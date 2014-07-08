@@ -7,6 +7,7 @@ public class AssetItem {
 	private Integer asset_id;// (int)所属资产
 	private String model;// (varchar)型号
 	private String spec;// (varchar)规格
+	private String price;// 单价
 	private String position;// (varchar)所在位置
 	private Integer is_use;// (int)是否已领用
 	private String own_user;// (varchar)所属人
@@ -20,6 +21,14 @@ public class AssetItem {
 
 	// 非数据库字段
 	private String own_user_name;
+
+	public String getPrice() {
+		return price;
+	}
+
+	public void setPrice(String price) {
+		this.price = price;
+	}
 
 	public String getOwn_user_name() {
 		return own_user_name;

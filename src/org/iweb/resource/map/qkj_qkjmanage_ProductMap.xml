@@ -27,8 +27,8 @@
 	</select>
 	<insert id="qkjmanage_addProduct" parameterClass="product">
 		<![CDATA[ 
-			Insert Into qkj_t_product(brand,title,spec,case_spec,alcohol,flavor,raw_materials,grade,market_price,group_price,dealer_price,group_rebates,dealer_rebates,agree_price_1,agree_price_2,agree_price_3,lm_user)
-			Values (#brand#,#title#,#spec#,#case_spec#,#alcohol#,#flavor#,#raw_materials#,#grade#,#market_price#,#group_price#,#dealer_price#,#group_rebates#,#dealer_rebates#,#agree_price_1#,#agree_price_2#,#agree_price_3#,#lm_user#)
+			Insert Into qkj_t_product(brand,title,spec,case_spec,alcohol,flavor,raw_materials,grade,market_price,group_price,dealer_price,group_rebates,dealer_rebates,agree_price_1,agree_price_2,agree_price_3,lm_user,prod_code)
+			Values (#brand#,#title#,#spec#,#case_spec#,#alcohol#,#flavor#,#raw_materials#,#grade#,#market_price#,#group_price#,#dealer_price#,#group_rebates#,#dealer_rebates#,#agree_price_1#,#agree_price_2#,#agree_price_3#,#lm_user#,#prod_code#)
 		]]>
 	</insert>
 	<update id="qkjmanage_mdyProduct" parameterClass="product">
@@ -50,7 +50,8 @@
 				agree_price_1=#agree_price_1#,
 				agree_price_2=#agree_price_2#,
 				agree_price_3=#agree_price_3#,
-				lm_user=#lm_user#
+				lm_user=#lm_user#,
+				prod_code=#prod_code#
 			Where uuid = #uuid#
 		]]>
 	</update>

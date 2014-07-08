@@ -55,6 +55,8 @@ $(function(){
 	<col width="30" />
 	  <tr>
 	    <th><input name="uuidcheck" type="checkbox" /></th>
+	    <th>统一编码</th>
+	    <th>系列</th>
 	    <th>品名</th>
 		<th>规格</th>
 		<th>数量</th>
@@ -68,6 +70,8 @@ $(function(){
 <s:iterator value="products" status="sta">
 	  <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>" type="pickrow">
 	    <td align="center"><input name="uuid" type="checkbox" value="<s:property value="uuid" />" /></td>
+	    <td align="center"><s:property value="prod_code" /></td>
+	    <td align="center"><s:property value="brand" /></td>
 	    <td><s:property value="title" /></td>
 		<td align="center"><s:property value="spec" /></td>
 		<td align="center"><s:property value="case_spec" />/件</td>

@@ -92,8 +92,8 @@ public class AssetItemAction extends ActionSupport {
 			if (assetItem != null) map.putAll(ToolsUtil.getMapByBean(assetItem));
 			map.putAll(ContextHelper.getDefaultRequestMap4Page());
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
-			this.setCurrPage(Integer.parseInt((ToolsUtil.isEmpty(map.get(Parameters.Current_Page_Str)) ? "1" : map
-					.get(Parameters.Current_Page_Str)).toString()));
+			this.setCurrPage(Integer.parseInt((ToolsUtil.isEmpty(map.get(Parameters.Current_Page_Str)) ? "1" : map.get(Parameters.Current_Page_Str))
+					.toString()));
 			this.setAssetItems(dao.list(map));
 			this.setRecCount(dao.getResultCount());
 		} catch (Exception e) {

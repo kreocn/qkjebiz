@@ -45,6 +45,10 @@
 			<td class='secRow'><s:textfield name="assetItem.spec" title="规格" dataLength="0,96" controlName="规格" /></td>
 			</tr>
 			<tr>
+			<td class='firstRow'>单价:</td>
+			<td class='secRow'><s:textfield name="assetItem.price" title="规格" dataLength="0,13" dataType="number" controlName="单价" /></td>
+			</tr>
+			<tr>
 			<td class='firstRow'>所在位置:</td>
 			<td class='secRow'><s:textfield name="assetItem.position" title="所在位置" dataLength="0,32" controlName="所在位置" /></td>
 			</tr>

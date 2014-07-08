@@ -26,7 +26,7 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
-		<action name="assetItem_addSimilar" class="com.qkj.adm.action.AssetItemAction" method="add">
+		<action name="assetItem_addSimilar" class="com.qkj.adm.action.AssetItemAction" method="addSimilar">
 			<result type="redirectAction">
 				<param name="actionName">assets_load</param>
 				<param name="assets.uuid">${assetItem.asset_id}</param>

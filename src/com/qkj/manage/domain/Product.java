@@ -4,6 +4,7 @@ import java.util.*;
 
 public class Product {
 	private Integer uuid;// (int)主键ID
+	private String prod_code;// 产品统一编码
 	private String brand;// (varchar)系列/类型/品牌
 	private String title;// (varchar)品名
 	private String spec;// (varchar)规格(500ml)
@@ -22,6 +23,14 @@ public class Product {
 	private Double agree_price_3;// (decimal)协议价3
 	private String lm_user;// (varchar)
 	private Date lm_time;// (timestamp)
+
+	public String getProd_code() {
+		return prod_code;
+	}
+
+	public void setProd_code(String prod_code) {
+		this.prod_code = prod_code;
+	}
 
 	public Integer getUuid() {
 		return uuid;

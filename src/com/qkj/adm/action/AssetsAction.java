@@ -111,11 +111,13 @@ public class AssetsAction extends ActionSupport {
 		ContextHelper.isPermit("QKJ_ADM_ASSETS_LIST");
 		try {
 			map.clear();
-			if (assets != null) map.putAll(ToolsUtil.getMapByBean(assets));
+			if (assets == null) assets = new Assets();
+			if (assets.getResidue_num_begin() == null) assets.setResidue_num_begin(1);
+			map.putAll(ToolsUtil.getMapByBean(assets));
 			map.putAll(ContextHelper.getDefaultRequestMap4Page());
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
-			this.setCurrPage(Integer.parseInt((ToolsUtil.isEmpty(map.get(Parameters.Current_Page_Str)) ? "1" : map
-					.get(Parameters.Current_Page_Str)).toString()));
+			this.setCurrPage(Integer.parseInt((ToolsUtil.isEmpty(map.get(Parameters.Current_Page_Str)) ? "1" : map.get(Parameters.Current_Page_Str))
+					.toString()));
 			this.setAssetss(dao.list(map));
 			this.setRecCount(dao.getResultCount());
 		} catch (Exception e) {

@@ -35,15 +35,15 @@
 	</select>
 	<insert id="adm_addAssetItem" parameterClass="assetItem">
 		<![CDATA[ 
-			Insert Into qkja_r_asset_item(uuid,asset_id,model,spec,position,is_use,own_user,use_time,op_user,op_time,add_user,add_time,lm_user)
-			Values (#uuid#,#asset_id#,#model#,#spec#,#position#,#is_use#,#own_user#,#use_time#,#op_user#,#op_time#,#add_user#,#add_time#,#lm_user#)
+			Insert Into qkja_r_asset_item(uuid,asset_id,model,spec,position,is_use,own_user,use_time,op_user,op_time,add_user,add_time,lm_user,price)
+			Values (#uuid#,#asset_id#,#model#,#spec#,#position#,#is_use#,#own_user#,#use_time#,#op_user#,#op_time#,#add_user#,#add_time#,#lm_user#,#price#)
 		]]>
 	</insert>
 	<!-- 类似创建,这里需要借用op_user作为临时的Insert uuid存储变量 -->
 	<insert id="adm_addAssetItemSimilar" parameterClass="assetItem">
 		<![CDATA[ 
-			INSERT INTO qkja_r_asset_item(`uuid`,asset_id,model,spec,`position`,is_use,add_user,add_time,lm_user)
-			SELECT #uuid#,t.`asset_id`,t.`model`,t.`spec`,t.`position`,0,#add_user#,NOW(),#lm_user# FROM qkja_r_asset_item t WHERE `uuid`=#op_user#
+			INSERT INTO qkja_r_asset_item(`uuid`,asset_id,model,spec,`position`,is_use,add_user,add_time,lm_user,price)
+			SELECT #uuid#,t.`asset_id`,t.`model`,t.`spec`,t.`position`,0,#add_user#,NOW(),#lm_user#,t.price FROM qkja_r_asset_item t WHERE `uuid`=#op_user#
 		]]>
 	</insert>
 	<update id="adm_mdyAssetItem" parameterClass="assetItem">
@@ -52,6 +52,7 @@
 			Set position=#position#,
 				model=#model#,
 				spec=#spec#,
+				price=#price#,
 				lm_user=#lm_user#
 			Where uuid = #uuid#
 		]]>

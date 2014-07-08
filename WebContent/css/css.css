@@ -17,6 +17,14 @@ a:hover {
 color: #FF0000;
 }
 
+input[type="text"].short_input {
+width: 60px;
+}
+
+input[type="text"].date_input {
+width: 80px;
+}
+
 input[type="text"] {
 width: 165px;
 }

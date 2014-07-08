@@ -56,8 +56,25 @@
 		<td class='secRow'><s:textfield name="assets.title" title="资产名称" require="required" dataLength="0,128" controlName="资产名称" /></td>
 		</tr>
 		<tr>
+		<td class='firstRow'>参考型号:</td>
+		<td class='secRow'><s:textfield id="assets_model" name="assets.model" title="资产名称" dataLength="0,96" controlName="参考型号" /></td>
+		</tr>
+		<tr>
+		<td class='firstRow'>参考规格:</td>
+		<td class='secRow'><s:textfield id="assets_spec" name="assets.spec" title="资产名称" dataLength="0,96" controlName="参考规格" /></td>
+		</tr>
+		<tr>
+		<td class='firstRow'>参考单价:￥</td>
+		<td class='secRow'><s:textfield id="assets_price" name="assets.price" title="总价" dataLength="0,10" dataType="number" controlName="参考单价" />元</td>
+		</tr>
+		<tr>
 		<td class='firstRow'><span style="color:red;">*</span> 数量:</td>
-		<td class='secRow'><s:textfield name="assets.num" title="数量" require="required" dataLength="0,10" dataType="integer" controlName="数量" /></td>
+		<td class='secRow'><s:textfield id="assets_num" name="assets.num" title="数量" require="required" dataLength="0,10" dataType="integer" controlName="数量" />
+		</td>
+		</tr>
+		<tr>
+		<td class='firstRow'>总价:￥</td>
+		<td class='secRow'><s:textfield id="assets_price_scope" name="assets.price_scope" title="总价" dataLength="0,10" dataType="number" controlName="总价" />元</td>
 		</tr>
 		<tr>
 		<td class='firstRow'>所属公司:</td>
@@ -75,10 +92,6 @@
 		<td class='secRow'><s:textfield name="assets.p_scrap" title="报废时限(月)" dataLength="0,10" dataType="integer" controlName="报废时限(月)" /> 月</td>
 		</tr>
 		<tr>
-		<td class='firstRow'>总价:￥</td>
-		<td class='secRow'><s:textfield name="assets.price_scope" title="总价" dataLength="0,10" dataType="number" controlName="总价" /></td>
-		</tr>
-		<tr>
 		<td class='firstRow'>可用操作:</td>
 		<td class='secRow'>
 			<s:if test="null == assets && 'add' == viewFlag">
@@ -94,7 +107,7 @@
 				<s:submit id="delete" name="delete" value="删除" action="assets_del" onclick="return isDel();" />
 				</s:if>
 				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_ASSETITEM_MDY')">
-		    	<input type="button" value="添加物品明细" onclick='$("#addAssetItems").dialog("open");' />
+		    	<input type="button" value="添加物品明细" onclick='openAddAssetItems();' />
 		    	</s:if>
 			</s:elseif>
 			<input type="button" value="返回" onclick="linkurl('<s:url action="assets_relist" namespace="/adm" />');" />
@@ -136,7 +149,10 @@
 			    	</s:if>	  
 			    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_ASSETITEM_DEL')">
 			    	[<a href="<s:url namespace="/adm" action="assetItem_del"><s:param name="assetItem.uuid" value="uuid" /><s:param name="assetItem.asset_id" value="asset_id" /></s:url>" onclick="return isDel();">删除</a>]
-			    	</s:if>	   
+			    	</s:if>
+			    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_ASSETITEM_ADD')">
+			    	[<a href="<s:url namespace="/adm" action="assetItem_addSimilar"><s:param name="assetItem.uuid" value="uuid" /><s:param name="assetItem.asset_id" value="asset_id" /></s:url>" onclick="return isOp('对这条信息进行类似创建吗?');">类似创建</a>]
+			    	</s:if>
 			    </td>
 			  </tr>
 			</s:iterator>
@@ -159,6 +175,14 @@ $(function(){
 		dist:" ${assets.typec}",
 		nodata:"none"
 	});
+	
+	$("#assets_price").bind("keyup",function(){
+		$("#assets_price_scope").val($("#assets_price").val()*$("#assets_num").val());
+	});
+	$("#assets_num").bind("keyup",function(){
+		$("#assets_price_scope").val($("#assets_price").val()*$("#assets_num").val());
+	});
+
 });
 </script>
 <!-- 以下为dialog div内容 -->
@@ -174,6 +198,10 @@ $(function(){
 	<tr>
 	<td class='firstRow'>规格:</td>
 	<td class='secRow'><s:textfield id="assetItem_spec" name="assetItem.spec" title="规格" dataLength="0,96" controlName="规格" /></td>
+	</tr>
+	<tr>
+	<td class='firstRow'>单价:</td>
+	<td class='secRow'><s:textfield id="assetItem_price" name="assetItem.price" title="规格" dataLength="0,13" dataType="number" controlName="单价" /></td>
 	</tr>
 	<tr>
 	<td class='firstRow'>所在位置:</td>
@@ -241,6 +269,13 @@ $(function(){
 	      modal: true
 	});
 });
+
+function openAddAssetItems() {
+	$("#assetItem_model").val($("#assets_model").val());
+	$("#assetItem_spec").val($("#assets_spec").val());
+	$("#assetItem_price").val($("#assets_price").val());
+	$("#addAssetItems").dialog("open");
+}
 
 function createMdyOwnDialog(item_id) {
 	var tr_id = "assetItems_" + item_id;

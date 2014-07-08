@@ -32,10 +32,16 @@
 <td class='secRow'><s:property value="product.uuid" /><s:hidden name="product.uuid" /></td>
 		</tr>
 		</s:if>
-		  
+		  <tr>
+<td class='firstRow'><span style="color:red;">*</span> 产品统一编码:</td>
+<td class='secRow'><s:textfield name="product.prod_code" title="产品统一编码" require="required" dataLength="0,16" controlName="产品统一编码" /></td>
+</tr>
 <tr>
-<td class='firstRow'>系列/类型/品牌:</td>
-<td class='secRow'><s:textfield name="product.brand" title="系列/类型/品牌" dataLength="0,85" controlName="系列/类型/品牌" /></td>
+<td class='firstRow'><span style="color:red;">*</span> 产品系列:</td>
+<td class='secRow'>
+<s:select name="product.brand" title="产品系列" require="required"  controlName="产品统一编码" headerKey="" headerValue="--请选择--"
+	list="#{'天佑德':'天佑德','八大作坊':'八大作坊','七彩互助':'七彩互助','互助头曲':'互助头曲','互助粮液':'互助粮液','永庆和':'永庆和','青稞酒':'青稞酒'}" />
+</td>
 </tr>
 <tr>
 <td class='firstRow'><span style="color:red;">*</span> 品名:</td>

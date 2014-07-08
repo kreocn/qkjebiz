@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
+<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,9 +10,13 @@
 <link rel="stylesheet" href="<s:url value="/css/css.css" />" />
 <link rel="stylesheet" href="<s:url value="/css/navigate.css" />" />
 <link rel="stylesheet" href="<s:url value="/css/main.css" />" />
+<script type="text/javascript" src="<s:url value="/js/form_validator.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/common_listtable.js" />"></script>
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery-1.8.3.min.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/jquery.CommonUtil.js" />"></script>
+<link rel="stylesheet" href="<s:url value="/include/jQuery/style.ui.smoothness/jquery-ui-1.10.3.min.css" />" />
+<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-ui-1.10.3.custom.min.js" />"></script>
+<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.ui.datepicker-zh.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/jqueryPlugins/select3/jquery.cityselect.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/show_page.js" />"></script>
 <script type="text/javascript">
@@ -43,7 +47,7 @@ $(function(){
 		</span>
 	</div>	
 	<div class="ilistsearch">
-<s:form name="form_serach" action="assets_list"  method="get" namespace="/adm" theme="simple">
+<s:form name="form_serach" action="assets_list"  method="get" onsubmit="return validator(this);" namespace="/adm" theme="simple">
 		<table class="ilisttable" id="serach_table" width="100%">
 			<tr>
 			<td class='firstRow'>系统编号:</td>
@@ -61,6 +65,22 @@ $(function(){
 			<td class='secRow'><s:select name="assets.company" title="所属公司" headerKey="" headerValue="--请选择--" list="#{0:'北京互助天佑德青稞酒销售有限公司',1:'华实集团',2:'华奥地产',3:'青海互助青稞酒股份有限公司',4:'青海互助青稞酒销售有限公司',5:'北京互助天佑德青稞酒销售有限公司第二分公司'}" /></td>
 			</tr>
 			<tr>
+			<td class='firstRow'>采购时间:</td>
+			<td class='secRow'>
+			<input id="assets_p_time_start" class="date_input" type="text" name="assets.p_time_start" title="采购时间" value="${it:formatDate(assets.p_time_start,'yyyy-MM-dd')}" />
+			<script type="text/javascript">$("#assets_p_time_start").datepicker();</script>
+			-
+			<input id="assets_p_time_end" class="date_input" type="text" name="assets.p_time_end" title="采购时间" value="${it:formatDate(assets.p_time_end,'yyyy-MM-dd')}" />
+			<script type="text/javascript">$("#assets_p_time_end").datepicker();</script>
+			</td>
+			<td class='firstRow'>剩余数量:</td>
+			<td class='secRow'>
+			<s:textfield cssClass="short_input" name="assets.residue_num_begin" dataLength="0,10" dataType="integer" controlName="数量"  />
+			-
+			<s:textfield  cssClass="short_input" name="assets.residue_num_end" dataLength="0,10" dataType="integer" controlName="数量"  />
+			</td>
+			</tr>
+			<tr>
 			<td colspan="4" class="buttonarea">
 				<s:submit value="搜索" />
 				<s:reset value="重置" />
@@ -75,12 +95,12 @@ $(function(){
 	  <tr>
 	    <th><input name="uuidcheck" type="checkbox" /></th>
 	    <th>系统编号</th>
-		<th>资产种类</th>
-		<th>资产类别</th>
-		<th>子类别</th>
+		<th>资产归类</th>
+		<th>参考型号</th>
+		<th>参考规格</th>
 		<th>资产名称</th>
 		<th>数量</th>
-		<th>总价</th>
+		<th>价格</th>
 		<th>采购时间</th>
 		<th>操作</th>
 	  </tr>
@@ -88,12 +108,12 @@ $(function(){
 	  <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>" type="pickrow">
 	    <td align="center"><input name="uuid" type="checkbox" value="<s:property value="uuid" />" /></td>
 	    <td align="center"><s:property value="uuid" /></td>
-		<td align="center">${typea}</td>
-		<td align="center">${typeb}</td>
-		<td align="center">${typec}</td>
+		<td align="center">${typea} ${typeb} ${typec}</td>
+		<td align="center">${model}</td>
+		<td align="center">${spec}</td>
 		<td><s:property value="title" /></td>
-		<td align="center"><s:property value="num" /></td>
-		<td align="center"><s:property value="price_scope" /></td>
+		<td align="center">${residue_num}/<s:property value="num" /></td>
+		<td align="center">${price_scope}(${price})</td>
 		<td align="center"><s:date name="p_time" format="yyyy-MM-dd" /></td>
 		<td align="center">
 			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_ASSETS')">

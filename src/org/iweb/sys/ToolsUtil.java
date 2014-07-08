@@ -44,7 +44,7 @@ public class ToolsUtil {
 	public static String getUUID(String prefix) {
 		String s = "";
 		try {
-			s = DateUtil.getDateString(new Date(), "yyMMddHHmmssS");
+			s = DateUtil.getDateString(new Date(), "yyMMddHHmmssSSS");
 		} catch (Exception e) {
 			s = getTimeTimeMillis(15);
 		}
