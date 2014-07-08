@@ -128,6 +128,14 @@ public class ToolsUtil {
 	}
 
 	/**
+	 * 
+	 * @return
+	 */
+	public static String getUUID16() {
+		return getUUIDByDateRandom(10, "yyMMdd");
+	}
+
+	/**
 	 * @return 20位的UUID,适用于不同要求
 	 */
 	public static String getUUID20() {

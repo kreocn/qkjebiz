@@ -1,16 +1,9 @@
 package org.iweb.test;
 
-import java.lang.annotation.Annotation;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.iweb.sys.ToolsUtil;
-
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-import net.sf.json.util.JSONUtils;
 
 public class test {
 
@@ -20,7 +13,19 @@ public class test {
 			+ "FROM information_schema.`COLUMNS` c WHERE c.TABLE_SCHEMA = 'AAA' " + "AND c.TABLE_NAME = 'BBB'";
 
 	public test() {
-		System.out.println(ToolsUtil.getRandomCode(24));
+		ArrayList<String> l = new ArrayList<>();
+		String tmp = "";
+		for (int i = 0; i < 10; i++) {
+			int count = 0;
+			l.clear();
+			while (true) {
+				tmp = ToolsUtil.getUUID16();
+				if (l.contains(tmp)) break;
+				else l.add(ToolsUtil.getUUID16());
+				count++;
+			}
+			System.out.println(count);
+		}
 	}
 
 	/**
