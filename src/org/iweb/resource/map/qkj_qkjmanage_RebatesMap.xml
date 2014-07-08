@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "sql-map-2.dtd">
+<sqlMap>
+	<!-- Rebates Start -->
+	<typeAlias alias="rebates" type="com.qkj.manage.domain.Rebates" />
+	<select id="qkjmanage_getRebatess" resultClass="rebates" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT r.*,m.member_name,m.mobile member_mobile,au.user_name 
+			       applicant_name,lu.user_name lm_user_name,p.product_num,p.product_money 
+			FROM   qkjm_r_rebates r 
+			       LEFT JOIN s_sys_user au 
+			              ON( au.uuid = r.applicant ) 
+			       LEFT JOIN s_sys_user lu 
+			              ON( lu.uuid = r.lm_user ) 
+			       LEFT JOIN (SELECT r.rebates_id,Sum(r.num) product_num, 
+			                         Sum(r.total_price) product_money 
+			                  FROM   qkjm_r_rebates_product r 
+			                  GROUP  BY r.rebates_id)p 
+			              ON( r.uuid = p.rebates_id ),s_vip_member m 
+			WHERE  r.member_id = m.uuid 
+		]]>
+		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ r.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="member_id"><![CDATA[ r.member_id=#member_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="re_type"><![CDATA[ r.re_type=#re_type# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="re_form"><![CDATA[ r.re_form=#re_form# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="status"><![CDATA[ r.`status`=#status# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="out_flag"><![CDATA[ r.out_flag=#out_flag# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="fd_check"><![CDATA[ r.fd_check=#fd_check# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="manager"><![CDATA[ m.manager=#manager# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="dept_codes">
+				<![CDATA[ m.dept_code In ]]>
+			<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
+		</isNotEmpty>
+		<![CDATA[ ORDER  BY r.`status` ASC,r.apply_time DESC  ]]>
+	</select>
+	<select id="qkjmanage_getRebatessCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) 
+			FROM   qkjm_r_rebates r,s_vip_member m 
+			WHERE  r.member_id = m.uuid 
+		]]>
+		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ r.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="member_id"><![CDATA[ r.member_id=#member_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="re_type"><![CDATA[ r.re_type=#re_type# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="re_form"><![CDATA[ r.re_form=#re_form# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="status"><![CDATA[ r.`status`=#status# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="out_flag"><![CDATA[ r.out_flag=#out_flag# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="fd_check"><![CDATA[ r.fd_check=#fd_check# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="manager"><![CDATA[ m.manager=#manager# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="dept_codes">
+				<![CDATA[ m.dept_code In ]]>
+			<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
+		</isNotEmpty>
+	</select>
+	<insert id="qkjmanage_addRebates" parameterClass="rebates">
+		<![CDATA[ 
+			Insert Into qkjm_r_rebates(member_id,re_type,re_form,re_score,re_money,with_score,apply_time,applicant,lm_user,note)
+			Values (#member_id#,#re_type#,#re_form#,#re_score#,#re_money#,#with_score#,#apply_time#,#applicant#,#lm_user#,#note#)
+		]]>
+		<selectKey resultClass="int" keyProperty="uuid">
+		<![CDATA[ 
+			Select LAST_INSERT_ID()
+		]]>
+		</selectKey>
+	</insert>
+	<update id="qkjmanage_mdyRebates" parameterClass="rebates">
+		<![CDATA[
+			Update qkjm_r_rebates
+			Set re_type=#re_type#,
+				re_form=#re_form#,
+				re_score=#re_score#,
+				re_money=#re_money#,
+				with_score=#with_score#,
+				re_scale=#re_scale#,
+				note=#note#,
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<update id="qkjmanage_mdyRebatesStatus" parameterClass="rebates">
+		<![CDATA[
+			Update qkjm_r_rebates
+			Set status=#status#,
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="qkjmanage_delRebates" parameterClass="rebates">
+	<![CDATA[
+		Delete From qkjm_r_rebates Where uuid=#uuid#
+	]]>
+	</delete>
+	<update id="qkjmanage_mdyRebatesOutFlag" parameterClass="rebates">
+		<![CDATA[
+			Update qkjm_r_rebates
+			Set out_flag=#out_flag#,
+				out_time=now(),
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<update id="qkjmanage_mdyRebatesFDCheck" parameterClass="rebates">
+		<![CDATA[
+			Update qkjm_r_rebates
+			Set fd_check=#fd_check#,
+				fd_check_time=now(),
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<!-- Rebates End -->
+
+	<typeAlias alias="rebatesLading" type="com.qkj.manage.domain.RebatesLading" />
+	<insert id="qkjmanage_addRebatesLading" parameterClass="rebatesLading">
+		<![CDATA[ 
+			Insert Into qkjm_r_rebates_lading(rebates_id,lading_id) Values (#rebates_id#,#lading_id#)
+		]]>
+	</insert>
+	<select id="qkjmanage_getRebatesLadings" resultClass="rebatesLading" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT r.*,l.apply_time lading_time
+			FROM  qkjm_r_rebates_lading r,qkjm_r_lading l
+			WHERE r.lading_id = l.uuid
+		]]>
+		<isNotEmpty prepend="AND" property="rebates_id"><![CDATA[ r.rebates_id=#rebates_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="lading_id"><![CDATA[ r.lading_id=#lading_id# ]]></isNotEmpty>
+	</select>
+	<delete id="qkjmanage_delRebatesLadings" parameterClass="int">
+	<![CDATA[
+		Delete From qkjm_r_rebates_lading Where rebates_id=#value#
+	]]>
+	</delete>
+</sqlMap>

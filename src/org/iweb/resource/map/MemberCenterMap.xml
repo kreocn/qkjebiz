@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "sql-map-2.dtd">
+<sqlMap>
+	<!-- OrderGoods Start -->
+	<typeAlias alias="memberOrderGoods" type="org.iweb.member.domain.MemberOrderGoods" />
+	<select id="sysebiz_getMemberOrderGoods" resultClass="memberOrderGoods" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT g.*,o.user_id member_id,o.order_status,t.goods_name,p.type_name goods_type_name, 
+			       t.goods_unit,d.og_num,t.goods_spec_unit,t.small_img goods_small_img,o.add_time,o.total_price
+			       order_total_price,o.pay_status order_pay_status 
+			FROM   qkj_r_order_goods g,(SELECT x.*,CASE 
+			                     WHEN x.`status` = 10 THEN 10 
+			                     WHEN x.`status` > 10 AND x.`status` < 70 THEN 20 
+			                     WHEN x.`status` >= 70 THEN 70 
+			                   end order_status 
+			        FROM   qkj_r_order x 
+			        WHERE  x.`status` >= 10) o,qkj_t_goods t 
+			       LEFT JOIN qkj_t_goods_type p 
+			              ON( t.goods_type = p.uuid ),(SELECT order_id,Count(uuid) og_num 
+			        FROM   qkj_r_order_goods 
+			        GROUP  BY order_id) d 
+			WHERE  g.goods_id = t.uuid 
+			       AND d.order_id = g.order_id 
+			       AND d.order_id = o.uuid 
+		]]>
+		<isNotEmpty prepend="AND" property="order_id"><![CDATA[ g.order_id =#order_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="member_id"><![CDATA[ o.user_id=#member_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="order_status"><![CDATA[ o.order_status=#order_status# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="s_add_time"><![CDATA[ o.add_time>=#s_add_time# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="e_add_time"><![CDATA[ o.add_time<=#e_add_time# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="goods_name">
+			<![CDATA[ t.goods_name LIKE CONCAT('%',#goods_name#,'%') ]]>
+		</isNotEmpty>
+		<![CDATA[ ORDER BY o.add_time DESC ]]>
+	</select>
+	<select id="sysebiz_getMemberOrderGoodsCount" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+		SELECT COUNT(*) 
+		FROM (SELECT x.*,CASE 
+			                     WHEN x.`status` = 10 THEN 10 
+			                     WHEN x.`status` > 10 AND x.`status` < 70 THEN 20 
+			                     WHEN x.`status` >= 70 THEN 70 
+			                   end order_status 
+			        FROM   qkj_r_order x 
+			        WHERE  x.`status` >= 10) o
+		WHERE 1=1
+		]]>
+		<isNotEmpty prepend="AND" property="order_id"><![CDATA[ o.uuid =#order_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="member_id"><![CDATA[ o.user_id=#member_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="order_status"><![CDATA[ o.order_status=#order_status# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="s_add_time"><![CDATA[ o.add_time>=#s_add_time# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="e_add_time"><![CDATA[ o.add_time<=#e_add_time# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="goods_name">
+			<![CDATA[ 
+				o.uuid IN (
+					SELECT t.order_id
+					FROM qkj_r_order_goods t,qkj_t_goods g
+					WHERE t.goods_id = g.uuid
+					AND g.goods_name LIKE CONCAT('%',#goods_name#,'%') 
+			)
+			]]>
+		</isNotEmpty>
+	</select>
+	<!-- OrderGoods End -->
+
+	<!-- Member Mdy -->
+	<!-- member:org.iweb.sysvip.domain.Member 详见 sysvip_MemberMap.xml -->
+	<update id="member_mdyMember" parameterClass="member">
+		<![CDATA[
+			Update s_vip_member
+			Set member_name=#member_name#,
+			email=#email#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<update id="member_changePasswords" parameterClass="member">
+		<![CDATA[
+			Update s_vip_member
+			Set passwords=#passwords#		
+			Where uuid = #uuid#
+		]]>
+	</update>
+
+	<!-- MemberAddress Mdy -->
+	<!-- memberAddress:org.iweb.sysvip.domain.MemberAddress 详见 sysvip_MemberAddressMap.xml -->
+	<update id="sysvip_mdyMemberAddressByMember" parameterClass="memberAddress">
+		<![CDATA[
+			Update s_vip_address
+			Set province=#province#,
+				city=#city#,
+				area=#area#,
+				post=#post#,
+				street=#street#,
+				con_name=#con_name#,
+				mobile=#mobile#
+			Where uuid = #uuid#
+			AND member_id = #member_id#
+		]]>
+	</update>
+	<!-- Member Mdy End -->
+
+	<!-- 得到用户藏酒的总数量 -->
+	<select id="sysebiz_getMemberCellarSum" resultClass="int" parameterClass="java.lang.String">
+		<![CDATA[ 
+		SELECT IFNULL(SUM(m.stock),0) FROM qkj_r_member_cellar m WHERE m.`status` = 0 AND m.member_id = #value#
+		]]>
+	</select>
+</sqlMap>

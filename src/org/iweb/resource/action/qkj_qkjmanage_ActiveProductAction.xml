@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="qkjmanage_activeProduct" extends="default" namespace="/qkjmanage">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- ActiveProduct Start -->
+		<action name="activeProduct_add" class="com.qkj.manage.action.ActiveProductAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">active_load</param>
+				<param name="active.uuid">${activeProduct.active_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="activeProduct_del" class="com.qkj.manage.action.ActiveProductAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">active_load</param>
+				<param name="active.uuid">${activeProduct.active_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+
+		<action name="activeProductClose_add" class="com.qkj.manage.action.ActiveProductAction" method="addClose">
+			<result type="redirectAction">
+				<param name="actionName">active_closeLoad</param>
+				<param name="active.uuid">${activeProduct.active_id}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="activeProductClose_del" class="com.qkj.manage.action.ActiveProductAction" method="delClose">
+			<result type="redirectAction">
+				<param name="actionName">active_closeLoad</param>
+				<param name="active.uuid">${activeProduct.active_id}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- ActiveProduct End -->
+	</package>
+</struts>

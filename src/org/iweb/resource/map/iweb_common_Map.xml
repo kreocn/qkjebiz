@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "sql-map-2.dtd">
+<sqlMap>
+	<!-- UploadClass Start -->
+	<typeAlias alias="uploadClass" type="org.iweb.fileupload.domain.UploadClass" />
+	<select id="upload_getClass" resultClass="uploadClass" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select * From t_upload_class
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotNull>
+		</dynamic>
+	</select>
+	<insert id="upload_addClass" parameterClass="uploadClass">
+		<![CDATA[ 
+			Insert Into t_upload_class(uuid,c_id,c_name,c_dir,max_size,descriptions,union_type,union_num,lm_user,lm_time)
+			Values (#uuid#,#c_id#,#c_name#,#c_dir#,#max_size#,#descriptions#,#union_type#,#union_num#,#lm_user#,#lm_time#)
+		]]>
+	</insert>
+	<update id="upload_mdyClass" parameterClass="uploadClass">
+		<![CDATA[
+			Update t_upload_class
+			Set c_id=#c_id#,
+				c_name=#c_name#,
+				c_dir=#c_dir#,
+				max_size=#max_size#,
+				descriptions=#descriptions#,
+				union_type=#union_type#,
+				union_num=#union_num#,
+				lm_user=#lm_user#,
+				lm_time=#lm_time#
+			Where uuid=#uuid#
+		]]>
+	</update>
+	<delete id="upload_delClass" parameterClass="uploadClass">
+		<![CDATA[
+			Delete From t_upload_class Where uuid=#uuid#		
+		]]>
+	</delete>
+	<typeAlias alias="uploadClassFileType" type="org.iweb.fileupload.domain.ClassFileType" />
+	<select id="upload_getClassFileType" resultClass="uploadClassFileType" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select t.*,c.c_name class_name,f.title filetype_title,
+			f.extension filetype_extension,f.mime_type filetype_mime_type
+			From t_upload_class_filetype t,t_upload_class c,c_upload_filetype f
+			Where t.class_id = c.uuid
+			And t.filetype_id = f.uuid
+		]]>
+		<isNotNull prepend="AND" property="class_id"><![CDATA[ t.class_id=#class_id# ]]></isNotNull>
+	</select>
+	<insert id="upload_addClassFileType" parameterClass="uploadClassFileType">
+		<![CDATA[
+			Insert Into t_upload_class_filetype(class_id,filetype_id)
+			Values (#class_id#,#filetype_id#)
+		]]>
+	</insert>
+	<delete id="upload_delClassFileType" parameterClass="uploadClassFileType">
+		<![CDATA[
+			Delete From t_upload_class_filetype Where class_id=#class_id# And filetype_id=#filetype_id#
+		]]>
+	</delete>
+	<typeAlias alias="uploadFileType" type="org.iweb.fileupload.domain.FileType" />
+	<select id="upload_getFileType" resultClass="uploadFileType" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select * From c_upload_filetype
+			Where status = 1
+		]]>
+		<isNotNull prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotNull>
+	</select>
+	<!-- UploadClass End -->
+	<!-- UploadFile Start -->
+	<typeAlias alias="uploadFile" type="org.iweb.fileupload.domain.UploadFile" />
+	<select id="upload_getFiles" resultClass="uploadFile" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select f.*,c.c_name class_name
+			From t_upload_file f,t_upload_class c
+			Where f.class_id = c.uuid
+		]]>
+		<isNotNull prepend="AND" property="uuid"><![CDATA[ f.uuid=#uuid# ]]></isNotNull>
+		<isNotNull prepend="AND" property="class_id"><![CDATA[ f.class_id=#class_id# ]]></isNotNull>
+		<isNotNull prepend="AND" property="union_code"><![CDATA[ f.union_code=#union_code# ]]></isNotNull>
+		<![CDATA[ Order By f.lm_time Desc ]]>
+	</select>
+	<insert id="upload_addFile" parameterClass="uploadFile">
+		<![CDATA[ 
+			Insert Into t_upload_file(uuid,class_id,title,file_name,file_type,file_size,union_code,lm_user,lm_time)
+			Values (#uuid#,#class_id#,#title#,#file_name#,#file_type#,#file_size#,#union_code#,#lm_user#,#lm_time#)
+		]]>
+	</insert>
+	<update id="upload_mdyFile" parameterClass="uploadFile">
+		<![CDATA[
+			Update t_upload_file
+			Set class_id=#class_id#,
+				title=#title#,
+				file_name=#file_name#,
+				file_type=#file_type#,
+				file_size=#file_size#,
+				union_code=#union_code#,
+				lm_user=#lm_user#,
+				lm_time=#lm_time#
+			Where uuid=#uuid#
+		]]>
+	</update>
+	<delete id="upload_delFile" parameterClass="uploadFile">
+		<![CDATA[
+			Delete From t_upload_file Where uuid=#uuid#		
+		]]>
+	</delete>
+	<!-- UploadFile End -->
+
+	<!-- InfoClass Start -->
+	<typeAlias alias="infoClass" type="org.iweb.info.domain.InfoClass" />
+	<select id="info_getClass" resultClass="infoClass" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select * From t_info_class
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotNull>
+			<isNotNull prepend="AND" property="parent_id"><![CDATA[ parent_id=#parent_id# ]]></isNotNull>
+			<isNotNull prepend="AND" property="classes">
+				<![CDATA[ uuid In ]]>
+				<iterate property="classes" open="(" close=")" conjunction=" , "> #classes[]#</iterate>
+			</isNotNull>
+		</dynamic>
+	</select>
+	<insert id="info_addClass" parameterClass="infoClass">
+		<![CDATA[ 
+			Insert Into t_info_class(uuid,title,title2,parent_id,class_template_id,info_template_id,info_html_dir,lm_user,lm_time)
+			Values (#uuid#,#title#,#title2#,#parent_id#,#class_template_id#,#info_template_id#,#info_html_dir#,#lm_user#,#lm_time#)
+		]]>
+	</insert>
+	<update id="info_mdyClass" parameterClass="infoClass">
+		<![CDATA[
+			Update t_info_class
+			Set title=#title#,
+				title2=#title2#,
+				parent_id=#parent_id#,
+				class_template_id=#class_template_id#,
+				info_template_id=#info_template_id#,
+				info_html_dir=#info_html_dir#,
+				lm_user=#lm_user#,
+				lm_time=#lm_time#
+			Where uuid=#uuid#
+		]]>
+	</update>
+	<delete id="info_delClass" parameterClass="infoClass">
+		<![CDATA[
+			Delete From t_info_class Where uuid=#uuid#		
+		]]>
+		<!--<iterate property="userIDs" open="(" close=")" conjunction=" , "> #userIDs[]# </iterate> -->
+	</delete>
+	<!-- InfoClass End -->
+
+	<!-- InfoNews Start -->
+	<typeAlias alias="infoNews" type="org.iweb.info.domain.InfoNews" />
+	<select id="info_getNews" resultClass="infoNews" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT t.*,c.title class_name,s1.dept_code add_dept,s1.user_name add_user_name, 
+			       s2.dept_code lm_dept,s2.user_name lm_user_name 
+			FROM   t_info_news t 
+			       LEFT JOIN s_sys_user s1 
+			              ON s1.uuid = t.add_user 
+			       LEFT JOIN s_sys_user s2 
+			              ON s2.uuid = t.lm_user,t_info_class c 
+			WHERE  t.class_id = c.uuid 
+		]]>
+		<isNotNull prepend="AND" property="uuid"><![CDATA[ t.uuid=#uuid# ]]></isNotNull>
+		<isNotNull prepend="AND" property="isdel"><![CDATA[ t.isdel=#isdel# ]]></isNotNull>
+		<isNotNull prepend="AND" property="ischecked"><![CDATA[ t.ischecked=#ischecked# ]]></isNotNull>
+		<!-- 同时支持多种状态 -->
+		<isNotNull prepend="AND" property="ischeckeds">
+			<![CDATA[ t.ischecked In ]]>
+			<iterate property="ischeckeds" open="(" close=")" conjunction=" , "> #ischeckeds[]#</iterate>
+		</isNotNull>
+		<isNotNull prepend="AND" property="class_id"><![CDATA[ t.class_id=#class_id# ]]></isNotNull>
+		<isNotNull prepend="AND" property="title"><![CDATA[ t.title like #title# ]]></isNotNull>
+		<isNotNull prepend="AND" property="add_dept"><![CDATA[ s1.dept_code like #add_dept# ]]></isNotNull>
+		<isNotNull prepend="AND" property="classes">
+				<![CDATA[ t.class_id In ]]>
+			<iterate property="classes" open="(" close=")" conjunction=" , "> #classes[]#</iterate>
+		</isNotNull>
+		<isEmpty property="orderby"><![CDATA[ Order By t.add_time Desc]]></isEmpty>
+		<isNotEmpty property="orderby">
+			<isEqual property="orderby" compareValue="top"><![CDATA[ ORDER BY t.ISTOP DESC,t.ADD_TIME DESC	]]></isEqual>
+		</isNotEmpty>
+		<isEmpty property="limit"><![CDATA[ LIMIT 500 ]]></isEmpty>
+		<isNotEmpty property="limit"><![CDATA[ LIMIT #limit# ]]></isNotEmpty>
+	</select>
+	<insert id="info_addNews" parameterClass="infoNews">
+		<![CDATA[ 
+			Insert Into t_info_news(uuid,class_id,title,redirect_url,keywords,shortcontent,content,isimgnews,smallimg,
+			bigimg,speciality_id,iscreated,file_path,new_source,add_user,add_time,add_ip,lm_ip,lm_user,lm_time)
+			Values (#uuid#,#class_id#,#title#,#redirect_url#,#keywords#,#shortcontent#,#content#,#isimgnews#,#smallimg#,#bigimg#,
+			#speciality_id#,#iscreated#,#file_path#,#new_source#,#add_user#,#add_time#,#add_ip#,#lm_ip#,#lm_user#,#lm_time#)
+		]]>
+	</insert>
+	<update id="info_mdyNews" parameterClass="infoNews">
+		<![CDATA[
+			Update t_info_news
+			Set class_id=#class_id#,
+				title=#title#,
+				redirect_url=#redirect_url#,
+				keywords=#keywords#,
+				shortcontent=#shortcontent#,
+				content=#content#,
+				isimgnews=#isimgnews#,
+				smallimg=#smallimg#,
+				bigimg=#bigimg#,
+				speciality_id=#speciality_id#,
+				iscreated=#iscreated#,
+				file_path=#file_path#,
+				new_source=#new_source#,
+				lm_user=#lm_user#,
+				lm_time=#lm_time#,
+				lm_ip=#lm_ip#
+			Where uuid=#uuid#
+		]]>
+	</update>
+
+	<update id="info_mdyNewsTop" parameterClass="infoNews">
+		<![CDATA[
+			Update t_info_news
+			Set istop=#istop#,
+				lm_user=#lm_user#,
+				lm_time=#lm_time#,
+				lm_ip=#lm_ip#
+			Where uuid=#uuid#
+		]]>
+	</update>
+
+	<update id="info_mdyNewsAddLevel" parameterClass="infoNews">
+		<![CDATA[
+			Update t_info_news
+			Set istop=istop+1,
+				lm_user=#lm_user#,
+				lm_time=#lm_time#,
+				lm_ip=#lm_ip#
+			Where uuid=#uuid#
+		]]>
+	</update>
+
+	<update id="info_mdyNewsDownLevel" parameterClass="infoNews">
+		<![CDATA[
+			Update t_info_news
+			Set istop=istop-1,
+				lm_user=#lm_user#,
+				lm_time=#lm_time#,
+				lm_ip=#lm_ip#
+			Where uuid=#uuid#
+		]]>
+	</update>
+
+	<update id="info_mdyNewsFirstCheck" parameterClass="infoNews">
+		<![CDATA[
+			Update t_info_news
+			Set first_check_note=#first_check_note#,
+				ischecked=#ischecked#,
+				lm_user=#lm_user#,
+				lm_time=#lm_time#,
+				lm_ip=#lm_ip#
+			Where uuid=#uuid#
+		]]>
+	</update>
+
+	<update id="info_mdyNewsFinalCheck" parameterClass="infoNews">
+		<![CDATA[
+			Update t_info_news
+			Set final_check_note=#final_check_note#,
+				ischecked=#ischecked#,
+				lm_user=#lm_user#,
+				lm_time=#lm_time#,
+				lm_ip=#lm_ip#
+			Where uuid=#uuid#
+		]]>
+	</update>
+
+	<update id="info_mdyNewsDel" parameterClass="infoNews">
+		<![CDATA[
+			Update t_info_news p
+			Set isdel=#isdel#,
+				lm_user=#lm_user#,
+				lm_time=#lm_time#,
+				lm_ip=#lm_ip#
+			Where uuid=#uuid#
+		]]>
+	</update>
+	<delete id="info_delNews" parameterClass="infoNews">
+		<![CDATA[
+			Delete From t_info_news Where uuid=#uuid#		
+		]]>
+		<!--<iterate property="userIDs" open="(" close=")" conjunction=" , "> #userIDs[]# </iterate> -->
+	</delete>
+	<!-- InfoNews End -->
+
+	<!-- Simple Report 通用 -->
+	<select id="rpt_getSimpleList" resultClass="org.iweb.rpt.domain.ListObject" parameterClass="java.util.Map">
+		$sqltext$
+	</select>
+
+	<!-- Simple Report 通用 -->
+	<select id="rpt_getSimpleResult" resultClass="java.util.HashMap" parameterClass="java.util.Map" remapResults="true">
+		$sqltext$
+	</select>
+
+	<!-- Simple Report 通用,得到总数量专用 -->
+	<select id="rpt_getSimpleResultCount" resultClass="int" parameterClass="java.util.Map">
+		$sqltext$
+	</select>
+
+	<!-- 适用性map,使用sqltext作为sql输入点,适合小查询使用 -->
+	<select id="commonSelectObject" resultClass="java.lang.Object" parameterClass="java.util.Map" remapResults="true">
+		$sqltext$
+	</select>
+	<!-- 适用性map,使用sqltext作为sql输入点,适合小查询使用 -->
+	<select id="commonSelectMapList" resultClass="java.util.HashMap" parameterClass="java.util.Map" remapResults="true">
+		$sqltext$
+	</select>
+</sqlMap>

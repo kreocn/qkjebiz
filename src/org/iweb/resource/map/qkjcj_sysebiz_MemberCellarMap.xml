@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "sql-map-2.dtd">
+<sqlMap>
+	<!-- MemberCellar Start -->
+	<typeAlias alias="memberCellar" type="com.qkjsys.ebiz.domain.MemberCellar" />
+	<select id="sysebiz_getMemberCellars" resultClass="memberCellar" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT c.*,x.order_id,c.goods_id,g.goods_name,x.order_num,c.ware_id,w.ware_name,x.user_id,
+						x.order_status,g.goods_unit,g.goods_spec,g.goods_spec_unit,i.column_2 AS goods_cellar_prefix,
+						g.small_img,g.big_img
+			FROM   qkj_r_member_cellar c,(SELECT 
+			       r.uuid,r.order_id,r.goods_id,r.order_num,o.user_id, 
+			              o.`status` order_status 
+			        FROM   qkj_r_order_goods r,qkj_r_order o 
+			        WHERE  r.order_id = o.uuid 
+			               AND o.`status` > 0) x,qkj_t_warehouse w,qkj_t_goods g, 
+			       qkj_t_goods_info i 
+			WHERE  c.order_goods_id = x.uuid 
+			       AND c.ware_id = w.uuid 
+			       AND c.goods_id = g.uuid 
+			       AND c.goods_id = i.goods_id 
+			       AND c.`status` = 0
+		]]>
+		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ c.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="member_id"><![CDATA[ c.member_id=#member_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="goods_id"><![CDATA[ c.goods_id=#goods_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="ware_id"><![CDATA[ c.ware_id=#ware_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="cellar_no"><![CDATA[ c.cellar_no=#cellar_no# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="cellar_position"><![CDATA[ c.cellar_position LIKE CONCAT('%',#cellar_position#,'%') ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="order_id"><![CDATA[ x.order_id=#order_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="fullflag">
+			<isEqual property="fullflag" compareValue="yes"><![CDATA[ c.num=c.stock ]]></isEqual>
+			<isEqual property="fullflag" compareValue="no"><![CDATA[ c.num<>c.stock ]]></isEqual>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="memflag">
+			<isEqual property="memflag" compareValue="yes"><![CDATA[ c.member_id IS NOT NULL ]]></isEqual>
+			<isEqual property="memflag" compareValue="no"><![CDATA[ c.member_id IS NULL ]]></isEqual>
+		</isNotEmpty>
+		<![CDATA[ ORDER BY c.cellar_position ]]>
+	</select>
+	<select id="sysebiz_getMemberCellarsCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT Count(*)
+			FROM   qkj_r_member_cellar c,(SELECT 
+			       r.uuid,r.order_id,r.goods_id,r.order_num,o.user_id, 
+			              o.`status` order_status 
+			        FROM   qkj_r_order_goods r,qkj_r_order o 
+			        WHERE  r.order_id = o.uuid 
+			               AND o.`status` > 0) x,qkj_t_warehouse w,qkj_t_goods g, 
+			       qkj_t_goods_info i 
+			WHERE  c.order_goods_id = x.uuid 
+			       AND c.ware_id = w.uuid 
+			       AND c.goods_id = g.uuid 
+			       AND c.goods_id = i.goods_id 
+			       AND c.`status` = 0
+		]]>
+		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ c.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="member_id"><![CDATA[ c.member_id=#member_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="goods_id"><![CDATA[ c.goods_id=#goods_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="ware_id"><![CDATA[ c.ware_id=#ware_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="cellar_no"><![CDATA[ c.cellar_no=#cellar_no# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="cellar_position"><![CDATA[ c.cellar_position LIKE CONCAT('%',#cellar_position#,'%') ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="order_id"><![CDATA[ x.order_id=#order_id# ]]></isNotEmpty>
+	</select>
+	<select id="sysebiz_checkMemberCellarsPosition" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT COUNT(*)
+			FROM qkj_r_member_cellar c
+			WHERE (c.ware_id,c.cellar_position) = (#ware_id#,#cellar_position#)
+			AND c.`status` = 0
+		]]>
+	</select>
+	<insert id="sysebiz_addMemberCellar" parameterClass="memberCellar">
+		<![CDATA[ 
+			Insert Into qkj_r_member_cellar(member_id,order_goods_id,goods_id,ware_id,cellar_no,num,stock,frozen,cellar_position,camera,storage_date,lm_user)
+			Values (#member_id#,#order_goods_id#,#goods_id#,#ware_id#,#cellar_no#,#num#,#stock#,#frozen#,#cellar_position#,#camera#,#storage_date#,#lm_user#)
+		]]>
+	</insert>
+	<insert id="sysebiz_addMemberCellarByOrderID" parameterClass="string">
+		<![CDATA[ 
+			INSERT INTO 
+				qkj_r_member_cellar(member_id,order_goods_id,goods_id,ware_id,cellar_no,num,stock,frozen,cellar_position,camera,storage_date,lm_user) 
+			SELECT o.user_id AS member_id,c.order_goods_id,g.goods_id,i.column_1 AS ware_id,c.cellar_no,c.num,c.stock,0 
+			       frozen, Concat(i.column_2, c.cellar_no) cellar_position,c.camera,g.storage_date,o.lm_user 
+			FROM   qkj_r_order_cellar c,qkj_r_order_goods g,qkj_r_order o,qkj_t_goods t, 
+			       qkj_t_goods_info i 
+			WHERE  c.order_goods_id = g.uuid
+			       AND g.order_id = o.uuid
+			       AND g.goods_id = t.uuid
+			       AND t.uuid = i.goods_id
+			       AND o.`status` = 70
+			       AND o.uuid = #value#
+		]]>
+	</insert>
+	<update id="sysebiz_mdyMemberCellar" parameterClass="memberCellar">
+		<![CDATA[
+			Update qkj_r_member_cellar
+			Set cellar_position=#cellar_position#,
+				camera=#camera#,
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+
+	<delete id="sysebiz_delMemberCellar" parameterClass="memberCellar">
+		<![CDATA[
+			Update qkj_r_member_cellar
+			Set member_id=NULL,
+				order_id=NULL,
+				order_goods_id=NULL,
+				storage_date=NULL,
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+			AND stock >= num
+		]]>
+	</delete>
+	
+	<delete id="sysebiz_delMemberCellarByOrder" parameterClass="memberCellar">
+		<![CDATA[
+			Update qkj_r_member_cellar
+			Set member_id=NULL,
+				order_id=NULL,
+				order_goods_id=NULL,
+				storage_date=NULL,
+				lm_user=#lm_user#
+			Where order_id = #order_id#
+			AND stock >= num
+		]]>
+	</delete>
+
+	<!-- 取酒订单号,如果库存已经是0,则把藏酒移除 -->
+	<delete id="sysebiz_delCellarByCellarOrderID" parameterClass="string">
+		<![CDATA[
+			Update qkj_r_member_cellar
+			Set `status`=1,
+				lm_user='SYSTEM'
+			Where uuid = (SELECT member_cellar_id 
+				FROM qkj_r_cellar_order WHERE uuid = #value#)
+			AND stock = 0
+		]]>
+	</delete>
+
+	<!-- New Start -->
+	<typeAlias alias="memberCellar4Add" type="com.qkjsys.ebiz.domain.MemberCellar4Add" />
+	<select id="sysebiz_getMemberCellars4Add" resultClass="memberCellar4Add" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT c.uuid,c.member_id,c.num,c.stock,c.cellar_position,c.order_id,c.goods_id,c.order_goods_id
+			FROM qkj_r_member_cellar c
+			WHERE c.`status` = 0
+		]]>
+		<isNotNull prepend="AND" property="uuid"><![CDATA[ c.uuid=#uuid# ]]></isNotNull>
+		<isNotNull prepend="AND" property="goods_id"><![CDATA[ c.goods_id=#goods_id# ]]></isNotNull>
+		<isNotNull prepend="AND" property="status"><![CDATA[ c.`status`=#status# ]]></isNotNull>
+		<isNotNull prepend="AND" property="order_id"><![CDATA[ c.order_id=#order_id# ]]></isNotNull>
+	</select>
+
+	<update id="sysebiz_addCellar2Member" parameterClass="memberCellar4Add">
+		<![CDATA[
+			Update qkj_r_member_cellar
+			Set member_id=#member_id#,
+				order_id=#order_id#,
+				order_goods_id=#order_goods_id#,
+				storage_date=#storage_date#
+			Where cellar_position = #cellar_position#
+			AND `status` = 0
+			AND goods_id = #goods_id#
+			AND member_id IS NULL
+		]]>
+	</update>
+
+	<update id="sysebiz_delMemberCellar4Add" parameterClass="int">
+		<![CDATA[
+			Update qkj_r_member_cellar c
+			Set member_id=NULL,
+				order_id=NULL,
+				order_goods_id=NULL,
+				storage_date=NULL
+			Where uuid=#value#
+			AND order_id IS NOT NULL
+			AND 30 = (SELECT o.`status` FROM qkj_r_order o WHERE o.uuid=c.order_id)
+		]]>
+	</update>
+	<!-- MemberCellar End -->
+</sqlMap>

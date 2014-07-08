@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "sql-map-2.dtd">
+<sqlMap>
+	<!-- OrderGoods Start -->
+	<typeAlias alias="orderGoods" type="com.qkjsys.ebiz.domain.OrderGoods" />
+	<select id="sysebiz_getOrderGoodss" resultClass="orderGoods" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT g.*, 
+			       t.goods_name, 
+			       p.type_name goods_type_name, 
+			       t.goods_unit 
+			FROM   qkj_r_order_goods g, 
+			       qkj_t_goods t 
+			       LEFT JOIN qkj_t_goods_type p 
+			              ON( t.goods_type = p.uuid ) 
+			WHERE  g.goods_id = t.uuid 
+		]]>
+		<isNotNull prepend="AND" property="uuid"><![CDATA[ g.uuid=#uuid# ]]></isNotNull>
+		<isNotNull prepend="AND" property="order_id"><![CDATA[ g.order_id=#order_id# ]]></isNotNull>
+	</select>
+	<select id="sysebiz_getOrderGoodssCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT Count(*)
+			FROM   qkj_r_order_goods g, 
+			       qkj_t_goods t 
+			       LEFT JOIN qkj_t_goods_type p 
+			              ON( t.goods_type = p.uuid ) 
+			WHERE  g.goods_id = t.uuid 
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="uuid"><![CDATA[ g.uuid=#uuid# ]]></isNotNull>
+			<isNotNull prepend="AND" property="order_id"><![CDATA[ g.order_id=#order_id# ]]></isNotNull>
+		</dynamic>
+	</select>
+	<insert id="sysebiz_addOrderGoods" parameterClass="orderGoods">
+		<![CDATA[ 
+			Insert Into qkj_r_order_goods(order_id,goods_id,per_price,order_num,total_price,storage_fees,storage_date)
+			Values (#order_id#,#goods_id#,#per_price#,#order_num#,#total_price#,#storage_fees#,#storage_date#)
+		]]>
+	</insert>
+	<update id="sysebiz_mdyOrderGoods" parameterClass="orderGoods">
+		<![CDATA[
+			Update qkj_r_order_goods
+			Set per_price=#per_price#,
+				storage_fees=#storage_fees#,
+				storage_date=#storage_date#,
+				order_num=#order_num#,
+				total_price=#total_price#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="sysebiz_delOrderGoods" parameterClass="orderGoods">
+	<![CDATA[
+		Delete From qkj_r_order_goods Where uuid=#uuid#
+	]]>
+	</delete>
+	<!-- OrderGoods End -->
+</sqlMap>

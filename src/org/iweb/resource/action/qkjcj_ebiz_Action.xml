@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="ebiz" extends="default" namespace="/sysebiz">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- Goods Start -->
+		<action name="goods_list" class="com.qkjsys.ebiz.action.GoodsAction" method="list">
+			<result>/jsp/sysebiz/GoodsList.jsp</result>
+		</action>
+		<action name="goods_addload" class="com.qkjsys.ebiz.action.GoodsAction" method="addLoad">
+			<result>/jsp/sysebiz/GoodsEdit.jsp</result>
+		</action>
+		<action name="goods_addsave" class="com.qkjsys.ebiz.action.GoodsAction" method="addSave">
+			<result type="redirectAction">
+				<param name="actionName">goods_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="goods_salesup" class="com.qkjsys.ebiz.action.GoodsAction" method="mdyGoodsSalesUp">
+			<result type="redirectAction">
+				<param name="actionName">goods_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="goods_salesdown" class="com.qkjsys.ebiz.action.GoodsAction" method="mdyGoodsSalesDown">
+			<result type="redirectAction">
+				<param name="actionName">goods_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+
+		<action name="goods_load" class="com.qkjsys.ebiz.action.GoodsAction" method="loadSave">
+			<result>/jsp/sysebiz/GoodsEdit.jsp</result>
+		</action>
+		<action name="goods_save" class="com.qkjsys.ebiz.action.GoodsAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">goods_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+
+		<action name="goods_saveInStock" class="com.qkjsys.ebiz.action.GoodsAction" method="saveInStock">
+			<result type="redirectAction">
+				<param name="actionName">goods_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- Goods End -->
+
+		<!-- Ware Start -->
+		<action name="ware_list" class="com.qkjsys.ebiz.action.WareAction" method="list">
+			<result>/jsp/sysebiz/WareList.jsp</result>
+		</action>
+		<action name="ware_load" class="com.qkjsys.ebiz.action.WareAction" method="load">
+			<result>/jsp/sysebiz/WareEdit.jsp</result>
+		</action>
+		<action name="ware_add" class="com.qkjsys.ebiz.action.WareAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">ware_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="ware_save" class="com.qkjsys.ebiz.action.WareAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">ware_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="ware_del" class="com.qkjsys.ebiz.action.WareAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">ware_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- Ware End -->
+
+		<!-- GoodsType Start -->
+		<action name="goodsType_list" class="com.qkjsys.ebiz.action.GoodsTypeAction" method="list">
+			<result>/jsp/sysebiz/GoodsTypeList.jsp</result>
+		</action>
+		<action name="goodsType_load" class="com.qkjsys.ebiz.action.GoodsTypeAction" method="load">
+			<result>/jsp/sysebiz/GoodsTypeEdit.jsp</result>
+		</action>
+		<action name="goodsType_add" class="com.qkjsys.ebiz.action.GoodsTypeAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">goodsType_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="goodsType_save" class="com.qkjsys.ebiz.action.GoodsTypeAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">goodsType_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="goodsType_del" class="com.qkjsys.ebiz.action.GoodsTypeAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">goodsType_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- GoodsType End -->
+	</package>
+</struts>

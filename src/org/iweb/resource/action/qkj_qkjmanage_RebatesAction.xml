@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="qkjmanage_rebates" extends="default" namespace="/qkjmanage">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- Rebates Start -->
+		<action name="rebates_list" class="com.qkj.manage.action.RebatesAction" method="list">
+			<result>/jsp/qkjmanage/RebatesList.jsp</result>
+		</action>
+		<action name="rebates_load" class="com.qkj.manage.action.RebatesAction" method="load">
+			<result>/jsp/qkjmanage/RebatesEdit.jsp</result>
+		</action>
+		<action name="rebates_view" class="com.qkj.manage.action.RebatesAction" method="load">
+			<result>/jsp/qkjmanage/RebatesView.jsp</result>
+		</action>
+		<action name="rebates_add" class="com.qkj.manage.action.RebatesAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">rebates_load</param>
+				<param name="rebates.uuid">${rebates.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="rebates_save" class="com.qkj.manage.action.RebatesAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">rebates_load</param>
+				<param name="rebates.uuid">${rebates.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="rebates_del" class="com.qkj.manage.action.RebatesAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">rebates_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+
+		<action name="rebates_mdyRebatesStatus0" class="com.qkj.manage.action.RebatesAction" method="mdyRebatesStatus0">
+			<result type="redirectAction">
+				<param name="actionName">rebates_load</param>
+				<param name="rebates.uuid">${rebates.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+
+		<action name="rebates_mdyRebatesStatus10" class="com.qkj.manage.action.RebatesAction" method="mdyRebatesStatus10">
+			<result type="redirectAction">
+				<param name="actionName">rebates_list</param>
+				<param name="message">${message}</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+
+		<action name="rebates_mdyRebatesStatus20" class="com.qkj.manage.action.RebatesAction" method="mdyRebatesStatus20">
+			<result type="redirectAction">
+				<param name="actionName">rebates_list</param>
+				<param name="message">${message}</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+
+		<action name="rebates_mdyRebatesStatus30" class="com.qkj.manage.action.RebatesAction" method="mdyRebatesStatus30">
+			<result type="redirectAction">
+				<param name="actionName">rebates_list</param>
+				<param name="message">${message}</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+
+		<action name="rebates_mdyRebatesStatus40" class="com.qkj.manage.action.RebatesAction" method="mdyRebatesStatus40">
+			<result type="redirectAction">
+				<param name="actionName">rebates_list</param>
+				<param name="message">${message}</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+
+		<action name="rebates_mdyRebatesStatus50" class="com.qkj.manage.action.RebatesAction" method="mdyRebatesStatus50">
+			<result type="redirectAction">
+				<param name="actionName">rebates_list</param>
+				<param name="message">${message}</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+
+		<action name="rebates_mdyFDCheck" class="com.qkj.manage.action.RebatesAction" method="mdyFDCheck">
+			<result type="redirectAction">
+				<param name="actionName">rebates_list</param>
+				<param name="message">${message}</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+
+		<action name="rebates_mdyOutFlag" class="com.qkj.manage.action.RebatesAction" method="mdyOutFlag">
+			<result type="redirectAction">
+				<param name="actionName">rebates_view</param>
+				<param name="rebates.uuid">${rebates.uuid}</param>
+				<param name="viewFlag">view</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- Rebates End -->
+	</package>
+</struts>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "sql-map-2.dtd">
+<sqlMap>
+	<!-- CellarOrder Start -->
+	<typeAlias alias="cellarOrder" type="com.qkjsys.ebiz.domain.CellarOrder" />
+	<select id="sysebiz_getCellarOrders" resultClass="cellarOrder" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT o.*,u1.user_name add_user_name,u2.user_name 
+			       lm_user_name,x.cellar_unit,x.ware_id,x.cellar_no,x.cellar_position
+			FROM   qkj_r_cellar_order o 
+			       LEFT JOIN s_sys_user u1 
+			              ON ( u1.uuid = o.add_user ) 
+			       LEFT JOIN s_sys_user u2 
+			              ON ( u2.uuid = o.lm_user ),(SELECT 
+					c.uuid member_cellar_id,t.goods_spec_unit cellar_unit,c.ware_id,c.cellar_no ,c.cellar_position
+			        FROM   qkj_r_member_cellar c,qkj_t_goods t
+			        WHERE  t.uuid = c.goods_id) x 
+			WHERE  o.`status` > 0 
+			       AND x.member_cellar_id = o.member_cellar_id 
+		]]>
+		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ o.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="member_cellar_id"><![CDATA[ o.member_cellar_id=#member_cellar_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="order_cellar"><![CDATA[ o.order_cellar=#order_cellar# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="con_name"><![CDATA[ o.con_name LIKE CONCAT('%',#con_name#,'%') ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="ware_id"><![CDATA[ x.ware_id=#ware_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="cellar_no"><![CDATA[ x.cellar_no=#cellar_no# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="status"><![CDATA[ o.`status`=#status# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="cellar_position"><![CDATA[	x.cellar_position = #cellar_position# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="add_time"><![CDATA[	to_days(o.add_time) = to_days(#add_time#)]]></isNotEmpty>
+		<![CDATA[ ORDER BY o.uuid Desc ]]>
+	</select>
+	<select id="sysebiz_getCellarOrdersCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT COUNT(*)
+			FROM   qkj_r_cellar_order o 
+			       LEFT JOIN s_sys_user u1 
+			              ON ( u1.uuid = o.add_user ) 
+			       LEFT JOIN s_sys_user u2 
+			              ON ( u2.uuid = o.lm_user ),(SELECT 
+					c.uuid member_cellar_id,t.goods_spec_unit cellar_unit,c.ware_id,c.cellar_no ,c.cellar_position
+			        FROM   qkj_r_member_cellar c,qkj_t_goods t
+			        WHERE  t.uuid = c.goods_id) x 
+			WHERE  o.`status` > 0 
+			       AND x.member_cellar_id = o.member_cellar_id 
+		]]>
+		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ o.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="member_cellar_id"><![CDATA[ o.member_cellar_id=#member_cellar_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="order_cellar"><![CDATA[ o.order_cellar=#order_cellar# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="con_name"><![CDATA[ o.con_name LIKE CONCAT('%',#con_name#,'%') ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="ware_id"><![CDATA[ x.ware_id=#ware_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="cellar_position"><![CDATA[ x.cellar_position LIKE CONCAT('%',#cellar_no#,'%') ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="status"><![CDATA[ o.`status`=#status# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="cellar_position"><![CDATA[	x.cellar_position = #cellar_position# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="add_time"><![CDATA[	to_days(o.add_time) = to_days(#add_time#)]]></isNotEmpty>
+	</select>
+	<insert id="sysebiz_addCellarOrder" parameterClass="cellarOrder">
+		<![CDATA[ 
+			Insert Into qkj_r_cellar_order(uuid,member_cellar_id,order_cellar,order_num,con_name,con_province,con_city,con_area,con_post,con_street,con_mobile,
+			con_note,express_type,express_no,order_video,order_video_pass,order_source,status,add_user,add_time,lm_user,lm_time)
+			Values (#uuid#,#member_cellar_id#,#order_cellar#,#order_num#,#con_name#,#con_province#,#con_city#,#con_area#,#con_post#,	#con_street#,
+			#con_mobile#,#con_note#,#express_type#,#express_no#,#order_video#,#order_video_pass#,#order_source#,#status#,
+			#add_user#,#add_time#,#lm_user#,#lm_time#)
+		]]>
+	</insert>
+	<update id="sysebiz_mdyCellarOrder" parameterClass="cellarOrder">
+		<![CDATA[
+			Update qkj_r_cellar_order
+			Set order_num=#order_num#,
+				con_name=#con_name#,
+				con_province=#con_province#,
+				con_city=#con_city#,
+				con_area=#con_area#,
+				con_post=#con_post#,
+				con_street=#con_street#,
+				con_mobile=#con_mobile#,
+				con_note=#con_note#,
+				express_type=#express_type#,
+				express_no=#express_no#,
+				order_video=#order_video#,
+				order_video_pass=#order_video_pass#,
+				lm_user=#lm_user#,
+				lm_time=#lm_time#
+			Where uuid = #uuid#
+		]]>
+	</update>
+
+	<update id="sysebiz_mdyCellarOrderStatus" parameterClass="cellarOrder">
+		<![CDATA[
+			Update qkj_r_cellar_order
+			Set `status` = #status#,
+				lm_user=#lm_user#,
+				lm_time=#lm_time#
+			Where uuid = #uuid#
+		]]>
+	</update>
+
+	<update id="sysebiz_outCellarStockByCellarOrderID" parameterClass="java.lang.String">
+		<![CDATA[
+			UPDATE qkj_r_member_cellar c,qkj_r_cellar_order o
+			SET c.stock = c.stock - o.order_num
+			WHERE c.uuid = o.member_cellar_id
+			AND o.uuid = #value#
+		]]>
+	</update>
+
+	<update id="sysebiz_inCellarStockByCellarOrderID" parameterClass="java.lang.String">
+		<![CDATA[
+			UPDATE qkj_r_member_cellar c,qkj_r_cellar_order o
+			SET c.stock = c.stock + o.order_num
+			WHERE c.uuid = o.member_cellar_id
+			AND o.uuid = #value#
+		]]>
+	</update>
+
+	<delete id="sysebiz_delCellarOrder" parameterClass="cellarOrder">
+	<![CDATA[
+		Delete From qkj_r_cellar_order Where uuid=#uuid#
+	]]>
+	</delete>
+
+	<!-- resultClass="order" 详见qkjcj_sysebiz_OrderMap.xml -->
+	<select id="sysebiz_getOrderByMemberCellarID" resultClass="order" parameterClass="Integer">
+		<![CDATA[ 
+			SELECT o.*, 
+			       m.member_name user_name, 
+			       m.mobile      user_mobile, 
+			       u.user_name   add_user_name 
+			FROM   qkj_r_order o 
+			       LEFT JOIN s_sys_user u 
+			              ON( o.add_user = u.uuid ), 
+			       s_vip_member m 
+			WHERE  o.user_id = m.uuid 
+			       AND o.`status` > 0 
+			       AND o.uuid = (SELECT g.order_id 
+			                     FROM   qkj_r_member_cellar c, 
+			                            qkj_r_order_goods g 
+			                     WHERE  c.order_goods_id = g.uuid 
+			                            AND c.uuid = #value#) 
+		]]>
+	</select>
+	<!-- CellarOrder End -->
+</sqlMap>

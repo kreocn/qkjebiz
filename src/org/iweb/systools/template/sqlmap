@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
+<sqlMap>
+	<!-- $file_s_name$ Start -->
+	<typeAlias alias="$class_alias$" type="$domain_package$.$file_s_name$" />
+	<select id="$name_space$_get$file_s_name$s" resultClass="$class_alias$" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select * From $table_name$
+		]]>
+		<dynamic prepend="WHERE">
+			$sqlmap_search_area$
+		</dynamic>
+	</select>
+	<select id="$name_space$_get$file_s_name$sCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) From $table_name$
+		]]>
+		<dynamic prepend="WHERE">
+			$sqlmap_search_area$
+		</dynamic>
+	</select>
+	<insert id="$name_space$_add$file_s_name$" parameterClass="$class_alias$">
+		<![CDATA[ 
+			Insert Into $table_name$($sqlmap_insert_column_area$)
+			Values ($sqlmap_insert_value_area$)
+		]]>
+	</insert>
+	<update id="$name_space$_mdy$file_s_name$" parameterClass="$class_alias$">
+		<![CDATA[
+			Update $table_name$
+			Set $sqlmap_update_set_area$
+			Where $pkey$ = #$pkey$#
+		]]>
+	</update>
+	<delete id="$name_space$_del$file_s_name$" parameterClass="$class_alias$">
+	<![CDATA[
+		Delete From $table_name$ Where $pkey$=#$pkey$#
+	]]>
+	</delete>
+	<!-- $file_s_name$ End -->
+</sqlMap>

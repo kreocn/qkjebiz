@@ -1,0 +1,245 @@
+@CHARSET "UTF-8";
+
+.banner,.banner .img_a {
+width: 1050px; height: 250px;
+}
+
+.banner .img_a {
+background: url("http://qkjchina.com/ckframe/userfiles/images/cangjiu/product_main.jpg") transparent no-repeat 0 0;
+}
+
+.cellar_info_text p {
+padding: 0; margin: 0; letter-spacing: 1px;
+}
+
+.cellar_info_text {
+padding: 80px 100px 50px 100px; line-height: 1.8;
+}
+
+.cellar_info_text .ttitle {
+padding-bottom: 30px;
+}
+
+.cellar_info_text .ttitle2 {
+padding-top: 30px;
+}
+
+.mpanel {
+position: relative;
+}
+
+.news_panel {
+padding: 15px 0px;
+}
+.news_list {
+padding: 0px; margin: 0px; position: relative;border: transparent dashed 1px;
+}
+
+.news_list:hover {
+background-color: #EEE;border: #d1bb81 dashed 1px;
+}
+
+.news_list dt {
+border-bottom: #d1bb81 dashed 1px; padding: 2px 0px; margin: 20px 0 10px 0; text-indent: 5px;
+}
+
+.news_list a.news_title {
+color: #ab8d3f; font-size: 14px; letter-spacing: 2px;
+}
+
+.news_list a.news_title:hover {
+color: #765a11;
+}
+
+.news_list .news_time {
+color: #AAA; padding-left: 10px; vertical-align: bottom;
+}
+
+.news_list dd {
+margin: 0 0 0 25px; padding: 0px; line-height: 1.5; letter-spacing: 1px;
+}
+
+.news_list .news_scontent {
+color: #666;
+}
+
+.news_list .news_more {
+color: #666; position: relative; top: -8px; text-align: right;
+}
+
+.news_list .news_more a {
+color: #666;
+}
+
+.news_list .news_more a:hover {
+color: #765a11; text-decoration: underline;
+}
+
+.news_view {
+background-color: #FFF; color: #333; padding: 0 20px;
+}
+
+.news_view h1.news_title {
+font-size: 26px; font-weight: bold; line-height: 31px; padding: 20px 0; margin: 0;
+}
+
+.news_view .news_info {
+color: #888; padding-bottom: 20px;
+}
+
+.news_info span {
+padding-right: 15px;
+}
+
+.news_info .news_class {
+letter-spacing: 1px;
+}
+
+.mpanel .news_page {
+text-align: center; margin: 15px 0px; line-height: 25px; height: 25px;
+}
+
+.mpanel .news_page input {
+vertical-align: middle;
+}
+
+.mpanel .news_page .opage_input {
+width: 32px; height: 21px; border: 1px solid #999;
+}
+
+.mpanel .news_page .opage_go {
+height: 21px; border: 1px solid #999; line-height:
+}
+
+.contact_phone {
+position: absolute; top: 20px; left: 0; width: 300px;
+}
+
+.contact_phone .contact_phone_text {
+font-size: 16px; font-weight: bold; display: block;
+}
+
+.contact_phone .contact_phone_no {
+display: block; font-size: 38px; color: #8dc63f; padding-top: 10px;
+}
+
+.float_buy {
+border-bottom: #c4b48e dashed 1px; border-top: #c4b48e dashed 1px; height: 65px; width: 100%; position: absolute; top: 420px; background: transparent url("../../images/bg/bg_1x1_e2d5b1_opacity60.png") repeat;
+}
+
+.float_buy .buy_trend {
+width: 1050px; margin: auto; height: 65px; position: relative;
+}
+
+.float_buy .buy_trend .buy_trend_icon {
+width: 46px; height: 46px; background-position: -50px -175px; position: absolute; top: 10px; left: 0;
+}
+
+.float_buy .buy_trend .top_trend {
+padding-left: 60px; padding-top: 15px;
+}
+
+.float_buy .buy_trend .top_trend .trend_title {
+font-size: 14px; display: block;
+}
+
+.float_buy .buy_trend .top_trend .trend_time {
+color: #999; display: block;
+}
+
+.float_buy .buy_trend a.buy_button {
+display: block; width: 135px; height: 36px; line-height: 36px; position: absolute; top: 15px; right: 0; background-color: #ab8d3f; border: #ab8d3f solid 1px; border-radius: 4px; text-align: center; letter-spacing: 2px; color: #FFF; font-size: 14px;
+}
+
+.float_buy .buy_trend a.buy_button:hover {
+border: #775b13 solid 1px;
+}
+
+.contact_main {
+background: transparent url("../../images/fore/contact.png") no-repeat 0 200px; min-height: 530px;
+}
+
+.contact_main .contact_text {
+min-height: 500px;
+}
+
+.contact_main .contact_text ul {
+list-style: none; padding: 0px; margin: 100px 0 20px 100px;
+}
+
+.contact_main .contact_text li {
+height: 30px; line-height: 30px;
+}
+
+.contact_main .contact_text span {
+letter-spacing: 1px; display: inline-block; zoom: 1; *display: inline;
+}
+
+.contact_main .contact_text .con_title {
+width: 100px; text-align: right; padding-right: 15px;
+}
+
+.contact_main .contact_text .con_val {
+
+}
+
+.contact_main .contact_text .contact_map {
+border: #c6a770 solid 1px; padding: 15px 8px 5px 8px; background-color: #d1bb81; border-radius: 5px;
+}
+
+.contact_main .contact_text .contact_map img {
+width: 740px;
+}
+
+.banner360 {
+height: 350px;
+}
+
+/*定制ui.jquery.tab*/
+.ui-tabs {
+
+}
+
+.ui-widget-content {
+padding: 0 !important; border: none !important; background: none !important; background-image: none !important; background-color: #FFF !important;
+}
+
+.ui-corner-all {
+border-radius: 0px !important;
+}
+
+.ui-widget-header {
+background: none !important; position: relative; top: -33px; border-left: none !important; border-right: none !important; border-top: none !important;
+}
+
+.ui-tabs-vertical {
+width: 883px; float: right;
+}
+
+.ui-tabs-vertical .ui-widget-header {
+border-bottom: none !important; top: 120px;
+}
+
+.ui-tabs-vertical .ui-tabs-nav {
+padding: .2em .1em .2em .2em; float: left; width: 120px;
+}
+
+.ui-tabs-vertical .ui-tabs-nav li {
+clear: left; width: 100%; border-bottom-width: 1px !important; border-right-width: 0 !important; margin: 0 -1px .2em 0;
+}
+
+.ui-tabs-vertical .ui-tabs-nav li a {
+display: block;
+}
+
+.ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active {
+padding-bottom: 0; padding-right: .1em; border-right-width: 1px; border-right-width: 1px;
+}
+
+.ui-tabs-vertical .ui-tabs-panel {
+padding: 1em; float: right; width: 758px;
+}
+
+.contact_main .ui-tabs-anchor {
+display: block; width: 97px;
+}

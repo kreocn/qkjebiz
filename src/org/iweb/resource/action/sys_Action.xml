@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="SYS_USER" extends="default" namespace="/sys">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- UserPrivilege Start -->
+		<action name="privilege_add" class="org.iweb.sys.action.UserPrivilegeAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">privilege_list</param>
+				<param name="privilege.uuid">${privilege.uuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="privilege_save" class="org.iweb.sys.action.UserPrivilegeAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">privilege_list</param>
+				<param name="privilege.uuid">${privilege.uuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="privilege_del" class="org.iweb.sys.action.UserPrivilegeAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">privilege_list</param>
+				<param name="privilege.uuid">${privilege.uuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="privilege_list" class="org.iweb.sys.action.UserPrivilegeAction" method="list">
+			<result>/jsp/sys/UserPrivilegeList.jsp</result>
+		</action>
+		<!-- UserPrivilege End -->
+		<!-- UserRole Start -->
+		<action name="role_list" class="org.iweb.sys.action.UserRoleAction" method="list">
+			<result>/jsp/sys/SysRoleList.jsp</result>
+		</action>
+		<action name="role_add" class="org.iweb.sys.action.UserRoleAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">role_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="role_save" class="org.iweb.sys.action.UserRoleAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">role_load</param>
+				<param name="viewFlag">mdy</param>
+				<param name="role.uuid">${role.uuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="role_load" class="org.iweb.sys.action.UserRoleAction" method="load">
+			<result>/jsp/sys/SysRoleEdit.jsp</result>
+		</action>
+		<action name="role_prvg_load" class="org.iweb.sys.action.UserRoleAction" method="roleprvgLoad">
+			<result>/jsp/sys/RolePrvgEdit.jsp</result>
+		</action>
+		<action name="role_prvg_save" class="org.iweb.sys.action.UserRoleAction" method="roleprvgSave">
+			<result type="redirectAction">
+				<param name="actionName">role_prvg_load</param>
+				<param name="role.uuid">${role.uuid}</param>
+				<param name="viewFlag">${viewFlag}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="role_del" class="org.iweb.sys.action.UserRoleAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">role_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- UserRole End -->
+		<!-- User Group Start -->
+		<action name="userrole_list" class="org.iweb.sys.action.UserRoleAction" method="listGroup">
+			<result>/jsp/sys/UserRoleList.jsp</result>
+		</action>
+		<action name="userrole_load_add" class="org.iweb.sys.action.UserRoleAction" method="loadAddGroup">
+			<result>/jsp/sys/UserRoleEdit.jsp</result>
+		</action>
+		<action name="role_addsave" class="org.iweb.sys.action.UserRoleAction" method="addSaveGroup">
+			<result type="redirectAction">
+				<param name="actionName">userrole_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="userrole_load_mdy" class="org.iweb.sys.action.UserRoleAction" method="loadMdyGroup">
+			<result>/jsp/sys/UserRoleEdit.jsp</result>
+		</action>
+		<action name="role_mdysave" class="org.iweb.sys.action.UserRoleAction" method="mdySaveGroup">
+			<result type="redirectAction">
+				<param name="actionName">userrole_load_mdy</param>
+				<param name="role.uuid">${role.uuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="userrole_del" class="org.iweb.sys.action.UserRoleAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">userrole_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- User Group End -->
+		<!-- Department Start -->
+		<action name="dept_list" class="org.iweb.sys.action.DepartmentAction" method="list">
+			<result>/jsp/sys/DepartmentList.jsp</result>
+		</action>
+		<action name="dept_add" class="org.iweb.sys.action.DepartmentAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">dept_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="dept_save" class="org.iweb.sys.action.DepartmentAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">dept_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="dept_del" class="org.iweb.sys.action.DepartmentAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">dept_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- Department End -->
+		<!-- User Start -->
+		<action name="user_list" class="org.iweb.sys.action.UserAction" method="list">
+			<result>/jsp/sys/UserList.jsp</result>
+		</action>
+		<action name="user_load" class="org.iweb.sys.action.UserAction" method="load">
+			<result>/jsp/sys/UserEdit.jsp</result>
+		</action>
+		<action name="user_add" class="org.iweb.sys.action.UserAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">user_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="user_save" class="org.iweb.sys.action.UserAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">user_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="user_del" class="org.iweb.sys.action.UserAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">user_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="user_change" class="org.iweb.sys.action.UserAction" method="changePWD">
+			<!--<result type="chain">user_load</result> -->
+			<result type="redirectAction">
+				<param name="actionName">user_load</param>
+				<param name="user.uuid">${user.uuid}</param>
+				<param name="viewFlag">mdy</param>
+			</result>
+		</action>
+
+		<action name="iuser_load" class="org.iweb.sys.action.UserAction" method="iload">
+			<result>/jsp/sys/IUserEdit.jsp</result>
+		</action>
+		<action name="iuser_save" class="org.iweb.sys.action.UserAction" method="isave">
+			<result type="redirectAction">
+				<param name="actionName">iuser_load</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="iuser_change" class="org.iweb.sys.action.UserAction" method="ichangePWD">
+			<!--<result type="chain">iuser_load</result> -->
+			<result type="redirectAction">
+				<param name="actionName">iuser_load</param>
+				<param name="user.uuid">${user.uuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- User End -->
+		<!-- Sys Param Start -->
+		<action name="sys_param" class="org.iweb.sys.action.SysParamAction">
+			<result>/jsp/sys/SysParam.jsp</result>
+		</action>
+		<action name="sys_param_save" class="org.iweb.sys.action.SysParamAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">sys_param</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- Sys Param End -->
+		<!-- Position Start -->
+		<action name="position_list" class="org.iweb.sys.action.PositionAction" method="list">
+			<result>/jsp/sys/PositionList.jsp</result>
+		</action>
+		<action name="position_load" class="org.iweb.sys.action.PositionAction" method="load">
+			<result>/jsp/sys/PositionEdit.jsp</result>
+		</action>
+		<action name="position_add" class="org.iweb.sys.action.PositionAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">position_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="position_save" class="org.iweb.sys.action.PositionAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">position_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="position_del" class="org.iweb.sys.action.PositionAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">position_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- Position End -->
+		<!-- SYS Select Start -->
+		<action name="dept_select_all" class="org.iweb.sys.action.SysSelectAction" method="dept_select_all">
+			<result>/jsp/sys/DeptSelect.jsp</result>
+		</action>
+		<action name="dept_select_limit" class="org.iweb.sys.action.SysSelectAction" method="dept_select_limit">
+			<result>/jsp/sys/DeptSelect.jsp</result>
+		</action>
+		<action name="dept_permit_select" class="org.iweb.sys.action.SysSelectAction" method="dept_permit_select">
+			<result>/jsp/sys/DeptPermitSelect.jsp</result>
+		</action>
+		<action name="dept_select_all_v02" class="org.iweb.sys.action.SysSelectAction" method="dept_select_all">
+			<result>/jsp/sys/DeptPermitSelect.jsp</result>
+		</action>
+		<!-- SYS Select End -->
+	</package>
+
+	<!-- sys下的AJAX应用 -->
+	<package name="sysAjax" extends="json-default" namespace="/sys">
+		<action name="member_check" class="org.iweb.sys.action.UserAction" method="memberCheck">
+			<result type="json">
+				<param name="root">ajaxResult</param>
+			</result>
+		</action>
+	</package>
+</struts>

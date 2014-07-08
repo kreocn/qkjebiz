@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="sysvip_ladingPay" extends="default" namespace="/qkjmanage">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- LadingPay Start -->
+		<action name="ladingPay_list" class="com.qkj.manage.action.LadingPayAction" method="list">
+			<result>/jsp/sysvip/LadingPayList.jsp</result>
+		</action>
+		<action name="ladingPay_load" class="com.qkj.manage.action.LadingPayAction" method="load">
+			<result>/jsp/sysvip/LadingPayEdit.jsp</result>
+		</action>
+		<action name="ladingPay_add" class="com.qkj.manage.action.LadingPayAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">lading_load</param>
+				<param name="lading.uuid">${ladingPay.lading_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="ladingPay_save" class="com.qkj.manage.action.LadingPayAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">ladingPay_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="ladingPay_fd_check" class="com.qkj.manage.action.LadingPayAction" method="fd_check">
+			<result type="redirectAction">
+				<param name="actionName">lading_load</param>
+				<param name="lading.uuid">${ladingPay.lading_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="ladingPay_del" class="com.qkj.manage.action.LadingPayAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">lading_load</param>
+				<param name="lading.uuid">${ladingPay.lading_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- LadingPay End -->
+	</package>
+</struts>

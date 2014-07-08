@@ -1,0 +1,31 @@
+package $dao_package$;
+$dao_import$
+public class $file_s_name$DAO extends AbstractDAO {
+
+	public List list(Map<String, Object> map) {
+		setCountMapid("$name_space$_get$file_s_name$sCounts");
+		return super.list("$name_space$_get$file_s_name$s", map);
+	}
+	
+	public Object get(Object uuid) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("uuid", uuid);
+		return super.get("$name_space$_get$file_s_name$s", map);
+	}
+
+	public Object add(Object parameters) {
+		return super.add("$name_space$_add$file_s_name$", parameters);
+	}
+
+	public int save(Object parameters) {
+		return super.save("$name_space$_mdy$file_s_name$", parameters);
+	}
+
+	public int delete(Object parameters) {
+		return super.delete("$name_space$_del$file_s_name$", parameters);
+	}
+
+	public int getResultCount() {
+		return super.getResultCount();
+	}
+}

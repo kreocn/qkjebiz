@@ -1,0 +1,232 @@
+@charset "utf-8";
+
+/* CSS Document */
+#main {
+	margin: auto; padding: 2px;
+}
+
+#message {
+	color: #FF0000;
+}
+
+.imglink {
+	cursor: pointer;
+}
+
+.little_title {
+	text-align: left; text-indent: 12px; font-size: 12px; font-weight: bold; background-color: #FFF; color: #333; padding: 5px 0px;
+}
+
+/*iindex Start*/
+.iindextitle {
+	font-size: 18px; font-weight: bold; text-align: center; margin-bottom: 15px;
+}
+
+.iindextitleinfo {
+	background-color: #DFDFDF; text-align: center; padding: 5px 0px; margin-bottom: 15px;
+}
+
+.iidexbox {
+	border: #86C2FF solid 1px; margin-bottom: 5px;
+}
+
+.iindextitle2 {
+	background-color: #E7E7E7; font-weight: bold; text-indent: 16px; padding: 4px 0px 2px 0px; border-bottom: #42A0FF solid 1px;
+}
+
+.iindexlist {
+	padding: 0px 0px 0px 25px; margin: 5px 0px; list-style-type: square;
+}
+
+.iindexlist li {
+	margin: 2px 0px;
+}
+
+.iindexlist a {
+	text-decoration: none; font-size: 12px; color: #000000;
+}
+
+.iindexlist a:hover {
+	text-decoration: underline; color: #FF0000;
+}
+
+/*新闻内容*/
+.iindexContent {
+	border: #8B8B8B solid 1px; padding: 0 15px;
+}
+
+.iindexContent h1 {
+	text-align: center; font-size: 22px;
+}
+
+.iindexContent .shortContent {
+	border-bottom: #8B8B8B solid 1px; border-top: #8B8B8B solid 1px; padding: 5px 0; text-align: center;
+}
+
+.iindexContent .mainContent {
+	
+}
+/*iindex End*/ /*ilist Start*/
+.ilistsearch {
+	padding-bottom: 5px;
+}
+
+.ilisttable {
+	border-collapse: collapse; border-spacing: 0px;
+}
+
+.ilisttable th,.ilisttable tr,.ilisttable td {
+	border: #E1E1E1 solid 1px;
+}
+
+.ilisttable th {
+	padding: 4px 0px; background-color: #CFD3FE; text-align: center; white-space: nowrap; word-break: break-all;
+}
+
+.ilisttable td {
+	padding: 1px 3px;
+}
+
+.ilisttable td.tablearea {
+	padding: 0px;
+}
+
+.ilisttable .showpagearea {
+	text-align: right;
+}
+
+.ilisttable .buttonarea {
+	text-align: center;
+}
+
+.ilisttable .buttonarea input {
+	padding: 1px 10px;
+}
+
+.ilisttable .oddStyle {
+	background-color: #F7F7FF;
+}
+
+.ilisttable .evenStyle {
+	background-color: #EEEFFF;
+}
+
+.ilisttable .focusStyle {
+	background-color: #CFD3FE !important;
+}
+
+.ilisttable .firstRow,.ilisttable .firstRowx,.ilisttable .firstRow3,.ilisttable .buttonarea {
+	line-height: 25px;
+}
+
+.ilisttable .firstRow {
+	background-color: #F8F8F8; color: #333; font-size: 12px; text-align: right; padding: 2px 5px; font-weight: bold; width: 15%; white-space: nowrap;
+	word-break: keep-all;
+}
+
+.ilisttable .secRow {
+	text-align: left; word-break: break-all; width: 35%;
+}
+
+.ilisttable .firstRowx {
+	background-color: #F8F8F8; color: #333; font-size: 12px; text-align: right; padding: 2px 5px; font-weight: bold; white-space: nowrap;
+	word-break: keep-all;
+}
+
+.ilisttable .secRowx {
+	text-align: left; word-break: break-all;
+}
+
+.ilisttable .firstRow3 {
+	background-color: #F8F8F8; color: #333; font-size: 12px; text-align: right; padding: 2px 5px; font-weight: bold; width: 10%; white-space: nowrap;
+	word-break: keep-all;
+}
+
+.ilisttable .secRow3 {
+	text-align: left;
+}
+
+.ilisttable .titleRow {
+	background-color: #CFD3FE; font-size: 12px; text-align: center; color: #333; padding: 5px 0px; font-weight: bold; width: 15%; white-space: nowrap;
+	word-break: keep-all;
+}
+
+.ilisttable .titleRowx {
+	background-color: #CFD3FE; font-size: 12px; text-align: center; color: #333; padding: 5px 0px; font-weight: bold; white-space: nowrap;
+	word-break: keep-all;
+}
+
+.ilisttable .title2 {
+	font-size: 14px; text-indent: 14px; padding: 5px 0px; font-weight: bold; background-color: #C0C0C0;
+}
+
+/*ilist End*/
+/*table mdy Start*/
+.itablemdy {
+	
+}
+
+.itableform {
+	border: #369 solid 1px;
+}
+
+.ifromoperate {
+	
+}
+/*
+.ifromoperate .tabpage {
+padding: 0px; margin: 1px; background-color: #369; padding-left: 10px;
+}
+
+.ifromoperate .tabpage a {
+display: inline-block; line-height: 25px; padding: 0px 15px; color: #FFF; text-decoration: none; border-right: #FFF solid 2px;
+}
+
+.ifromoperate .tabpage a:hover {
+background-color: #FFF; color: #666;
+}
+
+.ifromoperate .tabpage a.activelink {
+background-color: #FFF; color: #666; font-weight: bold; color: #666; font-weight: bold; border-right: #139 solid 2px;
+}
+
+.ilisttable-tab {
+margin: 1px;
+}
+*/
+.itablemdy .itabletitle {
+	background-color: #F8F8F8; border: #CFD3FE solid 1px; font-weight: bold; text-indent: 24px; padding: 10px 0px; margin: 0; font-size: 14px;
+	height: 18px;
+}
+
+.itabletitle span.title1 {
+	font-size: 14px; font-weight: bold; text-indent: 24px; float: left;
+}
+
+.itabletitle span.extra1 {
+	font-size: 12px; float: right; margin-right: 20px;
+}
+
+.itabletitle span.extra1 a {
+	color: #666; font-size: 12px; font-weight: 400; text-decoration: none; display: block; padding: 2px 5px 2px 8px; border: 1px solid #369;
+	border-right: 2px solid #369; border-bottom: 2px solid #369; background: #DDEEF2 url(../images/icon/icon_add.gif) no-repeat 3px center;
+}
+
+/*inputsearch*/
+.inputsearch {
+	background-image: url(../images/inputSearch.gif); background-position: right; background-repeat: no-repeat;
+}
+
+.description_note {
+	color: #999;
+}
+
+.money_div {
+	padding: 4px; color: #333; border-radius: 4px; border: 1px solid #aaa; margin: 4px;
+}
+
+@media print {
+	#main {
+		padding-top: 55px; background: url("../images/print/pageheader02.png") transparent no-repeat 0 0;
+	}
+}

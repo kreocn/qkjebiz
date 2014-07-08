@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "sql-map-2.dtd">
+<sqlMap>
+	<!-- Customer Start -->
+	<typeAlias alias="customer" type="com.qkj.manage.domain.Customer" />
+	<select id="qkjmanage_getCustomers" resultClass="customer" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select c.*,d.DEPT_CNAME dept_name,au.USER_NAME add_user_name,ifnull(cr.recode_count,0) recode_count
+			From qkjm_r_customer c 
+			LEFT JOIN s_sys_department d ON(c.dept_code=d.DEPT_CODE)
+			LEFT JOIN s_sys_user au ON(c.add_user = au.UUID)
+			LEFT JOIN (select customer_id,count(0) recode_count from qkjm_r_customer_recode group by customer_id) cr ON (cr.customer_id=c.UUID)
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ c.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="stage"><![CDATA[ c.stage=#stage# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="failed_reason"><![CDATA[ c.failed_reason LIKE CONCAT('%',#failed_reason#,'%') ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="source"><![CDATA[ c.source=#source# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="rating"><![CDATA[ c.rating>=#rating# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="cus_name"><![CDATA[ c.cus_name LIKE CONCAT('%',#cus_name#,'%') ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="add_time"><![CDATA[	to_days(c.add_time) = to_days(#add_time#) ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="dept_code">
+				<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ c.dept_code=#dept_code# ]]></isNotEqual>
+				<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ c.dept_code LIKE CONCAT(#dept_code#,'%') ]]></isEqual>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="manager"><![CDATA[ c.manager=#manager# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="dept_codes">
+			<![CDATA[ c.dept_code In ]]>
+				<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
+			</isNotEmpty>
+		</dynamic>
+		<![CDATA[ Order By c.uuid Desc ]]>
+	</select>
+	<select id="qkjmanage_getCustomersCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select COUNT(*)
+			From qkjm_r_customer c LEFT JOIN s_sys_department d ON(c.dept_code=d.DEPT_CODE)
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ c.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="stage"><![CDATA[ c.stage=#stage# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="failed_reason"><![CDATA[ c.failed_reason=#failed_reason# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="source"><![CDATA[ c.source=#source# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="rating"><![CDATA[ c.rating>=#rating# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="cus_name"><![CDATA[ c.cus_name=#cus_name# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="add_time"><![CDATA[	to_days(o.add_time) = to_days(#add_time#) ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="dept_code">
+				<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ c.dept_code=#dept_code# ]]></isNotEqual>
+				<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ c.dept_code LIKE CONCAT(#dept_code#,'%') ]]></isEqual>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="manager"><![CDATA[ c.manager=#manager# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="dept_codes">
+			<![CDATA[ c.dept_code In ]]>
+				<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	<insert id="qkjmanage_addCustomer" parameterClass="customer">
+		<![CDATA[ 
+			Insert Into qkjm_r_customer(dept_code,stage,failed_reason,source,cus_name,phone,email,sale_province,sale_city,sale_area,m_province,m_city,m_area,m_post,m_street,trade,mind,financial,distribution,remark,add_time,add_user,i_product,first_pay,n_product,doubt,qa,manager,con_name,qq,fax,mobile,contract_end,rating,cus_back,cus_now,ware_square,ware_type,vehicle_num,in_wholesaler,in_shop,out_wholesaler,out_shop,sale_type)
+			Values (#dept_code#,#stage#,#failed_reason#,#source#,#cus_name#,#phone#,#email#,#sale_province#,#sale_city#,#sale_area#,#m_province#,#m_city#,#m_area#,#m_post#,#m_street#,#trade#,#mind#,#financial#,#distribution#,#remark#,#add_time#,#add_user#,#i_product#,#first_pay#,#n_product#,#doubt#,#qa#,#manager#,#con_name#,#qq#,#fax#,#mobile#,#contract_end#,#rating#,#cus_back#,#cus_now#,#ware_square#,#ware_type#,#vehicle_num#,#in_wholesaler#,#in_shop#,#out_wholesaler#,#out_shop#,#sale_type#)
+		]]>
+	</insert>
+	<update id="qkjmanage_mdyCustomer" parameterClass="customer">
+		<![CDATA[
+			Update qkjm_r_customer
+			Set dept_code=#dept_code#,
+				stage=#stage#,
+				failed_reason=#failed_reason#,
+				source=#source#,
+				cus_name=#cus_name#,
+				phone=#phone#,
+				email=#email#,
+				sale_province=#sale_province#,
+				sale_city=#sale_city#,
+				sale_area=#sale_area#,
+				m_province=#m_province#,
+				m_city=#m_city#,
+				m_area=#m_area#,
+				m_post=#m_post#,
+				m_street=#m_street#,
+				trade=#trade#,
+				mind=#mind#,
+				financial=#financial#,
+				distribution=#distribution#,
+				remark=#remark#,
+				lm_time=#lm_time#,
+				lm_user=#lm_user#,
+				i_product=#i_product#,
+				first_pay=#first_pay#,
+				n_product=#n_product#,
+				doubt=#doubt#,
+				qa=#qa#,
+				manager=#manager#,
+				con_name=#con_name#,
+				qq=#qq#,
+				fax=#fax#,
+				mobile=#mobile#,
+				contract_end=#contract_end#,
+				rating=#rating#,
+				cus_back=#cus_back#,
+				cus_now=#cus_now#,
+				ware_square=#ware_square#,
+				ware_type=#ware_type#,
+				vehicle_num=#vehicle_num#,
+				in_wholesaler=#in_wholesaler#,
+				in_shop=#in_shop#,
+				out_wholesaler=#out_wholesaler#,
+				out_shop=#out_shop#,
+				sale_type=#sale_type#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="qkjmanage_delCustomer" parameterClass="customer">
+	<![CDATA[
+		Delete From qkjm_r_customer Where uuid=#uuid#
+	]]>
+	</delete>
+	<!-- Customer End -->
+</sqlMap>

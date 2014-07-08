@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="qkjmanage_activeMemcost" extends="default" namespace="/qkjmanage">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- ActiveMemcost Start -->
+		<action name="activeMemcost_add" class="com.qkj.manage.action.ActiveMemcostAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">active_load</param>
+				<param name="active.uuid">${activeMemcost.active_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="activeMemcost_del" class="com.qkj.manage.action.ActiveMemcostAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">active_load</param>
+				<param name="active.uuid">${activeMemcost.active_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+
+		<action name="activeMemcostClose_add" class="com.qkj.manage.action.ActiveMemcostAction" method="addClose">
+			<result type="redirectAction">
+				<param name="actionName">active_closeLoad</param>
+				<param name="active.uuid">${activeMemcost.active_id}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="activeMemcostClose_del" class="com.qkj.manage.action.ActiveMemcostAction" method="delClose">
+			<result type="redirectAction">
+				<param name="actionName">active_closeLoad</param>
+				<param name="active.uuid">${activeMemcost.active_id}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- ActiveMemcost End -->
+	</package>
+</struts>

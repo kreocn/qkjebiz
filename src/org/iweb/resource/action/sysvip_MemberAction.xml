@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="sysvip_member" extends="default" namespace="/sysvip">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- Member Start -->
+		<action name="member_list" class="org.iweb.sysvip.action.MemberAction" method="list">
+			<result>/jsp/sysvip/MemberList.jsp</result>
+		</action>
+		<action name="member_load" class="org.iweb.sysvip.action.MemberAction" method="load">
+			<result>/jsp/sysvip/MemberEdit.jsp</result>
+		</action>
+		<action name="member_add" class="org.iweb.sysvip.action.MemberAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">member_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="member_save" class="org.iweb.sysvip.action.MemberAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">member_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="member_del" class="org.iweb.sysvip.action.MemberAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">member_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+
+		<action name="member_login_check" class="org.iweb.sysvip.action.MemberAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">member_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+
+		<action name="distribution_list" class="org.iweb.sysvip.action.MemberAction" method="list">
+			<result>/jsp/sysvip/MemberDistribution.jsp</result>
+		</action>
+
+		<action name="member_distribution" class="org.iweb.sysvip.action.MemberAction" method="distribution">
+			<result type="redirectAction">
+				<param name="actionName">distribution_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+
+		<!-- Member End -->
+	</package>
+</struts>

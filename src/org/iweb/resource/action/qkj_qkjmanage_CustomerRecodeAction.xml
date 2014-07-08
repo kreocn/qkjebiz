@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="qkjmanage_customerRecode" extends="default" namespace="/qkjmanage">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- CustomerRecode Start -->
+		<action name="customerRecode_list" class="com.qkj.manage.action.CustomerRecodeAction" method="list">
+			<result>/jsp/qkjmanage/CustomerRecodeList.jsp</result>
+		</action>
+		<action name="customerRecode_load" class="com.qkj.manage.action.CustomerRecodeAction" method="load">
+			<result>/jsp/qkjmanage/CustomerRecodeEdit.jsp</result>
+		</action>
+		<action name="customerRecode_add" class="com.qkj.manage.action.CustomerRecodeAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">customer_load</param>
+				<param name="customer.uuid">${customerRecode.customer_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="customerRecode_save" class="com.qkj.manage.action.CustomerRecodeAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">customerRecode_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="customerRecode_del" class="com.qkj.manage.action.CustomerRecodeAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">customer_load</param>
+				<param name="customer.uuid">${customerRecode.customer_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- CustomerRecode End -->
+	</package>
+</struts>

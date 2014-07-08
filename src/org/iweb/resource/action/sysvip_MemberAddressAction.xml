@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="sysvip_memberAddress" extends="default" namespace="/sysvip">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- MemberAddress Start -->
+		<action name="memberAddress_list" class="org.iweb.sysvip.action.MemberAddressAction" method="list">
+			<result>/jsp/sysvip/MemberAddressList.jsp</result>
+		</action>
+		<action name="memberAddress_load" class="org.iweb.sysvip.action.MemberAddressAction" method="load">
+			<result>/jsp/sysvip/MemberAddressEdit.jsp</result>
+		</action>
+		<action name="memberAddress_add" class="org.iweb.sysvip.action.MemberAddressAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">member_load</param>
+				<param name="viewFlag">mdy</param>
+				<param name="member.uuid">${memberAddress.member_id}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="memberAddress_save" class="org.iweb.sysvip.action.MemberAddressAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">member_load</param>
+				<param name="viewFlag">mdy</param>
+				<param name="member.uuid">${memberAddress.member_id}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="memberAddress_del" class="org.iweb.sysvip.action.MemberAddressAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">member_load</param>
+				<param name="viewFlag">mdy</param>
+				<param name="member.uuid">${memberAddress.member_id}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+
+		<action name="memberAddress_default" class="org.iweb.sysvip.action.MemberAddressAction" method="changeDefaultAddress">
+			<result type="redirectAction">
+				<param name="actionName">member_load</param>
+				<param name="viewFlag">mdy</param>
+				<param name="member.uuid">${memberAddress.member_id}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- MemberAddress End -->
+	</package>
+</struts>

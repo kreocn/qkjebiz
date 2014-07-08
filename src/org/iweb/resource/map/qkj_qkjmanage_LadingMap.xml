@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "sql-map-2.dtd">
+<sqlMap>
+	<!-- Lading Start -->
+	<typeAlias alias="lading" type="com.qkj.manage.domain.Lading" />
+	<select id="qkjmanage_getLadings" resultClass="lading" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select l.*,m.member_name,m.mobile member_mobile,mu.USER_NAME manager_check_user_name,
+				sdu.USER_NAME sd_check_user_name,mdu.USER_NAME md_check_user_name,
+				fdu.USER_NAME fd_check_user_name,cdu.USER_NAME coo_check_user_name,
+				appu.USER_NAME applicant_name,addu.USER_NAME add_user_name,lmu.USER_NAME lm_user_name
+			From qkjm_r_lading l
+				LEFT JOIN s_vip_member m ON (l.member_id = m.UUID)
+				LEFT JOIN s_sys_user mu ON (l.manager_check_user = mu.UUID)
+				LEFT JOIN s_sys_user sdu ON (l.sd_check_user = sdu.UUID)
+				LEFT JOIN s_sys_user mdu ON (l.md_check_user = mdu.UUID)
+				LEFT JOIN s_sys_user fdu ON (l.fd_check_user = fdu.UUID)
+				LEFT JOIN s_sys_user cdu ON (l.coo_check_user = cdu.UUID)
+				LEFT JOIN s_sys_user appu ON (l.applicant = appu.UUID)
+				LEFT JOIN s_sys_user addu ON (l.add_user = addu.UUID)
+				LEFT JOIN s_sys_user lmu ON (l.lm_user = lmu.UUID)
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ l.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="member_id"><![CDATA[ l.member_id=#member_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="content"><![CDATA[ l.content Like CONCAT('%',#content#,'%')  ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="status"><![CDATA[ l.status=#status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="applicant"><![CDATA[ l.applicant=#applicant# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="out_flag"><![CDATA[ l.out_flag=#out_flag# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="rebates_flag"><![CDATA[ l.rebates_flag=#rebates_flag# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="manager"><![CDATA[ m.manager=#manager# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="dept_codes">
+				<![CDATA[ m.dept_code In ]]>
+				<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
+			</isNotEmpty>
+		</dynamic>
+		<![CDATA[ Order By l.`status` ASC ,l.add_time Desc LIMIT 0, 500 ]]>
+	</select>
+	<select id="qkjmanage_getLadingsCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*)
+			From qkjm_r_lading l
+				LEFT JOIN s_vip_member m ON (l.member_id = m.UUID)
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ l.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="member_id"><![CDATA[ l.member_id=#member_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="content"><![CDATA[ l.content Like CONCAT('%',#content#,'%')  ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="status"><![CDATA[ l.status=#status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="applicant"><![CDATA[ l.applicant=#applicant# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="out_flag"><![CDATA[ l.out_flag=#out_flag# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="rebates_flag"><![CDATA[ l.rebates_flag=#rebates_flag# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="manager"><![CDATA[ m.manager=#manager# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="dept_codes">
+				<![CDATA[ m.dept_code In ]]>
+				<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	<insert id="qkjmanage_addLading" parameterClass="lading">
+		<![CDATA[ 
+			Insert Into qkjm_r_lading(uuid,member_id,content,address,note,manager_check,sd_check,md_check,fd_check,coo_check,status,applicant,apply_time,add_user,add_time,lm_user)
+			Values (#uuid#,#member_id#,#content#,#address#,#note#,#manager_check#,#sd_check#,#md_check#,#fd_check#,#coo_check#,#status#,#applicant#,#apply_time#,#add_user#,#add_time#,#lm_user#)
+		]]>
+	</insert>
+	<update id="qkjmanage_mdyLading" parameterClass="lading">
+		<![CDATA[
+			Update qkjm_r_lading
+			Set content=#content#,
+				address=#address#,
+				note=#note#,
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="qkjmanage_delLading" parameterClass="lading">
+	<![CDATA[
+		Delete From qkjm_r_lading Where uuid=#uuid#
+	]]>
+	</delete>
+
+	<!-- 额外方法 -->
+	<update id="qkjmanage_mdyLadingTotalPrice" parameterClass="string">
+		<![CDATA[
+			Update qkjm_r_lading
+			Set total_price=(
+				SELECT SUM(i.total_price)
+				FROM qkjm_r_lading_item i
+				WHERE i.lading_id = #value#
+			)
+			Where uuid = #value#
+		]]>
+	</update>
+
+	<update id="qkjmanage_mdyLadingStatus" parameterClass="lading">
+		<![CDATA[
+			Update qkjm_r_lading
+			Set `status`=#status#,
+				close_time=#close_time#,
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+
+	<update id="qkjmanage_mdyLadingManagerCheck" parameterClass="lading">
+		<![CDATA[
+			Update qkjm_r_lading
+			Set manager_check=#manager_check#,
+				manager_check_user=#manager_check_user#,
+				manager_check_time=SYSDATE(),
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+
+	<update id="qkjmanage_mdyLadingSDCheck" parameterClass="lading">
+		<![CDATA[
+			Update qkjm_r_lading
+			Set sd_check=#sd_check#,
+				sd_check_user=#sd_check_user#,
+				sd_check_time=SYSDATE(),
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+
+	<update id="qkjmanage_mdyLadingMDCheck" parameterClass="lading">
+		<![CDATA[
+			Update qkjm_r_lading
+			Set md_check=#md_check#,
+				md_check_user=#md_check_user#,
+				md_check_time=SYSDATE(),
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+
+	<update id="qkjmanage_mdyLadingFDCheck" parameterClass="lading">
+		<![CDATA[
+			Update qkjm_r_lading
+			Set fd_check=#fd_check#,
+				fd_type=#fd_type#,
+				fd_date=#fd_date#,
+				fd_check_user=#fd_check_user#,
+				fd_check_time=SYSDATE(),
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+
+	<update id="qkjmanage_mdyLadingCOOCheck" parameterClass="lading">
+		<![CDATA[
+			Update qkjm_r_lading
+			Set coo_check=#coo_check#,
+				coo_check_user=#coo_check_user#,
+				coo_check_time=SYSDATE(),
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+
+	<update id="qkjmanage_mdyLadingOutFlag" parameterClass="lading">
+		<![CDATA[
+			Update qkjm_r_lading
+			Set out_flag=#out_flag#,
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+
+	<update id="qkjmanage_mdyLadingRebatesFlag" parameterClass="lading">
+		<![CDATA[
+			Update qkjm_r_lading
+			Set rebates_flag=#rebates_flag#,
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+
+	<update id="qkjmanage_mdyLadingRebatesFlagByRebatesID" parameterClass="java.util.Map">
+		<![CDATA[
+			UPDATE qkjm_r_lading 
+			SET    rebates_flag = #rebates_flag#,lm_user = #lm_user#
+			WHERE  uuid IN(SELECT lading_id 
+			               FROM   qkjm_r_rebates_lading 
+			               WHERE  rebates_id = #rebates_id#) 
+		]]>
+	</update>
+
+	<select id="qkjmanage_getLadingsNeedRebates" resultClass="lading" parameterClass="java.util.Map">
+		<![CDATA[ 
+		SELECT l.* 
+		FROM   qkjm_r_lading l 
+		WHERE  l.out_flag = 1 
+		       AND l.status = 2 
+		       AND l.rebates_flag = 0
+		]]>
+		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ l.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="member_id"><![CDATA[ l.member_id=#member_id# ]]></isNotEmpty>
+		<![CDATA[ Order By l.add_time ]]>
+	</select>
+	<!-- Lading End -->
+</sqlMap>

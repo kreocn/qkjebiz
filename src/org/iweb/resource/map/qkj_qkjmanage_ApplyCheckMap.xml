@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
+<sqlMap>
+	<!-- ApplyCheck Start -->
+	<typeAlias alias="applyCheck" type="com.qkj.manage.domain.ApplyCheck" />
+	<select id="qkjmanage_getApplyChecks" resultClass="applyCheck" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select * From qkjm_r_apply_check
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_id"><![CDATA[ apply_id=#apply_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="flag"><![CDATA[ flag=#flag# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="check_user"><![CDATA[ check_user=#check_user# ]]></isNotEmpty>
+		</dynamic>
+	</select>
+	<select id="qkjmanage_getApplyChecksCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) From qkjm_r_apply_check
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_id"><![CDATA[ apply_id=#apply_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="flag"><![CDATA[ flag=#flag# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="check_user"><![CDATA[ check_user=#check_user# ]]></isNotEmpty>
+		</dynamic>
+	</select>
+	<insert id="qkjmanage_addApplyCheck" parameterClass="applyCheck">
+		<![CDATA[ 
+			Insert Into qkjm_r_apply_check(apply_id,flag,check_user,check_title,advice,ad_time)
+			Values (#apply_id#,#flag#,#check_user#,#check_title#,#advice#,#ad_time#)
+		]]>
+	</insert>
+	<update id="qkjmanage_mdyApplyCheck" parameterClass="applyCheck">
+		<![CDATA[
+			Update qkjm_r_apply_check
+			Set apply_id=#apply_id#,
+				flag=#flag#,
+				check_user=#check_user#,
+				check_title=#check_title#,
+				advice=#advice#,
+				ad_time=#ad_time#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="qkjmanage_delApplyCheck" parameterClass="applyCheck">
+	<![CDATA[
+		Delete From qkjm_r_apply_check Where uuid=#uuid#
+	]]>
+	</delete>
+	<!-- ApplyCheck End -->
+</sqlMap>

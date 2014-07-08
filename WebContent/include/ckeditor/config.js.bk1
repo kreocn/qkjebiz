@@ -1,0 +1,18 @@
+/**
+ * @license Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights
+ *          reserved. For licensing, see LICENSE.md or
+ *          http://ckeditor.com/license
+ */
+
+CKEDITOR.editorConfig = function(config) {
+	config.language = 'zh-cn';
+	config.toolbar = "Full";
+	config.filebrowserBrowseUrl = 'include/ckfinder/ckfinder.html';
+	config.filebrowserImageBrowseUrl = 'include/ckfinder/ckfinder.html?type=Images';
+	config.filebrowserFlashBrowseUrl = 'include/ckfinder/ckfinder.html?type=Flash';
+	config.filebrowserUploadUrl = 'include/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Files';
+	config.filebrowserImageUploadUrl = 'include/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Images';
+	config.filebrowserFlashUploadUrl = 'include/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Flash';
+	config.filebrowserWindowWidth = '1000';
+	config.filebrowserWindowHeight = '700';
+};

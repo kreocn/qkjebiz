@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="$name_space$_$class_alias$" extends="default" namespace="/$name_space$">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- $file_s_name$ Start -->
+		<action name="$class_alias$_list" class="$action_package$.$file_s_name$Action" method="list">
+			<result>/jsp/$jsp_path$/$file_s_name$List.jsp</result>
+		</action>
+		<action name="$class_alias$_relist" class="$action_package$.$file_s_name$Action" method="relist">
+			<result type="redirectAction">
+				<param name="actionName">$class_alias$_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+		<action name="$class_alias$_load" class="$action_package$.$file_s_name$Action" method="load">
+			<result>/jsp/$jsp_path$/$file_s_name$Edit.jsp</result>
+		</action>
+		<action name="$class_alias$_add" class="$action_package$.$file_s_name$Action" method="add">
+			<result type="redirectAction">
+				<param name="actionName">$class_alias$_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="$class_alias$_save" class="$action_package$.$file_s_name$Action" method="save">
+			<result type="redirectAction">
+				<param name="actionName">$class_alias$_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="$class_alias$_del" class="$action_package$.$file_s_name$Action" method="del">
+			<result type="redirectAction">
+				<param name="actionName">$class_alias$_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- $file_s_name$ End -->
+	</package>
+</struts>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="iweb_root" extends="default" namespace="/">
+		<default-interceptor-ref name="myStack" />
+		<!-- 首页 -->
+		<action name="index" class="org.iweb.root.action.IWEBRoot" method="index">
+			<result>/jsp/fore/index.jsp</result>
+		</action>
+	</package>
+
+	<package name="iweb_html" extends="default" namespace="/html">
+		<default-interceptor-ref name="myStack" />
+		<!-- 藏酒介绍 -->
+		<action name="cellar" class="org.iweb.root.action.IWEBRootCellar">
+			<result>/jsp/fore/cellar.jsp</result>
+		</action>
+		<!-- 藏酒动态 -->
+		<action name="news" class="org.iweb.root.action.IWEBRootNews">
+			<result>/jsp/fore/news.jsp</result>
+		</action>
+		<action name="news_view" class="org.iweb.root.action.IWEBRootNews" method="view">
+			<result>/jsp/fore/news_view.jsp</result>
+			<result name="input" type="redirectAction">
+				<param name="actionName">news</param>
+			</result>
+		</action>
+		<action name="help" class="org.iweb.root.action.IWEBRootNews" method="help">
+			<result>/jsp/fore/help.jsp</result>
+		</action>
+	</package>
+</struts>

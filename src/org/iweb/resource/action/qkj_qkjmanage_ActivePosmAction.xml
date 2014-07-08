@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="qkjmanage_activePosm" extends="default" namespace="/qkjmanage">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- ActivePosm Start -->
+		<action name="activePosm_add" class="com.qkj.manage.action.ActivePosmAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">active_load</param>
+				<param name="active.uuid">${activePosm.active_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="activePosm_del" class="com.qkj.manage.action.ActivePosmAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">active_load</param>
+				<param name="active.uuid">${activePosm.active_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+
+		<action name="activePosmClose_add" class="com.qkj.manage.action.ActivePosmAction" method="addClose">
+			<result type="redirectAction">
+				<param name="actionName">active_closeLoad</param>
+				<param name="active.uuid">${activePosm.active_id}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="activePosmClose_del" class="com.qkj.manage.action.ActivePosmAction" method="delClose">
+			<result type="redirectAction">
+				<param name="actionName">active_closeLoad</param>
+				<param name="active.uuid">${activePosm.active_id}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- ActivePosm End -->
+	</package>
+</struts>

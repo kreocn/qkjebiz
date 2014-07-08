@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "sql-map-2.dtd">
+<sqlMap>
+	<!-- Apply Start -->
+	<typeAlias alias="apply" type="com.qkj.manage.domain.Apply" />
+	<select id="qkjmanage_getApplys" resultClass="apply" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT a.*,au.USER_NAME apply_user_name,cu.USER_NAME check_user_name,cu.`user_sign` check_user_sign,ad.dept_cname apply_dept_name
+			FROM qkjm_r_apply a
+			LEFT JOIN s_sys_user au ON(a.apply_user=au.UUID)
+			LEFT JOIN s_sys_department ad ON(a.apply_dept = ad.dept_code)
+			LEFT JOIN s_sys_user cu ON(a.check_user=cu.UUID)
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ a.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="title"><![CDATA[ a.title LIKE CONCAT('%',#title#,'%') ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="note"><![CDATA[ a.note=#note# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_dept">
+				<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ a.apply_dept=#apply_dept#]]></isNotEqual>
+				<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ a.apply_dept LIKE CONCAT(#apply_dept#,'%') ]]></isEqual>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_depts">
+				<![CDATA[ a.apply_dept In ]]>
+				<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_user"><![CDATA[ a.apply_user=#apply_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_time_begin"><![CDATA[ a.apply_time>=#apply_time_begin# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_time_end"><![CDATA[ a.apply_time<=DATE_ADD(#apply_time_end#,INTERVAL 1 day) ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="check_time_begin"><![CDATA[ a.check_time>=#check_time_begin# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="check_time_end"><![CDATA[ a.check_time<=DATE_ADD(#check_time_end#,INTERVAL 1 day) ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_time"><![CDATA[ a.apply_time=#apply_time# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="status"><![CDATA[ a.status=#status# ]]></isNotEmpty>
+		</dynamic>
+		<![CDATA[ Order By uuid Desc	]]>
+	</select>
+	<select id="qkjmanage_getApplysCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) From qkjm_r_apply
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="title"><![CDATA[ title LIKE CONCAT('%',#title#,'%') ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="note"><![CDATA[ note=#note# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_dept">
+				<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ apply_dept=#apply_dept#]]></isNotEqual>
+				<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ apply_dept LIKE CONCAT(#apply_dept#,'%') ]]></isEqual>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_depts">
+				<![CDATA[ apply_dept In ]]>
+				<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_user"><![CDATA[ apply_user=#apply_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_time_begin"><![CDATA[ apply_time>=#apply_time_begin# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_time_end"><![CDATA[ apply_time<=DATE_ADD(#apply_time_end#,INTERVAL 1 day) ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="check_time_begin"><![CDATA[ check_time>=#check_time_begin# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="check_time_end"><![CDATA[ check_time<=DATE_ADD(#check_time_end#,INTERVAL 1 day) ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="status"><![CDATA[ status=#status# ]]></isNotEmpty>
+		</dynamic>
+	</select>
+	<insert id="qkjmanage_addApply" parameterClass="apply">
+		<![CDATA[ 
+			Insert Into qkjm_r_apply(touser,title,note,apply_dept,apply_user,apply_time,status,lm_user,is_fullcheck,fullcheck_text)
+			Values (#touser#,#title#,#note#,#apply_dept#,#apply_user#,#apply_time#,#status#,#lm_user#,#is_fullcheck#,#fullcheck_text#)
+		]]>
+		<selectKey resultClass="int" keyProperty="uuid">
+		<![CDATA[ 
+			Select LAST_INSERT_ID()
+		]]>
+		</selectKey>
+	</insert>
+	<update id="qkjmanage_mdyApply" parameterClass="apply">
+		<![CDATA[
+			Update qkjm_r_apply
+			Set title=#title#,
+				touser=#touser#,
+				note=#note#,
+				lm_user=#lm_user#,
+				is_fullcheck=#is_fullcheck#,
+				fullcheck_text=#fullcheck_text#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<update id="qkjmanage_checkApply" parameterClass="apply">
+		<![CDATA[
+			Update qkjm_r_apply
+			Set status=#status#,
+				check_user=#check_user#,
+				check_time=#check_time#,
+				check_note=#check_note#,
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="qkjmanage_delApply" parameterClass="apply">
+	<![CDATA[
+		Delete From qkjm_r_apply Where uuid=#uuid#
+	]]>
+	</delete>
+	<!-- Apply End -->
+</sqlMap>

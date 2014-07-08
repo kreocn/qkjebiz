@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="qkjmanage_lading" extends="default" namespace="/qkjmanage">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- Lading Start -->
+		<action name="lading_list" class="com.qkj.manage.action.LadingAction" method="list">
+			<result>/jsp/qkjmanage/LadingList.jsp</result>
+		</action>
+		<action name="lading_load" class="com.qkj.manage.action.LadingAction" method="load">
+			<result>/jsp/qkjmanage/LadingEdit.jsp</result>
+		</action>
+		<action name="lading_view" class="com.qkj.manage.action.LadingAction" method="load">
+			<result>/jsp/qkjmanage/LadingView.jsp</result>
+		</action>
+		<action name="lading_add" class="com.qkj.manage.action.LadingAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">lading_load</param>
+				<param name="lading.uuid">${lading.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="lading_save" class="com.qkj.manage.action.LadingAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">lading_load</param>
+				<param name="lading.uuid">${lading.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="lading_del" class="com.qkj.manage.action.LadingAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">lading_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- User Interface -->
+		<action name="saveLadingStatus0" class="com.qkj.manage.action.LadingAction" method="saveLadingStatus0">
+			<result type="redirectAction">
+				<param name="actionName">lading_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+
+		<action name="saveLadingStatus1" class="com.qkj.manage.action.LadingAction" method="saveLadingStatus1">
+			<result type="redirectAction">
+				<param name="actionName">lading_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+
+		<action name="mdyLadingManagerCheck" class="com.qkj.manage.action.LadingAction" method="mdyLadingManagerCheck">
+			<result type="redirectAction">
+				<param name="actionName">lading_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+
+		<action name="mdyLadingSDCheck" class="com.qkj.manage.action.LadingAction" method="mdyLadingSDCheck">
+			<result type="redirectAction">
+				<param name="actionName">lading_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+
+		<action name="mdyLadingMDCheck" class="com.qkj.manage.action.LadingAction" method="mdyLadingMDCheck">
+			<result type="redirectAction">
+				<param name="actionName">lading_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+
+		<action name="mdyLadingFDCheck" class="com.qkj.manage.action.LadingAction" method="mdyLadingFDCheck">
+			<result type="redirectAction">
+				<param name="actionName">lading_load</param>
+				<param name="lading.uuid">${lading.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+
+		<action name="mdyLadingCOOCheck" class="com.qkj.manage.action.LadingAction" method="mdyLadingCOOCheck">
+			<result type="redirectAction">
+				<param name="actionName">lading_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+
+		<action name="lading_out" class="com.qkj.manage.action.LadingAction" method="mdyLadingOutFlag1">
+			<result type="redirectAction">
+				<param name="actionName">lading_view</param>
+				<param name="lading.uuid">${lading.uuid}</param>
+				<param name="viewFlag">view</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- Lading End -->
+	</package>
+</struts>

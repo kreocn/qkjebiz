@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "sql-map-2.dtd">
+<sqlMap>
+	<!-- GoodsInfo Start -->
+	<typeAlias alias="goodsInfo" type="com.qkjsys.ebiz.domain.GoodsInfo" />
+	<select id="sysebiz_getGoodsInfos" resultClass="goodsInfo" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select * From qkj_t_goods_info
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotNull>
+			<isNotNull prepend="AND" property="goods_id"><![CDATA[ goods_id=#goods_id# ]]></isNotNull>
+		</dynamic>
+	</select>
+	<select id="sysebiz_getGoodsInfosCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) From qkj_t_goods_info
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotNull>
+			<isNotNull prepend="AND" property="goods_id"><![CDATA[ goods_id=#goods_id# ]]></isNotNull>
+		</dynamic>
+	</select>
+	<insert id="sysebiz_addGoodsInfo" parameterClass="goodsInfo">
+		<![CDATA[ 
+			Insert Into qkj_t_goods_info(goods_id,column_1,column_2,column_3,column_4,column_5,column_6,column_7,column_8,column_9,column_10,column_11,column_12,column_13,column_14,column_15,column_16,column_17,column_18,column_19,column_20,column_21,column_22,column_23,column_24,column_25,column_26,column_27,column_28,column_29,column_30)
+			Values (#goods_id#,#column_1#,#column_2#,#column_3#,#column_4#,#column_5#,#column_6#,#column_7#,#column_8#,#column_9#,#column_10#,#column_11#,#column_12#,#column_13#,#column_14#,#column_15#,#column_16#,#column_17#,#column_18#,#column_19#,#column_20#,#column_21#,#column_22#,#column_23#,#column_24#,#column_25#,#column_26#,#column_27#,#column_28#,#column_29#,#column_30#)
+		]]>
+	</insert>
+	<update id="sysebiz_mdyGoodsInfo" parameterClass="goodsInfo">
+		<![CDATA[
+			Update qkj_t_goods_info
+			Set column_1=#column_1#,
+				column_2=#column_2#,
+				column_3=#column_3#,
+				column_4=#column_4#,
+				column_5=#column_5#,
+				column_6=#column_6#,
+				column_7=#column_7#,
+				column_8=#column_8#,
+				column_9=#column_9#,
+				column_10=#column_10#,
+				column_11=#column_11#,
+				column_12=#column_12#,
+				column_13=#column_13#,
+				column_14=#column_14#,
+				column_15=#column_15#,
+				column_16=#column_16#,
+				column_17=#column_17#,
+				column_18=#column_18#,
+				column_19=#column_19#,
+				column_20=#column_20#,
+				column_21=#column_21#,
+				column_22=#column_22#,
+				column_23=#column_23#,
+				column_24=#column_24#,
+				column_25=#column_25#,
+				column_26=#column_26#,
+				column_27=#column_27#,
+				column_28=#column_28#,
+				column_29=#column_29#,
+				column_30=#column_30#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="sysebiz_delGoodsInfo" parameterClass="goodsInfo">
+	<![CDATA[
+		Delete From qkj_t_goods_info Where uuid=#uuid#
+	]]>
+	</delete>
+	<!-- GoodsInfo End -->
+</sqlMap>

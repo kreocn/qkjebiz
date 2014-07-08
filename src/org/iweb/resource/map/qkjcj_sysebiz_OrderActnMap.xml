@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "sql-map-2.dtd">
+<sqlMap>
+	<!-- OrderActn Start -->
+	<typeAlias alias="orderActn" type="com.qkjsys.ebiz.domain.OrderActn" />
+	<select id="sysebiz_getOrderActns" resultClass="orderActn" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select a.*,g.goods_name,u.USER_NAME add_user_name
+			From qkj_h_order_actn a
+			LEFT JOIN qkj_t_goods g ON (a.goods_id = g.uuid)
+			LEFT JOIN s_sys_user u ON (a.add_user = u.UUID)
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="uuid"><![CDATA[ a.uuid=#uuid# ]]></isNotNull>
+			<isNotNull prepend="AND" property="order_id"><![CDATA[ a.order_id=#order_id# ]]></isNotNull>
+		</dynamic>
+		<![CDATA[ Order By a.uuid Desc ]]>
+	</select>
+	<select id="sysebiz_getOrderActnsCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select COUNT(*)
+			From qkj_h_order_actn a
+			LEFT JOIN qkj_t_goods g ON (a.goods_id = g.uuid)
+			LEFT JOIN s_sys_user u ON (a.add_user = u.UUID)
+		]]>
+		<isNotNull prepend="AND" property="uuid"><![CDATA[ a.uuid=#uuid# ]]></isNotNull>
+		<isNotNull prepend="AND" property="order_id"><![CDATA[ a.order_id=#order_id# ]]></isNotNull>
+	</select>
+	<insert id="sysebiz_addOrderActn" parameterClass="orderActn">
+		<![CDATA[ 
+			Insert Into qkj_h_order_actn(order_id,goods_id,action_type,original_value,new_value,note,add_ip,add_user,add_time)
+			Values (#order_id#,#goods_id#,#action_type#,#original_value#,#new_value#,#note#,#add_ip#,#add_user#,#add_time#)
+		]]>
+	</insert>
+	<update id="sysebiz_mdyOrderActn" parameterClass="orderActn">
+		<![CDATA[
+			Update qkj_h_order_actn
+			Set action_type=#action_type#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="sysebiz_delOrderActn" parameterClass="orderActn">
+	<![CDATA[
+		Delete From qkj_h_order_actn Where uuid=#uuid#
+	]]>
+	</delete>
+	<!-- OrderActn End -->
+</sqlMap>

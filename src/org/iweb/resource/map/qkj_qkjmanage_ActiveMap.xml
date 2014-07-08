@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "sql-map-2.dtd">
+<sqlMap>
+	<!-- Active Start -->
+	<typeAlias alias="active" type="com.qkj.manage.domain.Active" />
+	<select id="qkjmanage_getActives" resultClass="active" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select a.*,d.dept_cname apply_dept_name,au.user_name apply_user_name,
+			su.USER_NAME sd_user_name,smu.USER_NAME smd_user_name,
+			csu.USER_NAME close_sd_user_name,csmu.USER_NAME close_smd_user_name,
+			su.user_sign sd_user_sign,smu.user_sign smd_user_sign,
+			csu.user_sign close_sd_user_sign,csmu.user_sign close_smd_user_sign
+			From qkjm_r_active a
+			LEFT JOIN s_sys_department d ON (a.apply_dept = d.dept_code)
+			LEFT JOIN s_sys_user au ON (a.apply_user = au.uuid)
+			left join s_sys_user su on (a.sd_user = su.UUID)
+			left join s_sys_user smu on (a.smd_user = smu.UUID)
+			left join s_sys_user csu on (a.close_sd_user = csu.UUID)
+			left join s_sys_user csmu on (a.close_smd_user = csmu.UUID)
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ a.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_dept">
+				<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ a.apply_dept=#apply_dept#]]></isNotEqual>
+				<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ a.apply_dept LIKE CONCAT(#apply_dept#,'%') ]]></isEqual>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_user"><![CDATA[ a.apply_user=#apply_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="plan_start"><![CDATA[ a.plan_start=#plan_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="address"><![CDATA[ a.address=#address# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="sd_status"><![CDATA[ a.sd_status=#sd_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="smd_status"><![CDATA[ a.smd_status=#smd_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_user"><![CDATA[ a.apply_user=#apply_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_depts">
+				<![CDATA[ a.apply_dept In ]]>
+				<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="close_sd_status"><![CDATA[ a.close_sd_status=#close_sd_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="close_smd_status"><![CDATA[ a.close_smd_status=#close_smd_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="status"><![CDATA[ a.status=#status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="theme"><![CDATA[ a.theme LIKE CONCAT('%',#theme#,'%') ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="plan_start_begin"><![CDATA[ a.plan_start>=#plan_start_begin# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="plan_start_end"><![CDATA[ a.plan_start<=DATE_ADD(#plan_start_end#,INTERVAL 1 day) ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="pass_time_start"><![CDATA[ a.pass_time>=#pass_time_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="pass_time_end"><![CDATA[ a.pass_time<=DATE_ADD(#pass_time_end#,INTERVAL 1 day) ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="close_pass_time_start"><![CDATA[ a.close_pass_time>=#close_pass_time_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="close_pass_time_end"><![CDATA[ a.close_pass_time<=DATE_ADD(#close_pass_time_end#,INTERVAL 1 day) ]]></isNotEmpty>
+		</dynamic>
+		<![CDATA[ ORDER BY a.add_time DESC LIMIT 1000 ]]>
+	</select>
+	<select id="qkjmanage_getActivesCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) From qkjm_r_active
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_dept">
+				<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ apply_dept=#apply_dept#]]></isNotEqual>
+				<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ apply_dept LIKE CONCAT(#apply_dept#,'%') ]]></isEqual>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_user"><![CDATA[ apply_user=#apply_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="plan_start"><![CDATA[ plan_start=#plan_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="address"><![CDATA[ address=#address# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="sd_status"><![CDATA[ sd_status=#sd_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="smd_status"><![CDATA[ smd_status=#smd_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_user"><![CDATA[ apply_user=#apply_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_depts">
+				<![CDATA[ apply_dept In ]]>
+				<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="close_sd_status"><![CDATA[ close_sd_status=#close_sd_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="close_smd_status"><![CDATA[ close_smd_status=#close_smd_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="status"><![CDATA[ status=#status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="theme"><![CDATA[ theme LIKE CONCAT('%',#theme#,'%') ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="plan_start_begin"><![CDATA[ plan_start>=#plan_start_begin# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="plan_start_end"><![CDATA[ plan_start<=DATE_ADD(#plan_start_end#,INTERVAL 1 day) ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="pass_time_start"><![CDATA[ pass_time>=#pass_time_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="pass_time_end"><![CDATA[ pass_time<=DATE_ADD(#pass_time_end#,INTERVAL 1 day) ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="close_pass_time_start"><![CDATA[ close_pass_time>=#close_pass_time_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="close_pass_time_end"><![CDATA[ close_pass_time<=DATE_ADD(#close_pass_time_end#,INTERVAL 1 day) ]]></isNotEmpty>
+		</dynamic>
+		<![CDATA[ LIMIT 1000 ]]>
+	</select>
+	<insert id="qkjmanage_addActive" parameterClass="active">
+		<![CDATA[ 
+			Insert Into qkjm_r_active(uuid,apply_dept,apply_user,theme,purpose,plan_start,plan_end,address,person,note,expect,add_user,add_time,remark)
+			Values (#uuid#,#apply_dept#,#apply_user#,#theme#,#purpose#,#plan_start#,#plan_end#,#address#,#person#,#note#,#expect#,#add_user#,now(),#remark#)
+		]]>
+	</insert>
+	<update id="qkjmanage_mdyActive" parameterClass="active">
+		<![CDATA[
+			Update qkjm_r_active
+			Set theme=#theme#,
+				purpose=#purpose#,
+				plan_start=#plan_start#,
+				plan_end=#plan_end#,
+				address=#address#,
+				person=#person#,
+				note=#note#,
+				expect=#expect#,
+				lm_user=#lm_user#,
+				remark=#remark#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<update id="qkjmanage_mdyActiveStatus" parameterClass="active">
+		<![CDATA[
+			Update qkjm_r_active
+			Set status=#status#,
+				remark=#remark#,
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<update id="qkjmanage_mdyActiveSDStatus" parameterClass="active">
+		<![CDATA[
+			Update qkjm_r_active
+			Set sd_status=#sd_status#,
+				sd_user=#sd_user#,
+				sd_time=#sd_time#,
+				remark=#remark#,
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<update id="qkjmanage_mdyActiveSMDStatus" parameterClass="active">
+		<![CDATA[
+			Update qkjm_r_active
+			Set smd_status=#smd_status#,
+				smd_user=#smd_user#,
+				smd_time=#smd_time#,
+				remark=#remark#,
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="qkjmanage_delActive" parameterClass="active">
+	<![CDATA[
+		Delete From qkjm_r_active Where uuid=#uuid#
+	]]>
+	</delete>
+
+	<update id="qkjmanage_mdyActiveItPrice" parameterClass="string">
+		<![CDATA[
+		UPDATE qkjm_r_active t
+		SET t.it_price = (
+			SELECT IFNULL(SUM(a.total_price),0)
+			FROM (
+				SELECT m.total_price
+				FROM qkjm_r_active_posm m
+				WHERE m.active_id = #value#
+				AND `status` = 1
+				UNION ALL
+				SELECT p.total_price
+				FROM qkjm_r_active_product p
+				WHERE p.active_id = #value#
+				AND `status` = 1)a
+		)
+		WHERE t.uuid = #value#
+		]]>
+	</update>
+
+	<update id="qkjmanage_mdyActiveMtPrice" parameterClass="string">
+		<![CDATA[
+		UPDATE qkjm_r_active a
+		SET a.mt_price = (
+			SELECT IFNULL(SUM(total_price),0)
+			FROM qkjm_r_active_memcost
+			WHERE active_id = #value#
+			AND `status` = 1
+		)
+		WHERE a.uuid = #value#
+		]]>
+	</update>
+
+	<!-- 特殊的状态更改SQL,申请通过 -->
+	<update id="qkjmanage_mdyActivePass" parameterClass="active">
+		<![CDATA[
+			Update qkjm_r_active
+			Set status=2,
+				pass_time=now(),
+				remark=#remark#,
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+
+	<!-- 特殊的状态更改SQL,结案通过 -->
+	<update id="qkjmanage_mdyCloseActivePass" parameterClass="active">
+		<![CDATA[
+			Update qkjm_r_active
+			Set status=5,
+				close_pass_time=now(),
+				remark=#remark#,
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+
+	<!-- Close Flow Start -->
+	<!-- 特殊的状态更改,开始结案 -->
+	<update id="qkjmanage_startActiveCloseFlow" parameterClass="active">
+		<![CDATA[
+			Update qkjm_r_active
+			Set status=3,
+				close_start=now(),
+				remark=#remark#,
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<update id="qkjmanage_mdyCloseActive" parameterClass="active">
+		<![CDATA[
+			Update qkjm_r_active
+			Set close_note=#close_note#,
+				remark=#remark#,
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<update id="qkjmanage_mdyCloseActiveSDStatus" parameterClass="active">
+		<![CDATA[
+			Update qkjm_r_active
+			Set close_sd_status=#close_sd_status#,
+				close_sd_user=#close_sd_user#,
+				close_sd_time=#close_sd_time#,
+				remark=#remark#,
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<update id="qkjmanage_mdyCloseActiveSMDStatus" parameterClass="active">
+		<![CDATA[
+			Update qkjm_r_active
+			Set close_smd_status=#close_smd_status#,
+				close_smd_user=#close_smd_user#,
+				close_smd_time=#close_smd_time#,
+				remark=#remark#,
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+
+	<update id="qkjmanage_mdyActiveCloseItPrice" parameterClass="string">
+		<![CDATA[
+		UPDATE qkjm_r_active t
+		SET t.close_it_price = (
+			SELECT IFNULL(SUM(a.total_price),0)
+			FROM (
+				SELECT m.total_price
+				FROM qkjm_r_active_posm m
+				WHERE m.active_id = #value#
+				AND `status` = 2
+				UNION ALL
+				SELECT p.total_price
+				FROM qkjm_r_active_product p
+				WHERE p.active_id = #value#
+				AND `status` = 2)a
+		)
+		WHERE t.uuid = #value#
+		]]>
+	</update>
+
+	<update id="qkjmanage_mdyActiveCloseMtPrice" parameterClass="string">
+		<![CDATA[
+		UPDATE qkjm_r_active a
+		SET a.close_mt_price = (
+			SELECT IFNULL(SUM(total_price),0)
+			FROM qkjm_r_active_memcost
+			WHERE active_id = #value#
+			AND `status` = 2
+		)
+		WHERE a.uuid = #value#
+		]]>
+	</update>
+	<!-- Close Flow End -->
+	<!-- Active End -->
+</sqlMap>

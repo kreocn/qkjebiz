@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="sysebiz_order" extends="default" namespace="/sysebiz">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- Order Start -->
+		<action name="order_list" class="com.qkjsys.ebiz.action.OrderAction" method="list">
+			<result>/jsp/sysebiz/OrderList.jsp</result>
+		</action>
+		<action name="order_load" class="com.qkjsys.ebiz.action.OrderAction" method="load">
+			<result>/jsp/sysebiz/OrderEdit.jsp</result>
+		</action>
+		<action name="order_view" class="com.qkjsys.ebiz.action.OrderAction" method="load">
+			<result>/jsp/sysebiz/OrderView.jsp</result>
+		</action>
+		<action name="order_add" class="com.qkjsys.ebiz.action.OrderAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">order_load</param>
+				<param name="order.uuid">${order.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="order_add_check" class="com.qkjsys.ebiz.action.OrderAction" method="add_check">
+			<result type="redirectAction">
+				<param name="actionName">order_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="order_save" class="com.qkjsys.ebiz.action.OrderAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">order_load</param>
+				<param name="order.uuid">${order.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="order_check0" class="com.qkjsys.ebiz.action.OrderAction" method="order_check0">
+			<result type="redirectAction">
+				<param name="actionName">order_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="order_check10" class="com.qkjsys.ebiz.action.OrderAction" method="order_check10">
+			<result type="redirectAction">
+				<param name="actionName">order_load</param>
+				<param name="order.uuid">${order.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="order_check15" class="com.qkjsys.ebiz.action.OrderAction" method="order_check15">
+			<result type="redirectAction">
+				<param name="actionName">order_load</param>
+				<param name="order.uuid">${order.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="order_check19" class="com.qkjsys.ebiz.action.OrderAction" method="order_check19">
+			<result type="redirectAction">
+				<param name="actionName">order_load</param>
+				<param name="order.uuid">${order.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="order_check20" class="com.qkjsys.ebiz.action.OrderAction" method="order_check20">
+			<result type="redirectAction">
+				<param name="actionName">order_load</param>
+				<param name="order.uuid">${order.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="order_check30" class="com.qkjsys.ebiz.action.OrderAction" method="order_check30">
+			<result type="redirectAction">
+				<param name="actionName">order_load</param>
+				<param name="order.uuid">${order.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="order_check39" class="com.qkjsys.ebiz.action.OrderAction" method="order_check39">
+			<result type="redirectAction">
+				<param name="actionName">order_load</param>
+				<param name="order.uuid">${order.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="order_check41" class="com.qkjsys.ebiz.action.OrderAction" method="order_check41">
+			<result type="redirectAction">
+				<param name="actionName">order_load</param>
+				<param name="order.uuid">${order.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="order_pay_status" class="com.qkjsys.ebiz.action.OrderAction" method="order_pay_status">
+			<result type="redirectAction">
+				<param name="actionName">order_load</param>
+				<param name="order.uuid">${order.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="order_del" class="com.qkjsys.ebiz.action.OrderAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">order_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- Order End -->
+	</package>
+</struts>

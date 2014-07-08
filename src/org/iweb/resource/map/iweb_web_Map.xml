@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "sql-map-2.dtd">
+<sqlMap>
+	<typeAlias alias="cusInfoh" type="com.qkj.info.domain.CusInfoh" />
+	<select id="web_getCusInfohs" resultClass="cusInfoh" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select * From web_h_cus_info
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="linkid"><![CDATA[ linkid=#linkid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="fullname"><![CDATA[ fullname LIKE #fullname# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="mobile"><![CDATA[ mobile=#mobile# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="express_status"><![CDATA[ express_status=#express_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="security"><![CDATA[ security=#security# ]]></isNotEmpty>
+		</dynamic>
+	</select>
+	<select id="web_getCusInfohCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) From web_h_cus_info
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="linkid"><![CDATA[ linkid=#linkid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="fullname"><![CDATA[ fullname LIKE #fullname# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="mobile"><![CDATA[ mobile=#mobile# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="express_status"><![CDATA[ express_status=#express_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="security"><![CDATA[ security=#security# ]]></isNotEmpty>
+		</dynamic>
+	</select>
+	<insert id="web_addCusInfoh" parameterClass="cusInfoh">
+		<![CDATA[ 
+			Insert Into web_h_cus_info(linkid,fullname,xinlang,mobile,sex,ages,address,postno,works,zodiac,security,add_ip,lm_user,add_time)
+			Values (#linkid#,#fullname#,#xinlang#,#mobile#,#sex#,#ages#,#address#,#postno#,#works#,#zodiac#,#security#,#add_ip#,#lm_user#,#add_time#)
+		]]>
+		<selectKey resultClass="int" keyProperty="uuid">
+		<![CDATA[ 
+			Select LAST_INSERT_ID()
+		]]>
+		</selectKey>
+	</insert>
+	<update id="web_mdyHCusInfo" parameterClass="cusInfoh">
+		<![CDATA[
+			Update web_h_cus_info
+			Set fullname=#fullname#,
+				xinlang=#xinlang#,
+				mobile=#mobile#,
+				sex=#sex#,
+				ages=#ages#,
+				address=#address#,
+				postno=#postno#,
+				works=#works#,
+				zodiac=#zodiac#,
+				lm_user=#lm_user#,
+				lm_time=#lm_time#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<update id="web_expressHCusInfo" parameterClass="cusInfoh">
+		<![CDATA[
+			Update web_h_cus_info
+			Set express_status=#express_status#,
+				express_type=#express_type#,
+				express_no=#express_no#,
+				express_date=#express_date#,
+				lm_user=#lm_user#,
+				lm_time=#lm_time#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="web_delHCusInfo" parameterClass="cusInfoh">
+	<![CDATA[
+		Delete From web_h_cus_info Where uuid=#uuid#
+	]]>
+	</delete>
+
+	<update id="web_UserMdyAddress" parameterClass="cusInfoh">
+		<![CDATA[
+			Update web_h_cus_info
+			Set fullname=#fullname#,
+				mobile=#mobile#,
+				address=#address#,
+				postno=#postno#,
+				lm_user=#lm_user#,
+				lm_time=#lm_time#
+			Where security = #security#
+		]]>
+	</update>
+
+	<!-- ============ -->
+	<!-- Remote News Start -->
+	<!-- ============ -->
+	<typeAlias alias="news" type="org.iweb.info.domain.InfoNews" />
+	<select id="info_NewsRemote" resultClass="news" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select t.*,c.title class_name,u.dept_code add_dept,u.user_name add_user_name
+			From t_info_news t 
+			LEFT JOIN s_sys_user u ON (t.add_user = u.title)
+			LEFT JOIN t_info_class c ON (t.class_id = c.uuid)
+			Where t.isdel = 0
+			And t.ischecked = 4
+		]]>
+		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ t.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="title"><![CDATA[ t.title Like #title# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="istop">
+			<isEmpty property="istop_search_type"><![CDATA[  t.istop>=#istop# ]]></isEmpty>
+			<isNotEmpty>
+				<isEqual property="istop_search_type" compareValue="0"><![CDATA[ t.istop=#istop# ]]></isEqual>
+				<isEqual property="istop_search_type" compareValue="1"><![CDATA[ t.istop>=#istop# ]]></isEqual>
+				<isEqual property="istop_search_type" compareValue="2"><![CDATA[ t.istop<=#istop# ]]></isEqual>
+				<isEqual property="istop_search_type" compareValue="3"><![CDATA[ t.istop>#istop# ]]></isEqual>
+				<isEqual property="istop_search_type" compareValue="4"><![CDATA[ t.istop<#istop# ]]></isEqual>
+			</isNotEmpty>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="isimgnews"><![CDATA[ t.isimgnews=#isimgnews# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="title"><![CDATA[ t.title like #title# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="add_dept"><![CDATA[ u.dept_code like #add_dept# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="class_id"><![CDATA[ t.class_id=#class_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="class_ids">
+			<![CDATA[ t.class_id In ]]>
+			<iterate property="class_ids" open="(" close=")" conjunction=" , "> #class_ids[]#</iterate>
+		</isNotEmpty>
+		<isEmpty property="content">
+			<isNotEmpty prepend="AND" property="keywords"><![CDATA[ t.keywords Like #keywords# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="shortcontent"><![CDATA[ t.shortcontent Like #shortcontent# ]]></isNotEmpty>
+		</isEmpty>
+		<isNotEmpty prepend="AND" property="content">
+			<![CDATA[ (t.KEYWORDS LIKE #content# || t.SHORTCONTENT like #content# || t.CONTENT LIKE #content#) ]]>
+		</isNotEmpty>
+		<isEmpty property="order">
+			<![CDATA[ Order By t.istop Desc,t.add_time Desc	]]>
+		</isEmpty>
+		<isNotEmpty property="order">
+			<isEqual property="order" compareValue="order1">
+				<![CDATA[ Order By t.add_time Desc	]]>
+			</isEqual>
+			<isEqual property="order" compareValue="order2">
+				<![CDATA[ Order By t.istop Desc,t.add_time Asc	]]>
+			</isEqual>
+		</isNotEmpty>
+		<isNotEmpty property="top"><![CDATA[ Limit #top# ]]></isNotEmpty>
+	</select>
+
+	<select id="info_NewsRemoteCount" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*)
+			From t_info_news t,t_info_class c,s_sys_user u
+			Where t.class_id = c.uuid
+			And t.add_user = u.title
+			And t.isdel = 0
+			And t.ischecked = 4
+		]]>
+		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ t.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="title"><![CDATA[ t.title Like #title# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="istop"><![CDATA[ t.istop>=#istop# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="isimgnews"><![CDATA[ t.isimgnews=#isimgnews# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="title"><![CDATA[ t.title like #title# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="add_dept"><![CDATA[ u.dept_code like #add_dept# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="class_id"><![CDATA[ t.class_id=#class_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="class_ids">
+			<![CDATA[ t.class_id In ]]>
+			<iterate property="class_ids" open="(" close=")" conjunction=" , "> #class_ids[]#</iterate>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keywords"><![CDATA[ t.keywords Like #keywords# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="shortcontent"><![CDATA[ t.shortcontent Like #shortcontent# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="content">
+			<![CDATA[ (t.KEYWORDS LIKE #content# || t.SHORTCONTENT like #content# || t.CONTENT LIKE #content#) ]]>
+		</isNotEmpty>
+		<isNotEmpty property="top"><![CDATA[ Limit #top# ]]></isNotEmpty>
+	</select>
+
+	<typeAlias alias="classs" type="org.iweb.info.domain.InfoClass" />
+	<select id="info_getClasss" resultClass="classs" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select * From t_info_class
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="parent_id"><![CDATA[ parent_id=#parent_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="classes">
+				<![CDATA[ uuid In ]]>
+				<iterate property="classes" open="(" close=")" conjunction=" , "> #classes[]#</iterate>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	<!-- ============ -->
+	<!-- Remote News End -->
+	<!-- ============ -->
+</sqlMap>

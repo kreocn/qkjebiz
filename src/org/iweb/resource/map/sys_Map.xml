@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "sql-map-2.dtd">
+<sqlMap>
+	<!-- UserPrivilege Start -->
+	<typeAlias alias="privilege" type="org.iweb.sys.domain.UserPrivilege" />
+	<select id="sys_getPrivileges" resultClass="privilege" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select * From s_sys_privilege
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotNull>
+			<isNotNull prepend="AND" property="is_ajax"><![CDATA[ is_ajax=#is_ajax# ]]></isNotNull>
+			<isNotNull prepend="AND" property="privilege_name"><![CDATA[ privilege_name like CONCAT('%',#privilege_name#,'%') ]]></isNotNull>
+		</dynamic>
+		<![CDATA[ Order By PRIVILEGE_TYPE,MENU_PRIORITY,LM_TIME ]]>
+	</select>
+	<insert id="sys_addPrivileges" parameterClass="privilege">
+		<![CDATA[ 
+			Insert Into s_sys_privilege(uuid,privilege_name,parent_privilege,descriptions,privilege_id,privilege_type,is_ajax,ajax_map_id,is_menu,
+			menu_url,menu_target,menu_priority,menu_title,lm_user,lm_time)
+			Values (#uuid#,#privilege_name#,#parent_privilege#,#descriptions#,#privilege_id#,#privilege_type#,#is_ajax#,#ajax_map_id#,
+			#is_menu#,#menu_url#,#menu_target#,#menu_priority#,#menu_title#,#lm_user#,#lm_time#)
+		]]>
+	</insert>
+	<update id="sys_mdyPrivileges" parameterClass="privilege">
+		<![CDATA[
+			Update s_sys_privilege
+			Set privilege_name=#privilege_name#,
+				parent_privilege=#parent_privilege#,
+				descriptions=#descriptions#,
+				privilege_id=#privilege_id#,	
+				privilege_type=#privilege_type#,	
+				is_ajax=#is_ajax#,
+				ajax_map_id=#ajax_map_id#,
+				is_menu=#is_menu#,
+				menu_url=#menu_url#,
+				menu_target=#menu_target#,
+				menu_priority=#menu_priority#,
+				menu_title=#menu_title#,				
+				lm_user=#lm_user#,
+				lm_time=#lm_time#
+			Where uuid=#uuid#
+		]]>
+	</update>
+	<delete id="sys_delPrivileges" parameterClass="privilege">
+		<![CDATA[
+			Delete From s_sys_privilege Where uuid=#uuid#
+		]]>
+	</delete>
+	<!-- UserPrivilege End -->
+	<!-- UserRole Start -->
+	<typeAlias alias="role" type="org.iweb.sys.domain.UserRole" />
+	<select id="sys_getSysRoles" resultClass="role" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select * From s_sys_role
+			Where role_type=1
+		]]>
+		<isNotNull prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotNull>
+		<isNotNull prepend="AND" property="roles">
+			<![CDATA[ uuid In ]]>
+			<iterate property="roles" open="(" close=")" conjunction=" , "> #roles[]#</iterate>
+		</isNotNull>
+		<![CDATA[ ORDER BY role_name ]]>
+	</select>
+
+	<select id="sys_getUserRoles" resultClass="role" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select * From s_sys_role
+			Where role_type=0
+		]]>
+		<isNotNull prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotNull>
+		<isNotNull prepend="AND" property="roles">
+			<![CDATA[ uuid In ]]>
+			<iterate property="roles" open="(" close=")" conjunction=" , "> #roles[]#</iterate>
+		</isNotNull>
+		<![CDATA[ ORDER BY role_rank ]]>
+	</select>
+
+	<insert id="sys_addRoles" parameterClass="role">
+		<![CDATA[ 
+			Insert Into s_sys_role(uuid,role_type,role_rank,role_name,descriptions,lm_user,lm_time)
+			Values (#uuid#,#role_type#,#role_rank#,#role_name#,#descriptions#,#lm_user#,#lm_time#)
+		]]>
+	</insert>
+	<update id="sys_mdyRoles" parameterClass="role">
+		<![CDATA[
+			Update s_sys_role
+			Set role_name=#role_name#,
+				role_type=#role_type#,
+				role_rank=#role_rank#,
+				descriptions=#descriptions#,
+				lm_user=#lm_user#,
+				lm_time=#lm_time#
+			Where uuid=#uuid#
+		]]>
+	</update>
+	<delete id="sys_delRoles" parameterClass="role">
+		<![CDATA[
+			Delete From s_sys_role Where uuid=#uuid#
+		]]>
+		<!--<iterate property="userIDs" open="(" close=")" conjunction=" , "> #userIDs[]# </iterate> -->
+	</delete>
+	<!-- UserRole End -->
+	<!-- RolePrvg Start -->
+	<typeAlias alias="role_prvg" type="org.iweb.sys.domain.RolePrvg" />
+	<select id="sys_SysRolePrvg_Add" resultClass="role_prvg">
+		<![CDATA[ 
+			Select p.privilege_id,p.parent_privilege,p.privilege_name
+			From s_sys_privilege p
+			WHERE p.PRIVILEGE_TYPE = 1
+		]]>
+		<![CDATA[ Order By p.MENU_PRIORITY,p.LM_TIME ]]>
+	</select>
+
+	<select id="sys_SysRolePrvg_All" resultClass="role_prvg" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT	p.privilege_name,p.parent_privilege,a.uuid,a.role_id,p.privilege_id,a.type,a.function
+			FROM (SELECT * FROM s_sys_privilege WHERE PRIVILEGE_TYPE = 1) p
+			LEFT JOIN (SELECT * FROM s_sys_roleprvg
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="role_id"><![CDATA[ role_id=#role_id# ]]></isNotNull>
+		</dynamic>
+		<![CDATA[ ) a ON p.privilege_id = a.privilege_id	]]>
+		<![CDATA[ Order By p.MENU_PRIORITY,p.LM_TIME ]]>
+	</select>
+
+	<select id="sys_UserRolePrvg_Add" resultClass="role_prvg">
+		<![CDATA[ 
+			Select p.privilege_id,p.parent_privilege,p.privilege_name
+			From s_sys_privilege p
+			WHERE p.PRIVILEGE_TYPE = 0
+		]]>
+	</select>
+
+	<select id="sys_UserRolePrvg_All" resultClass="role_prvg" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT	p.privilege_name,p.parent_privilege,a.uuid,a.role_id,p.privilege_id,a.type,a.function
+			FROM (SELECT * FROM s_sys_privilege WHERE PRIVILEGE_TYPE = 0) p
+			LEFT JOIN (SELECT * FROM s_sys_roleprvg
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="role_id"><![CDATA[ role_id=#role_id# ]]></isNotNull>
+		</dynamic>
+		<![CDATA[ ) a ON p.privilege_id = a.privilege_id	]]>
+		<![CDATA[ Order By p.MENU_PRIORITY,p.LM_TIME ]]>
+	</select>
+
+	<select id="sys_getRolePrvg" resultClass="role_prvg" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT r.uuid, p.privilege_name, p.parent_privilege, r.role_id, 
+						p.privilege_id, r.type, r.function, l.role_name
+			FROM s_sys_role l, s_sys_roleprvg r
+			LEFT JOIN s_sys_privilege p ON p.privilege_id = r.privilege_id
+			WHERE	r.role_id = l.uuid
+		]]>
+		<isNotNull prepend="AND" property="uuid"><![CDATA[ r.uuid=#uuid# ]]></isNotNull>
+		<isNotNull prepend="AND" property="role_id"><![CDATA[ role_id=#role_id# ]]></isNotNull>
+		<isNotNull prepend="AND" property="roles">
+			<![CDATA[ role_id In ]]>
+			<iterate property="roles" open="(" close=")" conjunction=" , "> #roles[]#</iterate>
+		</isNotNull>
+		<![CDATA[ Order By l.UUID,p.PRIVILEGE_TYPE,p.MENU_PRIORITY ]]>
+	</select>
+	<insert id="sys_addRolePrvg" parameterClass="role_prvg">
+		<![CDATA[ 
+			insert into s_sys_roleprvg(uuid,role_id,privilege_id,type,function)
+			values(#uuid#,#role_id#,#privilege_id#,#type#,#function#)
+		]]>
+	</insert>
+	<update id="sys_mdyRolePrvg" parameterClass="role_prvg">
+		<![CDATA[
+			Update s_sys_roleprvg r
+			Set r.type = #type#,
+				r.function = #function#
+			Where r.role_id = #role_id#
+			And r.privilege_id = #privilege_id#
+		]]>
+	</update>
+	<delete id="sys_delRolePrvg" parameterClass="role_prvg">
+		<![CDATA[
+			delete from s_sys_roleprvg where 1=1
+		]]>
+		<isNotNull prepend="AND" property="role_id"><![CDATA[ role_id = #role_id# ]]></isNotNull>
+		<isNotNull prepend="AND" property="privilege_id"><![CDATA[ privilege_id=#privilege_id# ]]></isNotNull>
+	</delete>
+	<!-- RolePrvg End -->
+	<!-- UserDepartment Start -->
+	<typeAlias alias="dept" type="org.iweb.sys.domain.Department" />
+	<select id="sys_getDepts" resultClass="dept" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select * From s_sys_department
+			Where 1=1
+		]]>
+		<isNotNull prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotNull>
+		<isNotNull prepend="AND" property="dept_code"><![CDATA[ dept_code=#dept_code# ]]></isNotNull>
+		<isNotNull prepend="AND" property="dept_codes">
+			<![CDATA[ dept_code In ]]>
+			<iterate property="dept_codes" open="(" close=")" conjunction=","> #dept_codes[]#</iterate>
+		</isNotNull>
+		<![CDATA[ ORDER BY DEPT_CODE ]]>
+	</select>
+	<select id="sys_getPermitDepts" resultClass="java.lang.String" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select dept_code From s_sys_department
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="dept_code"><![CDATA[ dept_code Like #dept_code# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="parent_dept"><![CDATA[ parent_dept = #parent_dept# ]]></isNotEmpty>
+		</dynamic>
+		<![CDATA[ ORDER BY DEPT_CODE ]]>
+	</select>
+	<insert id="sys_addDept" parameterClass="dept">
+		<![CDATA[ 
+			Insert Into s_sys_department(uuid,dept_code,parent_dept,dept_ename,dept_cname,descriptions,lm_user,lm_time)
+			Values (#uuid#,#dept_code#,#parent_dept#,#dept_ename#,#dept_cname#,#descriptions#,#lm_user#,#lm_time#)
+		]]>
+	</insert>
+	<update id="sys_mdyDept" parameterClass="dept">
+		<![CDATA[
+			Update s_sys_department
+			Set dept_code=#dept_code#,
+				parent_dept=#parent_dept#,
+				dept_ename=#dept_ename#,
+				dept_cname=#dept_cname#,
+				descriptions=#descriptions#,
+				lm_user=#lm_user#,
+				lm_time=#lm_time#
+			Where uuid=#uuid#
+		]]>
+	</update>
+	<delete id="sys_delDept" parameterClass="dept">
+		<![CDATA[
+			Delete From s_sys_department Where uuid=#uuid#		
+		]]>
+		<!--<iterate property="userIDs" open="(" close=")" conjunction=" , "> #userIDs[]# </iterate> -->
+	</delete>
+	<!-- UserDepartment End -->
+	<!-- User Start -->
+	<typeAlias alias="user" type="org.iweb.sys.domain.User" />
+	<select id="sys_getUser" resultClass="user" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT u.*,r.ROLE_NAME TYPE_NAME,d.DEPT_CNAME,u2.USER_NAME AS senior_name,p.POSITION_NAME
+			FROM s_sys_user u
+			LEFT JOIN s_sys_department d ON (u.dept_code = d.dept_code)
+			LEFT JOIN s_sys_user u2 ON (u.SENIOR = u2.UUID)
+			LEFT JOIN s_sys_role r ON (u.USER_TYPE = r.UUID)
+			LEFT JOIN s_cfg_position p ON (u.POSITION = p.UUID)
+			Where 1=1
+		]]>
+		<isNotNull prepend="AND" property="uuid"><![CDATA[ u.uuid=#uuid# ]]></isNotNull>
+		<isNotNull prepend="AND" property="title"><![CDATA[ u.title=#title# ]]></isNotNull>
+		<isNotNull prepend="AND" property="user_name"><![CDATA[ u.user_name like #user_name# ]]></isNotNull>
+		<isNotNull prepend="AND" property="email"><![CDATA[ u.email like #email# ]]></isNotNull>
+		<isNotNull prepend="AND" property="mobile"><![CDATA[ u.mobile like #mobile# ]]></isNotNull>
+		<isNotNull prepend="AND" property="status"><![CDATA[ u.status=#status# ]]></isNotNull>
+		<isNotNull prepend="AND" property="dept_code"><![CDATA[ u.dept_code=#dept_code# ]]></isNotNull>
+		<isNotNull prepend="AND" property="dept_codes">
+			<![CDATA[ u.dept_code In ]]>
+			<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
+		</isNotNull>
+		<isNotNull prepend="AND" property="positions">
+			<![CDATA[ u.position In ]]>
+			<iterate property="positions" open="(" close=")" conjunction=" , "> #positions[]#</iterate>
+		</isNotNull>
+	</select>
+	<insert id="sys_addUser" parameterClass="user">
+		<![CDATA[ 
+			Insert Into s_sys_user(uuid,title,passwords,ukeys,dept_code,user_roles,extra_prvg,user_type,work_id,user_name,sex,
+				email,phone,mobile,position,descriptions,status,filesystem_root,reg_time,lm_user,lm_time) 
+			Values (#uuid#,#title#,#passwords#,#ukeys#,#dept_code#,#user_roles#,#extra_prvg#,#user_type#,#work_id#,
+			#user_name#,#sex#,	#email#,#phone#,#mobile#,#position#,#descriptions#,#status#,
+			#filesystem_root#,#reg_time#,#lm_user#,#lm_time#)
+		]]>
+	</insert>
+	<update id="sys_mdyUser" parameterClass="user">
+		<![CDATA[
+			Update s_sys_user
+			Set ukeys=#ukeys#,
+				dept_code=#dept_code#,
+				user_roles=#user_roles#,
+				user_type=#user_type#,
+				extra_prvg=#extra_prvg#,
+				work_id=#work_id#,
+				user_name=#user_name#,
+				sex=#sex#,
+				email=#email#,
+				phone=#phone#,
+				mobile=#mobile#,
+				position=#position#,
+				descriptions=#descriptions#,
+				status=#status#,
+				filesystem_root=#filesystem_root#,
+				lm_user=#lm_user#,
+				lm_time=#lm_time#
+			Where uuid=#uuid#
+		]]>
+	</update>
+
+	<update id="sys_imdyUser" parameterClass="user">
+		<![CDATA[
+			Update s_sys_user
+			Set user_name=#user_name#,
+				sex=#sex#,
+				email=#email#,
+				phone=#phone#,
+				mobile=#mobile#,
+				descriptions=#descriptions#,
+				lm_user=#lm_user#,
+				lm_time=#lm_time#
+			Where title=#title#
+		]]>
+	</update>
+
+	<delete id="sys_delUser" parameterClass="user">
+	<![CDATA[
+		Delete From s_sys_user Where uuid=#uuid#
+	]]>
+		<!--<iterate property="userIDs" open="(" close=")" conjunction=" , "> #userIDs[]# </iterate> -->
+	</delete>
+	<update id="sys_changePWD" parameterClass="user">
+		<![CDATA[
+			Update s_sys_user
+			Set passwords=#passwords#,
+				lm_user=#lm_user#,
+				lm_time=#lm_time#
+			Where uuid=#uuid#
+		]]>
+	</update>
+
+	<select id="sys_checkUserList" resultClass="user" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT u.*,d.DEPT_CNAME,u2.USER_NAME AS senior_name 
+			FROM s_sys_user u
+			LEFT JOIN s_sys_department d ON (u.dept_code = d.dept_code)
+			LEFT JOIN s_sys_user u2 ON (u.SENIOR = u2.UUID)
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="title"><![CDATA[ (u.TITLE = #title# OR u.MOBILE = #title#) ]]></isNotNull>
+			<isNotNull prepend="AND" property="status"><![CDATA[ u.`STATUS` =  #status# ]]></isNotNull>
+		</dynamic>
+	</select>
+
+	<select id="sys_checkMember" resultClass="int" parameterClass="user">
+		<![CDATA[ 
+			SELECT Count(*)
+			FROM s_sys_user u
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="title"><![CDATA[ u.TITLE = #title# ]]></isNotNull>
+			<isNotNull prepend="AND" property="mobile"><![CDATA[ u.mobile =  #mobile# ]]></isNotNull>
+			<isNotNull prepend="AND" property="email"><![CDATA[ u.email =  #email# ]]></isNotNull>
+		</dynamic>
+	</select>
+
+	<!-- User End -->
+	<!-- Position Start -->
+	<typeAlias alias="position" type="org.iweb.sys.domain.Position" />
+	<select id="sys_getPosition" resultClass="position" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select * 
+			From s_cfg_position
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotNull>
+			<isNotNull prepend="AND" property="position_name"><![CDATA[ position_name Like CONCAT('%',#position_name#,'%') ]]></isNotNull>
+		</dynamic>
+		<![CDATA[ ORDER BY POSITION_GRADE ]]>
+	</select>
+	<insert id="sys_addPosition" parameterClass="position">
+		<![CDATA[ 
+			Insert Into s_cfg_position(uuid,position_name,position_grade,position_senior,position_attribute,position_note,lm_user,lm_time)
+			Values (#uuid#,#position_name#,#position_grade#,#position_senior#,#position_attribute#,#position_note#,#lm_user#,#lm_time#)
+		]]>
+	</insert>
+	<update id="sys_mdyPosition" parameterClass="position">
+		<![CDATA[
+			Update s_cfg_position p
+			Set position_name = #position_name#,
+				position_senior=#position_senior#,
+				position_grade = #position_grade#,
+				position_attribute = #position_attribute#,
+				position_note = #position_note#,
+				lm_user = #lm_user#,
+				lm_time = #lm_time#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="sys_delPosition" parameterClass="position">
+	<![CDATA[
+		Delete From s_cfg_position Where uuid=#uuid#
+	]]>
+	</delete>
+	<!-- Position End -->
+
+	<!-- SYS_MENU Start -->
+	<typeAlias alias="menu" type="org.iweb.sys.domain.UserPrivilege" />
+	<select id="sys_getSysMenus" resultClass="menu" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select * From s_sys_privilege Where is_menu = 1 
+			And PRIVILEGE_TYPE = 1
+		]]>
+		<isNotNull prepend="AND" property="user_permits">
+			<![CDATA[ privilege_id In ]]>
+			<iterate property="user_permits" open="(" close=")" conjunction=" , "> #user_permits[]# </iterate>
+		</isNotNull>
+		<![CDATA[ Order By MENU_PRIORITY,LM_TIME 	]]>
+	</select>
+
+	<select id="sys_getUserMenus" resultClass="menu" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select * From s_sys_privilege Where is_menu = 1 
+			And PRIVILEGE_TYPE = 0
+		]]>
+		<isNotNull prepend="AND" property="user_permits">
+			<![CDATA[ privilege_id In ]]>
+			<iterate property="user_permits" open="(" close=")" conjunction=" , "> #user_permits[]# </iterate>
+		</isNotNull>
+		<![CDATA[ Order By MENU_PRIORITY,LM_TIME 	]]>
+	</select>
+	<!-- SYS_MENU End -->
+</sqlMap>

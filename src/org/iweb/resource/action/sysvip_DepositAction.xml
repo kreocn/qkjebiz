@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="sysvip_deposit" extends="default" namespace="/sysvip">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- Deposit Start -->
+		<action name="deposit_list" class="org.iweb.sysvip.action.DepositAction" method="list">
+			<result>/jsp/sysvip/DepositList.jsp</result>
+		</action>
+		<action name="deposit_load" class="org.iweb.sysvip.action.DepositAction" method="load">
+			<result>/jsp/sysvip/DepositEdit.jsp</result>
+		</action>
+		<action name="deposit_add" class="org.iweb.sysvip.action.DepositAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">deposit_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="deposit_save" class="org.iweb.sysvip.action.DepositAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">deposit_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="deposit_fd_check" class="org.iweb.sysvip.action.DepositAction" method="fd_check">
+			<result type="redirectAction">
+				<param name="actionName">deposit_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="deposit_del" class="org.iweb.sysvip.action.DepositAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">deposit_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- Deposit End -->
+	</package>
+</struts>

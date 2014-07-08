@@ -1,0 +1,84 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="default" extends="struts-default">
+		<interceptors>
+			<!-- 验证是否登录的拦截器 -->
+			<interceptor name="checkLogin" class="org.iweb.sys.interceptor.LoginInterceptor" />
+			<interceptor name="encode" class="org.iweb.sys.interceptor.EncodeInterceptor" />
+			<interceptor name="log" class="org.iweb.sys.interceptor.LogInterceptor" />
+			<interceptor name="checkMemberLogin" class="org.iweb.sys.interceptor.MemberInterceptor" />
+
+			<!-- 去除UploadFile拦截器的defaultStack -->
+			<interceptor-stack name="myDefault">
+				<interceptor-ref name="exception" />
+				<interceptor-ref name="alias" />
+				<interceptor-ref name="servletConfig" />
+				<interceptor-ref name="prepare" />
+				<interceptor-ref name="i18n" />
+				<interceptor-ref name="chain" />
+				<interceptor-ref name="debugging" />
+				<interceptor-ref name="profiling" />
+				<interceptor-ref name="scopedModelDriven" />
+				<interceptor-ref name="modelDriven" />
+				<interceptor-ref name="checkbox" />
+				<interceptor-ref name="staticParams" />
+				<interceptor-ref name="actionMappingParams" />
+				<interceptor-ref name="params">
+					<param name="excludeParams">dojo\..*</param>
+				</interceptor-ref>
+				<interceptor-ref name="conversionError" />
+				<interceptor-ref name="validation">
+					<param name="excludeMethods">input,back,cancel,browse</param>
+				</interceptor-ref>
+				<interceptor-ref name="workflow">
+					<param name="excludeMethods">input,back,cancel,browse</param>
+				</interceptor-ref>
+			</interceptor-stack>
+			<!-- 自定义全局默认拦截器 -->
+			<interceptor-stack name="myStack">
+				<interceptor-ref name="log" />
+				<!-- encode拦截器是用来转换字符集解决乱码的,具体部署时还要看容器的URLEncoding来决定是否要启用 -->
+				<!-- 不推荐使用此拦截器,推荐使用容器配置的URLEncoding -->
+				<!--<interceptor-ref name="encode" /> -->
+				<interceptor-ref name="myDefault" />
+			</interceptor-stack>
+			<!-- 自定义主拦截器(验证登陆) -->
+			<interceptor-stack name="myStackIndex">
+				<interceptor-ref name="checkLogin" />
+				<interceptor-ref name="myStack" />
+			</interceptor-stack>
+			<interceptor-stack name="myStackUpload">
+				<interceptor-ref name="checkLogin" />
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+			<!-- 以下为会员专用 -->
+			<interceptor-stack name="MemberPermit">
+				<interceptor-ref name="checkMemberLogin" />
+				<interceptor-ref name="myStack" />
+			</interceptor-stack>
+		</interceptors>
+		<global-results>
+			<result name="login" type="redirectAction">
+				<param name="namespace">/manager</param>
+				<param name="actionName">login</param>
+			</result>
+			<result name="logintimeout">/jsp/common/logintimeout.jsp</result>
+			<result name="error">/jsp/common/error.jsp</result>
+			<result name="invalid.token">/jsp/common/error.jsp</result>
+			<result name="logpermit">/jsp/common/login_refuse.jsp</result>
+			<result name="exception">/jsp/common/error.jsp</result>
+			<result name="input">/jsp/common/error.jsp</result>
+			<!-- 以下为会员专用 -->
+			<result name="membertimeout">/jsp/m_c/tmo.jsp</result>
+		</global-results>
+		<global-exception-mappings>
+			<exception-mapping result="logpermit" exception="org.iweb.sys.exception.PermitException" />
+			<exception-mapping result="exception" exception="java.lang.Exception" />
+		</global-exception-mappings>
+	</package>
+
+	<!-- 自定义Action配置文件 -->
+	<include file="org/iweb/resource/action/*.xml" />
+</struts>

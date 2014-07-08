@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="Member" extends="default" namespace="/member">
+		<default-interceptor-ref name="myStack" />
+		<action name="login" class="org.iweb.sysvip.action.MemberLoginAction" method="login">
+			<result>/jsp/member/login.jsp</result>
+		</action>
+
+		<action name="check_login" class="org.iweb.sysvip.action.MemberLoginAction" method="checkLogin">
+			<result name="success" type="redirectAction">
+				<param name="namespace">/member</param>
+				<param name="actionName">center</param>
+			</result>
+			<result name="input" type="redirectAction">
+				<param name="namespace">/member</param>
+				<param name="actionName">login</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+
+		<action name="top_minfo" class="org.iweb.sysvip.action.MemberLoginAction" method="minfo">
+			<result>/jsp/m_c/top_minfo.jsp</result>
+		</action>
+
+		<action name="member_login_out" class="org.iweb.sysvip.action.MemberLoginAction" method="member_login_out">
+			<result>/jsp/m_c/member_log_out.jsp</result>
+		</action>
+
+		<!-- 空方法拦截 -->
+		<action name="login_footer" class="org.iweb.member.action.MemberCommonAction">
+			<result>/jsp/m_c/login_footer.jsp</result>
+		</action>
+	</package>
+</struts>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "sql-map-2.dtd">
+<sqlMap>
+	<!-- CustomerRecode Start -->
+	<typeAlias alias="customerRecode" type="com.qkj.manage.domain.CustomerRecode" />
+	<select id="qkjmanage_getCustomerRecodes" resultClass="customerRecode" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select r.*,c.cus_name,u.user_name add_user_name
+			From qkjm_r_customer_recode r LEFT JOIN s_sys_user u ON(r.add_user=u.uuid)
+			,qkjm_r_customer c
+			WHERE r.customer_id = c.uuid
+		]]>
+		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ r.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="customer_id"><![CDATA[ r.customer_id=#customer_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="cus_name"><![CDATA[ c.cus_name LIKE CONCAT('%',#cus_name#,'%') ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="recode_time"><![CDATA[ to_days(r.recode_time) = to_days(#recode_time#) ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="type"><![CDATA[ r.type=#type# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="next_date"><![CDATA[ to_days(r.next_date) = to_days(#next_date#) ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="add_user"><![CDATA[ r.add_user=#add_user# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="dept_code">
+			<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ c.dept_code=#dept_code# ]]></isNotEqual>
+			<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ c.dept_code LIKE CONCAT(#dept_code#,'%') ]]></isEqual>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="dept_codes">
+			<![CDATA[ c.dept_code In ]]>
+			<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
+		</isNotEmpty>
+		<isEmpty property="order_type"><![CDATA[ Order By r.uuid Desc ]]>	</isEmpty>
+		<isNotEmpty property="order_type">
+			<isEqual property="order_type" compareValue="uuidAsc"><![CDATA[ Order By r.uuid ]]></isEqual>
+		</isNotEmpty>
+	</select>
+	<select id="qkjmanage_getCustomerRecodesCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*)
+			From qkjm_r_customer_recode r,qkjm_r_customer c
+			WHERE r.customer_id = c.uuid
+		]]>
+		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ r.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="customer_id"><![CDATA[ r.customer_id=#customer_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="cus_name"><![CDATA[ c.cus_name LIKE CONCAT('%',#cus_name#,'%') ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="recode_time"><![CDATA[ to_days(r.recode_time) = to_days(#recode_time#) ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="type"><![CDATA[ r.type=#type# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="next_date"><![CDATA[ to_days(r.next_date) = to_days(#next_date#) ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="add_user"><![CDATA[ r.add_user=#add_user# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="dept_code">
+			<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ c.dept_code=#dept_code# ]]></isNotEqual>
+			<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ c.dept_code LIKE CONCAT(#dept_code#,'%') ]]></isEqual>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="dept_codes">
+			<![CDATA[ c.dept_code In ]]>
+			<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
+		</isNotEmpty>
+	</select>
+	<insert id="qkjmanage_addCustomerRecode" parameterClass="customerRecode">
+		<![CDATA[ 
+			Insert Into qkjm_r_customer_recode(customer_id,recode_time,type,person,content,promise,next_date,add_user,add_time)
+			Values (#customer_id#,#recode_time#,#type#,#person#,#content#,#promise#,#next_date#,#add_user#,#add_time#)
+		]]>
+	</insert>
+	<update id="qkjmanage_mdyCustomerRecode" parameterClass="customerRecode">
+		<![CDATA[
+			Update qkjm_r_customer_recode
+			Set customer_id=#customer_id#,
+				type=#type#,
+				person=#person#,
+				content=#content#,
+				promise=#promise#,
+				next_date=#next_date#,
+				lm_user=#lm_user#,
+				lm_time=#lm_time#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<!-- 8小时之前录入的回访记录不能删除 -->
+	<delete id="qkjmanage_delCustomerRecode" parameterClass="customerRecode">
+	<![CDATA[
+		Delete From qkjm_r_customer_recode 
+		Where uuid=#uuid#
+		AND unix_timestamp(NOW())-unix_timestamp(add_time) < 28800
+	]]>
+	</delete>
+	<!-- CustomerRecode End -->
+</sqlMap>

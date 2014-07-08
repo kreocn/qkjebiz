@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="sysebiz_orderGoods" extends="default" namespace="/sysebiz">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- OrderGoods Start -->
+		<action name="orderGoods_list" class="com.qkjsys.ebiz.action.OrderGoodsAction" method="list">
+			<result>/jsp/sysebiz/OrderGoodsList.jsp</result>
+		</action>
+		<action name="orderGoods_load" class="com.qkjsys.ebiz.action.OrderGoodsAction" method="load">
+			<result>/jsp/sysebiz/OrderGoodsEdit.jsp</result>
+		</action>
+		<action name="orderGoods_add" class="com.qkjsys.ebiz.action.OrderGoodsAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">order_load</param>
+				<param name="order.uuid">${orderGoods.order_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="orderGoods_save" class="com.qkjsys.ebiz.action.OrderGoodsAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">order_load</param>
+				<param name="order.uuid">${orderGoods.order_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="orderGoods_del" class="com.qkjsys.ebiz.action.OrderGoodsAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">order_load</param>
+				<param name="order.uuid">${orderGoods.order_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- OrderGoods End -->
+	</package>
+</struts>

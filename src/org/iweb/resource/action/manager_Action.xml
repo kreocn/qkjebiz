@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="ROOT" extends="default" namespace="/manager">
+		<action name="login" class="org.iweb.sys.action.UserLoginAction">
+			<result>/jsp/manager/login.jsp</result>
+		</action>
+		<action name="login_outside" class="org.iweb.sys.action.UserLoginAction">
+			<result>/jsp/manager/login_outside.jsp</result>
+		</action>
+		<action name="check_login" class="org.iweb.sys.action.UserLoginAction" method="checkLogin">
+			<result type="redirectAction">
+				<param name="namespace">/manager</param>
+				<param name="actionName">imain</param>
+				<!--<param name="message">${message}</param> -->
+			</result>
+			<result name="input" type="redirectAction">
+				<param name="namespace">/manager</param>
+				<param name="actionName">login</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="login_out" class="org.iweb.sys.action.UserLoginAction" method="logout">
+			<result>/jsp/common/login_error.jsp</result>
+		</action>
+		<action name="main" class="org.iweb.common.action.ManageMainAction">
+			<result>/jsp/manager/main.jsp</result>
+		</action>
+		<action name="imain" class="org.iweb.common.action.ManageMainAction">
+			<result>/jsp/manager/imain.jsp</result>
+		</action>
+		<action name="default" class="org.iweb.common.action.DefaultAction">
+			<interceptor-ref name="myStackIndex" />
+			<result>/jsp/manager/default.jsp</result>
+		</action>
+		<action name="top" class="org.iweb.common.action.PageTopAction">
+			<result>/jsp/manager/top.jsp</result>
+		</action>
+		<action name="bottom" class="org.iweb.common.action.PageBottomAction">
+			<result>/jsp/manager/bottom.jsp</result>
+		</action>
+		<action name="menu" class="org.iweb.common.action.MenuAction">
+			<result>/jsp/manager/menu.jsp</result>
+		</action>
+
+		<action name="test" class="com.opensymphony.xwork2.ActionSupport">
+			<result>/jsp/manager/test.jsp</result> 
+		</action>
+	</package>
+</struts>

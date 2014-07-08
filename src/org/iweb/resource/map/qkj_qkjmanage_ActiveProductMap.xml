@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "sql-map-2.dtd">
+<sqlMap>
+	<!-- ActiveProduct Start -->
+	<typeAlias alias="activeProduct" type="com.qkj.manage.domain.ActiveProduct" />
+	<select id="qkjmanage_getActiveProducts" resultClass="activeProduct" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select a.*,p.title product_name
+			From qkjm_r_active_product a,qkj_t_product p
+			WHERE a.product_id = p.uuid
+		]]>
+		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ a.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="active_id"><![CDATA[ a.active_id=#active_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="status"><![CDATA[ a.status=#status# ]]></isNotEmpty>
+	</select>
+	<select id="qkjmanage_getActiveProductsCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*)
+			From qkjm_r_active_product a,qkj_t_product p
+			WHERE a.product_id = p.uuid
+		]]>
+		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ a.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="active_id"><![CDATA[ a.active_id=#active_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="status"><![CDATA[ a.status=#status# ]]></isNotEmpty>
+	</select>
+	<insert id="qkjmanage_addActiveProduct" parameterClass="activeProduct">
+		<![CDATA[ 
+			Insert Into qkjm_r_active_product(active_id,product_id,per_price,num,total_price,status)
+			Values (#active_id#,#product_id#,#per_price#,#num#,#total_price#,#status#)
+		]]>
+	</insert>
+	<delete id="qkjmanage_delActiveProduct" parameterClass="activeProduct">
+	<![CDATA[
+		Delete From qkjm_r_active_product Where uuid=#uuid#
+	]]>
+	</delete>
+	<!-- ActiveProduct End -->
+</sqlMap>

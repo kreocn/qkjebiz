@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "sql-map-2.dtd">
+<sqlMap>
+	<typeAlias alias="goods" type="com.qkjsys.ebiz.domain.Goods" />
+	<select id="ebiz_getGoods" resultClass="goods" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT g.*,s.stock_num,s.froze_num,s.break_num
+			FROM qkj_t_goods g LEFT JOIN qkj_r_goods_stock s ON(g.uuid = s.uuid)
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="uuid"><![CDATA[ g.uuid=#uuid# ]]></isNotNull>
+			<isNotNull prepend="AND" property="goods_sales"><![CDATA[ g.goods_sales=#goods_sales# ]]></isNotNull>
+			<isNotNull prepend="AND" property="goods_type"><![CDATA[ g.goods_type=#goods_type# ]]></isNotNull>
+			<isNotNull prepend="AND" property="goods_name"><![CDATA[ g.goods_name LIKE CONCAT('%',#goods_name#,'%') ]]></isNotNull>
+		</dynamic>
+	</select>
+	<select id="ebiz_getGoodsCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT Count(*)
+			FROM qkj_t_goods g
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="uuid"><![CDATA[ g.uuid=#uuid# ]]></isNotNull>
+			<isNotNull prepend="AND" property="goods_sales"><![CDATA[ g.goods_sales=#goods_sales# ]]></isNotNull>
+			<isNotNull prepend="AND" property="goods_type"><![CDATA[ g.goods_type=#goods_type# ]]></isNotNull>
+			<isNotNull prepend="AND" property="goods_name"><![CDATA[ g.goods_name LIKE CONCAT('%',#goods_name#,'%') ]]></isNotNull>
+		</dynamic>
+	</select>
+
+	<insert id="ebiz_addGoods" parameterClass="goods">
+		<![CDATA[ 
+			Insert Into qkj_t_goods ( goods_name, goods_class, goods_brand, goods_price, goods_price_original, 
+				goods_price_promotion, goods_promotion, goods_promotion_start, goods_promotion_end, goods_points, 
+				goods_description, goods_spec,goods_spec_unit, goods_unit, goods_num, goods_num_warning, goods_sales, goods_parts, 
+				goods_freight, goods_keywords, goods_short_text, goods_sec_remark, goods_points_sales,goods_points_price,
+				add_time, add_user, add_ip, lm_time, lm_user, lm_ip,goods_code,goods_type,small_img,big_img)
+			Values (#goods_name#,#goods_class#,#goods_brand#,#goods_price#,#goods_price_original#,#goods_price_promotion#,
+			#goods_promotion#,#goods_promotion_start#,#goods_promotion_end#,	#goods_points#,#goods_description#,
+			#goods_spec#,#goods_spec_unit#,#goods_unit#,#goods_num#,#goods_num_warning#,#goods_sales#,	#goods_parts#,	#goods_freight#,
+			#goods_keywords#,#goods_short_text#,#goods_sec_remark#,#goods_points_sales#,#goods_points_price#,
+			#add_time#,#add_user#,#add_ip#,#lm_time#,#lm_user#,#lm_ip#,#goods_code#,#goods_type#,#small_img#,#big_img#)
+		]]>
+		<selectKey resultClass="int" keyProperty="uuid">
+		<![CDATA[ 
+			Select LAST_INSERT_ID()
+		]]>
+		</selectKey>
+	</insert>
+	<update id="ebiz_mdyGoods" parameterClass="goods">
+		<![CDATA[
+			Update qkj_t_goods
+			Set goods_name=#goods_name#,
+				goods_class=#goods_class#,
+				goods_brand=#goods_brand#,
+				goods_price=#goods_price#,	
+				goods_price_original=#goods_price_original#,	
+				goods_price_promotion=#goods_price_promotion#,
+				goods_promotion=#goods_promotion#,
+				goods_promotion_start=#goods_promotion_start#,
+				goods_promotion_end=#goods_promotion_end#,
+				goods_points=#goods_points#,
+				goods_description=#goods_description#,
+				goods_spec=#goods_spec#,
+				goods_spec_unit=#goods_spec_unit#,		
+				goods_unit=#goods_unit#,
+				goods_num_warning=#goods_num_warning#,
+				goods_parts=#goods_parts#,
+				goods_freight=#goods_freight#,
+				goods_keywords=#goods_keywords#,
+				goods_short_text=#goods_short_text#,
+				goods_sec_remark=#goods_sec_remark#,
+				goods_points_sales=#goods_points_sales#,
+				goods_points_price=#goods_points_price#,
+				small_img=#small_img#,
+				big_img=#big_img#,
+				lm_time=#lm_time#,
+				lm_user=#lm_user#,
+				lm_ip=#lm_ip#,
+				goods_code=#goods_code#,
+				goods_type=#goods_type#
+			Where uuid=#uuid#
+		]]>
+	</update>
+
+	<!-- 设置商品上下架 -->
+	<update id="ebiz_mdyGoodsSales" parameterClass="goods">
+		<![CDATA[
+			Update qkj_t_goods
+			Set goods_sales=#goods_sales#,
+				lm_time=#lm_time#,
+				lm_user=#lm_user#,
+				lm_ip=#lm_ip#
+			Where uuid=#uuid#
+		]]>
+	</update>
+
+	<delete id="ebiz_delGoods" parameterClass="goods">
+		<![CDATA[
+			Delete From qkj_t_goods
+		]]>
+		<![CDATA[ Where uuid In ]]>
+		<iterate property="uuid" open="(" close=")" conjunction=" , "> #uuid[]#</iterate>
+	</delete>
+
+	<typeAlias alias="goodsImg" type="com.qkjsys.ebiz.domain.GoodsImg" />
+	<select id="ebiz_getGoodImgs" resultClass="goodsImg" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT * FROM qkj_t_goods_img
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotNull>
+			<isNotNull prepend="AND" property="goods_id"><![CDATA[ goods_id=#goods_id# ]]></isNotNull>
+		</dynamic>
+	</select>
+	<select id="ebiz_getGoodImgsCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select count(*) FROM qkj_t_goods_img
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotNull>
+			<isNotNull prepend="AND" property="goods_id"><![CDATA[ goods_id=#goods_id# ]]></isNotNull>
+		</dynamic>
+	</select>
+	<insert id="ebiz_addGoodImg" parameterClass="goodsImg">
+		<![CDATA[ 
+			Insert Into qkj_t_goods_img ( goods_id,title,alt,url,index_flag,state,add_user,add_time )
+			Values (#goods_id#,#title#,#alt#,#url#,#index_flag#,#state#,#add_user#,#add_time#)
+		]]>
+	</insert>
+
+	<!-- 通过AJAX进行修改和删除 -->
+	<update id="ebiz_mdyGoodImg" parameterClass="java.util.Map">
+		<![CDATA[
+			Update qkj_t_goods_img
+			Set title=#title#,
+				alt=#alt#,
+				index_flag=#index_flag#
+			Where uuid=#uuid#
+		]]>
+	</update>
+	<delete id="ebiz_delGoodImg" parameterClass="java.util.Map">
+		<![CDATA[
+			Delete From qkj_t_goods_img Where uuid=#uuid#
+		]]>
+	</delete>
+
+	<typeAlias alias="goodsStock" type="com.qkjsys.ebiz.domain.GoodsStock" />
+	<insert id="sysebiz_addGoodsStock" parameterClass="goodsStock">
+		<![CDATA[ 
+			Insert Into qkj_r_goods_stock(uuid,stock_num) Values (#uuid#,#stock_num#)
+		]]>
+	</insert>
+	<update id="sysebiz_mdyFrozeStock" parameterClass="int">
+		<![CDATA[
+			UPDATE qkj_r_goods_stock s
+			SET s.froze_num = (
+				SELECT IFNULL(SUM(g.order_num),0)
+				FROM qkj_r_order_goods g,qkj_r_order o
+				WHERE g.order_id = o.uuid
+				AND g.goods_id = s.uuid
+				AND o.`status` BETWEEN 10 AND 30
+				AND g.goods_id = #value#
+			)
+			WHERE s.uuid = #value#
+		]]>
+	</update>
+
+	<update id="sysebiz_mdyFrozeStockByOrderGoodsID" parameterClass="int">
+		<![CDATA[
+			UPDATE qkj_r_goods_stock s
+			SET s.froze_num = (
+				SELECT IFNULL(SUM(g.order_num),0)
+				FROM qkj_r_order_goods g,qkj_r_order o
+				WHERE g.order_id = o.uuid
+				AND g.goods_id = s.uuid
+				AND o.`status` BETWEEN 10 AND 20
+			)
+			WHERE s.uuid = (SELECT r.goods_id FROM qkj_r_order_goods r WHERE r.uuid = #value#)
+		]]>
+	</update>
+	<!-- 出库库存变化 -->
+	<update id="sysebiz_mdyOutStock" parameterClass="goodsStock">
+		<![CDATA[
+			UPDATE qkj_r_goods_stock s
+			SET s.stock_num = s.stock_num-#stock_num#
+			WHERE s.uuid = #uuid#
+		]]>
+	</update>
+	<!-- 补库存 -->
+	<update id="sysebiz_mdyInStock" parameterClass="goodsStock">
+		<![CDATA[
+			UPDATE qkj_r_goods_stock s
+			SET s.stock_num = s.stock_num+#stock_num#
+			WHERE s.uuid = #uuid#
+		]]>
+	</update>
+
+	<!-- 库存调整,直接用MemberCellar中,未分配的数量作为库存 -->
+	<update id="sysebiz_mdyGoodsStock" parameterClass="int">
+		<![CDATA[
+			UPDATE qkj_r_goods_stock s
+				SET s.stock_num = (
+				SELECT COUNT(*)
+				FROM qkj_r_member_cellar c
+				WHERE c.goods_id = #value#
+				AND c.member_id IS NULL
+			)
+			WHERE s.uuid = #value#
+		]]>
+	</update>
+
+	<!-- 根据商品批量生成藏酒数据 -->
+	<parameterMap id="procedure_param_goods_uuid" class="java.util.Map">
+		<parameter property="p_goods_id" jdbcType="int" javaType="java.lang.Integer" mode="IN" />
+	</parameterMap>
+	<procedure id="createCellarsByGoodsID" parameterMap="procedure_param_goods_uuid">
+		<![CDATA[ 
+			{CALL CreateCellars(?)}
+		]]>
+	</procedure>
+
+	<!-- Warehouse Start -->
+	<typeAlias alias="ware" type="com.qkjsys.ebiz.domain.Ware" />
+	<select id="ebiz_getWares" resultClass="ware" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select * From qkj_t_warehouse
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotNull>
+		</dynamic>
+	</select>
+	<insert id="ebiz_addWare" parameterClass="ware">
+		<![CDATA[ 
+			Insert Into qkj_t_warehouse(ware_class, ware_name, address,map_data, short_note, note, lm_user, lm_time)
+			Values (#ware_class#, #ware_name#, #address#,#map_data#, #short_note#, #note#, #lm_user#, #lm_time#)
+		]]>
+	</insert>
+	<update id="ebiz_mdyWare" parameterClass="ware">
+		<![CDATA[
+			Update qkj_t_warehouse
+			Set ware_class = #ware_class#,
+				ware_name = #ware_name#,
+				address = #address#,
+				map_data = #map_data#,
+				short_note = #short_note#,
+				note = #note#,
+				lm_user = #lm_user#,
+				lm_time = #lm_time#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="ebiz_delWare" parameterClass="ware">
+	<![CDATA[
+		Delete From qkj_t_warehouse Where uuid=#uuid#
+	]]>
+	</delete>
+	<!-- Warehouse End -->
+
+	<!-- GoodsType Start -->
+	<typeAlias alias="goodsType" type="com.qkjsys.ebiz.domain.GoodsType" />
+	<select id="ebiz_getGoodsTypes" resultClass="goodsType" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT t.*,(SELECT COUNT(*) FROM qkj_t_goods_typeitem i WHERE i.type_id = t.uuid) AS item_num
+			FROM qkj_t_goods_type t
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="uuid"><![CDATA[ t.uuid=#uuid# ]]></isNotNull>
+		</dynamic>
+	</select>
+	<insert id="ebiz_addGoodsType" parameterClass="goodsType">
+		<![CDATA[ 
+			Insert Into qkj_t_goods_type(type_name,type_group,status, lm_user, lm_time)
+			Values (#type_name#,#type_group#,#status#, #lm_user#, #lm_time#)
+		]]>
+	</insert>
+	<update id="ebiz_mdyGoodsType" parameterClass="goodsType">
+		<![CDATA[
+			Update qkj_t_goods_type
+			Set type_name = #type_name#,
+				type_group = #type_group#,
+				status = #status#,
+				lm_user = #lm_user#,
+				lm_time = #lm_time#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="ebiz_delGoodsType" parameterClass="goodsType">
+	<![CDATA[
+		Delete From qkj_t_goods_type Where uuid=#uuid#
+	]]>
+	</delete>
+	<!-- GoodsType End -->
+</sqlMap>

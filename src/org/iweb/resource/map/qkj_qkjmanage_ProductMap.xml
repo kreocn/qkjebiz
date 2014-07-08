@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "sql-map-2.dtd">
+<sqlMap>
+	<!-- Product Start -->
+	<typeAlias alias="product" type="com.qkj.manage.domain.Product" />
+	<select id="qkjmanage_getProducts" resultClass="product" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select * From qkj_t_product
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="brand"><![CDATA[ brand=#brand# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="title"><![CDATA[ title=#title# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="grade"><![CDATA[ grade=#grade# ]]></isNotEmpty>
+		</dynamic>
+	</select>
+	<select id="qkjmanage_getProductsCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) From qkj_t_product
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="brand"><![CDATA[ brand=#brand# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="title"><![CDATA[ title=#title# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="grade"><![CDATA[ grade=#grade# ]]></isNotEmpty>
+		</dynamic>
+	</select>
+	<insert id="qkjmanage_addProduct" parameterClass="product">
+		<![CDATA[ 
+			Insert Into qkj_t_product(brand,title,spec,case_spec,alcohol,flavor,raw_materials,grade,market_price,group_price,dealer_price,group_rebates,dealer_rebates,agree_price_1,agree_price_2,agree_price_3,lm_user)
+			Values (#brand#,#title#,#spec#,#case_spec#,#alcohol#,#flavor#,#raw_materials#,#grade#,#market_price#,#group_price#,#dealer_price#,#group_rebates#,#dealer_rebates#,#agree_price_1#,#agree_price_2#,#agree_price_3#,#lm_user#)
+		]]>
+	</insert>
+	<update id="qkjmanage_mdyProduct" parameterClass="product">
+		<![CDATA[
+			Update qkj_t_product
+			Set brand=#brand#,
+				title=#title#,
+				spec=#spec#,
+				case_spec=#case_spec#,
+				alcohol=#alcohol#,
+				flavor=#flavor#,
+				raw_materials=#raw_materials#,
+				grade=#grade#,
+				market_price=#market_price#,
+				group_price=#group_price#,
+				dealer_price=#dealer_price#,
+				group_rebates=#group_rebates#,
+				dealer_rebates=#dealer_rebates#,
+				agree_price_1=#agree_price_1#,
+				agree_price_2=#agree_price_2#,
+				agree_price_3=#agree_price_3#,
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="qkjmanage_delProduct" parameterClass="product">
+	<![CDATA[
+		Delete From qkj_t_product Where uuid=#uuid#
+	]]>
+	</delete>
+	<!-- Product End -->
+</sqlMap>

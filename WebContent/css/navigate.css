@@ -1,0 +1,28 @@
+@charset "utf-8";
+
+/* CSS Document */ /*Head Style Start*/
+#head {
+	margin: auto; width: 100%;
+}
+
+#banner {
+	height: 90px; background-image: url(../images/top_background.gif); background-repeat: repeat-x;
+}
+
+#menu {
+	font-size: 12px; font-weight: bold; color: #FFFFFF; margin-top: 5px; background-color: #004999; text-indent: 12px; padding: 5px 0px;
+}
+
+#menu a {
+	font-size: 12px; font-weight: bold; color: #FFFFFF; text-decoration: none;
+}
+
+#menu a:hover {
+	text-decoration: underline;
+}
+
+/*Head Style End*/ /*Bottom Style Start*/
+#bottom {
+	margin: auto; width: 98%;
+}
+/*Bottom Style End*/

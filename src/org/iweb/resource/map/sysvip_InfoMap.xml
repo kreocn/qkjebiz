@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "sql-map-2.dtd">
+<sqlMap>
+	<!-- Info Start -->
+	<typeAlias alias="info" type="org.iweb.sysvip.domain.Info" />
+	<select id="sysvip_getInfos" resultClass="info" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select * From s_vip_info
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="type"><![CDATA[ type=#type# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="itype"><![CDATA[ itype=#itype# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="reuuid"><![CDATA[ reuuid=#reuuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="tomember"><![CDATA[ tomember=#tomember# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="imode"><![CDATA[ imode=#imode# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="title"><![CDATA[ title LIKE CONCAT('%',#title#,'%') ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="content"><![CDATA[ content LIKE CONCAT('%',#content#,'%') ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="checked"><![CDATA[ checked=#checked# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="del"><![CDATA[ del=#del# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="add_member"><![CDATA[ add_member=#add_member# ]]></isNotEmpty>
+		</dynamic>
+	</select>
+	<select id="sysvip_getInfosCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) From s_vip_info
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="type"><![CDATA[ type=#type# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="itype"><![CDATA[ itype=#itype# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="reuuid"><![CDATA[ reuuid=#reuuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="tomember"><![CDATA[ tomember=#tomember# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="imode"><![CDATA[ imode=#imode# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="title"><![CDATA[ title LIKE CONCAT('%',#title#,'%') ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="content"><![CDATA[ content LIKE CONCAT('%',#content#,'%') ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="checked"><![CDATA[ checked=#checked# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="del"><![CDATA[ del=#del# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="add_member"><![CDATA[ add_member=#add_member# ]]></isNotEmpty>
+		</dynamic>
+	</select>
+	<insert id="sysvip_addInfo" parameterClass="info">
+		<![CDATA[ 
+			Insert Into s_vip_info(type,itype,reuuid,tomember,imode,title,content,checked,add_time,add_ip,add_member)
+			Values (#type#,#itype#,#reuuid#,#tomember#,#imode#,#title#,#content#,#checked#,#add_time#,#add_ip#,#add_member#)
+		]]>
+	</insert>
+	<update id="sysvip_mdyInfo" parameterClass="info">
+		<![CDATA[
+			Update s_vip_info
+			Set imode=#imode#,
+				title=#title#,
+				content=#content#,
+				lm_time=#lm_time#,
+				lm_ip=#lm_ip#,
+				lm_member=#lm_member#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<update id="sysvip_reMsg" parameterClass="info">
+		<![CDATA[
+			Update s_vip_info
+			Set title=#title#,
+				checked=1,
+				re_time=#re_time#,
+				re_user=#re_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<update id="sysvip_checkInfo" parameterClass="info">
+		<![CDATA[
+			Update s_vip_info
+			Set checked=#checked#,
+				del=#del#,
+				lm_ip=#lm_ip#,
+				lm_member=#lm_member#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<update id="sysvip_recycleInfo" parameterClass="info">
+		<![CDATA[
+			Update s_vip_info
+			Set del=#del#,
+				lm_ip=#lm_ip#,
+				lm_member=#lm_member#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="sysvip_delInfo" parameterClass="info">
+	<![CDATA[
+		Delete From s_vip_info Where uuid=#uuid#
+	]]>
+	</delete>
+	<!-- Info End -->
+</sqlMap>

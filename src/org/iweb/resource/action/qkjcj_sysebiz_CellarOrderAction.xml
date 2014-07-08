@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="sysebiz_cellarOrder" extends="default" namespace="/sysebiz">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- CellarOrder Start -->
+		<action name="cellarOrder_list" class="com.qkjsys.ebiz.action.CellarOrderAction" method="list">
+			<result>/jsp/sysebiz/CellarOrderList.jsp</result>
+		</action>
+		<action name="cellarOrder_load" class="com.qkjsys.ebiz.action.CellarOrderAction" method="load">
+			<result>/jsp/sysebiz/CellarOrderEdit.jsp</result>
+		</action>
+		<action name="cellarOrder_add" class="com.qkjsys.ebiz.action.CellarOrderAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">cellarOrder_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="cellarOrder_save" class="com.qkjsys.ebiz.action.CellarOrderAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">cellarOrder_load</param>
+				<param name="cellarOrder.uuid">${cellarOrder.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="cellarOrder_check0" class="com.qkjsys.ebiz.action.CellarOrderAction" method="order_check0">
+			<result type="redirectAction">
+				<param name="actionName">cellarOrder_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="cellarOrder_check10" class="com.qkjsys.ebiz.action.CellarOrderAction" method="order_check10">
+			<result type="redirectAction">
+				<param name="actionName">cellarOrder_load</param>
+				<param name="cellarOrder.uuid">${cellarOrder.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="cellarOrder_check15" class="com.qkjsys.ebiz.action.CellarOrderAction" method="order_check15">
+			<result type="redirectAction">
+				<param name="actionName">cellarOrder_load</param>
+				<param name="cellarOrder.uuid">${cellarOrder.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="cellarOrder_check20" class="com.qkjsys.ebiz.action.CellarOrderAction" method="order_check20">
+			<result type="redirectAction">
+				<param name="actionName">cellarOrder_load</param>
+				<param name="cellarOrder.uuid">${cellarOrder.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="cellarOrder_del" class="com.qkjsys.ebiz.action.CellarOrderAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">cellarOrder_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- CellarOrder End -->
+	</package>
+</struts>

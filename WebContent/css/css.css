@@ -1,0 +1,161 @@
+@charset "utf-8";
+
+/* CSS Document */
+html,body,div,table {
+padding: 0px; margin: 0px; font-size: 12px; font-family: Verdana, Arial, Helvetica, sans-serif; color: #333;
+}
+
+form {
+padding: 0px; margin: 0px;
+}
+
+a {
+font-size: 12px; color: #369; text-decoration: none;
+}
+
+a:hover {
+color: #FF0000;
+}
+
+input[type="text"] {
+width: 165px;
+}
+
+input[type="password"] {
+width: 165px;
+}
+
+.yesarea {
+display: inline-block; width: 16px; height: 16px; background: url("../images/ico_warn.png") transparent no-repeat 0 0;
+}
+
+.noarea {
+display: inline-block; width: 16px; height: 16px; background: url("../images/ico_warn.png") transparent no-repeat 0 -150px;
+}
+
+.errorarea {
+display: inline-block; width: 16px; height: 16px; background: url("../images/ico_warn.png") transparent no-repeat 0 -50px;
+}
+
+.loadingarea {
+display: inline-block; width: 16px; height: 16px; background: url("../images/loading/loading16x16_01.gif") transparent no-repeat 0 0; height: 16px;
+}
+
+/*ui-autocomplete extra*/
+.ui-autocomplete-loading {
+background-image: url("../images/loading/loading16x16_01.gif") !important;
+}
+
+.ui-autocomplete-input {
+background: white url("../images/icon/search16x16.png") right center no-repeat;
+}
+
+.input1 {
+width: 120px;
+}
+
+.ui_button_100x24_shallow {
+border: none; padding: 0 !important; margin: 0 !important; cursor: pointer;
+background: url("../images/menu/button100x24.png") transparent no-repeat 0 0; text-align: center; width: 100px; line-height: 24px; color: #FFF;
+font-weight: bold; display: inline-block; zoom: 1; *display: inline; cursor: pointer; border-radius: 4px;
+}
+
+.ui_button_100x24_dark {
+border: none; padding: 0 !important; margin: 0 !important; cursor: pointer;
+background: url("../images/menu/button100x24.png") transparent no-repeat 0 -48px; text-align: center; width: 100px; line-height: 24px; color: #FFF;
+font-weight: bold; display: inline-block; zoom: 1; *display: inline; padding: 0 !important; margin: 0 !important; border-radius: 4px;
+}
+
+.ui-loading-16 {
+background: url("../images/loading/loading16x16_01.gif") transparent left center no-repeat; text-indent: 16px; line-height: 16px;
+}
+
+.common_ajax_loading {
+width: 16px; height: 16px; text-indent: -9999px; background: url("../images/loading/loading16x16_01.gif") transparent no-repeat;
+display: inline-block; zoom: 1; *display: inline;
+}
+
+.message_warning {
+color: #B8860B;
+}
+
+.message_error {
+color: #FF0000;
+}
+
+.message_pass {
+color: #008000;
+}
+
+.message_prompt {
+color: #AAA;
+}
+
+.message_ell {
+text-overflow: ellipsis; white-space: nowrap; overflow: hidden; -moz-binding: url('../res/ffxul.xml#ellipsis');
+}
+
+.inline_block_hack {
+display: inline-block; zoom: 1; *display: inline;
+}
+
+.clear {
+clear: both !important; height: 0 !important; line-height: 0 !important;
+}
+
+.printarea {
+text-align: center;
+}
+
+.span_label {
+display: inline-block; padding: 4px 6px; color: #333; background-color: #EEE; border-radius: 4px; border: 1px solid #aaa; white-space: nowrap;
+word-break: break-all;
+}
+
+.sign_tr {
+height: 60px;
+}
+
+.user_sign {
+
+}
+
+.user_sign img {
+width: 100px;
+}
+
+.printshow {
+display: none;
+}
+
+.nowrap {
+white-space: nowrap; word-break: break-all;
+}
+
+span.nowrap {
+display: inline-block;
+}
+
+@media print {
+.printarea {
+display: none;
+}
+.noprintarea {
+display: none;
+}
+.ui-layout-south {
+display: none;
+}
+.ui-layout-north {
+display: none;
+}
+.ui-layout-east {
+display: none;
+}
+.printshow {
+display: table-row-group !important;
+}
+input,textarea,select {
+border: none !important; background: transparent;
+}
+}

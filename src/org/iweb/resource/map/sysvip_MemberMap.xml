@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "sql-map-2.dtd">
+<sqlMap>
+	<!-- Member Start -->
+	<typeAlias alias="member" type="org.iweb.sysvip.domain.Member" />
+	<select id="sysvip_getMembers" resultClass="member" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT m.*,r.role_name user_type_name,d.dept_cname dept_name, 
+						 s.user_name manager_name ,c.money,c.score,c.re_score,s.MOBILE manager_mobile,c.with_score
+			FROM   s_vip_member m 
+						 LEFT JOIN s_sys_department d 
+										ON ( m.dept_code = d.dept_code ) 
+						 LEFT JOIN s_sys_user s 
+										ON ( m.manager = s.uuid ),s_sys_role r ,s_vip_capital c
+			WHERE  m.user_type = r.uuid
+			AND m.uuid = c.member_id
+		]]>
+		<isNotNull prepend="AND" property="uuid"><![CDATA[ m.uuid=#uuid# ]]></isNotNull>
+		<isNotNull prepend="AND" property="title"><![CDATA[ m.title=#title# ]]></isNotNull>
+		<isNotNull prepend="AND" property="mobile"><![CDATA[ m.mobile=#mobile# ]]></isNotNull>
+		<isNotNull prepend="AND" property="email"><![CDATA[ m.email Like #email# ]]></isNotNull>
+		<isNotNull prepend="AND" property="member_name"><![CDATA[ m.member_name Like #member_name# ]]></isNotNull>
+		<isNotNull prepend="AND" property="manager"><![CDATA[ m.manager=#manager# ]]></isNotNull>
+		<isNotNull prepend="AND" property="dept_code"><![CDATA[ m.dept_code=#dept_code# ]]></isNotNull>
+		<isNotNull prepend="AND" property="dept_codes">
+			<![CDATA[ m.dept_code In ]]>
+			<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
+		</isNotNull>
+		<isNotEmpty prepend="AND" property="uuid_autoc"><![CDATA[ m.uuid LIKE CONCAT(#uuid_autoc#,'%') ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="mobile_autoc"><![CDATA[ m.mobile LIKE CONCAT(#mobile_autoc#,'%') ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="member_name_autoc"><![CDATA[ m.member_name LIKE CONCAT('%',#member_name_autoc#,'%') ]]></isNotEmpty>
+		<![CDATA[ ORDER BY m.UUID ]]>
+		<dynamic prepend="LIMIT ">
+			<isNotEmpty property="limitnum">
+				<isGreaterThan property="limitnum" compareValue="0"><![CDATA[ 0,#limitnum# ]]></isGreaterThan>
+			</isNotEmpty>
+			<isEmpty property="limitnum"><![CDATA[ 0,1000 ]]></isEmpty>
+		</dynamic>
+	</select>
+	<select id="sysvip_getMembersCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*)
+			FROM   s_vip_member m,s_sys_role r ,s_vip_capital c
+			WHERE  m.user_type = r.uuid
+			AND m.uuid = c.member_id
+		]]>
+		<isNotNull prepend="AND" property="uuid"><![CDATA[ m.uuid=#uuid# ]]></isNotNull>
+		<isNotNull prepend="AND" property="title"><![CDATA[ m.title=#title# ]]></isNotNull>
+		<isNotNull prepend="AND" property="mobile"><![CDATA[ m.mobile=#mobile# ]]></isNotNull>
+		<isNotNull prepend="AND" property="email"><![CDATA[ m.email Like #email# ]]></isNotNull>
+		<isNotNull prepend="AND" property="member_name"><![CDATA[ m.member_name Like #member_name# ]]></isNotNull>
+		<isNotNull prepend="AND" property="manager"><![CDATA[ m.manager=#manager# ]]></isNotNull>
+		<isNotNull prepend="AND" property="uuid"><![CDATA[ m.dept_code=#dept_code# ]]></isNotNull>
+		<isNotNull prepend="AND" property="dept_codes">
+			<![CDATA[ m.dept_code In ]]>
+			<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
+		</isNotNull>
+		<isNotEmpty prepend="AND" property="uuid_autoc"><![CDATA[ m.uuid LIKE CONCAT(#uuid_autoc#,'%') ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="mobile_autoc"><![CDATA[ m.mobile LIKE CONCAT(#mobile_autoc#,'%') ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="member_name_autoc"><![CDATA[ m.member_name LIKE CONCAT('%',#member_name_autoc#,'%') ]]></isNotEmpty>
+		<dynamic prepend="LIMIT ">
+			<isNotEmpty property="limitnum">
+				<isGreaterThan property="limitnum" compareValue="0"><![CDATA[ 0,#limitnum# ]]></isGreaterThan>
+			</isNotEmpty>
+			<isEmpty property="limitnum"><![CDATA[ 0,1000 ]]></isEmpty>
+		</dynamic>
+	</select>
+	<insert id="sysvip_addMember" parameterClass="member">
+		<selectKey resultClass="java.lang.String" keyProperty="uuid">
+			Select getnextid('SYS_MEMBER_ID','q',6) as uuid
+		</selectKey>
+		<![CDATA[ 
+			Insert Into s_vip_member(uuid,passwords,title,mobile,is_mobile_check,email,is_email_check,member_name,user_type,reg_time,reg_type,dept_code,manager,contact)
+			Values (#uuid#,#passwords#,#title#,#mobile#,#is_mobile_check#,#email#,#is_email_check#,#member_name#,#user_type#,#reg_time#,#reg_type#,#dept_code#,#manager#,#contact#)
+		]]>
+	</insert>
+	<update id="sysvip_mdyMember" parameterClass="member">
+		<![CDATA[
+			Update s_vip_member
+			Set 
+		]]>
+		<isNotNull property="passwords"><![CDATA[ passwords=#passwords#, ]]></isNotNull>
+		<![CDATA[
+			mobile=#mobile#,
+			member_name=#member_name#,
+			email=#email#,			
+			user_type=#user_type#,
+			contact=#contact#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="sysvip_delMember" parameterClass="member">
+	<![CDATA[
+		Delete From s_vip_member Where uuid=#uuid#
+	]]>
+	</delete>
+
+	<select id="sysvip_checkMemberLogin" resultClass="member" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT m.*,r.role_name user_type_name,d.dept_cname dept_name, 
+			       s.user_name manager_name 
+			       ,s.mobile manager_mobile 
+			FROM   s_vip_member m 
+			       LEFT JOIN s_sys_department d 
+			              ON ( m.dept_code = d.dept_code ) 
+			       LEFT JOIN s_sys_user s 
+			              ON ( m.manager = s.uuid ),s_sys_role r 
+			WHERE  m.user_type = r.uuid 
+			       AND ( m.mobile = #uuid# 
+			              OR ( m.email = #uuid# AND m.is_email_check = 1 ) 
+			              OR m.title = #uuid# 
+			              OR m.uuid = #uuid# ) 
+		]]>
+	</select>
+
+	<update id="sysvip_distributionMember" parameterClass="java.util.Map">
+		<![CDATA[
+			UPDATE s_vip_member 
+			SET dept_code = #dept_code#,
+			manager = #manager# 
+		]]>
+		<![CDATA[ Where uuid In ]]>
+		<iterate property="uuids" open="(" close=")" conjunction=" , ">#uuids[]#</iterate>
+	</update>
+
+	<!-- Member End -->
+</sqlMap>

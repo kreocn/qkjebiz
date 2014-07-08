@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "sql-map-2.dtd">
+<sqlMap>
+	<!-- LadingPay Start -->
+	<typeAlias alias="ladingPay" type="com.qkj.manage.domain.LadingPay" />
+	<select id="qkjmanager_getLadingPays" resultClass="ladingPay" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select d.*,au.user_name add_user_name,fu.user_name fd_check_user_name
+			From qkjm_r_lading_pay d LEFT JOIN s_sys_user fu ON (d.fd_check_user=fu.uuid),s_sys_user au
+			WHERE d.add_user=au.uuid
+		]]>
+		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ d.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="pay_date"><![CDATA[ TO_DAYS(d.pay_date)=TO_DAYS(#pay_date#) ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="type"><![CDATA[ d.type=#type# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="lading_id"><![CDATA[ d.lading_id=#lading_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="fd_check"><![CDATA[ d.fd_check=#fd_check# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="add_user"><![CDATA[ d.add_user=#add_user# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="dept_code"><![CDATA[ au.dept_code=#dept_code# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="dept_codes">
+			<![CDATA[ au.dept_code In ]]>
+			<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
+		</isNotEmpty>
+		<![CDATA[ Order By d.pay_date DESC ]]>
+	</select>
+	<select id="qkjmanager_getLadingPaysCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*)
+			From qkjm_r_lading_pay d,s_sys_user au
+			WHERE d.add_user=au.uuid
+		]]>
+		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ d.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="pay_date"><![CDATA[ TO_DAYS(d.pay_date)=TO_DAYS(#pay_date#) ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="type"><![CDATA[ d.type=#type# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="lading_id"><![CDATA[ d.lading_id=#lading_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="fd_check"><![CDATA[ d.fd_check=#fd_check# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="add_user"><![CDATA[ d.add_user=#add_user# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="dept_code"><![CDATA[ au.dept_code=#dept_code# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="dept_codes">
+			<![CDATA[ au.dept_code In ]]>
+			<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
+		</isNotEmpty>
+	</select>
+	<insert id="qkjmanager_addLadingPay" parameterClass="ladingPay">
+		<![CDATA[ 
+			Insert Into qkjm_r_lading_pay(pay_date,type,money,lading_id,add_user,add_time,lm_user,lm_time)
+			Values (#pay_date#,#type#,#money#,#lading_id#,#add_user#,#add_time#,#lm_user#,#lm_time#)
+		]]>
+	</insert>
+	<update id="qkjmanager_mdyLadingPay" parameterClass="ladingPay">
+		<![CDATA[
+			Update qkjm_r_lading_pay
+			Set pay_date=#pay_date#,
+				type=#type#,
+				money=#money#,
+				lm_user=#lm_user#,
+				lm_time=#lm_time#
+			Where uuid = #uuid#
+			AND fd_check=0
+		]]>
+	</update>
+	<update id="qkjmanager_LadingPay_FdCheck" parameterClass="ladingPay">
+		<![CDATA[
+			Update qkjm_r_lading_pay
+			Set fd_check=#fd_check#,
+				fd_check_user=#fd_check_user#,
+				fd_check_time=#fd_check_time#,
+				lm_user=#lm_user#,
+				lm_time=#lm_time#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="qkjmanager_delLadingPay" parameterClass="ladingPay">
+	<![CDATA[
+		Delete From qkjm_r_lading_pay Where uuid=#uuid# AND fd_check=0
+	]]>
+	</delete>
+	<select id="qkjmanager_getLadingPaysMoneys" resultClass="java.lang.Double" parameterClass="string">
+		<![CDATA[ 
+			SELECT IFNULL(SUM(money),0)
+			FROM qkjm_r_lading_pay
+			WHERE lading_id = #value#
+			AND fd_check = 1
+		]]>
+	</select>
+	<!-- LadingPay End -->
+</sqlMap>

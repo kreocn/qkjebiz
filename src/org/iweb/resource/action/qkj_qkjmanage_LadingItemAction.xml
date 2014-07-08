@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="qkjmanage_ladingItem" extends="default" namespace="/qkjmanage">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- LadingItem Start -->
+		<action name="ladingItem_list" class="com.qkj.manage.action.LadingItemAction" method="list">
+			<result>/jsp/qkjmanage/LadingItemList.jsp</result>
+		</action>
+		<action name="ladingItem_load" class="com.qkj.manage.action.LadingItemAction" method="load">
+			<result>/jsp/qkjmanage/LadingItemEdit.jsp</result>
+		</action>
+		<action name="ladingItem_add" class="com.qkj.manage.action.LadingItemAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">lading_load</param>
+				<param name="lading.uuid">${ladingItem.lading_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="ladingItem_save" class="com.qkj.manage.action.LadingItemAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">lading_load</param>
+				<param name="lading.uuid">${ladingItem.lading_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="ladingItem_del" class="com.qkj.manage.action.LadingItemAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">lading_load</param>
+				<param name="lading.uuid">${ladingItem.lading_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- LadingItem End -->
+	</package>
+</struts>

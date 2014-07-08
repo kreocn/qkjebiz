@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="qkjmanage_rebatesProduct" extends="default" namespace="/qkjmanage">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- RebatesProduct Start -->
+		<action name="rebatesProduct_add" class="com.qkj.manage.action.RebatesProductAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">rebates_load</param>
+				<param name="rebates.uuid">${rebatesProduct.rebates_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="rebatesProduct_save" class="com.qkj.manage.action.RebatesProductAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">rebates_load</param>
+				<param name="rebates.uuid">${rebatesProduct.rebates_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="rebatesProduct_del" class="com.qkj.manage.action.RebatesProductAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">rebates_load</param>
+				<param name="rebates.uuid">${rebatesProduct.rebates_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- RebatesProduct End -->
+	</package>
+</struts>

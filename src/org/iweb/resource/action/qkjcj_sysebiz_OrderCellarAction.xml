@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="sysebiz_orderCellar" extends="default" namespace="/sysebiz">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- OrderCellar Start -->
+		<!-- <action name="orderCellar_list" class="com.qkjsys.ebiz.action.OrderCellarAction" method="list"> <result name="success">/jsp/sysebiz/OrderCellarList.jsp</result> 
+			<result name="input" type="redirectAction"> <param name="actionName">order_load</param> <param name="order.uuid">${orderCellar.order_id}</param> 
+			<param name="viewFlag">mdy</param> <param name="message">${message}</param> </result> </action> -->
+		<!-- <action name="orderCellar_add" class="com.qkjsys.ebiz.action.OrderCellarAction" method="add"> <result type="redirectAction"> 
+			<param name="actionName">orderCellar_list</param> <param name="orderCellar.order_id">${orderCellar.order_id}</param> <param 
+			name="errorMessage">${errorMessage}</param> <param name="message">${message}</param> </result> </action> -->
+		<action name="orderCellar_load" class="com.qkjsys.ebiz.action.OrderCellarAction" method="load">
+			<result>/jsp/sysebiz/OrderCellarEdit.jsp</result>
+		</action>
+		<!-- <action name="orderCellar_del" class="com.qkjsys.ebiz.action.OrderCellarAction" method="del"> <result type="redirectAction"> 
+			<param name="actionName">orderCellar_list</param> <param name="orderCellar.order_id">${orderCellar.order_id}</param> <param 
+			name="errorMessage">${errorMessage}</param> <param name="message">${message}</param> </result> </action> -->
+		<!-- New Start -->
+		<action name="orderCellar_list" class="com.qkjsys.ebiz.action.OrderCellarAddAction" method="listCellarByOrder">
+			<result name="success">/jsp/sysebiz/OrderCellarList.jsp</result>
+		</action>
+		<action name="orderCellar_add" class="com.qkjsys.ebiz.action.OrderCellarAddAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">orderCellar_list</param>
+				<param name="memberCellar.order_id">${memberCellar.order_id}</param>
+				<param name="memberCellar.member_id">${memberCellar.member_id}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="orderCellar_del" class="com.qkjsys.ebiz.action.OrderCellarAddAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">orderCellar_list</param>
+				<param name="memberCellar.order_id">${memberCellar.order_id}</param>
+				<param name="memberCellar.member_id">${memberCellar.member_id}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- OrderCellar End -->
+	</package>
+</struts>

@@ -1,0 +1,6 @@
+package $domain_package$;
+$domain_import$
+public class $file_s_name$ {
+$domain_column_area$
+$domain_bean_area$
+}

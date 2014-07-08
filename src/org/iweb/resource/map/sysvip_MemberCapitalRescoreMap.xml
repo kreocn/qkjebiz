@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "sql-map-2.dtd">
+<sqlMap>
+	<!-- MemberCapitalRescore Start -->
+	<typeAlias alias="memberCapitalRescore" type="org.iweb.sysvip.domain.MemberCapitalRescore" />
+	<select id="sysvip_getMemberCapitalRescores" resultClass="memberCapitalRescore" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT r.*,au.user_name add_user_name,lu.user_name lm_user_name,m.member_name,c.re_score mscore
+			FROM   s_vip_capital_rescore r 
+			       LEFT JOIN s_sys_user au 
+			              ON( au.uuid = r.add_user ) 
+			       LEFT JOIN s_sys_user lu 
+			              ON( lu.uuid = r.lm_user ),s_vip_member m,s_vip_capital c 
+			WHERE  r.member_id = m.uuid 
+			       AND r.member_id = c.member_id 
+		]]>
+		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ r.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="member_id"><![CDATA[ r.member_id=#member_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="status"><![CDATA[ r.status=#status# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="manager"><![CDATA[ m.manager=#manager# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="dept_code"><![CDATA[ m.dept_code=#dept_code# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="dept_codes">
+			<![CDATA[ m.dept_code In ]]>
+			<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
+		</isNotEmpty>
+	</select>
+	<select id="sysvip_getMemberCapitalRescoresCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*)
+			FROM   s_vip_capital_rescore r,s_vip_member m ,s_vip_capital c 
+			WHERE  r.member_id = m.uuid 
+			AND r.member_id = c.member_id 
+		]]>
+		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ r.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="member_id"><![CDATA[ r.member_id=#member_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="status"><![CDATA[ r.status=#status# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="manager"><![CDATA[ m.manager=#manager# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="dept_code"><![CDATA[ m.dept_code=#dept_code# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="dept_codes">
+			<![CDATA[ m.dept_code In ]]>
+			<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
+		</isNotEmpty>
+	</select>
+	<insert id="sysvip_addMemberCapitalRescore" parameterClass="memberCapitalRescore">
+		<![CDATA[ 
+			Insert Into s_vip_capital_rescore(member_id,score,add_user,add_time,lm_user,note)
+			Values (#member_id#,#score#,#add_user#,#add_time#,#lm_user#,#note#)
+		]]>
+	</insert>
+	<update id="sysvip_mdyMemberCapitalRescore" parameterClass="memberCapitalRescore">
+		<![CDATA[
+			Update s_vip_capital_rescore
+			Set score=#score#,
+				note=#note#,
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<update id="sysvip_mdyMemberCapitalRescoreStatus" parameterClass="memberCapitalRescore">
+		<![CDATA[
+			Update s_vip_capital_rescore
+			Set status=#status#,
+			lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="sysvip_delMemberCapitalRescore" parameterClass="memberCapitalRescore">
+	<![CDATA[
+		Delete From s_vip_capital_rescore Where uuid=#uuid#
+	]]>
+	</delete>
+	<!-- MemberCapitalRescore End -->
+</sqlMap>

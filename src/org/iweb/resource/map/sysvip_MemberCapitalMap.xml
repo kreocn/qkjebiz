@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "sql-map-2.dtd">
+<sqlMap>
+	<!-- MemberCapital Start -->
+	<typeAlias alias="memberCapital" type="org.iweb.sysvip.domain.MemberCapital" />
+	<select id="sysvip_getMemberCapital" resultClass="memberCapital" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT * FROM s_vip_capital
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="member_id"><![CDATA[ member_id=#member_id# ]]></isNotNull>
+		</dynamic>
+	</select>
+	<insert id="sysvip_addMemberCapital" parameterClass="java.lang.String">
+		<![CDATA[ 
+			Insert Into s_vip_capital(member_id) Values (#value#)
+		]]>
+	</insert>
+	<update id="sysvip_mdyMemberCapitalMoney" parameterClass="memberCapital">
+		<![CDATA[
+			Update s_vip_capital
+			Set money=money + #money#
+			Where member_id = #member_id#
+		]]>
+	</update>
+	<update id="sysvip_mdyMemberCapitalScore" parameterClass="memberCapital">
+		<![CDATA[
+			Update s_vip_capital
+			Set score=score + #score#
+			Where member_id = #member_id#
+		]]>
+	</update>
+	<update id="sysvip_mdyMemberCapitalREScore" parameterClass="memberCapital">
+		<![CDATA[
+			Update s_vip_capital
+			Set re_score=re_score + #re_score#
+			Where member_id = #member_id#
+		]]>
+	</update>
+	<update id="sysvip_mdyMemberCapitalWithScore" parameterClass="memberCapital">
+		<![CDATA[
+			Update s_vip_capital
+			Set with_score=with_score + #with_score#
+			Where member_id = #member_id#
+		]]>
+	</update>
+	<update id="sysvip_mdyMemberCapitalScoreX" parameterClass="memberCapital">
+		<![CDATA[
+			Update s_vip_capital
+			Set score_x=score_x + #score_x#
+			Where member_id = #member_id#
+		]]>
+	</update>
+	<update id="sysvip_mdyMemberCapitalScoreY" parameterClass="memberCapital">
+		<![CDATA[
+			Update s_vip_capital
+			Set score_y=score_y + #score_y#
+			Where member_id = #member_id#
+		]]>
+	</update>
+	<update id="sysvip_mdyMemberCapitalMoneyX" parameterClass="memberCapital">
+		<![CDATA[
+			Update s_vip_capital
+			Set money_x=money_x + #money_x#
+			Where member_id = #member_id#
+		]]>
+	</update>
+	<update id="sysvip_mdyMemberCapitalMoneyY" parameterClass="memberCapital">
+		<![CDATA[
+			Update s_vip_capital
+			Set money_y=money_y + #money_y#
+			Where member_id = #member_id#
+		]]>
+	</update>
+	<delete id="sysvip_delMemberCapital" parameterClass="string">
+		<![CDATA[
+			Delete From s_vip_capital Where member_id=#value#
+		]]>
+	</delete>
+	<!-- MemberCapital End -->
+	<!-- MemberCapitalHistory Start -->
+	<typeAlias alias="memberCapitalHistory" type="org.iweb.sysvip.domain.MemberCapitalHistory" />
+	<insert id="sysvip_addMemberCapitalHistory" parameterClass="string">
+		<![CDATA[ 
+			INSERT INTO s_vip_capital_history(member_id,money,score,re_score,with_score,score_x,score_y,money_x,money_y)
+			SELECT member_id,money,score,re_score,with_score,score_x,score_y,money_x,money_y 
+			FROM s_vip_capital 
+			WHERE member_id=#value#
+		]]>
+	</insert>
+	<!-- MemberCapitalHistory End -->
+	<!-- MemberCapitalActn Start -->
+	<typeAlias alias="memberCapitalActn" type="org.iweb.sysvip.domain.MemberCapitalActn" />
+	<select id="sysvip_getMemberCapitalActn" resultClass="memberCapitalActn" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT * FROM s_vip_capital_actn
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotNull>
+			<isNotNull prepend="AND" property="member_id"><![CDATA[ member_id=#member_id# ]]></isNotNull>
+		</dynamic>
+		<![CDATA[ ORDER BY lm_time DESC ]]>
+		<isNotEmpty property="limit"><![CDATA[ LIMIT #limit# ]]></isNotEmpty>
+	</select>
+	<select id="sysvip_getMemberCapitalActnCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT COUNT(*) FROM s_vip_capital_actn
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotNull>
+			<isNotNull prepend="AND" property="member_id"><![CDATA[ member_id=#member_id# ]]></isNotNull>
+		</dynamic>
+		<isNotEmpty property="limit"><![CDATA[ LIMIT #limit# ]]></isNotEmpty>
+	</select>
+	<insert id="sysvip_addMemberCapitalActn" parameterClass="memberCapitalActn">
+		<![CDATA[ 
+			Insert Into s_vip_capital_actn(member_id,htype,mode,mode_uuid,money,score,note,lm_user)
+			Values (#member_id#,#htype#,#mode#,#mode_uuid#,#money#,#score#,#note#,#lm_user#)
+		]]>
+	</insert>
+	<!-- MemberCapitalActn End -->
+</sqlMap>

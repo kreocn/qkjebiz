@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "sql-map-2.dtd">
+<sqlMap>
+	<!-- LadingItem Start -->
+	<typeAlias alias="ladingItem" type="com.qkj.manage.domain.LadingItem" />
+	<select id="qkjmanage_getLadingItems" resultClass="ladingItem" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT i.*,p.title product_name,p.case_spec
+			FROM qkjm_r_lading_item i,qkj_t_product p
+			WHERE i.product_id = p.uuid
+		]]>
+		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ i.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="lading_id"><![CDATA[ i.lading_id=#lading_id# ]]></isNotEmpty>
+	</select>
+	<select id="qkjmanage_getLadingItemsCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*)
+			FROM qkjm_r_lading_item i,qkj_t_product p
+			WHERE i.product_id = p.uuid
+		]]>
+		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ i.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="lading_id"><![CDATA[ i.lading_id=#lading_id# ]]></isNotEmpty>
+	</select>
+	<insert id="qkjmanage_addLadingItem" parameterClass="ladingItem">
+		<![CDATA[ 
+			Insert Into qkjm_r_lading_item(lading_id,product_id,per_price,num,total_price)
+			Values (#lading_id#,#product_id#,#per_price#,#num#,#total_price#)
+		]]>
+	</insert>
+	<update id="qkjmanage_mdyLadingItem" parameterClass="ladingItem">
+		<![CDATA[
+			Update qkjm_r_lading_item
+			Set per_price=#per_price#,
+			num=#num#,
+			total_price=#total_price#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="qkjmanage_delLadingItem" parameterClass="ladingItem">
+	<![CDATA[
+		Delete From qkjm_r_lading_item Where uuid=#uuid#
+	]]>
+	</delete>
+
+	<select id="qkjmanage_getLadingItemSumByRebatesID" resultClass="ladingItem" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT it.*,p.title product_name,p.case_spec,p.group_rebates
+			FROM   (SELECT i.product_id,Sum(i.num) num,Sum(i.total_price) total_price 
+			        FROM   qkjm_r_lading_item i 
+			        WHERE  i.lading_id IN (SELECT x.lading_id 
+			                               FROM   qkjm_r_rebates_lading x 
+			                               WHERE  x.rebates_id = #rebates_id#) 
+			        GROUP  BY i.product_id) it,qkj_t_product p 
+			WHERE  it.product_id = p.uuid 
+		]]>
+	</select>
+	<!-- LadingItem End -->
+</sqlMap>

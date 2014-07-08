@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="sysebiz_memberCellar" extends="default" namespace="/sysebiz">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- MemberCellar Start -->
+		<action name="memberCellar_list" class="com.qkjsys.ebiz.action.MemberCellarAction" method="list">
+			<result>/jsp/sysebiz/MemberCellarList.jsp</result>
+		</action>
+		<action name="memberCellar_load" class="com.qkjsys.ebiz.action.MemberCellarAction" method="load">
+			<result>/jsp/sysebiz/MemberCellarEdit.jsp</result>
+		</action>
+		<action name="memberCellar_add" class="com.qkjsys.ebiz.action.MemberCellarAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">memberCellar_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="memberCellar_save" class="com.qkjsys.ebiz.action.MemberCellarAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">memberCellar_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="memberCellar_del" class="com.qkjsys.ebiz.action.MemberCellarAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">memberCellar_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- MemberCellar End -->
+	</package>
+</struts>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="sysvip_memberCapitalRescore" extends="default" namespace="/sysvip">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- MemberCapitalRescore Start -->
+		<action name="memberCapitalRescore_list" class="org.iweb.sysvip.action.MemberCapitalRescoreAction" method="list">
+			<result>/jsp/sysvip/MemberCapitalRescoreList.jsp</result>
+		</action>
+		<action name="memberCapitalRescore_load" class="org.iweb.sysvip.action.MemberCapitalRescoreAction" method="load">
+			<result>/jsp/sysvip/MemberCapitalRescoreEdit.jsp</result>
+		</action>
+		<action name="memberCapitalRescore_add" class="org.iweb.sysvip.action.MemberCapitalRescoreAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">memberCapitalRescore_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="memberCapitalRescore_save" class="org.iweb.sysvip.action.MemberCapitalRescoreAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">memberCapitalRescore_load</param>
+				<param name="memberCapitalRescore.uuid">${memberCapitalRescore.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="memberCapitalRescore_mdyStatus0" class="org.iweb.sysvip.action.MemberCapitalRescoreAction"
+			method="mdyStatus0">
+			<result type="redirectAction">
+				<param name="actionName">memberCapitalRescore_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="memberCapitalRescore_mdyStatus1" class="org.iweb.sysvip.action.MemberCapitalRescoreAction"
+			method="mdyStatus1">
+			<result type="redirectAction">
+				<param name="actionName">memberCapitalRescore_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="memberCapitalRescore_mdyStatus2" class="org.iweb.sysvip.action.MemberCapitalRescoreAction"
+			method="mdyStatus2">
+			<result type="redirectAction">
+				<param name="actionName">memberCapitalRescore_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+
+		<action name="memberCapitalRescore_del" class="org.iweb.sysvip.action.MemberCapitalRescoreAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">memberCapitalRescore_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- MemberCapitalRescore End -->
+	</package>
+</struts>

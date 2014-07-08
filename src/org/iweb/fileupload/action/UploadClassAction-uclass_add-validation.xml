@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE validators SYSTEM "/WEB-INF/xwork-validator-1.0.2.dtd" >
+<validators>
+	<field name="uclass.c_id">
+		<field-validator type="requiredstring">
+			<message>[分类编号]不能为空!</message>
+		</field-validator>
+		<field-validator type="regex">
+			<param name="trim">false</param>
+			<param name="expression">^[a-zA-Z0-9_\-]+$</param>
+			<message>[分类编号]仅允许英文字符及下划线 (a-zA-Z0-9_)!</message>
+		</field-validator>
+	</field>
+	<field name="uclass.c_name">
+		<field-validator type="requiredstring">
+			<message>[分类名称]不能为空!</message>
+		</field-validator>
+	</field>
+</validators>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="adm_assetItem" extends="default" namespace="/adm">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- AssetItem Start -->
+		<action name="assetItem_list" class="com.qkj.adm.action.AssetItemAction" method="list">
+			<result>/jsp/adm/AssetItemList.jsp</result>
+		</action>
+		<action name="assetItem_relist" class="com.qkj.adm.action.AssetItemAction" method="relist">
+			<result type="redirectAction">
+				<param name="actionName">assetItem_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+		<action name="assetItem_load" class="com.qkj.adm.action.AssetItemAction" method="load">
+			<result>/jsp/adm/AssetItemEdit.jsp</result>
+		</action>
+		<action name="assetItem_add" class="com.qkj.adm.action.AssetItemAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">assets_load</param>
+				<param name="assets.uuid">${assetItem.asset_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="assetItem_addSimilar" class="com.qkj.adm.action.AssetItemAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">assets_load</param>
+				<param name="assets.uuid">${assetItem.asset_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="assetItem_save" class="com.qkj.adm.action.AssetItemAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">assets_load</param>
+				<param name="assets.uuid">${assetItem.asset_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="assetItem_own" class="com.qkj.adm.action.AssetItemAction" method="own">
+			<result type="redirectAction">
+				<param name="actionName">assets_load</param>
+				<param name="assets.uuid">${assetItem.asset_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="assetItem_del" class="com.qkj.adm.action.AssetItemAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">assets_load</param>
+				<param name="assets.uuid">${assetItem.asset_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- AssetItem End -->
+	</package>
+</struts>

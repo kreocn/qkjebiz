@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "sql-map-2.dtd">
+<sqlMap>
+	<!-- Order Start -->
+	<typeAlias alias="order" type="com.qkjsys.ebiz.domain.Order" />
+	<select id="sysebiz_getOrders" resultClass="order" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT o.*,m.member_name user_name,m.mobile user_mobile,u.user_name 
+			       add_user_name,m.dept_code,d.dept_cname dept_name,mu.uuid manager, 
+			       mu.user_name manager_name
+			FROM   qkj_r_order o
+			       LEFT JOIN s_sys_user u
+			              ON( o.add_user = u.uuid ),s_vip_member m
+			       LEFT JOIN s_sys_department d
+			              ON ( m.dept_code = d.dept_code )
+			       LEFT JOIN s_sys_user mu 
+			              ON ( m.manager = mu.uuid )
+			WHERE  o.user_id = m.uuid
+			       AND o.`status` > 0
+		]]>
+		<isNotNull prepend="AND" property="uuid"><![CDATA[ o.uuid=#uuid# ]]></isNotNull>
+		<isNotNull prepend="AND" property="user_id"><![CDATA[ o.user_id=#user_id# ]]></isNotNull>
+		<isNotNull prepend="AND" property="pay_status"><![CDATA[ o.pay_status=#pay_status# ]]></isNotNull>
+		<isNotNull prepend="AND" property="status"><![CDATA[ o.`status`=#status# ]]></isNotNull>
+		<isNotEmpty prepend="AND" property="add_time">
+			<![CDATA[	to_days(o.add_time) = to_days(#add_time#)]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="user_mobile"><![CDATA[ m.mobile=#user_mobile# ]]></isNotEmpty>
+		<isNotNull prepend="AND" property="manager"><![CDATA[ mu.uuid=#manager# ]]></isNotNull>
+		<isNotNull prepend="AND" property="dept_code"><![CDATA[ m.dept_code=#dept_code# ]]></isNotNull>
+		<isNotNull prepend="AND" property="dept_codes">
+			<![CDATA[ m.dept_code In ]]>
+			<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
+		</isNotNull>
+		<![CDATA[ Order By o.add_time Desc LIMIT 0, 500 ]]>
+	</select>
+	<select id="sysebiz_getOrdersCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*)
+			FROM   qkj_r_order o 
+			       LEFT JOIN s_sys_user u 
+			              ON( o.add_user = u.uuid ),s_vip_member m 
+			       LEFT JOIN s_sys_department d 
+			              ON ( m.dept_code = d.dept_code ) 
+			       LEFT JOIN s_sys_user mu 
+			              ON ( m.manager = mu.uuid ) 
+			WHERE  o.user_id = m.uuid 
+			       AND o.`status` > 0 
+		]]>
+		<isNotNull prepend="AND" property="uuid"><![CDATA[ o.uuid=#uuid# ]]></isNotNull>
+		<isNotNull prepend="AND" property="user_id"><![CDATA[ o.user_id=#user_id# ]]></isNotNull>
+		<isNotNull prepend="AND" property="pay_status"><![CDATA[ o.pay_status=#pay_status# ]]></isNotNull>
+		<isNotNull prepend="AND" property="status"><![CDATA[ o.`status`=#status# ]]></isNotNull>
+		<isNotEmpty prepend="AND" property="add_time">
+			<![CDATA[	to_days(o.add_time) = to_days(#add_time#)]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="user_mobile"><![CDATA[ m.mobile=#user_mobile# ]]></isNotEmpty>
+		<isNotNull prepend="AND" property="manager"><![CDATA[ mu.uuid=#manager# ]]></isNotNull>
+		<isNotNull prepend="AND" property="dept_code"><![CDATA[ m.dept_code=#dept_code# ]]></isNotNull>
+		<isNotNull prepend="AND" property="dept_codes">
+			<![CDATA[ m.dept_code In ]]>
+			<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
+		</isNotNull>
+	</select>
+	<insert id="sysebiz_addOrder" parameterClass="order">
+		<![CDATA[ 
+		Insert Into qkj_r_order(uuid,order_type,user_id,pay_type,pay_status,pay_time,express_type,ship_time,order_source,note,con_name,con_province,con_city,con_area,con_post,con_street,con_mobile,con_note,invoice_status,invoice_type,invoice_head,invoice_details,status,add_user,add_time,lm_user,lm_time,total_price)
+			Values (#uuid#,#order_type#,#user_id#,#pay_type#,#pay_status#,#pay_time#,#express_type#,#ship_time#,#order_source#,#note#,#con_name#,#con_province#,#con_city#,#con_area#,#con_post#,#con_street#,#con_mobile#,#con_note#,#invoice_status#,#invoice_type#,#invoice_head#,#invoice_details#,#status#,#add_user#,#add_time#,#lm_user#,#lm_time#,#total_price#)
+		]]>
+	</insert>
+	<update id="sysebiz_mdyOrder" parameterClass="order">
+		<![CDATA[
+			Update qkj_r_order
+			Set order_type=#order_type#,
+				user_id=#user_id#,
+				pay_type=#pay_type#,
+				pay_time=#pay_time#,
+				express_type=#express_type#,
+				ship_time=#ship_time#,
+				note=#note#,
+				con_name=#con_name#,
+				con_province=#con_province#,
+				con_city=#con_city#,
+				con_area=#con_area#,
+				con_post=#con_post#,
+				con_street=#con_street#,
+				con_mobile=#con_mobile#,
+				con_note=#con_note#,
+				invoice_type=#invoice_type#,
+				invoice_head=#invoice_head#,
+				invoice_details=#invoice_details#,
+				total_price=#total_price#,
+				lm_user=#lm_user#,
+				lm_time=#lm_time#
+			Where uuid = #uuid#
+		]]>
+	</update>
+
+	<update id="sysebiz_mdyStatus" parameterClass="order">
+		<![CDATA[
+			UPDATE qkj_r_order r
+			SET `status` = #status#,
+				lm_user=#lm_user#,
+				lm_time=#lm_time#
+			Where uuid = #uuid#
+		]]>
+	</update>
+
+	<update id="sysebiz_mdyPayStatus" parameterClass="order">
+		<![CDATA[
+			UPDATE qkj_r_order r
+			SET pay_status = #pay_status#,
+				pay_time = #pay_time#,
+				lm_user=#lm_user#,
+				lm_time=#lm_time#
+			Where uuid = #uuid#
+		]]>
+	</update>
+
+	<update id="sysebiz_mdyTotalPrice" parameterClass="java.lang.String">
+		<![CDATA[
+			UPDATE qkj_r_order o
+			SET o.total_price = (
+			SELECT SUM(g.total_price) FROM qkj_r_order_goods g
+			WHERE g.order_id = o.uuid
+			)
+			WHERE o.uuid = #value#
+		]]>
+	</update>
+
+	<delete id="sysebiz_delOrder" parameterClass="order">
+	<![CDATA[
+		Delete From qkj_r_order Where uuid=#uuid#
+	]]>
+	</delete>
+	<!-- Order End -->
+</sqlMap>

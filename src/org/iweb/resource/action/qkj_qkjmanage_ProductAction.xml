@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="qkjmanage_product" extends="default" namespace="/qkjmanage">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- Product Start -->
+		<action name="product_list" class="com.qkj.manage.action.ProductAction" method="list">
+			<result>/jsp/qkjmanage/ProductList.jsp</result>
+		</action>
+		<action name="product_load" class="com.qkj.manage.action.ProductAction" method="load">
+			<result>/jsp/qkjmanage/ProductEdit.jsp</result>
+		</action>
+		<action name="product_add" class="com.qkj.manage.action.ProductAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">product_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="product_save" class="com.qkj.manage.action.ProductAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">product_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="product_del" class="com.qkj.manage.action.ProductAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">product_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- Product End -->
+	</package>
+</struts>

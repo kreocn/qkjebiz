@@ -1,0 +1,156 @@
+package $action_package$;
+$action_import$
+public class $file_s_name$Action extends ActionSupport {
+	private static final long serialVersionUID = 1L;
+	private static Log log = LogFactory.getLog($file_s_name$Action.class);
+	private Map<String, Object> map = new HashMap<String, Object>();
+	private $file_s_name$DAO dao = new $file_s_name$DAO();
+
+	private $file_s_name$ $class_alias$;
+	private List<$file_s_name$> $class_alias$s;
+	private String message;
+	private String viewFlag;
+	private int recCount;
+	private int pageSize;
+	private int currPage;
+
+	public $file_s_name$ get$file_s_name$() {
+		return $class_alias$;
+	}
+
+	public void set$file_s_name$($file_s_name$ $class_alias$) {
+		this.$class_alias$ = $class_alias$;
+	}
+
+	public List<$file_s_name$> get$file_s_name$s() {
+		return $class_alias$s;
+	}
+
+	public void set$file_s_name$s(List<$file_s_name$> $class_alias$s) {
+		this.$class_alias$s = $class_alias$s;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public String getViewFlag() {
+		return viewFlag;
+	}
+
+	public void setViewFlag(String viewFlag) {
+		this.viewFlag = viewFlag;
+	}
+
+	public int getRecCount() {
+		return recCount;
+	}
+
+	public void setRecCount(int recCount) {
+		this.recCount = recCount;
+	}
+
+	public int getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
+	
+	public int getCurrPage() {
+		return currPage;
+	}
+
+	public void setCurrPage(int currPage) {
+		this.currPage = currPage;
+	}
+
+	public String list() throws Exception {
+		ContextHelper.isPermit("$action_privilege_flag$_LIST");
+		try {
+			map.clear();
+			if ($class_alias$ != null)
+				map.putAll(ToolsUtil.getMapByBean($class_alias$));
+			map.putAll(ContextHelper.getDefaultRequestMap4Page());
+			this.setPageSize(ContextHelper.getPageSize(map));
+			this.setCurrPage(ContextHelper.getCurrPage(map));		
+			this.set$file_s_name$s(dao.list(map));
+			this.setRecCount(dao.getResultCount());
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
+			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
+		}
+		return SUCCESS;
+	}
+	
+	public String relist() throws Exception {
+		return SUCCESS;
+	}
+
+	public String load() throws Exception {
+		try {
+			if (null == viewFlag) {
+				this.set$file_s_name$(null);
+				setMessage("你没有选择任何操作!");
+			} else if ("add".equals(viewFlag)) {
+				this.set$file_s_name$(null);
+			} else if ("mdy".equals(viewFlag)) {
+				if (!($class_alias$ == null || $class_alias$.getUuid() == null)) {
+					this.set$file_s_name$(($file_s_name$) dao.get($class_alias$.getUuid()));
+				} else {
+					this.set$file_s_name$(null);
+				}
+			} else {
+				this.set$file_s_name$(null);
+				setMessage("无操作类型!");
+			}
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!load 读取数据错误:", e);
+			throw new Exception(this.getClass().getName() + "!load 读取数据错误:", e);
+		}
+		return SUCCESS;
+	}
+
+	public String add() throws Exception {
+		ContextHelper.isPermit("$action_privilege_flag$_ADD");
+		try {
+			//$class_alias$.setLm_user(ContextHelper.getUserLoginUuid());
+			//$class_alias$.setLm_time(new Date());
+			dao.add($class_alias$);
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!add 数据添加失败:", e);
+			throw new Exception(this.getClass().getName() + "!add 数据添加失败:", e);
+		}
+		return SUCCESS;
+	}
+
+	public String save() throws Exception {
+		ContextHelper.isPermit("$action_privilege_flag$_MDY");
+		try {
+			//$class_alias$.setLm_user(ContextHelper.getUserLoginUuid());
+			//$class_alias$.setLm_time(new Date());
+			dao.save($class_alias$);
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+
+	public String del() throws Exception {
+		ContextHelper.isPermit("$action_privilege_flag$_DEL");
+		try {
+			dao.delete($class_alias$);
+			setMessage("删除成功!ID=" + $class_alias$.getUuid());
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!del 数据删除失败:", e);
+			throw new Exception(this.getClass().getName() + "!del 数据删除失败:", e);
+		}
+		return SUCCESS;
+	}
+}

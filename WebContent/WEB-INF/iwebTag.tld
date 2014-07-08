@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd" version="2.0">
+	<description>IWEB Tags</description>
+	<tlib-version>1.0</tlib-version>
+	<short-name>it</short-name>
+	<uri>http://qkjchina.com/iweb/iwebTags</uri>
+
+	<function>
+		<name>getMemberLogin</name>
+		<function-class>org.iweb.sysvip.MemberStatusFactory</function-class>
+		<function-signature>boolean getLogin()</function-signature>
+	</function>
+
+	<function>
+		<name>getMemberID</name>
+		<function-class>org.iweb.sysvip.MemberStatusFactory</function-class>
+		<function-signature>java.lang.String getMemberID()</function-signature>
+	</function>
+
+	<function>
+		<name>i18n</name>
+		<function-class>org.iweb.sys.I18nMessage</function-class>
+		<function-signature>java.lang.String getI18n(java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<name>formatDate</name>
+		<function-class>org.iweb.sys.DateUtil</function-class>
+		<function-signature>java.lang.String format(java.util.Date,java.lang.String)</function-signature>
+	</function>
+	
+	<function>
+		<name>subString</name>
+		<function-class>org.iweb.sys.ToolsUtil</function-class>
+		<function-signature>java.lang.String subString(java.lang.String,java.lang.Integer)</function-signature>
+	</function>
+</taglib>

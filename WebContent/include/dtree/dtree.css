@@ -1,0 +1,153 @@
+/*--------------------------------------------------|
+| dTree 2.05 | www.destroydrop.com/javascript/tree/ |
+|---------------------------------------------------|
+| Copyright (c) 2002-2003     |
+|--------------------------------------------------*/
+.dtree {
+font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 11px; color: #666; white-space: nowrap;
+}
+
+.dtree img {
+border: 0px; vertical-align: middle;
+}
+
+.dtree a {
+color: #333; text-decoration: none;
+}
+
+.dtree a.node,.dtree a.nodeSel {
+white-space: nowrap; padding: 1px 2px 1px 2px;
+}
+
+.dtree a.node:hover,.dtree a.nodeSel:hover {
+color: #333; text-decoration: underline;
+}
+
+.dtree a.nodeSel {
+background-color: #c0d2ec;
+}
+
+.dtree .clip {
+overflow: hidden;
+}
+
+/***********************
+**CheckBox DTree Style**
+************************/
+.dtree2 {
+font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 11px; color: #666; white-space: nowrap; position: relative; border: #000 solid 1px;
+}
+
+.dtree2 .dTreeNode {
+position: relative;
+}
+
+.dtree2 img {
+border: 0px; vertical-align: middle;
+}
+
+.dtree2 a {
+color: #333; text-decoration: none;
+}
+
+.dtree2 a.node,.dtree2 a.nodeSel {
+white-space: nowrap; padding: 1px 2px 1px 20px;
+}
+
+.dtree2 a.node:hover,.dtree2 a.nodeSel:hover {
+color: #333; text-decoration: underline;
+}
+
+.dtree2 a.nodeSel {
+background-color: #c0d2ec;
+}
+
+.dtree2 .clip {
+overflow: hidden;
+}
+
+.dtree2 .checkArea {
+position: absolute;
+}
+
+.dtree2 .extra_check {
+position: absolute;
+/*float: right;*/ top: 0; right: 0;
+}
+
+.dtreebutton {
+text-align: center; border-bottom: #000 solid 1px; border-left: #000 solid 1px; border-right: #000 solid 1px;
+}
+/*
+.dtree2 input {
+	position: absolute;
+}
+*/
+/*********************
+**MENU DTREE STYLE
+************************/
+.dtree3 {
+font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 11px; color: #666; white-space: nowrap;
+}
+
+.dtree3 .dTreeNode_Root {
+display: none;
+}
+
+.dtree3 .dTreeNode_Title {
+width: 100%; background-color: #369; margin: 1px 0; padding: 5px 0; text-indent: 5px; cursor: pointer;
+}
+
+.dtree3 .dTreeNode_Title a {
+color: white; font-weight: bold;
+}
+
+.dtree3 .dTreeNode_Title a:hover {
+color: white !important; text-decoration: none !important;
+}
+
+.dtree3 .dTreeNode_Title2 {
+width: 100%;
+/*background-color: #8A8FFD;*/ margin: 6px 0 2px 0; padding: 0px; font-weight: bold; text-indent: 2px;
+}
+
+.dtree3 .dTreeNode {
+width: 100%;
+/*background-color: #C0C4FE;*/ margin: 1px 0; padding: 5px 0; text-indent: 5px;
+}
+
+.dtree3 img {
+border: 0px; vertical-align: middle;
+}
+
+.dtree3 a {
+color: #333; text-decoration: none;
+}
+
+.dtree3 a.node,.dtree3 a.nodeSel {
+white-space: nowrap; padding: 1px 2px;
+}
+
+.dtree3 a.node:hover,.dtree3 a.nodeSel:hover {
+color: #369; text-decoration: none;
+}
+
+.dtree3 a.nodeSel {
+color: #FF0000; background-color: #c0d2ec;
+}
+
+.dtree3 .clip {
+overflow: hidden;
+}
+
+.dtree3 .ctrl {
+text-align: center;
+}
+
+.dtree3 .ctrl a { /*padding: 5px 6px; */
+margin: 0px 10px;
+}
+
+.dtree3 .ctrl a:hover { /*background-color: #8A8FFD;*/
+
+}

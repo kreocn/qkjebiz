@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="sysvip_info" extends="default" namespace="/sysvip">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- Info Start -->
+		<action name="info_loadTips" class="org.iweb.sysvip.action.InfoAction" method="loadTips">
+			<result>/jsp/sysvip/InfoTipsEdit.jsp</result>
+		</action>
+		<action name="info_listTips" class="org.iweb.sysvip.action.InfoAction" method="listTips">
+			<result>/jsp/sysvip/InfoTipsList.jsp</result>
+		</action>
+		<action name="info_TipsPass" class="org.iweb.sysvip.action.InfoAction" method="TipsPass">
+			<result type="redirectAction">
+				<param name="actionName">info_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="info_TipsFail" class="org.iweb.sysvip.action.InfoAction" method="TipsFail">
+			<result type="redirectAction">
+				<param name="actionName">info_listTips</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+
+		<action name="info_loadMsgs" class="org.iweb.sysvip.action.InfoAction" method="loadMsgs">
+			<result>/jsp/sysvip/InfoMsgEdit.jsp</result>
+		</action>
+		<action name="info_listMsgs" class="org.iweb.sysvip.action.InfoAction" method="listMsgs">
+			<result>/jsp/sysvip/InfoMsgList.jsp</result>
+		</action>
+		<action name="info_MsgReply" class="org.iweb.sysvip.action.InfoAction" method="MsgReply">
+			<result type="redirectAction">
+				<param name="actionName">info_listMsgs</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- Info End -->
+	</package>
+</struts>

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "sql-map-2.dtd">
+<sqlMap>
+	<!-- OrderCellar Start -->
+	<typeAlias alias="orderCellar" type="com.qkjsys.ebiz.domain.OrderCellar" />
+	<select id="sysebiz_getOrderCellars" resultClass="orderCellar" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT c.*,x.order_id,x.goods_id,x.goods_name,x.order_num,x.ware_id,x.ware_name,x.user_id,
+					x.order_status,x.goods_unit,x.goods_spec,x.goods_spec_unit
+			FROM   qkj_r_order_cellar c,(SELECT 
+			       r.uuid,r.order_id,r.goods_id,g.goods_name,g.goods_unit,r.order_num, 
+			              g.goods_spec,g.goods_spec_unit,i.column_1 AS 
+			              ware_id,w.ware_name,o.user_id, o.`status` order_status 
+			        FROM   qkj_r_order_goods r,qkj_r_order o,qkj_t_goods g,
+			        			qkj_t_goods_info i LEFT JOIN qkj_t_warehouse w 
+			                      ON ( i.column_1 = w.uuid ) 
+			        WHERE  r.order_id = o.uuid 
+			               AND r.goods_id = g.uuid 
+			               AND g.uuid = i.goods_id 
+			               AND o.`status` > 0) x 
+			WHERE  c.order_goods_id = x.uuid 
+		]]>
+		<isNotNull prepend="AND" property="uuid"><![CDATA[ c.uuid=#uuid# ]]></isNotNull>
+		<isNotNull prepend="AND" property="order_goods_id"><![CDATA[ c.order_goods_id=#order_goods_id# ]]></isNotNull>
+		<isNotNull prepend="AND" property="cellar_no"><![CDATA[ c.cellar_no=#cellar_no# ]]></isNotNull>
+		<isNotNull prepend="AND" property="ware_id"><![CDATA[ x.ware_id=#ware_id# ]]></isNotNull>
+		<isNotNull prepend="AND" property="order_id"><![CDATA[ x.order_id=#order_id# ]]></isNotNull>
+		<isNotNull prepend="AND" property="user_id"><![CDATA[ x.user_id=#user_id# ]]></isNotNull>
+		<isNotNull prepend="AND" property="goods_id"><![CDATA[ x.goods_id=#goods_id# ]]></isNotNull>
+		<isNotNull prepend="AND" property="order_status">
+			<isEmpty property="status_search_type"><![CDATA[ x.order_status=#order_status# ]]></isEmpty>
+			<isNotEmpty>
+				<isEqual property="status_search_type" compareValue="0"><![CDATA[ x.order_status=#order_status# ]]></isEqual>
+				<isEqual property="status_search_type" compareValue="1"><![CDATA[ x.order_status>=#order_status# ]]></isEqual>
+				<isEqual property="status_search_type" compareValue="2"><![CDATA[ x.order_status<=#order_status# ]]></isEqual>
+				<isEqual property="status_search_type" compareValue="3"><![CDATA[ x.order_status>#order_status# ]]></isEqual>
+				<isEqual property="status_search_type" compareValue="4"><![CDATA[ x.order_status<#order_status# ]]></isEqual>
+			</isNotEmpty>
+		</isNotNull>
+		<![CDATA[ ORDER BY c.order_goods_id,(c.cellar_no+0) ]]>
+	</select>
+	<select id="sysebiz_getOrderCellarsCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT COUNT(*)
+			FROM   qkj_r_order_cellar c,(SELECT 
+			       r.uuid,r.order_id,r.goods_id,g.goods_name,g.goods_unit,r.order_num, 
+			              g.goods_spec,g.goods_spec_unit,i.column_1 AS 
+			              ware_id,w.ware_name,o.user_id, o.`status` order_status 
+			        FROM   qkj_r_order_goods r,qkj_r_order o,qkj_t_goods g,
+			        			qkj_t_goods_info i LEFT JOIN qkj_t_warehouse w 
+			                      ON ( i.column_1 = w.uuid ) 
+			        WHERE  r.order_id = o.uuid 
+			               AND r.goods_id = g.uuid 
+			               AND g.uuid = i.goods_id 
+			               AND o.`status` > 0) x 
+			WHERE  c.order_goods_id = x.uuid 
+		]]>
+		<isNotNull prepend="AND" property="uuid"><![CDATA[ c.uuid=#uuid# ]]></isNotNull>
+		<isNotNull prepend="AND" property="order_goods_id"><![CDATA[ c.order_goods_id=#order_goods_id# ]]></isNotNull>
+		<isNotNull prepend="AND" property="cellar_no"><![CDATA[ c.cellar_no=#cellar_no# ]]></isNotNull>
+		<isNotNull prepend="AND" property="ware_id"><![CDATA[ x.ware_id=#ware_id# ]]></isNotNull>
+		<isNotNull prepend="AND" property="order_id"><![CDATA[ x.order_id=#order_id# ]]></isNotNull>
+		<isNotNull prepend="AND" property="user_id"><![CDATA[ x.user_id=#user_id# ]]></isNotNull>
+		<isNotNull prepend="AND" property="goods_id"><![CDATA[ x.goods_id=#goods_id# ]]></isNotNull>
+		<isNotNull prepend="AND" property="order_status">
+			<isEmpty property="status_search_type"><![CDATA[ x.order_status=#order_status# ]]></isEmpty>
+			<isNotEmpty>
+				<isEqual property="status_search_type" compareValue="0"><![CDATA[ x.order_status=#order_status# ]]></isEqual>
+				<isEqual property="status_search_type" compareValue="1"><![CDATA[ x.order_status>=#order_status# ]]></isEqual>
+				<isEqual property="status_search_type" compareValue="2"><![CDATA[ x.order_status<=#order_status# ]]></isEqual>
+				<isEqual property="status_search_type" compareValue="3"><![CDATA[ x.order_status>#order_status# ]]></isEqual>
+				<isEqual property="status_search_type" compareValue="4"><![CDATA[ x.order_status<#order_status# ]]></isEqual>
+			</isNotEmpty>
+		</isNotNull>
+	</select>
+	<insert id="sysebiz_addOrderCellar" parameterClass="orderCellar">
+		<![CDATA[ 
+			Insert Into qkj_r_order_cellar(order_goods_id,cellar_no,num,stock,camera)
+			Values (#order_goods_id#,#cellar_no#,#num#,#stock#,#camera#)
+		]]>
+	</insert>
+	<update id="sysebiz_mdyOrderCellar" parameterClass="orderCellar">
+		<![CDATA[
+			Update qkj_r_order_cellar
+			Set cellar_no=#cellar_no#,
+				num=#num#,
+				stock=#stock#,
+				camera=#camera#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="sysebiz_delOrderCellar" parameterClass="java.util.Map">
+	<![CDATA[
+		Delete From qkj_r_order_cellar Where uuid=#uuid#
+	]]>
+	</delete>
+
+	<delete id="sysebiz_delOrderCellarByOrderGoods" parameterClass="java.lang.Integer">
+	<![CDATA[
+		Delete From qkj_r_order_cellar Where order_goods_id=#value#
+	]]>
+	</delete>
+
+	<delete id="sysebiz_delOrderCellarByOrder" parameterClass="java.lang.String">
+	<![CDATA[
+		DELETE FROM qkj_r_order_cellar
+		WHERE order_goods_id IN (SELECT g.uuid 
+						                            FROM   qkj_r_order_goods g 
+						                            WHERE  g.order_id = #value#)
+	]]>
+	</delete>
+
+	<select id="sysebiz_getOrderGoods4Cellars" resultClass="orderCellar" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT r.uuid AS order_goods_id,r.order_id,r.goods_id,g.goods_name,r.order_num,i.column_1 AS ware_id,w.ware_name,o.user_id,o.`status` order_status
+			FROM qkj_r_order_goods r,qkj_r_order o,qkj_t_goods g,
+			qkj_t_goods_info i LEFT JOIN qkj_t_warehouse w ON (i.column_1 = w.uuid)
+			WHERE r.order_id = o.uuid
+			AND r.goods_id = g.uuid
+			AND g.uuid = i.goods_id
+			AND o.`status` > 0
+		]]>
+		<isNotNull prepend="AND" property="order_goods_id"><![CDATA[ r.uuid=#order_goods_id# ]]></isNotNull>
+		<isNotNull prepend="AND" property="ware_id"><![CDATA[ i.column_1=#ware_id# ]]></isNotNull>
+		<isNotNull prepend="AND" property="order_id"><![CDATA[ r.order_id=#order_id# ]]></isNotNull>
+		<isNotNull prepend="AND" property="user_id"><![CDATA[ o.user_id=#user_id# ]]></isNotNull>
+		<isNotNull prepend="AND" property="order_status">
+			<isEmpty property="status_search_type"><![CDATA[ o.`status`=#order_status# ]]></isEmpty>
+			<isNotEmpty>
+				<isEqual property="status_search_type" compareValue="0"><![CDATA[ o.`status`=#order_status# ]]></isEqual>
+				<isEqual property="status_search_type" compareValue="1"><![CDATA[ o.`status`>=#order_status# ]]></isEqual>
+				<isEqual property="status_search_type" compareValue="2"><![CDATA[ o.`status`<=#order_status# ]]></isEqual>
+				<isEqual property="status_search_type" compareValue="3"><![CDATA[ o.`status`>#order_status# ]]></isEqual>
+				<isEqual property="status_search_type" compareValue="4"><![CDATA[ o.`status`<#order_status# ]]></isEqual>
+			</isNotEmpty>
+		</isNotNull>
+		<![CDATA[ ORDER BY r.uuid ]]>
+	</select>
+
+	<!-- 使用order_id检查配货数量,返回差值 -->
+	<select id="sysebiz_checkOrderCellarsIsComplete" resultClass="int" parameterClass="java.lang.String">
+	<![CDATA[ 
+		SELECT SUM(order_num)-SUM(cellar_num) FROM (
+		(SELECT SUM(g.order_num) order_num,0 cellar_num FROM qkj_r_order_goods g
+		WHERE g.order_id = #value#)
+		UNION
+		(SELECT 0,COUNT(c.uuid) FROM qkj_r_member_cellar c
+		WHERE c.order_id = #value#))a
+	 ]]>
+	</select>
+	<!-- 使用order_goods_id检查配货数量,返回差值 -->
+	<select id="sysebiz_checkOrderCellarsNeedNum" resultClass="int" parameterClass="int">
+	<![CDATA[ 
+		SELECT SUM(order_num)-SUM(cellar_num) FROM (
+		(SELECT SUM(g.order_num) order_num,0 cellar_num FROM qkj_r_order_goods g
+		WHERE g.uuid=#value#)
+		UNION
+		(SELECT 0,COUNT(c.uuid) FROM qkj_r_member_cellar c
+		WHERE c.order_goods_id = #value#)
+		)a
+	 ]]>
+	</select>
+
+	<!-- NEW START -->
+	<typeAlias alias="orderGoods4Add" type="com.qkjsys.ebiz.domain.OrderGoods4Add" />
+	<select id="sysebiz_getGoodsByOrderID" resultClass="orderGoods4Add" parameterClass="java.lang.String">
+	<![CDATA[ 
+		SELECT g.*,x.goods_name,x.ware_name
+		FROM   qkj_r_order_goods g,(SELECT g.uuid,g.goods_name,w.ware_name
+		        FROM   qkj_t_goods g,qkj_t_goods_info i
+		               LEFT JOIN qkj_t_warehouse w
+		                      ON (i.column_1=w.uuid)
+		        WHERE  g.uuid = i.goods_id) x 
+		WHERE  g.goods_id = x.uuid 
+		       AND g.order_id = #value#
+	 ]]>
+	</select>
+	<!-- OrderCellar End -->
+</sqlMap>

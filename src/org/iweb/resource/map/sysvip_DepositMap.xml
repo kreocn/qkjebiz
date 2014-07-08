@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "sql-map-2.dtd">
+<sqlMap>
+	<!-- Deposit Start -->
+	<typeAlias alias="deposit" type="org.iweb.sysvip.domain.Deposit" />
+	<select id="sysvip_getDeposits" resultClass="deposit" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select d.*,m.member_name,au.user_name add_user_name,fu.user_name fd_check_user_name
+			From s_vip_deposit d LEFT JOIN s_sys_user fu ON (d.fd_check_user=fu.uuid),
+					s_vip_member m,s_sys_user au
+			WHERE d.member_id=m.uuid
+			AND d.add_user=au.uuid
+		]]>
+		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ d.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="pay_date"><![CDATA[ TO_DAYS(d.pay_date)=TO_DAYS(#pay_date#) ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="type"><![CDATA[ d.type=#type# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="member_id"><![CDATA[ d.member_id=#member_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="member_name"><![CDATA[ m.member_name LIKE CONCAT('%',#member_name#'%') ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="fd_check"><![CDATA[ d.fd_check=#fd_check# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="add_user"><![CDATA[ d.add_user=#add_user# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="dept_code"><![CDATA[ au.dept_code=#dept_code# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="dept_codes">
+			<![CDATA[ au.dept_code In ]]>
+			<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
+		</isNotEmpty>
+		<![CDATA[ Order By d.pay_date DESC ]]>
+	</select>
+	<select id="sysvip_getDepositsCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*)
+			From s_vip_deposit d,	s_vip_member m,s_sys_user au
+			WHERE d.member_id=m.uuid
+			AND d.add_user=au.uuid
+		]]>
+		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ d.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="pay_date"><![CDATA[ TO_DAYS(d.pay_date)=TO_DAYS(#pay_date#) ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="type"><![CDATA[ d.type=#type# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="member_id"><![CDATA[ d.member_id=#member_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="member_name"><![CDATA[ m.member_name LIKE CONCAT('%',#member_name#'%') ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="fd_check"><![CDATA[ d.fd_check=#fd_check# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="add_user"><![CDATA[ d.add_user=#add_user# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="dept_code"><![CDATA[ au.dept_code=#dept_code# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="dept_codes">
+			<![CDATA[ au.dept_code In ]]>
+			<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
+		</isNotEmpty>
+	</select>
+	<insert id="sysvip_addDeposit" parameterClass="deposit">
+		<![CDATA[ 
+			Insert Into s_vip_deposit(pay_date,type,amount,member_id,add_user,add_time,lm_user,lm_time)
+			Values (#pay_date#,#type#,#amount#,#member_id#,#add_user#,#add_time#,#lm_user#,#lm_time#)
+		]]>
+	</insert>
+	<update id="sysvip_mdyDeposit" parameterClass="deposit">
+		<![CDATA[
+			Update s_vip_deposit
+			Set pay_date=#pay_date#,
+				type=#type#,
+				amount=#amount#,
+				lm_user=#lm_user#,
+				lm_time=#lm_time#
+			Where uuid = #uuid#
+			AND fd_check=0
+		]]>
+	</update>
+	<update id="sysvip_Deposit_FdCheck" parameterClass="deposit">
+		<![CDATA[
+			Update s_vip_deposit
+			Set fd_check=#fd_check#,
+				fd_check_user=#fd_check_user#,
+				fd_check_time=#fd_check_time#,
+				lm_user=#lm_user#,
+				lm_time=#lm_time#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="sysvip_delDeposit" parameterClass="deposit">
+	<![CDATA[
+		Delete From s_vip_deposit Where uuid=#uuid# AND fd_check=0
+	]]>
+	</delete>
+	<!-- Deposit End -->
+</sqlMap>

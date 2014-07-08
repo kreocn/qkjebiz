@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
+<sqlMap>
+	<!-- Assets Start -->
+	<typeAlias alias="assets" type="com.qkj.adm.domain.Assets" />
+	<select id="adm_getAssetss" resultClass="assets" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select * From qkja_r_assets
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="typea"><![CDATA[ typea=#typea# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="typeb"><![CDATA[ typeb=#typeb# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="typec"><![CDATA[ typec=#typec# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="title"><![CDATA[ title LIKE CONCAT('%',#title#,'%') ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="company"><![CDATA[ company=#company# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="price_scope"><![CDATA[ price_scope=#price_scope# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="lm_time"><![CDATA[ lm_time=#lm_time# ]]></isNotEmpty>
+		</dynamic>
+	</select>
+	<select id="adm_getAssetssCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) From qkja_r_assets
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="typea"><![CDATA[ typea=#typea# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="typeb"><![CDATA[ typeb=#typeb# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="typec"><![CDATA[ typec=#typec# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="title"><![CDATA[ title=#title# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="company"><![CDATA[ company=#company# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="price_scope"><![CDATA[ price_scope=#price_scope# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="lm_time"><![CDATA[ lm_time=#lm_time# ]]></isNotEmpty>
+		</dynamic>
+	</select>
+	<insert id="adm_addAssets" parameterClass="assets">
+		<![CDATA[ 
+			Insert Into qkja_r_assets(typea,typeb,typec,title,num,company,p_time,p_scrap,price_scope,add_time,add_user)
+			Values (#typea#,#typeb#,#typec#,#title#,#num#,#company#,#p_time#,#p_scrap#,#price_scope#,#add_time#,#add_user#)
+		]]>
+	</insert>
+	<update id="adm_mdyAssets" parameterClass="assets">
+		<![CDATA[
+			Update qkja_r_assets
+			Set title=#title#,
+				num=#num#,
+				company=#company#,
+				p_time=#p_time#,
+				p_scrap=#p_scrap#,
+				price_scope=#price_scope#,
+				lm_time=#lm_time#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="adm_delAssets" parameterClass="assets">
+	<![CDATA[
+		Delete From qkja_r_assets Where uuid=#uuid#
+	]]>
+	</delete>
+	<!-- Assets End -->
+</sqlMap>

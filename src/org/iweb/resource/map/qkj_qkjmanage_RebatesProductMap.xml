@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "sql-map-2.dtd">
+<sqlMap>
+	<!-- RebatesProduct Start -->
+	<typeAlias alias="rebatesProduct" type="com.qkj.manage.domain.RebatesProduct" />
+	<select id="qkjmanage_getRebatesProducts" resultClass="rebatesProduct" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select r.*,p.title product_name
+			From qkjm_r_rebates_product r,qkj_t_product p
+			WHERE r.product_id = p.uuid
+		]]>
+		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ r.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="rebates_id"><![CDATA[ r.rebates_id=#rebates_id# ]]></isNotEmpty>
+	</select>
+	<select id="qkjmanage_getRebatesProductsCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*)
+			From qkjm_r_rebates_product r,qkj_t_product p
+			WHERE r.product_id = p.uuid
+		]]>
+		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ r.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="rebates_id"><![CDATA[ r.rebates_id=#rebates_id# ]]></isNotEmpty>
+	</select>
+	<insert id="qkjmanage_addRebatesProduct" parameterClass="rebatesProduct">
+		<![CDATA[ 
+			Insert Into qkjm_r_rebates_product(rebates_id,product_id,per_price,num,total_price)
+			Values (#rebates_id#,#product_id#,#per_price#,#num#,#total_price#)
+		]]>
+	</insert>
+	<update id="qkjmanage_mdyRebatesProduct" parameterClass="rebatesProduct">
+		<![CDATA[
+			Update qkjm_r_rebates_product
+			Set per_price=#per_price#,
+			num=#num#,
+			total_price=#total_price#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="qkjmanage_delRebatesProduct" parameterClass="rebatesProduct">
+	<![CDATA[
+		Delete From qkjm_r_rebates_product Where uuid=#uuid#
+	]]>
+	</delete>
+	<delete id="qkjmanage_delRebatesProductByRebatesID" parameterClass="int">
+	<![CDATA[
+		Delete From qkjm_r_rebates_product Where rebates_id=#rebates_id#
+	]]>
+	</delete>
+	<!-- RebatesProduct End -->
+</sqlMap>

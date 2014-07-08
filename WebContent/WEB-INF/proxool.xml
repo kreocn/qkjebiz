@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- the proxool configuration can be embedded within your own application's. Anything outside the "proxool" tag is ignored. -->
+<something-else-entirely>
+	<proxool>
+		<alias>proxool_lterp</alias>
+		<driver-url>jdbc:oracle:thin:@192.168.1.200:1521:erpis</driver-url>
+		<!--<driver-url>jdbc:oracle:thin:@10.38.0.102:1521:qbacs</driver-url> -->
+		<driver-class>oracle.jdbc.driver.OracleDriver</driver-class>
+		<driver-properties>
+			<property name="user" value="erp" />
+			<property name="password" value="longtaierppwd" />
+		</driver-properties>
+		<jndi-name>jdbc_lterp_01</jndi-name>
+		<jndi-java.naming.factory.initial>org.jnp.interfaces.NamingContextFactory</jndi-java.naming.factory.initial>
+		<!--<jndi-java.naming.factory.url.pkgs>org.jboss.naming:org.jnp.interfaces</jndi-java.naming.factory.url.pkgs> -->
+		<jndi-java.naming.factory.url.pkgs>org.jboss.naming</jndi-java.naming.factory.url.pkgs>
+		<maximum-connection-count>10</maximum-connection-count>
+		<minimum-connection-count>5</minimum-connection-count>
+		<!--<maximum-connection-lifetime>30</maximum-connection-lifetime>毫秒(ms) -->
+		<!--<maximum-active-time>3</maximum-active-time>毫秒(ms) -->
+		<simultaneous-build-throttle>15</simultaneous-build-throttle>
+		<verbose>true</verbose>
+		<house-keeping-sleep-time>30000</house-keeping-sleep-time>
+		<house-keeping-test-sql>Select Sysdate From dual</house-keeping-test-sql>
+		<prototype-count>0</prototype-count>
+	</proxool>
+</something-else-entirely>

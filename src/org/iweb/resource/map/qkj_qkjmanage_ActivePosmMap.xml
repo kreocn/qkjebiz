@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "sql-map-2.dtd">
+<sqlMap>
+	<!-- ActivePosm Start -->
+	<typeAlias alias="activePosm" type="com.qkj.manage.domain.ActivePosm" />
+	<select id="qkjmanage_getActivePosms" resultClass="activePosm" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select * From qkjm_r_active_posm
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="active_id"><![CDATA[ active_id=#active_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="title"><![CDATA[ title=#title# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="status"><![CDATA[ status=#status# ]]></isNotEmpty>
+		</dynamic>
+	</select>
+	<select id="qkjmanage_getActivePosmsCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) From qkjm_r_active_posm
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="active_id"><![CDATA[ active_id=#active_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="title"><![CDATA[ title=#title# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="status"><![CDATA[ status=#status# ]]></isNotEmpty>
+		</dynamic>
+	</select>
+	<insert id="qkjmanage_addActivePosm" parameterClass="activePosm">
+		<![CDATA[ 
+			Insert Into qkjm_r_active_posm(active_id,title,note,total_price,status)
+			Values (#active_id#,#title#,#note#,#total_price#,#status#)
+		]]>
+	</insert>
+	<update id="qkjmanage_mdyActivePosm" parameterClass="activePosm">
+		<![CDATA[
+			Update qkjm_r_active_posm
+			Set title=#title#,
+				note=#note#,
+				total_price=#total_price#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="qkjmanage_delActivePosm" parameterClass="activePosm">
+	<![CDATA[
+		Delete From qkjm_r_active_posm Where uuid=#uuid#
+	]]>
+	</delete>
+	<!-- ActivePosm End -->
+</sqlMap>

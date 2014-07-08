@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
+<sqlMap>
+	<!-- AssetItem Start -->
+	<typeAlias alias="assetItem" type="com.qkj.adm.domain.AssetItem" />
+	<select id="adm_getAssetItems" resultClass="assetItem" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT i.*,ou.`USER_NAME` own_user_name
+			FROM qkja_r_asset_item i
+			LEFT JOIN s_sys_user ou ON(ou.`UUID` = i.`own_user`)
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ i.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="asset_id"><![CDATA[ i.asset_id=#asset_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="model"><![CDATA[ i.model=#model# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="spec"><![CDATA[ i.spec=#spec# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="own_user"><![CDATA[ i.own_user=#own_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="op_time"><![CDATA[ i.op_time=#op_time# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="lm_user"><![CDATA[ i.lm_user=#lm_user# ]]></isNotEmpty>
+		</dynamic>
+	</select>
+	<select id="adm_getAssetItemsCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) From qkja_r_asset_item
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="asset_id"><![CDATA[ asset_id=#asset_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="model"><![CDATA[ model=#model# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="spec"><![CDATA[ spec=#spec# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="own_user"><![CDATA[ own_user=#own_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="op_time"><![CDATA[ op_time=#op_time# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="lm_user"><![CDATA[ lm_user=#lm_user# ]]></isNotEmpty>
+		</dynamic>
+	</select>
+	<insert id="adm_addAssetItem" parameterClass="assetItem">
+		<![CDATA[ 
+			Insert Into qkja_r_asset_item(uuid,asset_id,model,spec,position,is_use,own_user,use_time,op_user,op_time,add_user,add_time,lm_user)
+			Values (#uuid#,#asset_id#,#model#,#spec#,#position#,#is_use#,#own_user#,#use_time#,#op_user#,#op_time#,#add_user#,#add_time#,#lm_user#)
+		]]>
+	</insert>
+	<!-- 类似创建,这里需要借用op_user作为临时的Insert uuid存储变量 -->
+	<insert id="adm_addAssetItemSimilar" parameterClass="assetItem">
+		<![CDATA[ 
+			INSERT INTO qkja_r_asset_item(`uuid`,asset_id,model,spec,`position`,is_use,add_user,add_time,lm_user)
+			SELECT #uuid#,t.`asset_id`,t.`model`,t.`spec`,t.`position`,0,#add_user#,NOW(),#lm_user# FROM qkja_r_asset_item t WHERE `uuid`=#op_user#
+		]]>
+	</insert>
+	<update id="adm_mdyAssetItem" parameterClass="assetItem">
+		<![CDATA[
+			Update qkja_r_asset_item
+			Set position=#position#,
+				model=#model#,
+				spec=#spec#,
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<update id="adm_ownAssetItem" parameterClass="assetItem">
+		<![CDATA[
+			Update qkja_r_asset_item
+			Set is_use=#is_use#,
+				own_user=#own_user#,
+				use_time=#use_time#,
+				op_user=#op_user#,
+				op_time=#op_time#,
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="adm_delAssetItem" parameterClass="assetItem">
+	<![CDATA[
+		Delete From qkja_r_asset_item Where uuid=#uuid#
+	]]>
+	</delete>
+	<!-- AssetItem End -->
+</sqlMap>

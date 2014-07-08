@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="QKJ_WEB" extends="default" namespace="/qkjweb">
+		<default-interceptor-ref name="myStack" />
+		<!-- UserPrivilege Start -->
+		<action name="cusInfoh_add" class="com.qkj.info.action.CusInfohAction" method="add">
+			<result>/jsp/qkjweb/CusInfoh_AddBack.jsp</result>
+			<result name="input">/jsp/qkjweb/CusInfoh_Form.jsp?message=${message}</result>
+		</action>
+		<!-- 青海总公司20130820股东送酒活动 -->
+		<!-- 收集信息 -->
+		<action name="cusInfoh_add_load" class="com.qkj.info.action.CusInfohAction" method="loadNull">
+			<result>/jsp/qkjweb/CusInfoh_Form.jsp</result>
+		</action>
+		<!-- 快递自主查询 -->
+		<action name="post_search" class="com.qkj.info.action.CusInfohAction" method="postSearch">
+			<result>/jsp/qkjweb/PostSearch.jsp</result>
+		</action>
+		<action name="loaduMdy" class="com.qkj.info.action.CusInfohAction" method="loaduMdy">
+			<result>/jsp/qkjweb/UInfoEdit.jsp</result>
+		</action>
+		<action name="usave" class="com.qkj.info.action.CusInfohAction" method="usave">
+			<result type="redirectAction">
+				<param name="actionName">loaduMdy</param>
+				<param name="cusInfoh.uuid">${cusInfoh.uuid}</param>
+				<param name="cusInfoh.security">${cusInfoh.security}</param>
+			</result>
+		</action>
+	</package>
+
+	<!-- 活动客户后台管理模块 -->
+	<package name="qkjweb_hCusInfo" extends="default" namespace="/webmanager">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- HCusInfo Start -->
+		<action name="hCusInfo_list" class="com.qkj.info.action.HCusInfoAction" method="list">
+			<result>/jsp/qkjweb/HCusInfoList.jsp</result>
+		</action>
+		<action name="hCusInfo_relist" class="com.qkj.info.action.HCusInfoAction" method="relist">
+			<result type="redirectAction">
+				<param name="actionName">hCusInfo_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+		<action name="hCusInfo_load" class="com.qkj.info.action.HCusInfoAction" method="load">
+			<result>/jsp/qkjweb/HCusInfoEdit.jsp</result>
+		</action>
+		<action name="hCusInfo_save" class="com.qkj.info.action.HCusInfoAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">hCusInfo_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="hCusInfo_del" class="com.qkj.info.action.HCusInfoAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">hCusInfo_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="hCusInfo_loadExpress" class="com.qkj.info.action.HCusInfoAction" method="loadOne">
+			<result>/jsp/qkjweb/HCusInfoExpress.jsp</result>
+		</action>
+		<action name="hCusInfo_loadExpressView" class="com.qkj.info.action.HCusInfoAction" method="loadOne">
+			<result>/jsp/qkjweb/HCusInfoExpressView.jsp</result>
+		</action>
+		<action name="hCusInfo_express" class="com.qkj.info.action.HCusInfoAction" method="express">
+			<result type="redirectAction">
+				<param name="actionName">hCusInfo_loadExpress</param>
+				<param name="hcusInfo.uuid">${hcusInfo.uuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+
+		<!-- HCusInfo End -->
+	</package>
+
+	<!-- ============= -->
+	<!-- Remote Ajax Start -->
+	<!-- ============= -->
+	<package name="iInfo" extends="json-default" namespace="/iInfo">
+		<action name="json_ajax" class="com.qkj.info.action.NewsRemoteAjaxAction">
+			<result type="json">
+				<param name="root">ajax_result</param>
+				<!-- <param name="includeProperties">ajax_result.*</param> -->
+				<param name="callbackParameter">callback</param>
+			</result>
+		</action>
+		<action name="cus_qkjAjax" class="com.qkj.info.action.CusInfohAction" method="checkSec">
+			<result type="json">
+				<param name="root">qkjajax_result</param>
+			</result>
+		</action>
+		<action name="OJson_*" class="com.qkj.info.action.OJsonIFAction" method="{1}">
+			<result type="json">
+				<param name="root">json_result</param>
+			</result>
+		</action>
+	</package>
+	<!-- ============= -->
+	<!-- Remote News End -->
+	<!-- ============= -->
+	<!-- Remote News End -->
+	<!-- *************** -->
+</struts>

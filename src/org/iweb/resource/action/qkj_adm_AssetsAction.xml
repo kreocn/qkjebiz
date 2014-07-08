@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="adm_assets" extends="default" namespace="/adm">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- Assets Start -->
+		<action name="assets_list" class="com.qkj.adm.action.AssetsAction" method="list">
+			<result>/jsp/adm/AssetsList.jsp</result>
+		</action>
+		<action name="assets_relist" class="com.qkj.adm.action.AssetsAction" method="relist">
+			<result type="redirectAction">
+				<param name="actionName">assets_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+		<action name="assets_load" class="com.qkj.adm.action.AssetsAction" method="load">
+			<result>/jsp/adm/AssetsEdit.jsp</result>
+		</action>
+		<action name="assets_add" class="com.qkj.adm.action.AssetsAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">assets_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="assets_save" class="com.qkj.adm.action.AssetsAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">assets_load</param>
+				<param name="assets.uuid">${assets.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="assets_del" class="com.qkj.adm.action.AssetsAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">assets_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- Assets End -->
+	</package>
+</struts>
