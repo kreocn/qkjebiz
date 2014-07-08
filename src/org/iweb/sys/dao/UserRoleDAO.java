@@ -1,4 +1,4 @@
-package org.iweb.sys.dao;
+﻿package org.iweb.sys.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -82,6 +82,7 @@ public class UserRoleDAO extends AbstractDAO {
 	 * @param prvg_list
 	 */
 	public void save(UserRole role, List<String> prvg_list) {
+		// 修改角色
 		ArrayList<String> map_id_list = new ArrayList<String>();
 		ArrayList<Object> parameter_list = new ArrayList<Object>();
 		RolePrvg rolePrvg;
@@ -149,11 +150,9 @@ public class UserRoleDAO extends AbstractDAO {
 	public void delete(Object parameters) {
 		ArrayList<String> map_id_list = new ArrayList<String>();
 		ArrayList<Object> parameter_list = new ArrayList<Object>();
-
 		// 角色主表
 		map_id_list.add("sys_delRoles");
 		parameter_list.add(parameters);
-
 		// 删除以前的权限列表
 		RolePrvg rolePrvg = new RolePrvg();
 		rolePrvg.setRole_id(((UserRole) parameters).getUuid());
