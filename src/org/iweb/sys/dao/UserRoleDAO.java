@@ -57,7 +57,7 @@ public class UserRoleDAO extends AbstractDAO {
 		// 角色主表
 		map_id_list.add("sys_addRoles");
 		parameter_list.add(role);
-
+		// ADD权限
 		// 权限列表
 		List<RolePrvg> rolePrvgs = new ArrayList<RolePrvg>();
 		RolePrvg rolePrvg;
