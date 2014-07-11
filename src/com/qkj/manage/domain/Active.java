@@ -48,6 +48,7 @@ public class Active {
 	private Integer ship_ware;// 发货仓库
 	private Date ship_date;// 发货时间
 	private String ship_no;// 运单号码
+	private String ship_type;// 物流名称
 	private String ship_phone;// 物流单号
 
 	// 非数据库字段
@@ -70,6 +71,14 @@ public class Active {
 	private Date pass_time_end;
 	private Date close_pass_time_start;
 	private Date close_pass_time_end;
+
+	public String getShip_type() {
+		return ship_type;
+	}
+
+	public void setShip_type(String ship_type) {
+		this.ship_type = ship_type;
+	}
 
 	public Integer getShip_status() {
 		return ship_status;

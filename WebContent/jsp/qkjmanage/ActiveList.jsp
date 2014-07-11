@@ -250,7 +250,7 @@ cursor: pointer;
 			<s:if test="status==5">
 			<span class="span_label">
 			<s:if test="ship_status==0"><font class="message_error">未发货</font></s:if>
-			<s:if test="ship_status==10"><font id="ship_pass_alert_info" class="message_pass" title="发货时间:${it:formatDate(ship_date,'yyyy-MM-dd')}|运单号:${ship_no}|物流电话:${ship_phone}">已发货</font></s:if>
+			<s:if test="ship_status==10"><font id="ship_pass_alert_info" class="message_pass" title="发货时间:${it:formatDate(ship_date,'yyyy-MM-dd')}|运单号:${ship_no}|物流公司:${ship_type}|物流电话:${ship_phone}">已发货</font></s:if>
 			</span>
 			</s:if>
 		</td>

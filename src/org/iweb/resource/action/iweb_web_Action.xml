@@ -7,7 +7,7 @@
 		<default-interceptor-ref name="myStack" />
 		<!-- UserPrivilege Start -->
 		<action name="cusInfoh_add" class="com.qkj.info.action.CusInfohAction" method="add">
-			<result>/jsp/qkjweb/CusInfoh_AddBack.jsp</result>
+			<result>/jsp/qkjweb/CusInfoh_AddBack.html</result>
 			<result name="input">/jsp/qkjweb/CusInfoh_Form.jsp?message=${message}</result>
 		</action>
 		<!-- 青海总公司20130820股东送酒活动 -->

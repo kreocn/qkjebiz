@@ -283,6 +283,7 @@
 				ship_no=#ship_no#,
 				ship_phone=#ship_phone#,
 				remark=#remark#,
+				ship_type=#ship_type#,
 				lm_user=#lm_user#
 			Where uuid = #uuid#
 		]]>

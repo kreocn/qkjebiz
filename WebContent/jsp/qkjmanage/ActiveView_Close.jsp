@@ -27,8 +27,8 @@ var infoeditor01;
 $(function(){
 	$("#mdyActiveShipInfoForm").dialog({
 	      autoOpen: false,
-	      height: 200,
-	      width: 600,
+	      height: 280,
+	      width: 700,
 	      modal: true
 	});
 	
@@ -385,19 +385,21 @@ font-size: 14px;
 			<div class="money_div">
 			<table class="ilisttable" width="100%">
 			<tr>
-				<td class='firstRowx' colspan="6" style="text-align: center;">
+				<td class='firstRowx' colspan="8" style="text-align: center;">
 					发货信息
 					<s:if test="active.ship_status==0"><span class="message_error">【未发货】</span></s:if>
 					<s:if test="active.ship_status==10"><span class="message_pass">【已发货】</span></s:if>
 				</td>
 			</tr>
 			<tr>
-			<td class='firstRow3'>发货时间:</td>
-			<td class='secRow3'>${it:formatDate(active.ship_date,'yyyy-MM-dd')}</td>
-			<td class='firstRow3'>运单号:</td>
-			<td class='secRow3'>${active.ship_no}</td>
-			<td class='firstRow3'>物流电话:</td>
-			<td class='secRow3'>${active.ship_phone}</td>
+			<td class='firstRowx'>发货时间:</td>
+			<td class='secRowx'>${it:formatDate(active.ship_date,'yyyy-MM-dd')}</td>
+			<td class='firstRowx'>运单号:</td>
+			<td class='secRowx'>${active.ship_no}</td>
+			<td class='firstRowx'>物流名称:</td>
+			<td class='secRowx'>${active.ship_type}</td>
+			<td class='firstRowx'>物流电话:</td>
+			<td class='secRowx'>${active.ship_phone}</td>
 			</tr>
 			</table>
 			</div>
@@ -471,8 +473,16 @@ font-size: 14px;
 		<td class='secRow'><s:textfield name="active.ship_no" title="运单号码" dataLength="0,48" controlName="运单号码" /></td>
 		</tr>
 		<tr>
+		<td class='firstRow'>物流类型/名称:</td>
+		<td class='secRow'><s:textfield name="active.ship_type" title="物流类型/名称" dataLength="0,32" controlName="物流电话" /></td>
+		</tr>
+		<tr>
 		<td class='firstRow'>物流电话:</td>
 		<td class='secRow'><s:textfield name="active.ship_phone" title="物流电话" dataLength="0,48" controlName="物流电话" /></td>
+		</tr>
+		<tr>
+		<td class='firstRow'>备注:</td>
+		<td class='secRow'><s:textarea name="active.remark" title="备注" dataLength="0,48" controlName="备注" cssStyle="width:80%;" /></td>
 		</tr>
 	<tr>
 	    <td colspan="20" class="buttonarea">
