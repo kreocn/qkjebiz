@@ -6,7 +6,7 @@
 
 CKEDITOR.editorConfig = function(config) {
 	config.language = 'zh-cn';
-	config.toolbar = "Full";
+	//config.toolbar = "Full";
 	config.filebrowserBrowseUrl = 'include/ckfinder/ckfinder.html';
 	config.filebrowserImageBrowseUrl = 'include/ckfinder/ckfinder.html?type=Images';
 	config.filebrowserFlashBrowseUrl = 'include/ckfinder/ckfinder.html?type=Flash';
@@ -15,4 +15,21 @@ CKEDITOR.editorConfig = function(config) {
 	config.filebrowserFlashUploadUrl = 'include/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Flash';
 	config.filebrowserWindowWidth = '1000';
 	config.filebrowserWindowHeight = '700';
+
+	config.toolbar_MyToolBars = [
+			['Source', '-','Undo', 'Redo','RemoveFormat'],
+			['Font', 'FontSize','Bold', 'Italic', 'Underline', 'Strike','TextColor', 'BGColor','JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+			['Link', 'Unlink', 'Image', 'Flash', 'Table','Maximize', 'ShowBlocks']
+	];
+	config.toolbar = "MyToolBars";	
+	config.font_names =
+		"宋体;" +
+		"黑体;" +
+		"微软雅黑;" +		
+		"楷体;" +
+		"隶书;" +
+		"幼圆;" +
+	    "Arial/Arial, Helvetica, sans-serif;" +
+	    "Roman/Times New Roman, Times, serif;" +
+	    "Verdana";
 };

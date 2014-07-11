@@ -20,7 +20,27 @@ $(function(){
 			checkSec(sval);
 		}
 	});
+	changeTextArea();
 });
+
+function changeTextArea() {
+	var initInfo = "请填写包含省/市/县的详细地址信息,以便邮寄";
+	$("#cusInfoh_address").val(initInfo);
+	$("#cusInfoh_address").bind({
+		focus:function(){
+			if($(this).val()==initInfo) {
+				$(this).val('');
+				$(this).removeClass('message_prompt');
+			}
+		},
+		blur:function(){
+			if($(this).val()=='') {
+				$(this).val(initInfo);
+				$(this).addClass('message_prompt');
+			}
+		}
+	});
+}
 
 var checkSec = function(sec){
 	if(sec.length>0) {
@@ -94,10 +114,9 @@ font-weight: bold;
 }
 .itable {
 border-collapse: collapse;
-border: #666 solid 1px;
 }
-.itable td {
-/*border: #666 solid 1px;*/
+.itable ,.itable td,.itable tr {
+border: #666 solid 1px;
 }
 
 #securityImg {
@@ -110,6 +129,10 @@ margin: 5px 10px 5px 3px;
 line-height: 20px;
 display: none;
 }
+
+.message_prompt {
+color: #999;
+}
 </style>
 </head>
 <body>
@@ -119,7 +142,7 @@ display: none;
 <td class="leftCol">股东深圳证券<br />A股证券卡号:</td>
 <td class="rightCol">
 <s:hidden name="cusInfoh.linkid" value="v02" />
-<s:textfield id="securityid" name="cusInfoh.security" title="股东证券账户卡号" require="required" controlName="证券号" />
+<s:textfield id="securityid" name="cusInfoh.security" title="股东证券账户卡号" require="required" controlName="证券号" dataLength="10,10" />
 <span id="securityImg"></span>
 <div id="errMsg"></div>
 </td>
@@ -134,11 +157,13 @@ display: none;
 </tr>
 <tr>
 <td class="leftCol">邮寄地址:</td>
-<td class="rightCol"><s:textfield name="cusInfoh.address" title="邮寄地址" require="required" controlName="地址" /></td>
+<td class="rightCol">
+	<s:textarea id="cusInfoh_address" cssClass="message_prompt" name="cusInfoh.address" title="邮寄地址" require="required" controlName="邮寄地址" />
+</td>
 </tr>
 <tr>
 <td class="leftCol">邮编:</td>
-<td class="rightCol"><s:textfield name="cusInfoh.postno" title="邮编" require="required" controlName="邮编" /></td>
+<td class="rightCol"><s:textfield name="cusInfoh.postno" title="邮编" require="required" controlName="邮编" dataType="zipcode" /></td>
 </tr>
 <tr>
     <td colspan="4" class="buttonarea">

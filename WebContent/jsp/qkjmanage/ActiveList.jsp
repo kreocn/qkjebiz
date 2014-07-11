@@ -30,6 +30,11 @@ $(function(){
 	if(curr_apply_dept!='') {
 		loadManagers(curr_apply_dept);
 	}
+	if($("#ship_pass_alert_info").length>0) {
+		$("#ship_pass_alert_info").bind("click",function(){
+			alert($(this).attr("title"));
+		});
+	}
  });
  
 var sobj01;
@@ -62,6 +67,11 @@ function loadManagers(dept_code) {
 	ajax.sendAjax2();
 }
 </script>
+<style type="text/css">
+#ship_pass_alert_info {
+cursor: pointer;
+}
+</style>
 <body>
 <div id="main">
 <div id="result">
@@ -217,7 +227,7 @@ function loadManagers(dept_code) {
 				<s:if test="smd_status==50"><font class="message_pass" title="${smd_user_name} ${it:formatDate(smd_time,'yyyy-MM-dd HH:mm:ss')}">销管副总已审</font></s:if>
 			</span>
 			</s:if>
-			<s:if test="status>2">
+			<s:if test="status>2 && status<5">
 			<span class="span_label">
 			销售(结):
 			<s:if test="close_sd_status==0">新单</s:if>
@@ -235,6 +245,12 @@ function loadManagers(dept_code) {
 			<s:if test="close_smd_status==10"><font class="message_warning">已签收</font></s:if>
 			<s:if test="close_smd_status==30"><font class="message_pass" title="${close_smd_user_name} ${it:formatDate(close_smd_time,'yyyy-MM-dd HH:mm:ss')}">销管经理已审</font></s:if>
 			<s:if test="close_smd_status==50"><font class="message_pass" title="${close_smd_user_name} ${it:formatDate(close_smd_time,'yyyy-MM-dd HH:mm:ss')}">销管副总已审</font></s:if>
+			</span>
+			</s:if>
+			<s:if test="status==5">
+			<span class="span_label">
+			<s:if test="ship_status==0"><font class="message_error">未发货</font></s:if>
+			<s:if test="ship_status==10"><font id="ship_pass_alert_info" class="message_pass" title="发货时间:${it:formatDate(ship_date,'yyyy-MM-dd')}|运单号:${ship_no}|物流电话:${ship_phone}">已发货</font></s:if>
 			</span>
 			</s:if>
 		</td>

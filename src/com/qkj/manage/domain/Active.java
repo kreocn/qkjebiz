@@ -42,8 +42,13 @@ public class Active {
 	private String smd_user;// 最后销管部审核人
 	private String close_sd_user;// 最后销售部审核人
 	private String close_smd_user;// 最后销管部审核人
-	private Date pass_time;
-	private Date close_pass_time;
+	private Date pass_time; // 申请通过时间
+	private Date close_pass_time; // 结案通过时间
+	private Integer ship_status;// 发货状态
+	private Integer ship_ware;// 发货仓库
+	private Date ship_date;// 发货时间
+	private String ship_no;// 运单号码
+	private String ship_phone;// 物流单号
 
 	// 非数据库字段
 	private String apply_dept_name;
@@ -65,6 +70,46 @@ public class Active {
 	private Date pass_time_end;
 	private Date close_pass_time_start;
 	private Date close_pass_time_end;
+
+	public Integer getShip_status() {
+		return ship_status;
+	}
+
+	public void setShip_status(Integer ship_status) {
+		this.ship_status = ship_status;
+	}
+
+	public Integer getShip_ware() {
+		return ship_ware;
+	}
+
+	public void setShip_ware(Integer ship_ware) {
+		this.ship_ware = ship_ware;
+	}
+
+	public Date getShip_date() {
+		return ship_date;
+	}
+
+	public void setShip_date(Date ship_date) {
+		this.ship_date = ship_date;
+	}
+
+	public String getShip_no() {
+		return ship_no;
+	}
+
+	public void setShip_no(String ship_no) {
+		this.ship_no = ship_no;
+	}
+
+	public String getShip_phone() {
+		return ship_phone;
+	}
+
+	public void setShip_phone(String ship_phone) {
+		this.ship_phone = ship_phone;
+	}
 
 	public String getIs_sub_dept() {
 		return is_sub_dept;

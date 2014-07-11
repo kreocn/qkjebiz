@@ -25,44 +25,15 @@
 var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
 var infoeditor01;
 $(function(){
-	if($("#active_close_note").length>0) {
-		infoeditor01 = new widget_textarea();
-		infoeditor01.init("active_close_note");
-	}
-	
-	$("#active_plan_start").datepicker();
-	$("#active_plan_end").datepicker();
-	
-	$("#addProductForm").dialog({
+	$("#mdyActiveShipInfoForm").dialog({
 	      autoOpen: false,
 	      height: 200,
 	      width: 600,
 	      modal: true
 	});
 	
-	$("#addProduct").click(function(){
-		$("#addProductForm").dialog("open");
-	});
-	
-	$("#addPosmForm").dialog({
-	      autoOpen: false,
-	      height: 200,
-	      width: 600,
-	      modal: true
-	});
-	$("#addPosm").click(function(){
-		$("#addPosmForm").dialog("open");
-	});
-	SimpleLoadMember(ajax_url_action,function(event, ui) {loadMember(ui.item.order_user_id);});
-	$("#addMemberForm").dialog({
-	      autoOpen: false,
-	      height: 300,
-	      width: 600,
-	      modal: true
-	});
-	$("#addMember").click(function(){
-		$("#with_score_remain").empty();
-		$("#addMemberForm").dialog("open");
+	$("#mdyActiveShipInfo_Button").click(function(){
+		$("#mdyActiveShipInfoForm").dialog("open");
 	});
 	
 	$("#viewMember").dialog({
@@ -146,7 +117,7 @@ font-size: 14px;
 	<div class="itabletitle">
 		<span class="title1">活动结案单</span>
 		<span class="extra1 printarea">
-			<a href="<s:url action="active_list" namespace="/qkjmanage" />" >活动列表</a>
+			<a href="<s:url action="active_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>" >活动列表</a>
 		</span>	
 	</div>
 <s:form name="form_mdyCloseActive" action="mdyCloseActive" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
@@ -413,6 +384,30 @@ font-size: 14px;
 			<td colspan="6">
 			<div class="money_div">
 			<table class="ilisttable" width="100%">
+			<tr>
+				<td class='firstRowx' colspan="6" style="text-align: center;">
+					发货信息
+					<s:if test="active.ship_status==0"><span class="message_error">【未发货】</span></s:if>
+					<s:if test="active.ship_status==10"><span class="message_pass">【已发货】</span></s:if>
+				</td>
+			</tr>
+			<tr>
+			<td class='firstRow3'>发货时间:</td>
+			<td class='secRow3'>${it:formatDate(active.ship_date,'yyyy-MM-dd')}</td>
+			<td class='firstRow3'>运单号:</td>
+			<td class='secRow3'>${active.ship_no}</td>
+			<td class='firstRow3'>物流电话:</td>
+			<td class='secRow3'>${active.ship_phone}</td>
+			</tr>
+			</table>
+			</div>
+			</td>
+		</tr>
+		<tr><td colspan="6" height="5"></td></tr>
+		<tr>
+			<td colspan="6">
+			<div class="money_div">
+			<table class="ilisttable" width="100%">
 			<tr><td class='firstRowx' colspan="6" style="text-align: center;">备注</td></tr>
 			<tr>
 			<td id="active_remark" class='secRow3' colspan="6">${active.remark }</td>
@@ -421,10 +416,12 @@ font-size: 14px;
 			</div>
 			</td>
 		</tr>
-		
 		<tr class="printarea">
 		<td class='firstRow3'>相关操作:</td>
 		<td class='secRow3' colspan="5">
+			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_MDYSHIPINFO') && active.status==5">
+			<input id="mdyActiveShipInfo_Button" type="button" value="填写发货信息" />
+			</s:if>
 			<input type="button" value="返回" onclick="linkurl('<s:url action="active_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');" />
 			<input type="button" onclick="window.print();" value="打印本页"/>
 		</td>
@@ -453,6 +450,40 @@ font-size: 14px;
 	<td class='secRow'><span id="view_member_with_score"></span></td>
 	</tr>
 </table>	
+</div>
+
+<div id="mdyActiveShipInfoForm" title="修改发货信息">
+<s:form name="form_mdyActiveShipInfoForm" action="mdyActiveShipInfo" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
+	<table class="ilisttable" width="100%">
+		<tr>
+		<td class='firstRow'><span style="color:red;">*</span> 发货状态:</td>
+		<td class='secRow'><s:select name="active.ship_status" list="#{0:'未发货',10:'已发货' }" /></td>
+		</tr>
+		<tr>
+		<td class='firstRow'>出库日期:</td>
+		<td class='secRow'>
+			<input id="form_active_ship_date" type="text" name="active.ship_date" title="出库日期" value="${it:formatDate(active.ship_date,'yyyy-MM-dd')}" dataType="date" controlName="出库日期" />
+			<script type="text/javascript">$("#form_active_ship_date").datepicker();</script>
+		</td>
+		</tr>
+		<tr>
+		<td class='firstRow'>运单号:</td>
+		<td class='secRow'><s:textfield name="active.ship_no" title="运单号码" dataLength="0,48" controlName="运单号码" /></td>
+		</tr>
+		<tr>
+		<td class='firstRow'>物流电话:</td>
+		<td class='secRow'><s:textfield name="active.ship_phone" title="物流电话" dataLength="0,48" controlName="物流电话" /></td>
+		</tr>
+	<tr>
+	    <td colspan="20" class="buttonarea">
+	    	<s:hidden name="active.uuid" value="%{active.uuid}" />
+			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_MDYSHIPINFO')">
+			<s:submit id="mdyActiveShipInfo" name="mdyActiveShipInfo" value="确定" action="mdyActiveShipInfo" />
+			</s:if>
+		</td>
+    </tr>
+</table>	
+</s:form>
 </div>
 </body>
 </html>

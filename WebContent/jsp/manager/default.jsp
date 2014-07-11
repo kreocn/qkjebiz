@@ -72,6 +72,19 @@ display: none;
 			</div>
 		</div>
 		<div class="update_info active_info">
+			<div class="update_title">2014-07-11 系统例行更新</div>
+			<div class="update_content">
+			<dl>
+				<dt>一.活动-增加发货管理功能</dt>
+				<dd>在活动结案之后,可以添加发货信息,包括是否已发货,物流单号电话等信息,方便管理</dd>
+			</dl>
+			<dl>
+				<dt>二.通用-编辑框精简</dt>
+				<dd>鉴于编辑框按钮繁多,但是又不常用的情况,特地把编辑框无用的功能都取出了,使页面更加简洁</dd>
+			</dl>
+			</div>
+		</div>
+		<div class="update_info">
 			<div class="update_title">2014-07-03 系统临时更新</div>
 			<div class="update_content">
 			<dl>

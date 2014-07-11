@@ -76,13 +76,12 @@ public class CusInfohDAO extends AbstractDAO {
 			return 1;
 		}
 
-		// String sql2 = "SELECT COUNT(*) FROM h_sec_info si WHERE si.ZQZH = '"
-		// + sec + "'";
-		// long i2 = (long) cd.commonSelectObject(sql2);
-		// if (i2 == 0) {
-		// 不是预定人群
-		// return 2;
-		// }
+		String sql2 = "SELECT COUNT(*) FROM web_t_cus_source_2014 WHERE `zqzh` =  '" + sec + "'";
+		long i2 = (long) cd.commonSelectObject(sql2);
+		if (i2 == 0) {
+			// 不是预定人群
+			return 2;
+		}
 		return 0;
 	}
 

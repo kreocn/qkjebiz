@@ -899,4 +899,22 @@ public class ActiveAction extends ActionSupport {
 			}
 		}
 	}
+
+	/**
+	 * 修改发货信息
+	 * 
+	 * @return
+	 * @throws Exception
+	 * @date 2014-4-26 上午10:29:40
+	 */
+	public String mdyShipInfo() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_MDYSHIPINFO");
+		try {
+			dao.mdyShipInfo(active);
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!mdyShipInfo 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!mdyShipInfo 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
 }

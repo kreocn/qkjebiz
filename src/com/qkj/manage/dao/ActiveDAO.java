@@ -84,6 +84,11 @@ public class ActiveDAO extends AbstractDAO {
 		return super.save("qkjmanage_mdyActiveCloseMtPrice", active_id);
 	}
 
+	// 发货信息修改
+	public int mdyShipInfo(Object parameters) {
+		return super.save("qkjmanage_mdyShipInfo", parameters);
+	}
+
 	public int getResultCount() {
 		return super.getResultCount();
 	}

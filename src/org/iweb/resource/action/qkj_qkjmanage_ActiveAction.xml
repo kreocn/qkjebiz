@@ -249,6 +249,14 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
+
+		<!-- 发货信息修改 -->
+		<action name="mdyActiveShipInfo" class="com.qkj.manage.action.ActiveAction" method="mdyShipInfo">
+			<result type="redirectAction">
+				<param name="actionName">active_closeView</param>
+				<param name="active.uuid">${active.uuid}</param>
+			</result>
+		</action>
 		<!-- Active End -->
 	</package>
 </struts>

@@ -134,7 +134,7 @@ font-size: 14px;
 	<div class="itabletitle">
 		<span class="title1">活动申请单(${active.uuid})</span>
 		<span class="extra1 printarea">
-			<a href="<s:url action="active_list" namespace="/qkjmanage" />" >活动列表</a>
+			<a href="<s:url action="active_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>" >活动列表</a>
 		</span>	
 	</div>
 <s:form name="form1" action="active_add" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">

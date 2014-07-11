@@ -273,5 +273,21 @@
 		]]>
 	</update>
 	<!-- Close Flow End -->
+	<!-- ship info change -->
+	<update id="qkjmanage_mdyShipInfo" parameterClass="active">
+		<![CDATA[
+			Update qkjm_r_active
+			Set ship_status=#ship_status#,
+				ship_ware=#ship_ware#,
+				ship_date=#ship_date#,
+				ship_no=#ship_no#,
+				ship_phone=#ship_phone#,
+				remark=#remark#,
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<!-- ship info change -->
+
 	<!-- Active End -->
 </sqlMap>
