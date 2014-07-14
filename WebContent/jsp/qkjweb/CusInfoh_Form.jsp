@@ -157,7 +157,7 @@ color: #999;
 <tr>
 <td class="leftCol">邮寄地址:</td>
 <td class="rightCol">
-<textarea  id="cusInfoh_address" cssClass="message_prompt" name="cusInfoh.address" title="邮寄地址" require="required" controlName="邮寄地址"></textarea>
+<textarea  id="cusInfoh_address" class="message_prompt" name="cusInfoh.address" title="邮寄地址" require="required" controlName="邮寄地址"></textarea>
 </td>
 </tr>
 <tr>
