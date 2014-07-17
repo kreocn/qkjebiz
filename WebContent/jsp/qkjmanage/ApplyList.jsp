@@ -36,6 +36,14 @@ var selectDept = function() {
 	sobj01.open();
 };
 </script>
+<style type="text/css">
+.mdyApplyShipInfo_Link {
+cursor: pointer;
+}
+.ship_hidden_info {
+display: none;
+}
+</style>
 <body>
 <div id="main">
 <div id="result">
@@ -113,6 +121,7 @@ var selectDept = function() {
 	    <th>申请人</th>
 		<th>事</th>
 		<th>状态</th>
+		<th>发货情况</th>
 		<th>操作</th>
 	  </tr>
 <s:iterator value="applys" status="sta">
@@ -123,12 +132,29 @@ var selectDept = function() {
 	    <td align="center"><s:property value="apply_dept_name" /></td>
 		<td align="center"><s:property value="apply_user_name" /></td>
 		<td title="${title}">${it:subString(title,40)}</td>
-		<td align="center" title="${check_user_name}-${it:formatDate(check_time,'yyyy-MM-dd HH:mm:ss')}">
+		<td align="center" title="${check_user_name}-${it:formatDate(check_time,'yyyy-MM-dd HH:mm:ss')}-${check_note}">
 			<s:if test="0==status">新申请</s:if>
 			<s:if test="5==status"><span class="message_error">已退回</span></s:if>
 			<s:if test="10==status"><span class="message_warning">待审核</span></s:if>
 			<s:if test="20==status"><span class="message_pass">大区经理已审</span></s:if>
-			<s:if test="30==status"><span class="message_pass">运营总监已审</span></s:if></td>
+			<s:if test="30==status"><span class="message_pass">运营总监已审</span></s:if>
+		</td>
+		<td align="center">
+			<s:if test="30==status">
+			<span class="mdyApplyShipInfo_Link"  data="${uuid}">
+			<s:if test="0==ship_status">未发货</s:if>
+			<s:if test="10==ship_status"><span class="message_pass">已发货</span></s:if>
+			</span>
+			<span class="ship_hidden_info">
+				<span id="ship_no_${uuid}">${ship_no}</span>
+				<span id="ship_type_${uuid}">${ship_type}</span>
+				<span id="ship_date_${uuid}">${it:formatDate(ship_date,"yyyy-MM-dd")}</span>
+				<span id="ship_phone_${uuid}">${ship_phone}</span>
+				<span id="ship_status_${uuid}">${ship_status}</span>
+				<span id="check_note_${uuid}">${check_note}</span>
+			</span>
+			</s:if>
+		</td>
 		<td align="center">
 			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_VIEW')">
 			<s:if test="status==30">
@@ -162,5 +188,77 @@ var selectDept = function() {
 	</div>
 </div>
 </div>
+
+<div id="mdyApplyShipInfoForm" title="修改发货信息">
+<s:form name="form_mdyApplyShipInfoForm" action="mdyApplyShipInfo" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
+	<table class="ilisttable" width="100%">
+		<tr>
+		<td class='firstRow' colspan="2" style="text-align: left !important;">
+		审核意见:<span id="form_apply_check_note"></span>
+		</td>
+		</tr>
+		<tr>
+		<td class='firstRow'><span style="color:red;">*</span> 发货状态:</td>
+		<td class='secRow'><s:select id="form_apply_ship_status" name="apply.ship_status" list="#{0:'未发货',10:'已发货' }" /></td>
+		</tr>
+		<tr>
+		<td class='firstRow'>出库日期:</td>
+		<td class='secRow'>
+			<input id="form_apply_ship_date" type="text" name="apply.ship_date" title="出库日期" value="${it:formatDate(apply.ship_date,'yyyy-MM-dd')}" dataType="date" controlName="出库日期" />
+			<script type="text/javascript">$("#form_apply_ship_date").datepicker();</script>
+		</td>
+		</tr>
+		<tr>
+		<td class='firstRow'>运单号:</td>
+		<td class='secRow'><s:textfield id="form_apply_ship_no" name="apply.ship_no" title="运单号码" dataLength="0,48" controlName="运单号码" /></td>
+		</tr>
+		<tr>
+		<td class='firstRow'>物流类型/名称:</td>
+		<td class='secRow'><s:textfield id="form_apply_ship_type" name="apply.ship_type" title="物流类型/名称" dataLength="0,32" controlName="物流电话" /></td>
+		</tr>
+		<tr>
+		<td class='firstRow'>物流电话:</td>
+		<td class='secRow'><s:textfield id="form_apply_ship_phone" name="apply.ship_phone" title="物流电话" dataLength="0,48" controlName="物流电话" /></td>
+		</tr>
+	<tr>
+	    <td colspan="20" class="buttonarea">
+	    	<s:hidden id="form_apply_uuid" name="apply.uuid" value="%{apply.uuid}" />
+			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_MDYAPPLYSHIPINFO')">
+			<s:submit id="mdyApplyShipInfo" name="mdyApplyShipInfo" value="确定" action="mdyApplyShipInfo" />
+			</s:if>
+		</td>
+    </tr>
+</table>	
+</s:form>
+</div>
+<script type="text/javascript">
+$(function(){
+	$("#mdyApplyShipInfoForm").dialog({
+	      autoOpen: false,
+	      height: 300,
+	      width: 700,
+	      modal: true
+	});
+	$(".mdyApplyShipInfo_Link").click(function(){
+		var p_uuid = $(this).attr("data");
+		$("#form_apply_uuid").val(p_uuid);
+		$("#form_apply_ship_phone").val($("#ship_phone_"+p_uuid).text());
+		$("#form_apply_ship_type").val($("#ship_type_"+p_uuid).text());
+		$("#form_apply_ship_no").val($("#ship_no_"+p_uuid).text());
+		$("#form_apply_ship_date").val($("#ship_date_"+p_uuid).text());
+		$("#form_apply_ship_status").val($("#ship_status_"+p_uuid).text());
+		$("#form_apply_check_note").text($("#check_note_"+p_uuid).text());
+		$("#mdyApplyShipInfoForm").dialog("open");
+	});
+});
+
+function jsont() {
+	var a = $("#message").attr("data");
+	 var obj = eval('(' + a + ')');
+	 $.each(obj, function(i, n){
+		  alert( "Item #" + i + ": " + n );
+	});
+}
+</script>
 </body>
 </html>

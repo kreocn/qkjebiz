@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
+<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -17,6 +18,20 @@
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery.ui.datepicker-zh.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/jquery.CommonUtil.js" />"></script>
 <script type="text/javascript" src="/ckframe/include/widget.js"></script>
+<style type="text/css">
+.approve_list {
+
+}
+.approve_ad_time, .approve_check_user, .approve_flag,.approve_advice {
+font-weight: bold;
+}
+.approve_flag_fail {
+color: #FF0000;
+}
+.approve_flag_pass {
+color: #008000;
+}
+</style>
 <body>
 <div id="main">
 <div id="result">
@@ -107,6 +122,33 @@
 			<s:textarea id="apply_check_note" name="apply.check_note" title="审核意见" rows="4" cssStyle="width:80%;" />
 		</td>
 		</tr>
+		
+		<tr>
+		<td class='firstRow3'>审阅情况:</td>
+		<td class='secRow3 approve_list'>
+			<ul>
+				<s:iterator value="approves" status="sta">
+				<li>此至事由在<span class="approve_ad_time"> ${it:formatDate(ad_time,'yyyy-MM-dd HH:mm:ss')}</span>
+					被 <span class="approve_check_user"> ${check_user_name}</span> 
+					执行
+					<span class="approve_flag">
+					<s:if test="flag==5">
+					<span class="approve_flag_fail">审阅不通过</span>
+					</s:if>
+					<s:if test="flag==10">
+					<span class="approve_flag_pass">审阅通过</span>
+					</s:if>
+					</span>
+					操作
+					<s:if test="advice!=null && advice!=''">
+					审阅意见:
+					<span class="approve_advice">${advice}</span>
+					</s:if>
+				</li>
+				</s:iterator>
+			</ul>
+		</td>
+		</tr>
 		</s:if>
 		<tr>
 		<td class='firstRow3'>相关操作:</td>
@@ -140,6 +182,9 @@
 					<s:submit id="apply_check5" name="apply_check5" value="审核不通过" action="apply_check5" onclick="return isOp('确定进行此操作?');" />
 					</s:if>
 					</s:if>
+					<s:if test="apply.status>=10 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_APPROVE')">
+					<input type="button" value="审阅"  onclick="openApprove();" />
+					</s:if>
 					<s:if test="apply.status==30">
 					<input type="button" onclick="linkurl('<s:url namespace="/qkjmanage" action="apply_print"><s:param name="apply.uuid" value="apply.uuid" /></s:url>');" value="转到打印页面"/>
 					</s:if>
@@ -157,6 +202,30 @@
 	</div>
 </div>
 </div>
+<div id="approveFrom" title="审阅信息">
+<s:form name="form1" action="apply_approve" namespace="/qkjmanage" onsubmit="return validator(this);" method="post"  theme="simple">
+<input type="hidden" name="apply.uuid" value="${apply['uuid']}" />
+<input type="hidden" id="add_approve_flag" name="approve.flag" />
+<table class="ilisttable" width="100%">
+ <tr>
+<td class='firstRowx'>审阅意见:</td>
+<td class='secRowx'>
+<textarea name="approve.advice" style="width: 80%;" rows="3" ></textarea>
+</td>
+</tr>
+<tr>
+<td align="center" class="buttonarea" colspan="2">
+	<input type="submit" name="approve_pass" value="审阅通过" onclick="return addApproveCheck(10);" />
+	<input type="submit" name="approve_fail" value="审阅不通过" onclick="return addApproveCheck(5);" />
+	<s:if test="'true'==isApprover">
+	<s:submit name="apply_approveDel" value="撤销最后一次审阅" action="apply_approveDel" onclick="return isOp('确定进行此操作?');" />
+	</s:if>
+</td>
+</tr>
+</table>
+</s:form>
+</div>
+
 <script type="text/javascript">
 var infoeditor01;
 $(function(){
@@ -180,7 +249,30 @@ $(function(){
 			$("#apply_fullcheck_text").hide();
 		}
 	});
+	
+	$("#approveFrom").dialog({
+	      autoOpen: false,
+	      height: 135,
+	      width: 500,
+	      modal: true
+	});
 });
+
+function openApprove() {
+	$("#approveFrom").dialog("open");
+}
+
+//add_approve_flag
+function addApproveCheck(flag) {
+	if(window.confirm("确定要审阅吗?")) {
+		//alert(flag);
+		$("#add_approve_flag").val(flag);
+		return true;
+	} else {
+		return false;
+	}
+}
+
 </script>
 </body>
 </html>

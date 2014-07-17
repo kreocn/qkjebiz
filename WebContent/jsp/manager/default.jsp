@@ -72,6 +72,26 @@ display: none;
 			</div>
 		</div>
 		<div class="update_info active_info">
+			<div class="update_title">2014-07-17 系统例行更新</div>
+			<div class="update_content">
+			<dl>
+				<dt>一.至事由-增加发货管理功能</dt>
+				<dd>1.在审核通过之后,可以添加发货信息,包括是否已发货,物流单号电话等信息,方便管理</dd>
+				<dd>2.在发货信息处,显示审核意见,方便查看</dd>
+			</dl>
+			<dl>
+				<dt>二.至事由增加审阅功能</dt>
+				<dd>1.拥有审阅权限的人,对至事由有审阅的功能.</dd>
+				<dd>2.审阅不影响实际流程,只是作为审核人的参考.</dd>
+			</dl>
+			<dl>
+				<dt>二.活动管理增加审阅功能</dt>
+				<dd>1.拥有审阅权限的人,对至事由有审阅的功能.</dd>
+				<dd>2.审阅不影响实际流程,只是作为审核人的参考.</dd>
+			</dl>
+			</div>
+		</div>
+		<div class="update_info">
 			<div class="update_title">2014-07-11 系统例行更新</div>
 			<div class="update_content">
 			<dl>

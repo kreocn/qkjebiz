@@ -17,11 +17,13 @@ import com.qkj.manage.dao.ActiveDAO;
 import com.qkj.manage.dao.ActiveMemcostDAO;
 import com.qkj.manage.dao.ActivePosmDAO;
 import com.qkj.manage.dao.ActiveProductDAO;
+import com.qkj.manage.dao.ApproveDAO;
 import com.qkj.manage.dao.ProductDAO;
 import com.qkj.manage.domain.Active;
 import com.qkj.manage.domain.ActiveMemcost;
 import com.qkj.manage.domain.ActivePosm;
 import com.qkj.manage.domain.ActiveProduct;
+import com.qkj.manage.domain.Approve;
 import com.qkj.manage.domain.Product;
 
 public class ActiveAction extends ActionSupport {
@@ -29,6 +31,7 @@ public class ActiveAction extends ActionSupport {
 	private static Log log = LogFactory.getLog(ActiveAction.class);
 	private Map<String, Object> map = new HashMap<String, Object>();
 	private ActiveDAO dao = new ActiveDAO();
+	private ApproveDAO apdao = new ApproveDAO();
 
 	private Active active;
 	private List<Active> actives;
@@ -42,11 +45,39 @@ public class ActiveAction extends ActionSupport {
 	private List<ActivePosm> activePosmsClose;
 	private List<ActiveMemcost> activeMemcostsClose;
 
+	private Approve approve;
+	private List<Approve> approves;
+	private String isApprover;
+
 	private String message;
 	private String viewFlag;
 	private int recCount;
 	private int pageSize;
 	private int currPage;
+
+	public String getIsApprover() {
+		return isApprover;
+	}
+
+	public void setIsApprover(String isApprover) {
+		this.isApprover = isApprover;
+	}
+
+	public Approve getApprove() {
+		return approve;
+	}
+
+	public void setApprove(Approve approve) {
+		this.approve = approve;
+	}
+
+	public List<Approve> getApproves() {
+		return approves;
+	}
+
+	public void setApproves(List<Approve> approves) {
+		this.approves = approves;
+	}
 
 	public int getCurrPage() {
 		return currPage;
@@ -204,6 +235,16 @@ public class ActiveAction extends ActionSupport {
 				this.setActivePosms(podao.list(map));
 				ActiveMemcostDAO amdao = new ActiveMemcostDAO();
 				this.setActiveMemcosts(amdao.list(map));
+
+				map.clear();
+				map.put("varchar_id", active.getUuid());
+				map.put("approve_type", 1);
+				map.put("ad_time_end", active.getClose_start());
+				this.setApproves(apdao.list(map));
+				/* 检查当前用户是否已经审阅 */
+				if (apdao.userIsIn(approves, ContextHelper.getUserLoginUuid())) this.setIsApprover("true");
+				else this.setIsApprover("false");
+
 			} else {
 				this.setActive(null);
 				setMessage("无操作类型!");
@@ -565,6 +606,15 @@ public class ActiveAction extends ActionSupport {
 				this.setActivePosmsClose(podao.list(map));
 				this.setActiveMemcostsClose(amdao.list(map));
 
+				map.clear();
+				map.put("varchar_id", active.getUuid());
+				map.put("approve_type", 1);
+				map.put("ad_time_start", active.getClose_start());
+				this.setApproves(apdao.list(map));
+				/* 检查当前用户是否已经审阅 */
+				if (apdao.userIsIn(approves, ContextHelper.getUserLoginUuid())) this.setIsApprover("true");
+				else this.setIsApprover("false");
+
 			} else {
 				this.setActive(null);
 				this.setMessage("数据读取错误,请按照正确的方式进入页面!");
@@ -914,6 +964,40 @@ public class ActiveAction extends ActionSupport {
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyShipInfo 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyShipInfo 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+
+	/**
+	 * 审阅
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String approve() throws Exception {
+		ContextHelper.isPermits(new String[] { "QKJ_QKJMANAGE_ACTIVE_APPROVE", "QKJ_QKJMANAGE_ACTIVECLOSE_APPROVE" }, false);
+		try {
+			apdao.add(approve, 1, active.getUuid());
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!approve 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!approve 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+
+	/**
+	 * 删除审阅
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String approveDel() throws Exception {
+		ContextHelper.isPermits(new String[] { "QKJ_QKJMANAGE_ACTIVE_APPROVEDELLAST", "QKJ_QKJMANAGE_ACTIVECLOSE_APPROVEDELLAST" }, false);
+		try {
+			apdao.deleteLast(approve, 1, active.getUuid());
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!approveDel 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!approveDel 数据更新失败:", e);
 		}
 		return SUCCESS;
 	}

@@ -90,13 +90,13 @@ $(function(){
 		</td>
 		<td align="center" class="nowrap"><s:property value="express_no" /></td>
 		<td align="center">
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('WEB_QKJWEB_HCUSINFO_MDY')">
+			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('WEB_MANAGER_HCUSINFO_MDY')">
 	    	<span class="nowrap">[<a href="<s:url namespace="/webmanager" action="hCusInfo_load"><s:param name="viewFlag">mdy</s:param><s:param name="hcusInfo.uuid" value="uuid"></s:param></s:url>">修改信息</a>]</span>
 	    	</s:if>
 	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('WEB_QKJWEB_HCUSINFO_EXPRESS')">
 	    	<span class="nowrap">[<a href="<s:url namespace="/webmanager" action="hCusInfo_loadExpress"><s:param name="hcusInfo.uuid" value="uuid"></s:param></s:url>">发快递</a>]</span>
 	    	</s:if>
-	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('WEB_QKJWEB_HCUSINFO_DEL')">
+	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('WEB_MANAGER_HCUSINFO_DEL')">
 	    	<span class="nowrap">[<a href="<s:url namespace="/webmanager" action="hCusInfo_del"><s:param name="hcusInfo.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>]</span>
 	    	</s:if>
 	    </td>

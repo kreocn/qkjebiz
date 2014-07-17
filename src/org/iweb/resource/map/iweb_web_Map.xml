@@ -14,6 +14,7 @@
 			<isNotEmpty prepend="AND" property="express_status"><![CDATA[ express_status=#express_status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="security"><![CDATA[ security=#security# ]]></isNotEmpty>
 		</dynamic>
+		<![CDATA[ Limit 1000 ]]>
 	</select>
 	<select id="web_getCusInfohCounts" resultClass="int" parameterClass="java.util.Map">
 		<![CDATA[ 
@@ -27,6 +28,7 @@
 			<isNotEmpty prepend="AND" property="express_status"><![CDATA[ express_status=#express_status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="security"><![CDATA[ security=#security# ]]></isNotEmpty>
 		</dynamic>
+		<![CDATA[ Limit 1000 ]]>
 	</select>
 	<insert id="web_addCusInfoh" parameterClass="cusInfoh">
 		<![CDATA[ 

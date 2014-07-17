@@ -96,5 +96,21 @@
 		Delete From qkjm_r_apply Where uuid=#uuid#
 	]]>
 	</delete>
+
+	<!-- ship info change -->
+	<update id="qkjmanage_mdyApplyShipInfo" parameterClass="apply">
+		<![CDATA[
+			Update qkjm_r_apply
+			Set ship_status=#ship_status#,
+				ship_ware=#ship_ware#,
+				ship_date=#ship_date#,
+				ship_no=#ship_no#,
+				ship_phone=#ship_phone#,
+				ship_type=#ship_type#,
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<!-- ship info change -->
 	<!-- Apply End -->
 </sqlMap>
