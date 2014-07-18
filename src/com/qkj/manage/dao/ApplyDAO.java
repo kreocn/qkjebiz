@@ -35,6 +35,10 @@ public class ApplyDAO extends AbstractDAO {
 		return super.delete("qkjmanage_delApply", parameters);
 	}
 
+	public int spcheck(Object parameters) {
+		return super.save("qkjmanage_spcheckApply", parameters);
+	}
+
 	// 发货信息修改
 	public int mdyShipInfo(Object parameters) {
 		return super.save("qkjmanage_mdyApplyShipInfo", parameters);

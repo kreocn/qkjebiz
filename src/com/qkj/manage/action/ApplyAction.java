@@ -121,6 +121,21 @@ public class ApplyAction extends ActionSupport {
 			if (apply == null) {
 				apply = new Apply();
 			}
+
+			// 特殊审核权限
+			if (apply.getStatus_sp() != null) {
+				if (apply.getStatus_sp() == 25) {
+					apply.setSp_check_status(10);
+					apply.setStatus(20);
+				} else if (apply.getStatus_sp() == 20) {
+					apply.setSp_check_status(0);
+					apply.setStatus(apply.getStatus_sp());
+				} else {
+					apply.setStatus(apply.getStatus_sp());
+					apply.setSp_check_status(null);
+				}
+			}
+
 			ContextHelper.setSearchDeptPermit4Search(map, "apply_depts", "apply_user");
 			ContextHelper.SimpleSearchMap4Page("QKJ_QKJMANAGE_APPLY_LIST", map, apply, viewFlag);
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
@@ -244,6 +259,7 @@ public class ApplyAction extends ActionSupport {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_CHECK5");
 		try {
 			check(5);
+			spcheck(0);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!check5 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!check5 数据更新失败:", e);
@@ -281,6 +297,42 @@ public class ApplyAction extends ActionSupport {
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!check20 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!check20 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+
+	/**
+	 * 特殊审核权限,通过
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String spcheck10() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_SPCHECK10");
+		try {
+			spcheck(10);
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!spcheck10 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!spcheck10 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+
+	/**
+	 * 特殊审核权限,退回
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String spcheck5() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_SPCHECK5");
+		try {
+			spcheck(5);
+			// 退回时,单子同时被退回
+			check(5);
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!spcheck5 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!spcheck5 数据更新失败:", e);
 		}
 		return SUCCESS;
 	}
@@ -348,6 +400,19 @@ public class ApplyAction extends ActionSupport {
 		apply.setCheck_time(new Date());
 		apply.setLm_user(ContextHelper.getUserLoginUuid());
 		dao.check(apply);
+	}
+
+	/**
+	 * 状态更改通用函数
+	 * 
+	 * @param p_status
+	 */
+	public void spcheck(int p_sp_check_status) {
+		apply.setSp_check_status(p_sp_check_status);
+		apply.setSp_check_user(ContextHelper.getUserLoginUuid());
+		apply.setSp_check_time(new Date());
+		apply.setLm_user(ContextHelper.getUserLoginUuid());
+		dao.spcheck(apply);
 	}
 
 	public String del() throws Exception {

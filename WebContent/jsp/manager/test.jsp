@@ -12,79 +12,26 @@
 <link rel="stylesheet" href="<s:url value="/css/navigate.css" />" />
 <link rel="stylesheet" href="<s:url value="/css/main.css" />" />
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery-1.8.3.min.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/jqueryPlugins/select3/jquery.cityselect.js" />"></script>
+<link rel="stylesheet" href="<s:url value="/include/jQuery/style.ui.smoothness/jquery-ui-1.10.3.min.css" />" />
+<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-ui-1.10.3.custom.min.js" />"></script>
+<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.ui.datepicker-zh.js" />"></script>
+<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-ui-timepicker-addon.js" />"></script>
 <style type="text/css">
 </style>
 <script type="text/javascript">
 $(function(){
-	$("#mmtype").citySelect({
-		url:{"citylist":[
-		             	{"p":"固定资产","c":[
-		         	                 	{"n":"办公家具","a":[{"s":"桌子"},{"s":"椅子"},{"s":"沙发"},{"s":"茶几"},{"s":"花架"},{"s":"运动器具"},{"s":"饰品"},{"s":"书柜"},{"s":"生活用具"}]},
-		         	                 	{"n":"电器设备","a":[{"s":"电视"},{"s":"空调"},{"s":"灯具"},{"s":"生活用具"}]},
-		                          		{"n":"电子设备","a":[{"s":"电脑"},{"s":"打印机"},{"s":"音频"},{"s":"电话"},{"s":"放映设备"},{"s":"网络设备"}]}
-		         	                 	]},
-		         	{"p":"非固定资产","c":[
-		         	                  	{"n":"办公用品"},
-		         	                  	{"n":"生活用品"}
-		         	                  	]},
-		         ]},
-		prov:"",
-		city:"",
-		dist:"",
-		nodata:"none"
-	});
-	
-	$("#mmtypex").citySelect({
-		url:"/js/jqueryPlugins/select3/city.min.js",
-		prov:"",
-		city:"",
-		dist:"",
-		nodata:"none"
-	});
-	
-	$("#mmtypey").citySelect({
-		url:"/js/jqueryPlugins/select3/mm.js",
-		prov:"",
-		city:"",
-		dist:"",
-		nodata:"none"
-	});
-	
-	$("#mmtypez").citySelect({
-		url:"/js/jqueryPlugins/select3/mm2.js",
-		prov:"",
-		city:"",
-		dist:"",
-		nodata:"none"
+	$('#mydate').datetimepicker({
+		stepMinute: 15,
+		altField: "#mydate2"
 	});
 });
 </script>
 </head>
 <body>
 <div style="height: 20px;"></div>
-<div id="mmtype">
-<select class="prov"></select> 
-<select class="city" disabled="disabled"></select>
-<select class="dist" disabled="disabled"></select>
-</div>
-<div style="height: 20px;"></div>
-<div id="mmtypex">
-<select class="prov"></select> 
-<select class="city" disabled="disabled"></select>
-<select class="dist" disabled="disabled"></select>
-</div>
-<div style="height: 20px;"></div>
-<div id="mmtypey">
-<select class="prov"></select> 
-<select class="city" disabled="disabled"></select>
-<select class="dist" disabled="disabled"></select>
-</div>
-<div style="height: 20px;"></div>
-<div id="mmtypez">
-<select class="prov"></select> 
-<select class="city" disabled="disabled"></select>
-<select class="dist" disabled="disabled"></select>
+<div>
+日期:<input name="testdate" id="mydate" />
+<input name="testdate2" id="mydate2" />
 </div>
 <div style="height: 50px;"></div>
 </body>

@@ -20,7 +20,6 @@
 <script type="text/javascript" src="/ckframe/include/widget.js"></script>
 <style type="text/css">
 .approve_list {
-
 }
 .approve_ad_time, .approve_check_user, .approve_flag,.approve_advice {
 font-weight: bold;
@@ -159,7 +158,7 @@ color: #008000;
 					</s:if>
 				</s:if>
 				<s:elseif test="null != apply && 'mdy' == viewFlag">
-					<s:if test="apply.status==0||apply.status==5">
+					<s:if test="apply.status==0||apply.status==5||apply.status==null">
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_MDY')">
 					<s:submit id="save" name="save" value="保存申请单" action="apply_save" />
 					</s:if>
@@ -174,6 +173,12 @@ color: #008000;
 					<s:submit id="apply_check10" name="apply_check10" value="大区经理审核通过" action="apply_check10" onclick="return isOp('确定进行此操作?');" />
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_CHECK5')">
 					<s:submit id="apply_check5" name="apply_check5" value="审核不通过" action="apply_check5" onclick="return isOp('确定进行此操作?');" />
+					</s:if>
+					</s:if>
+					<s:if test="apply.status==20 && apply.sp_check_status<=5 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_SPCHECK10')">
+					<s:submit id="apply_spcheck10" name="apply_spcheck10" value="销管经理审核通过" action="apply_spcheck10" onclick="return isOp('确定进行此操作?');" />
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_SPCHECK5')">
+					<s:submit id="apply_spcheck5" name="apply_spcheck5" value="审核不通过" action="apply_spcheck5" onclick="return isOp('确定进行此操作?');" />
 					</s:if>
 					</s:if>
 					<s:if test="apply.status==20 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_CHECK20')">

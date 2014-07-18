@@ -58,6 +58,8 @@ display: none;
 	</div>	
 	<div class="ilistsearch">
 <s:form name="form_serach" action="apply_list"  method="get" namespace="/qkjmanage" theme="simple">
+		<s:hidden name="apply.status_start" />
+		<s:hidden name="apply.status_end" />
 		<table class="ilisttable" id="serach_table" width="100%">
 			<tr>
 			<td class='firstRow'>申请编号:</td>
@@ -102,7 +104,7 @@ display: none;
 				<span id="ajax_member_message"></span>
 			</td>
 			<td class='firstRow'>状态:</td>
-			<td class='secRow'><s:select name="apply.status" title="状态" headerKey="" headerValue="--请选择--" list="#{0:'新申请',5:'审核退回',10:'待审核',20:'大区经理已审',30:'运营总监已审'}" /></td>
+			<td class='secRow'><s:select name="apply.status_sp" title="状态" headerKey="" headerValue="--请选择--" list="#{0:'新申请',5:'审核退回',10:'待审核',20:'大区经理已审',25:'销管经理已审',30:'运营总监已审'}" /></td>
 			</tr>
 			<tr>
 			<td class="buttonarea" colspan="4"><s:submit value="搜索" /> <s:reset value="重置" /></td>
@@ -134,10 +136,13 @@ display: none;
 		<td title="${title}">${it:subString(title,40)}</td>
 		<td align="center" title="${check_user_name}-${it:formatDate(check_time,'yyyy-MM-dd HH:mm:ss')}-${check_note}">
 			<s:if test="0==status">新申请</s:if>
-			<s:if test="5==status"><span class="message_error">已退回</span></s:if>
+			<s:if test="5==status"><span class="message_error">已退回(${check_user_name})</span></s:if>
 			<s:if test="10==status"><span class="message_warning">待审核</span></s:if>
-			<s:if test="20==status"><span class="message_pass">大区经理已审</span></s:if>
-			<s:if test="30==status"><span class="message_pass">运营总监已审</span></s:if>
+			<s:if test="20==status">
+			<s:if test="0==sp_check_status"><span class="message_pass">大区经理已审(${check_user_name})</span></s:if>
+			<s:elseif test="10==sp_check_status"><span class="message_pass">销管经理已审(${check_user_name})</span></s:elseif>
+			</s:if>
+			<s:if test="30==status"><span class="message_pass">运营总监已审(${check_user_name})</span></s:if>
 		</td>
 		<td align="center">
 			<s:if test="30==status">
