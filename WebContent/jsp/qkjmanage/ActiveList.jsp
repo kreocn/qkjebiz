@@ -54,7 +54,7 @@ function loadManagers(dept_code) {
 	ajax.config.action_url = ajax_url_action;
 	ajax.config._success = function(data, textStatus) {
 		$("#membermanagerid").clearAllOption();
-		$("#membermanagerid").addOption("暂不分配","");
+		$("#membermanagerid").addOption("--请选择--","");
 		$.each(data, function(i, n){
 			$("#membermanagerid").addOption(n.user_name,n.uuid);
 		});
@@ -108,7 +108,7 @@ cursor: pointer;
 			<s:textfield title="部门名称" id="userdept_nameid" name="active.apply_dept_name" readonly="true" />
 			<img class="imglink" src='<s:url value="/images/open2.gif" />' onclick="selectDept();" />
 			<s:checkbox id="active_is_sub_dept" name="active.is_sub_dept" />
-			<label for="active_is_sub_dept">包含子部门</label>
+			<!-- <label for="active_is_sub_dept">包含子部门</label> -->
 			<span id="ajax_member_message"></span>
 			<s:select id="membermanagerid" name="active.apply_user" list="#{}" headerKey="" headerValue="--请选择--" />
 			</td>

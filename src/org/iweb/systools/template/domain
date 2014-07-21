@@ -2,5 +2,8 @@ package $domain_package$;
 $domain_import$
 public class $file_s_name$ {
 $domain_column_area$
+
+// 以下为非数据库字段
+
 $domain_bean_area$
 }

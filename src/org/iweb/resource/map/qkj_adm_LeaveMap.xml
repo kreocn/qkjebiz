@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
+<sqlMap>
+	<!-- Leave Start -->
+	<typeAlias alias="leave" type="com.qkj.adm.domain.Leave" />
+	<select id="adm_getLeaves" resultClass="leave" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT l.*,cu.`USER_NAME` check_user_name,au.`USER_NAME` acheck_user_name,ld.`dept_cname` leave_dept_name
+			FROM qkja_r_leave l
+			LEFT JOIN s_sys_user cu ON(cu.`UUID` = l.`check_user`)
+			LEFT JOIN s_sys_user au ON(au.`UUID` = l.`acheck_user`)
+			LEFT JOIN s_sys_department ld ON(ld.`dept_code` = l.`leave_dept`)
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ l.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="leave_type"><![CDATA[ l.leave_type=#leave_type# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="leave_dept"><![CDATA[ l.leave_dept=#leave_dept# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="leave_user"><![CDATA[ l.leave_user=#leave_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="leave_start"><![CDATA[ l.leave_start=#leave_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="leave_end"><![CDATA[ l.leave_end=#leave_end# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="leave_end_time"><![CDATA[ l.leave_end_time=#leave_end_time# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="acheck_status"><![CDATA[ l.acheck_status=#acheck_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="allowance_status"><![CDATA[ l.allowance_status=#allowance_status# ]]></isNotEmpty>
+		</dynamic>
+	</select>
+	<select id="adm_getLeavesCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) From qkja_r_leave
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="leave_type"><![CDATA[ leave_type=#leave_type# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="leave_dept"><![CDATA[ leave_dept=#leave_dept# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="leave_user"><![CDATA[ leave_user=#leave_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="leave_start"><![CDATA[ leave_start=#leave_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="leave_end"><![CDATA[ leave_end=#leave_end# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="leave_end_time"><![CDATA[ leave_end_time=#leave_end_time# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="acheck_status"><![CDATA[ acheck_status=#acheck_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="allowance_status"><![CDATA[ allowance_status=#allowance_status# ]]></isNotEmpty>
+		</dynamic>
+	</select>
+	<insert id="adm_addLeave" parameterClass="leave">
+		<![CDATA[ 
+			Insert Into qkja_r_leave(leave_type,leave_mold,leave_dept,leave_user,leave_start,leave_start_time,leave_end,leave_end_time,totle,cause,lm_time,lm_user)
+			Values (#leave_type#,#leave_mold#,#leave_dept#,#leave_user#,#leave_start#,#leave_start_time#,#leave_end#,#leave_end_time#,#totle#,#cause#,#lm_time#,#lm_user#)
+		]]>
+	</insert>
+	<update id="adm_mdyLeave" parameterClass="leave">
+		<![CDATA[
+			Update qkja_r_leave
+			Set leave_type=#leave_type#,
+				leave_mold=#leave_mold#,
+				leave_dept=#leave_dept#,
+				leave_user=#leave_user#,
+				leave_start=#leave_start#,
+				leave_start_time=#leave_start_time#,
+				leave_end=#leave_end#,
+				leave_end_time=#leave_end_time#,
+				totle=#totle#,
+				cause=#cause#,
+				lm_time=#lm_time#,
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+
+	<update id="adm_mdyLeaveCheck" parameterClass="leave">
+		<![CDATA[
+			Update qkja_r_leave
+			Set check_status=#check_status#,
+				check_user=#check_user#,
+				check_time=#check_time#,
+				check_note=#check_note#,
+				lm_time=#lm_time#,
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+
+	<update id="adm_mdyLeaveACheck" parameterClass="leave">
+		<![CDATA[
+			Update qkja_r_leave
+			Set acheck_status=#acheck_status#,
+				acheck_user=#acheck_user#,
+				acheck_time=#acheck_time#,
+				acheck_note=#acheck_note#,
+				lm_time=#lm_time#,
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+
+	<update id="adm_mdyLeaveAllowance" parameterClass="leave">
+		<![CDATA[
+			Update qkja_r_leave
+			Set lm_time=#lm_time#,
+				lm_user=#lm_user#,
+				allowance_status=#allowance_status#,
+				allowance_date=#allowance_date#
+			Where uuid = #uuid#
+		]]>
+	</update>
+
+	<delete id="adm_delLeave" parameterClass="leave">
+	<![CDATA[
+		Delete From qkja_r_leave Where uuid=#uuid#
+	]]>
+	</delete>
+	<!-- Leave End -->
+</sqlMap>

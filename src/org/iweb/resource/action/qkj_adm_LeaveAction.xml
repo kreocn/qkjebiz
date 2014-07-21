@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="adm_leave" extends="default" namespace="/adm">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- Leave Start -->
+		<action name="leave_list" class="com.qkj.adm.action.LeaveAction" method="list">
+			<result>/jsp/adm/LeaveList.jsp</result>
+		</action>
+		<action name="leave_relist" class="com.qkj.adm.action.LeaveAction" method="relist">
+			<result type="redirectAction">
+				<param name="actionName">leave_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+		<action name="leave_load" class="com.qkj.adm.action.LeaveAction" method="load">
+			<result>/jsp/adm/LeaveEdit.jsp</result>
+		</action>
+		<action name="leave_add" class="com.qkj.adm.action.LeaveAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">leave_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="leave_del" class="com.qkj.adm.action.LeaveAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">leave_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+
+		<action name="leave_*" class="com.qkj.adm.action.LeaveAction" method="{1}">
+			<result type="redirectAction">
+				<param name="actionName">leave_load</param>
+				<param name="leave.uuid">${leave.uuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- Leave End -->
+	</package>
+</struts>
