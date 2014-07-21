@@ -111,7 +111,7 @@ public class LeaveAction extends ActionSupport {
 				this.setLeave(null);
 				setMessage("你没有选择任何操作!");
 			} else if ("add".equals(viewFlag)) {
-				this.setLeave(null);
+				// this.setLeave(null);
 			} else if ("mdy".equals(viewFlag)) {
 				if (!(leave == null || leave.getUuid() == null)) {
 					this.setLeave((Leave) dao.get(leave.getUuid()));

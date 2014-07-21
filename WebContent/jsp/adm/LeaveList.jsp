@@ -19,48 +19,6 @@
 <script type="text/javascript" src="<s:url value="/js/jquery.dialog.iframe.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/common_ajax2.0.js" />"></script>
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery.select.js" />"></script>
-<script type="text/javascript">
-var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
-var curr_apply_dept = '${leave.leave_dept}';
-var curr_apply_user = '${leave.leave_user}';
-$(function(){
-	CommonUtil.pickrow('table1');
-	CommonUtil.pickrowAll('table1','uuidcheck');
-	if(curr_apply_dept!='') {
-		loadManagers(curr_apply_dept);
-	}
- });
- 
-var sobj01;
-var selectDept = function() {
-	sobj01 = new DialogIFrame({src:'<s:url namespace="/sys" action="dept_permit_select" />?objname=sobj01',title:"选择部门"});
-	sobj01.selfAction = function(val1,val2) {
-		$("#userdept_codeid").val(val1);
-		$("#userdept_nameid").val(val2);
-		loadManagers(val1);
-	};
-	sobj01.create();
-	sobj01.open();
-};
-
-function loadManagers(dept_code) {
-	var ajax = new Common_Ajax('ajax_member_message');
-	ajax.config.action_url = ajax_url_action;
-	ajax.config._success = function(data, textStatus) {
-		$("#membermanagerid").clearAllOption();
-		$("#membermanagerid").addOption("--请选择--","");
-		$.each(data, function(i, n){
-			$("#membermanagerid").addOption(n.user_name,n.uuid);
-		});
-		if(curr_apply_user!='') {
-			$("#membermanagerid").val(curr_apply_user);
-		}
-	};
-	ajax.addParameter("work", "AutoComplete");
-	ajax.addParameter("parameters", "privilege_id=QKJCJ_SYS_AJAXLOAD_USER&dept_code=" + encodeURI(dept_code));
-	ajax.sendAjax2();
-}
-</script>
 <body>
 <div id="main">
 <div id="result">
@@ -69,7 +27,7 @@ function loadManagers(dept_code) {
 		<span class="title1">申请单列表</span>
 		<span class="extra1">
 			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_ADD')">
-			<a href="<s:url namespace="/adm" action="leave_load"><s:param name="viewFlag">add</s:param></s:url>" >添加申请单</a>
+			<a href="javascript:;" id="AddLeaveLink">添加申请单</a>
 			</s:if>
 		</span>
 	</div>	
@@ -77,7 +35,7 @@ function loadManagers(dept_code) {
 <s:form name="form_serach" action="leave_list"  method="get" namespace="/adm" theme="simple">
 		<table class="ilisttable" id="serach_table" width="100%">
 			<tr>
-			<td class='firstRow3'>单号:</td>
+			<td class='firstRow3'>编号:</td>
 			<td class='secRow3'><s:textfield name="leave.uuid" title="主键自增" /></td>
 			<td class='firstRow3'>类型:</td>
 			<td class='secRow3'>
@@ -93,8 +51,6 @@ function loadManagers(dept_code) {
 				<s:textfield title="部门" id="userdept_codeid" name="leave.leave_dept" readonly="true" />
 				<s:textfield title="部门名称" id="userdept_nameid" name="leave.leave_dept_name" readonly="true" />
 				<img class="imglink" src='<s:url value="/images/open2.gif" />' onclick="selectDept();" />
-				<s:checkbox id="active_is_sub_dept" name="active.is_sub_dept" />
-				<label for="active_is_sub_dept">包含子部门</label>
 				<span id="ajax_member_message"></span>
 				<s:select id="membermanagerid" name="leave.leave_user" list="#{}" headerKey="" headerValue="--请选择--" />
 			</td>
@@ -124,7 +80,7 @@ function loadManagers(dept_code) {
 	<col width="30" />
 	  <tr>
 	    <th><input name="uuidcheck" type="checkbox" /></th>
-	    <th>单号</th>
+	    <th>编号</th>
 	    <th>类型</th>
 		<th>申请人</th>
 		<th>开始时间</th>
@@ -183,5 +139,74 @@ function loadManagers(dept_code) {
 	</div>
 </div>
 </div>
+<div id="AddLeaveForm" title="请选择申请单类型">
+<p align="center">
+<input type="button" value="出差" onclick="addLeave(0);"  />
+<input type="button" value="请假" onclick="addLeave(1);"  />
+<input type="button" value="加班" onclick="addLeave(2);"  />
+<input type="button" value="换休" onclick="addLeave(3);"  />
+</p>
+</div>
+<script type="text/javascript">
+var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
+var curr_apply_dept = '${leave.leave_dept}';
+var curr_apply_user = '${leave.leave_user}';
+$(function(){
+	CommonUtil.pickrow('table1');
+	CommonUtil.pickrowAll('table1','uuidcheck');
+	if(curr_apply_dept!='') {
+		loadManagers(curr_apply_dept);
+	}
+	
+	$("#AddLeaveForm").dialog({
+	      autoOpen: false,
+	      width: 250,
+	      height: 100,
+	      modal: true
+	});
+	
+	$("#AddLeaveLink").click(function(){
+		$("#AddLeaveForm").dialog("open");
+	});
+});
+ 
+var sobj01;
+var selectDept = function() {
+	sobj01 = new DialogIFrame({src:'<s:url namespace="/sys" action="dept_permit_select" />?objname=sobj01',title:"选择部门"});
+	sobj01.selfAction = function(val1,val2) {
+		$("#userdept_codeid").val(val1);
+		$("#userdept_nameid").val(val2);
+		loadManagers(val1);
+	};
+	sobj01.create();
+	sobj01.open();
+};
+
+function loadManagers(dept_code) {
+	var ajax = new Common_Ajax('ajax_member_message');
+	ajax.config.action_url = ajax_url_action;
+	ajax.config._success = function(data, textStatus) {
+		$("#membermanagerid").clearAllOption();
+		$("#membermanagerid").addOption("--请选择--","");
+		$.each(data, function(i, n){
+			$("#membermanagerid").addOption(n.user_name,n.uuid);
+		});
+		if(curr_apply_user!='') {
+			$("#membermanagerid").val(curr_apply_user);
+		}
+	};
+	ajax.addParameter("work", "AutoComplete");
+	ajax.addParameter("parameters", "privilege_id=QKJCJ_SYS_AJAXLOAD_USER&dept_code=" + encodeURI(dept_code));
+	ajax.sendAjax2();
+}
+
+function addLeave(p_type) {
+	var add_url = '<s:url namespace="/adm" action="leave_load"><s:param name="viewFlag">add</s:param></s:url>';
+	add_url = add_url + "&leave.leave_type="+p_type;
+	//alert(add_url);
+	location.href = add_url;
+}
+
+</script>
 </body>
 </html>
