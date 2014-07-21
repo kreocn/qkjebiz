@@ -21,4 +21,6 @@
 		changeYear: true
 		};
 	$.datepicker.setDefaults($.datepicker.regional['zh-CN']);
+	
+	
 });

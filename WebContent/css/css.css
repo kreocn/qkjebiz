@@ -25,6 +25,10 @@ input[type="text"].date_input {
 width: 80px;
 }
 
+input[type="text"].time_input {
+width: 40px;
+}
+
 input[type="text"] {
 width: 165px;
 }

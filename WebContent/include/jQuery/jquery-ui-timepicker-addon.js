@@ -28,23 +28,41 @@
 	*/
 	var Timepicker = function () {
 		this.regional = []; // Available regional settings, indexed by language code
-		this.regional[''] = { // Default regional settings
-			currentText: 'Now',
-			closeText: 'Done',
-			amNames: ['AM', 'A'],
-			pmNames: ['PM', 'P'],
-			timeFormat: 'HH:mm',
-			timeSuffix: '',
-			timeOnlyTitle: 'Choose Time',
-			timeText: 'Time',
-			hourText: 'Hour',
-			minuteText: 'Minute',
-			secondText: 'Second',
-			millisecText: 'Millisecond',
-			microsecText: 'Microsecond',
-			timezoneText: 'Time Zone',
-			isRTL: false
-		};
+		// Default regional settings
+		//		this.regional[''] = { 
+		//			currentText: 'Now',
+		//			closeText: 'Done',
+		//			amNames: ['AM', 'A'],
+		//			pmNames: ['PM', 'P'],
+		//			timeFormat: 'HH:mm',
+		//			timeSuffix: '',
+		//			timeOnlyTitle: 'Choose Time',
+		//			timeText: 'Time',
+		//			hourText: 'Hour',
+		//			minuteText: 'Minute',
+		//			secondText: 'Second',
+		//			millisecText: 'Millisecond',
+		//			microsecText: 'Microsecond',
+		//			timezoneText: 'Time Zone',
+		//			isRTL: false
+		//		};
+		this.regional[''] = { 
+				currentText: '现在时间',
+				closeText: '确定',
+				amNames: ['AM', 'A'],
+				pmNames: ['PM', 'P'],
+				timeFormat: 'HH:mm',
+				timeSuffix: '',
+				timeOnlyTitle: '选择时间',
+				timeText: '时间',
+				hourText: '时',
+				minuteText: '分',
+				secondText: '秒',
+				millisecText: '毫秒',
+				microsecText: '微秒',
+				timezoneText: '时区',
+				isRTL: false
+			};
 		this._defaults = { // Global defaults for all the datetime picker instances
 			showButtonPanel: true,
 			timeOnly: false,
