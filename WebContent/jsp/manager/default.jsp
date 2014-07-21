@@ -85,21 +85,6 @@ display: none;
 					</div>
 			</div>
 		</s:iterator>
-		<div class="update_info">
-			<div class="update_title">2014-07-03 系统临时更新</div>
-			<div class="update_content">
-			<dl>
-				<dt>一.网站活动规则更改</dt>
-				<dd></dd>
-			</dl>
-			<dl>
-				<dt>二.系统BUG修复</dt>
-				<dd></dd>
-			</dl>
-			</div>
-		</div>
-		
-		
 	</div>
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery-1.8.3.min.js" />"></script>
 <script type="text/javascript">

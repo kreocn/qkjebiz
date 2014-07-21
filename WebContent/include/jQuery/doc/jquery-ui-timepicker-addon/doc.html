@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+</head>
+<body>
+$('#basic_example_2').timepicker(); //单单时分秒控件
+
+$('#slider_example_1').timepicker({
+	hourGrid: 4,//时间刻度
+	minuteGrid: 10,//分钟刻度
+	timeFormat: 'hh:mm:ss tt z',
+	timezone: 'MT',
+	timezoneList: [ 
+			{ value: -300, label: 'Eastern'}, 
+			{ value: -360, label: 'Central' }, 
+			{ value: -420, label: 'Mountain' }, 
+			{ value: -480, label: 'Pacific' } 
+		],
+	stepHour: 2,//步长
+	stepMinute: 10,
+	stepSecond: 10,
+	addSliderAccess: true,//这两行是加入+ -号
+	sliderAccessArgs: { touchonly: false },
+	controlType: 'select',//用select来选择时间
+	
+	altField: "#alt_example_1_alt",//用另外的控件来存放时间
+	altFieldTimeOnly: false,//加了这句之后,另外的控件作为复制框,下面是复制格式
+	altFormat: "yy-mm-dd",
+	altTimeFormat: "h:m t",
+	altSeparator: " @ ",
+	
+	numberOfMonths: 2,//同时出现2个月的时间选择控件
+	hourMin: 8,//最小最大可选择的小时
+	hourMax: 16,
+	
+	minDate: 0,
+	maxDate: 30,
+	minDate: new Date(2010, 11, 20, 8, 30),
+	maxDate: new Date(2010, 11, 31, 17, 30),
+});
+
+//可以直接设置Object时间
+$('#utility_example_1_setdt').click(function(){
+	ex13.datetimepicker('setDate', (new Date()) );
+});
+//可以直接得到Object时间
+$('#utility_example_1_getdt').click(function(){
+	alert(ex13.datetimepicker('getDate'));
+});
+</body>
+</html>

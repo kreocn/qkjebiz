@@ -19,7 +19,6 @@ window.onload = function() {
 }
 </script>
 <body>
-sss
 <div id="main">
 <div id="result">
 	<div class="itablemdy">
@@ -62,7 +61,9 @@ sss
 	    	${title }
 	    </td>
 	    <td>${sdate } </td>
-		<td>${content }</td>
+		<td>
+		${content}
+		</td>
 		<td align="center">
 	    	[<a href="<s:url namespace="/sche" action="schedule_load"><s:param name="viewFlag">mdy</s:param><s:param name="sche.ssid" value="ssid"></s:param></s:url>">修改</a>]
 	    	[<a href="<s:url namespace="/sche" action="schedule_del"><s:param name="sche.ssid" value="ssid"></s:param></s:url>" onclick="return isDel();">删除</a>]

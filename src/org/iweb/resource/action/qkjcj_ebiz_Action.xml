@@ -62,7 +62,7 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
-		<action name="sche_save" class="com.qkjsys.ebiz.action.WareAction" method="save">
+		<action name="ware_save" class="com.qkjsys.ebiz.action.WareAction" method="save">
 			<result type="redirectAction">
 				<param name="actionName">ware_list</param>
 				<param name="message">${message}</param>

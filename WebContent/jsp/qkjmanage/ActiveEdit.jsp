@@ -133,6 +133,16 @@ display: block;float: left;
 #active_remark,#active_remark textarea {
 font-size: 14px;
 }
+.approve_list {}
+.approve_ad_time, .approve_check_user, .approve_flag,.approve_advice {
+font-weight: bold;
+}
+.approve_flag_fail {
+color: #FF0000;
+}
+.approve_flag_pass {
+color: #008000;
+}
 </style>
 <body>
 <div id="main">
@@ -397,6 +407,35 @@ font-size: 14px;
 			</td>
 		</tr>
 		
+		<s:if test="active.status<=2">
+		<tr>
+		<td class='firstRow3'>审阅情况:</td>
+		<td class='secRow3 approve_list' colspan="5">
+			<ul>
+				<s:iterator value="approves" status="sta">
+				<li>此活动在<span class="approve_ad_time"> ${it:formatDate(ad_time,'yyyy-MM-dd HH:mm:ss')}</span>
+					被 <span class="approve_check_user"> ${check_user_name}</span> 
+					执行
+					<span class="approve_flag">
+					<s:if test="flag==5">
+					<span class="approve_flag_fail">审阅不通过</span>
+					</s:if>
+					<s:if test="flag==10">
+					<span class="approve_flag_pass">审阅通过</span>
+					</s:if>
+					</span>
+					操作
+					<s:if test="advice!=null && advice!=''">
+					审阅意见:
+					<span class="approve_advice">${advice}</span>
+					</s:if>
+				</li>
+				</s:iterator>
+			</ul>
+		</td>
+		</tr>
+		</s:if>
+		
 		<tr class="printarea">
 		<td class='firstRow3'>相关操作:</td>
 		<td class='secRow3' colspan="5">
@@ -421,6 +460,9 @@ font-size: 14px;
 			<s:submit id="mdyStatus1" name="mdyStatus1" value="申请通过-可以执行" action="mdyStatus1" onclick="return isOp('确定执行此操作?');" />
 			</s:if>
 			</s:elseif>
+			<s:if test="active.status==1 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_APPROVE')">
+				<input type="button" value="审阅"  onclick="openApprove();" />
+			</s:if>
 			<input type="button" value="返回" onclick="linkurl('<s:url action="active_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');" />
 			<s:if test="40<=active.sd_status">
 				<input type="button" onclick="linkurl('<s:url namespace="/qkjmanage" action="active_view"><s:param name="active.uuid" value="active.uuid" /></s:url>');" value="转到打印页面"/>
@@ -679,5 +721,56 @@ function setDataCase() {
 	</tr>
 </table>	
 </div>
+
+<div id="approveFrom" title="审阅信息">
+<s:form name="form1" action="active_approve" namespace="/qkjmanage" onsubmit="return validator(this);" method="post"  theme="simple">
+<input type="hidden" name="active.uuid" value="${active['uuid']}" />
+<input type="hidden" id="add_approve_flag" name="approve.flag" />
+<table class="ilisttable" width="100%">
+ <tr>
+<td class='firstRowx'>审阅意见:</td>
+<td class='secRowx'>
+<textarea name="approve.advice" style="width: 80%;" rows="3" ></textarea>
+</td>
+</tr>
+<tr>
+<td align="center" class="buttonarea" colspan="2">
+	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_APPROVE')">
+	<input type="submit" name="approve_pass" value="审阅通过" onclick="return addApproveCheck(10);" />
+	<input type="submit" name="approve_fail" value="审阅不通过" onclick="return addApproveCheck(5);" />
+	</s:if>
+	<s:if test="'true'==isApprover && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_APPROVEDELLAST')">
+	<s:submit name="active_approveDel" value="撤销最后一次审阅" action="active_approveDel" onclick="return isOp('确定进行此操作?');" />
+	</s:if>
+</td>
+</tr>
+</table>
+</s:form>
+</div>
+<script type="text/javascript">
+$(function(){
+	$("#approveFrom").dialog({
+	      autoOpen: false,
+	      height: 135,
+	      width: 500,
+	      modal: true
+	});
+});
+
+function openApprove() {
+	$("#approveFrom").dialog("open");
+}
+
+//add_approve_flag
+function addApproveCheck(flag) {
+	if(window.confirm("确定要审阅吗?")) {
+		//alert(flag);
+		$("#add_approve_flag").val(flag);
+		return true;
+	} else {
+		return false;
+	}
+}
+</script>
 </body>
 </html>

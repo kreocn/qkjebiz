@@ -65,6 +65,22 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
+		<action name="apply_approve" class="com.qkj.manage.action.ApplyAction" method="approve">
+			<result type="redirectAction">
+				<param name="actionName">apply_load</param>
+				<param name="apply.uuid">${apply.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="apply_approveDel" class="com.qkj.manage.action.ApplyAction" method="approveDel">
+			<result type="redirectAction">
+				<param name="actionName">apply_load</param>
+				<param name="apply.uuid">${apply.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
 		<action name="apply_del" class="com.qkj.manage.action.ApplyAction" method="del">
 			<result type="redirectAction">
 				<param name="actionName">apply_list</param>
@@ -72,6 +88,29 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
+		<action name="apply_spcheck10" class="com.qkj.manage.action.ApplyAction" method="spcheck10">
+			<result type="redirectAction">
+				<param name="actionName">apply_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="apply_spcheck5" class="com.qkj.manage.action.ApplyAction" method="spcheck5">
+			<result type="redirectAction">
+				<param name="actionName">apply_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
 		<!-- Apply End -->
+
+		<!-- 发货信息修改 -->
+		<action name="mdyApplyShipInfo" class="com.qkj.manage.action.ApplyAction" method="mdyShipInfo">
+			<result type="redirectAction">
+				<param name="actionName">apply_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
 	</package>
 </struts>

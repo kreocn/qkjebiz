@@ -20,17 +20,16 @@
 	<update id="sche_saveSche_ss" parameterClass="schedule">
 		<![CDATA[
 			Update qkj_t_schedule  
-			Set titile=#title#,
+			Set title=#title#,
 				content=#content#,
-				sdate=#sdate#,
-			Where ssid=#ssid#
+				sdate=#sdate#
+			Where ssId=#ssid#
 		]]>
 	</update>
 	<delete id="sche_delSche_ss" parameterClass="schedule">
 		<![CDATA[
-			Delete From qkj_t_schedule
+			Delete From qkj_t_schedule Where ssId=#ssid#
 		]]>
-		<![CDATA[ Where ssid In ]]>
-		<iterate property="ssid" open="(" close=")" conjunction=" , "> #ssid[]#</iterate>
+		
 	</delete>
 </sqlMap>

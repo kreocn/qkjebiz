@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
+<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -9,14 +9,9 @@
 <title>系统更新保存</title>
 </head>
 <link rel="stylesheet" href="<s:url value="/css/css.css" />" />
-<link rel="stylesheet" href="<s:url value="/css/navigate.css" />" />
 <link rel="stylesheet" href="<s:url value="/css/main.css" />" />
-<script type="text/javascript" src="<s:url value="/js/form_validator.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/common_lite.js" />"></script>
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery-1.8.3.min.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/jquery.CommonUtil.js" />"></script>
-<link rel="stylesheet" href="<s:url value="/include/jQuery/stylesheets/jquery-ui-1.10.3.custom.min.css" />" />
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-1.8.3.min.js" />"></script>
+<!-- 文本编辑器 -->
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery-ui-1.10.3.custom.min.js" />"></script>
 <script type="text/javascript" src="/ckframe/include/widget.js"></script>
 <!-- 日期样式 -->
@@ -25,12 +20,15 @@
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery.ui.datepicker-zh.js" />"></script>
 
 
+
 <script type="text/javascript">
 var infoeditor01;
 $(function(){
 	infoeditor01 = new widget_textarea();
 	infoeditor01.init("warenoteid");
 });
+
+$("#orderGoods_storage_date").datepicker();
 </script>
 <body>
 <div id="main">
@@ -59,8 +57,8 @@ $(function(){
 		  <tr>
 		    <td class="firstRow">日期:</td>
 		    <td class="secRow">
-		    	<s:textfield id="orderGoods_storage_date" name="sche.sdate" value="%{getText('global.date',{orderGoods.storage_date})=='null'?'':getText('global.date',{orderGoods.storage_date})}" title="时间"  controlName="时间"  cssStyle="width:40%;" require="required" />
-		    	<script type="text/javascript">$("#orderGoods_storage_date").datepicker();</script>
+		    <input id="active_plan_start" type="text" name="sche.sdate" title="活动开始时间" value="${sche.sdate}" dataType="date" controlName="计划开始时间" require="required" />
+		    	<script type="text/javascript">$("#active_plan_start").datepicker();</script>
 		    	<!-- 
 		    	<s:textfield id="ware.map_data" name="ware.map_data" title="仓库地图点" />
 		    	 -->

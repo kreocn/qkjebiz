@@ -5,11 +5,12 @@
 	<typeAlias alias="apply" type="com.qkj.manage.domain.Apply" />
 	<select id="qkjmanage_getApplys" resultClass="apply" parameterClass="java.util.Map">
 		<![CDATA[ 
-			SELECT a.*,au.USER_NAME apply_user_name,cu.USER_NAME check_user_name,cu.`user_sign` check_user_sign,ad.dept_cname apply_dept_name
+			SELECT a.*,au.USER_NAME apply_user_name,cu.USER_NAME check_user_name,cu.`user_sign` check_user_sign,ad.dept_cname apply_dept_name,su.`USER_NAME` sp_check_user_name
 			FROM qkjm_r_apply a
 			LEFT JOIN s_sys_user au ON(a.apply_user=au.UUID)
 			LEFT JOIN s_sys_department ad ON(a.apply_dept = ad.dept_code)
 			LEFT JOIN s_sys_user cu ON(a.check_user=cu.UUID)
+			LEFT JOIN s_sys_user su ON(a.sp_check_user = su.`UUID`)
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ a.uuid=#uuid# ]]></isNotEmpty>
@@ -29,7 +30,10 @@
 			<isNotEmpty prepend="AND" property="check_time_begin"><![CDATA[ a.check_time>=#check_time_begin# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="check_time_end"><![CDATA[ a.check_time<=DATE_ADD(#check_time_end#,INTERVAL 1 day) ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="apply_time"><![CDATA[ a.apply_time=#apply_time# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="sp_check_status"><![CDATA[ a.sp_check_status=#sp_check_status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="status"><![CDATA[ a.status=#status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="status_start"><![CDATA[ a.status>=#status_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="status_end"><![CDATA[ a.status<=#status_end# ]]></isNotEmpty>
 		</dynamic>
 		<![CDATA[ Order By uuid Desc	]]>
 	</select>
@@ -91,10 +95,39 @@
 			Where uuid = #uuid#
 		]]>
 	</update>
+
+	<update id="qkjmanage_spcheckApply" parameterClass="apply">
+		<![CDATA[
+			Update qkjm_r_apply
+			Set sp_check_status=#sp_check_status#,
+				sp_check_user=#sp_check_user#,
+				sp_check_time=#sp_check_time#,
+				check_note=#check_note#,
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+
 	<delete id="qkjmanage_delApply" parameterClass="apply">
 	<![CDATA[
 		Delete From qkjm_r_apply Where uuid=#uuid#
 	]]>
 	</delete>
+
+	<!-- ship info change -->
+	<update id="qkjmanage_mdyApplyShipInfo" parameterClass="apply">
+		<![CDATA[
+			Update qkjm_r_apply
+			Set ship_status=#ship_status#,
+				ship_ware=#ship_ware#,
+				ship_date=#ship_date#,
+				ship_no=#ship_no#,
+				ship_phone=#ship_phone#,
+				ship_type=#ship_type#,
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<!-- ship info change -->
 	<!-- Apply End -->
 </sqlMap>

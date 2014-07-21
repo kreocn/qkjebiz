@@ -89,7 +89,7 @@ public class ScheAction extends ActionSupport {
 	}
 
 	public void list() throws Exception {
-		ContextHelper.isPermit("QKJ_SCHE");
+		/*ContextHelper.isPermit("QKJ_SCHE");*/
 		try {
 			map.clear();
 			if (sche != null)

@@ -19,20 +19,20 @@
 		
 		<action name="schedule_add" class="com.qkj.sche.action.ScheAction" method="add">
 			<result type="redirectAction">
-				<param name="actionName">schedule_list</param>
+				<param name="actionName">schedule_leftList</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
 		
 		<action name="schedule_save" class="com.qkj.sche.action.ScheAction" method="save">
 			<result type="redirectAction">
-				<param name="actionName">schedule_list</param>
+				<param name="actionName">schedule_leftList</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
 		<action name="schedule_del" class="com.qkj.sche.action.ScheAction" method="del">
 			<result type="redirectAction">
-				<param name="actionName">schedule_list</param>
+				<param name="actionName">schedule_leftList</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>

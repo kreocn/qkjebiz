@@ -1,9 +1,12 @@
 package org.iweb.test;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.iweb.sys.ToolsUtil;
+import net.sf.json.JSONObject;
+
+import com.qkj.manage.domain.Apply;
 
 public class test {
 
@@ -13,19 +16,16 @@ public class test {
 			+ "FROM information_schema.`COLUMNS` c WHERE c.TABLE_SCHEMA = 'AAA' " + "AND c.TABLE_NAME = 'BBB'";
 
 	public test() {
-		ArrayList<String> l = new ArrayList<>();
-		String tmp = "";
-		for (int i = 0; i < 10; i++) {
-			int count = 0;
-			l.clear();
-			while (true) {
-				tmp = ToolsUtil.getUUID16();
-				if (l.contains(tmp)) break;
-				else l.add(ToolsUtil.getUUID16());
-				count++;
-			}
-			System.out.println(count);
-		}
+		Apply a = new Apply();
+		a.setShip_status(10);
+		a.setShip_date(new Date());
+		a.setShip_no("112233");
+		a.setShip_phone("223344");
+		a.setShip_type("334455");
+		a.setShip_ware(5);
+		
+		JSONObject o = JSONObject.fromObject(a);
+		System.out.println(o.toString());
 	}
 
 	/**

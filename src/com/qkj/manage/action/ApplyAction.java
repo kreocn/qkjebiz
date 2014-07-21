@@ -13,22 +13,50 @@ import org.iweb.sys.ToolsUtil;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.qkj.manage.dao.ApplyDAO;
-import com.qkj.manage.domain.Active;
+import com.qkj.manage.dao.ApproveDAO;
 import com.qkj.manage.domain.Apply;
+import com.qkj.manage.domain.Approve;
 
 public class ApplyAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
 	private static Log log = LogFactory.getLog(ApplyAction.class);
 	private Map<String, Object> map = new HashMap<String, Object>();
 	private ApplyDAO dao = new ApplyDAO();
-
+	private ApproveDAO adao = new ApproveDAO();
 	private Apply apply;
 	private List<Apply> applys;
+	private Approve approve;
+	private List<Approve> approves;
+	private String isApprover;
 	private String message;
 	private String viewFlag;
 	private int recCount;
 	private int pageSize;
 	private int currPage;
+
+	public String getIsApprover() {
+		return isApprover;
+	}
+
+	public void setIsApprover(String isApprover) {
+		this.isApprover = isApprover;
+	}
+
+	public List<Approve> getApproves() {
+		return approves;
+	}
+
+	public void setApproves(List<Approve> approves) {
+		this.approves = approves;
+	}
+
+	public Approve getApprove() {
+		return approve;
+	}
+
+	public void setApprove(Approve approve) {
+		this.approve = approve;
+	}
 
 	public Apply getApply() {
 		return apply;
@@ -93,11 +121,26 @@ public class ApplyAction extends ActionSupport {
 			if (apply == null) {
 				apply = new Apply();
 			}
+
+			// 特殊审核权限
+			if (apply.getStatus_sp() != null) {
+				if (apply.getStatus_sp() == 25) {
+					apply.setSp_check_status(10);
+					apply.setStatus(20);
+				} else if (apply.getStatus_sp() == 20) {
+					apply.setSp_check_status(0);
+					apply.setStatus(apply.getStatus_sp());
+				} else {
+					apply.setStatus(apply.getStatus_sp());
+					apply.setSp_check_status(null);
+				}
+			}
+
 			ContextHelper.setSearchDeptPermit4Search(map, "apply_depts", "apply_user");
 			ContextHelper.SimpleSearchMap4Page("QKJ_QKJMANAGE_APPLY_LIST", map, apply, viewFlag);
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
-			this.setCurrPage(Integer.parseInt((ToolsUtil.isEmpty(map.get(Parameters.Current_Page_Str)) ? "1" : map
-					.get(Parameters.Current_Page_Str)).toString()));
+			this.setCurrPage(Integer.parseInt((ToolsUtil.isEmpty(map.get(Parameters.Current_Page_Str)) ? "1" : map.get(Parameters.Current_Page_Str))
+					.toString()));
 			this.setApplys(dao.list(map));
 			this.setRecCount(dao.getResultCount());
 		} catch (Exception e) {
@@ -125,6 +168,13 @@ public class ApplyAction extends ActionSupport {
 				} else {
 					this.setApply(null);
 				}
+				map.clear();
+				map.put("int_id", apply.getUuid());
+				map.put("approve_type", 0);
+				this.setApproves(adao.list(map));
+				/* 检查当前用户是否已经审阅 */
+				if (adao.userIsIn(approves, ContextHelper.getUserLoginUuid())) this.setIsApprover("true");
+				else this.setIsApprover("false");
 			} else {
 				this.setApply(null);
 				setMessage("无操作类型!");
@@ -209,6 +259,7 @@ public class ApplyAction extends ActionSupport {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_CHECK5");
 		try {
 			check(5);
+			spcheck(0);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!check5 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!check5 数据更新失败:", e);
@@ -251,6 +302,94 @@ public class ApplyAction extends ActionSupport {
 	}
 
 	/**
+	 * 特殊审核权限,通过
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String spcheck10() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_SPCHECK10");
+		try {
+			spcheck(10);
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!spcheck10 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!spcheck10 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+
+	/**
+	 * 特殊审核权限,退回
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String spcheck5() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_SPCHECK5");
+		try {
+			spcheck(5);
+			// 退回时,单子同时被退回
+			check(5);
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!spcheck5 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!spcheck5 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+
+	/**
+	 * 审阅
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String approve() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_APPROVE");
+		try {
+			adao.add(approve, 0, apply.getUuid());
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!approve 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!approve 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+
+	/**
+	 * 删除审阅
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String approveDel() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_APPROVEDELLAST");
+		try {
+			adao.deleteLast(approve, 0, apply.getUuid());
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!approveDel 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!approveDel 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+
+	/**
+	 * 修改发货信息
+	 * 
+	 * @return
+	 * @throws Exception
+	 * @date 2014-4-26 上午10:29:40
+	 */
+	public String mdyShipInfo() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_MDYAPPLYSHIPINFO");
+		try {
+			dao.mdyShipInfo(apply);
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!mdyShipInfo 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!mdyShipInfo 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+
+	/**
 	 * 状态更改通用函数
 	 * 
 	 * @param p_status
@@ -261,6 +400,19 @@ public class ApplyAction extends ActionSupport {
 		apply.setCheck_time(new Date());
 		apply.setLm_user(ContextHelper.getUserLoginUuid());
 		dao.check(apply);
+	}
+
+	/**
+	 * 状态更改通用函数
+	 * 
+	 * @param p_status
+	 */
+	public void spcheck(int p_sp_check_status) {
+		apply.setSp_check_status(p_sp_check_status);
+		apply.setSp_check_user(ContextHelper.getUserLoginUuid());
+		apply.setSp_check_time(new Date());
+		apply.setLm_user(ContextHelper.getUserLoginUuid());
+		dao.spcheck(apply);
 	}
 
 	public String del() throws Exception {
