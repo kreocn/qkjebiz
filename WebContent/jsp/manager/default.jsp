@@ -55,6 +55,7 @@ display: none;
 </script>
 </head>
 <body>
+
 	<div class="main_info">
 		<div class="sysnote">
 			<div class="note_title">系统公告</div>
@@ -78,14 +79,16 @@ display: none;
 			</div>
 		</div>
 		<s:iterator value="sches" status="sch">
-			<div class="update_info">
+			<div class="update_info 
+			<s:if  test = "#sch.index==0">active_info</s:if>
+			 ">
 					<div class="update_title">${sdate } ${title }</div>
 					<div class="update_content">
 					<dl><dt>${content }</dt></dl>
 					</div>
 			</div>
 		</s:iterator>
-		<div class="update_info active_info">
+		<div class="update_info">
 			<div class="update_title">2014-07-11 系统例行更新</div>
 			<div class="update_content">
 			<dl>
