@@ -13,11 +13,7 @@
 <link rel="stylesheet" href="<s:url value="/css/main.css" />" />
 <script type="text/javascript" src="<s:url value="/js/common_listtable.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/show_page.js" />"></script>
-<script type="text/javascript">
-window.onload = function() {
-	setStyle("table1");
-}
-</script>
+
 <body>
 <div id="main">
 <div id="result">
@@ -89,4 +85,9 @@ window.onload = function() {
 </div>
 </div>
 </body>
+<script type="text/javascript">
+window.onload = function() {
+	setStyle("table1");
+}
+</script>
 </html>

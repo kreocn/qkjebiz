@@ -21,15 +21,6 @@
 
 
 
-<script type="text/javascript">
-var infoeditor01;
-$(function(){
-	infoeditor01 = new widget_textarea();
-	infoeditor01.init("warenoteid");
-});
-
-$("#orderGoods_storage_date").datepicker();
-</script>
 <body>
 <div id="main">
 <div id="result">
@@ -92,4 +83,14 @@ $("#orderGoods_storage_date").datepicker();
 </div>
 </div>
 </body>
+
+<script type="text/javascript">
+var infoeditor01;
+$(function(){
+	infoeditor01 = new widget_textarea();
+	infoeditor01.init("warenoteid");
+});
+
+$("#orderGoods_storage_date").datepicker();
+</script>
 </html>
