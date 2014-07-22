@@ -216,8 +216,8 @@ font-size: 12px; float: right; margin-right: 20px;
 }
 
 .itabletitle span.extra1 a {
-color: #666; font-size: 12px; font-weight: 400; text-decoration: none; display: block; padding: 2px 5px 2px 8px; border: 1px solid #369;
-border-right: 2px solid #369; border-bottom: 2px solid #369; background: #DDEEF2 url(../images/icon/icon_add.gif) no-repeat 3px center;
+color: #666; font-size: 12px; font-weight: 400; text-decoration: none; display: block; padding: 1px 5px 3px 8px; border: 1px solid #369;
+border-right: 2px solid #369; border-bottom: 2px solid #369; background: #DDEEF2 url(../images/icon/icon_add.png) no-repeat 3px center;
 }
 
 /*inputsearch*/

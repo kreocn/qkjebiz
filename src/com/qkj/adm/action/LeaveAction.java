@@ -13,6 +13,7 @@ import org.iweb.sys.ToolsUtil;
 import com.opensymphony.xwork2.ActionSupport;
 import com.qkj.adm.dao.LeaveDAO;
 import com.qkj.adm.domain.Leave;
+import com.qkj.manage.domain.Active;
 
 public class LeaveAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
@@ -88,8 +89,9 @@ public class LeaveAction extends ActionSupport {
 		ContextHelper.isPermit("QKJ_ADM_LEAVE_LIST");
 		try {
 			map.clear();
-			if (leave != null) map.putAll(ToolsUtil.getMapByBean(leave));
-			map.putAll(ContextHelper.getDefaultRequestMap4Page());
+			if (leave == null) leave = new Leave();
+			ContextHelper.setSearchDeptPermit4Search(map, "leave_depts", "leave_user");
+			ContextHelper.SimpleSearchMap4Page("QKJ_ADM_LEAVE_LIST", map, leave, viewFlag);
 			this.setPageSize(ContextHelper.getPageSize(map));
 			this.setCurrPage(ContextHelper.getCurrPage(map));
 			this.setLeaves(dao.list(map));
@@ -111,7 +113,9 @@ public class LeaveAction extends ActionSupport {
 				this.setLeave(null);
 				setMessage("你没有选择任何操作!");
 			} else if ("add".equals(viewFlag)) {
-				// this.setLeave(null);
+				leave.setLeave_dept(ContextHelper.getUserLoginDept());
+				leave.setLeave_dept_name(ContextHelper.getUserLoginDeptName());
+				leave.setLeave_user(ContextHelper.getUserLoginUuid());
 			} else if ("mdy".equals(viewFlag)) {
 				if (!(leave == null || leave.getUuid() == null)) {
 					this.setLeave((Leave) dao.get(leave.getUuid()));

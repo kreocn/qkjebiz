@@ -6,7 +6,7 @@ public class Leave {
 	private Integer uuid;// (int)主键自增
 	private Integer leave_type;// (int)类型 0出差 1请假 2加班 3换休
 	private String leave_dept;// (varchar)申请部门
-	private Integer leave_mold;// 假期类别
+	private String leave_mold;// 假期类别
 	private String leave_user;// (varchar)申请人
 	private Date leave_start;// (date)开始日期
 	private String leave_start_time;// (varchar)开始时间
@@ -31,6 +31,26 @@ public class Leave {
 	private String check_user_name;// 审核人
 	private String acheck_user_name;// 行政审核人
 	private String leave_dept_name;
+	private String leave_user_name;
+
+	// 以下为查询专用字段
+	private Date serach_date;
+
+	public Date getSerach_date() {
+		return serach_date;
+	}
+
+	public void setSerach_date(Date serach_date) {
+		this.serach_date = serach_date;
+	}
+
+	public String getLeave_user_name() {
+		return leave_user_name;
+	}
+
+	public void setLeave_user_name(String leave_user_name) {
+		this.leave_user_name = leave_user_name;
+	}
 
 	public String getLeave_dept_name() {
 		return leave_dept_name;
@@ -40,11 +60,11 @@ public class Leave {
 		this.leave_dept_name = leave_dept_name;
 	}
 
-	public Integer getLeave_mold() {
+	public String getLeave_mold() {
 		return leave_mold;
 	}
 
-	public void setLeave_mold(Integer leave_mold) {
+	public void setLeave_mold(String leave_mold) {
 		this.leave_mold = leave_mold;
 	}
 

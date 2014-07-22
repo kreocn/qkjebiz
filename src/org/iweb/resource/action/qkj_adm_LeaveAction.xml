@@ -37,6 +37,7 @@
 			<result type="redirectAction">
 				<param name="actionName">leave_load</param>
 				<param name="leave.uuid">${leave.uuid}</param>
+				<param name="viewFlag">mdy</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>

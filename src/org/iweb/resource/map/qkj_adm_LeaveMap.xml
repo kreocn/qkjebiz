@@ -5,38 +5,52 @@
 	<typeAlias alias="leave" type="com.qkj.adm.domain.Leave" />
 	<select id="adm_getLeaves" resultClass="leave" parameterClass="java.util.Map">
 		<![CDATA[ 
-			SELECT l.*,cu.`USER_NAME` check_user_name,au.`USER_NAME` acheck_user_name,ld.`dept_cname` leave_dept_name
+			SELECT l.*,cu.`USER_NAME` check_user_name,au.`USER_NAME` acheck_user_name,ld.`dept_cname` leave_dept_name,lu.`USER_NAME` leave_user_name			
 			FROM qkja_r_leave l
 			LEFT JOIN s_sys_user cu ON(cu.`UUID` = l.`check_user`)
 			LEFT JOIN s_sys_user au ON(au.`UUID` = l.`acheck_user`)
+			LEFT JOIN s_sys_user lu ON(lu.`UUID` = l.`leave_user`)
 			LEFT JOIN s_sys_department ld ON(ld.`dept_code` = l.`leave_dept`)
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ l.uuid=#uuid# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="leave_type"><![CDATA[ l.leave_type=#leave_type# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="leave_dept"><![CDATA[ l.leave_dept=#leave_dept# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="leave_depts">
+				<![CDATA[ l.leave_dept In ]]>
+				<iterate property="leave_depts" open="(" close=")" conjunction=" , "> #leave_depts[]#</iterate>
+			</isNotEmpty>
 			<isNotEmpty prepend="AND" property="leave_user"><![CDATA[ l.leave_user=#leave_user# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="leave_start"><![CDATA[ l.leave_start=#leave_start# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="leave_end"><![CDATA[ l.leave_end=#leave_end# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="leave_end_time"><![CDATA[ l.leave_end_time=#leave_end_time# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="check_status"><![CDATA[ l.check_status=#check_status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="acheck_status"><![CDATA[ l.acheck_status=#acheck_status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="allowance_status"><![CDATA[ l.allowance_status=#allowance_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="leave_mold"><![CDATA[ l.leave_mold=#leave_mold# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="serach_date"><![CDATA[ l.leave_start <= #serach_date# AND l.leave_end >= #serach_date# ]]></isNotEmpty>
 		</dynamic>
+		<![CDATA[ ORDER BY l.uuid DESC ]]>
 	</select>
 	<select id="adm_getLeavesCounts" resultClass="int" parameterClass="java.util.Map">
 		<![CDATA[ 
-			Select Count(*) From qkja_r_leave
+			Select Count(*) From qkja_r_leave l
 		]]>
 		<dynamic prepend="WHERE">
-			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="leave_type"><![CDATA[ leave_type=#leave_type# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="leave_dept"><![CDATA[ leave_dept=#leave_dept# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="leave_user"><![CDATA[ leave_user=#leave_user# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="leave_start"><![CDATA[ leave_start=#leave_start# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="leave_end"><![CDATA[ leave_end=#leave_end# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="leave_end_time"><![CDATA[ leave_end_time=#leave_end_time# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="acheck_status"><![CDATA[ acheck_status=#acheck_status# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="allowance_status"><![CDATA[ allowance_status=#allowance_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ l.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="leave_type"><![CDATA[ l.leave_type=#leave_type# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="leave_dept"><![CDATA[ l.leave_dept=#leave_dept# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="leave_depts">
+				<![CDATA[ l.leave_dept In ]]>
+				<iterate property="leave_depts" open="(" close=")" conjunction=" , "> #leave_depts[]#</iterate>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="leave_user"><![CDATA[ l.leave_user=#leave_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="leave_start"><![CDATA[ l.leave_start=#leave_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="leave_end"><![CDATA[ l.leave_end=#leave_end# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="check_status"><![CDATA[ l.check_status=#check_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="acheck_status"><![CDATA[ l.acheck_status=#acheck_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="allowance_status"><![CDATA[ l.allowance_status=#allowance_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="leave_mold"><![CDATA[ l.leave_mold=#leave_mold# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="serach_date"><![CDATA[ l.leave_start <= #serach_date# AND l.leave_end >= #serach_date# ]]></isNotEmpty>
 		</dynamic>
 	</select>
 	<insert id="adm_addLeave" parameterClass="leave">

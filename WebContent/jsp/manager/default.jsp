@@ -78,7 +78,7 @@ display: none;
 			</div>
 		</div>
 		<s:iterator value="sches" status="sch">
-			<div class="update_info">
+			<div class="update_info active_info">
 					<div class="update_title">${sdate } ${title }</div>
 					<div class="update_content">
 					<dl><dt>${content }</dt></dl>

@@ -58,14 +58,14 @@ $.fn.setSelectedText = function(text) {
 		}
 	}
 	if (!isExist) {
-		alert("下拉框中不存在该项");
+		//alert("下拉框中不存在该项");
 	}
 };
 // 设置选中指定索引项
 $.fn.setSelectedIndex = function(index) {
 	var count = this.getSelectSize();
 	if (index >= count || index < 0) {
-		alert("选中项索引超出范围");
+		//alert("选中项索引超出范围");
 	} else {
 		$(this).get(0).selectedIndex = index;
 	}
@@ -85,7 +85,7 @@ $.fn.isExistItem = function(value) {
 // 向select中添加一项，显示内容为text，值为value,如果该项值已存在，则提示
 $.fn.addOption = function(text, value) {
 	if (this.isExistItem(value)) {
-		alert("待添加项的值已存在");
+		//alert("待添加项的值已存在");
 	} else {
 		$(this).get(0).options.add(new Option(text, value));
 	}
@@ -101,14 +101,14 @@ $.fn.removeItem = function(value) {
 			}
 		}
 	} else {
-		alert("待删除的项不存在!");
+		//alert("待删除的项不存在!");
 	}
 };
 // 删除select中指定索引的项
 $.fn.removeIndex = function(index) {
 	var count = this.getSelectSize();
 	if (index >= count || index < 0) {
-		alert("待删除项索引超出范围");
+		//alert("待删除项索引超出范围");
 	} else {
 		$(this).get(0).remove(index);
 	}
