@@ -27,7 +27,7 @@ public class WareAppCreate extends AppCreate {
 		ai.setApp_name("仓库");
 		ai.setPackage_name("org.iweb.systools");
 		ai.setApp_en("ware");
-		ai.setDb_name("qkjcj");
+		ai.setDb_name("huzhu");
 		ai.setTable_name("qkj_t_warehouse");
 		ai.setJsp_path("sysebiz");
 		ai.setName_space("sysebiz");
