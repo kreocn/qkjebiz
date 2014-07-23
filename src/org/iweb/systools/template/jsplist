@@ -58,7 +58,7 @@ $(function(){
 	    <td align="center"><input name="$pkey$" type="checkbox" value="<s:property value="$pkey$" />" /></td>
 	    $jsplist_columnValues$
 		<td align="center">
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('$action_privilege_flag$_MDY')">
+			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('$action_privilege_flag$')">
 	    	[<a href="<s:url namespace="/$name_space$" action="$class_alias$_load"><s:param name="viewFlag">mdy</s:param><s:param name="$class_alias$.$pkey$" value="$pkey$"></s:param></s:url>">修改</a>]
 	    	</s:if>
 	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('$action_privilege_flag$_DEL')">

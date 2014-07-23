@@ -55,7 +55,7 @@
 			<s:if test="leave.check_status==0">新申请</s:if>
 			<s:if test="leave.check_status==5"><span class="message_error">已退回(${leave.check_user_name})</span></s:if>
 			<s:if test="leave.check_status==10"><span class="message_warning">待审核</span></s:if>
-			<s:if test="leave.check_status==20"><span class="message_pass">大区已审(${leave.check_user_name})</span></s:if>
+			<s:if test="leave.check_status==20"><span class="message_pass">经理/大区已审(${leave.check_user_name})</span></s:if>
 			<s:if test="leave.check_status==30"><span class="message_pass">运营总监已审(${leave.check_user_name})</span></s:if>
 			<s:if test="leave.check_status==40"><span class="message_pass">业务副总已审(${leave.check_user_name})</span></s:if>
 			</span>
@@ -155,11 +155,11 @@
 					<s:submit id="delete" name="delete" value="删除" action="leave_del" onclick="return isDel();" />
 					</s:if>
 				</s:elseif>
-				<!-- {0:'新申请',5:'已退回',10:'待审核',20:'大区已审',30:'运营总监已审',40:'业务副总已审' } -->
+				<!-- {0:'新申请',5:'已退回',10:'待审核',20:'经理/大区已审',30:'运营总监已审',40:'业务副总已审' } -->
 				<s:if test="leave.check_status==10&&@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_CHECK10')">
-					<s:submit id="leave_check10" name="leave_check10" value="大区-审核通过" action="leave_check10" onclick="return isOp('确定执行此操作?');" />
+					<s:submit id="leave_check10" name="leave_check10" value="经理/大区-审核通过" action="leave_check10" onclick="return isOp('确定执行此操作?');" />
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_CHECK5')">
-						<s:submit name="leave_check5" value="大区-审核不通过" action="leave_check5" onclick="return isOp('确定执行此操作?');" />
+						<s:submit name="leave_check5" value="经理/大区-审核不通过" action="leave_check5" onclick="return isOp('确定执行此操作?');" />
 					</s:if>
 				</s:if>
 				<s:if test="leave.check_status==20&&@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_CHECK20')">
@@ -175,7 +175,7 @@
 					</s:if>
 				</s:if>
 				<!-- {0:'未审核',10:'人事经理已审',20:'人事副总已审',30:'总经理已审' } -->
-				<s:if test="leave.check_status>=30">
+				<s:if test="leave.check_status>=20">
 					<s:if test="leave.acheck_status==0&&@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_ACHECK0')">
 						<s:submit id="leave_acheck0" name="leave_acheck0" value="人事经理-审核通过" action="leave_acheck0" onclick="return isOp('确定执行此操作?');" />
 						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_CHECK5')">
