@@ -15,6 +15,11 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.qkj.sche.dao.ScheduleDAO;
 import com.qkj.sche.domain.Schedule;
 
+/**
+ * 
+ * @author sunshanshan
+ *
+ */
 public class ScheAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
 	private static Log log = LogFactory.getLog(ScheAction.class);
