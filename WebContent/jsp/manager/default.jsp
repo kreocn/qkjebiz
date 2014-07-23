@@ -79,13 +79,9 @@ display: none;
 			</div>
 		</div>
 		<s:iterator value="sches" status="sch">
-<<<<<<< HEAD
-			<div class="update_info active_info">
-=======
 			<div class="update_info 
 			<s:if  test = "#sch.index==0">active_info</s:if>
 			 ">
->>>>>>> origin/master
 					<div class="update_title">${sdate } ${title }</div>
 					<div class="update_content">
 					<dl><dt>${content }</dt></dl>
