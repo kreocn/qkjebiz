@@ -132,6 +132,9 @@
 			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE')">
 	    	[<a href="<s:url namespace="/adm" action="leave_load"><s:param name="viewFlag">mdy</s:param><s:param name="leave.uuid" value="uuid"></s:param></s:url>">修改</a>]
 	    	</s:if>
+	    	<s:if test="check_status>=20">
+	    	[<a href="<s:url namespace="/adm" action="leave_print"><s:param name="leave.uuid" value="uuid" /><s:param name="leave.leave_type" value="leave_type" /></s:url>">打印</a>]
+	    	</s:if>
 	    	<s:if test="check_status<=5&&@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_DEL')">
 	    	[<a href="<s:url namespace="/adm" action="leave_del"><s:param name="leave.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>]
 	    	</s:if>	   

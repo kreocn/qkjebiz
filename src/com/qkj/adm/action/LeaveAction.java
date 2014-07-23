@@ -8,12 +8,10 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.iweb.sys.ContextHelper;
-import org.iweb.sys.ToolsUtil;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.qkj.adm.dao.LeaveDAO;
 import com.qkj.adm.domain.Leave;
-import com.qkj.manage.domain.Active;
 
 public class LeaveAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
@@ -129,6 +127,18 @@ public class LeaveAction extends ActionSupport {
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!load 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!load 读取数据错误:", e);
+		}
+		return SUCCESS;
+	}
+
+	public String print() throws Exception {
+		try {
+			if (!(leave == null || leave.getUuid() == null)) {
+				this.setLeave((Leave) dao.get(leave.getUuid()));
+			}
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!print 读取数据错误:", e);
+			throw new Exception(this.getClass().getName() + "!print 读取数据错误:", e);
 		}
 		return SUCCESS;
 	}

@@ -98,6 +98,7 @@
 				acheck_user=#acheck_user#,
 				acheck_time=#acheck_time#,
 				acheck_note=#acheck_note#,
+				check_note=#check_note#,
 				lm_time=#lm_time#,
 				lm_user=#lm_user#
 			Where uuid = #uuid#
