@@ -96,12 +96,14 @@
 			<input id="leave_leave_start" type="text" name="leave.leave_start" title="开始日期" value="${it:formatDate(leave.leave_start,'yyyy-MM-dd')}" dataType="date" controlName="开始日期" />
 			<s:textfield id="leave_leave_start_time" name="leave.leave_start_time" title="开始时间" dataLength="0,15" controlName="开始时间" cssClass="time_input" />
 			<script type="text/javascript">$('#leave_leave_start').datetimepicker({stepMinute: 15,altField: "#leave_leave_start_time"});</script>
+			<span class="message_prompt nowrap">如果是一整天,时间请选00:00</span>
 		</td>
 		<td class='firstRow'>结束时间:</td>
 		<td class='secRow'>
 			<input id="leave_leave_end" type="text" name="leave.leave_end" title="结束日期" value="${it:formatDate(leave.leave_end,'yyyy-MM-dd')}" dataType="date" controlName="结束日期" />
 			<s:textfield id="leave_leave_end_time" name="leave.leave_end_time" title="结束时间" dataLength="0,15" controlName="结束时间" cssClass="time_input" />
 			<script type="text/javascript">$('#leave_leave_end').datetimepicker({stepMinute: 15,altField: "#leave_leave_end_time"});</script>
+			<span class="message_prompt nowrap">如果是一整天,时间请选00:00</span>
 		</td>
 		</tr>
 		<tr>

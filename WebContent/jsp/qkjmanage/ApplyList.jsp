@@ -140,7 +140,7 @@ display: none;
 			<s:if test="10==status"><span class="message_warning">待审核</span></s:if>
 			<s:if test="20==status">
 			<s:if test="0==sp_check_status || 5==sp_check_status"><span class="message_pass">大区经理已审(${check_user_name})</span></s:if>
-			<s:elseif test="10==sp_check_status"><span class="message_pass">销管经理已审(${check_user_name})</span></s:elseif>
+			<s:elseif test="10==sp_check_status"><span class="message_pass">销管经理已审(${sp_check_user_name})</span></s:elseif>
 			</s:if>
 			<s:if test="30==status"><span class="message_pass">运营总监已审(${check_user_name})</span></s:if>
 		</td>
