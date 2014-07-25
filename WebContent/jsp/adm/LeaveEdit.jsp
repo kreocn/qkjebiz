@@ -21,6 +21,7 @@
 <script type="text/javascript" src="<s:url value="/js/common_ajax2.0.js" />"></script>
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery.select.js" />"></script>
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery-ui-timepicker-addon.js" />"></script>
+<script type="text/javascript" src="/ckframe/include/widget.js"></script>
 <body>
 <!--  0出差 1请假 2加班 3换休 -->
 <div id="main">
@@ -33,6 +34,7 @@
 			<s:if test="leave.leave_type==1">请假</s:if>
 			<s:if test="leave.leave_type==2">加班</s:if>
 			<s:if test="leave.leave_type==3">换休</s:if>
+			<s:if test="leave.leave_type==4">补签</s:if>
 			</span>
 			申请单
 		</span>
@@ -95,17 +97,18 @@
 		<td class='secRow'>
 			<input id="leave_leave_start" type="text" name="leave.leave_start" title="开始日期" value="${it:formatDate(leave.leave_start,'yyyy-MM-dd')}" dataType="date" controlName="开始日期" />
 			<s:textfield id="leave_leave_start_time" name="leave.leave_start_time" title="开始时间" dataLength="0,15" controlName="开始时间" cssClass="time_input" />
-			<script type="text/javascript">$('#leave_leave_start').datetimepicker({stepMinute: 15,altField: "#leave_leave_start_time"});</script>
+			
 			<span class="message_prompt nowrap">如果是一整天,时间请选00:00</span>
 		</td>
 		<td class='firstRow'>结束时间:</td>
 		<td class='secRow'>
 			<input id="leave_leave_end" type="text" name="leave.leave_end" title="结束日期" value="${it:formatDate(leave.leave_end,'yyyy-MM-dd')}" dataType="date" controlName="结束日期" />
 			<s:textfield id="leave_leave_end_time" name="leave.leave_end_time" title="结束时间" dataLength="0,15" controlName="结束时间" cssClass="time_input" />
-			<script type="text/javascript">$('#leave_leave_end').datetimepicker({stepMinute: 15,altField: "#leave_leave_end_time"});</script>
 			<span class="message_prompt nowrap">如果是一整天,时间请选00:00</span>
 		</td>
 		</tr>
+		<!-- 补签单没有共计 -->
+		<s:if test="leave.leave_type!=4">
 		<tr>
 		<td class='firstRow'>共计:</td>
 		<td class='secRow'><s:textfield name="leave.totle" title="共计" dataLength="0,10" dataType="number" controlName="共计"  cssClass="time_input" /> 天</td>
@@ -128,9 +131,17 @@
 		<td class='secRow'></td>
 		</s:else>
 		</tr>
+		</s:if>
 		<tr>
 		<td class='firstRow'>事由:</td>
-		<td class='secRow' colspan="3"><s:textarea name="leave.cause" rows="10" title="事由" dataLength="0,255" controlName="事由" cssStyle="width:80%;" /></td>
+		<td class='secRow' colspan="3">
+			<s:if test="leave.check_status>=10">
+			${leave.cause}
+			</s:if>
+			<s:else>
+			<s:textarea id="leave_cause" name="leave.cause" rows="10" title="事由" dataLength="0,65535" controlName="事由" />
+			</s:else>
+		</td>
 		</tr>
 		<s:if test="leave.check_status>=10">
 		<tr>
@@ -213,10 +224,17 @@
 var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
 var curr_dept = '${leave.leave_dept}';
 var curr_user = '${leave.leave_user}';
+var infoeditor01;
 $(function(){
+	if($("#leave_cause").length>0) {
+		infoeditor01 = new widget_textarea();
+		infoeditor01.init("leave_cause");
+	}
 	if(curr_dept!='') {
 		loadManagers(curr_dept);
 	}
+	$('#leave_leave_end').datetimepicker({<s:if test="leave.leave_type!=4">stepMinute: 15,</s:if>altField: "#leave_leave_end_time"});
+	$('#leave_leave_start').datetimepicker({<s:if test="leave.leave_type!=4">stepMinute: 15,</s:if>altField: "#leave_leave_start_time"});
 });
 
 var sobj01;

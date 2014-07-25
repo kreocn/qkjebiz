@@ -59,6 +59,11 @@
 			Insert Into qkja_r_leave(leave_type,leave_mold,leave_dept,leave_user,leave_start,leave_start_time,leave_end,leave_end_time,totle,cause,lm_time,lm_user,leave_time)
 			Values (#leave_type#,#leave_mold#,#leave_dept#,#leave_user#,#leave_start#,#leave_start_time#,#leave_end#,#leave_end_time#,#totle#,#cause#,#lm_time#,#lm_user#,NOW())
 		]]>
+		<selectKey resultClass="int" keyProperty="uuid">
+		<![CDATA[ 
+			Select LAST_INSERT_ID()
+		]]>
+		</selectKey>
 	</insert>
 	<update id="adm_mdyLeave" parameterClass="leave">
 		<![CDATA[

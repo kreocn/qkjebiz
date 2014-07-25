@@ -28,16 +28,20 @@
 		<td class="firstRow" width="20%">姓名</td>
 		<td>${leave.leave_user_name}</td>
 	</tr>
-	<tr height="40">
+	<tr height="30">
 		<td class="firstRow">出差时间</td>
 		<td colspan="3">从 ${it:formatDate(leave.leave_start,'yyyy-MM-dd')} 至 ${it:formatDate(leave.leave_end,'yyyy-MM-dd')} 共计 ${leave.totle} 天。</td>
 	</tr>
-	<tr height="40">
+	<tr height="30">
 		<td class="firstRow">出差地点</td>
 		<td colspan="3">${leave.leave_mold}</td>
 	</tr>
 	<tr height="130">
-		<td>部门负责<br />意见</td>
+		<td class="firstRow">出差事由</td>
+		<td colspan="3" style="text-align: left;">${leave.cause}</td>
+	</tr>
+	<tr height="110">
+		<td>部门负责人<br />意见</td>
 		<td colspan="3" class="sign_tr">
 			<s:if test="leave.check_status==30">
 				<span class="sh">${leave.check_note}</span>
@@ -65,7 +69,7 @@
 			</s:else>
 		</td>
 	</tr>
-	<tr height="130">
+	<tr height="110">
 		<td>分管副总经理<br />意见</td>
 		<td colspan="3" class="sign_tr">
 			<s:if test="leave.check_status==40">
@@ -94,11 +98,11 @@
 			</s:else>
 		</td>
 	</tr>
-	<tr height="130">
+	<tr height="110">
 		<td>人力资源部<br />意见</td>
 		<td colspan="3" class="sign_tr">
 			<s:if test="leave.acheck_status==10">
-				<span class="sh">${leave.check_note}</span>
+				<span class="sh">${leave.acheck_note}</span>
 				<span  class="st">	签字:			
 				<span class="sign_area">
 				<s:if test="leave.acheck_user_sign==null">
@@ -123,12 +127,12 @@
 			</s:else>
 		</td>
 	</tr>
-	<tr height="130">
+	<tr height="110">
 		<td>行政管理副总经理<br />意见</td>
 		<td colspan="3" class="sign_tr">
 			<s:if test="leave.acheck_status==20">
-				<span class="sh">${leave.check_note}</span>
-				<span  class="st">	签字:			
+				<span class="sh">${leave.acheck_note}</span>
+				<span  class="st">	签字:	
 				<span class="sign_area">
 				<s:if test="leave.acheck_user_sign==null">
 				<span class="uname">${leave.acheck_user_name}</span>
@@ -152,11 +156,11 @@
 			</s:else>
 		</td>
 	</tr>
-	<tr height="130">
+	<tr height="110">
 		<td>总经理<br />意见</td>
 		<td colspan="3" class="sign_tr">
 			<s:if test="leave.acheck_status==30">
-				<span class="sh">${leave.check_note}</span>
+				<span class="sh">${leave.acheck_note}</span>
 				<span  class="st">	签字:			
 				<span class="sign_area">
 				<s:if test="leave.acheck_user_sign==null">
@@ -201,11 +205,11 @@
 		<td class="firstRow" width="20%">姓名</td>
 		<td>${leave.leave_user_name}</td>
 	</tr>
-	<tr height="40">
-		<td class="firstRow">出差时间</td>
-		<td colspan="3">从 ${it:formatDate(leave.leave_start,'yyyy-MM-dd')} 至 ${it:formatDate(leave.leave_end,'yyyy-MM-dd')} 共计 ${leave.totle} 天。</td>
+	<tr height="30">
+		<td class="firstRow">请假时间</td>
+		<td colspan="3">从 ${it:formatDate(leave.leave_start,'yyyy-MM-dd')} ${leave.leave_start_time} 至 ${it:formatDate(leave.leave_end,'yyyy-MM-dd')} ${leave.leave_end_time} 共计 ${leave.totle} 天。</td>
 	</tr>
-	<tr height="40">
+	<tr height="30">
 		<td class="firstRow">请假类型</td>
 		<td colspan="3">
 			<s:if test="leave.leave_mold==0">年假</s:if>
@@ -219,7 +223,11 @@
 		</td>
 	</tr>
 	<tr height="130">
-		<td>部门负责<br />意见</td>
+		<td class="firstRow">请假事由</td>
+		<td colspan="3" style="text-align: left;">${leave.cause}</td>
+	</tr>
+	<tr height="110">
+		<td>部门负责人<br />意见</td>
 		<td colspan="3" class="sign_tr">
 			<s:if test="leave.check_status==30">
 				<span class="sh">${leave.check_note}</span>
@@ -247,7 +255,7 @@
 			</s:else>
 		</td>
 	</tr>
-	<tr height="130">
+	<tr height="110">
 		<td>分管副总经理<br />意见</td>
 		<td colspan="3" class="sign_tr">
 			<s:if test="leave.check_status==40">
@@ -276,11 +284,11 @@
 			</s:else>
 		</td>
 	</tr>
-	<tr height="130">
+	<tr height="110">
 		<td>人力资源部<br />意见</td>
 		<td colspan="3" class="sign_tr">
 			<s:if test="leave.acheck_status==10">
-				<span class="sh">${leave.check_note}</span>
+				<span class="sh">${leave.acheck_note}</span>
 				<span  class="st">	签字:			
 				<span class="sign_area">
 				<s:if test="leave.acheck_user_sign==null">
@@ -305,11 +313,11 @@
 			</s:else>
 		</td>
 	</tr>
-	<tr height="130">
+	<tr height="110">
 		<td>行政管理副总经理<br />意见</td>
 		<td colspan="3" class="sign_tr">
 			<s:if test="leave.acheck_status==20">
-				<span class="sh">${leave.check_note}</span>
+				<span class="sh">${leave.acheck_note}</span>
 				<span  class="st">	签字:			
 				<span class="sign_area">
 				<s:if test="leave.acheck_user_sign==null">
@@ -334,11 +342,11 @@
 			</s:else>
 		</td>
 	</tr>
-	<tr height="130">
+	<tr height="110">
 		<td>总经理<br />意见</td>
 		<td colspan="3" class="sign_tr">
 			<s:if test="leave.acheck_status==30">
-				<span class="sh">${leave.check_note}</span>
+				<span class="sh">${leave.acheck_note}</span>
 				<span  class="st">	签字:			
 				<span class="sign_area">
 				<s:if test="leave.acheck_user_sign==null">
@@ -373,8 +381,8 @@
 </table>
 </s:if>
 <s:if test="leave.leave_type==2">
-<!-- 请假申请单 -->
-<div class="table_title">请假申请单</div>
+<!-- 加班申请单 -->
+<div class="table_title">加班申请单</div>
 <div class="table_title2">制表日期：<span class="date_area">${it:formatDate(leave.leave_time,'yyyy-MM-dd')}</span></div>
 <table class="iprint-table"cellspacing="0" cellpadding="0">
 	<tr height="30">
@@ -383,12 +391,16 @@
 		<td class="firstRow" width="20%">姓名</td>
 		<td>${leave.leave_user_name}</td>
 	</tr>
-	<tr height="40">
-		<td class="firstRow">出差时间</td>
-		<td colspan="3">从 ${it:formatDate(leave.leave_start,'yyyy-MM-dd')} 至 ${it:formatDate(leave.leave_end,'yyyy-MM-dd')} 共计 ${leave.totle} 天。</td>
+	<tr height="30">
+		<td class="firstRow">加班时间</td>
+		<td colspan="3">从 ${it:formatDate(leave.leave_start,'yyyy-MM-dd')} ${leave.leave_start_time} 至 ${it:formatDate(leave.leave_end,'yyyy-MM-dd')} ${leave.leave_end_time } 共计 ${leave.totle} 天。</td>
 	</tr>
 	<tr height="130">
-		<td>部门负责<br />意见</td>
+		<td class="firstRow">加班事由</td>
+		<td colspan="3" style="text-align: left;">${leave.cause}</td>
+	</tr>
+	<tr height="110">
+		<td>部门负责人<br />意见</td>
 		<td colspan="3" class="sign_tr">
 			<s:if test="leave.check_status==30">
 				<span class="sh">${leave.check_note}</span>
@@ -416,7 +428,7 @@
 			</s:else>
 		</td>
 	</tr>
-	<tr height="130">
+	<tr height="110">
 		<td>分管副总经理<br />意见</td>
 		<td colspan="3" class="sign_tr">
 			<s:if test="leave.check_status==40">
@@ -445,11 +457,11 @@
 			</s:else>
 		</td>
 	</tr>
-	<tr height="130">
+	<tr height="110">
 		<td>人力资源部<br />意见</td>
 		<td colspan="3" class="sign_tr">
 			<s:if test="leave.acheck_status==10">
-				<span class="sh">${leave.check_note}</span>
+				<span class="sh">${leave.acheck_note}</span>
 				<span  class="st">	签字:			
 				<span class="sign_area">
 				<s:if test="leave.acheck_user_sign==null">
@@ -474,11 +486,11 @@
 			</s:else>
 		</td>
 	</tr>
-	<tr height="130">
+	<tr height="110">
 		<td>行政管理副总经理<br />意见</td>
 		<td colspan="3" class="sign_tr">
 			<s:if test="leave.acheck_status==20">
-				<span class="sh">${leave.check_note}</span>
+				<span class="sh">${leave.acheck_note}</span>
 				<span  class="st">	签字:			
 				<span class="sign_area">
 				<s:if test="leave.acheck_user_sign==null">
@@ -503,11 +515,11 @@
 			</s:else>
 		</td>
 	</tr>
-	<tr height="130">
+	<tr height="110">
 		<td>总经理<br />意见</td>
 		<td colspan="3" class="sign_tr">
 			<s:if test="leave.acheck_status==30">
-				<span class="sh">${leave.check_note}</span>
+				<span class="sh">${leave.acheck_note}</span>
 				<span  class="st">	签字:			
 				<span class="sign_area">
 				<s:if test="leave.acheck_user_sign==null">
@@ -544,7 +556,7 @@
 <s:if test="leave.leave_type==3">
 <!-- 换休申请单 -->
 <div class="table_title">换休申请单</div>
-<div class="table_title2">制表日期：<span class="date_area">2014-01-01</span></div>
+<div class="table_title2">制表日期：<span class="date_area">${it:formatDate(leave.leave_time,'yyyy-MM-dd')}</span></div>
 <table class="iprint-table"cellspacing="0" cellpadding="0">
 	<tr height="30">
 		<td class="centerRow" width="20%">部门</td>
@@ -554,10 +566,10 @@
 	</tr>
 	<tr height="60">
 		<td class="firstRow">换休时间</td>
-		<td colspan="3">从 2014-01-01 至 2014-02-01 共计 29 天。</td>
+		<td colspan="3">从 ${it:formatDate(leave.leave_start,'yyyy-MM-dd')} 至 ${it:formatDate(leave.leave_end,'yyyy-MM-dd')} 共计 ${leave.totle} 天。</td>
 	</tr>
 	<tr height="130">
-		<td>部门负责<br />意见</td>
+		<td>部门负责人<br />意见</td>
 		<td colspan="3" class="sign_tr">
 			<s:if test="leave.check_status==30">
 				<span class="sh">${leave.check_note}</span>
@@ -710,6 +722,89 @@
 	</tr>
 </table>
 </s:if>
+<s:if test="leave.leave_type==4">
+<!-- 补签申请单 -->
+<div class="table_title">补签(到/退)申请单</div>
+<div class="table_title2">制表日期：<span class="date_area">${it:formatDate(leave.leave_time,'yyyy-MM-dd')}</span></div>
+<table class="iprint-table"cellspacing="0" cellpadding="0">
+	<tr height="30">
+		<td class="centerRow" width="20%">部门</td>
+		<td>${leave.leave_dept_name}</td>
+		<td class="firstRow" width="20%">姓名</td>
+		<td>${leave.leave_user_name}</td>
+	</tr>
+	<tr height="60">
+		<td class="firstRow">补签时间</td>
+		<td colspan="3">从 ${it:formatDate(leave.leave_start,'yyyy-MM-dd')} ${leave.leave_start_time} 至 ${it:formatDate(leave.leave_end,'yyyy-MM-dd')} ${leave.leave_end_time}</td>
+	</tr>
+	<tr height="130">
+		<td class="firstRow">补签事由</td>
+		<td colspan="3" style="text-align: left;">${leave.cause}</td>
+	</tr>
+	<tr height="130">
+		<td>部门负责人<br />意见</td>
+		<td colspan="3" class="sign_tr">
+			<s:if test="leave.check_status==30">
+				<span class="sh">${leave.check_note}</span>
+				<span class="st">	签字:			
+				<span class="sign_area">
+				<s:if test="leave.check_user_sign==null">
+				<span class="uname">${leave.check_user_name}</span>
+				</s:if>
+				<s:else>
+				<span class="user_sign">
+				<img alt="" src="${leave.check_user_sign}" />
+				</span>
+				</s:else>
+				</span>
+				 日期：<span class="date_area">${it:formatDate(leave.check_time,'yyyy-MM-dd')}</span>
+				 </span>
+			</s:if>
+			<s:else>
+				<span class="sh"></span>
+				<span  class="st">	签字:			
+				<span class="sign_area">
+				</span>
+				 日期：<span class="date_area"></span>
+				 </span>
+			</s:else>
+		</td>
+	</tr>
+	<tr height="130">
+		<td>人力资源部<br />意见</td>
+		<td colspan="3" class="sign_tr">
+			<s:if test="leave.acheck_status==10">
+				<span class="sh">${leave.check_note}</span>
+				<span  class="st">	签字:			
+				<span class="sign_area">
+				<s:if test="leave.acheck_user_sign==null">
+				<span class="uname">${leave.acheck_user_name}</span>
+				</s:if>
+				<s:else>
+				<span class="user_sign">
+				<img alt="" src="${leave.acheck_user_sign}" />
+				</span>
+				</s:else>
+				</span>
+				 日期：<span class="date_area">${it:formatDate(leave.acheck_time,'yyyy-MM-dd')}</span>
+				 </span>
+			</s:if>
+			<s:else>
+				<span class="sh"></span>
+				<span  class="st">	签字:	
+				<span class="sign_area">
+				</span>
+				 日期：<span class="date_area"></span>
+				 </span>
+			</s:else>
+		</td>
+	</tr>
+</table>
+</s:if>
+<div class="printarea buttonarea">
+	<input type="button" value="打印本页" onclick="window.print();" />
+	<input type="button" value="返回" onclick="location.href='<s:url action="leave_relist" namespace="/adm" />';" />
+</div>
 </div></div></div>
 </body>
 </html>

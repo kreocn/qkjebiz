@@ -132,6 +132,7 @@ public class LeaveAction extends ActionSupport {
 	}
 
 	public String print() throws Exception {
+		ContextHelper.isPermit("QKJ_ADM_LEAVE");
 		try {
 			if (!(leave == null || leave.getUuid() == null)) {
 				this.setLeave((Leave) dao.get(leave.getUuid()));
@@ -148,7 +149,7 @@ public class LeaveAction extends ActionSupport {
 		try {
 			leave.setLm_user(ContextHelper.getUserLoginUuid());
 			leave.setLm_time(new Date());
-			dao.add(leave);
+			leave.setUuid((Integer) dao.add(leave));
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!add 数据添加失败:", e);
 			throw new Exception(this.getClass().getName() + "!add 数据添加失败:", e);

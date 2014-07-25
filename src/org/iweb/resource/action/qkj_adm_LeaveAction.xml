@@ -18,13 +18,8 @@
 		<action name="leave_load" class="com.qkj.adm.action.LeaveAction" method="load">
 			<result>/jsp/adm/LeaveEdit.jsp</result>
 		</action>
-		<action name="leave_add" class="com.qkj.adm.action.LeaveAction" method="add">
-			<result type="redirectAction">
-				<param name="actionName">leave_list</param>
-				<param name="viewFlag">relist</param>
-				<param name="message">${message}</param>
-			</result>
-		</action>
+		<!-- <action name="leave_add" class="com.qkj.adm.action.LeaveAction" method="add"> <result type="redirectAction"> <param name="actionName">leave_list</param> 
+			<param name="viewFlag">relist</param> <param name="message">${message}</param> </result> </action> -->
 		<action name="leave_del" class="com.qkj.adm.action.LeaveAction" method="del">
 			<result type="redirectAction">
 				<param name="actionName">leave_list</param>
@@ -34,6 +29,20 @@
 		</action>
 		<action name="leave_print" class="com.qkj.adm.action.LeaveAction" method="print">
 			<result>/jsp/adm/LeavePrint.jsp</result>
+		</action>
+		<action name="leave_check*" class="com.qkj.adm.action.LeaveAction" method="check{1}">
+			<result type="redirectAction">
+				<param name="actionName">leave_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="leave_acheck*" class="com.qkj.adm.action.LeaveAction" method="acheck{1}">
+			<result type="redirectAction">
+				<param name="actionName">leave_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
 		</action>
 		<action name="leave_*" class="com.qkj.adm.action.LeaveAction" method="{1}">
 			<result type="redirectAction">

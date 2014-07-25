@@ -57,5 +57,5 @@
 	<!-- 会员中心 -->
 	<sqlMap resource="org/iweb/resource/map/MemberCenterMap.xml" />
 	<!-- 系统修改 -->
-	<sqlMap resource="org/iweb/resource/map/qkj_sche_ActiveMap.xml"/>
+	<sqlMap resource="org/iweb/resource/map/qkj_sche_ActiveMap.xml" />
 </sqlMapConfig>

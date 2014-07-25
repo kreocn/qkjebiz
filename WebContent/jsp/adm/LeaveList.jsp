@@ -20,6 +20,14 @@
 <script type="text/javascript" src="<s:url value="/js/jquery.dialog.iframe.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/common_ajax2.0.js" />"></script>
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery.select.js" />"></script>
+<style type="text/css">
+.show_dialog {
+/*width: 550px;*/
+}
+.ui-tooltip {
+max-width: 650px !important;
+}
+</style>
 <body>
 <div id="main">
 <div id="result">
@@ -41,7 +49,7 @@
 			<td class='firstRow3'>类型:</td>
 			<td class='secRow3'>
 				<s:select id="searchLeaveType" name="leave.leave_type" title="类型"
-						list="#{0:'出差',1:'请假',2:'加班',3:'换休' }" headerKey="" headerValue="--请选择--" />
+						list="#{0:'出差',1:'请假',2:'加班',3:'换休',4:'补签' }" headerKey="" headerValue="--请选择--" />
 				<s:select  id="searchLeaveMold" name="leave.leave_mold" list="#{'0':'年假','1':'病假','2':'事假','3':'婚假','4':'产假','5':'丧假','6':'陪产假','7':'其他' }"
 					headerKey="" headerValue="--请选择--" />
 			</td>
@@ -106,13 +114,20 @@
 	    	<s:if test="leave_type==1">请假</s:if>
 	    	<s:if test="leave_type==2">加班</s:if>
 	    	<s:if test="leave_type==3">换休</s:if>
+	    	<s:if test="leave_type==4">补签</s:if>
 	    </td>
 	    <td><s:property value="leave_dept_name" /></td>
 		<td><s:property value="leave_user_name" /></td>
 		<td><s:date name="leave_start" format="yyyy-MM-dd" /> <s:property value="leave_start_time" /></td>
 		<td><s:date name="leave_end" format="yyyy-MM-dd" /> <s:property value="leave_end_time" /></td>
 		<td><s:property value="totle" /></td>
-		<td><a href="javascript:;" onclick="showCause('leave_cause${uuid}');">[点击查看]</a><span id="leave_cause${uuid}" style="display:none;"><s:property value="cause" /></span></td>
+		<td>
+			<a href="javascript:;"  class="leave_cause_show" data="${uuid}">[移此查看]</a>
+			<span id="leave_cause${uuid}" style="display:none;" class="leave_cause_shows">
+				<s:if test="leave_type==0">出差地点:${leave_mold}</s:if>
+				${cause}
+			</span>
+		</td>
 		<td>
 			<s:if test="check_status==0">新申请</s:if>
 			<s:if test="check_status==5"><span class="message_error">已退回</span></s:if>
@@ -165,6 +180,7 @@
 <input type="button" value="请假" onclick="addLeave(1);"  />
 <input type="button" value="加班" onclick="addLeave(2);"  />
 <input type="button" value="换休" onclick="addLeave(3);"  />
+<input type="button" value="换休" onclick="addLeave(4);"  />
 </p>
 </div>
 <script type="text/javascript">
@@ -180,7 +196,7 @@ $(function(){
 	
 	$("#AddLeaveForm").dialog({
 	      autoOpen: false,
-	      width: 250,
+	      width: 300,
 	      height: 100,
 	      modal: true
 	});
@@ -192,6 +208,14 @@ $(function(){
 	showLeaveMold(${leave.leave_type});
 	$("#searchLeaveType").change(function(){
 		showLeaveMold($(this).val());
+	});
+	
+	$(".leave_cause_show").tooltip({
+		items: "[data]",
+		content: function() {
+			//alert($(this).attr("data"));
+			return "<div class='show_dialog'>" + $("#leave_cause" + $(this).attr("data")).html() + "</div>";
+	  }
 	});
 });
  
