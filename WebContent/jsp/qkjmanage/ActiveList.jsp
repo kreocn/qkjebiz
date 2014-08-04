@@ -270,7 +270,7 @@ cursor: pointer;
 	    	<s:if test="status > 2 && status < 5">
 	    	<span class="nowrap">[<a href="<s:url namespace="/qkjmanage" action="active_closeLoad"><s:param name="active.uuid" value="uuid"></s:param></s:url>">结案单修改</a>]</span>
 	    	</s:if>
-	    	<s:if test="status == 5">
+	    	<s:if test="status >= 4">
 	    	<span class="nowrap">[<a href="<s:url namespace="/qkjmanage" action="active_closeView"><s:param name="active.uuid" value="uuid"></s:param></s:url>">结案单查看</a>]</span>
 	    	</s:if>
 	    	</s:if>

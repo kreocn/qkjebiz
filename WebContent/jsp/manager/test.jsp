@@ -21,6 +21,10 @@
 <script type="text/javascript">
 	$(function() {
 		$('#testxh').xheditor({
+			upImgUrl : "/upload/put",
+			upImgExt : "jpg,jpeg,gif,png",
+			//html5Upload : false,
+			//upMultiple : '1',
 			skin : 'nostyle'
 		});
 	});
@@ -32,5 +36,10 @@
     <textarea id="testxh" name="testxh" style="width: 80%; height: 300px;"></textarea>
   </div>
   <div style="height: 50px;"></div>
+  <div>
+    <form name="form1" action="/upload/put" onsubmit="return validator(this);" enctype="multipart/form-data" method="post">
+      <input type="file" name="filedata" /> <input type="submit" value="Upload" />
+    </form>
+  </div>
 </body>
 </html>
