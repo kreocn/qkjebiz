@@ -3,7 +3,8 @@ package com.qkj.manage.domain;
 import java.util.Date;
 
 public class Active {
-	private String uuid;// (varchar)申请编号
+	private Integer uuid;// (int)主键自增
+	private String uid;// (varchar)申请编号
 	private String apply_dept;// (varchar)申请部门
 	private String apply_user;// (varchar)申请人
 	private String theme;// (varchar)主题
@@ -208,12 +209,20 @@ public class Active {
 		this.smd_user_sign = smd_user_sign;
 	}
 
-	public String getUuid() {
+	public Integer getUuid() {
 		return uuid;
 	}
 
-	public void setUuid(String uuid) {
+	public void setUuid(Integer uuid) {
 		this.uuid = uuid;
+	}
+
+	public String getUid() {
+		return uid;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
 	}
 
 	public String getApply_dept() {

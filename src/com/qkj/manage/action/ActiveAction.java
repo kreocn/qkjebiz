@@ -18,6 +18,7 @@ import com.qkj.manage.dao.ActiveMemcostDAO;
 import com.qkj.manage.dao.ActivePosmDAO;
 import com.qkj.manage.dao.ActiveProductDAO;
 import com.qkj.manage.dao.ApproveDAO;
+import com.qkj.manage.dao.ProcessDAO;
 import com.qkj.manage.dao.ProductDAO;
 import com.qkj.manage.domain.Active;
 import com.qkj.manage.domain.ActiveMemcost;
@@ -32,7 +33,6 @@ public class ActiveAction extends ActionSupport {
 	private Map<String, Object> map = new HashMap<String, Object>();
 	private ActiveDAO dao = new ActiveDAO();
 	private ApproveDAO apdao = new ApproveDAO();
-
 	private Active active;
 	private List<Active> actives;
 
@@ -222,7 +222,6 @@ public class ActiveAction extends ActionSupport {
 				} else {
 					this.setActive(null);
 				}
-
 				ProductDAO pdao = new ProductDAO();
 				this.setProducts(pdao.list(null));
 
@@ -237,7 +236,7 @@ public class ActiveAction extends ActionSupport {
 				this.setActiveMemcosts(amdao.list(map));
 
 				map.clear();
-				map.put("varchar_id", active.getUuid());
+				map.put("int_id", active.getUuid());
 				map.put("approve_type", 1);
 				map.put("ad_time_end", active.getClose_start());
 				this.setApproves(apdao.list(map));
@@ -256,7 +255,6 @@ public class ActiveAction extends ActionSupport {
 		return SUCCESS;
 	}
 
-	// TODO
 	public String loadView() throws Exception {
 		try {
 			if (!(active == null || active.getUuid() == null)) {
@@ -288,11 +286,12 @@ public class ActiveAction extends ActionSupport {
 	public String add() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_ADD");
 		try {
-			active.setUuid(ToolsUtil.getCommonUUID("S"));
+			active.setUid(ToolsUtil.getCommonUUID("S"));
 			active.setAdd_user(ContextHelper.getUserLoginUuid());
 			active.setApply_dept(ContextHelper.getUserLoginDept());
 			active.setApply_user(ContextHelper.getUserLoginUuid());
-			dao.add(active);
+			active.setUuid((Integer) dao.add(active));
+			addProcess("ACTIVE_ADD", "新增活动");
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!add 数据添加失败:", e);
 			throw new Exception(this.getClass().getName() + "!add 数据添加失败:", e);
@@ -305,6 +304,7 @@ public class ActiveAction extends ActionSupport {
 		try {
 			active.setLm_user(ContextHelper.getUserLoginUuid());
 			dao.save(active);
+			addProcess("ACTIVE_MDY", "活动修改");
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
@@ -317,6 +317,7 @@ public class ActiveAction extends ActionSupport {
 		try {
 			dao.delete(active);
 			setMessage("删除成功!ID=" + active.getUuid());
+			addProcess("ACTIVE_DEL", "活动删除");
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!del 数据删除失败:", e);
 			throw new Exception(this.getClass().getName() + "!del 数据删除失败:", e);
@@ -362,6 +363,7 @@ public class ActiveAction extends ActionSupport {
 			// mdyStatus(2);
 			ContextHelper.getUserLoginUuid();
 			dao.mdyActivePass(active);
+			addProcess("ACTIVE_APPLY_PASS", "活动申请通过");
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyStatus1 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyStatus1 数据更新失败:", e);
@@ -379,6 +381,7 @@ public class ActiveAction extends ActionSupport {
 	private int mdyStatus(int status) {
 		active.setStatus(status);
 		active.setLm_user(ContextHelper.getUserLoginUuid());
+		addProcess("ACTIVE_MDY_STATUS", "活动状态变更");
 		return dao.mdyActiveStatus(active);
 	}
 
@@ -485,6 +488,7 @@ public class ActiveAction extends ActionSupport {
 		active.setSd_time(new Date());
 		active.setSd_user(ContextHelper.getUserLoginUuid());
 		active.setLm_user(ContextHelper.getUserLoginUuid());
+		addProcess("ACTIVE_MDY_SDSTATUS", "活动申请-销售审核状态变更");
 		return dao.mdyActiveSDStatus(active);
 	}
 
@@ -573,6 +577,7 @@ public class ActiveAction extends ActionSupport {
 		active.setSmd_time(new Date());
 		active.setSmd_user(ContextHelper.getUserLoginUuid());
 		active.setLm_user(ContextHelper.getUserLoginUuid());
+		addProcess("ACTIVE_MDY_SMDSTATUS", "活动申请-销管审核状态变更");
 		return dao.mdyActiveSMDStatus(active);
 	}
 
@@ -607,7 +612,7 @@ public class ActiveAction extends ActionSupport {
 				this.setActiveMemcostsClose(amdao.list(map));
 
 				map.clear();
-				map.put("varchar_id", active.getUuid());
+				map.put("int_id", active.getUuid());
 				map.put("approve_type", 1);
 				map.put("ad_time_start", active.getClose_start());
 				this.setApproves(apdao.list(map));
@@ -626,7 +631,6 @@ public class ActiveAction extends ActionSupport {
 		return SUCCESS;
 	}
 
-	// TODO
 	public String closeViewLoad() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE");
 		try {
@@ -675,6 +679,7 @@ public class ActiveAction extends ActionSupport {
 		try {
 			active.setLm_user(ContextHelper.getUserLoginUuid());
 			dao.mdyCloseActive(active);
+			addProcess("ACTIVE_CLOSE_MDY", "活动结案信息修改");
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyCloseActive 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyCloseActive 数据更新失败:", e);
@@ -693,6 +698,7 @@ public class ActiveAction extends ActionSupport {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_STATUS2");
 		try {
 			dao.startActiveCloseFlow(active);
+			addProcess("ACTIVE_START_CLOSE", "活动开始结案");
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyStatus2 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyStatus2 数据更新失败:", e);
@@ -737,6 +743,7 @@ public class ActiveAction extends ActionSupport {
 			dao.mdyCloseActivePass(active);
 			// 调整随量积分
 			mdyMemberCapital();
+			addProcess("ACTIVE_CLOSE_PASS", "活动结案通过");
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyStatus3 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyStatus3 数据更新失败:", e);
@@ -851,6 +858,9 @@ public class ActiveAction extends ActionSupport {
 		active.setClose_sd_time(new Date());
 		active.setClose_sd_user(ContextHelper.getUserLoginUuid());
 		active.setLm_user(ContextHelper.getUserLoginUuid());
+
+		addProcess("ACTIVE_CLOSE_SDSTATUS", "活动结案-销售审核状态变更");
+
 		return dao.mdyCloseActiveSDStatus(active);
 	}
 
@@ -924,6 +934,7 @@ public class ActiveAction extends ActionSupport {
 		active.setClose_smd_time(new Date());
 		active.setClose_smd_user(ContextHelper.getUserLoginUuid());
 		active.setLm_user(ContextHelper.getUserLoginUuid());
+		addProcess("ACTIVE_CLOSE_SMDSTATUS", "活动结案-销管审核状态变更");
 		return dao.mdyCloseActiveSMDStatus(active);
 	}
 
@@ -961,6 +972,7 @@ public class ActiveAction extends ActionSupport {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_MDYSHIPINFO");
 		try {
 			dao.mdyShipInfo(active);
+			addProcess("ACTIVE_SHIP", "活动-出货信息修改");
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyShipInfo 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyShipInfo 数据更新失败:", e);
@@ -978,6 +990,7 @@ public class ActiveAction extends ActionSupport {
 		ContextHelper.isPermits(new String[] { "QKJ_QKJMANAGE_ACTIVE_APPROVE", "QKJ_QKJMANAGE_ACTIVECLOSE_APPROVE" }, false);
 		try {
 			apdao.add(approve, 1, active.getUuid());
+			addProcess("ACTIVE_APPROVE", "活动-增加一条审阅信息");
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!approve 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!approve 数据更新失败:", e);
@@ -995,10 +1008,19 @@ public class ActiveAction extends ActionSupport {
 		ContextHelper.isPermits(new String[] { "QKJ_QKJMANAGE_ACTIVE_APPROVEDELLAST", "QKJ_QKJMANAGE_ACTIVECLOSE_APPROVEDELLAST" }, false);
 		try {
 			apdao.deleteLast(approve, 1, active.getUuid());
+			addProcess("ACTIVE_APPROVEDEL", "活动-删除一条审阅信息");
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!approveDel 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!approveDel 数据更新失败:", e);
 		}
 		return SUCCESS;
+	}
+
+	private void addProcess(String p_sign, String p_note) {
+		ProcessDAO pdao = new ProcessDAO();
+		if (active != null) {
+			pdao.addProcess(1, active.getUuid(), p_sign, p_note, active.getStatus(), active.getSd_status(), active.getSmd_status(),
+					active.getClose_sd_status(), active.getClose_smd_status());
+		}
 	}
 }

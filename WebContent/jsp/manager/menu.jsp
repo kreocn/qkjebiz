@@ -22,7 +22,7 @@ function slink(url,target) {
 </script>
 <body style="background-color: #F0F0F0">
 <div id="dtree3" class="dtree3" style="width:100%; overflow: auto; height: 100%; position: absolute; left: 0; top: 0;">
-<div class="ctrl"><a href="javascript: d.openAll();">全部展开</a><a href="javascript: d.closeAll();">全部收缩</a>
+<div class="ctrl"><a href="javascript: d.openAll();">全部展开</a>&nbsp;&nbsp;&nbsp;<a href="javascript: d.closeAll();">全部收缩</a>
 </div>
 <script type="text/javascript">
 	d = new dTree('d');
@@ -42,8 +42,8 @@ function slink(url,target) {
 			plusBottom	: '<s:url value="/include/dtree/" />'+'img/plusbottom.gif',
 			minus		: '<s:url value="/include/dtree/" />'+'img/minus.gif',
 			minusBottom	: '<s:url value="/include/dtree/" />'+'img/minusbottom.gif',
-			nlPlus		: '<s:url value="/include/dtree/" />'+'img/nolines_plus2.gif',
-			nlMinus		: '<s:url value="/include/dtree/" />'+'img/nolines_minus2.gif'
+			nlPlus		: '<s:url value="/include/dtree/" />'+'img/nolines_plus3.png',
+			nlMinus		: '<s:url value="/include/dtree/" />'+'img/nolines_minus3.png'
 	};
 	
 	d.add(0,-1,'Menu');

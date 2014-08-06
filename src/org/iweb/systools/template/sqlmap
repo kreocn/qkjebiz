@@ -10,6 +10,7 @@
 		<dynamic prepend="WHERE">
 			$sqlmap_search_area$
 		</dynamic>
+		<![CDATA[ LIMIT 1000 ]]>
 	</select>
 	<select id="$name_space$_get$file_s_name$sCounts" resultClass="int" parameterClass="java.util.Map">
 		<![CDATA[ 
@@ -18,6 +19,7 @@
 		<dynamic prepend="WHERE">
 			$sqlmap_search_area$
 		</dynamic>
+		<![CDATA[ LIMIT 1000 ]]>
 	</select>
 	<insert id="$name_space$_add$file_s_name$" parameterClass="$class_alias$">
 		<![CDATA[ 

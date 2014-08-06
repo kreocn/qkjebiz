@@ -96,7 +96,7 @@ color: #008000;
 		
 		<tr>
 		<td class='firstRow3'>说明:</td>
-		<td class='secRow3'>
+		<td class='secRow3 oneditor'>
 			<s:if test="apply.status>=10">
 			${apply.note}
 			</s:if>

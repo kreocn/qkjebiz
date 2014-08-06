@@ -89,7 +89,7 @@ cursor: pointer;
 		<table class="ilisttable" id="serach_table" width="100%">
 			<tr>
 			<td class='firstRow3'>申请编号:</td>
-			<td class='secRow3'><s:textfield name="active.uuid" title="申请编号" /></td>
+			<td class='secRow3'><s:textfield name="active.uid" title="申请编号" /></td>
 			<td class='firstRow3'>主题(%):</td>
 			<td class='secRow3'><s:textfield name="active.theme" title="主题" /></td>
 			<td class='secRow3' colspan="2">
@@ -193,7 +193,7 @@ cursor: pointer;
 <s:iterator value="actives" status="sta">
 	  <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>" type="pickrow">
 	    <td align="center"><input name="uuid" type="checkbox" value="<s:property value="uuid" />" /></td>
-	    <td>${uuid}</td>
+	    <td>${uid}</td>
 		<td class="nowrap">${apply_dept_name}</td>
 		<td class="nowrap">${apply_user_name}</td>
 		<td title="${theme}">${it:subString(theme,22)}</td>
