@@ -42,7 +42,7 @@ color: #008000;
 		</span>	
 	</div>
 <s:form name="form1" action="apply_add" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
-	<div class="ifromoperate" ></div>
+	<div class="ifromoperate" ><s:hidden name="apply.status" /><s:hidden name="apply.sp_check_status" /></div>
 	<table class="ilisttable" width="100%">
 		<s:if test="null != apply">
 		  <tr>

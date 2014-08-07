@@ -43,8 +43,7 @@
 		</span>	
 	</div>
 <s:form name="form1" action="leave_add" namespace="/adm" onsubmit="return validator(this);" method="post" theme="simple">
-	<s:hidden name="leave.leave_type" />
-	<div class="ifromoperate" ></div>
+	<div class="ifromoperate" ><s:hidden name="leave.leave_type" /><s:hidden name="leave.check_status" /><s:hidden name="leave.acheck_status" /></div>
 	<table class="ilisttable" width="100%">
 		<s:if test="'mdy'==viewFlag">
 		<tr>

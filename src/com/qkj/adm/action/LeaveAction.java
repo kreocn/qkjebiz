@@ -12,6 +12,7 @@ import org.iweb.sys.ContextHelper;
 import com.opensymphony.xwork2.ActionSupport;
 import com.qkj.adm.dao.LeaveDAO;
 import com.qkj.adm.domain.Leave;
+import com.qkj.manage.dao.ProcessDAO;
 
 public class LeaveAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
@@ -150,6 +151,7 @@ public class LeaveAction extends ActionSupport {
 			leave.setLm_user(ContextHelper.getUserLoginUuid());
 			leave.setLm_time(new Date());
 			leave.setUuid((Integer) dao.add(leave));
+			addProcess("LEAVE_ADD", "工时-新增");
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!add 数据添加失败:", e);
 			throw new Exception(this.getClass().getName() + "!add 数据添加失败:", e);
@@ -163,6 +165,7 @@ public class LeaveAction extends ActionSupport {
 			leave.setLm_user(ContextHelper.getUserLoginUuid());
 			leave.setLm_time(new Date());
 			dao.save(leave);
+			addProcess("LEAVE_MDY", "工时-修改");
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
@@ -175,6 +178,7 @@ public class LeaveAction extends ActionSupport {
 		try {
 			dao.delete(leave);
 			setMessage("删除成功!ID=" + leave.getUuid());
+			addProcess("LEAVE_DEL", "工时-删除");
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!del 数据删除失败:", e);
 			throw new Exception(this.getClass().getName() + "!del 数据删除失败:", e);
@@ -326,6 +330,7 @@ public class LeaveAction extends ActionSupport {
 		leave.setCheck_time(new Date());
 		leave.setLm_user(ContextHelper.getUserLoginUuid());
 		leave.setLm_time(new Date());
+		addProcess("LEAVE_STATUS_CHANGE", "工时-业务审核状态变更");
 		return dao.check(leave);
 	}
 
@@ -335,9 +340,23 @@ public class LeaveAction extends ActionSupport {
 		leave.setAcheck_time(new Date());
 		leave.setLm_user(ContextHelper.getUserLoginUuid());
 		leave.setLm_time(new Date());
+		addProcess("LEAVE_ADMSTATUS_CHANGE", "工时-行政审核状态变更");
 		return dao.acheck(leave);
 	}
 
+	private void addProcess(String p_sign, String p_note) {
+		ProcessDAO pdao = new ProcessDAO();
+		if (leave != null) {
+			pdao.addProcess(3, leave.getUuid(), p_sign, p_note, leave.getCheck_status(), leave.getAcheck_status());
+		}
+	}
+
+	/**
+	 * 补偿标记管理
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
 	public String allowance() throws Exception {
 		ContextHelper.isPermit("QKJ_ADM_LEAVE_ALLOWANCE");
 		try {
