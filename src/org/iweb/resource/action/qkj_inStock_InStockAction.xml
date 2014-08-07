@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="inStock_inStock" extends="default" namespace="/inStock">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- InStock Start -->
+		<action name="inStock_list" class="com.qkj.inStock.action.InStockAction" method="list">
+			<result>/jsp/inStock/InStockList.jsp</result>
+		</action>
+		<action name="inStock_relist" class="com.qkj.inStock.action.InStockAction" method="relist">
+			<result type="redirectAction">
+				<param name="actionName">inStock_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+		<action name="inStock_load" class="com.qkj.inStock.action.InStockAction" method="load">
+			<result>/jsp/inStock/InStockEdit.jsp</result>
+		</action>
+		<action name="inStock_add" class="com.qkj.inStock.action.InStockAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">inStock_load</param>
+				<param name="inStock.uuid">${inStock.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="inStock_save" class="com.qkj.inStock.action.InStockAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">inStock_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="inStock_del" class="com.qkj.inStock.action.InStockAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">inStock_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- InStock End -->
+	</package>
+</struts>

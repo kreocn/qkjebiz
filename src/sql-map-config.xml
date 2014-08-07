@@ -6,6 +6,8 @@
 		<dataSource type="JNDI">
 			<!-- 正式环境 DataSource Proxool -->
 			<!--<property name="DataSource" value="java:/comp/env/qkj/mysql203huzhu_proxool" /> -->
+			<!-- 测试环境 DataSource Proxool -->
+			<!--<property name="DataSource" value="java:/comp/env/qkj/mysql204huzhu_proxool" /> -->
 			<!-- 本机Tomcat本机测试环境 DataSource(ERP LOCAL TEST)&测试服务器 Proxool -->
 			<property name="DataSource" value="java:/comp/env/qkj/mysqlLocalCJ_proxool" />
 		</dataSource>
@@ -50,6 +52,7 @@
 	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_ActiveMemcostMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_ApplyMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_ApproveMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_ProcessMap.xml" />
 	<!--行政管理 -->
 	<sqlMap resource="org/iweb/resource/map/qkj_adm_AssetsMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_adm_AssetItemMap.xml" />
@@ -57,5 +60,11 @@
 	<!-- 会员中心 -->
 	<sqlMap resource="org/iweb/resource/map/MemberCenterMap.xml" />
 	<!-- 系统修改 -->
-	<sqlMap resource="org/iweb/resource/map/qkj_sche_ActiveMap.xml"/>
+	<sqlMap resource="org/iweb/resource/map/qkj_sche_ActiveMap.xml" />
+	<!-- 仓库管理 -->
+	<sqlMap resource="org/iweb/resource/map/qkj_stock_StockMap.xml"/>
+	<sqlMap resource="org/iweb/resource/map/qkj_inStock_InStockMap.xml"/>
+	<sqlMap resource="org/iweb/resource/map/qkj_inDetail_InDetailMap.xml"/>
+	<sqlMap resource="org/iweb/resource/map/qkj_outStock_OutStockMap.xml"/>
+	<sqlMap resource="org/iweb/resource/map/qkj_outDetail_OutDetailMap.xml"/>
 </sqlMapConfig>
