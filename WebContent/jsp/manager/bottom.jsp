@@ -7,14 +7,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><s:text name="APP_NAME" /></title>
 <link rel="stylesheet" href="<s:url value="/css/css.css" />" />
-<link rel="stylesheet" href="<s:url value="/css/navigate.css" />" />
-<style type="text/css">
-.bottom_style {
-text-align: right;line-height: 20px;
-}
-</style>
+<link rel="stylesheet" href="<s:url value="/css/admin_navigate.css" />" />
 </head>
-<body style="background-color: #F0F0F0">
+<body>
 	<div id="bottom" class="bottom_style">
 		当前登录信息:
 			<!--<s:property value="org_name" />-->

@@ -27,7 +27,7 @@ var infoeditor01;
 $(function(){
 	$("#mdyActiveShipInfoForm").dialog({
 	      autoOpen: false,
-	      height: 280,
+	      height: 320,
 	      width: 700,
 	      modal: true
 	});
@@ -115,7 +115,7 @@ font-size: 14px;
 <div id="result">
 	<div class="itablemdy">
 	<div class="itabletitle">
-		<span class="title1">活动结案单</span>
+		<span class="title1">活动结案单(${active.uid})</span>
 		<span class="extra1 printarea">
 			<a href="<s:url action="active_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>" >活动列表</a>
 		</span>	
@@ -126,7 +126,7 @@ font-size: 14px;
 		<s:if test="null != active">
 		  <tr>
 			<td class='firstRow3'><span style="color:red;">*</span> 申请编号:</td>
-			<td class='secRow3'><s:property value="active.uuid" /><s:hidden name="active.uuid" title="申请编号" /></td>
+			<td class='secRow3'>${active.uid}<s:hidden name="active.uid" /><s:hidden name="active.uuid" title="" /></td>
 			<td class='firstRow3'><span style="color:red;">*</span> 申请部门:</td>
 			<td class='secRow3'><s:property value="active.apply_dept_name" /></td>
 			<td class='firstRow3'><span style="color:red;">*</span> 申请人:</td>
@@ -410,7 +410,7 @@ font-size: 14px;
 			<td colspan="6">
 			<div class="money_div">
 			<table class="ilisttable" width="100%">
-			<tr><td class='firstRowx' colspan="6" style="text-align: center;">备注</td></tr>
+			<tr><td class='firstRowx oneditor' colspan="6" style="text-align: center;">备注</td></tr>
 			<tr>
 			<td id="active_remark" class='secRow3' colspan="6">${active.remark }</td>
 			</tr>
@@ -482,7 +482,7 @@ font-size: 14px;
 		</tr>
 		<tr>
 		<td class='firstRow'>备注:</td>
-		<td class='secRow'><s:textarea name="active.remark" title="备注" dataLength="0,48" controlName="备注" cssStyle="width:80%;" /></td>
+		<td class='secRow'><s:textarea name="active.remark" title="备注" dataLength="0,65535" cols="3" rows="4" controlName="备注"  cssStyle="width:80%;" /></td>
 		</tr>
 	<tr>
 	    <td colspan="20" class="buttonarea">

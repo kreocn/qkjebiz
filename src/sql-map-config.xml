@@ -61,10 +61,4 @@
 	<sqlMap resource="org/iweb/resource/map/MemberCenterMap.xml" />
 	<!-- 系统修改 -->
 	<sqlMap resource="org/iweb/resource/map/qkj_sche_ActiveMap.xml" />
-	<!-- 仓库管理 -->
-	<sqlMap resource="org/iweb/resource/map/qkj_stock_StockMap.xml"/>
-	<sqlMap resource="org/iweb/resource/map/qkj_inStock_InStockMap.xml"/>
-	<sqlMap resource="org/iweb/resource/map/qkj_inDetail_InDetailMap.xml"/>
-	<sqlMap resource="org/iweb/resource/map/qkj_outStock_OutStockMap.xml"/>
-	<sqlMap resource="org/iweb/resource/map/qkj_outDetail_OutDetailMap.xml"/>
 </sqlMapConfig>

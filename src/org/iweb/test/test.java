@@ -1,12 +1,13 @@
 package org.iweb.test;
 
+import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
 
-import net.sf.json.JSONObject;
+import org.iweb.sys.FileUtil;
+import org.iweb.sys.MD5Plus;
 
-import com.qkj.manage.domain.Apply;
+import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 
 public class test {
 
@@ -16,16 +17,9 @@ public class test {
 			+ "FROM information_schema.`COLUMNS` c WHERE c.TABLE_SCHEMA = 'AAA' " + "AND c.TABLE_NAME = 'BBB'";
 
 	public test() {
-		Apply a = new Apply();
-		a.setShip_status(10);
-		a.setShip_date(new Date());
-		a.setShip_no("112233");
-		a.setShip_phone("223344");
-		a.setShip_type("334455");
-		a.setShip_ware(5);
-		
-		JSONObject o = JSONObject.fromObject(a);
-		System.out.println(o.toString());
+		System.out.println(MD5Plus.encrypt(str));
+		InputStream in = new ByteInputStream(str.getBytes(), 0);
+		System.out.println(FileUtil.getFileMD5(in));
 	}
 
 	/**

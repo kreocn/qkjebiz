@@ -84,11 +84,39 @@ text-align: center;
 }
 
 .ilisttable th,.ilisttable tr,.ilisttable td {
-border: #E1E1E1 solid 1px;
+border: #C1C1C1 solid 1px;
 }
 
 .ilisttable th {
-padding: 4px 0px; background-color: #CFD3FE; text-align: center; white-space: nowrap; word-break: break-all;
+background-color: #D1D1D1 !important;
+}
+
+.ilisttable th,.ilisttable .firstRow,.ilisttable .firstRowx,.ilisttable .firstRow3,.ilisttable .titleRow,.ilisttable .titleRowx,.ilisttable .title2 {
+background-color: #F1F1F1; color: #333; white-space: nowrap; word-break: break-all; line-height: 25px;
+}
+
+.ilisttable th {
+text-align: center; padding: 4px 0px;
+}
+
+.ilisttable .firstRow,.ilisttable .firstRowx,.ilisttable .firstRow3 {
+text-align: right; padding: 2px 5px; font-weight: bold;
+}
+
+.ilisttable .firstRow {
+width: 15%;
+}
+
+.ilisttable .firstRow3 {
+width: 10%;
+}
+
+.ilisttable .titleRow,.ilisttable .titleRowx {
+text-align: center; padding: 5px 0px; font-weight: bold;
+}
+
+.ilisttable .title2 {
+font-size: 14px; text-indent: 14px; padding: 5px 0px; font-weight: bold;
 }
 
 .ilisttable td {
@@ -112,60 +140,23 @@ padding: 1px 10px;
 }
 
 .ilisttable .oddStyle {
-background-color: #F7F7FF;
+background-color: #F1F1F1;
 }
 
 .ilisttable .evenStyle {
-background-color: #EEEFFF;
+background-color: #E1E1E1;
 }
 
 .ilisttable .focusStyle {
-background-color: #CFD3FE !important;
+background-color: #D1D1D1 !important;
 }
 
-.ilisttable .firstRow,.ilisttable .firstRowx,.ilisttable .firstRow3,.ilisttable .buttonarea {
-line-height: 25px;
-}
-
-.ilisttable .firstRow {
-background-color: #F8F8F8; color: #333; font-size: 12px; text-align: right; padding: 2px 5px; font-weight: bold; width: 15%; white-space: nowrap;
-word-break: keep-all;
-}
-
-.ilisttable .secRow {
-text-align: left; word-break: break-all; width: 35%;
-}
-
-.ilisttable .firstRowx {
-background-color: #F8F8F8; color: #333; font-size: 12px; text-align: right; padding: 2px 5px; font-weight: bold; white-space: nowrap;
-word-break: keep-all;
-}
-
-.ilisttable .secRowx {
+.ilisttable .secRow,.ilisttable .secRowx,.ilisttable .secRow3 {
 text-align: left; word-break: break-all;
 }
 
-.ilisttable .firstRow3 {
-background-color: #F8F8F8; color: #333; font-size: 12px; text-align: right; padding: 2px 5px; font-weight: bold; width: 10%; white-space: nowrap;
-word-break: keep-all;
-}
-
-.ilisttable .secRow3 {
-text-align: left;
-}
-
-.ilisttable .titleRow {
-background-color: #CFD3FE; font-size: 12px; text-align: center; color: #333; padding: 5px 0px; font-weight: bold; width: 15%; white-space: nowrap;
-word-break: keep-all;
-}
-
-.ilisttable .titleRowx {
-background-color: #CFD3FE; font-size: 12px; text-align: center; color: #333; padding: 5px 0px; font-weight: bold; white-space: nowrap;
-word-break: keep-all;
-}
-
-.ilisttable .title2 {
-font-size: 14px; text-indent: 14px; padding: 5px 0px; font-weight: bold; background-color: #C0C0C0;
+.ilisttable .secRow {
+width: 35%;
 }
 
 /*ilist End*/
@@ -203,8 +194,8 @@ margin: 1px;
 }
 */
 .itablemdy .itabletitle {
-background-color: #F8F8F8; border: #CFD3FE solid 1px; font-weight: bold; text-indent: 24px; padding: 10px 0px; margin: 0; font-size: 14px;
-height: 18px;
+border-bottom: #C1C1C1 solid 1px; font-weight: bold; text-indent: 24px; padding: 10px 0px; margin: 0; font-size: 14px; height: 18px;
+margin-bottom: 1px;
 }
 
 .itabletitle span.title1 {
@@ -231,6 +222,22 @@ color: #999;
 
 .money_div {
 padding: 4px; color: #333; border-radius: 4px; border: 1px solid #aaa; margin: 4px;
+}
+
+.oneditor {
+
+}
+
+.oneditor table {
+border-collapse: collapse; border-spacing: 0px;
+}
+
+.oneditor table td {
+text-align: center;
+}
+
+.oneditor table th,.oneditor table tr,.oneditor table td {
+border: #E1E1E1 solid 1px;
 }
 
 @media print {

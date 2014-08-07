@@ -140,7 +140,7 @@ display: none;
 			<s:if test="10==status"><span class="message_warning">待审核</span></s:if>
 			<s:if test="20==status">
 			<s:if test="0==sp_check_status || 5==sp_check_status"><span class="message_pass">大区经理已审(${check_user_name})</span></s:if>
-			<s:elseif test="10==sp_check_status"><span class="message_pass">销管经理已审(${check_user_name})</span></s:elseif>
+			<s:elseif test="10==sp_check_status"><span class="message_pass">销管经理已审(${sp_check_user_name})</span></s:elseif>
 			</s:if>
 			<s:if test="30==status"><span class="message_pass">运营总监已审(${check_user_name})</span></s:if>
 		</td>
@@ -149,6 +149,7 @@ display: none;
 			<span class="mdyApplyShipInfo_Link"  data="${uuid}">
 			<s:if test="0==ship_status">未发货</s:if>
 			<s:if test="10==ship_status"><span class="message_pass">已发货</span></s:if>
+            <s:if test="20==ship_status"><span class="message_warning">已受理</span></s:if>
 			</span>
 			<span class="ship_hidden_info">
 				<span id="ship_no_${uuid}">${ship_no}</span>
@@ -204,7 +205,7 @@ display: none;
 		</tr>
 		<tr>
 		<td class='firstRow'><span style="color:red;">*</span> 发货状态:</td>
-		<td class='secRow'><s:select id="form_apply_ship_status" name="apply.ship_status" list="#{0:'未发货',10:'已发货' }" /></td>
+		<td class='secRow'><s:select id="form_apply_ship_status" name="apply.ship_status" list="#{0:'未发货',10:'已发货',20:'已受理' }" /></td>
 		</tr>
 		<tr>
 		<td class='firstRow'>出库日期:</td>

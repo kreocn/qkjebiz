@@ -68,7 +68,7 @@ font-size: 24px;font-weight: bold;
 		<div class="apply_t apply_y">由：${apply.apply_dept_name } ${apply.apply_user_name}</div>
 		<div class="apply_hr"></div>
 		<div class="apply_t">说明:</div>
-		<div id="apply_note_text" class="apply_n">${apply.note}</div>
+		<div id="apply_note_text" class="apply_n oneditor">${apply.note}</div>
 		<div class="check_note">
 			<div class="apply_t">审核意见:</div>
 			<div id="apply_check_note_text" class="apply_n"></div>

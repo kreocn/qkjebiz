@@ -5,7 +5,8 @@
 	<typeAlias alias="leave" type="com.qkj.adm.domain.Leave" />
 	<select id="adm_getLeaves" resultClass="leave" parameterClass="java.util.Map">
 		<![CDATA[ 
-			SELECT l.*,cu.`USER_NAME` check_user_name,au.`USER_NAME` acheck_user_name,ld.`dept_cname` leave_dept_name,lu.`USER_NAME` leave_user_name			
+			SELECT l.*,cu.`USER_NAME` check_user_name,au.`USER_NAME` acheck_user_name,ld.`dept_cname` leave_dept_name,lu.`USER_NAME` leave_user_name,
+						cu.`user_sign` check_user_sign,au.`user_sign` acheck_user_sign
 			FROM qkja_r_leave l
 			LEFT JOIN s_sys_user cu ON(cu.`UUID` = l.`check_user`)
 			LEFT JOIN s_sys_user au ON(au.`UUID` = l.`acheck_user`)
@@ -55,9 +56,14 @@
 	</select>
 	<insert id="adm_addLeave" parameterClass="leave">
 		<![CDATA[ 
-			Insert Into qkja_r_leave(leave_type,leave_mold,leave_dept,leave_user,leave_start,leave_start_time,leave_end,leave_end_time,totle,cause,lm_time,lm_user)
-			Values (#leave_type#,#leave_mold#,#leave_dept#,#leave_user#,#leave_start#,#leave_start_time#,#leave_end#,#leave_end_time#,#totle#,#cause#,#lm_time#,#lm_user#)
+			Insert Into qkja_r_leave(leave_type,leave_mold,leave_dept,leave_user,leave_start,leave_start_time,leave_end,leave_end_time,totle,cause,lm_time,lm_user,leave_time)
+			Values (#leave_type#,#leave_mold#,#leave_dept#,#leave_user#,#leave_start#,#leave_start_time#,#leave_end#,#leave_end_time#,#totle#,#cause#,#lm_time#,#lm_user#,NOW())
 		]]>
+		<selectKey resultClass="int" keyProperty="uuid">
+		<![CDATA[ 
+			Select LAST_INSERT_ID()
+		]]>
+		</selectKey>
 	</insert>
 	<update id="adm_mdyLeave" parameterClass="leave">
 		<![CDATA[

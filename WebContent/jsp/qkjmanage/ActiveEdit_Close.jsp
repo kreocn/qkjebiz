@@ -174,7 +174,7 @@ color: #008000;
 		<s:if test="null != active">
 		  <tr>
 			<td class='firstRow3'><span style="color:red;">*</span> 申请编号:</td>
-			<td class='secRow3'><s:property value="active.uuid" /><s:hidden name="active.uuid" title="申请编号" /></td>
+			<td class='secRow3'>${active.uid}<s:hidden name="active.uid" /><s:hidden name="active.uuid" title="" /></td>
 			<td class='firstRow3'><span style="color:red;">*</span> 申请部门:</td>
 			<td class='secRow3'><s:property value="active.apply_dept_name" /></td>
 			<td class='firstRow3'><span style="color:red;">*</span> 申请人:</td>
@@ -614,7 +614,7 @@ color: #008000;
 			</s:if>
 			</s:if>
 			<input type="button" value="返回" onclick="linkurl('<s:url action="active_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');" />
-			<s:if test="40<=active.close_sd_status">
+			<s:if test="status >= 4">
 				<input type="button" onclick="linkurl('<s:url namespace="/qkjmanage" action="active_closeView"><s:param name="active.uuid" value="active.uuid"></s:param></s:url>');" value="转到打印页面"/>
 			</s:if>
 			<!-- <input type="button" onclick="window.print();" value="打印本页"/> -->

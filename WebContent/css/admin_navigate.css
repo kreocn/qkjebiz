@@ -1,0 +1,42 @@
+@charset "utf-8";
+
+* {
+margin: 0; padding: 0; border: 0;
+}
+
+body {
+background: #363636;
+}
+
+table {
+border-collapse: collapse;
+}
+
+.ht_top {
+width: 100%; background: #363636; height: 45px; border-bottom: 1px solid #bbb;
+}
+
+.ht_lTit {
+float: left; background: url(../images/top/ht_logo.gif) no-repeat; font-size: 16px; font-family: "微软雅黑"; color: #fff; padding-left: 45px;
+font-weight: bold; line-height: 24px; margin: 12px 0 0 15px; _display: inline;
+}
+
+.ht_rczuo {
+float: right; padding-right: 10px;
+}
+
+.ht_rczuo li {
+float: left; list-style: none; margin-right: 10px; display: inline;
+}
+
+.bottom_style {
+text-align: right; line-height: 20px; color: #FFF;padding-right: 10px;
+}
+
+.bottom_style a {
+color: #FFF;
+}
+
+.bottom_style a:hover {
+color: #E0E0E0;
+}

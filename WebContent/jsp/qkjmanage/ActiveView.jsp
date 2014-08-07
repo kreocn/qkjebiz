@@ -132,7 +132,7 @@ font-size: 14px;
 <div id="result">
 	<div class="itablemdy">
 	<div class="itabletitle">
-		<span class="title1">活动申请单(${active.uuid})</span>
+		<span class="title1">活动申请单(${active.uid})</span>
 		<span class="extra1 printarea">
 			<a href="<s:url action="active_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>" >活动列表</a>
 		</span>	
@@ -143,7 +143,7 @@ font-size: 14px;
 		<s:if test="null != active">
 		  <tr>
 			<td class='firstRow3'>申请编号:</td>
-			<td class='secRow3'><s:property value="active.uuid" /><s:hidden name="active.uuid" title="申请编号" /></td>
+			<td class='secRow3'>${active.uid}<s:hidden name="active.uid" /><s:hidden name="active.uuid" title="" /></td>
 			<td class='firstRow3'>申请部门:</td>
 			<td class='secRow3'><s:property value="active.apply_dept_name" /></td>
 			<td class='firstRow3'>申请人:</td>
@@ -392,7 +392,7 @@ font-size: 14px;
 			<table class="ilisttable" width="100%">
 			<tr><td class='firstRowx' colspan="6" style="text-align: center;">备注</td></tr>
 			<tr>
-			<td id="active_remark" class='secRow3' colspan="6">${active.remark }</td>
+			<td id="active_remark" class='secRow3 oneditor' colspan="6">${active.remark }</td>
 			</tr>
 			</table>
 			</div>

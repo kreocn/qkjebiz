@@ -35,7 +35,8 @@ overflow: hidden;
 **CheckBox DTree Style**
 ************************/
 .dtree2 {
-font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 11px; color: #666; white-space: nowrap; position: relative; border: #000 solid 1px;
+font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 11px; color: #666; white-space: nowrap; position: relative;
+border: #000 solid 1px;
 }
 
 .dtree2 .dTreeNode {
@@ -95,7 +96,7 @@ display: none;
 }
 
 .dtree3 .dTreeNode_Title {
-width: 100%; background-color: #369; margin: 1px 0; padding: 5px 0; text-indent: 5px; cursor: pointer;
+width: 100%; background-color: #059C77; margin: 1px 0; padding: 5px 0; text-indent: 14px; cursor: pointer;
 }
 
 .dtree3 .dTreeNode_Title a {
@@ -113,7 +114,7 @@ width: 100%;
 
 .dtree3 .dTreeNode {
 width: 100%;
-/*background-color: #C0C4FE;*/ margin: 1px 0; padding: 5px 0; text-indent: 5px;
+/*background-color: #C0C4FE;*/ margin: 1px 0; padding: 5px 0; text-indent: 9px;
 }
 
 .dtree3 img {
@@ -125,7 +126,7 @@ color: #333; text-decoration: none;
 }
 
 .dtree3 a.node,.dtree3 a.nodeSel {
-white-space: nowrap; padding: 1px 2px;
+white-space: nowrap; padding: 1px 2px 1px 5px;
 }
 
 .dtree3 a.node:hover,.dtree3 a.nodeSel:hover {
@@ -141,11 +142,11 @@ overflow: hidden;
 }
 
 .dtree3 .ctrl {
-text-align: center;
+line-height: 25px; height: 25px; margin-left: 30px;
 }
 
 .dtree3 .ctrl a { /*padding: 5px 6px; */
-margin: 0px 10px;
+
 }
 
 .dtree3 .ctrl a:hover { /*background-color: #8A8FFD;*/

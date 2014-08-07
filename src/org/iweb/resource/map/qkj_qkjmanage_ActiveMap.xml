@@ -20,6 +20,7 @@
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ a.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="uid"><![CDATA[ a.uid=#uid# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="apply_dept">
 				<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ a.apply_dept=#apply_dept#]]></isNotEqual>
 				<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ a.apply_dept LIKE CONCAT(#apply_dept#,'%') ]]></isEqual>
@@ -53,6 +54,7 @@
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="uid"><![CDATA[ uid=#uid# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="apply_dept">
 				<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ apply_dept=#apply_dept#]]></isNotEqual>
 				<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ apply_dept LIKE CONCAT(#apply_dept#,'%') ]]></isEqual>
@@ -82,9 +84,12 @@
 	</select>
 	<insert id="qkjmanage_addActive" parameterClass="active">
 		<![CDATA[ 
-			Insert Into qkjm_r_active(uuid,apply_dept,apply_user,theme,purpose,plan_start,plan_end,address,person,note,expect,add_user,add_time,remark)
-			Values (#uuid#,#apply_dept#,#apply_user#,#theme#,#purpose#,#plan_start#,#plan_end#,#address#,#person#,#note#,#expect#,#add_user#,now(),#remark#)
+			Insert Into qkjm_r_active(uid,apply_dept,apply_user,theme,purpose,plan_start,plan_end,address,person,note,expect,add_user,add_time,remark)
+			Values (#uid#,#apply_dept#,#apply_user#,#theme#,#purpose#,#plan_start#,#plan_end#,#address#,#person#,#note#,#expect#,#add_user#,now(),#remark#)
 		]]>
+		<selectKey resultClass="int" keyProperty="uuid">
+		<![CDATA[ Select LAST_INSERT_ID() ]]>
+		</selectKey>
 	</insert>
 	<update id="qkjmanage_mdyActive" parameterClass="active">
 		<![CDATA[

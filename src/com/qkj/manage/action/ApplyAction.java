@@ -14,6 +14,7 @@ import org.iweb.sys.ToolsUtil;
 import com.opensymphony.xwork2.ActionSupport;
 import com.qkj.manage.dao.ApplyDAO;
 import com.qkj.manage.dao.ApproveDAO;
+import com.qkj.manage.dao.ProcessDAO;
 import com.qkj.manage.domain.Apply;
 import com.qkj.manage.domain.Approve;
 
@@ -211,6 +212,8 @@ public class ApplyAction extends ActionSupport {
 			apply.setApply_time(new Date());
 			apply.setLm_user(ContextHelper.getUserLoginUuid());
 			apply.setUuid((Integer) dao.add(apply));
+
+			addProcess("APPLY_ADD", "至事由-新增");
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!add 数据添加失败:", e);
 			throw new Exception(this.getClass().getName() + "!add 数据添加失败:", e);
@@ -223,6 +226,8 @@ public class ApplyAction extends ActionSupport {
 		try {
 			apply.setLm_user(ContextHelper.getUserLoginUuid());
 			dao.save(apply);
+
+			addProcess("APPLY_MDY", "至事由-修改");
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
@@ -382,6 +387,7 @@ public class ApplyAction extends ActionSupport {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_MDYAPPLYSHIPINFO");
 		try {
 			dao.mdyShipInfo(apply);
+			addProcess("APPLY_CHANGE_STATUS", "至事由-出货状态更改");
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyShipInfo 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyShipInfo 数据更新失败:", e);
@@ -400,6 +406,7 @@ public class ApplyAction extends ActionSupport {
 		apply.setCheck_time(new Date());
 		apply.setLm_user(ContextHelper.getUserLoginUuid());
 		dao.check(apply);
+		addProcess("APPLY_CHANGE_STATUS", "至事由-状态更改");
 	}
 
 	/**
@@ -413,12 +420,21 @@ public class ApplyAction extends ActionSupport {
 		apply.setSp_check_time(new Date());
 		apply.setLm_user(ContextHelper.getUserLoginUuid());
 		dao.spcheck(apply);
+		addProcess("APPLY_CHANGE_SPSTATUS", "至事由-特别状态更改");
+	}
+
+	private void addProcess(String p_sign, String p_note) {
+		ProcessDAO pdao = new ProcessDAO();
+		if (apply != null) {
+			pdao.addProcess(2, apply.getUuid(), p_sign, p_note, apply.getStatus(), apply.getSp_check_status(), apply.getShip_status());
+		}
 	}
 
 	public String del() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_DEL");
 		try {
 			dao.delete(apply);
+			addProcess("APPLY_DEL", "至事由-删除");
 			setMessage("删除成功!ID=" + apply.getUuid());
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!del 数据删除失败:", e);

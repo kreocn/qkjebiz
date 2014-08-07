@@ -57,9 +57,9 @@ public class ApproveDAO extends AbstractDAO {
 			approve.setInt_id((Integer) p_id);
 			approve.setAd_time(new Date());
 			approve.setCheck_user(ContextHelper.getUserLoginUuid());
-		} else if (approve_type == 1) {// 活动管理审阅
+		} else if (approve_type == 1) {// 活动审阅
 			approve.setApprove_type(1);
-			approve.setVarchar_id((String) p_id);
+			approve.setInt_id((Integer) p_id);
 			approve.setAd_time(new Date());
 			approve.setCheck_user(ContextHelper.getUserLoginUuid());
 		} else {
@@ -78,7 +78,7 @@ public class ApproveDAO extends AbstractDAO {
 			approve.setCheck_user(ContextHelper.getUserLoginUuid());
 		} else if (approve_type == 1) {// 活动管理审阅
 			approve.setApprove_type(1);
-			approve.setVarchar_id((String) p_id);
+			approve.setInt_id((Integer) p_id);
 			approve.setCheck_user(ContextHelper.getUserLoginUuid());
 		} else {
 			return 0;

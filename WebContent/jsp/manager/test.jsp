@@ -1,5 +1,3 @@
-<%@page import="java.util.ArrayList"%>
-<%@page import="org.iweb.rpt.domain.ListObject"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
@@ -16,23 +14,32 @@
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery-ui-1.10.3.custom.min.js" />"></script>
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery.ui.datepicker-zh.js" />"></script>
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery-ui-timepicker-addon.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/xheditor/xheditor-1.2.1.min.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/xheditor/xheditor_lang/zh-cn.js" />"></script>
 <style type="text/css">
 </style>
 <script type="text/javascript">
-$(function(){
-	$('#mydate').datetimepicker({
-		stepMinute: 15,
-		altField: "#mydate2"
+	$(function() {
+		$('#testxh').xheditor({
+			upImgUrl : "/upload/put",
+			upImgExt : "jpg,jpeg,gif,png",
+			//html5Upload : false,
+			//upMultiple : '1',
+			skin : 'nostyle'
+		});
 	});
-});
 </script>
 </head>
 <body>
-<div style="height: 20px;"></div>
-<div>
-日期:<input name="testdate" id="mydate" />
-<input name="testdate2" id="mydate2" />
-</div>
-<div style="height: 50px;"></div>
+  <div style="height: 20px;"></div>
+  <div style="padding-left: 30px;">
+    <textarea id="testxh" name="testxh" style="width: 80%; height: 300px;"></textarea>
+  </div>
+  <div style="height: 50px;"></div>
+  <div>
+    <form name="form1" action="/upload/put" onsubmit="return validator(this);" enctype="multipart/form-data" method="post">
+      <input type="file" name="filedata" /> <input type="submit" value="Upload" />
+    </form>
+  </div>
 </body>
 </html>

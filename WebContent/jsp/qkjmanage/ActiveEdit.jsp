@@ -160,7 +160,7 @@ color: #008000;
 		<s:if test="null != active">
 		  <tr>
 			<td class='firstRow3'>申请编号:</td>
-			<td class='secRow3'><s:property value="active.uuid" /><s:hidden name="active.uuid" title="申请编号" /></td>
+			<td class='secRow3'>${active.uid}<s:hidden name="active.uid" /><s:hidden name="active.uuid" title="" /></td>
 			<td class='firstRow3'>申请部门:</td>
 			<td class='secRow3'><s:property value="active.apply_dept_name" /></td>
 			<td class='firstRow3'>申请人:</td>
@@ -730,7 +730,7 @@ function setDataCase() {
  <tr>
 <td class='firstRowx'>审阅意见:</td>
 <td class='secRowx'>
-<textarea name="approve.advice" style="width: 80%;" rows="3" ></textarea>
+<textarea name="approve.advice" style="width: 80%;"></textarea>
 </td>
 </tr>
 <tr>

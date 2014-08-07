@@ -8,6 +8,7 @@ public class Leave {
 	private String leave_dept;// (varchar)申请部门
 	private String leave_mold;// 假期类别
 	private String leave_user;// (varchar)申请人
+	private Date leave_time;// 添加时间
 	private Date leave_start;// (date)开始日期
 	private String leave_start_time;// (varchar)开始时间
 	private Date leave_end;// (date)结束日期
@@ -29,12 +30,38 @@ public class Leave {
 
 	// 以下为非数据库字段
 	private String check_user_name;// 审核人
+	private String check_user_sign;
 	private String acheck_user_name;// 行政审核人
+	private String acheck_user_sign;// 行政审核人
 	private String leave_dept_name;
 	private String leave_user_name;
 
 	// 以下为查询专用字段
 	private Date serach_date;
+
+	public String getCheck_user_sign() {
+		return check_user_sign;
+	}
+
+	public void setCheck_user_sign(String check_user_sign) {
+		this.check_user_sign = check_user_sign;
+	}
+
+	public String getAcheck_user_sign() {
+		return acheck_user_sign;
+	}
+
+	public void setAcheck_user_sign(String acheck_user_sign) {
+		this.acheck_user_sign = acheck_user_sign;
+	}
+
+	public Date getLeave_time() {
+		return leave_time;
+	}
+
+	public void setLeave_time(Date leave_time) {
+		this.leave_time = leave_time;
+	}
 
 	public Date getSerach_date() {
 		return serach_date;
