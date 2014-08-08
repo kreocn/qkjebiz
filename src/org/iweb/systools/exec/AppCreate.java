@@ -392,7 +392,7 @@ public abstract class AppCreate {
 	 * @date 2013-12-29 下午6:14:49
 	 */
 	protected String getBaseDir() {
-		return "E:/tmp/app";
+		return "D:/tmp/app";
 	}
 
 	private String Lower(String s) {

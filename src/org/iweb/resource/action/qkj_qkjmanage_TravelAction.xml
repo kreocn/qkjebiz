@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="qkjmanage_travel" extends="default" namespace="/qkjmanage">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- Travel Start -->
+		<action name="travel_list" class="com.qkj.manage.action.TravelAction" method="list">
+			<result>/jsp/qkjmanage/TravelList.jsp</result>
+		</action>
+		<action name="travel_relist" class="com.qkj.manage.action.TravelAction" method="relist">
+			<result type="redirectAction">
+				<param name="actionName">travel_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+		<action name="travel_load" class="com.qkj.manage.action.TravelAction" method="load">
+			<result>/jsp/qkjmanage/TravelEdit.jsp</result>
+		</action>
+		<action name="travel_add" class="com.qkj.manage.action.TravelAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">travel_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="travel_save" class="com.qkj.manage.action.TravelAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">travel_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="travel_del" class="com.qkj.manage.action.TravelAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">travel_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- Travel End -->
+	</package>
+</struts>

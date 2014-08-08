@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
+<sqlMap>
+	<!-- Travel Start -->
+	<typeAlias alias="travel" type="com.qkj.manage.domain.Travel" />
+	<select id="qkjmanage_getTravels" resultClass="travel" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select * From qkjm_r_travel
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_dept"><![CDATA[ apply_dept=#apply_dept# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_user"><![CDATA[ apply_user=#apply_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="check_status"><![CDATA[ check_status=#check_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="acheck_status"><![CDATA[ acheck_status=#acheck_status# ]]></isNotEmpty>
+		</dynamic>
+		<![CDATA[ LIMIT 1000 ]]>
+	</select>
+	<select id="qkjmanage_getTravelsCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) From qkjm_r_travel
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_dept"><![CDATA[ apply_dept=#apply_dept# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_user"><![CDATA[ apply_user=#apply_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="check_status"><![CDATA[ check_status=#check_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="acheck_status"><![CDATA[ acheck_status=#acheck_status# ]]></isNotEmpty>
+		</dynamic>
+		<![CDATA[ LIMIT 1000 ]]>
+	</select>
+	<insert id="qkjmanage_addTravel" parameterClass="travel">
+		<![CDATA[ 
+			Insert Into qkjm_r_travel(apply_dept,apply_user,apply_item,travel_num,accompany_num,travel_date,member_num,lunch_price,lunch_num,lunch_desk,dinner_price,dinner_num,dinner_desk,cigarette,cigarette_num,fruit,hotel,hotel_start,hotel_end,hotel_total,hotel_twinroom,hotel_house,hotel_house_num,car,travel_agency,trip,gift,gift_num,note,check_status,check_user,check_time,check_note,acheck_status,acheck_user,acheck_time,acheck_note,add_user,add_time,lm_user,lm_time)
+			Values (#apply_dept#,#apply_user#,#apply_item#,#travel_num#,#accompany_num#,#travel_date#,#member_num#,#lunch_price#,#lunch_num#,#lunch_desk#,#dinner_price#,#dinner_num#,#dinner_desk#,#cigarette#,#cigarette_num#,#fruit#,#hotel#,#hotel_start#,#hotel_end#,#hotel_total#,#hotel_twinroom#,#hotel_house#,#hotel_house_num#,#car#,#travel_agency#,#trip#,#gift#,#gift_num#,#note#,#check_status#,#check_user#,#check_time#,#check_note#,#acheck_status#,#acheck_user#,#acheck_time#,#acheck_note#,#add_user#,#add_time#,#lm_user#,#lm_time#)
+		]]>
+	</insert>
+	<update id="qkjmanage_mdyTravel" parameterClass="travel">
+		<![CDATA[
+			Update qkjm_r_travel
+			Set apply_item=#apply_item#,
+travel_num=#travel_num#,
+accompany_num=#accompany_num#,
+travel_date=#travel_date#,
+member_num=#member_num#,
+lunch_price=#lunch_price#,
+lunch_num=#lunch_num#,
+lunch_desk=#lunch_desk#,
+dinner_price=#dinner_price#,
+dinner_num=#dinner_num#,
+dinner_desk=#dinner_desk#,
+cigarette=#cigarette#,
+cigarette_num=#cigarette_num#,
+fruit=#fruit#,
+hotel=#hotel#,
+hotel_start=#hotel_start#,
+hotel_end=#hotel_end#,
+hotel_total=#hotel_total#,
+hotel_twinroom=#hotel_twinroom#,
+hotel_house=#hotel_house#,
+hotel_house_num=#hotel_house_num#,
+car=#car#,
+travel_agency=#travel_agency#,
+trip=#trip#,
+gift=#gift#,
+gift_num=#gift_num#,
+note=#note#,
+check_status=#check_status#,
+check_user=#check_user#,
+check_time=#check_time#,
+check_note=#check_note#,
+acheck_status=#acheck_status#,
+acheck_user=#acheck_user#,
+acheck_time=#acheck_time#,
+acheck_note=#acheck_note#,
+add_user=#add_user#,
+add_time=#add_time#,
+lm_user=#lm_user#,
+lm_time=#lm_time#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="qkjmanage_delTravel" parameterClass="travel">
+	<![CDATA[
+		Delete From qkjm_r_travel Where uuid=#uuid#
+	]]>
+	</delete>
+	<!-- Travel End -->
+</sqlMap>
