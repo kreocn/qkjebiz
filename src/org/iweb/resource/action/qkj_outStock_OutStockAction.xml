@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="outStock_outStock" extends="default" namespace="/outStock">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- OutStock Start -->
+		<action name="outStock_list" class="com.qkj.outStock.action.OutStockAction" method="list">
+			<result>/jsp/outStock/OutStockList.jsp</result>
+		</action>
+		<action name="outStock_relist" class="com.qkj.outStock.action.OutStockAction" method="relist">
+			<result type="redirectAction">
+				<param name="actionName">outStock_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+		<action name="outStock_load" class="com.qkj.outStock.action.OutStockAction" method="load">
+			<result name="success">/jsp/outStock/OutStockEdit.jsp</result>
+			<result name="add">/jsp/outStock/OutDetail.jsp</result>
+		</action>
+		<action name="outStock_add" class="com.qkj.outStock.action.OutStockAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">outStock_load</param>
+				<param name="outStock.ordernum">${outStock.ordernum}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="outStock_save" class="com.qkj.outStock.action.OutStockAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">outStock_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="outStock_del" class="com.qkj.outStock.action.OutStockAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">outStock_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- OutStock End -->
+	</package>
+</struts>

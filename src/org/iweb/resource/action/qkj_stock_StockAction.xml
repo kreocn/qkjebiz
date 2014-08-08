@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="stock_stock" extends="default" namespace="/stock">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- Stock Start -->
+		<action name="stock_list" class="com.qkj.stock.action.StockAction" method="list">
+			<result>/jsp/stock/StockList.jsp</result>
+		</action>
+		<action name="stock_relist" class="com.qkj.stock.action.StockAction" method="relist">
+			<result type="redirectAction">
+				<param name="actionName">stock_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+		<action name="stock_load" class="com.qkj.stock.action.StockAction" method="load">
+			<result>/jsp/stock/StockEdit.jsp</result>
+		</action>
+		<action name="stock_add" class="com.qkj.stock.action.StockAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">stock_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="stock_save" class="com.qkj.stock.action.StockAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">stock_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="stock_del" class="com.qkj.stock.action.StockAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">stock_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- Stock End -->
+	</package>
+</struts>

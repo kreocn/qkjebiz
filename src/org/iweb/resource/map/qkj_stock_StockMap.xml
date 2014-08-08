@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
+<sqlMap>
+	<!-- Stock Start -->
+	<typeAlias alias="stock" type="com.qkj.stock.domain.Stock" />
+	<select id="stock_getStocks" resultClass="stock" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT s.*,p.`title` product_name,w.`ware_name` store_name FROM qkj_r_stock s LEFT JOIN qkj_t_product p ON (s.`product_id`=p.`uuid`)
+			 LEFT JOIN qkj_t_warehouse w ON (s.`store_id`=w.`uuid`)
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ s.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="product_id"><![CDATA[ s.product_id=#product_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="store_id"><![CDATA[ s.store_id=#store_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="quantity"><![CDATA[ s.quantity=#quantity# ]]></isNotEmpty>
+			
+
+		</dynamic>
+	</select>
+	<select id="stock_getStocksBig" resultClass="stock" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT s.*,p.`title` product_name,w.`ware_name` store_name,p.`market_price` market_price,p.`agree_price_1` agree_price_1,p.`agree_price_2` agree_price_2,p.`agree_price_3` agree_price_3,p.`dealer_price` dealer_price,p.`group_price` group_price,p.`case_spec` case_spec FROM qkj_r_stock s 
+			LEFT JOIN qkj_t_product p ON (s.`product_id`=p.`uuid`)
+			 LEFT JOIN qkj_t_warehouse w ON (s.`store_id`=w.`uuid`)
+			 WHERE s.`quantity`>0
+		]]>
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ s.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="product_id"><![CDATA[ s.product_id=#product_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="store_id"><![CDATA[ s.store_id=#store_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="quantity"><![CDATA[ s.quantity=#quantity# ]]></isNotEmpty>
+			
+	</select>
+	<select id="stock_getStocksCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) From qkj_r_stock
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="product_id"><![CDATA[ product_id=#product_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="store_id"><![CDATA[ store_id=#store_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="quantity"><![CDATA[ quantity=#quantity# ]]></isNotEmpty>
+
+		</dynamic>
+	</select>
+	<insert id="stock_addStock" parameterClass="stock">
+		<![CDATA[ 
+			Insert Into qkj_r_stock(product_id,store_id,quantity)
+			Values (#product_id#,#store_id#,#quantity#)
+		]]>
+	</insert>
+	<update id="stock_mdyStock" parameterClass="stock">
+		<![CDATA[
+			Update qkj_r_stock
+			Set product_id=#product_id#,
+store_id=#store_id#,
+quantity=#quantity#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="stock_delStock" parameterClass="stock">
+	<![CDATA[
+		Delete From qkj_r_stock Where uuid=#uuid#
+	]]>
+	</delete>
+	<update id="stock_mdyQuantity"  parameterClass="java.util.Map">
+		<![CDATA[
+			UPDATE qkj_r_stock
+			SET quantity=quantity+(
+				SELECT SUM(i.`totel`) FROM qkj_t_outdetail i WHERE i.lading_id = #lading_id#
+			)
+			WHERE UUID =#uuid#
+		]]>
+	</update>
+	
+	<!-- Stock End -->
+</sqlMap>

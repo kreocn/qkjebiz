@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
+<sqlMap>
+	<!-- InStock Start -->
+	<typeAlias alias="inStock" type="com.qkj.inStock.domain.InStock" />
+	<select id="inStock_getInStocks" resultClass="inStock" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT i.*,addu.`USER_NAME` add_user_name,lmu.`USER_NAME` lm_user_name FROM 
+			qkj_t_instock i LEFT JOIN s_sys_user addu ON (i.add_user=addu.`UUID`) 
+			LEFT JOIN s_sys_user lmu ON (i.lm_user=lmu.`UUID`)
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ i.uuid=#uuid# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="date"><![CDATA[ i.date=#date# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="store_id"><![CDATA[ i.store_id=#store_id# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="operator_id"><![CDATA[ i.operator_id=#operator_id# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="take_id"><![CDATA[ i.take_id=#take_id# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="total_price"><![CDATA[ i.total_price=#total_price# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="add_user"><![CDATA[ i.add_user=#add_user# ]]></isNotEmpty>
+
+		</dynamic>
+		<![CDATA[ Order By i.add_timer Desc LIMIT 0, 500 ]]>
+	</select>
+	<select id="inStock_getInStocksCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) From qkj_t_instock
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="date"><![CDATA[ date=#date# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="store_id"><![CDATA[ store_id=#store_id# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="operator_id"><![CDATA[ operator_id=#operator_id# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="take_id"><![CDATA[ take_id=#take_id# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="total_price"><![CDATA[ total_price=#total_price# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="add_user"><![CDATA[ add_user=#add_user# ]]></isNotEmpty>
+
+		</dynamic>
+	</select>
+	<insert id="inStock_addInStock" parameterClass="inStock">
+		<![CDATA[ 
+			Insert Into qkj_t_instock(uuid,date,store_id,operator_id,take_id,note,total_price,add_user,add_timer,lm_user,lm_timer,reason)
+			Values (#uuid#,#date#,#store_id#,#operator_id#,#take_id#,#note#,#total_price#,#add_user#,#add_timer#,#lm_user#,#lm_timer#,#reason#)
+		]]>
+	</insert>
+	<update id="inStock_mdyInStock" parameterClass="inStock">
+		<![CDATA[
+			Update qkj_t_instock
+			Set 
+store_id=#store_id#,
+operator_id=#operator_id#,
+take_id=#take_id#,
+note=#note#,
+total_price=#total_price#,
+lm_user=#lm_user#,
+lm_timer=#lm_timer#,
+reason=#reason#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="inStock_delInStock" parameterClass="inStock">
+	<![CDATA[
+		Delete From qkj_t_instock Where uuid=#uuid#
+	]]>
+	</delete>
+	
+	<!-- 额外方法 -->
+	<update id="qkjmanage_mdyTotalPrice" parameterClass="string">
+		<![CDATA[
+			UPDATE qkj_t_instock
+			SET total_price=(
+				SELECT SUM(i.total)
+				FROM qkj_t_indetail i
+				WHERE i.lading_id = #value#
+			)
+			Where uuid = #value#
+		]]>
+	</update>
+	<!-- InStock End -->
+</sqlMap>

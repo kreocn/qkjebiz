@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="inDetail_inDetail" extends="default" namespace="/inStock">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- InDetail Start -->
+		<action name="inDetail_list" class="com.qkj.inDetail.action.InDetailAction" method="list">
+			<result>/jsp/inDetail/InDetailList.jsp</result>
+		</action>
+		<action name="inDetail_relist" class="com.qkj.inDetail.action.InDetailAction" method="relist">
+			<result type="redirectAction">
+				<param name="actionName">inDetail_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+		<action name="inDetail_load" class="com.qkj.inDetail.action.InDetailAction" method="load">
+			<result>/jsp/inDetail/InDetailEdit.jsp</result>
+		</action>
+		<action name="inDetail_add" class="com.qkj.inDetail.action.InDetailAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">inStock_load</param>
+				<param name="inStock.uuid">${inDetail.lading_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="inDetail_save" class="com.qkj.inDetail.action.InDetailAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">inDetail_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="inDetail_del" class="com.qkj.inDetail.action.InDetailAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">inStock_load</param>
+				<param name="inStock.uuid">${inDetail.lading_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- InDetail End -->
+	</package>
+</struts>
