@@ -27,7 +27,7 @@ window.onload = function() {
 
 var sobj01;
 var selectDept2 = function() {
-	sobj01 = new DialogIFrame({src:'<s:url namespace="/sys" action="dept_permit_select" />?objname=sobj01'});
+	sobj01 = new DialogIFrame({src:'<s:url namespace="/sys" action="dept_permit_select" />?objname=sobj01',title:'选择部门'});
 	sobj01.selfAction = function(val1,val2) {
 		$("#userdept_codeid").val(val1);
 		$("#userdept_cnameid").val(val2);

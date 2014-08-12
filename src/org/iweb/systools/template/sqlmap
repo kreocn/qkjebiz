@@ -26,6 +26,9 @@
 			Insert Into $table_name$($sqlmap_insert_column_area$)
 			Values ($sqlmap_insert_value_area$)
 		]]>
+		<selectKey resultClass="int" keyProperty="uuid">
+		<![CDATA[ Select LAST_INSERT_ID() ]]>
+		</selectKey>
 	</insert>
 	<update id="$name_space$_mdy$file_s_name$" parameterClass="$class_alias$">
 		<![CDATA[

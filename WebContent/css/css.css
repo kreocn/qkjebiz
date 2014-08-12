@@ -29,6 +29,10 @@ input[type="text"].time_input {
 width: 40px;
 }
 
+input[type="text"].int_input {
+width: 25px;
+}
+
 input[type="text"] {
 width: 165px;
 }

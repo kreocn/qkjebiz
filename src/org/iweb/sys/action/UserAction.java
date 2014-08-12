@@ -171,15 +171,12 @@ public class UserAction extends ActionSupport {
 			}
 			map.putAll(ToolsUtil.getMapByBean(user));
 			map.putAll(ContextHelper.getDefaultRequestMap4Page());
-			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str)
-					.toString()));
+			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 			this.setUsers(dao.list(map));
 			this.setRecCount(dao.getResultCount());
 		} catch (Exception e) {
-			log.error(this.getClass().getName() + "!list 读取数据错误:"
-					+ ToolsUtil.getStackTrace(e));
-			throw new Exception(this.getClass().getName() + "!list 读取数据错误:"
-					+ ToolsUtil.getStackTraceHTML(e));
+			log.error(this.getClass().getName() + "!list 读取数据错误:" + ToolsUtil.getStackTrace(e));
+			throw new Exception(this.getClass().getName() + "!list 读取数据错误:" + ToolsUtil.getStackTraceHTML(e));
 		}
 		return SUCCESS;
 	}
@@ -216,18 +213,15 @@ public class UserAction extends ActionSupport {
 
 			// 得到用户拥有的角色
 
-			if (ContextHelper.isAdmin()) { // 如果是超级管理员
+			if (ContextHelper.isAdmin() || ContextHelper.checkPermit("SYS_MANAGER_ROLE_LISTALL")) { // 如果是超级管理员
 				// 可以选到所有的部门
 				this.setDepts(dao2.list(null));
 				// 可以选到所有的角色
 				this.setRoles(dao3.listSysRole(null));
 			} else {
-				this.setDepts(ToolsUtil.getTreeNode(dao2.list(null),
-						"dept_code", "parent_dept", ContextHelper
-								.getUserLoginInfo().getDept_code(), 2, true));
+				this.setDepts(ToolsUtil.getTreeNode(dao2.list(null), "dept_code", "parent_dept", ContextHelper.getUserLoginInfo().getDept_code(), 2, true));
 				// 只能选到自己的角色
-				this.setRoles(ContextHelper.getUserLoginInfo()
-						.getUser_roles_list());
+				this.setRoles(ContextHelper.getUserLoginInfo().getUser_roles_list());
 			}
 
 			if ("mdy".equals(viewFlag)) {
@@ -237,10 +231,8 @@ public class UserAction extends ActionSupport {
 			PositionDAO pdao = new PositionDAO();
 			this.setPositions(pdao.list(null));
 		} catch (Exception e) {
-			log.error(this.getClass().getName() + "!load 读取数据错误:"
-					+ ToolsUtil.getStackTrace(e));
-			throw new Exception(this.getClass().getName() + "!load 读取数据错误:"
-					+ ToolsUtil.getStackTraceHTML(e));
+			log.error(this.getClass().getName() + "!load 读取数据错误:" + ToolsUtil.getStackTrace(e));
+			throw new Exception(this.getClass().getName() + "!load 读取数据错误:" + ToolsUtil.getStackTraceHTML(e));
 		}
 		return SUCCESS;
 	}
@@ -279,14 +271,11 @@ public class UserAction extends ActionSupport {
 				this.setRoles(dao3.listSysRole(null));
 			} else {
 				this.setUser((User) dao.list(map).get(0));
-				this.setRoles(ContextHelper.getUserLoginInfo()
-						.getUser_roles_list());
+				this.setRoles(ContextHelper.getUserLoginInfo().getUser_roles_list());
 			}
 		} catch (Exception e) {
-			log.error(this.getClass().getName() + "!load 读取数据错误:"
-					+ ToolsUtil.getStackTrace(e));
-			throw new Exception(this.getClass().getName() + "!load 读取数据错误:"
-					+ ToolsUtil.getStackTraceHTML(e));
+			log.error(this.getClass().getName() + "!load 读取数据错误:" + ToolsUtil.getStackTrace(e));
+			throw new Exception(this.getClass().getName() + "!load 读取数据错误:" + ToolsUtil.getStackTraceHTML(e));
 		}
 		return SUCCESS;
 	}
@@ -299,10 +288,8 @@ public class UserAction extends ActionSupport {
 			user.setLm_time(new Date());
 			dao.isave(user);
 		} catch (Exception e) {
-			log.error(this.getClass().getName() + "!isave 数据更新失败:"
-					+ ToolsUtil.getStackTrace(e));
-			throw new Exception(this.getClass().getName() + "!isave 数据更新失败:"
-					+ ToolsUtil.getStackTraceHTML(e));
+			log.error(this.getClass().getName() + "!isave 数据更新失败:" + ToolsUtil.getStackTrace(e));
+			throw new Exception(this.getClass().getName() + "!isave 数据更新失败:" + ToolsUtil.getStackTraceHTML(e));
 		}
 		return SUCCESS;
 	}
@@ -313,44 +300,32 @@ public class UserAction extends ActionSupport {
 			user.setUuid(ToolsUtil.getUUID());
 			// 统一小写
 			user.setTitle(user.getTitle().toLowerCase());
-			user.setPasswords("true".equals(IWebConfig.getConfigMap().get(
-					"isPasswordEncrypt")) ? MD5Plus.encrypt(user.getPasswords())
-					: user.getPasswords());
+			user.setPasswords("true".equals(IWebConfig.getConfigMap().get("isPasswordEncrypt")) ? MD5Plus.encrypt(user.getPasswords()) : user.getPasswords());
 			user.setReg_time(new Date());
 			user.setLm_user(ContextHelper.getUserLoginTitle());
 			user.setLm_time(new Date());
 			user.setStatus(1);
-			user.setUser_roles(ToolsUtil.Array2String(
-					uroles == null ? new String[] {} : uroles, ","));
+			user.setUser_roles(ToolsUtil.Array2String(uroles == null ? new String[] {} : uroles, ","));
 			dao.add(user);
 		} catch (Exception e) {
 			// setMessage("数据更新失败!" + e.getMessage());
-			log.error(this.getClass().getName() + "!add 数据添加失败:"
-					+ ToolsUtil.getStackTrace(e));
-			throw new Exception(this.getClass().getName() + "!add 数据添加失败:"
-					+ ToolsUtil.getStackTraceHTML(e));
+			log.error(this.getClass().getName() + "!add 数据添加失败:" + ToolsUtil.getStackTrace(e));
+			throw new Exception(this.getClass().getName() + "!add 数据添加失败:" + ToolsUtil.getStackTraceHTML(e));
 		}
 		return SUCCESS;
 	}
 
 	public String save() throws Exception {
 		ContextHelper.isPermit("SYS_MANAGER_USER_MDY");
-		if (user.getTitle().equals(
-				IWebConfig.getConfigMap().get("defaultAdministrator"))
-				&& !ContextHelper.isAdmin()) {
-			throw new PermitException("你没有权限修改超级管理员帐户!");
-		}
+		if (user.getTitle().equals(IWebConfig.getConfigMap().get("defaultAdministrator")) && !ContextHelper.isAdmin()) { throw new PermitException("你没有权限修改超级管理员帐户!"); }
 		try {
-			user.setUser_roles(ToolsUtil.Array2String(
-					uroles == null ? new String[] {} : uroles, ","));
+			user.setUser_roles(ToolsUtil.Array2String(uroles == null ? new String[] {} : uroles, ","));
 			user.setLm_user(ContextHelper.getUserLoginTitle());
 			user.setLm_time(new Date());
 			dao.save(user);
 		} catch (Exception e) {
-			log.error(this.getClass().getName() + "!save 数据更新失败:"
-					+ ToolsUtil.getStackTrace(e));
-			throw new Exception(this.getClass().getName() + "!save 数据更新失败:"
-					+ ToolsUtil.getStackTraceHTML(e));
+			log.error(this.getClass().getName() + "!save 数据更新失败:" + ToolsUtil.getStackTrace(e));
+			throw new Exception(this.getClass().getName() + "!save 数据更新失败:" + ToolsUtil.getStackTraceHTML(e));
 		}
 		return SUCCESS;
 	}
@@ -361,27 +336,19 @@ public class UserAction extends ActionSupport {
 			dao.delete(user);
 			setMessage("删除成功!ID=" + user.getUuid());
 		} catch (Exception e) {
-			log.error(this.getClass().getName() + "!del 数据删除失败:"
-					+ ToolsUtil.getStackTrace(e));
-			throw new Exception(this.getClass().getName() + "!del 数据删除失败:"
-					+ ToolsUtil.getStackTraceHTML(e));
+			log.error(this.getClass().getName() + "!del 数据删除失败:" + ToolsUtil.getStackTrace(e));
+			throw new Exception(this.getClass().getName() + "!del 数据删除失败:" + ToolsUtil.getStackTraceHTML(e));
 		}
 		return SUCCESS;
 	}
 
 	public String changePWD() throws Exception {
 		ContextHelper.isPermit("SYS_MANAGER_USER_PWD_MDY");
-		if (user.getTitle().equals(
-				IWebConfig.getConfigMap().get("defaultAdministrator"))
-				&& !ContextHelper.isAdmin()) {
-			throw new PermitException("你没有权限修改超级管理员帐户!");
-		}
+		if (user.getTitle().equals(IWebConfig.getConfigMap().get("defaultAdministrator")) && !ContextHelper.isAdmin()) { throw new PermitException("你没有权限修改超级管理员帐户!"); }
 		try {
 			map.clear();
-			String new_passwords = ContextHelper.getRequest().getParameter(
-					"new_passwords");
-			String new_passwords2 = ContextHelper.getRequest().getParameter(
-					"new_passwords2");
+			String new_passwords = ContextHelper.getRequest().getParameter("new_passwords");
+			String new_passwords2 = ContextHelper.getRequest().getParameter("new_passwords2");
 
 			map.put("uuid", user.getUuid());
 			map.put("title", user.getTitle());
@@ -389,9 +356,7 @@ public class UserAction extends ActionSupport {
 			if (users.size() == 1) {
 				user = users.get(0);
 				if (new_passwords.equals(new_passwords2)) {
-					user.setPasswords("true".equals(IWebConfig.getConfigMap()
-							.get("isPasswordEncrypt")) ? MD5Plus
-							.encrypt(new_passwords) : new_passwords);
+					user.setPasswords("true".equals(IWebConfig.getConfigMap().get("isPasswordEncrypt")) ? MD5Plus.encrypt(new_passwords) : new_passwords);
 					user.setLm_user(ContextHelper.getUserLoginTitle());
 					user.setLm_time(new Date());
 					dao.changePWD(user);
@@ -402,10 +367,8 @@ public class UserAction extends ActionSupport {
 				setMessage("未知错误!请按照正规操作途径修改密码!");
 			}
 		} catch (Exception e) {
-			log.error(this.getClass().getName() + "!changePWD 数据删除失败:"
-					+ ToolsUtil.getStackTrace(e));
-			throw new Exception(this.getClass().getName()
-					+ "!changePWD 数据删除失败:" + ToolsUtil.getStackTraceHTML(e));
+			log.error(this.getClass().getName() + "!changePWD 数据删除失败:" + ToolsUtil.getStackTrace(e));
+			throw new Exception(this.getClass().getName() + "!changePWD 数据删除失败:" + ToolsUtil.getStackTraceHTML(e));
 		}
 		return SUCCESS;
 	}
@@ -414,12 +377,9 @@ public class UserAction extends ActionSupport {
 		ContextHelper.isPermit("LOGING_USER_CONFIG_INFO_CPWD");
 		try {
 			map.clear();
-			String old_passwords = ContextHelper.getRequest().getParameter(
-					"old_passwords");
-			String new_passwords = ContextHelper.getRequest().getParameter(
-					"new_passwords");
-			String new_passwords2 = ContextHelper.getRequest().getParameter(
-					"new_passwords2");
+			String old_passwords = ContextHelper.getRequest().getParameter("old_passwords");
+			String new_passwords = ContextHelper.getRequest().getParameter("new_passwords");
+			String new_passwords2 = ContextHelper.getRequest().getParameter("new_passwords2");
 
 			map.put("uuid", user.getUuid());
 			map.put("title", user.getTitle());
@@ -427,14 +387,9 @@ public class UserAction extends ActionSupport {
 			if (users.size() == 1) {
 				user = users.get(0);
 				if (new_passwords.equals(new_passwords2)) {
-					if ("true".equals(IWebConfig.getConfigMap().get(
-							"isPasswordEncrypt")) ? MD5Plus.compare(
-							old_passwords, this.getUser().getPasswords())
-							: old_passwords.equals(this.getUser()
-									.getPasswords())) {
-						user.setPasswords("true".equals(IWebConfig
-								.getConfigMap().get("isPasswordEncrypt")) ? MD5Plus
-								.encrypt(new_passwords) : new_passwords);
+					if ("true".equals(IWebConfig.getConfigMap().get("isPasswordEncrypt")) ? MD5Plus.compare(old_passwords, this.getUser().getPasswords()) : old_passwords
+							.equals(this.getUser().getPasswords())) {
+						user.setPasswords("true".equals(IWebConfig.getConfigMap().get("isPasswordEncrypt")) ? MD5Plus.encrypt(new_passwords) : new_passwords);
 						user.setLm_user(ContextHelper.getUserLoginTitle());
 						user.setLm_time(new Date());
 						dao.changePWD(user);
@@ -450,10 +405,8 @@ public class UserAction extends ActionSupport {
 				setMessage("未知错误!请按照正规操作途径修改密码!");
 			}
 		} catch (Exception e) {
-			log.error(this.getClass().getName() + "!changePWD 数据删除失败:"
-					+ ToolsUtil.getStackTrace(e));
-			throw new Exception(this.getClass().getName()
-					+ "!changePWD 数据删除失败:" + ToolsUtil.getStackTraceHTML(e));
+			log.error(this.getClass().getName() + "!changePWD 数据删除失败:" + ToolsUtil.getStackTrace(e));
+			throw new Exception(this.getClass().getName() + "!changePWD 数据删除失败:" + ToolsUtil.getStackTraceHTML(e));
 		}
 		return SUCCESS;
 	}

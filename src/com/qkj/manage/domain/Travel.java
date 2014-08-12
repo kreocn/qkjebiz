@@ -10,6 +10,7 @@ public class Travel {
 	private Integer travel_num;// (int)客户人数
 	private Integer accompany_num;// (int)陪同人数
 	private Date travel_date;// (date)执行日期
+	private Date travel_date_end;// (date)执行日期截至
 	private Integer member_num;// (int)客户家数
 	private Double lunch_price;// (decimal)午餐标准/桌
 	private Integer lunch_num;// (int)午餐次数
@@ -47,6 +48,79 @@ public class Travel {
 	private Date lm_time;// (datetime)最后修改时间
 
 	// 以下为非数据库字段
+	private String apply_dept_name;
+	private String apply_user_name;
+	private String check_user_name;
+	private String acheck_user_name;
+	private String add_user_name;
+
+	// checkbox专用转换字段
+	private String[] apply_items;
+	private String[] cars;
+
+	public String[] getApply_items() {
+		return apply_items;
+	}
+
+	public void setApply_items(String[] apply_items) {
+		this.apply_items = apply_items;
+	}
+
+	public String[] getCars() {
+		return cars;
+	}
+
+	public void setCars(String[] cars) {
+		this.cars = cars;
+	}
+
+	public Date getTravel_date_end() {
+		return travel_date_end;
+	}
+
+	public void setTravel_date_end(Date travel_date_end) {
+		this.travel_date_end = travel_date_end;
+	}
+
+	public String getApply_dept_name() {
+		return apply_dept_name;
+	}
+
+	public void setApply_dept_name(String apply_dept_name) {
+		this.apply_dept_name = apply_dept_name;
+	}
+
+	public String getApply_user_name() {
+		return apply_user_name;
+	}
+
+	public void setApply_user_name(String apply_user_name) {
+		this.apply_user_name = apply_user_name;
+	}
+
+	public String getCheck_user_name() {
+		return check_user_name;
+	}
+
+	public void setCheck_user_name(String check_user_name) {
+		this.check_user_name = check_user_name;
+	}
+
+	public String getAcheck_user_name() {
+		return acheck_user_name;
+	}
+
+	public void setAcheck_user_name(String acheck_user_name) {
+		this.acheck_user_name = acheck_user_name;
+	}
+
+	public String getAdd_user_name() {
+		return add_user_name;
+	}
+
+	public void setAdd_user_name(String add_user_name) {
+		this.add_user_name = add_user_name;
+	}
 
 	public Integer getUuid() {
 		return uuid;

@@ -159,7 +159,7 @@ function loadManagers(dept_code) {
 		<td><s:property value="recode_count" /></td>
 		<td>${add_user_name}(<s:date name="add_time" format="yyyy-MM-dd" />)</td>
 		<td align="center">
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_CUSTOMER_MDY')">
+			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_CUSTOMER')">
 	    	[<a href="<s:url namespace="/qkjmanage" action="customer_load"><s:param name="viewFlag">mdy</s:param><s:param name="customer.uuid" value="uuid"></s:param></s:url>">修改</a>]
 	    	</s:if>
 	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_CUSTOMER_DEL')">

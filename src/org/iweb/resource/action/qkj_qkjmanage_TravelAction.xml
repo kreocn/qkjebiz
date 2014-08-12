@@ -18,25 +18,18 @@
 		<action name="travel_load" class="com.qkj.manage.action.TravelAction" method="load">
 			<result>/jsp/qkjmanage/TravelEdit.jsp</result>
 		</action>
-		<action name="travel_add" class="com.qkj.manage.action.TravelAction" method="add">
-			<result type="redirectAction">
-				<param name="actionName">travel_list</param>
-				<param name="viewFlag">relist</param>
-				<param name="message">${message}</param>
-			</result>
-		</action>
-		<action name="travel_save" class="com.qkj.manage.action.TravelAction" method="save">
-			<result type="redirectAction">
-				<param name="actionName">travel_list</param>
-				<param name="viewFlag">relist</param>
-				<param name="message">${message}</param>
-			</result>
-		</action>
 		<action name="travel_del" class="com.qkj.manage.action.TravelAction" method="del">
 			<result type="redirectAction">
 				<param name="actionName">travel_list</param>
 				<param name="viewFlag">relist</param>
 				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="travel_*" class="com.qkj.manage.action.TravelAction" method="{1}">
+			<result type="redirectAction">
+				<param name="actionName">travel_load</param>
+				<param name="viewFlag">mdy</param>
+				<param name="travel.uuid">${travel.uuid}</param>
 			</result>
 		</action>
 		<!-- Travel End -->

@@ -159,6 +159,14 @@ text-align: left; word-break: break-all;
 width: 35%;
 }
 
+.ilisttable-center {
+
+}
+
+.ilisttable-center td {
+text-align: center;
+}
+
 /*ilist End*/
 /*table mdy Start*/
 .itablemdy {

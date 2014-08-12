@@ -74,7 +74,7 @@ $(function(){
 		<td><s:property value="num" /></td>
 		<td><s:property value="total_price" /></td>
 		<td align="center">
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADINGITEM_MDY')">
+			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADINGITEM')">
 	    	[<a href="<s:url namespace="/qkjmanage" action="ladingItem_load"><s:param name="viewFlag">mdy</s:param><s:param name="ladingItem.uuid" value="uuid"></s:param></s:url>">修改</a>]
 	    	</s:if>
 	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADINGITEM_DEL')">
