@@ -17,18 +17,17 @@
 <script type="text/javascript" src="<s:url value="/js/common_cptb.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/div.js" />"></script>
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery-1.8.3.min.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/div.js" />"></script>
+<link rel="stylesheet" href="<s:url value="/include/jQuery/style.ui.smoothness/jquery-ui-1.10.3.min.css" />" />
+<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-ui-1.10.3.custom.min.js" />"></script>
+<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.ui.datepicker-zh.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/jquery.dialog.iframe.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/optiontransferselect.js" />"></script>
 <script type="text/javascript">
 var md;
 var ___change_pwd_html_value;	//由于赋值了form,导致form_name重复而不能使用框架的checkFormx,所以要建立变量保存HTML
-var ___select_dept_html_value;
-//selectRolesDiv
 window.onload = function() {
 	___change_pwd_html_value = $('#changePWDdiv').html();
 	$('#changePWDdiv').empty();	
-	___select_dept_html_value = $('#selectDeptDiv').html();
-	$('#selectDeptDiv').empty();
 };
 function changePWD() {	
 	md = new modelDiv();
@@ -36,16 +35,22 @@ function changePWD() {
 	md.setBottom_HTML("");
 	md.createModelDivByContent(580,260,___change_pwd_html_value);	
 }
-function selectDept() {	
-	md = new modelDiv();
-	md.setTitle_HTML("");
-	md.setBottom_HTML("");
-	md.createModelDivByContent(220,400,___select_dept_html_value);	
-}
-
 function closemDiv() {
 	md.dropModelDiv();
 }
+var sobj01;
+var selectDept = function() {
+	sobj01 = new DialogIFrame({src:'<s:url namespace="/sys" action="dept_permit_select" />?objname=sobj01',title:"选择部门"});
+	sobj01.selfAction = function(val1,val2) {
+		$("#userdept_codeid").val(val1);
+		$("#userdept_nameid").val(val2);
+		//loadManagers(val1);
+	};
+	sobj01.create();
+	sobj01.open();
+};
+
+
 function view(obj) {
 	var str = "";
 	for(var i in obj) {
@@ -109,8 +114,8 @@ function view(obj) {
 		  <tr>
 		    <td class="firstRow">部门:</td>
 		    <td class="secRow" colspan="3">
-		    <s:textfield title="部门代码" id="user.dept_code" name="user.dept_code" require="required" controlName="部门代码" readonly="true" />
-			<s:textfield title="部门名称" id="user.dept_cname" name="user.dept_cname" require="required" controlName="部门名称" readonly="true" />
+		    <s:textfield title="部门代码" id="userdept_codeid" name="user.dept_code" require="required" controlName="部门代码" readonly="true" />
+			<s:textfield title="部门名称" id="userdept_nameid" name="user.dept_cname" require="required" controlName="部门名称" readonly="true" />
 			<img class="imglink" src='<s:url value="/images/open2.gif" />' onclick="selectDept();" />
 			</td>			
 		  </tr>

@@ -265,7 +265,7 @@ color: #008000;
 				<tr>
 				<th>品名</th>
 				<th>单价</th>
-				<th>数量</th>
+				<th>数量(瓶)</th>
 				<th>合计</th>
 				<th>操作</th>
 				</tr>
@@ -561,7 +561,7 @@ color: #008000;
 		<tr>
 		<td class='firstRow'>数量:</td>
 		<td class='secRow'>
-			<s:textfield name="activeProduct.num" title="数量" dataType="integer" controlName="数量" require="required" />
+			<s:textfield name="activeProduct.num" title="数量" dataType="integer" controlName="数量" require="required" />(瓶)
 			<span id="ladingItemnumCase"></span>
 		</td>
 		</tr>

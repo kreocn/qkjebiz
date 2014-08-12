@@ -180,7 +180,7 @@ max-width: 650px !important;
 <input type="button" value="请假" onclick="addLeave(1);"  />
 <input type="button" value="加班" onclick="addLeave(2);"  />
 <input type="button" value="换休" onclick="addLeave(3);"  />
-<input type="button" value="换休" onclick="addLeave(4);"  />
+<input type="button" value="补签" onclick="addLeave(4);"  />
 </p>
 </div>
 <script type="text/javascript">

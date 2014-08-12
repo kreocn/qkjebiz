@@ -194,10 +194,10 @@
 		]]>
 		<isNotNull prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotNull>
 		<isNotNull prepend="AND" property="dept_code"><![CDATA[ dept_code=#dept_code# ]]></isNotNull>
-		<isNotNull prepend="AND" property="dept_codes">
+		<isNotEmpty prepend="AND" property="dept_codes">
 			<![CDATA[ dept_code In ]]>
 			<iterate property="dept_codes" open="(" close=")" conjunction=","> #dept_codes[]#</iterate>
-		</isNotNull>
+		</isNotEmpty>
 		<![CDATA[ ORDER BY DEPT_CODE ]]>
 	</select>
 	<select id="sys_getPermitDepts" resultClass="java.lang.String" parameterClass="java.util.Map">

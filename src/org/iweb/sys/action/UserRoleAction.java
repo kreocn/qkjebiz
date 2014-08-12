@@ -158,7 +158,7 @@ public class UserRoleAction extends ActionSupport {
 			map.clear();
 			map = ContextHelper.getDefaultRequestMap4Page();
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
-			if (ContextHelper.isAdmin()) {
+			if (ContextHelper.isAdmin() || ContextHelper.checkPermit("SYS_MANAGER_ROLE_LISTALL")) {
 				this.setRoles(dao.listSysRole(map));
 				this.setRecCount(dao.getResultCount());
 			} else {
@@ -198,8 +198,7 @@ public class UserRoleAction extends ActionSupport {
 					for (Iterator<RolePrvg> list = getRolePrvgs().iterator(); list.hasNext();) {
 						RolePrvg rp = (RolePrvg) list.next();
 						if (!ToolsUtil.isEmpty(rp.getRole_id())) { // 非空代表此角色拥有此权限
-							this.setSpecialPrivilegeHtml(this.getSpecialPrivilegeHtml()
-									+ spe.getRealFromHtml(rp.getPrivilege_id(), rp.getFunction()));
+							this.setSpecialPrivilegeHtml(this.getSpecialPrivilegeHtml() + spe.getRealFromHtml(rp.getPrivilege_id(), rp.getFunction()));
 						}
 					}
 				}
@@ -290,9 +289,8 @@ public class UserRoleAction extends ActionSupport {
 			setRolePrvgs(dao.listRolePrvg(map));
 			for (int i = 0, n = getRolePrvgs().size(); i < n; i++) {
 				getRolePrvgs().get(i).setType(
-						Integer.parseInt((String) (ToolsUtil.isEmpty(ContextHelper.getParameter(getRolePrvgs().get(i)
-								.getPrivilege_id())) ? "0" : ContextHelper.getParameter(getRolePrvgs().get(i)
-								.getPrivilege_id()))));
+						Integer.parseInt((String) (ToolsUtil.isEmpty(ContextHelper.getParameter(getRolePrvgs().get(i).getPrivilege_id())) ? "0"
+								: ContextHelper.getParameter(getRolePrvgs().get(i).getPrivilege_id()))));
 			}
 			dao.saveRolePrvg(getRolePrvgs());
 
@@ -364,8 +362,7 @@ public class UserRoleAction extends ActionSupport {
 			for (Iterator<RolePrvg> list = getRolePrvgs().iterator(); list.hasNext();) {
 				RolePrvg rp = (RolePrvg) list.next();
 				if (!ToolsUtil.isEmpty(rp.getRole_id())) { // 非空代表此角色拥有此权限
-					this.setSpecialPrivilegeHtml(this.getSpecialPrivilegeHtml()
-							+ spe.getRealFromHtml(rp.getPrivilege_id(), rp.getFunction()));
+					this.setSpecialPrivilegeHtml(this.getSpecialPrivilegeHtml() + spe.getRealFromHtml(rp.getPrivilege_id(), rp.getFunction()));
 				}
 			}
 		}

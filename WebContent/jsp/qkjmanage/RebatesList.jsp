@@ -135,7 +135,7 @@ $(function(){
 			</s:if>
 		</td>
 		<td align="center">
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATES_MDY')">
+			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATES')">
 	    	[<a href="<s:url namespace="/qkjmanage" action="rebates_load"><s:param name="viewFlag">mdy</s:param><s:param name="rebates.uuid" value="uuid"></s:param></s:url>">修改&审批</a>]
 	    	</s:if>
 	    </td>

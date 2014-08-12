@@ -40,7 +40,7 @@
 <td class='firstRow'><span style="color:red;">*</span> 产品系列:</td>
 <td class='secRow'>
 <s:select name="product.brand" title="产品系列" require="required"  controlName="产品统一编码" headerKey="" headerValue="--请选择--"
-	list="#{'天佑德':'天佑德','八大作坊':'八大作坊','七彩互助':'七彩互助','互助头曲':'互助头曲','互助粮液':'互助粮液','永庆和':'永庆和','青稞酒':'青稞酒'}" />
+	list="#{'天佑德':'天佑德','八大作坊':'八大作坊','七彩互助':'七彩互助','互助头曲':'互助头曲','互助粮液':'互助粮液','永庆和':'永庆和','青稞酒':'青稞酒','世义德':'世义德','其他':'其他'}" />
 </td>
 </tr>
 <tr>

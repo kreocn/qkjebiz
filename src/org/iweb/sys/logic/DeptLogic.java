@@ -23,10 +23,9 @@ public class DeptLogic {
 		HashMap<String, Object> map = new HashMap<>();
 		String user_dept_code = ContextHelper.getUserLoginInfo().getDept_code();
 		String global_dept_function = ContextHelper.getPermitFunction("GLOBAL_PRVG_DEPT_FUNCTION");
+		System.out.println("得到用户的GLOBAL_PRVG_DEPT_FUNCTION:" + global_dept_function);
 		global_dept_function = ToolsUtil.isEmpty(global_dept_function) ? "0.1" : global_dept_function;
-		if (ContextHelper.isAdmin()) {
-			return ddao.listPermit(null);
-		}
+		if (ContextHelper.isAdmin()) { return ddao.listPermit(null); }
 
 		String[] fs = global_dept_function.split("\\.");
 		List<String> dlist = null;
@@ -90,6 +89,8 @@ public class DeptLogic {
 		if (dlist == null) {
 			dlist = new ArrayList<>();
 		}
+
+		System.out.println("得到用户部门权限列表:" + dlist);
 		return dlist;
 	}
 

@@ -268,7 +268,7 @@ font-size: 14px;
 				<tr>
 				<th>品名</th>
 				<th>单价</th>
-				<th>数量</th>
+				<th>数量(瓶)</th>
 				<th>合计</th>
 				</tr>
 				<s:iterator value="activeProductsClose" status="sta">
