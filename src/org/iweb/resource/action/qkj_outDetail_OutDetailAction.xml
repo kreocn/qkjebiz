@@ -3,37 +3,37 @@
         "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
         "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
-	<package name="outDetail_outDetail" extends="default" namespace="/outDetail">
+	<package name="outDetail_outDetail" extends="default" namespace="/outStock">
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- OutDetail Start -->
-		<action name="outDetail_list" class="com.qkj.outDetail.action.OutDetailAction" method="list">
-			<result>/jsp/outDetail/OutDetailList.jsp</result>
+		<action name="outDetail_list" class="com.qkj.ware.action.OutDetailAction" method="list">
+			<result>/jsp/ware/outDetail/OutDetailList.jsp</result>
 		</action>
-		<action name="outDetail_relist" class="com.qkj.outDetail.action.OutDetailAction" method="relist">
+		<action name="outDetail_relist" class="com.qkj.ware.action.OutDetailAction" method="relist">
 			<result type="redirectAction">
 				<param name="actionName">outDetail_list</param>
 				<param name="viewFlag">relist</param>
 			</result>
 		</action>
-		<action name="outDetail_load" class="com.qkj.outDetail.action.OutDetailAction" method="load">
-			<result>/jsp/outDetail/OutDetailEdit.jsp</result>
+		<action name="outDetail_load" class="com.qkj.ware.action.OutDetailAction" method="load">
+			<result>/jsp/ware/outDetail/OutDetailEdit.jsp</result>
 		</action>
-		<action name="outDetail_add" class="com.qkj.outDetail.action.OutDetailAction" method="add">
+		<action name="outDetail_add" class="com.qkj.ware.action.OutDetailAction" method="add">
 			<result type="redirectAction">
 				<param name="actionName">outStock_load</param>
-				<param name="outStock.ordernum">${inDetail.lading_id}</param>
+				<param name="outStock.ordernum">${outDetail.lading_id}</param>
 				<param name="viewFlag">mdy</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
-		<action name="outDetail_save" class="com.qkj.outDetail.action.OutDetailAction" method="save">
+		<action name="outDetail_save" class="com.qkj.ware.action.OutDetailAction" method="save">
 			<result type="redirectAction">
 				<param name="actionName">outDetail_list</param>
 				<param name="viewFlag">relist</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
-		<action name="outDetail_del" class="com.qkj.outDetail.action.OutDetailAction" method="del">
+		<action name="outDetail_del" class="com.qkj.ware.action.OutDetailAction" method="del">
 			<result type="redirectAction">
 				<param name="actionName">outDetail_list</param>
 				<param name="viewFlag">relist</param>

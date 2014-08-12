@@ -35,6 +35,14 @@ public class StockDAO extends AbstractDAO {
 	public int updateTotle(Map<String, Object> map){
 		return super.save("stock_mdyQuantity", map);
 	}
+	
+	public int updateTotleById(Map<String, Object> map){
+		return super.save("stock_mdyQuantityById", map);
+	}
+	
+	public int updateFreezeNumById(Map<String, Object> map){
+		return super.save("stock_mdyFreezeNumById", map);
+	}
 
 	public int getResultCount() {
 		return super.getResultCount();

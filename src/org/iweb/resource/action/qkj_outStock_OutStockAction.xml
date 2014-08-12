@@ -6,38 +6,50 @@
 	<package name="outStock_outStock" extends="default" namespace="/outStock">
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- OutStock Start -->
-		<action name="outStock_list" class="com.qkj.outStock.action.OutStockAction" method="list">
-			<result>/jsp/outStock/OutStockList.jsp</result>
+		<action name="outStock_list" class="com.qkj.ware.action.OutStockAction" method="list">
+			<result>/jsp/ware/outStock/OutStockList.jsp</result>
 		</action>
-		<action name="outStock_relist" class="com.qkj.outStock.action.OutStockAction" method="relist">
+		<action name="outStock_relist" class="com.qkj.ware.action.OutStockAction" method="relist">
 			<result type="redirectAction">
 				<param name="actionName">outStock_list</param>
 				<param name="viewFlag">relist</param>
 			</result>
 		</action>
-		<action name="outStock_load" class="com.qkj.outStock.action.OutStockAction" method="load">
-			<result name="success">/jsp/outStock/OutStockEdit.jsp</result>
-			<result name="add">/jsp/outStock/OutDetail.jsp</result>
+		<action name="outStock_load" class="com.qkj.ware.action.OutStockAction" method="load">
+			<result name="success">/jsp/ware/outStock/OutDetail.jsp</result>
+			<result name="add">/jsp/ware/outStock/OutNext.jsp</result>
+			<result name="next">/jsp/ware/outStock/OutNext.jsp</result>
+			<result name="sale">/jsp/ware/outStock/OutSaleDetail.jsp</result>
 		</action>
-		<action name="outStock_add" class="com.qkj.outStock.action.OutStockAction" method="add">
+		<action name="outStock_add" class="com.qkj.ware.action.OutStockAction" method="add">
 			<result type="redirectAction">
 				<param name="actionName">outStock_load</param>
-				<param name="outStock.ordernum">${outStock.ordernum}</param>
+				<param name="outStock.uuid">${outStock.uuid}</param>
 				<param name="viewFlag">mdy</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
-		<action name="outStock_save" class="com.qkj.outStock.action.OutStockAction" method="save">
+		<action name="outStock_save" class="com.qkj.ware.action.OutStockAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">outStock_load</param>
+				<param name="outStock.uuid">${outStock.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="outStock_del" class="com.qkj.ware.action.OutStockAction" method="del">
 			<result type="redirectAction">
 				<param name="actionName">outStock_list</param>
 				<param name="viewFlag">relist</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
-		<action name="outStock_del" class="com.qkj.outStock.action.OutStockAction" method="del">
+		<!-- 新增 -->
+		<action name="outStock_sale" class="com.qkj.ware.action.OutStockAction" method="sale">
 			<result type="redirectAction">
-				<param name="actionName">outStock_list</param>
-				<param name="viewFlag">relist</param>
+				<param name="actionName">outStock_load</param>
+				<param name="outStock.uuid">${outStock.uuid}</param>
+				<param name="viewFlag">mdy</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>

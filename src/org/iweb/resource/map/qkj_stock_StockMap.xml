@@ -52,8 +52,8 @@
 		<![CDATA[
 			Update qkj_r_stock
 			Set product_id=#product_id#,
-store_id=#store_id#,
-quantity=#quantity#
+			store_id=#store_id#,
+			quantity=#quantity#
 			Where uuid = #uuid#
 		]]>
 	</update>
@@ -71,6 +71,23 @@ quantity=#quantity#
 			WHERE UUID =#uuid#
 		]]>
 	</update>
+	<!-- 其它 -->
+	<update id="stock_mdyQuantityById"  parameterClass="java.util.Map">
+		<![CDATA[
+			UPDATE qkj_r_stock
+			SET quantity=#quantity#
+			WHERE UUID =#uuid#
+		]]>
+	</update>
+	
+	<update id="stock_mdyFreezeNumById"  parameterClass="java.util.Map">
+		<![CDATA[
+			UPDATE qkj_r_stock
+			SET freezeNum=#freezeNum#
+			WHERE UUID =#uuid#
+		]]>
+	</update>
+	
 	
 	<!-- Stock End -->
 </sqlMap>

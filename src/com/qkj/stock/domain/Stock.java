@@ -7,6 +7,7 @@ public class Stock {
 	private Integer product_id;// (int)
 	private Integer store_id;// (int)
 	private Integer quantity;// (int)
+	private Integer freezeNum;
 
 	// 以下为非数据库字段
 	private String product_name;
@@ -123,6 +124,14 @@ public class Stock {
 
 	public void setAgree_price_3(BigDecimal agree_price_3) {
 		this.agree_price_3 = agree_price_3;
+	}
+
+	public Integer getFreezeNum() {
+		return freezeNum;
+	}
+
+	public void setFreezeNum(Integer freezeNum) {
+		this.freezeNum = freezeNum;
 	}
 	
 	

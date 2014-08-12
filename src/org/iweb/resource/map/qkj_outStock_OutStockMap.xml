@@ -2,7 +2,7 @@
 <!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
 <sqlMap>
 	<!-- OutStock Start -->
-	<typeAlias alias="outStock" type="com.qkj.outStock.domain.OutStock" />
+	<typeAlias alias="outStock" type="com.qkj.ware.domain.OutStock" />
 	<select id="outStock_getOutStocks" resultClass="outStock" parameterClass="java.util.Map">
 		<![CDATA[ 
 			SELECT i.*,addu.`USER_NAME` add_user_name,lmu.`USER_NAME` lm_user_name FROM qkj_t_outstock i LEFT JOIN s_sys_user addu ON (i.add_user=addu.`UUID`) 
@@ -19,6 +19,7 @@
 <isNotEmpty prepend="AND" property="manager_check_user"><![CDATA[ i.manager_check_user=#manager_check_user# ]]></isNotEmpty>
 
 		</dynamic>
+		<![CDATA[ Order By i.add_timer Desc LIMIT 0, 500 ]]>
 	</select>
 	<select id="outStock_getOutStocksCounts" resultClass="int" parameterClass="java.util.Map">
 		<![CDATA[ 
@@ -47,23 +48,28 @@
 		<![CDATA[
 			Update qkj_t_outstock
 			Set date=#date#,
-store_id=#store_id#,
-operator_id=#operator_id#,
-take_id=#take_id#,
-note=#note#,
-total_price=#total_price#,
-add_user=#add_user#,
-add_timer=#add_timer#,
-lm_user=#lm_user#,
-lm_timer=#lm_timer#,
-reason=#reason#,
-send=#send#,
-manager_check=#manager_check#,
-manager_check_user=#manager_check_user#,
-manager_check_time=#manager_check_time#,
-coo_check=#coo_check#,
-coo_check_user=#coo_check_user#,
-coo_check_time=#coo_check_time#
+			store_id=#store_id#,
+			operator_id=#operator_id#,
+			take_id=#take_id#,
+			note=#note#,
+			total_price=#total_price#,
+			add_user=#add_user#,
+			add_timer=#add_timer#,
+			lm_user=#lm_user#,
+			lm_timer=#lm_timer#,
+			reason=#reason#,
+			send=#send#,
+			manager_check=#manager_check#,
+			manager_check_user=#manager_check_user#,
+			manager_check_time=#manager_check_time#,
+			coo_check=#coo_check#,
+			coo_check_user=#coo_check_user#,
+			coo_check_time=#coo_check_time#,
+			member_id=#member_id#,
+			member_mebile=#member_mebile#,
+			member_name=#member_name#,
+			member_adress=#member_adress#,
+			member_price=#member_price#
 			Where uuid = #uuid#
 		]]>
 	</update>
@@ -72,5 +78,49 @@ coo_check_time=#coo_check_time#
 		Delete From qkj_t_outstock Where uuid=#uuid#
 	]]>
 	</delete>
+	
+	<!-- 额外方法 -->
+	<update id="outStock_mdyOutStockByTotal" parameterClass="outStock">
+		<![CDATA[
+			Update qkj_t_outstock
+			Set 
+			total_price=#total_price#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<update id="outStock_mdyOutStockSale" parameterClass="outStock">
+		<![CDATA[
+			Update qkj_t_outstock
+			Set 
+			total_price=#total_price#,
+			member_id=#member_id#,
+			member_mebile=#member_mebile#,
+			member_name=#member_name#,
+			member_adress=#member_adress#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<update id="outStock_mdyOutStockBro" parameterClass="outStock">
+		<![CDATA[
+			Update qkj_t_outstock
+			Set 
+			total_price=#total_price#,
+			member_id=#member_id#,
+			member_mebile=#member_mebile#,
+			member_name=#member_name#,
+			member_adress=#member_adress#,
+			member_price=#member_price#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<update id="outStock_mdyOutStockBs" parameterClass="outStock">
+		<![CDATA[
+			Update qkj_t_outstock
+			Set 
+			bsreason=#bsreason#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
 	<!-- OutStock End -->
 </sqlMap>
