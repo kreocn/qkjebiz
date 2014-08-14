@@ -11,7 +11,7 @@ public class Travel {
 	private Integer accompany_num;// (int)陪同人数
 	private Date travel_date;// (date)执行日期
 	private Date travel_date_end;// (date)执行日期截至
-	private Integer member_num;// (int)客户家数
+	private String members_names;// (int)客户家数
 	private Double lunch_price;// (decimal)午餐标准/桌
 	private Integer lunch_num;// (int)午餐次数
 	private Integer lunch_desk;// (int)午餐桌数
@@ -57,6 +57,17 @@ public class Travel {
 	// checkbox专用转换字段
 	private String[] apply_items;
 	private String[] cars;
+
+	// 查询专用字段
+	private Date travel_date_search;
+
+	public Date getTravel_date_search() {
+		return travel_date_search;
+	}
+
+	public void setTravel_date_search(Date travel_date_search) {
+		this.travel_date_search = travel_date_search;
+	}
 
 	public String[] getApply_items() {
 		return apply_items;
@@ -178,12 +189,12 @@ public class Travel {
 		this.travel_date = travel_date;
 	}
 
-	public Integer getMember_num() {
-		return member_num;
+	public String getMembers_names() {
+		return members_names;
 	}
 
-	public void setMember_num(Integer member_num) {
-		this.member_num = member_num;
+	public void setMembers_names(String members_names) {
+		this.members_names = members_names;
 	}
 
 	public Double getLunch_price() {

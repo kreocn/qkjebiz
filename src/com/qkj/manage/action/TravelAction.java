@@ -11,22 +11,32 @@ import org.iweb.sys.ContextHelper;
 import org.iweb.sys.ToolsUtil;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.qkj.manage.dao.TravelCustomerDAO;
 import com.qkj.manage.dao.TravelDAO;
 import com.qkj.manage.domain.Travel;
+import com.qkj.manage.domain.TravelCustomer;
 
 public class TravelAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
 	private static Log log = LogFactory.getLog(TravelAction.class);
 	private Map<String, Object> map = new HashMap<String, Object>();
 	private TravelDAO dao = new TravelDAO();
+	private TravelCustomerDAO cdao = new TravelCustomerDAO();
 
 	private Travel travel;
 	private List<Travel> travels;
+
+	private List<TravelCustomer> travelCustomers;
+
 	private String message;
 	private String viewFlag;
 	private int recCount;
 	private int pageSize;
 	private int currPage;
+
+	public List<TravelCustomer> getTravelCustomers() {
+		return travelCustomers;
+	}
 
 	public Travel getTravel() {
 		return travel;
@@ -111,12 +121,21 @@ public class TravelAction extends ActionSupport {
 				this.setTravel(null);
 				setMessage("你没有选择任何操作!");
 			} else if ("add".equals(viewFlag)) {
-				this.setTravel(null);
+				// this.setTravel(null);
+				if (travel == null) {
+					travel = new Travel();
+				}
+				travel.setApply_dept(ContextHelper.getUserLoginDept());
+				travel.setApply_dept_name(ContextHelper.getUserLoginDeptName());
+				travel.setApply_user(ContextHelper.getUserLoginUuid());
+				travel.setApply_user_name(ContextHelper.getUserLoginInfo().getUser_name());
 			} else if ("mdy".equals(viewFlag) || "print".equals(viewFlag)) {
 				if (!(travel == null || travel.getUuid() == null)) {
 					this.setTravel((Travel) dao.get(travel.getUuid()));
 				} else {
-					this.setTravel(null);
+					this.setViewFlag("add");
+					load();
+					// this.setTravel(null);
 				}
 
 				// checkbox专用转换
@@ -126,6 +145,11 @@ public class TravelAction extends ActionSupport {
 				if (!ToolsUtil.isEmpty(travel.getCar())) {
 					travel.setCars(travel.getCar().split(","));
 				}
+
+				map.clear();
+				map.put("travel_id", travel.getUuid());
+				travelCustomers = cdao.list(map);
+
 			} else {
 				this.setTravel(null);
 				setMessage("无操作类型!");

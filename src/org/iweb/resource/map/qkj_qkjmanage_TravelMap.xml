@@ -20,6 +20,7 @@
 			<isNotEmpty prepend="AND" property="apply_user"><![CDATA[ t.apply_user=#apply_user# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="check_status"><![CDATA[ t.check_status=#check_status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="acheck_status"><![CDATA[ t.acheck_status=#acheck_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="travel_date_search"><![CDATA[ t.travel_date <= #travel_date_search# AND t.travel_date_end >= #travel_date_search# ]]></isNotEmpty>
 		</dynamic>
 		<![CDATA[ LIMIT 1000 ]]>
 	</select>
@@ -38,8 +39,8 @@
 	</select>
 	<insert id="qkjmanage_addTravel" parameterClass="travel">
 		<![CDATA[ 
-			Insert Into qkjm_r_travel(apply_dept,apply_user,apply_item,travel_num,accompany_num,travel_date,travel_date_end,member_num,lunch_price,lunch_num,lunch_desk,dinner_price,dinner_num,dinner_desk,cigarette,cigarette_num,fruit,hotel,hotel_start,hotel_end,hotel_total,hotel_twinroom,hotel_house,hotel_house_num,car,travel_agency,trip,gift,gift_num,note,check_status,check_user,check_time,check_note,acheck_status,acheck_user,acheck_time,acheck_note,add_user,add_time,lm_user,lm_time)
-			Values (#apply_dept#,#apply_user#,#apply_item#,#travel_num#,#accompany_num#,#travel_date#,#travel_date_end#,#member_num#,#lunch_price#,#lunch_num#,#lunch_desk#,#dinner_price#,#dinner_num#,#dinner_desk#,#cigarette#,#cigarette_num#,#fruit#,#hotel#,#hotel_start#,#hotel_end#,#hotel_total#,#hotel_twinroom#,#hotel_house#,#hotel_house_num#,#car#,#travel_agency#,#trip#,#gift#,#gift_num#,#note#,#check_status#,#check_user#,#check_time#,#check_note#,#acheck_status#,#acheck_user#,#acheck_time#,#acheck_note#,#add_user#,#add_time#,#lm_user#,#lm_time#)
+			Insert Into qkjm_r_travel(apply_dept,apply_user,apply_item,travel_num,accompany_num,travel_date,travel_date_end,members_names,lunch_price,lunch_num,lunch_desk,dinner_price,dinner_num,dinner_desk,cigarette,cigarette_num,fruit,hotel,hotel_start,hotel_end,hotel_total,hotel_twinroom,hotel_house,hotel_house_num,car,travel_agency,trip,gift,gift_num,note,check_status,check_user,check_time,check_note,acheck_status,acheck_user,acheck_time,acheck_note,add_user,add_time,lm_user,lm_time)
+			Values (#apply_dept#,#apply_user#,#apply_item#,#travel_num#,#accompany_num#,#travel_date#,#travel_date_end#,#members_names#,#lunch_price#,#lunch_num#,#lunch_desk#,#dinner_price#,#dinner_num#,#dinner_desk#,#cigarette#,#cigarette_num#,#fruit#,#hotel#,#hotel_start#,#hotel_end#,#hotel_total#,#hotel_twinroom#,#hotel_house#,#hotel_house_num#,#car#,#travel_agency#,#trip#,#gift#,#gift_num#,#note#,#check_status#,#check_user#,#check_time#,#check_note#,#acheck_status#,#acheck_user#,#acheck_time#,#acheck_note#,#add_user#,#add_time#,#lm_user#,#lm_time#)
 		]]>
 		<selectKey resultClass="int" keyProperty="uuid">
 		<![CDATA[ Select LAST_INSERT_ID() ]]>
@@ -53,7 +54,7 @@
 				accompany_num=#accompany_num#,
 				travel_date=#travel_date#,
 				travel_date_end=#travel_date_end#,
-				member_num=#member_num#,
+				members_names=#members_names#,
 				lunch_price=#lunch_price#,
 				lunch_num=#lunch_num#,
 				lunch_desk=#lunch_desk#,

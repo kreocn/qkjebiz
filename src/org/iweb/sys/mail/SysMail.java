@@ -1,19 +1,29 @@
 package org.iweb.sys.mail;
 
-public class Mail {
+public class SysMail {
 	private static MailSenderInfo mail_sys;
 	static {
 		mail_sys = new MailSenderInfo();
 		mail_sys.setMailServerHost("smtp.51qkj.com");
 		mail_sys.setMailServerPort("25");
 		mail_sys.setValidate(true);
-		mail_sys.setUserName("system@51qkj.com");
-		mail_sys.setPassword("z1x2c3v4b5n6m7");// 您的邮箱密码
-		mail_sys.setFromAddress("system@51qkj.com");
+		mail_sys.setUserName("service@51qkj.com");
+		mail_sys.setPassword("iloveqkj2646");// 您的邮箱密码
+		mail_sys.setFromAddress("service@51qkj.com");
 	}
 
-	private static boolean Send_SYS() {
-		return false;
+	public static boolean sendHtml(String to_addr, String subject, String content) {
+		mail_sys.setToAddress(to_addr);
+		mail_sys.setSubject(subject);
+		mail_sys.setContent(content);
+		return SimpleMailSender.sendHtmlMail(mail_sys);
+	}
+
+	public static boolean sendText(String to_addr, String subject, String content) {
+		mail_sys.setToAddress(to_addr);
+		mail_sys.setSubject(subject);
+		mail_sys.setContent(content);
+		return SimpleMailSender.sendTextMail(mail_sys);
 	}
 
 	public static void main(String[] args) {
