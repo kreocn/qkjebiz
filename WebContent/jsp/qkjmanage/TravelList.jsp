@@ -13,12 +13,57 @@
 <script type="text/javascript" src="<s:url value="/js/common_listtable.js" />"></script>
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery-1.8.3.min.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/jquery.CommonUtil.js" />"></script>
+<link rel="stylesheet" href="<s:url value="/include/jQuery/style.ui.smoothness/jquery-ui-1.10.3.min.css" />" />
+<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-ui-1.10.3.custom.min.js" />"></script>
+<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.ui.datepicker-zh.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/jquery.dialog.iframe.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/common_ajax2.0.js" />"></script>
+<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.select.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/show_page.js" />"></script>
 <script type="text/javascript">
+var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
+var curr_dept = '${travel.apply_dept}';
+var curr_user = '${travel.apply_user}';
 $(function(){
 	CommonUtil.pickrow('table1');
 	CommonUtil.pickrowAll('table1','uuidcheck');
+	
+	$("#travel_travel_date_search").datepicker();
+	
+	if(curr_dept!='') {
+	    loadManagers(curr_dept);
+	  }
  });
+ 
+var sobj01;
+var selectDept = function() {
+  sobj01 = new DialogIFrame({src:'<s:url namespace="/sys" action="dept_permit_select" />?objname=sobj01',title:"选择部门"});
+  sobj01.selfAction = function(val1,val2) {
+    $("#userdept_codeid").val(val1);
+    $("#userdept_nameid").val(val2);
+    loadManagers(val1);
+  };
+  sobj01.create();
+  sobj01.open();
+};
+
+function loadManagers(dept_code) {
+  var ajax = new Common_Ajax('ajax_member_message');
+  ajax.config.action_url = ajax_url_action;
+  ajax.config._success = function(data, textStatus) {
+    $("#membermanagerid").clearAllOption();
+    $("#membermanagerid").addOption("--请选择--","");
+    $.each(data, function(i, n){
+      $("#membermanagerid").addOption(n.user_name,n.uuid);
+    });
+    if(curr_user!='') {
+      $("#membermanagerid").val(curr_user);
+    }
+  };
+  ajax.addParameter("work", "AutoComplete");
+  ajax.addParameter("parameters", "privilege_id=QKJCJ_SYS_AJAXLOAD_USER&dept_code=" + encodeURI(dept_code));
+  ajax.sendAjax2();
+}
 </script>
 <body>
   <div id="main">
@@ -34,23 +79,34 @@ $(function(){
           <s:form name="form_serach" action="travel_list" method="get" namespace="/qkjmanage" theme="simple">
             <table class="ilisttable" id="serach_table" width="100%">
               <tr>
-                <td class='firstRow'>主键自增:</td>
-                <td class='secRow'><s:property value="travel.uuid" /> <s:hidden name="travel.uuid" title="主键自增" /></td>
-                <td class='firstRow'>申请部门:</td>
-                <td class='secRow'><s:textfield name="travel.apply_dept" title="申请部门" dataLength="0,24" controlName="申请部门" /></td>
+                <td class='firstRow3'>申请编号:</td>
+                <td class='secRow3'><s:textfield name="travel.uuid" title="申请部门" dataLength="0,24" controlName="申请部门" /></td>
+                <td class='firstRow3'>申请部门:</td>
+                <td class='secRow3' colspan="3">
+                  <s:textfield id="userdept_codeid" name="travel.apply_dept" readonly="true"  title="部门编号" require="required" controlName="部门编号" />
+                  <s:textfield id="userdept_nameid" name="travel.apply_dept_name" readonly="true"  title="部门名称" require="required" controlName="申请部门名称" />
+                  <img class="imglink" src='<s:url value="/images/open2.gif" />' onclick="selectDept();" />
+                  <span id="ajax_member_message"></span>
+                  <s:select id="membermanagerid" name="travel.apply_user" list="#{}" headerKey="" headerValue="--请选择--" />
+               </td>
               </tr>
               <tr>
-                <td class='firstRow'>申请人:</td>
-                <td class='secRow'><s:textfield name="travel.apply_user" title="申请人" dataLength="0,48" controlName="申请人" /></td>
-                <td class='firstRow'>业务审核状态:</td>
-                <td class='secRow'><s:textfield name="travel.check_status" title="业务审核状态" dataLength="0,10" dataType="integer" controlName="业务审核状态" /></td>
-              </tr>
+                <td class='firstRow3'>业务审核状态:</td>
+                <td class='secRow3'>
+                  <s:select name="travel.check_status" 
+                  list="#{0:'新申请',5:'已退回',10:'待审核',20:'经理/大区已审',30:'总监已审',40:'业务副总已审'}"
+                  headerKey="" headerValue="--请选择--" />
+                </td>
+                <td class='firstRow3'>行政审核状态:</td>
+                <td class='secRow3'>
+                  <s:select name="travel.acheck_status" list="#{0:'新申请',5:'已退回',10:'待审核',20:'行政经理已审',30:'行政副总已审',40:'总经理已审'}"
+                  headerKey="" headerValue="--请选择--"  />
+                </td>
+                <td class='firstRow3'>查询日期:</td>
+                <td class='secRow3'><input id="travel_travel_date_search" name="travel.travel_date_search" value="${it:formatDate(travel.travel_date_search,'yyyy-MM-dd')}" class="date_input" type="text" title="执行日期" /></td>
+             </tr>
               <tr>
-                <td class='firstRow'>行政审核状态:</td>
-                <td class='secRow'><s:textfield name="travel.acheck_status" title="行政审核状态" dataLength="0,10" dataType="integer" controlName="行政审核状态" /></td>
-              </tr>
-              <tr>
-                <td colspan="4" class="buttonarea"><s:submit value="搜索" /> <s:reset value="重置" /></td>
+                <td colspan="20" class="buttonarea"><s:submit value="搜索" /> <s:reset value="重置" /></td>
               </tr>
             </table>
           </s:form>
@@ -87,9 +143,9 @@ $(function(){
                   <s:if test="acheck_status==0">新申请</s:if>
                   <s:if test="acheck_status==5"><span class="message_error" title="${acheck_user_name}">已退回</span></s:if>
                   <s:if test="acheck_status==10"><span class="message_warning">待审核</span></s:if>
-                  <s:if test="acheck_status==20"><span class="message_pass"  title="${acheck_user_name}">经理/大区已审</span></s:if>
-                  <s:if test="acheck_status==30"><span class="message_pass"  title="${acheck_user_name}">总监已审</span></s:if>
-                  <s:if test="acheck_status==40"><span class="message_pass"  title="${acheck_user_name}">业务副总已审</span></s:if>
+                  <s:if test="acheck_status==20"><span class="message_pass"  title="${acheck_user_name}">行政经理已审</span></s:if>
+                  <s:if test="acheck_status==30"><span class="message_pass"  title="${acheck_user_name}">行政副总已审</span></s:if>
+                  <s:if test="acheck_status==40"><span class="message_pass"  title="${acheck_user_name}">总经理已审</span></s:if>
                 </td>
                 <td align="center">
                 <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_TRAVEL')">

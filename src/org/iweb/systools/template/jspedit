@@ -18,7 +18,7 @@
 <div id="result">
 	<div class="itablemdy">
 	<div class="itabletitle">
-		<span class="title1"><s:if test="null == $class_alias$ && 'add' == viewFlag">增加</s:if><s:elseif test="null != $class_alias$ && 'mdy' == viewFlag">修改</s:elseif>$app_name$</span>
+		<span class="title1"><s:if test="'add' == viewFlag">增加</s:if><s:elseif test="'mdy' == viewFlag">修改</s:elseif>$app_name$</span>
 		<span class="extra1">
 			<a href="<s:url action="$class_alias$_list" namespace="/$name_space$" />" >$app_name$列表</a>
 		</span>	
@@ -26,7 +26,7 @@
 <s:form name="form1" action="$class_alias$_add" namespace="/$name_space$" onsubmit="return validator(this);" method="post" theme="simple">
 	<div class="ifromoperate" ></div>
 	<table class="ilisttable" width="100%">
-		<s:if test="null != $class_alias$">
+		<s:if test="'mdy' == viewFlag">
 		  $jspedit_noedit_area$
 		</s:if>
 		  $jspedit_edit_area$
@@ -34,12 +34,12 @@
 		    <td colspan="20" class="buttonarea">
 		    	$jspedit_hidden_area$
 		    	<span id="message"><s:property value="message" /></span>
-				<s:if test="null == $class_alias$ && 'add' == viewFlag">
+				<s:if test="'add' == viewFlag">
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('$action_privilege_flag$_ADD')">
 					<s:submit id="add" name="add" value="确定" action="$class_alias$_add" />
 					</s:if>
 				</s:if>
-				<s:elseif test="null != $class_alias$ && 'mdy' == viewFlag">
+				<s:elseif test="'mdy' == viewFlag">
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('$action_privilege_flag$_MDY')">
 					<s:submit id="save" name="save" value="保存" action="$class_alias$_save" />
 					</s:if>

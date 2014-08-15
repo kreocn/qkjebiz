@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
+<sqlMap>
+	<!-- TravelCustomer Start -->
+	<typeAlias alias="travelCustomer" type="com.qkj.manage.domain.TravelCustomer" />
+	<select id="qkjmanage_getTravelCustomers" resultClass="travelCustomer" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select * From qkjm_r_travel_customer
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="travel_id"><![CDATA[ travel_id=#travel_id# ]]></isNotEmpty>
+		</dynamic>
+		<![CDATA[ LIMIT 1000 ]]>
+	</select>
+	<select id="qkjmanage_getTravelCustomersCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) From qkjm_r_travel_customer
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="travel_id"><![CDATA[ travel_id=#travel_id# ]]></isNotEmpty>
+		</dynamic>
+		<![CDATA[ LIMIT 1000 ]]>
+	</select>
+	<insert id="qkjmanage_addTravelCustomer" parameterClass="travelCustomer">
+		<![CDATA[ 
+			Insert Into qkjm_r_travel_customer(travel_id,cus_name,cus_sex,cus_company,cus_type,cus_phone,cus_idcard,note)
+			Values (#travel_id#,#cus_name#,#cus_sex#,#cus_company#,#cus_type#,#cus_phone#,#cus_idcard#,#note#)
+		]]>
+		<selectKey resultClass="int" keyProperty="uuid">
+		<![CDATA[ Select LAST_INSERT_ID() ]]>
+		</selectKey>
+	</insert>
+	<update id="qkjmanage_mdyTravelCustomer" parameterClass="travelCustomer">
+		<![CDATA[
+			Update qkjm_r_travel_customer
+			Set cus_name=#cus_name#,
+				cus_sex=#cus_sex#,
+				cus_company=#cus_company#,
+				cus_type=#cus_type#,
+				cus_phone=#cus_phone#,
+				cus_idcard=#cus_idcard#,
+				note=#note#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="qkjmanage_delTravelCustomer" parameterClass="travelCustomer">
+	<![CDATA[
+		Delete From qkjm_r_travel_customer Where uuid=#uuid#
+	]]>
+	</delete>
+	<!-- TravelCustomer End -->
+</sqlMap>

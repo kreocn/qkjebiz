@@ -44,8 +44,10 @@
 		<action name="menu" class="org.iweb.common.action.MenuAction">
 			<result>/jsp/manager/menu.jsp</result>
 		</action>
-		<action name="test" class="com.opensymphony.xwork2.ActionSupport">
-			<!-- <result>/jsp/adm/LeavePrint.jsp</result> -->
+		<action name="test" class="org.iweb.common.action.TestAction">
+			<result>/jsp/manager/test.jsp</result>
+		</action>
+		<action name="test_*" class="org.iweb.common.action.TestAction" method="{1}">
 			<result>/jsp/manager/test.jsp</result>
 		</action>
 	</package>
