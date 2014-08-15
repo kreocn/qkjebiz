@@ -46,7 +46,6 @@
                     <s:if test="travel.check_status==20"><span class="message_pass">经理/大区已审</span><span class="nowrap">(${travel.check_user_name} ${it:formatDate(travel.check_time,'yyyy-MM-dd HH:mm:ss')})</span></s:if>
                     <s:if test="travel.check_status==30"><span class="message_pass">总监已审</span><span class="nowrap">(${travel.check_user_name} ${it:formatDate(travel.check_time,'yyyy-MM-dd')})</span></s:if>
                     <s:if test="travel.check_status==40"><span class="message_pass">业务副总已审</span><span class="nowrap">(${travel.check_user_name} ${it:formatDate(travel.check_time,'yyyy-MM-dd')})</span></s:if>
-                    <s:hidden name="travel.check_status" />
                  </td>
                  <td class='firstRow3'>行政审核状态:</td>
                  <td class='secRow3'>
@@ -56,7 +55,6 @@
                     <s:if test="travel.acheck_status==20"><span class="message_pass">行政经理已审</span><span class="nowrap">(${travel.acheck_user_name} ${it:formatDate(travel.acheck_time,'yyyy-MM-dd HH:mm:ss')})</span></s:if>
                     <s:if test="travel.acheck_status==30"><span class="message_pass">行政副总已审</span><span class="nowrap">(${travel.acheck_user_name} ${it:formatDate(travel.acheck_time,'yyyy-MM-dd HH:mm:ss')})</span></s:if>
                     <s:if test="travel.acheck_status==40"><span class="message_pass">总经理已审</span><span class="nowrap">(${travel.acheck_user_name} ${it:formatDate(travel.acheck_time,'yyyy-MM-dd HH:mm:ss')})</span></s:if>
-                    <s:hidden name="travel.acheck_status" />
                  </td>
               </tr>
             </s:if>
@@ -80,17 +78,76 @@
                    到<input id="travel_travel_date_end" name="travel.travel_date_end" value="${it:formatDate(travel.travel_date_end,'yyyy-MM-dd')}" class="date_input" type="text" title="执行日期" dataType="date" controlName="执行日期" />
              </td>
              <td class='firstRow3'>客户人数:</td>
-              <td class='secRow3'><s:textfield name="travel.travel_num" title="客户人数" dataLength="0,10"  cssClass="int_input" dataType="integer" controlName="客户人数" /> 人</td>
+              <td class='secRow3'>
+                <s:textfield name="travel.travel_num" title="客户人数" dataLength="0,10"  cssClass="int_input" dataType="integer" controlName="客户人数" /> 人
+                <span class="fb">陪同:</span>
+                <s:textfield name="travel.accompany_num" title="陪同人数" dataLength="0,10" cssClass="int_input" dataType="integer" controlName="陪同人数" /> 人
+             </td>
             </tr>
             <tr>
               <td class='firstRow3'>客户单位:</td>
-              <td class='secRow3' colspan="3"> 
-                <s:textarea name="travel.member_num" title="客户家数" cssStyle="width:80%;overflow:hidden;" rows="3" />
-                <span class="nowrap message_prompt">请用半角逗号,隔开</span>
+              <td class='secRow3' colspan="5"> 
+                <s:textfield id="travel_members_names" name="travel.members_names" title="客户家数" cssStyle="width:95%;"  />
+                <span class="nowrap message_prompt">单位名称之间请用半角逗号,或者空格隔开</span>
                </td>
-              <td class='firstRow3'>陪同人数:</td>
-              <td class='secRow3'><s:textfield name="travel.accompany_num" title="陪同人数" dataLength="0,10" cssClass="int_input" dataType="integer" controlName="陪同人数" /> 人</td>
              </tr>
+             <tbody id="cus_info_tbody">
+             <tr>
+              <td class="titleRow" colspan="6">客户详情/来访客户资料
+              <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_TRAVELCUSTOMER_ADD') && (travel.check_status<=5 ||  travel.acheck_status<=5)">
+              <input type="button" id="AddCustomer" value="添加客户资料" />
+              </s:if>
+              </td>
+            </tr>
+            <tr>
+              <td class="secRow3" colspan="6">
+                <s:if test="travelCustomers==null || travelCustomers.size==0">
+                        <div style="text-align: center;line-height: 30px;">暂无客户信息</div>
+                </s:if>
+                <s:else>
+                <table class="ilisttable ilisttable-center" id="table1" width="100%">
+                  <tr>
+                    <th>资料编号</th>
+                    <th>客户姓名</th>
+                    <th>性别</th>
+                    <th>单位名称</th>
+                    <th>客户类别</th>
+                    <th>联系电话</th>
+                    <th>身份证号</th>
+                    <th>操作</th>
+                  </tr>
+              <s:iterator value="travelCustomers" status="sta">
+                  <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>" type="pickrow">
+                    <td><s:property value="uuid" /></td>
+                      <td><s:property value="cus_name" /></td>
+                      <td>
+                        <s:if test="cus_sex==0">男</s:if>
+                        <s:elseif test="cus_sex==1">女</s:elseif>
+                      </td>
+                      <td><s:property value="cus_company" /></td>
+                      <td>
+                        <s:if test="cus_type==1">政府</s:if>
+                        <s:elseif test="cus_type==2">企业</s:elseif>
+                        <s:elseif test="cus_type==3">经销商</s:elseif>
+                        <s:elseif test="cus_type==4">潜在客户</s:elseif>
+                        <s:elseif test="cus_type==5">终端零售</s:elseif>
+                        <s:elseif test="cus_type==6">专卖店消费者</s:elseif>
+                        <s:elseif test="cus_type==7">其他</s:elseif>
+                      </td>
+                      <td><s:property value="cus_phone" /></td>
+                      <td><s:property value="cus_idcard" /></td>
+                  <td align="center">
+                      <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_TRAVELCUSTOMER_DEL') && (travel.check_status<=5 ||  travel.acheck_status<=5)">
+                      [<a href="<s:url namespace="/qkjmanage" action="travelCustomer_del"><s:param name="travelCustomer.uuid" value="uuid" /><s:param name="travelCustomer.travel_id" value="travel_id" /></s:url>" onclick="return isDel();">删除</a>]
+                      </s:if>    
+                    </td>
+                  </tr>
+              </s:iterator>
+                </table>
+                </s:else>
+              </td>
+            </tr>
+            </tbody>
             <tr>
               <td class="titleRow" colspan="6">接待标准</td>
             </tr>
@@ -245,8 +302,58 @@
       </div>
     </div>
   </div>
+  <div id="AddCustomerForm" title="添加客户资料">
+  <s:form name="form1" action="travelCustomer_add" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
+  <div class="ifromoperate" >
+    <input type="hidden" name="travelCustomer.travel_id" value="${travel.uuid }" />
+  </div>
+  <table class="ilisttable" width="100%">
+      <tr>
+      <td class='firstRow'><span style="color:red;">*</span> 客户姓名:</td>
+      <td class='secRow'><s:textfield name="travelCustomer.cus_name" title="客户姓名" require="required" dataLength="0,32" controlName="客户姓名" /></td>
+      </tr>
+      <tr>
+      <td class='firstRow'>性别:</td>
+      <td class='secRow'><s:radio name="travelCustomer.cus_sex" list="#{0:'男',1:'女'}" /></td>
+      </tr>
+      <tr>
+      <td class='firstRow'>单位名称:</td>
+      <td class='secRow'>
+        <s:textfield id="travelCustomer_cus_company" name="travelCustomer.cus_company" title="单位名称" dataLength="0,255" controlName="单位名称" />
+        <select id="cus_select"><option>--请选择--</option></select>
+      </td>
+      </tr>
+      <tr>
+      <td class='firstRow'>客户类别:</td>
+      <td class='secRow'>
+        <s:select name="travelCustomer.cus_type" title="客户类别" list="#{1:'政府',2:'企业',3:'经销商',4:'潜在客户',5:'终端零售',6:'专卖店消费者',7:'其他'}" />
+      </td>
+      </tr>
+      <tr>
+      <td class='firstRow'>联系电话:</td>
+      <td class='secRow'><s:textfield name="travelCustomer.cus_phone" title="联系电话" dataLength="0,55" controlName="联系电话" /></td>
+      </tr>
+      <tr>
+      <td class='firstRow'>身份证号:</td>
+      <td class='secRow'><s:textfield name="travelCustomer.cus_idcard" title="身份证号" dataLength="0,32" controlName="身份证号" /></td>
+      </tr>
+      <tr>
+      <td class='firstRow'>备注:</td>
+      <td class='secRow'><s:textfield name="travelCustomer.note" title="备注" dataLength="0,255" controlName="备注" /></td>
+      </tr>
+    <tr>
+        <td colspan="20" class="buttonarea">
+          <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_TRAVELCUSTOMER_ADD') && (travel.check_status<=5 ||  travel.acheck_status<=5)">
+          <s:submit id="add" name="add" value="确定" action="travelCustomer_add" />
+          </s:if>
+      </td>
+      </tr>
+  </table>  
+</s:form>
+  </div>
   <script type="text/javascript">
 var infoeditor01;
+var mns = '${travel.members_names}';
 $(function(){
   if($("#travel_trip").length>0) {
     infoeditor01 = new widget_textarea();
@@ -256,6 +363,30 @@ $(function(){
   $('#travel_hotel_end').datepicker();
   $('#travel_travel_date').datepicker();
   $('#travel_travel_date_end').datepicker();
+  
+  $("#AddCustomerForm").dialog({
+      autoOpen: false,
+      height: 330,
+      width: 400,
+      modal: true
+  });
+  
+  $("#AddCustomer").click(function(){
+	  if(mns!=null || mns!='') {
+		  $("#cus_select").clearAllOption();
+		  $("#cus_select").addOption("--请选择--","");
+		  var ts = mns.replace(/\s+/g," ").split(/[,| ]/);
+		  for(i=0;i<ts.length;i++) {
+			  $("#cus_select").addOption(ts[i],ts[i]);
+		  }
+	  }
+	  $("#AddCustomerForm").dialog("open");
+  });
+  
+  $("#cus_select").change(function(){
+	  $("#travelCustomer_cus_company").val($(this).val());
+	  
+  });
 });
 </script>
 </body>

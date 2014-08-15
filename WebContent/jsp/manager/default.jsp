@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
-<%@ page import="org.iweb.sys.ContextHelper"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
@@ -49,7 +47,7 @@ display: none;
 </style>
 <script type="text/javascript">
 	function load(){
-   	 location.href="<s:url value="/sche/schedule_list" />"; 
+   	 location.href='<s:url value="/sche/schedule_list" />'; 
 
 	}
 </script>
@@ -73,21 +71,20 @@ display: none;
 				<li>当出现上述情况时,请马上联系您的办事处经理(或大区经理)进行分配,
 				分配操作:  [会员管理]->[会员分配]->[把选中的会员分配给***]功能,把会员分配给您;</li>
 				<li>活动申请单/结案单添加时,请注意添加格式,所有的<font style="color: #FF0000;">费用明细,<b>不是</b>填写在[方案说明]里面! </font>而是在您填完"活动内容",点击[下一步&填写费用明细]后添加的,具体请参考"系统操作指南" 第五条;</li>
-				<li><font style="color: #FF0000;">"业务系统操作指南"</font>(2014-05-23更新) <a href="http://pan.baidu.com/s/1i3l4zVv" target="_blank">点此查看</a> ,提取密码为: c1cz</li>
+				<li>新上线 <a href="http://d.qkjchina.com/qkjzn/index.html?v=0.01"><font style="color: #FF0000;">"业务系统操作指南"</font></a> (2014-08-15更新) </li>
 				<li>潜在客户管理,如果要查看下属部门的所有客户,请在列表页面,选中[包含子部门]进行查询,否则只能看到当前指定部门下的客户</li>
 				</ul>
 			</div>
 		</div>
 		<s:iterator value="sches" status="sch">
-			<div class="update_info 
-			<s:if  test = "#sch.index==0">active_info</s:if>
-			 ">
-					<div class="update_title">${sdate } ${title }</div>
+			<div class="update_info <s:if  test = "#sch.index==0">active_info</s:if>">
+					<div class="update_title">${sdate} ${title}</div>
 					<div class="update_content">
-					<dl><dt>${content }</dt></dl>
+					<dl><dt>${content}</dt></dl>
 					</div>
 			</div>
 		</s:iterator>
+      <!-- 
 		<div class="update_info">
 			<div class="update_title">2014-07-11 系统例行更新</div>
 			<div class="update_content">
@@ -273,7 +270,6 @@ display: none;
 			</dl>
 			</div>
 		</div>
-		
 		<div class="update_info">
 			<div class="update_title">2014-05-12 系统更新</div>
 			<div class="update_content">
@@ -304,6 +300,7 @@ display: none;
 			</dl>
 			</div>
 		</div>
+        -->
 	</div>
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery-1.8.3.min.js" />"></script>
 <script type="text/javascript">

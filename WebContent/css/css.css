@@ -152,6 +152,10 @@ span.nowrap {
 display: inline-block;
 }
 
+.fb {
+font-weight: bold;
+}
+
 @media print {
 .printarea {
 display: none;

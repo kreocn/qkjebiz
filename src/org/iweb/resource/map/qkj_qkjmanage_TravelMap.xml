@@ -22,7 +22,7 @@
 			<isNotEmpty prepend="AND" property="acheck_status"><![CDATA[ t.acheck_status=#acheck_status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="travel_date_search"><![CDATA[ t.travel_date <= #travel_date_search# AND t.travel_date_end >= #travel_date_search# ]]></isNotEmpty>
 		</dynamic>
-		<![CDATA[ LIMIT 1000 ]]>
+		<![CDATA[ ORDER BY t.uuid DESC LIMIT 1000 ]]>
 	</select>
 	<select id="qkjmanage_getTravelsCounts" resultClass="int" parameterClass="java.util.Map">
 		<![CDATA[ 

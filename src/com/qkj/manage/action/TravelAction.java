@@ -132,23 +132,24 @@ public class TravelAction extends ActionSupport {
 			} else if ("mdy".equals(viewFlag) || "print".equals(viewFlag)) {
 				if (!(travel == null || travel.getUuid() == null)) {
 					this.setTravel((Travel) dao.get(travel.getUuid()));
+					// checkbox专用转换
+					if (!ToolsUtil.isEmpty(travel.getApply_item())) {
+						travel.setApply_items(travel.getApply_item().split(","));
+					}
+					if (!ToolsUtil.isEmpty(travel.getCar())) {
+						travel.setCars(travel.getCar().split(","));
+					}
+
+					// System.out.println(ToolsUtil.dumpObject(travel));
+
+					map.clear();
+					map.put("travel_id", travel.getUuid());
+					travelCustomers = cdao.list(map);
 				} else {
+					this.setMessage("参数丢失,自动转到添加申请单页面.");
 					this.setViewFlag("add");
 					load();
-					// this.setTravel(null);
 				}
-
-				// checkbox专用转换
-				if (!ToolsUtil.isEmpty(travel.getApply_item())) {
-					travel.setApply_items(travel.getApply_item().split(","));
-				}
-				if (!ToolsUtil.isEmpty(travel.getCar())) {
-					travel.setCars(travel.getCar().split(","));
-				}
-
-				map.clear();
-				map.put("travel_id", travel.getUuid());
-				travelCustomers = cdao.list(map);
 
 			} else {
 				this.setTravel(null);
@@ -174,7 +175,6 @@ public class TravelAction extends ActionSupport {
 			// checkbox 专用转换
 			travel.setApply_item(ToolsUtil.Array2String(travel.getApply_items() == null ? new String[] {} : travel.getApply_items(), ","));
 			travel.setCar(ToolsUtil.Array2String(travel.getCars() == null ? new String[] {} : travel.getCars(), ","));
-
 			travel.setUuid((Integer) dao.add(travel));
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!add 数据添加失败:", e);
