@@ -2,17 +2,19 @@
 <!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
 <sqlMap>
 	<!-- OutDetail Start -->
-	<typeAlias alias="outDetail" type="com.qkj.outDetail.domain.OutDetail" />
+	<typeAlias alias="outDetail" type="com.qkj.ware.domain.OutDetail" />
 	<select id="outDetail_getOutDetails" resultClass="outDetail" parameterClass="java.util.Map">
 		<![CDATA[ 
-			Select * From qkj_t_outdetail
+			SELECT i.*,p.`title` product_name, p.`case_spec` case_spec FROM qkj_t_outdetail i 
+			LEFT JOIN qkj_r_stock s ON(i.`product_id`=s.`uuid`) 
+			LEFT JOIN qkj_t_product p ON(s.`product_id`=p.`uuid`)
 		]]>
 		<dynamic prepend="WHERE">
-			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="lading_id"><![CDATA[ lading_id=#lading_id# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="product_id"><![CDATA[ product_id=#product_id# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="num"><![CDATA[ num=#num# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="price"><![CDATA[ price=#price# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ i.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="lading_id"><![CDATA[ i.lading_id=#lading_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="product_id"><![CDATA[ i.product_id=#product_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="num"><![CDATA[ i.num=#num# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="price"><![CDATA[ i.price=#price# ]]></isNotEmpty>
 
 		</dynamic>
 	</select>

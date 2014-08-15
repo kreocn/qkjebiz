@@ -2,7 +2,7 @@
 <!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
 <sqlMap>
 	<!-- InStock Start -->
-	<typeAlias alias="inStock" type="com.qkj.inStock.domain.InStock" />
+	<typeAlias alias="inStock" type="com.qkj.ware.domain.InStock" />
 	<select id="inStock_getInStocks" resultClass="inStock" parameterClass="java.util.Map">
 		<![CDATA[ 
 			SELECT i.*,addu.`USER_NAME` add_user_name,lmu.`USER_NAME` lm_user_name FROM 

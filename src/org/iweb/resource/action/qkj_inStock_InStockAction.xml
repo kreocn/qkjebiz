@@ -6,19 +6,19 @@
 	<package name="inStock_inStock" extends="default" namespace="/inStock">
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- InStock Start -->
-		<action name="inStock_list" class="com.qkj.inStock.action.InStockAction" method="list">
-			<result>/jsp/inStock/InStockList.jsp</result>
+		<action name="inStock_list" class="com.qkj.ware.action.InStockAction" method="list">
+			<result>/jsp/ware/inStock/InStockList.jsp</result>
 		</action>
-		<action name="inStock_relist" class="com.qkj.inStock.action.InStockAction" method="relist">
+		<action name="inStock_relist" class="com.qkj.ware.action.InStockAction" method="relist">
 			<result type="redirectAction">
 				<param name="actionName">inStock_list</param>
 				<param name="viewFlag">relist</param>
 			</result>
 		</action>
-		<action name="inStock_load" class="com.qkj.inStock.action.InStockAction" method="load">
-			<result>/jsp/inStock/InStockEdit.jsp</result>
+		<action name="inStock_load" class="com.qkj.ware.action.InStockAction" method="load">
+			<result>/jsp/ware/inStock/InStockEdit.jsp</result>
 		</action>
-		<action name="inStock_add" class="com.qkj.inStock.action.InStockAction" method="add">
+		<action name="inStock_add" class="com.qkj.ware.action.InStockAction" method="add">
 			<result type="redirectAction">
 				<param name="actionName">inStock_load</param>
 				<param name="inStock.uuid">${inStock.uuid}</param>
@@ -26,14 +26,14 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
-		<action name="inStock_save" class="com.qkj.inStock.action.InStockAction" method="save">
+		<action name="inStock_save" class="com.qkj.ware.action.InStockAction" method="save">
 			<result type="redirectAction">
 				<param name="actionName">inStock_list</param>
 				<param name="viewFlag">relist</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
-		<action name="inStock_del" class="com.qkj.inStock.action.InStockAction" method="del">
+		<action name="inStock_del" class="com.qkj.ware.action.InStockAction" method="del">
 			<result type="redirectAction">
 				<param name="actionName">inStock_list</param>
 				<param name="viewFlag">relist</param>
