@@ -2,7 +2,7 @@
 <!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
 <sqlMap>
 	<!-- Stock Start -->
-	<typeAlias alias="stock" type="com.qkj.stock.domain.Stock" />
+	<typeAlias alias="stock" type="com.qkj.ware.domain.Stock" />
 	<select id="stock_getStocks" resultClass="stock" parameterClass="java.util.Map">
 		<![CDATA[ 
 			SELECT s.*,p.`title` product_name,w.`ware_name` store_name FROM qkj_r_stock s LEFT JOIN qkj_t_product p ON (s.`product_id`=p.`uuid`)

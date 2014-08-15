@@ -2,7 +2,7 @@
 <!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
 <sqlMap>
 	<!-- InDetail Start -->
-	<typeAlias alias="inDetail" type="com.qkj.inDetail.domain.InDetail" />
+	<typeAlias alias="inDetail" type="com.qkj.ware.domain.InDetail" />
 	<select id="inDetail_getInDetails" resultClass="inDetail" parameterClass="java.util.Map">
 		<![CDATA[ 
 			SELECT i.*,p.`title` product_name,p.`case_spec` FROM 

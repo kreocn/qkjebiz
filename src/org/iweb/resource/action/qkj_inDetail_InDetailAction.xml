@@ -6,19 +6,19 @@
 	<package name="inDetail_inDetail" extends="default" namespace="/inStock">
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- InDetail Start -->
-		<action name="inDetail_list" class="com.qkj.inDetail.action.InDetailAction" method="list">
-			<result>/jsp/inDetail/InDetailList.jsp</result>
+		<action name="inDetail_list" class="com.qkj.ware.action.InDetailAction" method="list">
+			<result>/jsp/ware/inDetail/InDetailList.jsp</result>
 		</action>
-		<action name="inDetail_relist" class="com.qkj.inDetail.action.InDetailAction" method="relist">
+		<action name="inDetail_relist" class="com.qkj.ware.action.InDetailAction" method="relist">
 			<result type="redirectAction">
 				<param name="actionName">inDetail_list</param>
 				<param name="viewFlag">relist</param>
 			</result>
 		</action>
-		<action name="inDetail_load" class="com.qkj.inDetail.action.InDetailAction" method="load">
-			<result>/jsp/inDetail/InDetailEdit.jsp</result>
+		<action name="inDetail_load" class="com.qkj.ware.action.InDetailAction" method="load">
+			<result>/jsp/ware/inDetail/InDetailEdit.jsp</result>
 		</action>
-		<action name="inDetail_add" class="com.qkj.inDetail.action.InDetailAction" method="add">
+		<action name="inDetail_add" class="com.qkj.ware.action.InDetailAction" method="add">
 			<result type="redirectAction">
 				<param name="actionName">inStock_load</param>
 				<param name="inStock.uuid">${inDetail.lading_id}</param>
@@ -26,14 +26,14 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
-		<action name="inDetail_save" class="com.qkj.inDetail.action.InDetailAction" method="save">
+		<action name="inDetail_save" class="com.qkj.ware.action.InDetailAction" method="save">
 			<result type="redirectAction">
 				<param name="actionName">inDetail_list</param>
 				<param name="viewFlag">relist</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
-		<action name="inDetail_del" class="com.qkj.inDetail.action.InDetailAction" method="del">
+		<action name="inDetail_del" class="com.qkj.ware.action.InDetailAction" method="del">
 			<result type="redirectAction">
 				<param name="actionName">inStock_load</param>
 				<param name="inStock.uuid">${inDetail.lading_id}</param>
