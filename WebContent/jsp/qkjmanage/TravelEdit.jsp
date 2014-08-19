@@ -175,6 +175,43 @@
               <td class='secRow3'><s:radio name="travel.fruit" list="#{0:'否',1:'是' }" /></td>
             </tr>
             <tr>
+              <td class='firstRow3'>
+                      餐酒标准:<br />
+                <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_TRAVELPRODUCT_ADD') && (travel.check_status<=5 ||  travel.acheck_status<=5)">
+                <input type="button" id="AddProduct" value="添加酒品" />
+                </s:if>
+              </td>
+              <td class='secRow3'  colspan="5">
+               <s:if test="travelProducts==null || travelProducts.size==0">
+                    <div style="line-height: 30px;">暂无酒品信息</div>
+                </s:if>
+                <s:else>
+              <table class="ilisttable ilisttable-center" id="table1">
+                  <col width="" />
+                  <col width="50" />
+                  <col width="" />
+                  <tr>
+                    <th>产品名称</th>
+                    <th>数量(瓶|公斤)</th>
+                    <th>操作</th>
+                  </tr>
+                  <s:iterator value="travelProducts" status="sta">
+                    <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>" type="pickrow">
+                      <td><s:property value="product_name" /></td>
+                      <td><s:property value="num" /></td>
+                      <td align="center">
+                      <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_TRAVELPRODUCT_DEL') && (travel.check_status<=5 ||  travel.acheck_status<=5)">
+                      [<a href="<s:url namespace="/qkjmanage" action="travelProduct_del"><s:param name="travelProduct.uuid" value="uuid" /><s:param name="travelProduct.travel_id" value="travel_id" /></s:url>" onclick="return isDel();">删除</a>]
+                      </s:if>
+                    </td>
+                    </tr>
+                  </s:iterator>
+                </table>
+                <span class="message_prompt nowrap">散酒的单位是:公斤 | 瓶装酒单位是:瓶</span>
+                </s:else>
+              </td>
+            </tr>
+            <tr>
               <td class='firstRow3'>是否安排住宿:</td>
               <td class='secRow3'  colspan="3"><s:radio name="travel.hotel" list="#{0:'否',1:'是' }" /></td>
               <td class='firstRow3'>别墅规格:</td>
@@ -204,7 +241,7 @@
               <td class='secRow3'><s:radio name="travel.travel_agency" list="#{0:'否',1:'是' }" /></td>
             </tr>
             <tr>
-              <td class="titleRow" colspan="6">具体行程安排</td>
+              <td class="titleRow" colspan="6">具体行程安排<span class="message_prompt nowrap">请尽量不要超过8行</span></td>
             </tr>
             <tr>
               <td class='secRow3' colspan="6">
@@ -293,7 +330,7 @@
                   </s:if>
                 </s:else>
               </s:elseif> 
-                <input type="button" value="返回" onclick="linkurl('<s:url action="travel_relist" namespace="/qkjmanage" />');" />
+                <input type="button" value="返回" onclick="location.href='<s:url action="travel_relist" namespace="/qkjmanage" />';" />
                 <span id="message"><s:property value="message" /></span> 
                </td>
             </tr>
@@ -351,6 +388,34 @@
   </table>  
 </s:form>
   </div>
+  <div id="AddProductForm" title="添加酒品">
+    <s:form name="form1" action="travelProduct_add" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
+      <div class="ifromoperate"><input type="hidden" name="travelProduct.travel_id"  value="${travel.uuid }" /></div>
+      <table class="ilisttable" width="100%">
+        <tr>
+          <td class='firstRow'><span style="color: red;">*</span> 产品:</td>
+          <td class='secRow'>
+            <s:select name="travelProduct.product_id" list="products" listKey="uuid" listValue="title" require="required"
+                headerKey="" headerValue="--请选择--"  />
+          </td>
+        </tr>
+        <tr>
+          <td class='firstRow'><span style="color: red;">*</span> 数量:</td>
+          <td class='secRow'>
+            <s:textfield name="travelProduct.num" title="数量" require="required" dataLength="0,10" dataType="integer" controlName="数量" />
+            <span class="message_prompt nowrap">散酒(公斤) | 瓶装酒(瓶)</span>
+         </td>
+        </tr>
+        <tr>
+          <td colspan="20" class="buttonarea">
+              <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_TRAVELPRODUCT_ADD')">
+                <s:submit id="add" name="add" value="确定" action="travelProduct_add" />
+              </s:if>
+           </td>
+        </tr>
+      </table>
+    </s:form>
+  </div>
   <script type="text/javascript">
 var infoeditor01;
 var mns = '${travel.members_names}';
@@ -385,7 +450,17 @@ $(function(){
   
   $("#cus_select").change(function(){
 	  $("#travelCustomer_cus_company").val($(this).val());
-	  
+  });
+  
+  $("#AddProductForm").dialog({
+      autoOpen: false,
+      height: 150,
+      width: 400,
+      modal: true
+  });
+  
+  $("#AddProduct").click(function(){
+	  $("#AddProductForm").dialog("open");
   });
 });
 </script>

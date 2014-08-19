@@ -51,7 +51,9 @@ public class Travel {
 	private String apply_dept_name;
 	private String apply_user_name;
 	private String check_user_name;
+	private String check_user_sign;
 	private String acheck_user_name;
+	private String acheck_user_sign;
 	private String add_user_name;
 
 	// checkbox专用转换字段
@@ -60,6 +62,22 @@ public class Travel {
 
 	// 查询专用字段
 	private Date travel_date_search;
+
+	public String getCheck_user_sign() {
+		return check_user_sign;
+	}
+
+	public void setCheck_user_sign(String check_user_sign) {
+		this.check_user_sign = check_user_sign;
+	}
+
+	public String getAcheck_user_sign() {
+		return acheck_user_sign;
+	}
+
+	public void setAcheck_user_sign(String acheck_user_sign) {
+		this.acheck_user_sign = acheck_user_sign;
+	}
 
 	public Date getTravel_date_search() {
 		return travel_date_search;

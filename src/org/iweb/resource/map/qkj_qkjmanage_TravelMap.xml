@@ -5,8 +5,8 @@
 	<typeAlias alias="travel" type="com.qkj.manage.domain.Travel" />
 	<select id="qkjmanage_getTravels" resultClass="travel" parameterClass="java.util.Map">
 		<![CDATA[ 
-			SELECT t.*,ad.`dept_cname` apply_dept_name,au.`USER_NAME` apply_user_name,
-			cu.`USER_NAME` check_user_name,acu.`USER_NAME` acheck_user_name,adu.`USER_NAME` add_user_name
+			SELECT t.*,ad.`dept_cname` apply_dept_name,au.`USER_NAME` apply_user_name,cu.`USER_NAME` check_user_name,
+			acu.`USER_NAME` acheck_user_name,adu.`USER_NAME` add_user_name,cu.`user_sign` check_user_sign,acu.`user_sign` acheck_user_sign
 			FROM qkjm_r_travel t
 			LEFT JOIN s_sys_department ad ON(t.`apply_dept`=ad.`dept_code`)
 			LEFT JOIN s_sys_user au ON(t.`apply_user`=au.`UUID`)
@@ -18,6 +18,10 @@
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ t.uuid=#uuid# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="apply_dept"><![CDATA[ t.apply_dept=#apply_dept# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="apply_user"><![CDATA[ t.apply_user=#apply_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_depts">
+				<![CDATA[ t.apply_dept In ]]>
+				<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
+			</isNotEmpty>
 			<isNotEmpty prepend="AND" property="check_status"><![CDATA[ t.check_status=#check_status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="acheck_status"><![CDATA[ t.acheck_status=#acheck_status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="travel_date_search"><![CDATA[ t.travel_date <= #travel_date_search# AND t.travel_date_end >= #travel_date_search# ]]></isNotEmpty>
@@ -31,6 +35,10 @@
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="apply_dept"><![CDATA[ apply_dept=#apply_dept# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_depts">
+				<![CDATA[ apply_dept In ]]>
+				<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
+			</isNotEmpty>
 			<isNotEmpty prepend="AND" property="apply_user"><![CDATA[ apply_user=#apply_user# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="check_status"><![CDATA[ check_status=#check_status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="acheck_status"><![CDATA[ acheck_status=#acheck_status# ]]></isNotEmpty>

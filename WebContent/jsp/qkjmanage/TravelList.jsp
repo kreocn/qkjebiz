@@ -150,7 +150,12 @@ function loadManagers(dept_code) {
                 <td align="center">
                 <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_TRAVEL')">
     	    	[<a href="<s:url namespace="/qkjmanage" action="travel_load"><s:param name="viewFlag">mdy</s:param><s:param name="travel.uuid" value="uuid"></s:param></s:url>">修改</a>]
-    	    	</s:if> 
+    	    	</s:if>
+                <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_TRAVEL_DEL') && check_status>=30 && acheck_status>=10">
+                [<a href="<s:url namespace="/qkjmanage" action="travel_load"><s:param name="viewFlag">print1</s:param><s:param name="travel.uuid" value="uuid" /></s:url>">打印1</a>]
+                [<a href="<s:url namespace="/qkjmanage" action="travel_load"><s:param name="viewFlag">print2</s:param><s:param name="travel.uuid" value="uuid" /></s:url>">打印2</a>]
+                [<a href="<s:url namespace="/qkjmanage" action="travel_load"><s:param name="viewFlag">print3</s:param><s:param name="travel.uuid" value="uuid" /></s:url>">打印客户表</a>]
+                </s:if>
                 <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_TRAVEL_DEL') && (check_status<=5 || acheck_status<=5)">
       	    	[<a href="<s:url namespace="/qkjmanage" action="travel_del"><s:param name="travel.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>]
       	    	</s:if>

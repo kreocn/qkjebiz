@@ -1,6 +1,6 @@
 package com.qkj.manage.domain;
 
-import java.util.*;
+import java.util.Date;
 
 public class Product {
 	private Integer uuid;// (int)主键ID

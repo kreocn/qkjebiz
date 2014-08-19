@@ -17,6 +17,9 @@
 		</action>
 		<action name="travel_load" class="com.qkj.manage.action.TravelAction" method="load">
 			<result>/jsp/qkjmanage/TravelEdit.jsp</result>
+			<result name="print1">/jsp/qkjmanage/TravelPrint1.jsp</result>
+			<result name="print2">/jsp/qkjmanage/TravelPrint2.jsp</result>
+			<result name="print3">/jsp/qkjmanage/TravelPrint3.jsp</result>
 		</action>
 		<action name="travel_del" class="com.qkj.manage.action.TravelAction" method="del">
 			<result type="redirectAction">

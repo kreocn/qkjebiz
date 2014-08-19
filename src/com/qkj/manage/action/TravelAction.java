@@ -11,28 +11,42 @@ import org.iweb.sys.ContextHelper;
 import org.iweb.sys.ToolsUtil;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.qkj.manage.dao.ProductDAO;
 import com.qkj.manage.dao.TravelCustomerDAO;
 import com.qkj.manage.dao.TravelDAO;
+import com.qkj.manage.dao.TravelProductDAO;
+import com.qkj.manage.domain.Active;
+import com.qkj.manage.domain.Product;
 import com.qkj.manage.domain.Travel;
 import com.qkj.manage.domain.TravelCustomer;
+import com.qkj.manage.domain.TravelProduct;
 
 public class TravelAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
 	private static Log log = LogFactory.getLog(TravelAction.class);
 	private Map<String, Object> map = new HashMap<String, Object>();
 	private TravelDAO dao = new TravelDAO();
-	private TravelCustomerDAO cdao = new TravelCustomerDAO();
 
 	private Travel travel;
 	private List<Travel> travels;
 
 	private List<TravelCustomer> travelCustomers;
+	private List<TravelProduct> travelProducts;
+	private List<Product> products;
 
 	private String message;
 	private String viewFlag;
 	private int recCount;
 	private int pageSize;
 	private int currPage;
+
+	public List<Product> getProducts() {
+		return products;
+	}
+
+	public List<TravelProduct> getTravelProducts() {
+		return travelProducts;
+	}
 
 	public List<TravelCustomer> getTravelCustomers() {
 		return travelCustomers;
@@ -98,8 +112,9 @@ public class TravelAction extends ActionSupport {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_TRAVEL_LIST");
 		try {
 			map.clear();
-			if (travel != null) map.putAll(ToolsUtil.getMapByBean(travel));
-			map.putAll(ContextHelper.getDefaultRequestMap4Page());
+			if (travel == null) travel = new Travel();
+			ContextHelper.setSearchDeptPermit4Search(map, "apply_depts", "apply_user");
+			ContextHelper.SimpleSearchMap4Page("QKJ_QKJMANAGE_TRAVEL_LIST", map, travel, viewFlag);
 			this.setPageSize(ContextHelper.getPageSize(map));
 			this.setCurrPage(ContextHelper.getCurrPage(map));
 			this.setTravels(dao.list(map));
@@ -117,10 +132,7 @@ public class TravelAction extends ActionSupport {
 
 	public String load() throws Exception {
 		try {
-			if (null == viewFlag) {
-				this.setTravel(null);
-				setMessage("你没有选择任何操作!");
-			} else if ("add".equals(viewFlag)) {
+			if ("add".equals(viewFlag)) {
 				// this.setTravel(null);
 				if (travel == null) {
 					travel = new Travel();
@@ -129,7 +141,7 @@ public class TravelAction extends ActionSupport {
 				travel.setApply_dept_name(ContextHelper.getUserLoginDeptName());
 				travel.setApply_user(ContextHelper.getUserLoginUuid());
 				travel.setApply_user_name(ContextHelper.getUserLoginInfo().getUser_name());
-			} else if ("mdy".equals(viewFlag) || "print".equals(viewFlag)) {
+			} else if ("mdy".equals(viewFlag) || "print1".equals(viewFlag) || "print2".equals(viewFlag) || "print3".equals(viewFlag)) {
 				if (!(travel == null || travel.getUuid() == null)) {
 					this.setTravel((Travel) dao.get(travel.getUuid()));
 					// checkbox专用转换
@@ -140,20 +152,23 @@ public class TravelAction extends ActionSupport {
 						travel.setCars(travel.getCar().split(","));
 					}
 
-					// System.out.println(ToolsUtil.dumpObject(travel));
-
+					TravelCustomerDAO cdao = new TravelCustomerDAO();
 					map.clear();
 					map.put("travel_id", travel.getUuid());
 					travelCustomers = cdao.list(map);
-				} else {
-					this.setMessage("参数丢失,自动转到添加申请单页面.");
-					this.setViewFlag("add");
-					load();
-				}
 
+					TravelProductDAO pdao = new TravelProductDAO();
+					travelProducts = pdao.list(map);
+
+					ProductDAO pdao2 = new ProductDAO();
+					products = pdao2.list(null);
+
+					if ("print1".equals(viewFlag) || "print2".equals(viewFlag) || "print3".equals(viewFlag)) return viewFlag;
+				}
 			} else {
-				this.setTravel(null);
-				setMessage("无操作类型!");
+				this.setMessage("参数丢失,自动转到添加申请单页面.");
+				this.setViewFlag("add");
+				load();
 			}
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!load 读取数据错误:", e);

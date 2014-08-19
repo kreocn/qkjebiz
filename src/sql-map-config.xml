@@ -55,6 +55,7 @@
 	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_ProcessMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_TravelMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_TravelCustomerMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_TravelProductMap.xml" />
 	<!--行政管理 -->
 	<sqlMap resource="org/iweb/resource/map/qkj_adm_AssetsMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_adm_AssetItemMap.xml" />
@@ -64,11 +65,11 @@
 	<!-- 系统修改 -->
 	<sqlMap resource="org/iweb/resource/map/qkj_sche_ActiveMap.xml" />
 	<!-- 仓库管理 -->
-	<sqlMap resource="org/iweb/resource/map/qkj_stock_StockMap.xml"/>
-	<sqlMap resource="org/iweb/resource/map/qkj_inStock_InStockMap.xml"/>
-	<sqlMap resource="org/iweb/resource/map/qkj_inDetail_InDetailMap.xml"/>
-	<sqlMap resource="org/iweb/resource/map/qkj_outStock_OutStockMap.xml"/>
-	<sqlMap resource="org/iweb/resource/map/qkj_outDetail_OutDetailMap.xml"/>
-	<sqlMap resource="org/iweb/resource/map/qkj_allot_AllotMap.xml"/>
-	<sqlMap resource="org/iweb/resource/map/qkj_allot_AllotDetailMap.xml"/>
+	<sqlMap resource="org/iweb/resource/map/qkj_stock_StockMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_inStock_InStockMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_inDetail_InDetailMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_outStock_OutStockMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_outDetail_OutDetailMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_allot_AllotMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_allot_AllotDetailMap.xml" />
 </sqlMapConfig>
