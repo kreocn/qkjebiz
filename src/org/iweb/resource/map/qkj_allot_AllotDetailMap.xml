@@ -2,7 +2,7 @@
 <!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
 <sqlMap>
 	<!-- AllotDetail Start -->
-	<typeAlias alias="allotDetail" type="com.qkj.ware.allotDetail.domain.AllotDetail" />
+	<typeAlias alias="allotDetail" type="com.qkj.ware.domain.AllotDetail" />
 	<select id="allot_getAllotDetails" resultClass="allotDetail" parameterClass="java.util.Map">
 		<![CDATA[ 
 			SELECT i.*,p.`title` product_name,p.`case_spec` case_spec FROM qkj_t_allotDetail i LEFT JOIN qkj_r_stock s ON (i.`stock_id`=s.`uuid`)

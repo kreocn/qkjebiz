@@ -6,19 +6,19 @@
 	<package name="allot_allot" extends="default" namespace="/allot">
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- Allot Start -->
-		<action name="allot_list" class="com.qkj.ware.allot.action.AllotAction" method="list">
+		<action name="allot_list" class="com.qkj.ware.action.AllotAction" method="list">
 			<result>/jsp/ware/allot/AllotList.jsp</result>
 		</action>
-		<action name="allot_relist" class="com.qkj.ware.allot.action.AllotAction" method="relist">
+		<action name="allot_relist" class="com.qkj.ware.action.AllotAction" method="relist">
 			<result type="redirectAction">
 				<param name="actionName">allot_list</param>
 				<param name="viewFlag">relist</param>
 			</result>
 		</action>
-		<action name="allot_load" class="com.qkj.ware.allot.action.AllotAction" method="load">
+		<action name="allot_load" class="com.qkj.ware.action.AllotAction" method="load">
 			<result>/jsp/ware/allot/AllotEdit.jsp</result>
 		</action>
-		<action name="allot_add" class="com.qkj.ware.allot.action.AllotAction" method="add">
+		<action name="allot_add" class="com.qkj.ware.action.AllotAction" method="add">
 			<result type="redirectAction">
 				<param name="actionName">allot_load</param>
 				<param name="allot.uuid">${allot.uuid}</param>
@@ -26,7 +26,7 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
-		<action name="allot_save" class="com.qkj.ware.allot.action.AllotAction" method="save">
+		<action name="allot_save" class="com.qkj.ware.action.AllotAction" method="save">
 			<result type="redirectAction">
 				<param name="actionName">allot_load</param>
 				<param name="allot.uuid">${allot.uuid}</param>
@@ -34,7 +34,7 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
-		<action name="allot_del" class="com.qkj.ware.allot.action.AllotAction" method="del">
+		<action name="allot_del" class="com.qkj.ware.action.AllotAction" method="del">
 			<result type="redirectAction">
 				<param name="actionName">allot_list</param>
 				<param name="viewFlag">relist</param>
@@ -42,7 +42,7 @@
 			</result>
 		</action>
 		
-		<action name="allot_freeze" class="com.qkj.ware.allot.action.AllotAction" method="freeze">
+		<action name="allot_freeze" class="com.qkj.ware.action.AllotAction" method="freeze">
 			<result type="redirectAction">
 				<param name="actionName">allot_load</param>
 				<param name="allot.uuid">${allot.uuid}</param>
@@ -51,7 +51,7 @@
 			</result>
 		</action>
 		
-		<action name="allot_cancel" class="com.qkj.ware.allot.action.AllotAction" method="cancel">
+		<action name="allot_cancel" class="com.qkj.ware.action.AllotAction" method="cancel">
 			<result type="redirectAction">
 				<param name="actionName">allot_load</param>
 				<param name="allot.uuid">${allot.uuid}</param>
@@ -60,7 +60,7 @@
 			</result>
 		</action>
 		
-		<action name="allot_delivery" class="com.qkj.ware.allot.action.AllotAction" method="delivery">
+		<action name="allot_delivery" class="com.qkj.ware.action.AllotAction" method="delivery">
 			<result type="redirectAction">
 				<param name="actionName">allot_load</param>
 				<param name="allot.uuid">${allot.uuid}</param>
