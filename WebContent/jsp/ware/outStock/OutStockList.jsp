@@ -42,7 +42,7 @@ $(function(){
 		</span>
 	</div>	
 	<div class="ilistsearch">
-<s:form name="form_serach" action="outStock_list"  method="post" namespace="/outStock" theme="simple">
+<s:form name="form_serach" action="outStock_list"  method="get" namespace="/outStock" theme="simple">
 		<table class="ilisttable" id="serach_table" width="100%">
 			<tr>
 <td class='firstRow'>出库时间:</td>
