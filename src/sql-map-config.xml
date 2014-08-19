@@ -71,4 +71,6 @@
 	<sqlMap resource="org/iweb/resource/map/qkj_outDetail_OutDetailMap.xml"/>
 	<sqlMap resource="org/iweb/resource/map/qkj_allot_AllotMap.xml"/>
 	<sqlMap resource="org/iweb/resource/map/qkj_allot_AllotDetailMap.xml"/>
+	<sqlMap resource="org/iweb/resource/map/qkj_check_CheckMap.xml"/>
+	<sqlMap resource="org/iweb/resource/map/qkj_warepower_WarepowerMap.xml"/>
 </sqlMapConfig>

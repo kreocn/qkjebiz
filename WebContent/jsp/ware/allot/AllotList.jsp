@@ -42,7 +42,7 @@ $(function(){
 		</span>
 	</div>	
 	<div class="ilistsearch">
-<s:form name="form_serach" action="allot_list"  method="get" namespace="/allot" theme="simple">
+<s:form name="form_serach" action="allot_list"  method="post" namespace="/allot" theme="simple">
 		<table class="ilisttable" id="serach_table" width="100%">
 <tr>
 <td class='firstRow'>调库日期:</td>

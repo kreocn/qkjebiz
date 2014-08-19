@@ -9,6 +9,8 @@ public class Stock {
 	private Integer quantity;// (int)
 	private Integer freezeNum;
 
+	private Integer cnum;
+
 	// 以下为非数据库字段
 	private String product_name;
 	private String store_name;
@@ -19,6 +21,14 @@ public class Stock {
 	private double dealer_price;
 	private double group_price;
 	private int case_spec;
+
+	public Integer getCnum() {
+		return cnum;
+	}
+
+	public void setCnum(Integer cnum) {
+		this.cnum = cnum;
+	}
 
 	public Integer getUuid() {
 		return uuid;
@@ -76,8 +86,6 @@ public class Stock {
 		this.market_price = market_price;
 	}
 
-	
-
 	public BigDecimal getAgree_price_1() {
 		return agree_price_1;
 	}
@@ -133,9 +141,5 @@ public class Stock {
 	public void setFreezeNum(Integer freezeNum) {
 		this.freezeNum = freezeNum;
 	}
-	
-	
-	
-	
 
 }

@@ -2,7 +2,7 @@
 <!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
 <sqlMap>
 	<!-- Allot Start -->
-	<typeAlias alias="allot" type="com.qkj.ware.allot.domain.Allot" />
+	<typeAlias alias="allot" type="com.qkj.ware.domain.Allot" />
 	<select id="allot_getAllots" resultClass="allot" parameterClass="java.util.Map">
 		<![CDATA[ 
 			SELECT i.*,addu.`USER_NAME` add_user_name,lmu.`USER_NAME` lm_user_name,w.`ware_name` sourceName,g.`ware_name` goldName  FROM qkj_t_allot i LEFT JOIN s_sys_user addu ON (i.add_user=addu.`UUID`) 

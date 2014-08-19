@@ -33,7 +33,7 @@ $(function(){
 		</span>
 	</div>	
 	<div class="ilistsearch">
-<s:form name="form_serach" action="inStock_list"  method="get" namespace="/inStock" theme="simple">
+<s:form name="form_serach" action="inStock_list"  method="post" namespace="/inStock" theme="simple">
 		<table class="ilisttable" id="serach_table" width="100%">
 			<tr>
 <td class='firstRow'>订单编号:</td>
