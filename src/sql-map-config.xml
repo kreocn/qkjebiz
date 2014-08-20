@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN" "org/iweb/resource/map/sql-map-config-2.dtd">
 <!-- 新DTD验证地址:http://ibatis.apache.org/dtd/ -->
@@ -75,3 +76,82 @@
 	<sqlMap resource="org/iweb/resource/map/qkj_check_CheckMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_warepower_WarepowerMap.xml" /> 
 </sqlMapConfig>
+=======
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN" "org/iweb/resource/map/sql-map-config-2.dtd">
+<!-- 新DTD验证地址:http://ibatis.apache.org/dtd/ -->
+<sqlMapConfig>
+	<transactionManager type="JDBC">
+		<dataSource type="JNDI">
+			<!-- 正式环境 DataSource Proxool -->
+			<!--<property name="DataSource" value="java:/comp/env/qkj/mysql203huzhu_proxool" /> -->
+			<!-- 测试环境 DataSource Proxool -->
+			<!--<property name="DataSource" value="java:/comp/env/qkj/mysql204huzhu_proxool" /> -->
+			<!-- 本机Tomcat本机测试环境 DataSource(ERP LOCAL TEST)&测试服务器 Proxool -->
+			<property name="DataSource" value="java:/comp/env/qkj/mysqlLocalCJ_proxool" />
+		</dataSource>
+	</transactionManager>
+	<!-- 要想实现*通配符模式,可以修改com.ibatis.sqlmap.engine.builder.xml.SqlMapConfigParser类源代码中的addSqlMapNodelets()方法 -->
+	<!-- 以下为自定义的MAP文件 -->
+	<sqlMap resource="org/iweb/resource/map/sys_Map.xml" />
+	<sqlMap resource="org/iweb/resource/map/iweb_common_Map.xml" />
+	<sqlMap resource="org/iweb/resource/map/iweb_web_Map.xml" />
+	<!-- 散装MAP -->
+	<!-- 会员后台管理 -->
+	<sqlMap resource="org/iweb/resource/map/sysvip_MemberMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/sysvip_MemberAddressMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/sysvip_MemberHandoverMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/sysvip_MemberCapitalMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/sysvip_MemberCapitalRescoreMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/sysvip_InfoMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/sysvip_DepositMap.xml" />
+	<!-- 商品/仓库后台管理 -->
+	<sqlMap resource="org/iweb/resource/map/qkjcj_ebiz_Map.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkjcj_sysebiz_GoodsInfoMap.xml" />
+	<!-- 订单后台管理 -->
+	<sqlMap resource="org/iweb/resource/map/qkjcj_sysebiz_OrderMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkjcj_sysebiz_OrderGoodsMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkjcj_sysebiz_OrderActnMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkjcj_sysebiz_OrderCellarMap.xml" />
+	<!-- 藏酒业务 -->
+	<sqlMap resource="org/iweb/resource/map/qkjcj_sysebiz_CellarOrderMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkjcj_sysebiz_MemberCellarMap.xml" />
+	<!-- 业务管理 -->
+	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_ProductMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_LadingMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_LadingItemMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_LadingPayMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_RebatesMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_RebatesProductMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_CustomerMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_CustomerRecodeMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_ActiveMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_ActiveProductMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_ActivePosmMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_ActiveMemcostMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_ApplyMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_ApproveMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_ProcessMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_TravelMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_TravelCustomerMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_TravelProductMap.xml" />
+	<!--行政管理 -->
+	<sqlMap resource="org/iweb/resource/map/qkj_adm_AssetsMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_adm_AssetItemMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_adm_LeaveMap.xml" />
+	<!-- 会员中心 -->
+	<sqlMap resource="org/iweb/resource/map/MemberCenterMap.xml" />
+	<!-- 系统修改 -->
+	<sqlMap resource="org/iweb/resource/map/qkj_sche_ActiveMap.xml" />
+	<!-- 仓库管理 -->
+	<sqlMap resource="org/iweb/resource/map/qkj_stock_StockMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_inStock_InStockMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_inDetail_InDetailMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_outStock_OutStockMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_outDetail_OutDetailMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_allot_AllotMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_allot_AllotDetailMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_check_CheckMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_warepower_WarepowerMap.xml" /> 
+</sqlMapConfig>
+>>>>>>> branch 'master' of https://github.com/TYD-QKJ/qkjebiz.git
