@@ -23,7 +23,7 @@ import com.opensymphony.xwork2.ActionSupport;
  * @author Kreo
  * 
  */
-public class InfoClassAction extends ActionSupport implements ServletRequestAware {
+public class InfoClassAction extends ActionSupport {
 
 	/**
 	 * 
@@ -39,10 +39,6 @@ public class InfoClassAction extends ActionSupport implements ServletRequestAwar
 	private List<InfoClass> iclasses;
 
 	private String message;
-
-	public void setServletRequest(HttpServletRequest request) {
-		this.request = request;
-	}
 
 	public Map<String, Object> getMap() {
 		return map;
