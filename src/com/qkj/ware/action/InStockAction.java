@@ -25,7 +25,6 @@ public class InStockAction extends ActionSupport {
 	private InStockDAO dao = new InStockDAO();
 	
 	private InStock inStock;
-	private InStock instocks;
 	private List<InStock> inStocks;
 	private List<Ware> wares;
 	private List<Product> products;
