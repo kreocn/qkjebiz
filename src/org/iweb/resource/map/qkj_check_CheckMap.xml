@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
+<sqlMap>
+	<!-- Check Start -->
+	<typeAlias alias="check" type="com.qkj.ware.domain.Check" />
+	<select id="check_getChecks" resultClass="check" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT c.*,p.`title` product_name,w.`ware_name` ware_name FROM qkj_t_check c LEFT JOIN qkj_t_product p ON (c.`product_id`=p.`uuid`)
+			LEFT JOIN qkj_t_warehouse w ON(c.`store_id`=w.`uuid`)
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ c.uuid=#uuid# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="product_id"><![CDATA[ c.product_id=#product_id# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="store_id"><![CDATA[ c.store_id=#store_id# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="quantity"><![CDATA[ c.date=#date# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="quantity"><![CDATA[ c.quantity=#quantity# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="num"><![CDATA[ c.num=#num# ]]></isNotEmpty>
+
+		</dynamic>
+		<![CDATA[ LIMIT 1000 ]]>
+	</select>
+	<select id="check_getChecksCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) From qkj_t_check
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="product_id"><![CDATA[ product_id=#product_id# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="store_id"><![CDATA[ store_id=#store_id# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="quantity"><![CDATA[ date=#date# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="num"><![CDATA[ num=#num# ]]></isNotEmpty>
+
+		</dynamic>
+		<![CDATA[ LIMIT 1000 ]]>
+	</select>
+	<insert id="check_addCheck" parameterClass="check">
+		<![CDATA[ 
+			Insert Into qkj_t_check(stock_id,product_id,store_id,date,quantity,num)
+			Values (#stock_id#,#product_id#,#store_id#,#date#,#quantity#,#num#)
+		]]>
+		<selectKey resultClass="int" keyProperty="uuid">
+		<![CDATA[ Select LAST_INSERT_ID() ]]>
+		</selectKey>
+	</insert>
+	<update id="check_mdyCheck" parameterClass="check">
+		<![CDATA[
+			Update qkj_t_check
+			Set
+			num=#num#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="check_delCheck" parameterClass="check">
+	<![CDATA[
+		Delete From qkj_t_check Where uuid=#uuid#
+	]]>
+	</delete>
+	<!-- Check End -->
+</sqlMap>

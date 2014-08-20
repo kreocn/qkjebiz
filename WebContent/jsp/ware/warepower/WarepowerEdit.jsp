@@ -37,7 +37,16 @@
 		</tr>
 		<tr>
 			<td class='firstRow'><span style="color:red;">*</span> 管理员:</td>
-			<td class='secRow'> </td>
+			<td class='secRow'><select name="warepower.username"
+								title="管理员">
+									<s:iterator value="users" status="sta" var="x">
+									<option value="<s:property value="uuid" />" 
+									<s:if test="#x.uuid==warepower.username">
+									selected="selected"
+									</s:if>
+									/><s:property value="user_name" />
+									</s:iterator>
+							</select> </td>
 		</tr>
 
 		</s:if>
