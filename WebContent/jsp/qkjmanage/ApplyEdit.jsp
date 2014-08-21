@@ -169,6 +169,9 @@ color: #008000;
 					<s:submit id="delete" name="delete" value="删除" action="apply_del" onclick="return isDel();" />
 					</s:if>
 					</s:if>
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_CHECK_1')">
+					<s:submit id="apply_check_1" name="apply_check_1" value="作废" action="apply_check_1" onclick="return isOp('确定进行此操作?');" />
+					</s:if>
 					<s:if test="apply.status==10 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_CHECK10')">
 					<s:submit id="apply_check10" name="apply_check10" value="大区经理审核通过" action="apply_check10" onclick="return isOp('确定进行此操作?');" />
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_CHECK5')">

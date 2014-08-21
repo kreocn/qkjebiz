@@ -171,6 +171,7 @@ color: #008000;
 			<td class='secRow3' colspan="5">
 				<span class="span_label">
 					申请单状态:
+					<s:if test="active.status==-1"><font class="message_error">已作废</font></s:if>
 					<s:if test="active.status==0">新申请</s:if>
 					<s:if test="active.status==1"><font class="message_warning">申请审批中</font></s:if>
 					<s:if test="active.status==2"><font class="message_pass">申请通过-可以执行</font></s:if>
@@ -271,10 +272,10 @@ color: #008000;
 				</tr>
 				<s:iterator value="activeProducts" status="sta">
 				<tr>
-				<td>${product_name}</td>
-				<td align="center">￥${per_price}</td>
-				<td align="center">${num}</td>
-				<td align="center">￥${total_price}</td>
+				<td class="nowrap">${product_name}</td>
+				<td class="nowrap">￥${per_price}</td>
+				<td class="nowrap" align="center">${num}</td>
+				<td class="nowrap" align="center">￥${total_price}</td>
 				<td align="center">
 					<s:if test="active.status==0 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEPRODUCT_DEL')">
 						<a href="<s:url action="activeProduct_del"><s:param name="activeProduct.uuid" value="%{uuid}" /><s:param name="activeProduct.active_id" value="%{active.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
@@ -297,7 +298,7 @@ color: #008000;
 				</tr>
 				<s:iterator value="activePosms" status="sta">
 				<tr>
-				<td class="nowrap">${title}</td>
+				<td>${title}</td>
 				<td>${note}</td>
 				<td class="nowrap" align="center">￥${total_price}</td>
 				<td class="nowrap" align="center">
@@ -327,10 +328,10 @@ color: #008000;
 				</tr>
 				<s:iterator value="activeMemcosts" status="sta">
 				<tr>
-				<td class="nowrap"><a href="javascript:;" onclick="loadMemberInfo('${member_id}');">${member_name}</a></td>
-				<td class="nowrap">${title}</td>
+				<td><a href="javascript:;" onclick="loadMemberInfo('${member_id}');">${member_name}</a></td>
+				<td>${title}</td>
 				<td>${note}</td>
-				<td class="nowrap">￥${total_price}</td>
+				<td class="nowrap" align="center">￥${total_price}</td>
 				<td class="nowrap">
 					<s:if test="active.status==0 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEMEMCOST_DEL')">
 						<a href="<s:url action="activeMemcost_del"><s:param name="activeMemcost.uuid" value="%{uuid}" /><s:param name="activeMemcost.active_id" value="%{active.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
@@ -407,7 +408,7 @@ color: #008000;
 			</td>
 		</tr>
 		
-		<s:if test="active.status<=2">
+		<s:if test="active.status<=2 && active.status>=0">
 		<tr>
 		<td class='firstRow3'>审阅情况:</td>
 		<td class='secRow3 approve_list' colspan="5">
@@ -460,6 +461,11 @@ color: #008000;
 			<s:submit id="mdyStatus1" name="mdyStatus1" value="申请通过-可以执行" action="mdyStatus1" onclick="return isOp('确定执行此操作?');" />
 			</s:if>
 			</s:elseif>
+			
+			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_STATUS_1')">
+				<s:submit id="active_mdyStatus_1" name="active_mdyStatus_1" value="作废" action="active_mdyStatus_1" onclick="return isOp('确定执行此操作?');" />
+			</s:if>
+			
 			<s:if test="active.status==1 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_APPROVE')">
 				<input type="button" value="审阅"  onclick="openApprove();" />
 			</s:if>

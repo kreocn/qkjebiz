@@ -87,10 +87,11 @@
             <tr>
               <td class='firstRow3'>客户单位:</td>
               <td class='secRow3' colspan="5"> 
-                <s:textfield id="travel_members_names" name="travel.members_names" title="客户家数" cssStyle="width:95%;"  />
+                <s:textfield id="travel_members_names" name="travel.members_names" title="客户单位" cssStyle="width:95%;"  />
                 <span class="nowrap message_prompt">单位名称之间请用半角逗号,或者空格隔开</span>
                </td>
              </tr>
+             <s:if test="'mdy' == viewFlag">
              <tbody id="cus_info_tbody">
              <tr>
               <td class="titleRow" colspan="6">客户详情/来访客户资料
@@ -148,6 +149,7 @@
               </td>
             </tr>
             </tbody>
+            </s:if>
             <tr>
               <td class="titleRow" colspan="6">接待标准</td>
             </tr>
@@ -174,6 +176,7 @@
               <td class='firstRow3'>是否准备水果:</td>
               <td class='secRow3'><s:radio name="travel.fruit" list="#{0:'否',1:'是' }" /></td>
             </tr>
+            <s:if test="'mdy' == viewFlag">
             <tr>
               <td class='firstRow3'>
                       餐酒标准:<br />
@@ -211,6 +214,7 @@
                 </s:else>
               </td>
             </tr>
+            </s:if>
             <tr>
               <td class='firstRow3'>是否安排住宿:</td>
               <td class='secRow3'  colspan="3"><s:radio name="travel.hotel" list="#{0:'否',1:'是' }" /></td>
@@ -274,7 +278,7 @@
               <td class='secRow3' colspan="20">
                 <s:if test="'add' == viewFlag">
                   <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_TRAVEL_ADD')">
-                    <s:submit id="add" name="add" value="确定" action="travel_add" />
+                    <s:submit id="add" name="add" value="下一步-添加客户信息和招待酒品信息" action="travel_add" />
                   </s:if>
                 </s:if>
                 <s:elseif test="'mdy' == viewFlag">
@@ -339,6 +343,7 @@
       </div>
     </div>
   </div>
+  <s:if test="'mdy' == viewFlag">
   <div id="AddCustomerForm" title="添加客户资料">
   <s:form name="form1" action="travelCustomer_add" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
   <div class="ifromoperate" >
@@ -416,6 +421,7 @@
       </table>
     </s:form>
   </div>
+  </s:if>
   <script type="text/javascript">
 var infoeditor01;
 var mns = '${travel.members_names}';
@@ -428,7 +434,7 @@ $(function(){
   $('#travel_hotel_end').datepicker();
   $('#travel_travel_date').datepicker();
   $('#travel_travel_date_end').datepicker();
-  
+  //<s:if test="'mdy' == viewFlag">
   $("#AddCustomerForm").dialog({
       autoOpen: false,
       height: 330,
@@ -454,7 +460,7 @@ $(function(){
   
   $("#AddProductForm").dialog({
       autoOpen: false,
-      height: 150,
+      height: 160,
       width: 400,
       modal: true
   });
@@ -462,6 +468,7 @@ $(function(){
   $("#AddProduct").click(function(){
 	  $("#AddProductForm").dialog("open");
   });
+  //</s:if>
 });
 </script>
 </body>

@@ -140,8 +140,7 @@ public class ApplyAction extends ActionSupport {
 			ContextHelper.setSearchDeptPermit4Search(map, "apply_depts", "apply_user");
 			ContextHelper.SimpleSearchMap4Page("QKJ_QKJMANAGE_APPLY_LIST", map, apply, viewFlag);
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
-			this.setCurrPage(Integer.parseInt((ToolsUtil.isEmpty(map.get(Parameters.Current_Page_Str)) ? "1" : map.get(Parameters.Current_Page_Str))
-					.toString()));
+			this.setCurrPage(Integer.parseInt((ToolsUtil.isEmpty(map.get(Parameters.Current_Page_Str)) ? "1" : map.get(Parameters.Current_Page_Str)).toString()));
 			this.setApplys(dao.list(map));
 			this.setRecCount(dao.getResultCount());
 		} catch (Exception e) {
@@ -236,7 +235,7 @@ public class ApplyAction extends ActionSupport {
 	}
 
 	/* 审核流程 */
-	// 状态 0:新事由 5:已退回 10:待审核 20:大区经理已审 30:运营总监已审
+	// 状态 -1:已作废 0:新事由 5:已退回 10:待审核 20:大区经理已审 30:运营总监已审
 	/**
 	 * 报审
 	 * 
@@ -250,6 +249,23 @@ public class ApplyAction extends ActionSupport {
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!check0 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!check0 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+
+	/**
+	 * 作废
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String check_1() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_CHECK_1");
+		try {
+			check(-1);
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!check_1 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!check_1 数据更新失败:", e);
 		}
 		return SUCCESS;
 	}

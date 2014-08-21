@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
+<sqlMap>
+	<!-- TravelProduct Start -->
+	<typeAlias alias="travelProduct" type="com.qkj.manage.domain.TravelProduct" />
+	<select id="qkjmanage_getTravelProducts" resultClass="travelProduct" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT t.*,p.`title` product_name
+			FROM qkjm_r_travel_product t,qkj_t_product p
+			WHERE t.`product_id` = p.`uuid`
+		]]>
+		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ t.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="travel_id"><![CDATA[ t.travel_id=#travel_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="product_id"><![CDATA[ t.product_id=#product_id# ]]></isNotEmpty>
+		<![CDATA[ LIMIT 1000 ]]>
+	</select>
+	<select id="qkjmanage_getTravelProductsCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) 
+			FROM qkjm_r_travel_product t,qkj_t_product p
+			WHERE t.`product_id` = p.`uuid`
+		]]>
+		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ t.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="travel_id"><![CDATA[ t.travel_id=#travel_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="product_id"><![CDATA[ t.product_id=#product_id# ]]></isNotEmpty>
+		<![CDATA[ LIMIT 1000 ]]>
+	</select>
+	<insert id="qkjmanage_addTravelProduct" parameterClass="travelProduct">
+		<![CDATA[ 
+			Insert Into qkjm_r_travel_product(travel_id,product_id,num)
+			Values (#travel_id#,#product_id#,#num#)
+		]]>
+		<selectKey resultClass="int" keyProperty="uuid">
+		<![CDATA[ Select LAST_INSERT_ID() ]]>
+		</selectKey>
+	</insert>
+	<update id="qkjmanage_mdyTravelProduct" parameterClass="travelProduct">
+		<![CDATA[
+			Update qkjm_r_travel_product
+			Set product_id=#product_id#,
+				num=#num#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="qkjmanage_delTravelProduct" parameterClass="travelProduct">
+	<![CDATA[
+		Delete From qkjm_r_travel_product Where uuid=#uuid#
+	]]>
+	</delete>
+	<!-- TravelProduct End -->
+</sqlMap>

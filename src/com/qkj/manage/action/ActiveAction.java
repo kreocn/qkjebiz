@@ -327,7 +327,30 @@ public class ActiveAction extends ActionSupport {
 
 	// 审核流程
 
-	// 0:新申请 1:申请审批中 2:申请通过 3:开始结案 4:结案审批中 5:结案通过
+	// -1:作废 0:新申请 1:申请审批中 2:申请通过 3:开始结案 4:结案审批中 5:结案通过
+
+	/**
+	 * 作废
+	 * 
+	 * @return
+	 * @throws Exception
+	 * @date 2014-4-26 上午10:10:19
+	 */
+	public String mdyStatus_1() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_STATUS_1");
+		try {
+			mdyStatus(-1);
+
+			// 作废时状态都打回初始状态
+			mdyActiveSDStatus(0);
+			mdyActiveSMDStatus(0);
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!mdyStatus0 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!mdyStatus0 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+
 	/**
 	 * 报审
 	 * 
@@ -1019,8 +1042,8 @@ public class ActiveAction extends ActionSupport {
 	private void addProcess(String p_sign, String p_note) {
 		ProcessDAO pdao = new ProcessDAO();
 		if (active != null) {
-			pdao.addProcess(1, active.getUuid(), p_sign, p_note, active.getStatus(), active.getSd_status(), active.getSmd_status(),
-					active.getClose_sd_status(), active.getClose_smd_status());
+			pdao.addProcess(1, active.getUuid(), p_sign, p_note, active.getStatus(), active.getSd_status(), active.getSmd_status(), active.getClose_sd_status(),
+					active.getClose_smd_status());
 		}
 	}
 }

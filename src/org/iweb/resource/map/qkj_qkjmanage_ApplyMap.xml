@@ -32,6 +32,7 @@
 			<isNotEmpty prepend="AND" property="apply_time"><![CDATA[ a.apply_time=#apply_time# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="sp_check_status"><![CDATA[ a.sp_check_status=#sp_check_status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="status"><![CDATA[ a.status=#status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="ship_status"><![CDATA[ a.ship_status=#ship_status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="status_start"><![CDATA[ a.status>=#status_start# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="status_end"><![CDATA[ a.status<=#status_end# ]]></isNotEmpty>
 		</dynamic>
@@ -59,6 +60,9 @@
 			<isNotEmpty prepend="AND" property="check_time_begin"><![CDATA[ check_time>=#check_time_begin# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="check_time_end"><![CDATA[ check_time<=DATE_ADD(#check_time_end#,INTERVAL 1 day) ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="status"><![CDATA[ status=#status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="ship_status"><![CDATA[ ship_status=#ship_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="status_start"><![CDATA[ status>=#status_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="status_end"><![CDATA[ status<=#status_end# ]]></isNotEmpty>
 		</dynamic>
 	</select>
 	<insert id="qkjmanage_addApply" parameterClass="apply">

@@ -39,6 +39,14 @@
 		</action>
 
 		<!-- 订单状态 -->
+		<!-- 作废 -->
+		<action name="active_mdyStatus_1" class="com.qkj.manage.action.ActiveAction" method="mdyStatus_1">
+			<result type="redirectAction">
+				<param name="actionName">active_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
 		<!-- 报审 -->
 		<action name="mdyStatus0" class="com.qkj.manage.action.ActiveAction" method="mdyStatus0">
 			<result type="redirectAction">

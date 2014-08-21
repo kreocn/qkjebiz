@@ -185,6 +185,7 @@ color: #008000;
 			<td class='secRow3' colspan="5">
 				<span class="span_label">
 					申请单状态:
+					<s:if test="active.status==-1"><font class="message_error">已作废</font></s:if>
 					<s:if test="active.status==2"><font class="message_prompt">未开始结案</font></s:if>
 					<s:if test="active.status==3">开始结案</s:if>
 					<s:if test="active.status==4"><font class="message_warning">结案审批中</font></s:if>
@@ -279,21 +280,21 @@ color: #008000;
 			<td class='secRowx' colspan="3" valign="top">
 			<div class="active_icost active_icost_left">
 <s:if test="activeProducts.size != 0">
-			<div class="active_p_title">公司提供酒品</div>
+			<div class="active_p_title">公司提供酒品(瓶装酒:瓶|散酒:公斤)</div>
 			<div class="active_p_list">
 				<table class="ilisttable listtable_show" width="100%">
 				<tr>
 				<th>品名</th>
 				<th>单价</th>
-				<th>数量(瓶)</th>
+				<th>数量</th>
 				<th>合计</th>
 				</tr>
 				<s:iterator value="activeProducts" status="sta">
 				<tr>
-				<td>${product_name}</td>
-				<td align="center">￥${per_price}</td>
-				<td align="center">${num}</td>
-				<td align="center">￥${total_price}</td>
+				<td class="nowrap">${product_name}</td>
+				<td class="nowrap">￥${per_price}</td>
+				<td class="nowrap" align="center">${num}</td>
+				<td class="nowrap" align="center">￥${total_price}</td>
 				</tr>
 				</s:iterator>
 				</table>
@@ -310,7 +311,7 @@ color: #008000;
 				</tr>
 				<s:iterator value="activePosms" status="sta">
 				<tr>
-				<td class="nowrap">${title}</td>
+				<td>${title}</td>
 				<td>${note}</td>
 				<td class="nowrap" align="center">￥${total_price}</td>
 				</tr>
@@ -334,10 +335,11 @@ color: #008000;
 				</tr>
 				<s:iterator value="activeMemcosts" status="sta">
 				<tr>
-				<td class="nowrap"><a href="javascript:;" onclick="loadMemberInfo('${member_id}');">${member_name}</a></td>
-				<td class="nowrap">${title}</td>
+				<td><a href="javascript:;" onclick="loadMemberInfo('${member_id}');">${member_name}</a></td>
+				<td>${title}</td>
 				<td>${note}</td>
-				<td class="nowrap">￥${total_price}</td>
+				<td class="nowrap" align="center">￥${total_price}</td>
+				<td class="nowrap" align="center">${with_score}</td>
 				</tr>
 				</s:iterator>
 				</table>
@@ -391,22 +393,22 @@ color: #008000;
 			<div class="active_icost active_icost_left">
 			
 <s:if test="activeProductsClose.size != 0">
-			<div class="active_p_title">公司提供酒品</div>
+			<div class="active_p_title">公司提供酒品(瓶装酒:瓶|散酒:公斤)</div>
 			<div class="active_p_list">
 				<table class="ilisttable listtable_show" width="100%">
 				<tr>
 				<th>品名</th>
 				<th>单价</th>
-				<th>数量(瓶)</th>
+				<th>数量</th>
 				<th>合计</th>
 				<th>操作</th>
 				</tr>
 				<s:iterator value="activeProductsClose" status="sta">
 				<tr>
-				<td>${product_name}</td>
-				<td align="center">￥${per_price}</td>
-				<td align="center">${num}</td>
-				<td align="center">￥${total_price}</td>
+				<td class="nowrap">${product_name}</td>
+				<td class="nowrap">￥${per_price}</td>
+				<td class="nowrap" align="center">${num}</td>
+				<td class="nowrap" align="center">￥${total_price}</td>
 				<td class="nowrap" align="center">
 				<s:if test="active.status==3 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEPRODUCT_DEL')">
 					<a href="<s:url action="activeProductClose_del"><s:param name="activeProduct.uuid" value="%{uuid}" /><s:param name="activeProduct.active_id" value="%{active.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
@@ -429,7 +431,7 @@ color: #008000;
 				</tr>
 				<s:iterator value="activePosmsClose" status="sta">
 				<tr>
-				<td class="nowrap">${title}</td>
+				<td>${title}</td>
 				<td>${note}</td>
 				<td class="nowrap" align="center">￥${total_price}</td>
 				<td class="nowrap" align="center">
@@ -461,8 +463,8 @@ color: #008000;
 				</tr>
 				<s:iterator value="activeMemcostsClose" status="sta">
 				<tr>
-				<td class="nowrap"><a href="javascript:;" onclick="loadMemberInfo('${member_id}');">${member_name}</a></td>
-				<td class="nowrap">${title}</td>
+				<td><a href="javascript:;" onclick="loadMemberInfo('${member_id}');">${member_name}</a></td>
+				<td>${title}</td>
 				<td>${note}</td>
 				<td class="nowrap" align="center">￥${total_price}</td>
 				<td class="nowrap" align="center">￥${with_score}</td>
@@ -607,6 +609,10 @@ color: #008000;
 			</s:if>
 			<s:if test="active.status==4&&active.close_sd_status>=40&&active.close_smd_status>=30 &&@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_STATUS4')">
 			<s:submit id="mdyStatus4" name="mdyStatus4" value="结案通过" action="mdyStatus4" onclick="return isOp('确定执行此操作?');" />
+			</s:if>
+			
+			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_STATUS_1')">
+				<s:submit id="active_mdyStatus_1" name="active_mdyStatus_1" value="作废" action="active_mdyStatus_1" onclick="return isOp('确定执行此操作?');" />
 			</s:if>
 			
 			<s:if test="active.status==4 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_APPROVE')">

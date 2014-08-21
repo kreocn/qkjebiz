@@ -92,8 +92,9 @@ cursor: pointer;
 			<td class='secRow3'><s:textfield name="active.uid" title="申请编号" /></td>
 			<td class='firstRow3'>主题(%):</td>
 			<td class='secRow3'><s:textfield name="active.theme" title="主题" /></td>
-			<td class='secRow3' colspan="2">
-			
+			<td class='firstRow3'>其他状态:</td>
+			<td class='secRow3'>
+				<s:select name="active.ship_status" headerKey="" headerValue="-发货状态-" list="#{0:'未发货',10:'已发货',99:'其他' }" />
 			</td>
 			</tr><tr>
 			<td class='firstRow3'>活动状态:</td>
@@ -200,6 +201,7 @@ cursor: pointer;
 		<td title="${address}" class="nowrap">${it:subString(address,6)}</td>
 		<td class="nowrap" align="center">
 			<span class="span_label">
+			<s:if test="status==-1"><font class="message_error">已作废</font></s:if>
 			<s:if test="status==0">新申请</s:if>
 			<s:if test="status==1"><font class="message_warning">申请审批中</font></s:if>
 			<s:if test="status==2"><font class="message_pass" title="${it:formatDate(pass_time,'yyyy-MM-dd HH:mm:ss')}">申请通过</font></s:if>
