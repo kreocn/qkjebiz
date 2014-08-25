@@ -34,6 +34,7 @@ public class InStockAction extends ActionSupport {
 	private InStockH inStockh;
 	private InDetailH inDetailh;
 	private InDetail inDetail;
+	private InStock inStock;
 	private List<InStock> inStocks;
 	private List<Ware> wares;
 	private List<Product> products;
@@ -110,7 +111,7 @@ public class InStockAction extends ActionSupport {
 		this.currPage = currPage;
 	}
 	
-	
+
 	
 
 	public InDetail getInDetail() {

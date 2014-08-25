@@ -135,6 +135,7 @@ font-size: 14px;
 			<tr>
 			<td class='firstRow3'>结案单状态:</td>
 			<td class='secRow3'>
+				<s:if test="active.status==-1"><font class="message_error">已作废</font></s:if>
 				<s:if test="active.status==2"><span class="span_label"><font class="message_prompt">未开始结案</font></span></s:if>
 				<s:if test="active.status==3"><span class="span_label">开始结案</span></s:if>
 				<s:if test="active.status==4"><span class="span_label"><font class="message_warning">结案审批中</font></span></s:if>
@@ -190,10 +191,6 @@ font-size: 14px;
 			
 			<tbody class="printshow">
 			<tr class="sign_tr">
-			<td class='firstRow3'>销售管理副总经理:</td>
-			<td class='secRow3 message_prompt' valign="top" colspan="5">(签字/日期)</td>
-			</tr>
-			<tr class="sign_tr">
 			<td class='firstRow3'>财务部:</td>
 			<td class='secRow3 message_prompt' valign="top" colspan="5">(签字/日期)</td>
 			</tr>
@@ -202,7 +199,11 @@ font-size: 14px;
 			<td class='secRow3 message_prompt' valign="top" colspan="5">(签字/日期)</td>
 			</tr>
 			<tr class="sign_tr">
-			<td class='firstRow3'>业务副总经理:</td>
+			<td class='firstRow3'>销售管理部经理:</td>
+			<td class='secRow3 message_prompt' valign="top" colspan="5">(签字/日期)</td>
+			</tr>
+			<tr class="sign_tr">
+			<td class='firstRow3'>销售管理副总经理:</td>
 			<td class='secRow3 message_prompt' valign="top" colspan="5">(签字/日期)</td>
 			</tr>
 			<tr class="sign_tr">
@@ -262,21 +263,21 @@ font-size: 14px;
 			<div class="active_icost active_icost_left">
 			
 <s:if test="activeProductsClose.size != 0">
-			<div class="active_p_title">公司提供酒品</div>
+			<div class="active_p_title">公司提供酒品(瓶装酒:瓶|散酒:公斤)</div>
 			<div class="active_p_list">
 				<table class="ilisttable listtable_show" width="100%">
 				<tr>
 				<th>品名</th>
 				<th>单价</th>
-				<th>数量(瓶)</th>
+				<th>数量</th>
 				<th>合计</th>
 				</tr>
 				<s:iterator value="activeProductsClose" status="sta">
 				<tr>
-				<td>${product_name}</td>
-				<td align="center">￥${per_price}</td>
-				<td align="center">${num}</td>
-				<td align="center">￥${total_price}</td>
+				<td class="nowrap">${product_name}</td>
+				<td class="nowrap">￥${per_price}</td>
+				<td class="nowrap" align="center">${num}</td>
+				<td class="nowrap" align="center">￥${total_price}</td>
 				</tr>
 				</s:iterator>
 				</table>
@@ -293,7 +294,7 @@ font-size: 14px;
 				</tr>
 				<s:iterator value="activePosmsClose" status="sta">
 				<tr>
-				<td class="nowrap">${title}</td>
+				<td>${title}</td>
 				<td>${note}</td>
 				<td class="nowrap" align="center">￥${total_price}</td>
 				</tr>
@@ -319,11 +320,11 @@ font-size: 14px;
 				</tr>
 				<s:iterator value="activeMemcostsClose" status="sta">
 				<tr>
-				<td class="nowrap"><a href="javascript:;" onclick="loadMemberInfo('${member_id}');">${member_name}</a></td>
-				<td class="nowrap">${title}</td>
+				<td><a href="javascript:;" onclick="loadMemberInfo('${member_id}');">${member_name}</a></td>
+				<td>${title}</td>
 				<td>${note}</td>
 				<td class="nowrap" align="center">￥${total_price}</td>
-				<td class="nowrap" align="center">￥${with_score}</td>
+				<td class="nowrap" align="center">${with_score}</td>
 				</tr>
 				</s:iterator>
 				</table>
@@ -389,6 +390,7 @@ font-size: 14px;
 					发货信息
 					<s:if test="active.ship_status==0"><span class="message_error">【未发货】</span></s:if>
 					<s:if test="active.ship_status==10"><span class="message_pass">【已发货】</span></s:if>
+					<s:if test="active.ship_status==99"><span class="message_pass">【其他】</span></s:if>
 				</td>
 			</tr>
 			<tr>
@@ -423,6 +425,9 @@ font-size: 14px;
 		<td class='secRow3' colspan="5">
 			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_MDYSHIPINFO') && active.status==5">
 			<input id="mdyActiveShipInfo_Button" type="button" value="填写发货信息" />
+			</s:if>
+			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_STATUS_1')">
+				<s:submit id="active_mdyStatus_1" name="active_mdyStatus_1" value="作废" action="active_mdyStatus_1" onclick="return isOp('确定执行此操作?');" />
 			</s:if>
 			<input type="button" value="返回" onclick="linkurl('<s:url action="active_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');" />
 			<input type="button" onclick="window.print();" value="打印本页"/>
@@ -459,7 +464,7 @@ font-size: 14px;
 	<table class="ilisttable" width="100%">
 		<tr>
 		<td class='firstRow'><span style="color:red;">*</span> 发货状态:</td>
-		<td class='secRow'><s:select name="active.ship_status" list="#{0:'未发货',10:'已发货' }" /></td>
+		<td class='secRow'><s:select name="active.ship_status" list="#{0:'未发货',10:'已发货',99:'其他' }" /></td>
 		</tr>
 		<tr>
 		<td class='firstRow'>出库日期:</td>

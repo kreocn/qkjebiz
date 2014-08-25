@@ -152,6 +152,7 @@ font-size: 14px;
 			<tr>
 			<td class='firstRow3'>申请单状态:</td>
 			<td class='secRow3'>
+				<s:if test="active.status==-1"><font class="message_error">已作废</font></s:if>
 				<s:if test="active.status==0"><span class="span_label">新申请</span></s:if>
 				<s:if test="active.status==1"><span class="span_label"><font class="message_warning">申请审批中</font></span></s:if>
 				<s:if test="active.status>=2">
@@ -210,7 +211,7 @@ font-size: 14px;
 			<td class='secRow3' valign="top" colspan="5">(签字/日期)</td>
 			</tr>
 			<tr class="sign_tr">
-			<td class='firstRow3'>业务副总经理:</td>
+			<td class='firstRow3'>销售管理部经理:</td>
 			<td class='secRow3' valign="top" colspan="5">(签字/日期)</td>
 			</tr>
 			<tr class="sign_tr">
@@ -272,21 +273,21 @@ font-size: 14px;
 			<td class='secRowx' colspan="3" valign="top">
 			<div class="active_icost active_icost_left">
 <s:if test="activeProducts.size != 0">
-			<div class="active_p_title">公司提供酒品</div>
+			<div class="active_p_title">公司提供酒品(瓶装酒:瓶|散酒:公斤)</div>
 			<div class="active_p_list">
 				<table class="ilisttable listtable_show" width="100%">
 				<tr>
 				<th>品名</th>
 				<th>单价</th>
-				<th>数量(瓶)</th>
+				<th>数量</th>
 				<th>合计</th>
 				</tr>
 				<s:iterator value="activeProducts" status="sta">
 				<tr>
-				<td>${product_name}</td>
-				<td align="center">￥${per_price}</td>
-				<td align="center">${num}</td>
-				<td align="center">￥${total_price}</td>
+				<td class="nowrap">${product_name}</td>
+				<td class="nowrap">￥${per_price}</td>
+				<td class="nowrap" align="center">${num}</td>
+				<td class="nowrap" align="center">￥${total_price}</td>
 				</tr>
 				</s:iterator>
 				</table>
@@ -303,7 +304,7 @@ font-size: 14px;
 				</tr>
 				<s:iterator value="activePosms" status="sta">
 				<tr>
-				<td class="nowrap">${title}</td>
+				<td>${title}</td>
 				<td>${note}</td>
 				<td class="nowrap" align="center">￥${total_price}</td>
 				</tr>
@@ -327,10 +328,10 @@ font-size: 14px;
 				</tr>
 				<s:iterator value="activeMemcosts" status="sta">
 				<tr>
-				<td class="nowrap"><a href="javascript:;" onclick="loadMemberInfo('${member_id}');">${member_name}</a></td>
-				<td class="nowrap">${title}</td>
+				<td><a href="javascript:;" onclick="loadMemberInfo('${member_id}');">${member_name}</a></td>
+				<td>${title}</td>
 				<td>${note}</td>
-				<td class="nowrap">￥${total_price}</td>
+				<td class="nowrap" align="center">￥${total_price}</td>
 				</tr>
 				</s:iterator>
 				</table>
@@ -402,6 +403,9 @@ font-size: 14px;
 		<tr class="printarea">
 		<td class='firstRow3'>相关操作:</td>
 		<td class='secRow3' colspan="5">
+			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_STATUS_1')">
+				<s:submit id="active_mdyStatus_1" name="active_mdyStatus_1" value="作废" action="active_mdyStatus_1" onclick="return isOp('确定执行此操作?');" />
+			</s:if>
 			<input type="button" value="返回" onclick="linkurl('<s:url action="active_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');" />
 			<input type="button" onclick="window.print();" value="打印本页"/>
 			<span id="message"><s:property value="message" /></span>

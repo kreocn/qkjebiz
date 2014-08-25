@@ -90,6 +90,18 @@ font-size: 24px;font-weight: bold;
 		$("#apply_check_note_text").html(CommonUtil.rtextarea("apply_check_note", "div"));
 	</script>
 	<div class="noprintarea"><input type="button" onclick="window.print();" value="打印本页"/></div>
+	
+	
+	<div class="noprintarea">
+	<s:form name="form1" action="apply_add" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
+		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_CHECK_1')">
+		<s:hidden name="apply.uuid" /><s:hidden name="apply.status" /><s:hidden name="apply.sp_check_status" />
+		<s:submit id="apply_check_1" name="apply_check_1" value="作废" action="apply_check_1" onclick="return isOp('确定进行此操作?');" />
+		</s:if>
+	</s:form>
+	</div>
+	
+	
 	</div>
 </div>
 </div>

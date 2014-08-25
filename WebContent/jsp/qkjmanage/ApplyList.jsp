@@ -104,7 +104,10 @@ display: none;
 				<span id="ajax_member_message"></span>
 			</td>
 			<td class='firstRow'>状态:</td>
-			<td class='secRow'><s:select name="apply.status_sp" title="状态" headerKey="" headerValue="--请选择--" list="#{0:'新申请',5:'审核退回',10:'待审核',20:'大区经理已审',25:'销管经理已审',30:'运营总监已审'}" /></td>
+			<td class='secRow'>
+				<s:select name="apply.status_sp" title="状态" headerKey="" headerValue="-申请状态-" list="#{-1:'已作废',0:'新申请',5:'审核退回',10:'待审核',20:'大区经理已审',25:'销管经理已审',30:'运营总监已审'}" />
+				<s:select id="form_apply_ship_status" name="apply.ship_status"  headerKey="" headerValue="-发货状态-" list="#{0:'未发货',10:'已发货',20:'已受理' }" />
+			</td>
 			</tr>
 			<tr>
 			<td class="buttonarea" colspan="4"><s:submit value="搜索" /> <s:reset value="重置" /></td>
@@ -135,6 +138,7 @@ display: none;
 		<td align="center"><s:property value="apply_user_name" /></td>
 		<td title="${title}">${it:subString(title,40)}</td>
 		<td align="center" title="${check_user_name}-${it:formatDate(check_time,'yyyy-MM-dd HH:mm:ss')}-${check_note}">
+			<s:if test="-1==status"><span class="message_error">已作废(${check_user_name})</span></s:if>
 			<s:if test="0==status">新申请</s:if>
 			<s:if test="5==status"><span class="message_error">已退回(${check_user_name})</span></s:if>
 			<s:if test="10==status"><span class="message_warning">待审核</span></s:if>

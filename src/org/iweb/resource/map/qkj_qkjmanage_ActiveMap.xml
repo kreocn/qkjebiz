@@ -37,6 +37,7 @@
 			<isNotEmpty prepend="AND" property="close_sd_status"><![CDATA[ a.close_sd_status=#close_sd_status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="close_smd_status"><![CDATA[ a.close_smd_status=#close_smd_status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="status"><![CDATA[ a.status=#status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="ship_status"><![CDATA[ a.ship_status=#ship_status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="theme"><![CDATA[ a.theme LIKE CONCAT('%',#theme#,'%') ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="plan_start_begin"><![CDATA[ a.plan_start>=#plan_start_begin# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="plan_start_end"><![CDATA[ a.plan_start<=DATE_ADD(#plan_start_end#,INTERVAL 1 day) ]]></isNotEmpty>
@@ -71,6 +72,7 @@
 			<isNotEmpty prepend="AND" property="close_sd_status"><![CDATA[ close_sd_status=#close_sd_status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="close_smd_status"><![CDATA[ close_smd_status=#close_smd_status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="status"><![CDATA[ status=#status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="ship_status"><![CDATA[ ship_status=#ship_status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="theme"><![CDATA[ theme LIKE CONCAT('%',#theme#,'%') ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="plan_start_begin"><![CDATA[ plan_start>=#plan_start_begin# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="plan_start_end"><![CDATA[ plan_start<=DATE_ADD(#plan_start_end#,INTERVAL 1 day) ]]></isNotEmpty>
