@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
+<sqlMap>
+	<!-- OutStockH Start -->
+	<typeAlias alias="outStockH" type="com.qkj.ware.domain.OutStockH" />
+	<select id="ware_getOutStockHs" resultClass="outStockH" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select * From qkj_h_outstock
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="ordernum"><![CDATA[ ordernum=#ordernum# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="date"><![CDATA[ date=#date# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="store_id"><![CDATA[ store_id=#store_id# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="operator_id"><![CDATA[ operator_id=#operator_id# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="take_id"><![CDATA[ take_id=#take_id# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="total_price"><![CDATA[ total_price=#total_price# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="add_user"><![CDATA[ add_user=#add_user# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="manager_check_user"><![CDATA[ manager_check_user=#manager_check_user# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="member_id"><![CDATA[ member_id=#member_id# ]]></isNotEmpty>
+
+		</dynamic>
+		<![CDATA[ LIMIT 1000 ]]>
+	</select>
+	<select id="ware_getOutStockHsCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) From qkj_h_outstock
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="ordernum"><![CDATA[ ordernum=#ordernum# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="date"><![CDATA[ date=#date# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="store_id"><![CDATA[ store_id=#store_id# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="operator_id"><![CDATA[ operator_id=#operator_id# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="take_id"><![CDATA[ take_id=#take_id# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="total_price"><![CDATA[ total_price=#total_price# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="add_user"><![CDATA[ add_user=#add_user# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="manager_check_user"><![CDATA[ manager_check_user=#manager_check_user# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="member_id"><![CDATA[ member_id=#member_id# ]]></isNotEmpty>
+
+		</dynamic>
+		<![CDATA[ LIMIT 1000 ]]>
+	</select>
+	<insert id="ware_addOutStockH" parameterClass="outStockH">
+		<![CDATA[ 
+			Insert Into qkj_h_outstock(ordernum,date,store_id,operator_id,take_id,note,total_price,add_user,add_timer,lm_user,lm_timer,reason,send,manager_check,manager_check_user,manager_check_time,coo_check,coo_check_user,coo_check_time,member_id,member_mebile,member_name,bsreason)
+			Values (#ordernum#,#date#,#store_id#,#operator_id#,#take_id#,#note#,#total_price#,#add_user#,#add_timer#,#lm_user#,#lm_timer#,#reason#,#send#,#manager_check#,#manager_check_user#,#manager_check_time#,#coo_check#,#coo_check_user#,#coo_check_time#,#member_id#,#member_mebile#,#member_name#,#bsreason#)
+		]]>
+		<selectKey resultClass="int" keyProperty="uuid">
+		<![CDATA[ Select LAST_INSERT_ID() ]]>
+		</selectKey>
+	</insert>
+	<update id="ware_mdyOutStockH" parameterClass="outStockH">
+		<![CDATA[
+			Update qkj_h_outstock
+			Set ordernum=#ordernum#,
+date=#date#,
+store_id=#store_id#,
+operator_id=#operator_id#,
+take_id=#take_id#,
+note=#note#,
+total_price=#total_price#,
+add_user=#add_user#,
+add_timer=#add_timer#,
+lm_user=#lm_user#,
+lm_timer=#lm_timer#,
+reason=#reason#,
+send=#send#,
+manager_check=#manager_check#,
+manager_check_user=#manager_check_user#,
+manager_check_time=#manager_check_time#,
+coo_check=#coo_check#,
+coo_check_user=#coo_check_user#,
+coo_check_time=#coo_check_time#,
+member_id=#member_id#,
+member_mebile=#member_mebile#,
+member_name=#member_name#,
+member_adress=#member_adress#,
+member_price=#member_price#,
+bsreason=#bsreason#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="ware_delOutStockH" parameterClass="outStockH">
+	<![CDATA[
+		Delete From qkj_h_outstock Where uuid=#uuid#
+	]]>
+	</delete>
+	<!-- OutStockH End -->
+</sqlMap>

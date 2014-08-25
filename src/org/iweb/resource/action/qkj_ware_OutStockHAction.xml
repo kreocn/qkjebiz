@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="ware_outStockH" extends="default" namespace="/ware">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- OutStockH Start -->
+		<action name="outStockH_list" class="com.qkj.ware.action.OutStockHAction" method="list">
+			<result>/jsp/ware/history/OutStockHList.jsp</result>
+		</action>
+		<action name="outStockH_relist" class="com.qkj.ware.action.OutStockHAction" method="relist">
+			<result type="redirectAction">
+				<param name="actionName">outStockH_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+		<action name="outStockH_load" class="com.qkj.ware.action.OutStockHAction" method="load">
+			<result>/jsp/ware/history/OutStockHEdit.jsp</result>
+		</action>
+		<action name="outStockH_add" class="com.qkj.ware.action.OutStockHAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">outStockH_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="outStockH_save" class="com.qkj.ware.action.OutStockHAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">outStockH_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="outStockH_del" class="com.qkj.ware.action.OutStockHAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">outStockH_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- OutStockH End -->
+	</package>
+</struts>

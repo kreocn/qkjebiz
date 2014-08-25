@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
+<sqlMap>
+	<!-- AllotH Start -->
+	<typeAlias alias="allotH" type="com.qkj.ware.domain.AllotH" />
+	<select id="ware_getAllotHs" resultClass="allotH" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select * From qkj_H_allot
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="ordernum"><![CDATA[ ordernum=#ordernum# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="date"><![CDATA[ date=#date# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="sourceid"><![CDATA[ sourceid=#sourceid# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="goldid"><![CDATA[ goldid=#goldid# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="note"><![CDATA[ note=#note# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="add_timer"><![CDATA[ add_timer=#add_timer# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="lm_user"><![CDATA[ lm_user=#lm_user# ]]></isNotEmpty>
+
+		</dynamic>
+		<![CDATA[ LIMIT 1000 ]]>
+	</select>
+	<select id="ware_getAllotHsCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) From qkj_H_allot
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="ordernum"><![CDATA[ ordernum=#ordernum# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="date"><![CDATA[ date=#date# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="sourceid"><![CDATA[ sourceid=#sourceid# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="goldid"><![CDATA[ goldid=#goldid# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="note"><![CDATA[ note=#note# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="add_timer"><![CDATA[ add_timer=#add_timer# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="lm_user"><![CDATA[ lm_user=#lm_user# ]]></isNotEmpty>
+
+		</dynamic>
+		<![CDATA[ LIMIT 1000 ]]>
+	</select>
+	<insert id="ware_addAllotH" parameterClass="allotH">
+		<![CDATA[ 
+			Insert Into qkj_H_allot(ordernum,date,sourceid,goldid,note,add_user,add_timer,lm_user,lm_timer,state)
+			Values (#ordernum#,#date#,#sourceid#,#goldid#,#note#,#add_user#,#add_timer#,#lm_user#,#lm_timer#,#state#)
+		]]>
+		<selectKey resultClass="int" keyProperty="uuid">
+		<![CDATA[ Select LAST_INSERT_ID() ]]>
+		</selectKey>
+	</insert>
+	<update id="ware_mdyAllotH" parameterClass="allotH">
+		<![CDATA[
+			Update qkj_H_allot
+			Set ordernum=#ordernum#,
+date=#date#,
+sourceid=#sourceid#,
+goldid=#goldid#,
+note=#note#,
+add_user=#add_user#,
+add_timer=#add_timer#,
+lm_user=#lm_user#,
+lm_timer=#lm_timer#,
+state=#state#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="ware_delAllotH" parameterClass="allotH">
+	<![CDATA[
+		Delete From qkj_H_allot Where uuid=#uuid#
+	]]>
+	</delete>
+	<!-- AllotH End -->
+</sqlMap>
