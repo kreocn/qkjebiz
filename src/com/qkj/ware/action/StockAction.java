@@ -102,7 +102,7 @@ public class StockAction extends ActionSupport {
 	}
 
 	public String list() throws Exception {
-		ContextHelper.isPermit("QKJ_STOCK_STOCK");
+		ContextHelper.isPermit("QKJ_WARE_STOCK_LIST");
 		try {
 			map.clear();
 			if (stock != null)
@@ -152,7 +152,7 @@ public class StockAction extends ActionSupport {
 	}
 
 	public String add() throws Exception {
-		ContextHelper.isPermit("QKJ_STOCK_STOCK_ADD");
+		ContextHelper.isPermit("QKJ_WARE_STOCK_ADD");
 		try {
 			//stock.setLm_user(ContextHelper.getUserLoginUuid());
 			//stock.setLm_time(new Date());
@@ -165,7 +165,7 @@ public class StockAction extends ActionSupport {
 	}
 
 	public String save() throws Exception {
-		ContextHelper.isPermit("QKJ_STOCK_STOCK_MDY");
+		ContextHelper.isPermit("QKJ_WARE_STOCK_MDY");
 		try {
 			//stock.setLm_user(ContextHelper.getUserLoginUuid());
 			//stock.setLm_time(new Date());
@@ -178,7 +178,7 @@ public class StockAction extends ActionSupport {
 	}
 
 	public String del() throws Exception {
-		ContextHelper.isPermit("QKJ_STOCK_STOCK_DEL");
+		ContextHelper.isPermit("QKJ_WARE_STOCK_DEL");
 		try {
 			dao.delete(stock);
 			setMessage("删除成功!ID=" + stock.getUuid());

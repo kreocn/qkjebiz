@@ -123,7 +123,7 @@ public class AllotDetailAction extends ActionSupport {
 	}
 
 	public String list() throws Exception {
-		ContextHelper.isPermit("QKJ_ALLOT_ALLOT_LIST");
+		ContextHelper.isPermit("QKJ_WARE_ALLOT_LIST");
 		try {
 			map.clear();
 			if (allotDetail != null)
@@ -169,7 +169,7 @@ public class AllotDetailAction extends ActionSupport {
 	}
 
 	public String add() throws Exception {
-		ContextHelper.isPermit("QKJ_ALLOT_ALLOT_ADD");
+		ContextHelper.isPermit("QKJ_WARE_ALLOT_ADD");
 		try {
 			dao.add(allotDetail);
 		} catch (Exception e) {
@@ -180,7 +180,7 @@ public class AllotDetailAction extends ActionSupport {
 	}
 
 	public String save() throws Exception {
-		ContextHelper.isPermit("QKJ_ALLOT_ALLOT_MDY");
+		ContextHelper.isPermit("QKJ_WARE_ALLOT_MDY");
 		try {
 			dao.save(allotDetail);
 		} catch (Exception e) {
@@ -191,7 +191,7 @@ public class AllotDetailAction extends ActionSupport {
 	}
 
 	public String del() throws Exception {
-		ContextHelper.isPermit("QKJ_ALLOT_ALLOT_DEL");
+		ContextHelper.isPermit("QKJ_WARE_ALLOT_DEL");
 		try {
 			
 			this.setAllotDetail((AllotDetail)dao.get(allotDetail.getUuid()));

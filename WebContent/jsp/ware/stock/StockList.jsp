@@ -27,7 +27,7 @@ $(function(){
 	<div class="itabletitle">
 		<span class="title1">库存物品列表</span>
 		<span class="extra1">
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_STOCK_STOCK_ADD')">
+			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_STOCK_ADD')">
 			<a href="<s:url namespace="/stock" action="stock_load"><s:param name="viewFlag">add</s:param></s:url>" >添加库存物品</a>
 			</s:if>
 		</span>

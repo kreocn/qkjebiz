@@ -116,15 +116,15 @@
 		<tr>
 		<td colspan="20" class="buttonarea">
 				<s:if test="null == outStock && 'add' == viewFlag">
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_OUTSTOCK_OUTSTOCK_ADD')">
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_ADD')">
 					<s:submit id="add" name="add" value="保存&填写明细" action="outStock_add" />
 					</s:if>
 				</s:if>
 				<s:elseif test="null != outStock && 'mdy' == viewFlag">
 					<s:hidden name="outStock.reason"/>
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_OUTSTOCK_OUTSTOCK_MDY')">
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_MDY')">
 					<s:submit id="save" name="save" value="下一步" action="outStock_sale" />
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_OUTSTOCK_OUTSTOCK_DEL')">
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_DEL')">
 					<s:submit id="delete" name="delete" value="删除" action="outStock_del" onclick="return isDel();" />
 					</s:if>
 					</s:if>

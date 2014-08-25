@@ -186,7 +186,7 @@ public class AllotAction extends ActionSupport {
 	}
 
 	public String list() throws Exception {
-		ContextHelper.isPermit("QKJ_ALLOT_ALLOT_LIST");
+		ContextHelper.isPermit("QKJ_WARE_ALLOT_LIST");
 		try {
 			map.clear();
 			if (allot != null)
@@ -303,7 +303,7 @@ public class AllotAction extends ActionSupport {
 	}
 
 	public String add() throws Exception {
-		ContextHelper.isPermit("QKJ_ALLOT_ALLOT_ADD");
+		ContextHelper.isPermit("QKJ_WARE_ALLOT_ADD");
 		try {
 			Date d = new Date();
 			String u = ContextHelper.getUserLoginUuid();
@@ -324,7 +324,7 @@ public class AllotAction extends ActionSupport {
 	}
 
 	public String save() throws Exception {
-		ContextHelper.isPermit("QKJ_ALLOT_ALLOT_MDY");
+		ContextHelper.isPermit("QKJ_WARE_ALLOT_MDY");
 		try {
 			allot.setLm_user(ContextHelper.getUserLoginUuid());
 			allot.setLm_timer(new Date());
@@ -337,7 +337,7 @@ public class AllotAction extends ActionSupport {
 	}
 	
 	public String freeze() throws Exception{
-		ContextHelper.isPermit("QKJ_ALLOT_ALLOT_MDY");
+		ContextHelper.isPermit("QKJ_WARE_ALLOT_MDY");
 		String u = ContextHelper.getUserLoginUuid();
 		try {
 			//检查库存是否足够
@@ -435,7 +435,7 @@ public class AllotAction extends ActionSupport {
 	
 	//取消发货
 	public String cancel() throws Exception{
-		ContextHelper.isPermit("QKJ_ALLOT_ALLOT_MDY");
+		ContextHelper.isPermit("QKJ_WARE_ALLOT_MDY");
 		try {
 			//检查库存是否足够
 			AllotDetailDAO addao=new AllotDetailDAO();
@@ -467,7 +467,7 @@ public class AllotAction extends ActionSupport {
 	}
 	
 	public String del() throws Exception {
-		ContextHelper.isPermit("QKJ_ALLOT_ALLOT_DEL");
+		ContextHelper.isPermit("QKJ_WARE_ALLOT_DEL");
 		try {
 			this.setAllot((Allot)dao.get(allot.getUuid()));
 			AllotHDAO mhd=new AllotHDAO();

@@ -124,7 +124,7 @@ public class InDetailAction extends ActionSupport {
 	}
 
 	public String list() throws Exception {
-		ContextHelper.isPermit("QKJ_INSTOCK_INSTOCK_LIST");
+		ContextHelper.isPermit("QKJ_WARE_INSTOCK_LIST");
 		try {
 			map.clear();
 			if (inDetail != null)
@@ -170,7 +170,7 @@ public class InDetailAction extends ActionSupport {
 	}
 
 	public String add() throws Exception {
-		ContextHelper.isPermit("QKJ_INSTOCK_INSTOCK_ADD");
+		ContextHelper.isPermit("QKJ_WARE_INSTOCK_ADD");
 		try {
 			//inDetail.setLm_user(ContextHelper.getUserLoginUuid());
 			//inDetail.setLm_time(new Date());
@@ -210,7 +210,7 @@ public class InDetailAction extends ActionSupport {
 	}
 
 	public String save() throws Exception {
-		ContextHelper.isPermit("QKJ_INSTOCK_INSTOCK_MDY");
+		ContextHelper.isPermit("QKJ_WARE_INSTOCK_MDY");
 		try {
 			//inDetail.setLm_user(ContextHelper.getUserLoginUuid());
 			//inDetail.setLm_time(new Date());
@@ -223,7 +223,7 @@ public class InDetailAction extends ActionSupport {
 	}
 
 	public String del() throws Exception {
-		ContextHelper.isPermit("QKJ_INSTOCK_INSTOCK_DEL");
+		ContextHelper.isPermit("QKJ_WARE_INSTOCK_DEL");
 		try {
 			InDetailHDAO hdao=new InDetailHDAO();
 			this.setInDetail((InDetail)dao.get(inDetail.getUuid()));

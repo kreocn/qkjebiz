@@ -102,7 +102,7 @@ public class WarepowerAction extends ActionSupport {
 	}
 
 	public String list() throws Exception {
-		ContextHelper.isPermit("QKJ_WAREPOWER_WAREPOWER_LIST");
+		ContextHelper.isPermit("QKJ_WARE_WAREPOWER_LIST");
 		try {
 			map.clear();
 			if (warepower != null)
@@ -154,7 +154,7 @@ public class WarepowerAction extends ActionSupport {
 	}
 
 	public String add() throws Exception {
-		ContextHelper.isPermit("QKJ_WAREPOWER_WAREPOWER_ADD");
+		ContextHelper.isPermit("QKJ_WARE_WAREPOWER_ADD");
 		try {
 			//warepower.setLm_user(ContextHelper.getUserLoginUuid());
 			//warepower.setLm_time(new Date());
@@ -167,7 +167,7 @@ public class WarepowerAction extends ActionSupport {
 	}
 
 	public String save() throws Exception {
-		ContextHelper.isPermit("QKJ_WAREPOWER_WAREPOWER_MDY");
+		ContextHelper.isPermit("QKJ_WARE_WAREPOWER_MDY");
 		try {
 			//warepower.setLm_user(ContextHelper.getUserLoginUuid());
 			//warepower.setLm_time(new Date());
@@ -181,7 +181,7 @@ public class WarepowerAction extends ActionSupport {
 	}
 
 	public String del() throws Exception {
-		ContextHelper.isPermit("QKJ_WAREPOWER_WAREPOWER_DEL");
+		ContextHelper.isPermit("QKJ_WARE_WAREPOWER_DEL");
 		try {
 			dao.delete(warepower);
 			setMessage("删除成功!ID=" + warepower.getUuid());

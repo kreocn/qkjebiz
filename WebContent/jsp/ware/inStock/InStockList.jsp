@@ -27,7 +27,7 @@ $(function(){
 	<div class="itabletitle">
 		<span class="title1">入库列表</span>
 		<span class="extra1">
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_INSTOCK_INSTOCK_ADD')">
+			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_ADD')">
 			<a href="<s:url namespace="/inStock" action="inStock_load"><s:param name="viewFlag">add</s:param></s:url>" >添加入库</a>
 			</s:if>
 		</span>
@@ -86,10 +86,10 @@ $(function(){
 		<td><s:property value="lm_user_name" /></td>
 		<td><s:date name="lm_timer" format="yyyy-MM-dd HH:mm:ss" /></td>
 		<td align="center">
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_INSTOCK_INSTOCK_MDY')">
+			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_MDY')">
 	    	[<a href="<s:url namespace="/inStock" action="inStock_load"><s:param name="viewFlag">mdy</s:param><s:param name="inStock.uuid" value="uuid"></s:param></s:url>">修改</a>]
 	    	</s:if>
-	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_INSTOCK_INSTOCK_DEL')">
+	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_DEL')">
 	    	[<a href="<s:url namespace="/inStock" action="inStock_del"><s:param name="inStock.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>]
 	    	</s:if>	   
 	    </td>

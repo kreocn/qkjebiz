@@ -59,15 +59,15 @@
 		    	
 		    	<span id="message"><s:property value="message" /></span>
 				<s:if test="null == stock && 'add' == viewFlag">
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_STOCK_STOCK_ADD')">
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_STOCK_ADD')">
 					<s:submit id="add" name="add" value="确定" action="stock_add" />
 					</s:if>
 				</s:if>
 				<s:elseif test="null != stock && 'mdy' == viewFlag">
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_STOCK_STOCK_MDY')">
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_STOCK_MDY')">
 					<s:submit id="save" name="save" value="保存" action="stock_save" />
 					</s:if>
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_STOCK_STOCK_DEL')">
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_STOCK_DEL')">
 					<s:submit id="delete" name="delete" value="删除" action="stock_del" onclick="return isDel();" />
 					</s:if>
 				</s:elseif>

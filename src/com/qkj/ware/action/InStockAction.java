@@ -1,12 +1,19 @@
 package com.qkj.ware.action;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import org.apache.commons.logging.*;
-import org.iweb.sys.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.iweb.sys.ContextHelper;
+import org.iweb.sys.ToolsUtil;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.qkj.manage.dao.ProductDAO;
+import com.qkj.manage.domain.Product;
 import com.qkj.ware.dao.InDetailDAO;
-import com.qkj.ware.dao.InDetailHDAO;
+import com.qkj.ware.dao.InStockDAO;
 import com.qkj.ware.dao.InStockHDAO;
 import com.qkj.ware.dao.StockDAO;
 import com.qkj.ware.domain.InDetail;
@@ -14,13 +21,6 @@ import com.qkj.ware.domain.InDetailH;
 import com.qkj.ware.domain.InStock;
 import com.qkj.ware.domain.InStockH;
 import com.qkj.ware.domain.Stock;
-import com.qkj.ware.dao.InStockDAO;
-import com.qkj.manage.dao.LadingItemDAO;
-import com.qkj.manage.dao.LadingPayDAO;
-import com.qkj.manage.dao.ProductDAO;
-import com.qkj.manage.domain.Lading;
-import com.qkj.manage.domain.Product;
-import com.qkjsys.ebiz.action.WareAction;
 import com.qkjsys.ebiz.dao.WareDAO;
 import com.qkjsys.ebiz.domain.Ware;
 
@@ -34,7 +34,6 @@ public class InStockAction extends ActionSupport {
 	private InStockH inStockh;
 	private InDetailH inDetailh;
 	private InDetail inDetail;
-	private InStock inStock;
 	private List<InStock> inStocks;
 	private List<Ware> wares;
 	private List<Product> products;
@@ -166,7 +165,7 @@ public class InStockAction extends ActionSupport {
 	}
 
 	public String list() throws Exception {
-		ContextHelper.isPermit("QKJ_STOCK_INSTOCK");
+		ContextHelper.isPermit("QKJ_WARE_INSTOCK_LIST");
 		try {
 			map.clear();
 			if (inStock != null)
@@ -247,7 +246,7 @@ public class InStockAction extends ActionSupport {
 	}
 
 	public String add() throws Exception {
-		ContextHelper.isPermit("QKJ_INSTOCK_INSTOCK_ADD");
+		ContextHelper.isPermit("QKJ_WARE_INSTOCK_ADD");
 		try {
 			Date d = new Date();
 			String u = ContextHelper.getUserLoginUuid();
@@ -272,7 +271,7 @@ public class InStockAction extends ActionSupport {
 	}
 
 	public String save() throws Exception {
-		ContextHelper.isPermit("QKJ_INSTOCK_INSTOCK_MDY");
+		ContextHelper.isPermit("QKJ_WARE_INSTOCK_MDY");
 		try {
 			//inStock.setLm_user(ContextHelper.getUserLoginUuid());
 			//inStock.setLm_time(new Date());
@@ -289,7 +288,7 @@ public class InStockAction extends ActionSupport {
 	}
 
 	public String del() throws Exception {
-		ContextHelper.isPermit("QKJ_INSTOCK_INSTOCK_DEL");
+		ContextHelper.isPermit("QKJ_WARE_INSTOCK_DEL");
 		try {
 			InStockHDAO hdao=new InStockHDAO();
 			this.setInStock((InStock)dao.get(inStock.getUuid()));
@@ -367,7 +366,7 @@ public class InStockAction extends ActionSupport {
 	
 	//确认
 		public String sure() throws Exception {
-				ContextHelper.isPermit("QKJ_INSTOCK_INSTOCK_ADD");
+				ContextHelper.isPermit("QKJ_WARE_INSTOCK_ADD");
 				String u = ContextHelper.getUserLoginUuid();
 				try {
 					inStock.setConfirm(1);

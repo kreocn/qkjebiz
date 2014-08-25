@@ -27,7 +27,7 @@ $(function(){
 	<div class="itabletitle">
 		<span class="title1">盘点列表</span>
 		<span class="extra1">
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_CHECK_CHECK_ADD')">
+			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_CHECK_ADD')">
 			<a href="<s:url namespace="/check" action="check_load"><s:param name="viewFlag">add</s:param></s:url>" >添加盘点</a>
 			</s:if>
 		</span>
@@ -75,10 +75,10 @@ $(function(){
 		<td><s:property value="num" /></td>
 
 		<td align="center">
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_CHECK_CHECK')">
+			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_CHECK')">
 	    	[<a href="<s:url namespace="/check" action="check_load"><s:param name="viewFlag">mdy</s:param><s:param name="check.uuid" value="uuid"></s:param></s:url>">修改</a>]
 	    	</s:if>
-	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_CHECK_CHECK_DEL')">
+	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_CHECK_DEL')">
 	    	[<a href="<s:url namespace="/check" action="check_del"><s:param name="check.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>]
 	    	</s:if>	   
 	    </td>

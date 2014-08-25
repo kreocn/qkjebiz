@@ -213,8 +213,8 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 <s:if test="null != inStock">
 <tr>
 <td class='firstRow'>入库明细:
-	<%-- <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_INSTOCK_INSTOCK_ADD') && inStock.status==0"> --%>
-	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_INSTOCK_INSTOCK_ADD')">
+	<%-- <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_ADD') && inStock.status==0"> --%>
+	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_ADD')">
 	<br />
 	<input id="addItem" type="button" value="添加明细" />
 	</s:if>
@@ -270,15 +270,15 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 		<tr>
 		<td colspan="20" class="buttonarea">
 				<s:if test="null == inStock && 'add' == viewFlag">
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_INSTOCK_INSTOCK_ADD')">
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_ADD')">
 					<s:submit id="add" name="add" value="保存&填写明细" action="inStock_add" />
 					</s:if>
 				</s:if>
 				<s:elseif test="null != inStock && 'mdy' == viewFlag">
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_INSTOCK_INSTOCK_MDY') && null==inStock.confirm">
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_MDY') && null==inStock.confirm">
 					<s:submit id="save" name="save" value="保存" action="inStock_save" />
 					<s:submit value="确认" action="inStock_sure" onclick="return isOp('是否确认?\n确认后将不能更改!');"></s:submit>
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_INSTOCK_INSTOCK_DEL')">
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_DEL')">
 					<s:submit id="delete" name="delete" value="删除" action="inStock_del" onclick="return isDel();" />
 					</s:if>
 					<script type="text/javascript">
@@ -341,7 +341,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 		<tr>
 		    <td colspan="20" class="buttonarea">
 				<s:hidden name="inDetail.lading_id" title="提货单ID" value="%{inStock.uuid}" />
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_INSTOCK_INSTOCK_ADD')">
+				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_ADD')">
 				<s:submit id="add" name="add" value="确定" action="inDetail_add" />
 				</s:if>
 				<input type="button" value="关闭" onclick="closeAddForm();" />

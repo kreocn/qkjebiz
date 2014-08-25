@@ -125,7 +125,7 @@ public class OutDetailAction extends ActionSupport {
 	}
 
 	public String list() throws Exception {
-		ContextHelper.isPermit("QKJ_OUTSTOCK_OUTSTOCK_LIST");
+		ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_LIST");
 		try {
 			map.clear();
 			if (outDetail != null)
@@ -171,7 +171,7 @@ public class OutDetailAction extends ActionSupport {
 	}
 
 	public String add() throws Exception {
-		ContextHelper.isPermit("QKJ_OUTSTOCK_OUTSTOCK_ADD");
+		ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_ADD");
 		try {
 			//修改库存
 			StockDAO stockdao=new StockDAO();
@@ -215,7 +215,7 @@ public class OutDetailAction extends ActionSupport {
 	}
 
 	public String save() throws Exception {
-		ContextHelper.isPermit("QKJ_OUTSTOCK_OUTSTOCK_MDY");
+		ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_MDY");
 		try {
 			//outDetail.setLm_user(ContextHelper.getUserLoginUuid());
 			//outDetail.setLm_time(new Date());
@@ -228,7 +228,7 @@ public class OutDetailAction extends ActionSupport {
 	}
 
 	public String del() throws Exception {
-		ContextHelper.isPermit("QKJ_OUTSTOCK_OUTSTOCK_DEL");
+		ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_DEL");
 		try {
 			this.setOutDetail((OutDetail)dao.get(outDetail.getUuid()));
 			OutDetailHDAO hd=new OutDetailHDAO();

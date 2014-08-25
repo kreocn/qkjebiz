@@ -130,7 +130,7 @@ public class CheckAction extends ActionSupport {
 	}
 
 	public String list() throws Exception {
-		ContextHelper.isPermit("QKJ_CHECK_CHECK_LIST");
+		ContextHelper.isPermit("QKJ_WARE_CHECK_LIST");
 		try {
 			map.clear();
 			if (check != null)
@@ -183,7 +183,7 @@ public class CheckAction extends ActionSupport {
 	}
 
 	public String add() throws Exception {
-		ContextHelper.isPermit("QKJ_CHECK_CHECK_ADD");
+		ContextHelper.isPermit("QKJ_WARE_CHECK_ADD");
 		try {
 			if (!(pageStocks == null || pageStocks.size() == 0)) {
 				for (int i = 0, n = pageStocks.size(); i < n; i++) {
@@ -207,7 +207,7 @@ public class CheckAction extends ActionSupport {
 	}
 
 	public String save() throws Exception {
-		ContextHelper.isPermit("QKJ_CHECK_CHECK_MDY");
+		ContextHelper.isPermit("QKJ_WARE_CHECK_MDY");
 		try {
 			// check.setLm_user(ContextHelper.getUserLoginUuid());
 			// check.setLm_time(new Date());
@@ -220,7 +220,7 @@ public class CheckAction extends ActionSupport {
 	}
 
 	public String del() throws Exception {
-		ContextHelper.isPermit("QKJ_CHECK_CHECK_DEL");
+		ContextHelper.isPermit("QKJ_WARE_CHECK_DEL");
 		try {
 			dao.delete(check);
 			setMessage("删除成功!ID=" + check.getUuid());

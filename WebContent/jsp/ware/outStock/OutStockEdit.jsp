@@ -148,7 +148,7 @@ a.confirm_button:hover {
 							<td colspan="20" class="buttonarea"><s:if
 									test="null == outStock && 'new' == viewFlag">
 									<s:if
-										test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_OUTSTOCK_OUTSTOCK_ADD')">
+										test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_ADD')">
 										<s:submit id="add" name="add" value="下一步"
 											action="outStock_add" />
 									</s:if>

@@ -79,15 +79,15 @@
 		    	
 		    	<span id="message"><s:property value="message" /></span>
 				<s:if test="'add' == viewFlag">
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WAREPOWER_WAREPOWER_ADD')">
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_WAREPOWER_ADD')">
 					<s:submit id="add" name="add" value="确定" action="warepower_add" />
 					</s:if>
 				</s:if>
 				<s:elseif test="'mdy' == viewFlag">
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WAREPOWER_WAREPOWER_MDY')">
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_WAREPOWER_MDY')">
 					<s:submit id="save" name="save" value="保存" action="warepower_save" />
 					</s:if>
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WAREPOWER_WAREPOWER_DEL')">
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_WAREPOWER_DEL')">
 					<s:submit id="delete" name="delete" value="删除" action="warepower_del" onclick="return isDel();" />
 					</s:if>
 				</s:elseif>

@@ -59,7 +59,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 			<tr>
 			<td class="confirm_td">
 				<s:if test="0==outStock.manager_check">
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_OUTSTOCK_OUTSTOCK_MANAGE')">
+				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_MANAGE')">
 				<a href='<s:url action="outStock_chackManage"><s:param name="outStock.uuid" value="outStock.uuid" /></s:url>' class="confirm_button confirm_ok" onclick="return isOp('是否通过审核?\n审核操作不能取消!');">通过</a>
 				</s:if>
 				<s:else><span class="confirmd confirmd_cancel">-</span></s:else>
@@ -72,7 +72,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 			
 			<td class="confirm_td">
 				<s:if test="0==outStock.coo_check">
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_OUTSTOCK_OUTSTOCK_COO')">
+				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_COO')">
 				<a href='<s:url action="outStock_chackCoo"><s:param name="outStock.uuid" value="outStock.uuid" /></s:url>' class="confirm_button confirm_ok" onclick="return isOp('是否通过审核?\n审核操作不能取消!');">通过</a>
 				</s:if>
 				<s:else><span class="confirmd confirmd_cancel">-</span></s:else>
@@ -202,7 +202,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 		<s:if test="null != outStock">
 		<tr>
 		<td class='firstRow'>出库明细:
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_OUTSTOCK_OUTSTOCK_ADD')">
+			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_ADD')">
 			<br />
 			<input id="addItem" type="button" value="添加明细" onclick="commain();"/>
 			</s:if>
@@ -227,7 +227,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 			</td>
 			<td align="right"><s:property value="totel" /></td>
 			<td align="center">
-		   	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_OUTSTOCK_OUTSTOCK_DEL') && 2==outStock.send">
+		   	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_DEL') && 2==outStock.send">
 		   	[<a href="<s:url namespace="/outStock" action="outDetail_del"><s:param name="outDetail.uuid" value="uuid" /><s:param name="outDetail.lading_id" value="lading_id" /></s:url>" onclick="return isDel();">删除</a>]
 		   	</s:if>	   
 		    </td>
@@ -265,23 +265,23 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 		<tr>
 		<td colspan="20" class="buttonarea">
 				<s:if test="null == outStock && 'add' == viewFlag">
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_OUTSTOCK_OUTSTOCK_ADD')">
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_ADD')">
 					<s:submit id="add" name="add" value="保存&填写明细" action="outStock_add" />
 					</s:if>
 				</s:if>
 				<s:elseif test="null != outStock && 'mdy' == viewFlag">
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_OUTSTOCK_OUTSTOCK_MDY') && 2==outStock.send">
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_MDY') && 2==outStock.send">
 					<s:submit id="save" name="save" value="保存" action="outStock_save" />
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_OUTSTOCK_OUTSTOCK_STATUS0') && 2==outStock.send">
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_STATUS0') && 2==outStock.send">
 					<s:if test="%{outDetails.size>0}">
 					<s:submit id="saveLadingStatus0" name="saveLadingStatus0" value="送审" action="outStock_chack" onclick="return isOp('是否送审?\n送审后将不能更改!');" />
 					</s:if>
-					<%-- 	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_OUTSTOCK_OUTSTOCK_DEL')">
+					<%-- 	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_DEL')">
 							<s:submit id="delete" name="delete" value="删除提货单(业务)" action="lading_del" onclick="return isDel();" />
 						</s:if> --%>
 					</s:if>
 					
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_OUTSTOCK_OUTSTOCK_DEL')">
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_DEL')">
 					<s:submit id="delete" name="delete" value="删除" action="outStock_del" onclick="return isDel();" />
 					</s:if>
 					<script type="text/javascript">
@@ -348,7 +348,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 		<tr>
 		    <td colspan="20" class="buttonarea">
 				<s:hidden name="outDetail.lading_id" title="提货单ID" value="%{outStock.ordernum}" />
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_OUTSTOCK_OUTSTOCK_ADD')">
+				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_ADD')">
 				<s:submit id="add" name="add" value="确定" action="outDetail_add" />
 				</s:if>
 				<input type="button" value="关闭" onclick="closeAddForm();" />

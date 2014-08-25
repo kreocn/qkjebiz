@@ -36,7 +36,7 @@ $(function(){
 	<div class="itabletitle">
 		<span class="title1">调库列表</span>
 		<span class="extra1">
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ALLOT_ALLOT_ADD')">
+			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_ADD')">
 			<a href="<s:url namespace="/allot" action="allot_load"><s:param name="viewFlag">add</s:param></s:url>" >添加调库</a>
 			</s:if>
 		</span>
@@ -101,10 +101,10 @@ $(function(){
 		<td><s:date name="lm_timer" format="yyyy-MM-dd HH:mm:ss" /></td>
 
 		<td align="center">
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ALLOT_ALLOT_MDY')">
+			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_MDY')">
 	    	[<a href="<s:url namespace="/allot" action="allot_load"><s:param name="viewFlag">mdy</s:param><s:param name="allot.uuid" value="uuid"></s:param></s:url>">修改</a>]
 	    	</s:if>
-	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ALLOT_ALLOT_DEL')">
+	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_DEL')">
 	    	[<a href="<s:url namespace="/allot" action="allot_del"><s:param name="allot.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>]
 	    	</s:if>	   
 	    </td>

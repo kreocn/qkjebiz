@@ -141,7 +141,7 @@ public class OutStockAction extends ActionSupport {
 	}
 
 	public String list() throws Exception {
-		ContextHelper.isPermit("QKJ_STOCK_OUTSTOCK");
+		ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_LIST");
 		String u = ContextHelper.getUserLoginUuid();
 		try {
 			map.clear();
@@ -270,7 +270,7 @@ public class OutStockAction extends ActionSupport {
 	}
 
 	public String add() throws Exception {
-		ContextHelper.isPermit("QKJ_OUTSTOCK_OUTSTOCK_ADD");
+		ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_ADD");
 		try {
 			Date d = new Date();
 			String u = ContextHelper.getUserLoginUuid();
@@ -302,7 +302,7 @@ public class OutStockAction extends ActionSupport {
 	}
 
 	public String save() throws Exception {
-		ContextHelper.isPermit("QKJ_OUTSTOCK_OUTSTOCK_MDY");
+		ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_MDY");
 		try {
 			if(outStock.getReason()==1){
 				outStock.setMember_id(outStock.getMember_name());
@@ -320,7 +320,7 @@ public class OutStockAction extends ActionSupport {
 	}
 
 	public String del() throws Exception {
-		ContextHelper.isPermit("QKJ_OUTSTOCK_OUTSTOCK_DEL");
+		ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_DEL");
 		try {
 			this.setOutStock((OutStock)dao.get(outStock.getUuid()));
 			this.setOutStockh(outStock);
@@ -407,7 +407,7 @@ public class OutStockAction extends ActionSupport {
 	 */
 	
 	public String sale() throws Exception {
-		ContextHelper.isPermit("QKJ_OUTSTOCK_OUTSTOCK_MDY");
+		ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_MDY");
 		try {
 			if(outStock.getReason()==1){
 				outStock.setMember_id(outStock.getMember_name());
@@ -422,7 +422,7 @@ public class OutStockAction extends ActionSupport {
 	
 	//送审
 	public String chack() throws Exception {
-		ContextHelper.isPermit("QKJ_OUTSTOCK_OUTSTOCK_STATUS0");
+		ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_STATUS0");
 		try {
 			Date d = new Date();
 			String u = ContextHelper.getUserLoginUuid();
@@ -439,7 +439,7 @@ public class OutStockAction extends ActionSupport {
 	
 	//确认
 		public String sure() throws Exception {
-			ContextHelper.isPermit("QKJ_OUTSTOCK_OUTSTOCK_ADD");
+			ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_ADD");
 			try {
 				outStock.setSend(4);
 				dao.updateCheck(outStock);
@@ -453,7 +453,7 @@ public class OutStockAction extends ActionSupport {
 	//经理审核
 	
 	public String chackManage() throws Exception {
-		ContextHelper.isPermit("QKJ_OUTSTOCK_OUTSTOCK_MANAGE");
+		ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_MANAGE");
 		try {
 			Date d = new Date();
 			String u = ContextHelper.getUserLoginUuid();
@@ -471,7 +471,7 @@ public class OutStockAction extends ActionSupport {
 	
 	//总监审核
 	public String chackCoo() throws Exception {
-		ContextHelper.isPermit("QKJ_OUTSTOCK_OUTSTOCK_COO");
+		ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_COO");
 		try {
 			Date d = new Date();
 			String u = ContextHelper.getUserLoginUuid();

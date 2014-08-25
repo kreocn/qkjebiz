@@ -119,7 +119,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 <s:if test="null != allot">
 <tr>
 <td class='firstRow'>调库明细:
-	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ALLOT_ALLOT_ADD')">
+	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_ADD')">
 	<br />
 	<input id="addItem" type="button" value="添加明细" />
 	</s:if>
@@ -143,7 +143,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 	</td>
 	<s:if test="%{allot.state==0||allot.state==2}">
 	<td align="center">
-   	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ALLOT_ALLOT_DEL')">
+   	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_DEL')">
    	[<a href="<s:url namespace="/allot" action="allotDetail_del"><s:param name="allotDetail.uuid" value="uuid" /><s:param name="allotDetail.lading_id" value="lading_id" /></s:url>" onclick="return isDel();">删除</a>]
    	</s:if>	   
     </td>
@@ -173,18 +173,18 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 		    	
 		    	<span id="message"><s:property value="message" /></span>
 				<s:if test="null == allot && 'add' == viewFlag">
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ALLOT_ALLOT_ADD')">
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_ADD')">
 					<s:submit id="add" name="add" value="保存&填写明细" action="allot_add" onclick="return xt();"/>
 					</s:if>
 				</s:if>
 				<s:elseif test="null != allot && 'mdy' == viewFlag">
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ALLOT_ALLOT_MDY')">
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_MDY')">
 					<s:if test="%{allot.state==0||allot.state==2}">
 					<s:submit id="save" name="save" value="保存" action="allot_save" onclick="return xt();"/>
 					<s:if test="%{allotDetails.size>0}">
 					<s:submit id="freeze" name="freeze" value="发货" action="allot_freeze" onclick="return isOp('是否确认发货?\n发货后将不能更改!');"></s:submit>
 					</s:if>
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ALLOT_ALLOT_DEL')">
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_DEL')">
 					<s:submit id="delete" name="delete" value="删除" action="allot_del" onclick="return isDel();" />
 					</s:if>
 					</s:if>
@@ -235,7 +235,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 		    <td colspan="20" class="buttonarea">
 				<s:hidden name="allotDetail.lading_id" title="调货单ID" value="%{allot.ordernum}" />
 				<s:hidden name="allotDetail.goldId" title="调入仓库" value="%{allot.goldid}"></s:hidden>
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ALLOT_ALLOT_ADD')">
+				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_ADD')">
 				<s:submit id="add" name="add" value="确定" action="allotDetail_add" />
 				</s:if>
 				<input type="button" value="关闭" onclick="closeAddForm();" />

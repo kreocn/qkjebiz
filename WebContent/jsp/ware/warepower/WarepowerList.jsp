@@ -27,7 +27,7 @@ $(function(){
 	<div class="itabletitle">
 		<span class="title1">仓库管理权限列表</span>
 		<span class="extra1">
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WAREPOWER_WAREPOWER_ADD')">
+			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_WAREPOWER_ADD')">
 			<a href="<s:url namespace="/warepower" action="warepower_load"><s:param name="viewFlag">add</s:param></s:url>" >添加仓库管理权限</a>
 			</s:if>
 		</span>
@@ -71,10 +71,10 @@ $(function(){
 	    <td><s:property value="user_name" /></td>
 
 		<td align="center">
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WAREPOWER_WAREPOWER')">
+			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_WAREPOWER')">
 	    	[<a href="<s:url namespace="/warepower" action="warepower_load"><s:param name="viewFlag">mdy</s:param><s:param name="warepower.uuid" value="uuid"></s:param></s:url>">修改</a>]
 	    	</s:if>
-	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WAREPOWER_WAREPOWER_DEL')">
+	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_WAREPOWER_DEL')">
 	    	[<a href="<s:url namespace="/warepower" action="warepower_del"><s:param name="warepower.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>]
 	    	</s:if>	   
 	    </td>
