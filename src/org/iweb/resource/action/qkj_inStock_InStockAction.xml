@@ -40,6 +40,15 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
+		
+		<action name="inStock_sure" class="com.qkj.ware.action.InStockAction" method="sure">
+			<result type="redirectAction">
+				<param name="actionName">inStock_load</param>
+				<param name="inStock.uuid">${inStock.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
 		<!-- InStock End -->
 	</package>
 </struts>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="ware_inDetailH" extends="default" namespace="/ware">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- InDetailH Start -->
+		<action name="inDetailH_list" class="com.qkj.ware.action.InDetailHAction" method="list">
+			<result>/jsp/ware/history/InDetailHList.jsp</result>
+		</action>
+		<action name="inDetailH_relist" class="com.qkj.ware.action.InDetailHAction" method="relist">
+			<result type="redirectAction">
+				<param name="actionName">inDetailH_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+		<action name="inDetailH_load" class="com.qkj.ware.action.InDetailHAction" method="load">
+			<result>/jsp/ware/history/InDetailHEdit.jsp</result>
+		</action>
+		<action name="inDetailH_add" class="com.qkj.ware.action.InDetailHAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">inDetailH_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="inDetailH_save" class="com.qkj.ware.action.InDetailHAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">inDetailH_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="inDetailH_del" class="com.qkj.ware.action.InDetailHAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">inDetailH_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- InDetailH End -->
+	</package>
+</struts>

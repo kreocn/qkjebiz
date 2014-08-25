@@ -30,7 +30,11 @@ public class InStockDAO extends AbstractDAO {
 	public int mdyTotalPrice(String lading_id) {
 		return super.save("qkjmanage_mdyTotalPrice", lading_id);
 	}
-
+	
+	public int sure(Object parameters) {
+		return super.save("inStock_mdySure", parameters);
+	}
+	
 	public int getResultCount() {
 		return super.getResultCount();
 	}

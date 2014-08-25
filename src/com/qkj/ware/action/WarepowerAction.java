@@ -172,9 +172,7 @@ public class WarepowerAction extends ActionSupport {
 			//warepower.setLm_user(ContextHelper.getUserLoginUuid());
 			//warepower.setLm_time(new Date());
 			dao.save(warepower);
-			map.clear();
-			map.put("ware_id", warepower.getWare_id());
-			this.setWarepower((Warepower)dao.list(map).get(0));
+		
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);

@@ -33,7 +33,7 @@
 		</tr>
 		<tr>
 			<td class='firstRow'><span style="color:red;">*</span> 仓库id:</td>
-			<td class='secRow'><s:property value="warepower.ware_id" /></td>
+			<td class='secRow'><s:property value="warepower.ware_name" /></td>
 		</tr>
 		<tr>
 			<td class='firstRow'><span style="color:red;">*</span> 管理员:</td>
@@ -67,8 +67,8 @@
 			<td><s:property value="ware_name" /></td>
 			<td><s:property value="address" /></td>
 			<td>
-			<s:hidden name="warepowers[%{#sta.index}].ware_id" value="%{uuid}" />
-			<s:submit id="ss" name="ss" value="填加管理员" action="warepower_add" /></td>
+			<s:a href="warepower_add?warepower.ware_id=%{uuid}">填加管理员</s:a>
+			</td>
 		  </tr>
 		</s:iterator>
 		</s:else>

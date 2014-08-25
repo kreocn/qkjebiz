@@ -7,7 +7,7 @@
 	<select id="warepower_getWarepowers" resultClass="warepower" parameterClass="java.util.Map">
 		<![CDATA[ 
 			SELECT s.*,w.`ware_name` ware_name, u.`USER_NAME` user_name FROM qkj_t_stockpower s LEFT JOIN qkj_t_warehouse w ON (s.`ware_id`=w.`uuid`)
-			LEFT JOIN s_sys_user u ON (s.`username`=u.`USER_NAME`)
+			LEFT JOIN s_sys_user u ON (s.`username`=u.`UUID`)
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ s.uuid=#uuid# ]]></isNotEmpty>
@@ -41,7 +41,7 @@
 	<update id="warepower_mdyWarepower" parameterClass="warepower">
 		<![CDATA[
 			Update qkj_t_stockpower
-			Set ware_id=#ware_id#,
+			Set
 username=#username#
 			Where uuid = #uuid#
 		]]>
@@ -54,11 +54,9 @@ username=#username#
 	<!-- 其它的 -->
 	<select id="warepower_getUsers" resultClass="user" parameterClass="java.util.Map">
 		<![CDATA[ 
-			SELECT * FROM s_sys_user
+			SELECT * FROM s_sys_user WHERE user_roles LIKE '%1393307368483001%'
 		]]>
-		<dynamic prepend="WHERE">
-			<isNotEmpty prepend="AND" property="user_roles"><![CDATA[ user_roles like '%'||#user_roles#||'%' ]]></isNotEmpty>
-		</dynamic>
+		
 		<![CDATA[ Order By uuid Desc LIMIT 0, 1000 ]]>
 	</select>
 	<!-- Warepower End -->

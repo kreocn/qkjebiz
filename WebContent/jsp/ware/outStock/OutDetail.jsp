@@ -49,11 +49,14 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 		<s:if test="null != outStock">
 		  <tr>
 			<td class='firstRow'><span style="color:red;">*</span> 出库单号:</td>
-			<td class='secRow'><s:property value="outStock.ordernum" />
+			<td class='secRow' colspan="4"><s:property value="outStock.ordernum" />
 			<s:hidden name="outStock.uuid"></s:hidden>
 			<s:hidden name="outStock.send"></s:hidden>
 			<s:hidden name="outDetail.lading_id"  title="出库单号" /></td>
-			<td class='firstRow'><span style="color:red;">*</span> 出库时间:</td>
+			
+		</tr>
+		<tr>
+		<td class='firstRow'><span style="color:red;">*</span> 出库时间:</td>
 			<td class='secRow'><s:date name="outStock.date" format="yyyy-MM-dd" /><s:hidden name="outStock.date" title="出库时间" /></td>
 			<td class='firstRow'>状态:</td>
 			<td class='secRow'>
@@ -152,7 +155,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 <tr>
 <td class='firstRow'>出库明细:
 	<%-- <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_outStock_outStock_ADD') && outStock.status==0"> --%>
-	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_outStock_outStock_ADD')">
+	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_OUTSTOCK_OUTSTOCK_ADD')">
 	<br />
 	<input id="addItem" type="button" value="添加明细" onclick="commain();"/>
 	</s:if>
@@ -177,7 +180,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 	</td>
 	<td align="right"><s:property value="totel" /></td>
 	<td align="center">
-   	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_OUTDETAIL_OUTDETAIL_DEL')">
+   	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_OUTSTOCK_OUTSTOCK_DEL')">
    	[<a href="<s:url namespace="/outStock" action="outDetail_del"><s:param name="outDetail.uuid" value="uuid" /><s:param name="outDetail.lading_id" value="lading_id" /></s:url>" onclick="return isDel();">删除</a>]
    	</s:if>	   
     </td>
@@ -213,8 +216,10 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 					</s:if>
 				</s:if>
 				<s:elseif test="null != outStock && 'mdy' == viewFlag">
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_OUTSTOCK_OUTSTOCK_MDY')">
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_OUTSTOCK_OUTSTOCK_MDY') && 2==outStock.send">
+					<s:if test=""></s:if>
 					<s:submit id="save" name="save" value="保存" action="outStock_save" />
+					<s:submit value="确认" action="outStock_sure" onclick="return isOp('是否确认?\n确认后将不能更改!');"></s:submit>
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_OUTSTOCK_OUTSTOCK_DEL')">
 					<s:submit id="delete" name="delete" value="删除" action="outStock_del" onclick="return isDel();" />
 					</s:if>
@@ -284,7 +289,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 		<tr>
 		    <td colspan="20" class="buttonarea">
 				<s:hidden name="outDetail.lading_id" title="提货单ID" value="%{outStock.ordernum}" />
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_INDETAIL_INDETAIL_ADD')">
+				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_OUTSTOCK_OUTSTOCK_ADD')">
 				<s:submit id="add" name="add" value="确定" action="outDetail_add" />
 				</s:if>
 				<input type="button" value="关闭" onclick="closeAddForm();" />

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
+<sqlMap>
+	<!-- OutDetailH Start -->
+	<typeAlias alias="outDetailH" type="com.qkj.ware.domain.OutDetailH" />
+	<select id="ware_getOutDetailHs" resultClass="outDetailH" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select * From qkj_h_outdetail
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="lading_id"><![CDATA[ lading_id=#lading_id# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="product_id"><![CDATA[ product_id=#product_id# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="num"><![CDATA[ num=#num# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="price"><![CDATA[ price=#price# ]]></isNotEmpty>
+
+		</dynamic>
+		<![CDATA[ LIMIT 1000 ]]>
+	</select>
+	<select id="ware_getOutDetailHsCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) From qkj_h_outdetail
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="lading_id"><![CDATA[ lading_id=#lading_id# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="product_id"><![CDATA[ product_id=#product_id# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="num"><![CDATA[ num=#num# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="price"><![CDATA[ price=#price# ]]></isNotEmpty>
+
+		</dynamic>
+		<![CDATA[ LIMIT 1000 ]]>
+	</select>
+	<insert id="ware_addOutDetailH" parameterClass="outDetailH">
+		<![CDATA[ 
+			Insert Into qkj_h_outdetail(lading_id,product_id,num,price,totel)
+			Values (#lading_id#,#product_id#,#num#,#price#,#totel#)
+		]]>
+		<selectKey resultClass="int" keyProperty="uuid">
+		<![CDATA[ Select LAST_INSERT_ID() ]]>
+		</selectKey>
+	</insert>
+	<update id="ware_mdyOutDetailH" parameterClass="outDetailH">
+		<![CDATA[
+			Update qkj_h_outdetail
+			Set lading_id=#lading_id#,
+product_id=#product_id#,
+num=#num#,
+price=#price#,
+totel=#totel#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="ware_delOutDetailH" parameterClass="outDetailH">
+	<![CDATA[
+		Delete From qkj_h_outdetail Where uuid=#uuid#
+	]]>
+	</delete>
+	<!-- OutDetailH End -->
+</sqlMap>

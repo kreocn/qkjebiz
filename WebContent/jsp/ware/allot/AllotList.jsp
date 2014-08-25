@@ -101,7 +101,7 @@ $(function(){
 		<td><s:date name="lm_timer" format="yyyy-MM-dd HH:mm:ss" /></td>
 
 		<td align="center">
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ALLOT_ALLOT')">
+			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ALLOT_ALLOT_MDY')">
 	    	[<a href="<s:url namespace="/allot" action="allot_load"><s:param name="viewFlag">mdy</s:param><s:param name="allot.uuid" value="uuid"></s:param></s:url>">修改</a>]
 	    	</s:if>
 	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ALLOT_ALLOT_DEL')">

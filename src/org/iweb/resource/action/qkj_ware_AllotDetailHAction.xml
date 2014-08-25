@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="ware_allotDetailH" extends="default" namespace="/ware">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- AllotDetailH Start -->
+		<action name="allotDetailH_list" class="com.qkj.ware.action.AllotDetailHAction" method="list">
+			<result>/jsp/ware/history/AllotDetailHList.jsp</result>
+		</action>
+		<action name="allotDetailH_relist" class="com.qkj.ware.action.AllotDetailHAction" method="relist">
+			<result type="redirectAction">
+				<param name="actionName">allotDetailH_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+		<action name="allotDetailH_load" class="com.qkj.ware.action.AllotDetailHAction" method="load">
+			<result>/jsp/ware/history/AllotDetailHEdit.jsp</result>
+		</action>
+		<action name="allotDetailH_add" class="com.qkj.ware.action.AllotDetailHAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">allotDetailH_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="allotDetailH_save" class="com.qkj.ware.action.AllotDetailHAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">allotDetailH_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="allotDetailH_del" class="com.qkj.ware.action.AllotDetailHAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">allotDetailH_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- AllotDetailH End -->
+	</package>
+</struts>

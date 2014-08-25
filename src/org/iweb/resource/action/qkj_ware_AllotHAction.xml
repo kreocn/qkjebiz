@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="ware_allotH" extends="default" namespace="/ware">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- AllotH Start -->
+		<action name="allotH_list" class="com.qkj.ware.action.AllotHAction" method="list">
+			<result>/jsp/ware/history/AllotHList.jsp</result>
+		</action>
+		<action name="allotH_relist" class="com.qkj.ware.action.AllotHAction" method="relist">
+			<result type="redirectAction">
+				<param name="actionName">allotH_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+		<action name="allotH_load" class="com.qkj.ware.action.AllotHAction" method="load">
+			<result>/jsp/ware/history/AllotHEdit.jsp</result>
+		</action>
+		<action name="allotH_add" class="com.qkj.ware.action.AllotHAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">allotH_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="allotH_save" class="com.qkj.ware.action.AllotHAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">allotH_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="allotH_del" class="com.qkj.ware.action.AllotHAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">allotH_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- AllotH End -->
+	</package>
+</struts>

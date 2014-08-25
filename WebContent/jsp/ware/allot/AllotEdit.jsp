@@ -46,7 +46,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 			<a href="<s:url action="allot_list" namespace="/allot" />" >调库列表</a>
 		</span>	
 	</div>
-<s:form name="form1" action="allot_add" namespace="/allot" onsubmit="return validator(this);" method="post" theme="simple">
+<s:form id="form1" name="form1" action="allot_add" namespace="/allot" onsubmit="return validator(this);" method="post" theme="simple">
 	<div class="ifromoperate" ></div>
 	<table class="ilisttable" width="100%">
 		<s:if test="null != allot">
@@ -82,9 +82,9 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 		  <tr>
 <td class='firstRow'><span style="color:red;">*</span> 调出仓库:</td>
 <td class='secRow'>
-	<select name="allot.sourceid" title="调出仓库" >
+	<select id="allot.sourceid" name="allot.sourceid" title="调出仓库" >
 					
-					<s:iterator value="wares" status="sta" var="x">
+					<s:iterator value="warepowers" status="sta" var="x">
 					<option value="<s:property value="uuid" />" 
 					<s:if test="#x.uuid==allot.sourceid">
 					selected="selected"
@@ -96,7 +96,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 <tr>
 <td class='firstRow'><span style="color:red;">*</span> 调入仓库:</td>
 <td class='secRow'>
-	<select name="allot.goldid" title="调入仓库" >
+	<select id="allot.goldid" name="allot.goldid" title="调入仓库" >
 					
 					<s:iterator value="wares" status="sta" var="x">
 					<option value="<s:property value="uuid" />" 
@@ -119,7 +119,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 <s:if test="null != allot">
 <tr>
 <td class='firstRow'>调库明细:
-	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ALLOT_ALLOTDETAIL_ADD')">
+	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ALLOT_ALLOT_ADD')">
 	<br />
 	<input id="addItem" type="button" value="添加明细" />
 	</s:if>
@@ -143,7 +143,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 	</td>
 	<s:if test="%{allot.state==0||allot.state==2}">
 	<td align="center">
-   	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ALLOT_ALLOTDETAIL_DEL')">
+   	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ALLOT_ALLOT_DEL')">
    	[<a href="<s:url namespace="/allot" action="allotDetail_del"><s:param name="allotDetail.uuid" value="uuid" /><s:param name="allotDetail.lading_id" value="lading_id" /></s:url>" onclick="return isDel();">删除</a>]
    	</s:if>	   
     </td>
@@ -174,22 +174,25 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 		    	<span id="message"><s:property value="message" /></span>
 				<s:if test="null == allot && 'add' == viewFlag">
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ALLOT_ALLOT_ADD')">
-					<s:submit id="add" name="add" value="保存&填写明细" action="allot_add" />
+					<s:submit id="add" name="add" value="保存&填写明细" action="allot_add" onclick="return xt();"/>
 					</s:if>
 				</s:if>
 				<s:elseif test="null != allot && 'mdy' == viewFlag">
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ALLOT_ALLOT_MDY')">
 					<s:if test="%{allot.state==0||allot.state==2}">
-					<s:submit id="save" name="save" value="保存" action="allot_save" />
+					<s:submit id="save" name="save" value="保存" action="allot_save" onclick="return xt();"/>
+					<s:if test="%{allotDetails.size>0}">
 					<s:submit id="freeze" name="freeze" value="发货" action="allot_freeze" onclick="return isOp('是否确认发货?\n发货后将不能更改!');"></s:submit>
+					</s:if>
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ALLOT_ALLOT_DEL')">
 					<s:submit id="delete" name="delete" value="删除" action="allot_del" onclick="return isDel();" />
 					</s:if>
 					</s:if>
-					
 					<s:if test="%{allot.state==1}">
-					<s:submit id="freeze" name="freeze" value="确认收货" action="allot_delivery"></s:submit>
 					<s:submit id="freeze" name="freeze" value="取消发货" action="allot_cancel" onclick="return isOp('确认取消发货?');"></s:submit>
+					</s:if>
+					<s:if test="%{allot.state==1&&flag==1}">
+					<s:submit id="freeze" name="freeze" value="确认收货" action="allot_delivery"></s:submit>
 					</s:if>
 					</s:if>
 					
@@ -232,7 +235,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 		    <td colspan="20" class="buttonarea">
 				<s:hidden name="allotDetail.lading_id" title="调货单ID" value="%{allot.ordernum}" />
 				<s:hidden name="allotDetail.goldId" title="调入仓库" value="%{allot.goldid}"></s:hidden>
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ALLOT_ALLOTDETAIL_ADD')">
+				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ALLOT_ALLOT_ADD')">
 				<s:submit id="add" name="add" value="确定" action="allotDetail_add" />
 				</s:if>
 				<input type="button" value="关闭" onclick="closeAddForm();" />
@@ -242,6 +245,14 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 </s:form>
 </div>
 <script type="text/javascript">
+function xt(){
+	var source=document.getElementById('allot.sourceid').value;
+	var gold=document.getElementById('allot.goldid').value;
+	if(source==gold){
+		alert("调入仓库调出仓库不能一致！");
+		return false;
+	}
+}
 var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
 var c_mid = '<s:property value="lading.member_id" />';
 $(function() {
