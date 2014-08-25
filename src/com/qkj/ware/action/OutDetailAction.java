@@ -6,6 +6,7 @@ import org.iweb.sys.*;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.qkj.ware.dao.OutDetailDAO;
+import com.qkj.ware.dao.OutDetailHDAO;
 import com.qkj.ware.dao.OutStockDAO;
 import com.qkj.ware.domain.*;
 import com.qkj.ware.dao.StockDAO;
@@ -18,6 +19,7 @@ public class OutDetailAction extends ActionSupport {
 	private OutDetailDAO dao=new OutDetailDAO();
 
 	private OutDetail outDetail;
+	private OutDetailH outDetailh;
 	private OutStock outStock;
 	private Stock stock;
 	private List<OutDetail> outDetails;
@@ -30,6 +32,14 @@ public class OutDetailAction extends ActionSupport {
 	
 	
 
+
+	public OutDetailH getOutDetailh() {
+		return outDetailh;
+	}
+
+	public void setOutDetailh(OutDetailH outDetailh) {
+		this.outDetailh = outDetailh;
+	}
 
 	public OutDetail getOutDetail() {
 		return outDetail;
@@ -115,7 +125,7 @@ public class OutDetailAction extends ActionSupport {
 	}
 
 	public String list() throws Exception {
-		ContextHelper.isPermit("QKJ_OUTDETAIL_OUTDETAIL_LIST");
+		ContextHelper.isPermit("QKJ_OUTSTOCK_OUTSTOCK_LIST");
 		try {
 			map.clear();
 			if (outDetail != null)
@@ -161,7 +171,7 @@ public class OutDetailAction extends ActionSupport {
 	}
 
 	public String add() throws Exception {
-		ContextHelper.isPermit("QKJ_OUTDETAIL_OUTDETAIL_ADD");
+		ContextHelper.isPermit("QKJ_OUTSTOCK_OUTSTOCK_ADD");
 		try {
 			//修改库存
 			StockDAO stockdao=new StockDAO();
@@ -194,7 +204,7 @@ public class OutDetailAction extends ActionSupport {
 				//填加祥表
 				dao.add(outDetail);
 			}else{
-				setMessage("库存不足!");
+				setMessage("1");
 			}
 			
 		} catch (Exception e) {
@@ -205,7 +215,7 @@ public class OutDetailAction extends ActionSupport {
 	}
 
 	public String save() throws Exception {
-		ContextHelper.isPermit("QKJ_OUTDETAIL_OUTDETAIL_MDY");
+		ContextHelper.isPermit("QKJ_OUTSTOCK_OUTSTOCK_MDY");
 		try {
 			//outDetail.setLm_user(ContextHelper.getUserLoginUuid());
 			//outDetail.setLm_time(new Date());
@@ -218,9 +228,12 @@ public class OutDetailAction extends ActionSupport {
 	}
 
 	public String del() throws Exception {
-		ContextHelper.isPermit("QKJ_OUTDETAIL_OUTDETAIL_DEL");
+		ContextHelper.isPermit("QKJ_OUTSTOCK_OUTSTOCK_DEL");
 		try {
 			this.setOutDetail((OutDetail)dao.get(outDetail.getUuid()));
+			OutDetailHDAO hd=new OutDetailHDAO();
+			this.setOutDetailh(outDetail);
+			hd.add(outDetailh);//填加历史
 			setMessage("删除成功!ID=" + outDetail.getUuid());
 			//修改库存
 			StockDAO stockdao=new StockDAO();
@@ -237,6 +250,7 @@ public class OutDetailAction extends ActionSupport {
 				insdao.save(outStock);
 			}
 			//删除祥表
+			
 			dao.delete(outDetail);
 			
 		} catch (Exception e) {
@@ -244,6 +258,17 @@ public class OutDetailAction extends ActionSupport {
 			throw new Exception(this.getClass().getName() + "!del 数据删除失败:", e);
 		}
 		return SUCCESS;
+	}
+
+	private void setOutDetailh(OutDetail outDetail2) {
+		// TODO Auto-generated method stub
+		outDetailh=new OutDetailH();
+		outDetailh.setLading_id(outDetail2.getLading_id());
+		outDetailh.setNum(outDetail2.getNum());
+		outDetailh.setPrice(outDetail2.getPrice());
+		outDetailh.setProduct_id(outDetail2.getProduct_id());
+		outDetailh.setTotel(outDetail2.getTotel());
+		
 	}
 
 	

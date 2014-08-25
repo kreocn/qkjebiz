@@ -59,13 +59,16 @@ $(function(){
 	  <tr>
 	    <th><input name="uuidcheck" type="checkbox" /></th>
 	    <th>主键</th>
-
+		<th>仓库</th>
+		<th>管理员</th>
 		<th>操作</th>
 	  </tr>
 <s:iterator value="warepowers" status="sta">
 	  <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>" type="pickrow">
 	    <td align="center"><input name="uuid" type="checkbox" value="<s:property value="uuid" />" /></td>
 	    <td><s:property value="uuid" /></td>
+	    <td><s:property value="ware_name" /></td>
+	    <td><s:property value="user_name" /></td>
 
 		<td align="center">
 			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WAREPOWER_WAREPOWER')">

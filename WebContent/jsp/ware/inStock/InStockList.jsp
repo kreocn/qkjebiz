@@ -86,7 +86,7 @@ $(function(){
 		<td><s:property value="lm_user_name" /></td>
 		<td><s:date name="lm_timer" format="yyyy-MM-dd HH:mm:ss" /></td>
 		<td align="center">
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_INSTOCK_INSTOCK')">
+			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_INSTOCK_INSTOCK_MDY')">
 	    	[<a href="<s:url namespace="/inStock" action="inStock_load"><s:param name="viewFlag">mdy</s:param><s:param name="inStock.uuid" value="uuid"></s:param></s:url>">修改</a>]
 	    	</s:if>
 	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_INSTOCK_INSTOCK_DEL')">

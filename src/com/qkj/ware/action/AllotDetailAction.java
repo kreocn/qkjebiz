@@ -5,10 +5,13 @@ import org.apache.commons.logging.*;
 import org.iweb.sys.*;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.qkj.ware.domain.AllotDetailH;
 import com.qkj.ware.domain.Stock;
 import com.qkj.ware.domain.Allot;
 import com.qkj.ware.domain.AllotDetail;
 import com.qkj.ware.dao.AllotDetailDAO;
+import com.qkj.ware.dao.AllotDetailHDAO;
+import com.qkj.ware.dao.AllotHDAO;
 
 public class AllotDetailAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
@@ -17,6 +20,7 @@ public class AllotDetailAction extends ActionSupport {
 	private AllotDetailDAO dao = new AllotDetailDAO();
 
 	private AllotDetail allotDetail;
+	private AllotDetailH allotDh;
 	private Allot allot;
 	private List<AllotDetail> allotDetails;
 	private List<Stock> stocks;
@@ -26,6 +30,15 @@ public class AllotDetailAction extends ActionSupport {
 	private int recCount;
 	private int pageSize;
 	private int currPage;
+
+	
+	public AllotDetailH getAllotDh() {
+		return allotDh;
+	}
+
+	public void setAllotDh(AllotDetailH allotDh) {
+		this.allotDh = allotDh;
+	}
 
 	public AllotDetail getAllotDetail() {
 		return allotDetail;
@@ -110,7 +123,7 @@ public class AllotDetailAction extends ActionSupport {
 	}
 
 	public String list() throws Exception {
-		ContextHelper.isPermit("QKJ_ALLOT_ALLOTDETAIL_LIST");
+		ContextHelper.isPermit("QKJ_ALLOT_ALLOT_LIST");
 		try {
 			map.clear();
 			if (allotDetail != null)
@@ -156,7 +169,7 @@ public class AllotDetailAction extends ActionSupport {
 	}
 
 	public String add() throws Exception {
-		ContextHelper.isPermit("QKJ_ALLOT_ALLOTDETAIL_ADD");
+		ContextHelper.isPermit("QKJ_ALLOT_ALLOT_ADD");
 		try {
 			dao.add(allotDetail);
 		} catch (Exception e) {
@@ -167,7 +180,7 @@ public class AllotDetailAction extends ActionSupport {
 	}
 
 	public String save() throws Exception {
-		ContextHelper.isPermit("QKJ_ALLOT_ALLOTDETAIL_MDY");
+		ContextHelper.isPermit("QKJ_ALLOT_ALLOT_MDY");
 		try {
 			dao.save(allotDetail);
 		} catch (Exception e) {
@@ -178,8 +191,13 @@ public class AllotDetailAction extends ActionSupport {
 	}
 
 	public String del() throws Exception {
-		ContextHelper.isPermit("QKJ_ALLOT_ALLOTDETAIL_DEL");
+		ContextHelper.isPermit("QKJ_ALLOT_ALLOT_DEL");
 		try {
+			
+			this.setAllotDetail((AllotDetail)dao.get(allotDetail.getUuid()));
+			AllotDetailHDAO hd=new AllotDetailHDAO();
+			this.setAllotDh(allotDetail);
+			hd.add(allotDh);//填加历史
 			//删除祥表
 			dao.delete(allotDetail);
 			setMessage("删除成功!ID=" + allotDetail.getUuid());
@@ -188,5 +206,12 @@ public class AllotDetailAction extends ActionSupport {
 			throw new Exception(this.getClass().getName() + "!del 数据删除失败:", e);
 		}
 		return SUCCESS;
+	}
+
+	private void setAllotDh(AllotDetail allotDetail2) {
+		// TODO Auto-generated method stub
+		allotDh.setLading_id(allotDetail2.getLading_id());
+		allotDh.setNum(allotDetail2.getNum());
+		allotDh.setStock_id(allotDetail2.getStock_id());
 	}
 }

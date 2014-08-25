@@ -6,10 +6,14 @@ import org.iweb.sys.*;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.qkj.ware.dao.StockDAO;
+import com.qkj.ware.domain.AllotDetailH;
+import com.qkj.ware.domain.AllotH;
 import com.qkj.ware.domain.Stock;
 import com.qkj.ware.domain.Allot;
 import com.qkj.ware.dao.AllotDAO;
 import com.qkj.ware.dao.AllotDetailDAO;
+import com.qkj.ware.dao.AllotDetailHDAO;
+import com.qkj.ware.dao.AllotHDAO;
 import com.qkj.ware.domain.AllotDetail;
 import com.qkjsys.ebiz.dao.WareDAO;
 import com.qkjsys.ebiz.domain.Ware;
@@ -21,10 +25,13 @@ public class AllotAction extends ActionSupport {
 	private AllotDAO dao = new AllotDAO();
 
 	private Allot allot;
+	private AllotH alloth;
+	private AllotDetailH allotDh;
+	private Ware ware;
 	private Stock stock;//
 	private AllotDetail allotDetail;
 	private List<Allot> allots;
-	private List<Allot> allotss;
+	private List<Ware> warepowers;
 	private List<AllotDetail> allotDetails;
 	private List<Ware> wares;
 	private List<Stock> stocks;
@@ -33,6 +40,43 @@ public class AllotAction extends ActionSupport {
 	private int recCount;
 	private int pageSize;
 	private int currPage;
+	
+	private int flag=0;
+
+	
+	
+	
+	public AllotH getAlloth() {
+		return alloth;
+	}
+
+	public void setAlloth(AllotH alloth) {
+		this.alloth = alloth;
+	}
+
+	public AllotDetailH getAllotDh() {
+		return allotDh;
+	}
+
+	public void setAllotDh(AllotDetailH allotDh) {
+		this.allotDh = allotDh;
+	}
+
+	public Ware getWare() {
+		return ware;
+	}
+
+	public void setWare(Ware ware) {
+		this.ware = ware;
+	}
+
+	public List<Ware> getWarepowers() {
+		return warepowers;
+	}
+
+	public void setWarepowers(List<Ware> warepowers) {
+		this.warepowers = warepowers;
+	}
 
 	public Allot getAllot() {
 		return allot;
@@ -131,6 +175,15 @@ public class AllotAction extends ActionSupport {
 	public void setStock(Stock stock) {
 		this.stock = stock;
 	}
+	
+	
+	public int getFlag() {
+		return flag;
+	}
+
+	public void setFlag(int flag) {
+		this.flag = flag;
+	}
 
 	public String list() throws Exception {
 		ContextHelper.isPermit("QKJ_ALLOT_ALLOT_LIST");
@@ -143,10 +196,11 @@ public class AllotAction extends ActionSupport {
 			this.setCurrPage(ContextHelper.getCurrPage(map));		
 			this.setAllots(dao.list(map));
 			this.setRecCount(dao.getResultCount());
-			//仓库
+			
 			WareDAO wd=new WareDAO();
 			this.setWares(wd.list(null));
 			this.setAllot(null);
+			
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
@@ -159,14 +213,27 @@ public class AllotAction extends ActionSupport {
 	}
 
 	public String load() throws Exception {
+		String u = ContextHelper.getUserLoginUuid();
 		try {
 			if (null == viewFlag) {
 				this.setAllot(null);
 				setMessage("你没有选择任何操作!");
 			} else if ("add".equals(viewFlag)) {
 				this.setAllot(null);
+				//入仓库
 				WareDAO wd=new WareDAO();
-				this.setWares(wd.list(null));
+				map.clear();
+				map.put("bug","bug");
+				this.setWares(wd.list(map));
+				this.setAllot(null);
+				//出仓库
+				if(u.equals("1")){//管理员
+					this.setWarepowers(wares);
+				}else{
+					map.clear();
+					map.put("useruuid",u);
+					this.setWarepowers(wd.listByPower(map));
+				}
 			} else if ("mdy".equals(viewFlag)) {
 				map.clear();
 				map.put("ordernum", allot.getOrdernum());
@@ -176,9 +243,19 @@ public class AllotAction extends ActionSupport {
 					}else{
 						this.setAllot((Allot)dao.list(map).get(0));
 					}
-					//仓库
+					//入仓库
 					WareDAO wd=new WareDAO();
-					this.setWares(wd.list(null));
+					map.clear();
+					map.put("bug","bug");
+					this.setWares(wd.list(map));
+					//出仓库
+					if(u.equals("1")){//管理员
+						this.setWarepowers(wares);
+					}else{
+						map.clear();
+						map.put("useruuid",u);
+						this.setWarepowers(wd.listByPower(map));
+					}
 					//库存
 					StockDAO sdao=new StockDAO();
 					map.clear();
@@ -189,6 +266,27 @@ public class AllotAction extends ActionSupport {
 					map.clear();
 					map.put("lading_id", allot.getOrdernum());
 					this.setAllotDetails(adao.list(map));
+					
+					//判断是否有确认收货权限
+					int id=allot.getGoldid();
+					map.clear();
+					map.put("useruuid",u);
+					if(ContextHelper.isAdmin()){//管理员
+						this.setFlag(1);
+					}else{
+						this.setWarepowers(wd.listByPower(map));
+						for(int i=0;i<warepowers.size();i++){
+							this.setWare(warepowers.get(i));
+							if(id==ware.getUuid()){//有权限
+								this.setFlag(1);
+								break;
+							}else{
+								this.setFlag(0);
+							}
+							
+						}
+						
+					}
 					
 				} else {
 					this.setAllot(null);
@@ -240,6 +338,7 @@ public class AllotAction extends ActionSupport {
 	
 	public String freeze() throws Exception{
 		ContextHelper.isPermit("QKJ_ALLOT_ALLOT_MDY");
+		String u = ContextHelper.getUserLoginUuid();
 		try {
 			//检查库存是否足够
 			AllotDetailDAO addao=new AllotDetailDAO();
@@ -285,6 +384,7 @@ public class AllotAction extends ActionSupport {
 		map.clear();
 		map.put("lading_id", allot.getOrdernum());
 		this.setAllotDetails(addao.list(map));
+		this.setAllot((Allot)dao.list(map).get(0));
 		if(allotDetails.size()>0){
 			for(int i=0;i<allotDetails.size();i++){
 				this.setAllotDetail(allotDetails.get(i));
@@ -312,7 +412,7 @@ public class AllotAction extends ActionSupport {
 					sdao.updateTotleById(map);
 				}else{
 					stock.setProduct_id(stock.getProduct_id());
-					stock.setStore_id(allotDetail.getGoldId());
+					stock.setStore_id(allot.getGoldid());
 					stock.setQuantity(allotDetail.getNum());
 					sdao.add(stock);
 					
@@ -370,6 +470,10 @@ public class AllotAction extends ActionSupport {
 		ContextHelper.isPermit("QKJ_ALLOT_ALLOT_DEL");
 		try {
 			this.setAllot((Allot)dao.get(allot.getUuid()));
+			AllotHDAO mhd=new AllotHDAO();
+			this.setAlloth(allot);
+			mhd.add(alloth);//填加历史
+			
 			AllotDetailDAO adDao=new AllotDetailDAO();
 			map.clear();
 			map.put("lading_id", allot.getOrdernum());
@@ -378,6 +482,10 @@ public class AllotAction extends ActionSupport {
 			if(allotDetails.size()>0){
 				for(int i=0;i<allotDetails.size();i++){
 					this.setAllotDetail(allotDetails.get(i));
+					
+					AllotDetailHDAO hd=new AllotDetailHDAO();
+					this.setAllotDh(allotDetail);
+					hd.add(allotDh);//填加历史
 					//删除祥表
 					adDao.delete(allotDetail);
 					setMessage("删除成功!ID=" + allotDetail.getUuid());
@@ -393,5 +501,30 @@ public class AllotAction extends ActionSupport {
 			throw new Exception(this.getClass().getName() + "!del 数据删除失败:", e);
 		}
 		return SUCCESS;
+	}
+
+	private void setAllotDh(AllotDetail allotDetail2) {
+		// TODO Auto-generated method stub
+		allotDh=new AllotDetailH();
+		allotDh.setLading_id(allotDetail2.getLading_id());
+		allotDh.setNum(allotDetail2.getNum());
+		allotDh.setStock_id(allotDetail2.getStock_id());
+		
+	}
+
+	private void setAlloth(Allot allot2) {
+		// TODO Auto-generated method stub
+		alloth=new AllotH();
+		alloth.setAdd_timer(allot2.getAdd_timer());
+		alloth.setAdd_user(allot2.getAdd_user());
+		alloth.setDate(allot2.getDate());
+		alloth.setGoldid(allot2.getGoldid());
+		alloth.setLm_timer(allot2.getLm_timer());
+		alloth.setLm_user(allot2.getLm_user());
+		alloth.setNote(allot2.getNote());
+		alloth.setOrdernum(allot2.getOrdernum());
+		alloth.setSourceid(allot2.getSourceid());
+		alloth.setState(allot2.getState());
+		
 	}
 }

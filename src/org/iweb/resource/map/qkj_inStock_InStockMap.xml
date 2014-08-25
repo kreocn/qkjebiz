@@ -75,5 +75,16 @@ reason=#reason#
 			Where uuid = #value#
 		]]>
 	</update>
+	
+	<update id="inStock_mdySure" parameterClass="inStock">
+		<![CDATA[
+			Update qkj_t_instock
+			Set 
+			confirm=#confirm#,
+			conname=#conname#,
+			contime=#contime#
+			Where uuid = #uuid#
+		]]>
+	</update>
 	<!-- InStock End -->
 </sqlMap>

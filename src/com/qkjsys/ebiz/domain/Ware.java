@@ -12,6 +12,8 @@ public class Ware {
 	private String note;// (text) 详细描述
 	private String lm_user;// (varchar) 最后修改人
 	private Date lm_time;// (datetime) 最后修改时间
+	
+	private String bug;
 
 	public Integer getUuid() {
 		return uuid;
@@ -84,5 +86,14 @@ public class Ware {
 	public void setLm_time(Date lm_time) {
 		this.lm_time = lm_time;
 	}
+
+	public String getBug() {
+		return bug;
+	}
+
+	public void setBug(String bug) {
+		this.bug = bug;
+	}
+	
 
 }

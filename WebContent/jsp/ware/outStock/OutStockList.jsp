@@ -101,7 +101,7 @@ $(function(){
 					</s:if>
 		</td>
 		<td align="center">
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_OUTSTOCK_OUTSTOCK')">
+			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_OUTSTOCK_OUTSTOCK_MDY')">
 	    	[<a href="<s:url namespace="/outStock" action="outStock_load"><s:param name="viewFlag">mdy</s:param><s:param name="outStock.uuid" value="uuid"></s:param></s:url>">修改</a>]
 	    	</s:if>
 	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_OUTSTOCK_OUTSTOCK_DEL')">

@@ -6,7 +6,9 @@ import org.iweb.sys.*;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.qkj.ware.domain.InDetail;
+import com.qkj.ware.domain.InDetailH;
 import com.qkj.ware.dao.InDetailDAO;
+import com.qkj.ware.dao.InDetailHDAO;
 import com.qkj.ware.dao.InStockDAO;
 import com.qkj.ware.domain.InStock;
 import com.qkj.ware.dao.StockDAO;
@@ -19,6 +21,7 @@ public class InDetailAction extends ActionSupport {
 	private InDetailDAO dao = new InDetailDAO();
 
 	private InDetail inDetail;
+	private InDetailH inDetailh;
 	private List<InDetail> inDetails;
 	private Stock stock;
 	private Stock newStock;
@@ -110,9 +113,18 @@ public class InDetailAction extends ActionSupport {
 	public void setNewStock(Stock newStock) {
 		this.newStock = newStock;
 	}
+	
+	
+	public InDetailH getInDetailh() {
+		return inDetailh;
+	}
+
+	public void setInDetailh(InDetailH inDetailh) {
+		this.inDetailh = inDetailh;
+	}
 
 	public String list() throws Exception {
-		ContextHelper.isPermit("QKJ_INDETAIL_INDETAIL_LIST");
+		ContextHelper.isPermit("QKJ_INSTOCK_INSTOCK_LIST");
 		try {
 			map.clear();
 			if (inDetail != null)
@@ -158,7 +170,7 @@ public class InDetailAction extends ActionSupport {
 	}
 
 	public String add() throws Exception {
-		ContextHelper.isPermit("QKJ_INDETAIL_INDETAIL_ADD");
+		ContextHelper.isPermit("QKJ_INSTOCK_INSTOCK_ADD");
 		try {
 			//inDetail.setLm_user(ContextHelper.getUserLoginUuid());
 			//inDetail.setLm_time(new Date());
@@ -198,7 +210,7 @@ public class InDetailAction extends ActionSupport {
 	}
 
 	public String save() throws Exception {
-		ContextHelper.isPermit("QKJ_INDETAIL_INDETAIL_MDY");
+		ContextHelper.isPermit("QKJ_INSTOCK_INSTOCK_MDY");
 		try {
 			//inDetail.setLm_user(ContextHelper.getUserLoginUuid());
 			//inDetail.setLm_time(new Date());
@@ -211,8 +223,12 @@ public class InDetailAction extends ActionSupport {
 	}
 
 	public String del() throws Exception {
-		ContextHelper.isPermit("QKJ_INDETAIL_INDETAIL_DEL");
+		ContextHelper.isPermit("QKJ_INSTOCK_INSTOCK_DEL");
 		try {
+			InDetailHDAO hdao=new InDetailHDAO();
+			this.setInDetail((InDetail)dao.get(inDetail.getUuid()));
+			this.setInDetailh(inDetail);
+			hdao.add(inDetailh);
 			dao.delete(inDetail);
 			//修改库存
 			StockDAO stockdao=new StockDAO();
@@ -230,5 +246,15 @@ public class InDetailAction extends ActionSupport {
 			throw new Exception(this.getClass().getName() + "!del 数据删除失败:", e);
 		}
 		return SUCCESS;
+	}
+
+	private void setInDetailh(InDetail inDetail2) {
+		// TODO Auto-generated method stub
+		inDetailh=new InDetailH();
+		inDetailh.setLading_id(inDetail2.getLading_id());
+		inDetailh.setNum(inDetail2.getNum());
+		inDetailh.setPrice(inDetail2.getPrice());
+		inDetailh.setProduct_id(inDetail2.getProduct_id());
+		inDetailh.setTotal(inDetail2.getTotal());
 	}
 }

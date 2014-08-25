@@ -19,6 +19,8 @@ public class OutStockAction extends ActionSupport {
 	private OutStockDAO dao = new OutStockDAO();
 
 	private OutStock outStock;
+	private OutStockH outStockh;
+	private OutDetailH outDetailh;
 	private List<Stock> stocks;
 	private List<OutStock> outStocks;
 	private List<OutDetail> outDetails;
@@ -120,9 +122,27 @@ public class OutStockAction extends ActionSupport {
 	public void setOutDetail(OutDetail outDetail) {
 		this.outDetail = outDetail;
 	}
+	
+	
+	public OutStockH getOutStockh() {
+		return outStockh;
+	}
+
+	public void setOutStockh(OutStockH outStockh) {
+		this.outStockh = outStockh;
+	}
+
+	public OutDetailH getOutDetailh() {
+		return outDetailh;
+	}
+
+	public void setOutDetailh(OutDetailH outDetailh) {
+		this.outDetailh = outDetailh;
+	}
 
 	public String list() throws Exception {
 		ContextHelper.isPermit("QKJ_STOCK_OUTSTOCK");
+		String u = ContextHelper.getUserLoginUuid();
 		try {
 			map.clear();
 			if (outStock != null)
@@ -132,8 +152,18 @@ public class OutStockAction extends ActionSupport {
 			this.setCurrPage(ContextHelper.getCurrPage(map));		
 			this.setOutStocks(dao.list(map));
 			this.setRecCount(dao.getResultCount());
+			
 			WareDAO wd=new WareDAO();
-			this.setWares(wd.list(null));
+			if(ContextHelper.isAdmin()){//管理员
+				map.clear();
+				map.put("bug","bug");
+				this.setWares(wd.list(map));
+			}else{
+				map.clear();
+				map.put("useruuid",u);
+				this.setWares(wd.listByPower(map));
+			}
+			
 			this.setOutStock(null);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
@@ -147,6 +177,7 @@ public class OutStockAction extends ActionSupport {
 	}
 
 	public String load() throws Exception {
+		String u = ContextHelper.getUserLoginUuid();
 		try {
 			if (null == viewFlag) {
 				this.setOutStock(null);
@@ -154,7 +185,15 @@ public class OutStockAction extends ActionSupport {
 			}else if("new".equals(viewFlag)){
 				//出库仓库
 				WareDAO wd=new WareDAO();
-				this.setWares(wd.list(null));
+				if(ContextHelper.isAdmin()){//管理员
+					map.clear();
+					map.put("bug","bug");
+					this.setWares(wd.list(map));
+				}else{
+					map.clear();
+					map.put("useruuid",u);
+					this.setWares(wd.listByPower(map));
+				}
 				this.setOutStock(null);
 			}else if ("add".equals(viewFlag)) {
 				this.setOutStock(null);
@@ -177,7 +216,15 @@ public class OutStockAction extends ActionSupport {
 					}
 					this.setOutStock((OutStock)dao.list(map).get(0));
 					WareDAO wd=new WareDAO();
-					this.setWares(wd.list(null));
+					if(ContextHelper.isAdmin()){//管理员
+						map.clear();
+						map.put("bug","bug");
+						this.setWares(wd.list(map));
+					}else{
+						map.clear();
+						map.put("useruuid",u);
+						this.setWares(wd.listByPower(map));
+					}
 					
 					StockDAO sdao=new StockDAO();
 					map.clear();
@@ -276,6 +323,10 @@ public class OutStockAction extends ActionSupport {
 		ContextHelper.isPermit("QKJ_OUTSTOCK_OUTSTOCK_DEL");
 		try {
 			this.setOutStock((OutStock)dao.get(outStock.getUuid()));
+			this.setOutStockh(outStock);
+			OutStockHDAO mhd=new OutStockHDAO();
+			mhd.add(outStockh);
+			
 			dao.delete(outStock);
 			setMessage("删除成功!ID=" + outStock.getUuid());
 			OutDetailDAO odao=new OutDetailDAO();
@@ -291,6 +342,10 @@ public class OutStockAction extends ActionSupport {
 					map.put("uuid", outDetail.getProduct_id());
 					map.put("lading_id", outStock.getOrdernum());
 					stockdao.updateTotle(map);
+					
+					OutDetailHDAO hd=new OutDetailHDAO();
+					this.setOutDetailh(outDetail);
+					hd.add(outDetailh);//填加历史
 				}
 				
 				//删除详表
@@ -306,6 +361,47 @@ public class OutStockAction extends ActionSupport {
 		return SUCCESS;
 	}
 	
+	private void setOutDetailh(OutDetail outDetail2) {
+		// TODO Auto-generated method stub
+		outDetailh=new OutDetailH();
+		outDetailh.setLading_id(outDetail2.getLading_id());
+		outDetailh.setNum(outDetail2.getNum());
+		outDetailh.setPrice(outDetail2.getPrice());
+		outDetailh.setProduct_id(outDetail2.getProduct_id());
+		outDetailh.setTotel(outDetail2.getTotel());
+		
+	}
+
+	private void setOutStockh(OutStock outStock2) {
+		// TODO Auto-generated method stub
+		outStockh=new OutStockH();
+		outStockh.setAdd_timer(outStock2.getAdd_timer());
+		outStockh.setAdd_user(outStock2.getAdd_user());
+		outStockh.setBsreason(outStock2.getBsreason());
+		outStockh.setCoo_check(outStock2.getCoo_check());
+		outStockh.setCoo_check_time(outStock2.getCoo_check_time());
+		outStockh.setDate(outStock2.getDate());
+		outStockh.setLm_timer(outStock2.getLm_timer());
+		outStockh.setLm_user(outStock2.getLm_user());
+		outStockh.setManager_check(outStock2.getManager_check());
+		outStockh.setManager_check_time(outStock2.getManager_check_time());
+		outStockh.setManager_check_user(outStock2.getManager_check_user());
+		outStockh.setMember_adress(outStock2.getMember_adress());
+		outStockh.setMember_id(outStock2.getMember_id());
+		outStockh.setMember_mebile(outStock2.getMember_mebile());
+		outStockh.setMember_name(outStock2.getMember_name());
+		outStockh.setMember_price(outStock2.getMember_price());
+		outStockh.setNote(outStock2.getNote());
+		outStockh.setOperator_id(outStock2.getOperator_id());
+		outStockh.setOrdernum(outStock2.getOrdernum());
+		outStockh.setReason(outStock2.getReason());
+		outStockh.setSend(outStock2.getSend());
+		outStockh.setStore_id(outStock2.getStore_id());
+		outStockh.setTake_id(outStock2.getTake_id());
+		outStockh.setTotal_price(outStock2.getTotal_price());
+		
+	}
+
 	/**
 	 * 新增方法
 	 */
@@ -340,6 +436,19 @@ public class OutStockAction extends ActionSupport {
 		}
 		return SUCCESS;
 	}
+	
+	//确认
+		public String sure() throws Exception {
+			ContextHelper.isPermit("QKJ_OUTSTOCK_OUTSTOCK_ADD");
+			try {
+				outStock.setSend(4);
+				dao.updateCheck(outStock);
+			} catch (Exception e) {
+				log.error(this.getClass().getName() + "!save 数据更新失败:", e);
+				throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
+			}
+			return SUCCESS;
+		}
 	
 	//经理审核
 	
