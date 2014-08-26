@@ -24,8 +24,8 @@ import net.sf.json.util.JSONUtils;
 
 public class ToolsUtil {
 
-	private final static String[] simpleClass = { "java.lang.String", "java.lang.Double", "java.lang.Integer", "java.lang.Float", "java.lang.Lang",
-			"java.lang.Number", "java.lang.Short" };
+	private final static String[] simpleClass = { "java.lang.String", "java.lang.Double", "java.lang.Integer", "java.lang.Float", "java.lang.Lang", "java.lang.Number",
+			"java.lang.Short" };
 
 	/**
 	 * 创建16位ID
@@ -139,17 +139,15 @@ public class ToolsUtil {
 	 * @return 20位的UUID,适用于不同要求
 	 */
 	public static String getUUID20() {
-		return new StringBuffer().append(System.currentTimeMillis()).append((long) (Math.random() * 9000) + 1000)
-				.append((long) (Math.random() * 900) + 100).toString();
+		return new StringBuffer().append(System.currentTimeMillis()).append((long) (Math.random() * 9000) + 1000).append((long) (Math.random() * 900) + 100).toString();
 	}
 
 	/**
 	 * @return 32位的UUID,适用于不同要求
 	 */
 	public static String getUUID32() {
-		return new StringBuffer().append(System.currentTimeMillis()).append((long) (Math.random() * 9000) + 1000)
-				.append((long) (Math.random() * 9000) + 1000).append((long) (Math.random() * 9000) + 1000)
-				.append((long) (Math.random() * 9000) + 1000).append((long) (Math.random() * 900) + 100).toString();
+		return new StringBuffer().append(System.currentTimeMillis()).append((long) (Math.random() * 9000) + 1000).append((long) (Math.random() * 9000) + 1000)
+				.append((long) (Math.random() * 9000) + 1000).append((long) (Math.random() * 9000) + 1000).append((long) (Math.random() * 900) + 100).toString();
 	}
 
 	/**
@@ -168,6 +166,15 @@ public class ToolsUtil {
 			s = s.substring(0, pos);
 		}
 		return s;
+	}
+
+	/**
+	 * 使用System.currentTimeMillis(13位)得到ID
+	 * 
+	 * @return
+	 */
+	public static String getTimeTimeMillis() {
+		return getTimeTimeMillis(13);
 	}
 
 	/**
@@ -194,8 +201,8 @@ public class ToolsUtil {
 		final int maxNum = 36;
 		int i; // 生成的随机数
 		int count = 0; // 生成的密码的长度
-		char[] str = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'L', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y',
-				'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+		char[] str = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'L', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4',
+				'5', '6', '7', '8', '9' };
 		StringBuffer pwd = new StringBuffer("");
 		Random r = new Random();
 		while (count < pwd_len) {
@@ -491,8 +498,7 @@ public class ToolsUtil {
 			return null;
 		} else {
 			// instanceof
-			if (ToolsUtil.isIn(bean.getClass().getName(), ToolsUtil.simpleClass) || bean instanceof Map || bean instanceof Collections
-					|| bean instanceof Collection) {
+			if (ToolsUtil.isIn(bean.getClass().getName(), ToolsUtil.simpleClass) || bean instanceof Map || bean instanceof Collections || bean instanceof Collection) {
 				return bean.toString();
 			} else {
 				StringBuffer sb = new StringBuffer();
@@ -565,8 +571,7 @@ public class ToolsUtil {
 	 *            竖转横的key(竖列需变成横列的key列)
 	 * @return
 	 */
-	public static List<Map<String, Object>> conventTable(List<Map<String, Object>> oTable, String[] p_key, String[] v_key, String[] v_key_name,
-			String v_key_title, String value_key) {
+	public static List<Map<String, Object>> conventTable(List<Map<String, Object>> oTable, String[] p_key, String[] v_key, String[] v_key_name, String v_key_title, String value_key) {
 		// 定义返回的变量
 		Map<String, HashMap<String, Object>> nTable1 = new HashMap<String, HashMap<String, Object>>();
 		Map<String, HashMap<String, Object>> nTable2 = new HashMap<String, HashMap<String, Object>>();

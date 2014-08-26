@@ -18,9 +18,14 @@
 		<action name="leave_load" class="com.qkj.adm.action.LeaveAction" method="load">
 			<result>/jsp/adm/LeaveEdit.jsp</result>
 		</action>
-		<!-- <action name="leave_add" class="com.qkj.adm.action.LeaveAction" method="add"> <result type="redirectAction"> <param name="actionName">leave_list</param> 
-			<param name="viewFlag">relist</param> <param name="message">${message}</param> </result> </action> -->
 		<action name="leave_del" class="com.qkj.adm.action.LeaveAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">leave_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="leave_list_*" class="com.qkj.adm.action.LeaveAction" method="{1}">
 			<result type="redirectAction">
 				<param name="actionName">leave_list</param>
 				<param name="viewFlag">relist</param>

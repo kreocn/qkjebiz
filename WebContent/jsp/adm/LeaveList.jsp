@@ -69,7 +69,7 @@ max-width: 650px !important;
 			</td>
 			<td class='firstRow3'>补贴状态:</td>
 			<td class='secRow3'>
-				<s:select name="leave.allowance_status" list="#{0:'未补贴',1:'已补贴'}" headerKey="" headerValue="--请选择--" />
+				<s:select name="leave.allowance_status" list="#{0:'未补贴',1:'已补贴',2:'其他'}" headerKey="" headerValue="--请选择--" />
 			</td>
 			</tr>
 			<tr>
@@ -103,6 +103,7 @@ max-width: 650px !important;
 		<th>事由</th>
 		<th>业务部门意见</th>
 		<th>人事部门意见</th>
+		<th>补偿?</th>
 		<th>操作</th>
 	  </tr>
 <s:iterator value="leaves" status="sta">
@@ -142,6 +143,13 @@ max-width: 650px !important;
 			<s:if test="acheck_status==10"><span class="message_pass">人事经理已审</span></s:if>
 			<s:if test="acheck_status==20"><span class="message_pass">行政副总已审</span></s:if>
 			<s:if test="acheck_status==30"><span class="message_pass">总经理已审</span></s:if>
+		</td>
+		<td>
+		<s:if test="leave_type==0 || leave_type==3">
+    	<s:if test="allowance_status==0"><span class="allowance_action message_error" uid="${uuid}" stat="${allowance_status}" title="${it:formatDate(allowance_date,'yyyy-MM-dd')}">未补偿</span></s:if>
+    	<s:if test="allowance_status==1"><span class="allowance_action message_pass" uid="${uuid}" stat="${allowance_status}" title="${it:formatDate(allowance_date,'yyyy-MM-dd')}">已补偿</span></s:if>
+    	<s:if test="allowance_status==2"><span class="allowance_action message_warn" uid="${uuid}" stat="${allowance_status}" title="${it:formatDate(allowance_date,'yyyy-MM-dd')}">其他</span></s:if>
+    	</s:if>
 		</td>
 		<td align="center">
 			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE')">
@@ -183,6 +191,29 @@ max-width: 650px !important;
 <input type="button" value="补签" onclick="addLeave(4);"  />
 </p>
 </div>
+
+<div id="AddAllowanceForm" title="修改补贴状态" style="display: none;">
+<s:form name="form1" action="leave_list_allowance" namespace="/adm" onsubmit="return validator(this);" method="post" theme="simple">
+<s:hidden id="leave_uuid_allowance" name="leave.uuid" />
+<table class="ilisttable" width="100%">
+<tr>
+<td class='firstRow'>补贴状态:</td>
+<td class='secRow'><s:select id="allowance_status_allowance" name="leave.allowance_status" list="#{0:'未补贴',1:'已补贴',2:'其他'}" headerKey="" headerValue="--请选择--" /></td>
+</tr>
+<tr>
+<td class='firstRow'>补贴时间:</td>
+<td class='secRow'>
+	<input id="allowance_date_allowance" name="leave.allowance_date" title="查询日期" value="${it:formatDate(leave.allowance_date,'yyyy-MM-dd')}" />
+	<script type="text/javascript">$("#allowance_date_allowance").datepicker();</script>
+</td>
+</tr>
+<tr>
+<td class='buttonarea' colspan="2"><s:submit id="leave_list_allowance" name="leave_list_allowance" value="确定" action="leave_list_allowance" /></td>
+</tr>
+</table>
+</s:form>
+</div>
+
 <script type="text/javascript">
 var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
 var curr_apply_dept = '${leave.leave_dept}';
@@ -200,6 +231,15 @@ $(function(){
 	      height: 100,
 	      modal: true
 	});
+	
+	$("#AddAllowanceForm").dialog({
+	      autoOpen: false,
+	      width: 260,
+	      height: 150,
+	      modal: true
+	});
+	
+	addAllowance();
 	
 	$("#AddLeaveLink").click(function(){
 		$("#AddLeaveForm").dialog("open");
@@ -268,6 +308,18 @@ function showLeaveMold(p_type) {
 		$("#searchLeaveMold").attr("disabled","disabled");
 		$("#searchLeaveMold").hide();
 	}
+}
+
+function addAllowance() {
+	//<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_ALLOWANCE')">
+	$(".allowance_action").css("cursor","pointer");
+	$(".allowance_action").click(function(){
+		$("#leave_uuid_allowance").val($(this).attr("uid"));
+		$("#allowance_status_allowance").val($(this).attr("stat"));
+		$("#allowance_date_allowance").val($(this).attr("title"));
+		$("#AddAllowanceForm").dialog("open");
+	});
+	//</s:if>
 }
 </script>
 </body>

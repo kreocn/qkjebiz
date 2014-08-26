@@ -2,7 +2,6 @@ package org.iweb.sys;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -21,8 +20,8 @@ import com.aliyun.openservices.oss.model.PutObjectResult;
  * @author 骏宇
  * 
  */
-public class OSSUtil {
-	private static Log log = LogFactory.getLog(OSSUtil.class);
+public class OSSUtil_IMG {
+	private static Log log = LogFactory.getLog(OSSUtil_IMG.class);
 	private final static String key = "otx1ZFIBfPBRgPEv";
 	private final static String secret = "A1PwcIcvavGUhjZ7amtIEJkI4Xg4QO";
 	private final static String endpoint = "http://images.qkjchina.com/";
@@ -96,16 +95,54 @@ public class OSSUtil {
 		}
 	}
 
+	/**
+	 * 上传文件
+	 * 
+	 * @param bucketName
+	 * @param file_name
+	 * @param in
+	 * @param meta
+	 *            meta.setContentLength(int) 为必须
+	 * @return
+	 */
 	public static boolean uploadFile(String bucketName, String file_name, InputStream in, ObjectMetadata meta) {
 		PutObjectResult r = client.putObject(bucketName, file_name, in, meta);
 		log.info("上传成功,返回MD5值为:" + r.getETag());
 		return true;
 	}
 
+	/**
+	 * 上传文件
+	 * 
+	 * @param bucketName
+	 * @param file_name
+	 * @param uploadFile
+	 * @param meta
+	 *            meta.setContentLength(int) 为必须
+	 * @return
+	 */
 	public static boolean uploadFile(String bucketName, String file_name, File uploadFile, ObjectMetadata meta) {
 		try {
 			log.info("校验的MD5值为:" + FileUtil.getFileMD5(uploadFile));
 			return uploadFile(bucketName, file_name, new FileInputStream(uploadFile), meta);
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	/**
+	 * 上传文件
+	 * 
+	 * @param file_name
+	 * @param in
+	 * @param content_length
+	 * @return
+	 */
+	public static boolean uploadFile(String file_name, InputStream in, Long content_length) {
+		try {
+			ObjectMetadata meta = new ObjectMetadata();
+			meta.setContentLength(content_length);
+			return uploadFile("qkjebiz-images", file_name, in, meta);
 		} catch (Exception e) {
 			return false;
 		}
@@ -121,7 +158,7 @@ public class OSSUtil {
 			File f = new File("D://bcd.jpg");
 			// InputStream in = new FileInputStream(f);
 			meta.setContentLength(f.length());
-			OSSUtil.uploadFile("qkjebiz-images", "123456.jpg", f, meta);
+			OSSUtil_IMG.uploadFile("qkjebiz-images", "123456.jpg", f, meta);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -19,15 +19,18 @@
 <style type="text/css">
 </style>
 <script type="text/javascript">
-	$(function() {
-		$('#testxh').xheditor({
-			upImgUrl : "/upload/put",
-			upImgExt : "jpg,jpeg,gif,png",
-			//html5Upload : false,
-			//upMultiple : '1',
-			skin : 'nostyle'
-		});
+var editor;
+$(function() {
+	editor = $('#testxh').xheditor({
+		tools:'Cut,Copy,Paste,Pastetext,SelectAll,|,Blocktag,Fontface,FontSize,Bold,Italic,Underline,Strikethrough,FontColor,BackColor,Removeformat,|,Align,Outdent,Indent,|,Hr,List,Table,Img,|,Source,Preview,Fullscreen',
+		upImgUrl : "/upload/put",
+		upImgExt : "jpg,jpeg,gif,png",
+		//html5Upload : false,
+		//upMultiple : '1',
+		skin : 'nostyle'
 	});
+	//editor.toggleFullscreen(true);
+});
 </script>
 </head>
 <body>
