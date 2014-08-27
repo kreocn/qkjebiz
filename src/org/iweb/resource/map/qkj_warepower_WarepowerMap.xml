@@ -6,13 +6,14 @@
 	<typeAlias alias="user" type="org.iweb.sys.domain.User" />
 	<select id="warepower_getWarepowers" resultClass="warepower" parameterClass="java.util.Map">
 		<![CDATA[ 
-			SELECT s.*,w.`ware_name` ware_name, u.`USER_NAME` user_name FROM qkj_t_stockpower s LEFT JOIN qkj_t_warehouse w ON (s.`ware_id`=w.`uuid`)
+		SELECT s.*,w.`ware_name` ware_name,w.`address` address, u.`USER_NAME` user_name FROM qkj_t_stockpower s LEFT JOIN qkj_t_warehouse w ON (s.`ware_id`=w.`uuid`)
 			LEFT JOIN s_sys_user u ON (s.`username`=u.`UUID`)
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ s.uuid=#uuid# ]]></isNotEmpty>
 <isNotEmpty prepend="AND" property="ware_id"><![CDATA[ s.ware_id=#ware_id# ]]></isNotEmpty>
 <isNotEmpty prepend="AND" property="username"><![CDATA[ s.username=#username# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="username"><![CDATA[ s.dept_code=#dept_code# ]]></isNotEmpty>
 
 		</dynamic>
 		<![CDATA[ Order By s.uuid Desc LIMIT 0, 1000 ]]>
@@ -31,8 +32,8 @@
 	</select>
 	<insert id="warepower_addWarepower" parameterClass="warepower">
 		<![CDATA[ 
-			Insert Into qkj_t_stockpower(ware_id,username)
-			Values (#ware_id#,#username#)
+			Insert Into qkj_t_stockpower(ware_id,username,dept_code,dept_name,prvg)
+			Values (#ware_id#,#username#,#dept_code#,#dept_name#,#prvg#)
 		]]>
 		<selectKey resultClass="int" keyProperty="uuid">
 		<![CDATA[ Select LAST_INSERT_ID() ]]>
@@ -42,7 +43,7 @@
 		<![CDATA[
 			Update qkj_t_stockpower
 			Set
-username=#username#
+			prvg=#prvg#
 			Where uuid = #uuid#
 		]]>
 	</update>

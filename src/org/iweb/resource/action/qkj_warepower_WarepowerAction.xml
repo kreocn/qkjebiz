@@ -20,9 +20,8 @@
 		</action>
 		<action name="warepower_add" class="com.qkj.ware.action.WarepowerAction" method="add">
 			<result type="redirectAction">
-				<param name="actionName">warepower_load</param>
-				<param name="warepower.uuid">${warepower.uuid}</param>
-				<param name="viewFlag">mdy</param>
+				<param name="actionName">warepower_list</param>
+				<param name="viewFlag">relist</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
+<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -13,6 +14,17 @@
 <script type="text/javascript" src="<s:url value="/js/form_validator.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/common_cptb.js" />"></script>
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery-1.8.3.min.js" />"></script>
+
+
+<script type="text/javascript" src="<s:url value="/js/common_listtable.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/jquery.CommonUtil.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/show_page.js" />"></script>
+<link rel="stylesheet" href="<s:url value="/include/jQuery/style.ui.smoothness/jquery-ui-1.10.3.min.css" />" />
+<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-ui-1.10.3.custom.min.js" />"></script>
+<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.ui.datepicker-zh.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/jquery.dialog.iframe.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/common_ajax2.0.js" />"></script>
+<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.select.js" />"></script>
 <body>
 <div id="main">
 <div id="result">
@@ -26,53 +38,63 @@
 <s:form name="form1" action="warepower_add" namespace="/warepower" onsubmit="return validator(this);" method="post" theme="simple">
 	<div class="ifromoperate" ></div>
 	<table class="ilisttable" width="100%">
-		<s:if test="'mdy' == viewFlag">
-		 <tr>
-			<td class='firstRow'><span style="color:red;">*</span> 主键:</td>
-			<td class='secRow'><s:property value="warepower.uuid" /><s:hidden name="warepower.uuid" title="主键" /></td>
+		<s:if test="warepower!=null">
+		<tr>
+		<td class='firstRow3'>申请部门/人:</td>
+			<td class='secRow3' colspan="3">
+				<s:textfield title="部门" id="userdept_codeid" name="warepower.dept_code" readonly="true" />
+				<s:textfield title="部门名称" id="userdept_nameid" name="warepower.dept_name" readonly="true" />
+				<span id="ajax_member_message"></span>
+				<s:textfield name="warepower.user_name" readonly="true"></s:textfield>
+			</td>
+		
 		</tr>
 		<tr>
-			<td class='firstRow'><span style="color:red;">*</span> 仓库id:</td>
-			<td class='secRow'><s:property value="warepower.ware_name" /></td>
-		</tr>
-		<tr>
-			<td class='firstRow'><span style="color:red;">*</span> 管理员:</td>
-			<td class='secRow'><select name="warepower.username"
-								title="管理员">
-									<s:iterator value="users" status="sta" var="x">
-									<option value="<s:property value="uuid" />" 
-									<s:if test="#x.uuid==warepower.username">
-									selected="selected"
-									</s:if>
-									/><s:property value="user_name" />
-									</s:iterator>
-							</select> </td>
-		</tr>
-
+			<td width="30%"><s:property value="warepower.ware_name" />(<s:property value="warepower.address" />)
+			<s:hidden name="warepower.uuid" />
+			</td>
+			<td >  
+			<input type="checkbox" name="warepower.prvg"  value="1"  <s:if test="%{warepower.prvg.indexOf('1')>=0}">checked="checked"</s:if> >增加&nbsp;&nbsp;
+			<input type="checkbox" name="warepower.prvg"  value="2"  <s:if test="%{warepower.prvg.indexOf('2')>=0}">checked="checked"</s:if> > 删除&nbsp;&nbsp;
+			<input type="checkbox" name="warepower.prvg"  value="3"  <s:if test="%{warepower.prvg.indexOf('3')>=0}">checked="checked"</s:if> > 修改&nbsp;&nbsp;
+			<input type="checkbox" name="warepower.prvg"  value="4"  <s:if test="%{warepower.prvg.indexOf('4')>=0}">checked="checked"</s:if> > 查询&nbsp;&nbsp;
+			</td>
+		  </tr>
 		</s:if>
+		
 		<s:else>
 		<tr>
-		    <th>仓库类型</th>
-		    <th>仓库名称</th>
-			<th>仓库地址</th>
-			<th>操作</th>
-	  	</tr>
-	  	<s:iterator value="wares" status="sta">
-		  <tr>
-		    <td>
-		    
-		    <s:if test="0==ware_class">普通库</s:if>
-	    	<s:elseif test="1==ware_class">藏酒库</s:elseif>
-		    </td>
-			<td><s:property value="ware_name" /></td>
-			<td><s:property value="address" /></td>
-			<td>
-			<s:a href="warepower_add?warepower.ware_id=%{uuid}">填加管理员</s:a>
+		<td class='firstRow3'>申请部门/人:</td>
+			<td class='secRow3' colspan="3">
+				<s:textfield title="部门" id="userdept_codeid" name="warepower.dept_code" readonly="true" />
+				<s:textfield title="部门名称" id="userdept_nameid"  name="warepower.dept_name"  readonly="true" />
+				<img class="imglink" src='<s:url value="/images/open2.gif" />' onclick="selectDept();" />
+				<span id="ajax_member_message"></span>
+				<s:select id="membermanagerid" name="warepower.username" list="#{}" headerKey="" headerValue="--请选择--" />
+			</td>
+		
+		</tr>
+		<s:iterator value="wares" status="sta">
+		<tr>
+			<td width="30%"><s:property value="ware_name" />(<s:property value="address" />)
+			<s:hidden name="warepowers[%{#sta.index}].ware_id" value="%{uuid}" />
+			</td>
+			<td >
+			<s:checkbox name="warepowers[%{#sta.index}].prvg" 
+			  fieldValue="1"  /> 增加&nbsp;&nbsp;
+			<s:checkbox name="warepowers[%{#sta.index}].prvg"
+			  fieldValue="2"/> 删除&nbsp;&nbsp;
+			<s:checkbox name="warepowers[%{#sta.index}].prvg" 
+			 fieldValue="3"/> 修改&nbsp;&nbsp;
+			<s:checkbox name="warepowers[%{#sta.index}].prvg"  
+			fieldValue="4"/> 查询&nbsp;&nbsp;
 			</td>
 		  </tr>
 		</s:iterator>
+		
 		</s:else>
-		  
+		
+		
 
 		<tr>
 		    <td colspan="20" class="buttonarea">
@@ -100,4 +122,86 @@
 </div>
 </div>
 </body>
+<script type="text/javascript">
+function check(){
+	
+}
+var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
+var curr_apply_dept = '${leave.leave_dept}';
+var curr_apply_user = '${leave.leave_user}';
+$(function(){
+	CommonUtil.pickrow('table1');
+	CommonUtil.pickrowAll('table1','uuidcheck');
+	if(curr_apply_dept!='') {
+		loadManagers(curr_apply_dept);
+	}
+	
+	$("#AddLeaveForm").dialog({
+	      autoOpen: false,
+	      width: 300,
+	      height: 100,
+	      modal: true
+	});
+	
+	$("#AddLeaveLink").click(function(){
+		$("#AddLeaveForm").dialog("open");
+	});
+	
+	showLeaveMold(${leave.leave_type});
+	$("#searchLeaveType").change(function(){
+		showLeaveMold($(this).val());
+	});
+	
+	$(".leave_cause_show").tooltip({
+		items: "[data]",
+		content: function() {
+			//alert($(this).attr("data"));
+			return "<div class='show_dialog'>" + $("#leave_cause" + $(this).attr("data")).html() + "</div>";
+	  }
+	});
+});
+ 
+var sobj01;
+var selectDept = function() {
+	sobj01 = new DialogIFrame({src:'<s:url namespace="/sys" action="dept_permit_select" />?objname=sobj01',title:"选择部门"});
+	sobj01.selfAction = function(val1,val2) {
+		$("#userdept_codeid").val(val1);
+		$("#userdept_nameid").val(val2);
+		loadManagers(val1);
+	};
+	sobj01.create();
+	sobj01.open();
+};
+
+function loadManagers(dept_code) {
+	var ajax = new Common_Ajax('ajax_member_message');
+	ajax.config.action_url = ajax_url_action;
+	ajax.config._success = function(data, textStatus) {
+		$("#membermanagerid").clearAllOption();
+		$("#membermanagerid").addOption("--请选择--","");
+		$.each(data, function(i, n){
+			$("#membermanagerid").addOption(n.user_name,n.uuid);
+		});
+		if(curr_apply_user!='') {
+			$("#membermanagerid").val(curr_apply_user);
+		}
+	};
+	ajax.addParameter("work", "AutoComplete");
+	ajax.addParameter("parameters", "privilege_id=QKJCJ_SYS_AJAXLOAD_USER&dept_code=" + encodeURI(dept_code));
+	ajax.sendAjax2();
+}
+
+function addLeave(p_type) {
+	var add_url = '<s:url namespace="/adm" action="leave_load"><s:param name="viewFlag">add</s:param></s:url>';
+	add_url = add_url + "&leave.leave_type="+p_type;
+	//alert(add_url);
+	location.href = add_url;
+}
+
+function showCause(s_id) {
+	alert($("#"+s_id).text());
+}
+
+
+</script>
 </html>

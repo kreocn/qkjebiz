@@ -6,6 +6,8 @@ import org.iweb.sys.*;
 import org.iweb.sys.domain.User;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.qkj.ware.domain.Check;
+import com.qkj.ware.domain.Stock;
 import com.qkj.ware.domain.Warepower;
 import com.qkj.ware.dao.WarepowerDAO;
 import com.qkjsys.ebiz.dao.WareDAO;
@@ -111,6 +113,8 @@ public class WarepowerAction extends ActionSupport {
 			this.setPageSize(ContextHelper.getPageSize(map));
 			this.setCurrPage(ContextHelper.getCurrPage(map));		
 			this.setWarepowers(dao.list(map));
+			WareDAO wd=new WareDAO();
+			this.setWares(wd.list(null));
 			this.setRecCount(dao.getResultCount());
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
@@ -136,12 +140,11 @@ public class WarepowerAction extends ActionSupport {
 				if (!(warepower == null || warepower.getUuid() == null)) {
 					this.setWarepower((Warepower) dao.get(warepower.getUuid()));
 				} else {
+					
 					this.setWarepower(null);
 					
 				}
-				map.clear();
-				map.put("user_roles", "1393307368483001");
-				this.setUsers(dao.listUser(map));
+
 			} else {
 				this.setWarepower(null);
 				setMessage("无操作类型!");
@@ -158,7 +161,26 @@ public class WarepowerAction extends ActionSupport {
 		try {
 			//warepower.setLm_user(ContextHelper.getUserLoginUuid());
 			//warepower.setLm_time(new Date());
-			dao.add(warepower);
+			String code=warepower.getDept_code();
+			String user_id=null;
+			String codename=warepower.getDept_name();
+			if(warepower.getUsername()!=null&&warepower.getUsername()!=""){
+				user_id=warepower.getUsername();
+			}
+			
+			if (!(warepowers == null || warepowers.size() == 0)) {
+				for (int i = 0, n = warepowers.size(); i < n; i++) {
+					warepower = warepowers.get(i);
+					if(warepower.getPrvg()==null||warepower.getPrvg().equals("")){
+						continue;
+					}
+					warepower.setUsername(user_id);
+					warepower.setDept_code(code);
+					warepower.setDept_name(codename);
+					dao.add(warepower);
+				}
+			}
+			
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!add 数据添加失败:", e);
 			throw new Exception(this.getClass().getName() + "!add 数据添加失败:", e);

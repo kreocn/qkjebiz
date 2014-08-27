@@ -1,15 +1,17 @@
 package com.qkj.ware.domain;
 
-import java.util.*;
-
 public class Warepower {
 	private Integer uuid;// (int)
 	private Integer ware_id;// (int)仓库id
 	private String username;// (varchar)管理人员
+	private String dept_code;
+	private String prvg;
+	private String dept_name;
 
 	// 以下为非数据库字段
 	private String ware_name;
 	private String user_name;
+	private String address;
 
 	public Integer getUuid() {
 		return uuid;
@@ -51,7 +53,37 @@ public class Warepower {
 		this.user_name = user_name;
 	}
 
-	
-	
+	public String getDept_code() {
+		return dept_code;
+	}
 
+	public void setDept_code(String dept_code) {
+		this.dept_code = dept_code;
+	}
+
+	public String getPrvg() {
+		return prvg;
+	}
+
+	public void setPrvg(String prvg) {
+		this.prvg = prvg;
+	}
+
+	public String getDept_name() {
+		return dept_name;
+	}
+
+	public void setDept_name(String dept_name) {
+		this.dept_name = dept_name;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	
+	
 }
