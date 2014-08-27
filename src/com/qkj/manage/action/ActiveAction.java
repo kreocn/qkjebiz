@@ -384,7 +384,8 @@ public class ActiveAction extends ActionSupport {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_STATUS1");
 		try {
 			// mdyStatus(2);
-			ContextHelper.getUserLoginUuid();
+			active.setLm_user(ContextHelper.getUserLoginUuid());
+			active.setStatus(2);// 为了addProcess而写
 			dao.mdyActivePass(active);
 			addProcess("ACTIVE_APPLY_PASS", "活动申请通过");
 		} catch (Exception e) {

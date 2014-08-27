@@ -22,9 +22,11 @@
 var editor;
 $(function() {
 	editor = $('#testxh').xheditor({
-		tools:'Cut,Copy,Paste,Pastetext,SelectAll,|,Blocktag,Fontface,FontSize,Bold,Italic,Underline,Strikethrough,FontColor,BackColor,Removeformat,|,Align,Outdent,Indent,|,Hr,List,Table,Img,|,Source,Preview,Fullscreen',
+		tools:'Cut,Copy,Paste,Pastetext,SelectAll,|,Blocktag,Fontface,FontSize,Bold,Italic,Underline,Strikethrough,FontColor,BackColor,Removeformat,|,Align,Outdent,Indent,|,Hr,List,Table,|,Link,Img,|,Source,Preview,Fullscreen',
 		upImgUrl : "/upload/put",
 		upImgExt : "jpg,jpeg,gif,png",
+		upLinkUrl:"/upload/put",
+		upLinkExt:"zip,rar,7z,txt,doc,docx,xls,xlsx,ppt,pptx",
 		//html5Upload : false,
 		//upMultiple : '1',
 		skin : 'nostyle'
