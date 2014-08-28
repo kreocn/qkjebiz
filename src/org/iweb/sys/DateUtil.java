@@ -8,16 +8,21 @@ import java.util.GregorianCalendar;
 public class DateUtil {
 	/**
 	 * 把指定格式字符串返回日期
+	 * 如果报错就返回null
 	 * 
 	 * @param str
 	 *            String
 	 * @param patten
 	 *            yyyy-MM-dd HH:mm:ss
 	 * @return
-	 * @throws Exception
 	 */
-	public static Date getDate(String str, String patten) throws Exception {
-		return new SimpleDateFormat(patten).parse(str);
+	public static Date getDate(String str, String patten) {
+		try {
+			return new SimpleDateFormat(patten).parse(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	/**
@@ -28,11 +33,15 @@ public class DateUtil {
 	 * @param patten
 	 *            yyyy-MM-dd HH:mm:ss
 	 * @return
-	 * @throws Exception
 	 */
-	public static Date getDate(Date d, String patten) throws Exception {
-		SimpleDateFormat sdf = new SimpleDateFormat(patten);
-		return sdf.parse(sdf.format(d));
+	public static Date getDate(Date d, String patten) {
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat(patten);
+			return sdf.parse(sdf.format(d));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	/**
@@ -46,10 +55,8 @@ public class DateUtil {
 	 * @throws Exception
 	 */
 	public static String getDateString(Date d, String patten) throws Exception {
-		if (ToolsUtil.isEmpty(d))
-			return "";
-		else
-			return new SimpleDateFormat(patten).format(d);
+		if (ToolsUtil.isEmpty(d)) return "";
+		else return new SimpleDateFormat(patten).format(d);
 	}
 
 	/**
