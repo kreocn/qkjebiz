@@ -1,4 +1,5 @@
 package com.qkj.ware.action;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -16,11 +17,13 @@ import com.qkj.ware.dao.InDetailDAO;
 import com.qkj.ware.dao.InStockDAO;
 import com.qkj.ware.dao.InStockHDAO;
 import com.qkj.ware.dao.StockDAO;
+import com.qkj.ware.dao.WarepowerDAO;
 import com.qkj.ware.domain.InDetail;
 import com.qkj.ware.domain.InDetailH;
 import com.qkj.ware.domain.InStock;
 import com.qkj.ware.domain.InStockH;
 import com.qkj.ware.domain.Stock;
+import com.qkj.ware.domain.Warepower;
 import com.qkjsys.ebiz.dao.WareDAO;
 import com.qkjsys.ebiz.domain.Ware;
 
@@ -31,6 +34,7 @@ public class InStockAction extends ActionSupport {
 	private InStockDAO dao = new InStockDAO();
 	
 	private InStock inStock;
+	private Warepower warep;
 	private InStockH inStockh;
 	private InDetailH inDetailh;
 	private InDetail inDetail;
@@ -111,7 +115,13 @@ public class InStockAction extends ActionSupport {
 	}
 	
 
-	
+	public Warepower getWarep() {
+		return warep;
+	}
+
+	public void setWarep(Warepower warep) {
+		this.warep = warep;
+	}
 
 	public InDetail getInDetail() {
 		return inDetail;
@@ -188,6 +198,7 @@ public class InStockAction extends ActionSupport {
 
 	public String load() throws Exception {
 		String u = ContextHelper.getUserLoginUuid();
+		String code=ContextHelper.getUserLoginDept();
 		try {
 			if (null == viewFlag) {
 				this.setInStock(null);
@@ -196,12 +207,13 @@ public class InStockAction extends ActionSupport {
 				this.setInStock(null);
 				WareDAO wd=new WareDAO();
 				if(ContextHelper.isAdmin()){//管理员
-					map.clear();
-					map.put("bug","bug");
-					this.setWares(wd.list(map));
+					//map.clear();
+					//map.put("bug","bug");不包含破损库
+					this.setWares(wd.list(null));
 				}else{
 					map.clear();
-					map.put("useruuid",u);
+					map.put("username",u);
+					map.put("dept_code", code);
 					this.setWares(wd.listByPower(map));
 				}
 				ProductDAO pdao = new ProductDAO();

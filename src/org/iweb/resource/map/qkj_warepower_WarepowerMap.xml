@@ -13,7 +13,7 @@
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ s.uuid=#uuid# ]]></isNotEmpty>
 <isNotEmpty prepend="AND" property="ware_id"><![CDATA[ s.ware_id=#ware_id# ]]></isNotEmpty>
 <isNotEmpty prepend="AND" property="username"><![CDATA[ s.username=#username# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="username"><![CDATA[ s.dept_code=#dept_code# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="dept_code"><![CDATA[ s.dept_code=#dept_code# ]]></isNotEmpty>
 
 		</dynamic>
 		<![CDATA[ Order By s.uuid Desc LIMIT 0, 1000 ]]>
@@ -32,8 +32,8 @@
 	</select>
 	<insert id="warepower_addWarepower" parameterClass="warepower">
 		<![CDATA[ 
-			Insert Into qkj_t_stockpower(ware_id,username,dept_code,dept_name,prvg)
-			Values (#ware_id#,#username#,#dept_code#,#dept_name#,#prvg#)
+			Insert Into qkj_t_stockpower(ware_id,username,dept_code,dept_name,prvg,son)
+			Values (#ware_id#,#username#,#dept_code#,#dept_name#,#prvg#,#son#)
 		]]>
 		<selectKey resultClass="int" keyProperty="uuid">
 		<![CDATA[ Select LAST_INSERT_ID() ]]>
@@ -43,7 +43,8 @@
 		<![CDATA[
 			Update qkj_t_stockpower
 			Set
-			prvg=#prvg#
+			prvg=#prvg#,
+			son=#son#
 			Where uuid = #uuid#
 		]]>
 	</update>
@@ -60,5 +61,6 @@
 		
 		<![CDATA[ Order By uuid Desc LIMIT 0, 1000 ]]>
 	</select>
+	
 	<!-- Warepower End -->
 </sqlMap>

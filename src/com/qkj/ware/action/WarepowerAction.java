@@ -113,9 +113,11 @@ public class WarepowerAction extends ActionSupport {
 			this.setPageSize(ContextHelper.getPageSize(map));
 			this.setCurrPage(ContextHelper.getCurrPage(map));		
 			this.setWarepowers(dao.list(map));
+			System.out.println(warepowers.size());
 			WareDAO wd=new WareDAO();
 			this.setWares(wd.list(null));
 			this.setRecCount(dao.getResultCount());
+			this.setWarepower(null);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
@@ -161,25 +163,39 @@ public class WarepowerAction extends ActionSupport {
 		try {
 			//warepower.setLm_user(ContextHelper.getUserLoginUuid());
 			//warepower.setLm_time(new Date());
-			String code=warepower.getDept_code();
+			String code=null;
 			String user_id=null;
-			String codename=warepower.getDept_name();
-			if(warepower.getUsername()!=null&&warepower.getUsername()!=""){
-				user_id=warepower.getUsername();
-			}
-			
-			if (!(warepowers == null || warepowers.size() == 0)) {
-				for (int i = 0, n = warepowers.size(); i < n; i++) {
-					warepower = warepowers.get(i);
-					if(warepower.getPrvg()==null||warepower.getPrvg().equals("")){
-						continue;
+			String codename=null;
+			String son="0";
+			if((warepower.getDept_code()==null||warepower.getDept_code().equals(""))&&(warepower.getUsername()==null||warepower.getUsername().equals(""))){
+				this.setMessage("部门和用户不能全为空！");
+			}else{
+				if((warepower.getDept_code()!=null&&!warepower.getDept_code().equals(""))){
+					code=warepower.getDept_code();
+					codename=warepower.getDept_name();
+				}
+				if(warepower.getUsername()!=null&&!warepower.getUsername().equals("")){
+					user_id=warepower.getUsername();
+				}
+				if(warepower.getSon()!=null&&warepower.getSon()!=""){
+					son=warepower.getSon();
+				}
+				
+				if (!(warepowers == null || warepowers.size() == 0)) {
+					for (int i = 0, n = warepowers.size(); i < n; i++) {
+						warepower = warepowers.get(i);
+						if(warepower.getPrvg()==null||warepower.getPrvg().equals("")){
+							continue;
+						}
+						warepower.setUsername(user_id);
+						warepower.setDept_code(code);
+						warepower.setDept_name(codename);
+						warepower.setSon(son);
+						dao.add(warepower);
 					}
-					warepower.setUsername(user_id);
-					warepower.setDept_code(code);
-					warepower.setDept_name(codename);
-					dao.add(warepower);
 				}
 			}
+			
 			
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!add 数据添加失败:", e);

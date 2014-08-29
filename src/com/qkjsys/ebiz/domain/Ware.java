@@ -14,6 +14,10 @@ public class Ware {
 	private Date lm_time;// (datetime) 最后修改时间
 	
 	private String bug;
+	private String dept_code;
+	private String prvg;
+	private String son;
+	private String username;
 
 	public Integer getUuid() {
 		return uuid;
@@ -93,6 +97,38 @@ public class Ware {
 
 	public void setBug(String bug) {
 		this.bug = bug;
+	}
+
+	public String getDept_code() {
+		return dept_code;
+	}
+
+	public void setDept_code(String dept_code) {
+		this.dept_code = dept_code;
+	}
+
+	public String getPrvg() {
+		return prvg;
+	}
+
+	public void setPrvg(String prvg) {
+		this.prvg = prvg;
+	}
+
+	public String getSon() {
+		return son;
+	}
+
+	public void setSon(String son) {
+		this.son = son;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	
 

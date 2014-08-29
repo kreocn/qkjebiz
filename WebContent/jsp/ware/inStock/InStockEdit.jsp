@@ -199,7 +199,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 					<s:if test="#x.uuid==inStock.store_id">
 					selected="selected"
 					</s:if>
-					/><s:property value="ware_name" />
+					/><s:property value="ware_name" /><s:property value="prvg" />
 					</s:iterator>
 			</select>
 	</td>

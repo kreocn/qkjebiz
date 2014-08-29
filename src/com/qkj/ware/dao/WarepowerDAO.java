@@ -8,6 +8,7 @@ public class WarepowerDAO extends AbstractDAO {
 		return super.list("warepower_getWarepowers", map);
 	}
 	
+	
 	public Object get(Object uuid) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("uuid", uuid);

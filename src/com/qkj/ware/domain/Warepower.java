@@ -7,6 +7,7 @@ public class Warepower {
 	private String dept_code;
 	private String prvg;
 	private String dept_name;
+	private String son;
 
 	// 以下为非数据库字段
 	private String ware_name;
@@ -83,6 +84,14 @@ public class Warepower {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public String getSon() {
+		return son;
+	}
+
+	public void setSon(String son) {
+		this.son = son;
 	}
 	
 	

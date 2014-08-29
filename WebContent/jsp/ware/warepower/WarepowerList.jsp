@@ -15,9 +15,6 @@
 <script type="text/javascript" src="<s:url value="/js/jquery.CommonUtil.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/show_page.js" />"></script>
 
-<script type="text/javascript" src="<s:url value="/js/common_listtable.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/jquery.CommonUtil.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/show_page.js" />"></script>
 <link rel="stylesheet" href="<s:url value="/include/jQuery/style.ui.smoothness/jquery-ui-1.10.3.min.css" />" />
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery-ui-1.10.3.custom.min.js" />"></script>
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery.ui.datepicker-zh.js" />"></script>
@@ -49,10 +46,10 @@ $(function(){
 				<td class='firstRow'>部门/管理员:</td>
 				<td class='secRow'>
 					<s:textfield title="部门" id="userdept_codeid" name="warepower.dept_code" readonly="true" />
-					<s:textfield title="部门名称" id="userdept_nameid"  name="warepower.dept_name"  readonly="true" />
-					<img class="imglink" src='<s:url value="/images/open2.gif" />' onclick="selectDept();" />
-					<span id="ajax_member_message"></span>
-					<s:select id="membermanagerid" name="warepower.username" list="#{}" headerKey="" headerValue="--请选择--" />
+				<s:textfield title="部门名称" id="userdept_nameid"  name="warepower.dept_name"  readonly="true" />
+				<img class="imglink" src='<s:url value="/images/open2.gif" />' onclick="selectDept();" />
+				<span id="ajax_member_message"></span>
+				<s:select id="membermanagerid" name="warepower.username" list="#{}" headerKey="" headerValue="--请选择--" />
 				</td>
 			</tr>
 			<tr>
@@ -126,6 +123,7 @@ $(function(){
 </div>
 </body>
 <script type="text/javascript">
+
 var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
 var curr_apply_dept = '${leave.leave_dept}';
 var curr_apply_user = '${leave.leave_user}';
@@ -159,7 +157,7 @@ $(function(){
 			return "<div class='show_dialog'>" + $("#leave_cause" + $(this).attr("data")).html() + "</div>";
 	  }
 	});
-};
+});
  
 var sobj01;
 var selectDept = function() {

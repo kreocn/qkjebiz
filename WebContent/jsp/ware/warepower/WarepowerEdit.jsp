@@ -46,8 +46,9 @@
 				<s:textfield title="部门名称" id="userdept_nameid" name="warepower.dept_name" readonly="true" />
 				<span id="ajax_member_message"></span>
 				<s:textfield name="warepower.user_name" readonly="true"></s:textfield>
+				<input type="checkbox" name="warepower.son"  value="1"  <s:if test="%{warepower.son.indexOf('1')>=0}">checked="checked"</s:if> >是否包含子部门
 			</td>
-		
+			
 		</tr>
 		<tr>
 			<td width="30%"><s:property value="warepower.ware_name" />(<s:property value="warepower.address" />)
@@ -65,13 +66,14 @@
 		<s:else>
 		<tr>
 		<td class='firstRow3'>申请部门/人:</td>
-			<td class='secRow3' colspan="3">
+		<td class='secRow3' colspan="3">
 				<s:textfield title="部门" id="userdept_codeid" name="warepower.dept_code" readonly="true" />
 				<s:textfield title="部门名称" id="userdept_nameid"  name="warepower.dept_name"  readonly="true" />
 				<img class="imglink" src='<s:url value="/images/open2.gif" />' onclick="selectDept();" />
 				<span id="ajax_member_message"></span>
 				<s:select id="membermanagerid" name="warepower.username" list="#{}" headerKey="" headerValue="--请选择--" />
-			</td>
+				<input type="checkbox" name="warepower.son"  value="1"  checked="checked" >是否包含子部门
+		</td>
 		
 		</tr>
 		<s:iterator value="wares" status="sta">
@@ -123,9 +125,7 @@
 </div>
 </body>
 <script type="text/javascript">
-function check(){
-	
-}
+
 var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
 var curr_apply_dept = '${leave.leave_dept}';
 var curr_apply_user = '${leave.leave_user}';
