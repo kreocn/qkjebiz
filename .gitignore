@@ -44,3 +44,6 @@ Icon
 /.settings/
 /build/
 META-INF/
+/.g*
+/.project
+/.classpath
