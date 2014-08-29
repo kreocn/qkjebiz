@@ -1,5 +1,6 @@
 package org.iweb.rpt.action;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -7,8 +8,11 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.iweb.common.dao.CommonDAO;
 import org.iweb.rpt.domain.ListObject;
+import org.iweb.sys.ContextHelper;
 import org.iweb.sys.DateUtil;
+import org.iweb.sys.ToolsUtil;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -17,6 +21,16 @@ public class CheckEffMonthlyStatAction extends ActionSupport {
 	private static Log log = LogFactory.getLog(CheckEffMonthlyStatAction.class);
 	private Map<String, Object> map = new HashMap<String, Object>();
 
+	private CommonDAO dao = new CommonDAO();
+
+	private Map activeAvgTime;
+	private Map activeCloseAvgTime;
+	private Map applyAvgTime;
+
+	private List<Map> activePasses;
+	private List<Map> activeClosePasses;
+	private List<Map> applyPasses;
+
 	private String yearMonth;// 参数 年-月
 	private List<ListObject> yearMonths;
 
@@ -24,6 +38,54 @@ public class CheckEffMonthlyStatAction extends ActionSupport {
 	private List<ListObject> deptGroups;
 
 	private String message;
+
+	public Map getActiveAvgTime() {
+		return activeAvgTime;
+	}
+
+	public void setActiveAvgTime(Map activeAvgTime) {
+		this.activeAvgTime = activeAvgTime;
+	}
+
+	public Map getActiveCloseAvgTime() {
+		return activeCloseAvgTime;
+	}
+
+	public void setActiveCloseAvgTime(Map activeCloseAvgTime) {
+		this.activeCloseAvgTime = activeCloseAvgTime;
+	}
+
+	public Map getApplyAvgTime() {
+		return applyAvgTime;
+	}
+
+	public void setApplyAvgTime(Map applyAvgTime) {
+		this.applyAvgTime = applyAvgTime;
+	}
+
+	public List<Map> getActivePasses() {
+		return activePasses;
+	}
+
+	public void setActivePasses(List<Map> activePasses) {
+		this.activePasses = activePasses;
+	}
+
+	public List<Map> getActiveClosePasses() {
+		return activeClosePasses;
+	}
+
+	public void setActiveClosePasses(List<Map> activeClosePasses) {
+		this.activeClosePasses = activeClosePasses;
+	}
+
+	public List<Map> getApplyPasses() {
+		return applyPasses;
+	}
+
+	public void setApplyPasses(List<Map> applyPasses) {
+		this.applyPasses = applyPasses;
+	}
 
 	public String getMessage() {
 		return message;
@@ -34,10 +96,26 @@ public class CheckEffMonthlyStatAction extends ActionSupport {
 	}
 
 	public String execute() throws Exception {
-		/* ContextHelper.isPermit("QKJ_SCHE"); */
-		// 初始化数据
-		setYearMonths();
-		setDeptGroups();
+		ContextHelper.isPermit("REPORT_CHECKEFF_MONTHLY");
+		try {
+			// 初始化数据
+			setYearMonths();
+			setDeptGroups();
+
+			if (!ToolsUtil.isEmpty(yearMonth)) {
+				this.setActiveAvgTime(dao.commonSelectMap(initSQL(0)));
+				this.setActiveCloseAvgTime(dao.commonSelectMap(initSQL(1)));
+				this.setApplyAvgTime(dao.commonSelectMap(initSQL(2)));
+				this.setActivePasses(dao.commonSelectMapList(initSQL(3)));
+				this.setActiveClosePasses(dao.commonSelectMapList(initSQL(4)));
+				this.setApplyPasses(dao.commonSelectMapList(initSQL(5)));
+				this.setMessage("报表生成成功!");
+			} else {
+				this.setMessage("请选择报表统计时间");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		return SUCCESS;
 	}
@@ -55,6 +133,9 @@ public class CheckEffMonthlyStatAction extends ActionSupport {
 	}
 
 	private void setYearMonths() {
+		if (yearMonths == null) {
+			yearMonths = new ArrayList<>();
+		}
 		String patten = "yyyy-MM";
 		Date ds = DateUtil.getDate("2014-08", patten);
 		Date de = DateUtil.addMonth(DateUtil.getDate(new Date(), patten), 1);
@@ -77,6 +158,9 @@ public class CheckEffMonthlyStatAction extends ActionSupport {
 	}
 
 	private void setDeptGroups() {
+		if (deptGroups == null) {
+			deptGroups = new ArrayList<>();
+		}
 		deptGroups.add(new ListObject("21", "省外运营中心+北京"));
 		deptGroups.add(new ListObject("220", "西北运营中心"));
 	}
@@ -85,10 +169,10 @@ public class CheckEffMonthlyStatAction extends ActionSupport {
 	 * 根据定制的参数返回相应的SQL
 	 * 
 	 * @param n
-	 *            0:活动申请平均时间 1:活动结案平均时间 2:至事由平均时间
+	 *            0:活动申请平均时间 1:活动结案平均时间 2:至事由平均时间 3:活动申请通过数量 4:活动结案通过数量 5:至事由通过数量
 	 * @return
 	 */
-	public String initSQL(int n) {
+	private String initSQL(int n) {
 		// ").append("'").append(yearMonth).append("'").append("
 		// ").append(deptGroup).append("
 		StringBuffer sql = new StringBuffer();
@@ -96,7 +180,7 @@ public class CheckEffMonthlyStatAction extends ActionSupport {
 		if (n == 0) sql.append("SELECT ").append("ROUND(AVG((UNIX_TIMESTAMP(o.pt)-UNIX_TIMESTAMP(o.at))/3600/24),2) total,")
 				.append("ROUND(AVG((UNIX_TIMESTAMP(o.ct)-UNIX_TIMESTAMP(o.at))/3600/24),2) edit,").append("ROUND(AVG((UNIX_TIMESTAMP(o.mt)-UNIX_TIMESTAMP(o.ct))/3600/24),2) mct,")
 				.append("ROUND(AVG((UNIX_TIMESTAMP(o.xt)-UNIX_TIMESTAMP(o.mt))/3600/24),2) xct,").append("ROUND(AVG((UNIX_TIMESTAMP(o.zt)-UNIX_TIMESTAMP(o.xt))/3600/24),2) zct,")
-				.append("ROUND(AVG((UNIX_TIMESTAMP(o.pt)-UNIX_TIMESTAMP(o.xt))/3600/24),2) pct").append(" FROM (")
+				.append("ROUND(AVG((UNIX_TIMESTAMP(o.pt)-UNIX_TIMESTAMP(o.zt))/3600/24),2) pct").append(" FROM (")
 				.append("SELECT biz_id,MAX(`at`) `at`,MAX(`ct`) `ct`,MAX(`mt`) `mt`,MAX(`xt`) `xt`,MAX(`zt`) `zt`,MAX(`pt`) `pt`").append("FROM (")
 				.append("SELECT p.biz_id,p.biz_time `at`,0 `ct`,0 `mt`,0 `xt`,0 `zt`,0 `pt`").append("FROM qkjm_h_process p").append(" WHERE p.`process_id` = 1")
 				.append(" AND p.biz_sign = 'ACTIVE_ADD'").append("AND EXISTS (").append("SELECT 1").append(" FROM qkjm_h_process").append(" WHERE `process_id` = 1")
@@ -138,7 +222,7 @@ public class CheckEffMonthlyStatAction extends ActionSupport {
 		if (n == 1) sql.append("SELECT ").append("ROUND(AVG((UNIX_TIMESTAMP(o.pt)-UNIX_TIMESTAMP(o.at))/3600/24),2) total,")
 				.append("ROUND(AVG((UNIX_TIMESTAMP(o.ct)-UNIX_TIMESTAMP(o.at))/3600/24),2) edit,").append("ROUND(AVG((UNIX_TIMESTAMP(o.mt)-UNIX_TIMESTAMP(o.ct))/3600/24),2) mct,")
 				.append("ROUND(AVG((UNIX_TIMESTAMP(o.xt)-UNIX_TIMESTAMP(o.mt))/3600/24),2) xct,").append("ROUND(AVG((UNIX_TIMESTAMP(o.zt)-UNIX_TIMESTAMP(o.xt))/3600/24),2) zct,")
-				.append("ROUND(AVG((UNIX_TIMESTAMP(o.pt)-UNIX_TIMESTAMP(o.xt))/3600/24),2) pct").append(" FROM (")
+				.append("ROUND(AVG((UNIX_TIMESTAMP(o.pt)-UNIX_TIMESTAMP(o.zt))/3600/24),2) pct").append(" FROM (")
 				.append("SELECT biz_id,MAX(`at`) `at`,MAX(`ct`) `ct`,MAX(`mt`) `mt`,MAX(`xt`) `xt`,MAX(`zt`) `zt`,MAX(`pt`) `pt`").append("FROM (")
 				.append("SELECT p.biz_id,p.biz_time `at`,0 `ct`,0 `mt`,0 `xt`,0 `zt`,0 `pt`").append("FROM qkjm_h_process p").append(" WHERE p.`process_id` = 1")
 				.append(" AND p.biz_sign = 'ACTIVE_START_CLOSE'").append("AND EXISTS (").append("SELECT 1").append(" FROM qkjm_h_process").append(" WHERE `process_id` = 1")
@@ -186,19 +270,19 @@ public class CheckEffMonthlyStatAction extends ActionSupport {
 				.append(" AND p.biz_sign = 'APPLY_ADD'").append("AND EXISTS (").append("SELECT 1").append(" FROM qkjm_h_process").append(" WHERE `process_id` = 2")
 				.append(" AND `biz_sign` = 'APPLY_CHANGE_STATUS'").append("AND biz_status01 = 30").append(" AND `biz_time` > DATE_ADD(CONCAT(").append("'").append(yearMonth)
 				.append("'").append(",'-26'), INTERVAL -1 MONTH)").append("AND CONCAT(").append("'").append(yearMonth).append("'").append(",'-26')")
-				.append("AND biz_id = p.`biz_id`").append(")").append("UNION ALL").append("SELECT p.biz_id,0,p.biz_time,0,0").append(" FROM qkjm_h_process p")
+				.append("AND biz_id = p.`biz_id`").append(")").append("UNION ALL").append(" SELECT p.biz_id,0,p.biz_time,0,0").append(" FROM qkjm_h_process p")
 				.append(" WHERE p.`process_id` = 2").append(" AND p.biz_sign = 'APPLY_CHANGE_STATUS'").append("AND p.biz_status01 = 10").append(" AND EXISTS (").append("SELECT 1")
 				.append(" FROM qkjm_h_process").append(" WHERE `process_id` = 2").append(" AND `biz_sign` = 'APPLY_CHANGE_STATUS'").append("AND biz_status01 = 30")
 				.append(" AND `biz_time` > DATE_ADD(CONCAT(").append("'").append(yearMonth).append("'").append(",'-26'), INTERVAL -1 MONTH)").append("AND CONCAT(").append("'")
 				.append(yearMonth).append("'").append(",'-26')").append("AND biz_id = p.`biz_id`").append(")").append("AND EXISTS (").append("SELECT 1")
 				.append(" FROM qkjm_h_process").append(" WHERE `process_id` = 2").append(" AND biz_sign = 'APPLY_CHANGE_STATUS'").append("AND biz_status01 = 10")
-				.append(" GROUP BY biz_id").append(" HAVING MIN(`uuid`) = p.`uuid`").append(")").append("UNION ALL").append("SELECT p.biz_id,0,0,p.biz_time,0")
+				.append(" GROUP BY biz_id").append(" HAVING MIN(`uuid`) = p.`uuid`").append(")").append("UNION ALL").append(" SELECT p.biz_id,0,0,p.biz_time,0")
 				.append(" FROM qkjm_h_process p").append(" WHERE p.`process_id` = 2").append(" AND p.biz_sign = 'APPLY_CHANGE_STATUS'").append("AND p.biz_status01 = 20")
 				.append(" AND EXISTS (").append("SELECT 1").append(" FROM qkjm_h_process").append(" WHERE `process_id` = 2").append(" AND `biz_sign` = 'APPLY_CHANGE_STATUS'")
 				.append("AND biz_status01 = 30").append(" AND `biz_time` > DATE_ADD(CONCAT(").append("'").append(yearMonth).append("'").append(",'-26'), INTERVAL -1 MONTH)")
 				.append("AND CONCAT(").append("'").append(yearMonth).append("'").append(",'-26')").append("AND biz_id = p.`biz_id`)").append("AND EXISTS (").append("SELECT 1")
 				.append(" FROM qkjm_h_process").append(" WHERE `process_id` = 2").append(" AND biz_sign = 'APPLY_CHANGE_STATUS'").append("AND biz_status01 = 20")
-				.append(" GROUP BY biz_id").append(" HAVING MAX(`uuid`) = p.`uuid`").append(")").append("UNION ALL").append("SELECT p.biz_id,0,0,0,p.biz_time")
+				.append(" GROUP BY biz_id").append(" HAVING MAX(`uuid`) = p.`uuid`").append(")").append("UNION ALL").append(" SELECT p.biz_id,0,0,0,p.biz_time")
 				.append(" FROM qkjm_h_process p").append(" WHERE p.`process_id` = 2").append(" AND p.biz_sign = 'APPLY_CHANGE_STATUS'").append("AND p.biz_status01 = 30")
 				.append(" AND EXISTS (").append("SELECT 1").append(" FROM qkjm_h_process").append(" WHERE `process_id` = 2").append(" AND biz_sign = 'APPLY_CHANGE_STATUS'")
 				.append("AND biz_status01 = 30").append(" GROUP BY biz_id").append(" HAVING MAX(`uuid`) = p.`uuid`").append(")").append(") t").append(" GROUP BY t.biz_id")
@@ -235,7 +319,7 @@ public class CheckEffMonthlyStatAction extends ActionSupport {
 				.append(" AND p.`biz_time` > DATE_ADD(CONCAT(").append("'").append(yearMonth).append("'").append(",'-26'), INTERVAL -1 MONTH)").append("AND CONCAT(").append("'")
 				.append(yearMonth).append("'").append(",'-26')").append("AND a.`apply_dept` = d.`dept_code`").append("AND a.`apply_dept` LIKE '").append(deptGroup).append("%'")
 				.append("GROUP BY a.`apply_dept`").append("UNION ALL").append(" SELECT b.apply_dept,rd.dept_cname,b.cout FROM (")
-				.append("SELECT SUBSTR(a.`apply_dept`,1,3) `apply_dept`,COUNT(*) cout").append(" FROM qkjm_h_process p,qkjm_r_active a,s_sys_department d")
+				.append("SELECT SUBSTR(a.`apply_dept`,1,3) `apply_dept`,COUNT(*) cout").append(" FROM qkjm_h_process p,qkjm_r_apply a,s_sys_department d")
 				.append(" WHERE p.`process_id` = 2").append(" AND p.`biz_id` = a.`uuid`").append("AND p.`biz_sign` = 'APPLY_CHANGE_STATUS'").append("AND biz_status01 = 30")
 				.append(" AND p.`biz_time` > DATE_ADD(CONCAT(").append("'").append(yearMonth).append("'").append(",'-26'), INTERVAL -1 MONTH)").append("AND CONCAT(").append("'")
 				.append(yearMonth).append("'").append(",'-26')").append("AND a.`apply_dept` = d.`dept_code`").append("AND a.`apply_dept` LIKE '").append(deptGroup).append("%'")

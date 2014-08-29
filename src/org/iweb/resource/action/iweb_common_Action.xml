@@ -184,5 +184,8 @@
 		<action name="simple" class="org.iweb.rpt.action.SimpleReportAction">
 			<result>/jsp/report/SimpleReport.jsp</result>
 		</action>
+		<action name="checkeffmonthly" class="org.iweb.rpt.action.CheckEffMonthlyStatAction">
+			<result>/jsp/report/CheckEffMonthlyStat.jsp</result>
+		</action>
 	</package>
 </struts>

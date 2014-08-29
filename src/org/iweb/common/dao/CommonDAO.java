@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.iweb.sys.AbstractDAO;
-import org.iweb.sysvip.dao.MemberDAO;
-import org.iweb.sysvip.domain.Member;
 
 public class CommonDAO extends AbstractDAO {
 	public Object commonSelectObject(String sqltext) {
@@ -19,5 +17,17 @@ public class CommonDAO extends AbstractDAO {
 		Map map = new HashMap();
 		map.put("sqltext", sqltext);
 		return super.list("commonSelectMapList", map);
+	}
+
+	/**
+	 * 结果集只有一行的情况下适用
+	 * 
+	 * @param sqltext
+	 * @return
+	 */
+	public Map commonSelectMap(String sqltext) {
+		Map map = new HashMap();
+		map.put("sqltext", sqltext);
+		return (Map) super.get("commonSelectMapList", map);
 	}
 }
