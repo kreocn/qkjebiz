@@ -23,7 +23,7 @@ var ___select_infoclass_html_value;
 window.onload = function() {
 	___select_infoclass_html_value = $('#selectInfoClass').html();
 	$('#selectInfoClass').empty();
-	setStyle("table1");
+	//setStyle("table1");
 };
 function selectClass() {	
 	md = new modelDiv();
@@ -39,7 +39,14 @@ function closemDiv() {
 	<div id="main">
 		<div id="result">
 			<div class="itablemdy">
-				<div class="itabletitle">信息列表</div>
+				<div class="itabletitle">
+					<span class="title1">信息列表</span>
+					<span class="extra1">
+						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('INFO_MANAGER_NEWS_ADD')">
+						<a href="<s:url namespace="/info" action="news_load"><s:param name="viewFlag">add</s:param></s:url>" >添加信息</a>
+						</s:if>
+					</span>
+				</div>
 				<div class="ilistsearch">
 					<s:form name="form_serach" action="news_list" method="get" namespace="/info" theme="simple">
 						<table class="ilisttable" id="serach_table" width="100%" border="1" cellspacing="0" cellpadding="0" bordercolor="#8B8B8B">
@@ -66,18 +73,17 @@ function closemDiv() {
 				<s:form name="form1" theme="simple">
 					<table class="ilisttable" id="table1" width="100%" border="1" cellspacing="0" cellpadding="0" bordercolor="#8B8B8B">
 						<tr>
-							<th width="12">&nbsp;</th>
 							<th width="140">编号</th>
-							<th width="120">类别</th>
+							<th width="80">类别</th>
 							<th>标题</th>
 							<th width="100" style="">发布人</th>
-							<th width="160">发布时间</th>
+							<th width="100">发布时间</th>
 							<th width="80">置顶</th>
 							<th width="80">状态</th>
+							<th>操作</th>
 						</tr>
 						<s:iterator value="newsx" status="sta">
 							<tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>" onclick="pickrow(this);">
-								<td><input name="uuid" type="checkbox" value="<s:property value="uuid" />" onclick="this.checked=!this.checked;" /></td>
 								<td align="center"><s:property value="uuid" /></td>
 								<td align="center"><s:property value="class_name" /></td>
 								<td>
@@ -86,7 +92,7 @@ function closemDiv() {
 								</a>
 								</td>
 								<td align="center"><s:property value="add_user_name" /></td>
-								<td align="center"><s:date name="add_time" format="yyyy-MM-dd HH:mm:ss" /></td>
+								<td align="center"><s:date name="add_time" format="yyyy-MM-dd" /></td>
 								<td align="center"><s:if test="istop==0">未置顶</s:if> <s:elseif test="istop>0">
 										<span style="color: red;">已置顶(<s:property value="istop" />)
 										</span>
@@ -98,36 +104,29 @@ function closemDiv() {
 									</s:elseif> <s:elseif test="ischecked==2">
 										<span style="color: green;">初审通过</span>
 									</s:elseif> <s:elseif test="ischecked==3">
-										<span style="color: orange;">终审退回</span>
+										<span style="color: red;">终审退回</span>
 									</s:elseif> <s:elseif test="ischecked==4">
 										<span style="color: gray;">终审通过</span>
 									</s:elseif> <s:else>
 										<span style="color: red; font-weight: bold;">状态异常,请通知管理员</span>
 									</s:else></td>
+								<td align="center">
+									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('INFO_MANAGER_NEWS_MDY')">
+							    	[<a href="<s:url namespace="/info" action="news_load"><s:param name="viewFlag">mdy</s:param><s:param name="news.uuid" value="uuid"></s:param></s:url>">修改</a>]
+							    	</s:if>
+							    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_CUSTOMER_DEL')">
+							    	[<a href="<s:url namespace="/info" action="news_saveDel"><s:param name="news.uuid" value="uuid" /><s:param name="news.isdel">1</s:param></s:url>" onclick="return isDel('把记录放进回收站吗?');">回收</a>]
+							    	</s:if>	   
+								</td>
 							</tr>
 						</s:iterator>
 						<tr>
 							<td colspan="20" class="buttonarea"><script type="text/javascript">
-var spage = new ShowPage();
-spage.show2(<s:property value="recCount" />,<s:property value="pageSize" />,2);
-</script></td>
+								var spage = new ShowPage();
+								spage.show2(<s:property value="recCount" />,<s:property value="pageSize" />,2);
+								</script></td>
 						</tr>
-			<tr>
-				<td colspan="20" class="buttonarea"><span id="message"><s:property value="message" /></span> 
-				<input type="button" value="全选" onclick="checkAllInTable('table1');" />
-				<input type="button" value="反选" onclick="oppositeAllInTable('table1');" /> 
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('INFO_MANAGER_NEWS_ADD')">
-					<input type="button" value="新增" onclick="location.href='<s:url value="/info/news_load?viewFlag=add" />';" />
-				</s:if>
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('INFO_MANAGER_NEWS_MDY')">
-					<input type="button" value="修改" onclick="return forward('<s:url value="/info/news_load?viewFlag=mdy" />','uuid','news.uuid',false);" />
-				</s:if>
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('INFO_MANAGER_NEWS_MDYDEL')">
-					<input type="button" value="放入回收站" onclick="return window.confirm('真的把记录放进回收站吗?') && forward('<s:url value="/info/news_saveDel?news.isdel=1" />','uuid','news.uuid',false);" />
-				</s:if>
-				</td>
-			</tr>
-					</table>
+						</table>
 				</s:form>
 			</div>
 		</div>

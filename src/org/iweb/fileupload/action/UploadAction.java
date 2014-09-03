@@ -129,6 +129,13 @@ public class UploadAction extends ActionSupport {
 			log.info("上传文件失败:" + err);
 		}
 
+		// 关闭文件流
+		try {
+			in.close();
+			in = null;
+		} catch (Exception e) {
+		}
+
 		this.setMessage("{\"err\":\"" + err + "\",\"msg\":\"" + msg + "\"}");
 		return SUCCESS;
 	}

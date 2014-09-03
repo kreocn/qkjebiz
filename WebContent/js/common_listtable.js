@@ -267,6 +267,7 @@ function getCheckBox(objName) {
 	return result;
 }
 
-function isDel() {
-	return window.confirm("是否真的要删除记录?");
+function isDel(p_m) {
+	var m = p_m || "是否真的要删除记录?";
+	return window.confirm(m);
 }

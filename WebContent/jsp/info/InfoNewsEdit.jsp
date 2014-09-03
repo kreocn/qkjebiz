@@ -20,7 +20,11 @@
 <link rel="stylesheet" href="<s:url value="/include/jQuery/stylesheets/jquery-ui-1.10.3.custom.min.css" />" />
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery-1.8.3.min.js" />"></script>
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery-ui-1.10.3.custom.min.js" />"></script>
-<script type="text/javascript" src="/ckframe/include/widget.js"></script>
+<script type="text/javascript" src="<s:url value="/js/xheditor/xheditor-1.2.1.min.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/xheditor/xheditor_lang/zh-cn.js" />"></script>
+<link rel="stylesheet" href="<s:url value="/include/jQuery/stylesheets/jquery.xhupload.css" />" />
+<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.xhupload.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/func/create_editor.js" />"></script>
 <script type="text/javascript">
 var md;
 var ___select_infoclass_html_value;
@@ -32,12 +36,15 @@ $(function(){
 	___select_infoclass_html_value = $('#selectInfoClass').html();
 	$('#selectInfoClass').empty();
 	
-	infoeditor01 = new widget_textarea();
-	infoeditor01.init("newscontentedit1");
-	wb_smallimg = new widget_button({ inputid : "newssmallimgid", objname : "wb_smallimg" });
-	wb_smallimg.init();
-	wb_bigimg = new widget_button({ inputid : "newsbigimgid", objname : "wb_bigimg" });
-	wb_bigimg.init();
+	createXhEditor("newscontentedit1");
+	$("#newssmallimgid").xhupload();
+	$("#newsbigimgid").xhupload();
+	//infoeditor01 = new widget_textarea();
+	//infoeditor01.init("newscontentedit1");
+	//wb_smallimg = new widget_button({ inputid : "newssmallimgid", objname : "wb_smallimg" });
+	//wb_smallimg.init();
+	//wb_bigimg = new widget_button({ inputid : "newsbigimgid", objname : "wb_bigimg" });
+	//wb_bigimg.init();
 });
 
 function selectClass() {	

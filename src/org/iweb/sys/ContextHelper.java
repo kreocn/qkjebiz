@@ -77,8 +77,8 @@ public class ContextHelper {
 	 * @return
 	 */
 	public static Object getBeanByRequest(Object bean, javax.servlet.http.HttpServletRequest request) {
-		Map map = request.getParameterMap();
 		try {
+			Map map = request.getParameterMap();
 			java.beans.BeanInfo info = java.beans.Introspector.getBeanInfo(bean.getClass());
 			if (info != null) {
 				java.beans.PropertyDescriptor pds[] = info.getPropertyDescriptors();
@@ -149,8 +149,7 @@ public class ContextHelper {
 	 */
 	public static HashMap<String, Integer> getUserLoginPermits() {
 		try {
-			if (ContextHelper.getUserLoginInfo().getUser_prvg_map() != null) return (HashMap<String, Integer>) (ContextHelper
-					.getUserLoginInfo().getUser_prvg_map());
+			if (ContextHelper.getUserLoginInfo().getUser_prvg_map() != null) return (HashMap<String, Integer>) (ContextHelper.getUserLoginInfo().getUser_prvg_map());
 			else return new HashMap<String, Integer>();
 		} catch (Exception e) {
 			return new HashMap<String, Integer>();
@@ -245,8 +244,7 @@ public class ContextHelper {
 	 */
 	public static boolean isAdmin() {
 		try {
-			return IWebConfig.getConfigMap().get("defaultAdministrator")
-					.equals(ContextHelper.getUserLoginInfo().getTitle());
+			return IWebConfig.getConfigMap().get("defaultAdministrator").equals(ContextHelper.getUserLoginInfo().getTitle());
 		} catch (Exception e) {
 			return false;
 		}
@@ -458,14 +456,13 @@ public class ContextHelper {
 	}
 
 	public static Integer getPageSize(Map<String, Object> p_map) {
-		if (p_map.containsKey(Parameters.Page_Size_Str) && p_map.get(Parameters.Page_Size_Str) != null) return Integer
-				.parseInt(p_map.get(Parameters.Page_Size_Str).toString());
+		if (p_map.containsKey(Parameters.Page_Size_Str) && p_map.get(Parameters.Page_Size_Str) != null) return Integer.parseInt(p_map.get(Parameters.Page_Size_Str).toString());
 		return Integer.parseInt(IWebConfig.getConfigMap().get("Default_Page_Size"));
 	}
 
 	public static Integer getCurrPage(Map<String, Object> p_map) {
-		if (p_map.containsKey(Parameters.Current_Page_Str) && p_map.get(Parameters.Current_Page_Str) != null) return Integer
-				.parseInt(p_map.get(Parameters.Current_Page_Str).toString());
+		if (p_map.containsKey(Parameters.Current_Page_Str) && p_map.get(Parameters.Current_Page_Str) != null) return Integer.parseInt(p_map.get(Parameters.Current_Page_Str)
+				.toString());
 		return 1;
 	}
 }
