@@ -4,51 +4,51 @@
 (function($){
 	var xhupload_opts = {};
 	$.fn.xhupload = function(options){
-		var $this = $(this);
-		var $this_id = $this.attr("id");
-		var defaults = { url : "/upload/put",// 上传serve
-		filefield : "filedata",// input.file的表单名称
-		immediate : 1,// 0:普通模式 1:立即模式,选择文件即上传
-		info : 0,// 是否返回文件信息(大小,文件名,类型) 0:不返回 1:返回
-		fileext : [ 'jpg', 'gif', 'png', 'jpeg' ],// 对返回的文件信息的扩展名进行校验
-		progress : function(evt){ // 进度条函数
-			if (evt.lengthComputable) {
-				var percentComplete = Math.round(evt.loaded * 100 / evt.total);
-				$('#' + $this_id + '_progressbar').progressbar("value", percentComplete);
-				// document.getElementById('progressNumber').innerHTML = percentComplete.toString() + '%';
-			} else {
-				alert("上传失败");
-				// document.getElementById('progressNumber').innerHTML = 'unable to compute';
-			}
-
-		},
-		complete : function(evt){// 完成
-			// alert(evt.target.responseText);
-			// alert(evt.target.responseText);
-			// {"err":"","msg":"200906030521128703.gif"}
-			var text = evt.target.responseText;
-			var reg = /^\{"err":"[\S]*","msg":"[\S]*"\}$/;
-			if (reg.test(text)) {
-				var jobj = eval("(" + evt.target.responseText + ")");
-				if (jobj.err != '') {
-					alert("err:" + jobj.err);
-				} else {
-					$this.val(jobj.msg);
-				}
-			} else {
-				alert("上传文件错误,文件最大不能超过10M.");
-			}
-
-		},
-		failed : function(evt){
-			alert("上传文件失败");
-		},
-		canceled : function(evt){
-			alert("上传文件被中断");
-		} };
-
 		xhupload_opts = $.extend({}, defaults, options);
 		return this.each(function(){
+			var $this = $(this);
+			var $this_id = $this.attr("id");
+			var defaults = { url : "/upload/put",// 上传serve
+			filefield : "filedata",// input.file的表单名称
+			immediate : 1,// 0:普通模式 1:立即模式,选择文件即上传
+			info : 0,// 是否返回文件信息(大小,文件名,类型) 0:不返回 1:返回
+			fileext : [ 'jpg', 'gif', 'png', 'jpeg' ],// 对返回的文件信息的扩展名进行校验
+			progress : function(evt){ // 进度条函数
+				if (evt.lengthComputable) {
+					var percentComplete = Math.round(evt.loaded * 100 / evt.total);
+					$('#' + $this_id + '_progressbar').progressbar("value", percentComplete);
+					// document.getElementById('progressNumber').innerHTML = percentComplete.toString() + '%';
+				} else {
+					alert("上传失败");
+					// document.getElementById('progressNumber').innerHTML = 'unable to compute';
+				}
+
+			},
+			complete : function(evt){// 完成
+				// alert(evt.target.responseText);
+				// alert(evt.target.responseText);
+				// {"err":"","msg":"200906030521128703.gif"}
+				var text = evt.target.responseText;
+				var reg = /^\{"err":"[\S]*","msg":"[\S]*"\}$/;
+				if (reg.test(text)) {
+					var jobj = eval("(" + evt.target.responseText + ")");
+					if (jobj.err != '') {
+						alert("err:" + jobj.err);
+					} else {
+						$this.val(jobj.msg);
+					}
+				} else {
+					alert("上传文件错误,文件最大不能超过10M.");
+				}
+
+			},
+			failed : function(evt){
+				alert("上传文件失败");
+			},
+			canceled : function(evt){
+				alert("上传文件被中断");
+			} };
+
 			$.fn.xhcreate($this);
 		});
 	};
@@ -63,45 +63,43 @@
 		var filename = "", filesize = 0, filetype = "", fileext = "";
 		obj
 				.after('<span class="filearea"><input type="file" id="' + oid + '_' + filefield + '" name="' + filefield + '" class="fileinput" /><input type="button" id="ft_filebutton" name="filebutton" value="选择文件" class="filebutton" /></span>');
-		$("#" + oid + "_" + filefield).on(
-				"change",
-				function(){
-					if (xhupload_opts.info == 1) {
-						var thisval = $(this).val();
-						if (this.files) {
-							// alert("支持:" + this.files[0].size);
-							filesize = this.files[0].size;
-							filename = this.files[0].name;
-							filetype = this.files[0].type;
-							fileext = $.fn.xhupload.getFileExt(filename);
-						} else {
-							// 不支持返回filesize
-							filename = $.fn.xhupload.getFileName(thisval);
-							fileext = $.fn.xhupload.getFileExt(thisval);
-						}
-					}
+		$("#" + oid + "_" + filefield).on("change", function(){
+			if (xhupload_opts.info == 1) {
+				var thisval = $(this).val();
+				if (this.files) {
+					// alert("支持:" + this.files[0].size);
+					filesize = this.files[0].size;
+					filename = this.files[0].name;
+					filetype = this.files[0].type;
+					fileext = $.fn.xhupload.getFileExt(filename);
+				} else {
+					// 不支持返回filesize
+					filename = $.fn.xhupload.getFileName(thisval);
+					fileext = $.fn.xhupload.getFileExt(thisval);
+				}
+			}
 
-					// 创建进度条dialog
-					if ($('#' + oid + '_progress').length == 0)
-						$("body").append('<div id="' + oid + '_progress" title="文件上传"><div id="' + oid + '_progressbar"></div><div id="' + oid + '_progressbar2"></div></div>');
-					$('#' + oid + '_progress').dialog({ autoOpen : false,
-					height : 100,
-					width : 300,
-					modal : true });
+			// 创建进度条dialog
+			if ($('#' + oid + '_progress').length == 0)
+				$("body").append('<div id="' + oid + '_progress" title="文件上传"><div id="' + oid + '_progressbar"></div><div id="' + oid + '_progressbar2"></div></div>');
+			$('#' + oid + '_progress').dialog({ autoOpen : false,
+			height : 100,
+			width : 300,
+			modal : true });
 
-					$('#' + oid + '_progressbar').progressbar({ value : false,
-					change : function(){},
-					complete : function(){
-						$('#' + oid + '_progress').dialog("close");
-					} });
+			$('#' + oid + '_progressbar').progressbar({ value : false,
+			change : function(){},
+			complete : function(){
+				$('#' + oid + '_progress').dialog("close");
+			} });
 
-					if (xhupload_opts.immediate == 1) {
-						$('#' + oid + '_progress').dialog("open");
-						// alert(xhupload_opts.immediate);
-						// 直接上传文件
-						$.fn.xhUploadFile(oid + '_' + filefield);
-					}
-				});
+			if (xhupload_opts.immediate == 1) {
+				$('#' + oid + '_progress').dialog("open");
+				// alert(xhupload_opts.immediate);
+				// 直接上传文件
+				$.fn.xhUploadFile(oid + '_' + filefield);
+			}
+		});
 	};
 
 	$.fn.xhupload.sizeFormat = function(s){
