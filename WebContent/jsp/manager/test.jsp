@@ -81,18 +81,53 @@ $(function() {
 </head>
 <body>
 <div style="border: red solid 1px;padding: 50px;margin: 20px;">
-  	<input id="ft" name="filetxt" value="http://" />
-  	<!-- 
-  	<span class="filearea">
-  		<input type="file" id="ft_filedata" name="filedata" class="fileinput" />
-  		<input type="button" id="ft_filebutton" name="filebutton" value="选择文件" class="filebutton" />
-  	</span>
-  	-->
+  	<input id="ft" name="filetxt" value="http://" style="width: 300px;" />  <br />
+  	<input id="ft2" name="filetxt2" value="http://" style="width: 300px;" /> 
 <script type="text/javascript">
+
+$(function(){
+	$.fn.xhuploadinit();
+	$("#ft").xhupload();
+	$("#ft2").xhupload();
+});
 		//var x = {"err":"","msg":"200906030521128703.gif"};
 		//alert(x.err);
 		//alert(x.msg);
-		$("#ft").xhupload();
+		//$("#ft").xhupload();
+		//$("#ft2").xhupload();
+		//$("#ft").ajaxFileUpload
+function ajaxFileUpload(){
+	$.ajaxFileUpload({ url : '/upload/put',
+	secureuri : false,
+	fileElementId : 'ft_filedata',
+	dataType : 'json',
+	beforeSend : function(){
+		//<button class="button" id="buttonUpload" onclick="return ajaxFileUpload();">Upload</button>
+		//$("#loading").show();
+	},
+	complete : function(){
+		//$("#loading").hide();
+	},
+	success : function(data, status){
+		alert(data.err);
+		alert(data.msg);
+		/*
+		if (typeof (data.error) != 'undefined') {
+			if (data.error != '') {
+				alert(data.error);
+			} else {
+				alert(data.msg);
+			}
+		}
+		*/
+	},
+	error : function(data, status, e){
+		alert(e);
+	} })
+
+	return false;
+
+}
 </script>
   </div>
   <div style="height: 20px;"></div>

@@ -6,7 +6,8 @@ function createXhEditor(obj_id, upload_url){
 	var $text = $('#' + obj_id);
 	$text.css("width", "100%");
 	$text.css("min-height", "300px");
-	return $text
+	$text.css("display", "none");
+	var editor = $text
 			.xheditor({
 				tools : 'Cut,Copy,Paste,Pastetext,SelectAll,|,Blocktag,Fontface,FontSize,Bold,Italic,Underline,Strikethrough,FontColor,BackColor,Removeformat,|,Align,Outdent,Indent,|,Hr,List,Table,|,Link,Img,|,Source,Preview,Fullscreen',
 				upImgUrl : "/upload/put",
@@ -17,4 +18,5 @@ function createXhEditor(obj_id, upload_url){
 				// upMultiple : '1',
 				skin : 'nostyle' });
 	// editor.toggleFullscreen(true);
+	return editor
 }

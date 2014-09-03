@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
-<%@ page import="org.iweb.sys.ContextHelper"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -37,6 +36,8 @@ $(function(){
 	$('#selectInfoClass').empty();
 	
 	createXhEditor("newscontentedit1");
+	
+	$.fn.xhuploadinit();
 	$("#newssmallimgid").xhupload();
 	$("#newsbigimgid").xhupload();
 	//infoeditor01 = new widget_textarea();
@@ -118,7 +119,7 @@ function view(obj) {
 						</tr>
 						<tr>
 							<td class="secRow" colspan="4">
-							<s:textarea id="newscontentedit1" title="信息内容" name="news.content" /> 
+							<s:textarea id="newscontentedit1" title="信息内容" name="news.content" cssStyle="display:none;"  /> 
 							</td>
 						</tr>
 						<tr>
