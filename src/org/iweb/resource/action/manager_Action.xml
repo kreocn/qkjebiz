@@ -48,7 +48,7 @@
 			<result>/jsp/manager/test.jsp</result>
 		</action>
 		<action name="test_*" class="org.iweb.common.action.TestAction" method="{1}">
-			<result>/jsp/manager/test.jsp</result>
+			<result>/WEB-INF/jsp/main/test.jsp</result>
 		</action>
 	</package>
 </struts>

@@ -24,6 +24,10 @@ public class TestAction extends ActionSupport {
 		return SUCCESS;
 	}
 
+	public String tmain() throws Exception {
+		return SUCCESS;
+	}
+
 	private void sendMails() {
 		String sql = "SELECT * FROM h_tmp_email WHERE 1=0";
 		CommonDAO c = new CommonDAO();

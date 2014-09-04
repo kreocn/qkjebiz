@@ -30,7 +30,7 @@
 <body>
 	<div class="errorMain">
 		<div class="errorTop">
-			<img src="<s:url value="/images/error05.jpg" />" />
+			<img src="<s:url value="/images/error/error04.jpg" />" />
 		</div>
 		
 		<div class="errorContent" style="display: none;">

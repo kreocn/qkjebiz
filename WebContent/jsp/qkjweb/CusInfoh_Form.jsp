@@ -54,11 +54,11 @@ var checkSec = function(sec){
 				var m = parseInt(msg);
 				//alert( "Data Saved: " + m);
 				if(m==0) {
-					$("#securityImg").css('background','url("<s:url value="/images/ico_warn.png" />") no-repeat 0 0');
+					$("#securityImg").css('background','url("<s:url value="/images/icon/ico_warn.png" />") no-repeat 0 0');
 					$("#errMsg").empty();
 					$("#errMsg").hide();
 				} else {
-					$("#securityImg").css({'background-image':'url("<s:url value="/images/ico_warn.png" />")','background-position':'0 -50px'});
+					$("#securityImg").css({'background-image':'url("<s:url value="/images/icon/ico_warn.png" />")','background-position':'0 -50px'});
 					if(m==1) {
 						$("#errMsg").text("您已经参与了这个活动并且正确提交了信息!");
 					} else {

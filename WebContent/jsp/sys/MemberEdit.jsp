@@ -131,10 +131,10 @@ var setclass = function() {
 .warn_area_img {display: inline-block;height: 16px;width: 16px;}
 .warn_area_info {display: inline-block;color: red;}
 .warn_area_success {display: inline-block;height: 16px;}
-.warn_area_success .warn_area_img {background: url('<s:url value="/images/ico_warn.png" />')  no-repeat 0 0;}
+.warn_area_success .warn_area_img {background: url('<s:url value="/images/icon/ico_warn.png" />')  no-repeat 0 0;}
 .warn_area_success .warn_area_info {color: #E1E1E1;}
 .warn_area_fail {display: inline-block;height: 16px;}
-.warn_area_fail  .warn_area_img {background: url('<s:url value="/images/ico_warn.png" />')  no-repeat 0 -50px;}
+.warn_area_fail  .warn_area_img {background: url('<s:url value="/images/icon/ico_warn.png" />')  no-repeat 0 -50px;}
 .warn_area_fail .warn_area_info {color: red;}
 .warn_area_load {display: inline-block;height: 16px;}
 .warn_area_load .warn_area_img {background: url('<s:url value="/images/loading/loading16x16_01.gif" />')  no-repeat;}

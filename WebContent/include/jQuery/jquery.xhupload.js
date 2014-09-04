@@ -2,15 +2,11 @@
  * jquery上传插件
  */
 (function($){
-
 	$.fn.xhuploadinit = function(){
-
 		var immediate = true;
-
 		$("body").append('<input type="file" id="xhUploadFile" name="filedata" class="fileinput" />');
 		$("body").append('<div id="xhUploadFile_progress" title="文件上传"><div id="xhUploadFile_progressbar"></div></div>');
 		var filename = "", filesize = 0, filetype = "", fileext = "";
-
 		$("#xhUploadFile").on("change", function(){
 			if (this.files) {
 				// alert("支持:" + this.files[0].size);
@@ -23,13 +19,11 @@
 				filename = $.fn.xhupload.getFileName(thisval);
 				fileext = $.fn.xhupload.getFileExt(thisval);
 			}
-
 			// 创建进度条dialog
 			$('#xhUploadFile_progress').dialog({ autoOpen : false,
 			height : 100,
 			width : 300,
 			modal : true });
-
 			$('#xhUploadFile_progressbar').progressbar({ value : false,
 			change : function(){},
 			complete : function(){

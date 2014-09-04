@@ -27,7 +27,7 @@ function reloadImage() {
 </script>
 <body>
 <div style="text-align: center;padding-top: 200px;">
-	<img src="images/ajax-loader.gif" alt=""><br />
+	<img src="images/loading/ajax-loader.gif" alt=""><br />
 	<span id="login_message">正在登陆,请稍后...</span><br />
 </div>
 <div style=" text-align:center; margin-top:80px;display: none;">

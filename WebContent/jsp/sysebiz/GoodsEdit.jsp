@@ -18,12 +18,17 @@
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery-ui-1.10.3.custom.min.js" />"></script>
 <script type="text/javascript" src="/ckframe/include/widget.js"></script>
 <script type="text/javascript" src="<s:url value="/js/common_ajax2.0.js" />"></script>
+
+<link rel="stylesheet" href="<s:url value="/include/jQuery/stylesheets/jquery.xhupload.css" />" />
+<script type="text/javascript" src="<s:url value="/js/xheditor/xheditor-1.2.1.min.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/xheditor/xheditor_lang/zh-cn.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/func/create_editor.js" />"></script>
+<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.xhupload.js" />"></script>
 <script type="text/javascript">
 var infoeditor01;
 var wb_smallImg,wb_bigImg;
 $(function(){
 	$("#itableformid").tabs();
-	
 	$("#goodstypeinfo :input[name='goods.goods_type']").bind("change",function(){
 		showInfoColumn();
 	});
@@ -36,23 +41,20 @@ $(function(){
 		}
 	};	
 	showInfoColumn();
-	infoeditor01 = new widget_textarea();
-	infoeditor01.init("goodsdescriptionid");
+	createXhEditor("goodsdescriptionid");
+	
 	BrowseServer(0);
-	wb_smallImg = new widget_button({ inputid :"goods_small_img", objname : "wb_smallImg" });
-	wb_smallImg.init(); 
-	wb_bigImg = new widget_button({ inputid :"goods_big_img", objname : "wb_bigImg" });
-	wb_bigImg.init(); 
+	//wb_smallImg = new widget_button({ inputid :"goods_small_img", objname : "wb_smallImg" });
+	//wb_smallImg.init(); 
+	//wb_bigImg = new widget_button({ inputid :"goods_big_img", objname : "wb_bigImg" });
+	//wb_bigImg.init(); 
+	$.fn.xhuploadinit();
+	$("#goods_small_img").xhupload();
+	$("#goods_big_img").xhupload();
 });
 
 function BrowseServer(idindex) {
-	var objname = 'window.wb_goodsImgs'+idindex;
-	var objname2 = 'wb_goodsImgs'+idindex;
-	//先判断有没有此对象
-	if(typeof(eval(objname))=='undefined') {
-		var sstr = objname+'=new widget_button({ inputid:"goodsImgsurl'+idindex+'",objname:"'+objname2+'"});'+objname+'.init();';
-		eval(sstr);
-	}
+	$("#goodsImgsurl"+idindex).xhupload();
 }
 
 var fileindex = 1;
@@ -201,8 +203,7 @@ ul.showImgList .rightinfo {display: block;clear: both;margin-top: 5px;}
 		    <td class="firstRow"><span style="color:red;">*</span>产品小图:</td>
 		    <td class="secRow">
 		    	<s:textfield id="goods_small_img" name="goods.small_img" title="产品小图" require="required" controlName="产品小图" cssStyle="width:400px;" />
-		    	<span class="message_prompt">图片规格100x100</span>
-		    	<div><img src="<s:property value="goods.small_img" />" /></div>
+		    	<div><img src="<s:property value="goods.small_img" />" /> <span class="message_prompt">图片规格100x100</span></div>
 		    </td>
 		  </tr>
 		  <tr>
@@ -247,7 +248,7 @@ ul.showImgList .rightinfo {display: block;clear: both;margin-top: 5px;}
 	<table id="goodsdetailedinfo_table" class="ilisttable" width="100%" border="1" cellspacing="0" cellpadding="0" bordercolor="#8B8B8B">
 		  <tr>
 		    <td>
-<textarea cols="100" id="goodsdescriptionid" name="goods.goods_description" rows="10"><s:property value="goods.goods_description" /></textarea>
+<textarea id="goodsdescriptionid" name="goods.goods_description" style="height: 450px;"><s:property value="goods.goods_description" /></textarea>
 		    </td>
 		  </tr>		 
 	</table>

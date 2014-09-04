@@ -42,15 +42,15 @@ width: 165px;
 }
 
 .yesarea {
-display: inline-block; width: 16px; height: 16px; background: url("../images/ico_warn.png") transparent no-repeat 0 0;
+display: inline-block; width: 16px; height: 16px; background: url("../images/icon/ico_warn.png") transparent no-repeat 0 0;
 }
 
 .noarea {
-display: inline-block; width: 16px; height: 16px; background: url("../images/ico_warn.png") transparent no-repeat 0 -150px;
+display: inline-block; width: 16px; height: 16px; background: url("../images/icon/ico_warn.png") transparent no-repeat 0 -150px;
 }
 
 .errorarea {
-display: inline-block; width: 16px; height: 16px; background: url("../images/ico_warn.png") transparent no-repeat 0 -50px;
+display: inline-block; width: 16px; height: 16px; background: url("../images/icon/ico_warn.png") transparent no-repeat 0 -50px;
 }
 
 .loadingarea {
