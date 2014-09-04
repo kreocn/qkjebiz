@@ -22,8 +22,8 @@
 <script type="text/javascript" src="<c:url value="/js/v0.1/index.js" />"></script>
 <script type="text/javascript" src="<c:url value="/js/v0.1/tab.js" />"></script>
 <script type="text/javascript">
-var str = '{err:"xserr",msg:"this is msg"}';
+//var str = '{err:"xserr",msg:"this is msg"}';
 //var j1 = eval("(" + str + ")");
-alert(str.err + ":" + str.msg);
+//alert(j1.err + ":" + j1.msg);
 </script>
 </html>
