@@ -8,6 +8,11 @@ public class AllotDAO extends AbstractDAO {
 		return super.list("allot_getAllots", map);
 	}
 	
+	public List listPower(Map<String, Object> map) {
+		setCountMapid("allot_getAllotsCounts");
+		return super.list("allot_getbyPower", map);
+	}
+	
 	public Object get(Object uuid) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("uuid", uuid);

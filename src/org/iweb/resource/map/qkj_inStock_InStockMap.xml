@@ -21,18 +21,47 @@
 		</dynamic>
 		<![CDATA[ Order By i.add_timer Desc LIMIT 0, 500 ]]>
 	</select>
+	
+	<select id="inStock_getIn" resultClass="inStock" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT DISTINCT i.`uuid`, i.*,addu.`USER_NAME` add_user_name,lmu.`USER_NAME` lm_user_name,s.`prvg` prvg FROM 
+			qkj_t_instock i LEFT JOIN s_sys_user addu ON (i.add_user=addu.`UUID`) 
+			LEFT JOIN s_sys_user lmu ON (i.lm_user=lmu.`UUID`)
+			LEFT JOIN qkj_t_stockpower  s ON(s.`ware_id`=i.store_id) WHERE 
+			 (s.`username`=#username# OR 
+			(IF(s.son = 0, s.`dept_code`=#dept_code#, s.`dept_code` LIKE #dept_code#))) AND s.`prvg` LIKE '%4%'
+		]]>
+		<isNotEmpty prepend="AND" property="date"><![CDATA[ i.date=#date# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="store_id"><![CDATA[ i.store_id=#store_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="operator_id"><![CDATA[ i.operator_id=#operator_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="take_id"><![CDATA[ i.take_id=#take_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="total_price"><![CDATA[ i.total_price=#total_price# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="add_user"><![CDATA[ i.add_user=#add_user# ]]></isNotEmpty>
+
+		<![CDATA[ GROUP BY i.`uuid` Order By i.add_timer Desc LIMIT 0, 500 ]]>
+	</select>
+	
 	<select id="inStock_getInStocksCounts" resultClass="int" parameterClass="java.util.Map">
 		<![CDATA[ 
-			Select Count(*) From qkj_t_instock
+			Select Count(*)  FROM 
+			qkj_t_instock i LEFT JOIN s_sys_user addu ON (i.add_user=addu.`UUID`) 
+			LEFT JOIN s_sys_user lmu ON (i.lm_user=lmu.`UUID`)
+			LEFT JOIN qkj_t_stockpower  s ON(s.`ware_id`=i.store_id)
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="date"><![CDATA[ date=#date# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="store_id"><![CDATA[ store_id=#store_id# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="operator_id"><![CDATA[ operator_id=#operator_id# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="take_id"><![CDATA[ take_id=#take_id# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="total_price"><![CDATA[ total_price=#total_price# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="add_user"><![CDATA[ add_user=#add_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date"><![CDATA[ date=#date# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="store_id"><![CDATA[ store_id=#store_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="operator_id"><![CDATA[ operator_id=#operator_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="take_id"><![CDATA[ take_id=#take_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="total_price"><![CDATA[ total_price=#total_price# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="add_user"><![CDATA[ add_user=#add_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="dept_code">
+			
+			<![CDATA[(s.`username`=#username# OR 
+			(IF(s.son = 0, s.`dept_code`=#dept_code#, s.`dept_code` LIKE #dept_code#))) AND s.`prvg` LIKE '%4%' ]]>
+			
+			</isNotEmpty>
 
 		</dynamic>
 	</select>

@@ -7,6 +7,12 @@ public class StockDAO extends AbstractDAO {
 		setCountMapid("stock_getStocksCounts");
 		return super.list("stock_getStocks", map);
 	}
+	
+	public List listByPower(Map<String, Object> map) {
+		setCountMapid("stock_getStocksCounts");
+		return super.list("stock_getPower", map);
+	}
+	
 	public Object fingByPro(Map<String, Object> map){
 		return super.get("stock_getStocks", map);
 	}

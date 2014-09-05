@@ -9,6 +9,11 @@ public class InStockDAO extends AbstractDAO {
 		return super.list("inStock_getInStocks", map);
 	}
 	
+	public List listbypo(Map<String, Object> map) {
+		setCountMapid("inStock_getInStocksCounts");
+		return super.list("inStock_getIn", map);
+	}
+	
 	public Object get(Object uuid) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("uuid", uuid);

@@ -49,6 +49,10 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
+		
+		<action name="inStock_view" class="com.qkj.ware.action.InStockAction" method="load">
+			<result>/jsp/ware/inStock/InStockView.jsp</result>
+		</action>
 		<!-- InStock End -->
 	</package>
 </struts>

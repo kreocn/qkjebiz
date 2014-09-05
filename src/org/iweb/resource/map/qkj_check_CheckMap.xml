@@ -12,13 +12,31 @@
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ c.uuid=#uuid# ]]></isNotEmpty>
 <isNotEmpty prepend="AND" property="product_id"><![CDATA[ c.product_id=#product_id# ]]></isNotEmpty>
 <isNotEmpty prepend="AND" property="store_id"><![CDATA[ c.store_id=#store_id# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="quantity"><![CDATA[ c.date=#date# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="date"><![CDATA[ c.date=#date# ]]></isNotEmpty>
 <isNotEmpty prepend="AND" property="quantity"><![CDATA[ c.quantity=#quantity# ]]></isNotEmpty>
 <isNotEmpty prepend="AND" property="num"><![CDATA[ c.num=#num# ]]></isNotEmpty>
 
 		</dynamic>
 		<![CDATA[ LIMIT 1000 ]]>
 	</select>
+	<!-- 日期分组查询 -->
+	<select id="check_getChecksByDate" resultClass="check" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT c.*,p.`title` product_name,w.`ware_name` ware_name FROM qkj_t_check c LEFT JOIN qkj_t_product p ON (c.`product_id`=p.`uuid`)
+			LEFT JOIN qkj_t_warehouse w ON(c.`store_id`=w.`uuid`)
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="product_id"><![CDATA[ c.product_id=#product_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="store_id"><![CDATA[ c.store_id=#store_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date"><![CDATA[ c.date=#date# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="quantity"><![CDATA[ c.quantity=#quantity# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="num"><![CDATA[ c.num=#num# ]]></isNotEmpty>
+
+		</dynamic>
+		<![CDATA[ GROUP BY c.`date` LIMIT 1000 ]]>
+	</select>
+	
+	
 	<select id="check_getChecksCounts" resultClass="int" parameterClass="java.util.Map">
 		<![CDATA[ 
 			Select Count(*) From qkj_t_check

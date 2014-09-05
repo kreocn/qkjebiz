@@ -97,8 +97,96 @@
 </div>
 </body>
 <script type="text/javascript">
-function checks(){
+var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
+var c_mid = '<s:property value="outStock.member_id" />';
+$(function() {
+	SimpleLoadMember(ajax_url_action,function(event, ui) {loadAddress(ui.item.order_user_id);});
+	if(c_mid!='') {
+		loadAddress(c_mid);
+	}
+	$("#addItemForm").dialog({
+	      autoOpen: false,
+	      height: 200,
+	      width: 600,
+	      modal: true
+	});
+	$("#addItem").click(function() {
+		openAddForm();
+	});
 	
+	$("#addoutStockPay").dialog({
+	      autoOpen: false,
+	      height: 200,
+	      width: 600,
+	      modal: true
+	});
+	$("#addoutStockPayOpen").click(function() {
+		$("#addoutStockPay").dialog("open");
+	});
+	
+	//outStock_fd_date
+	if($("#outStock_fd_date").length>0) {
+		$("#outStock_fd_date").datepicker();
+	}
+	
+	// 此段代码可以方式回车提交
+	jQuery(function($){
+	    $("form").keypress(function(e){
+	        if(e.keyCode == 13) {
+	            e.preventDefault();
+	        }
+	    });  
+	});
+	
+	CommonUtil.pickrow('fd_list_table');
+});
+
+function loadAddress(memberid) {
+	var ajax = new Common_Ajax();
+	ajax.config.action_url = ajax_url_action;
+	ajax.config._success = function(data, textStatus) {
+		createAddreeeSelect(data);
+	};
+	ajax.addParameter("privilege_id", "QKJCJ_SYSEBIZ_AJAXLOAD_ADDRESS");
+	ajax.addParameter("parameters", "member_id=" + memberid);
+	ajax.sendAjax();
+}
+
+var c_data=new Array(); // 保存当前用户的所有联系人信息
+function createAddreeeSelect(p_data) {
+	var selectid = $("#selectAddress");
+	selectid.clearAllOption();
+	var sh = "";
+	for ( var i = 0; i < p_data.length; i++) {
+		selectid.addOption(i+"-"+ p_data[i].province,i);
+		sh += p_data[i].province + " " + p_data[i].city + " " + p_data[i].area + " " + p_data[i].street + "  " 
+			+ p_data[i].con_name + ' 收  邮编:' + p_data[i].post + ' 联系电话:' + p_data[i].mobile;
+		if (p_data[i].defaultaddress == 1) {
+			$(":input[name='outStock.address']").val(sh);
+			selectid.setSelectedValue(i);
+		}
+		c_data[i] = sh;
+		sh="";
+	}
+	selectid.unbind().bind("change",function(){
+		$(":input[name='outStock.address']").val(c_data[$(this).getSelectedValue()]);
+	});
+}
+
+function openAddForm() {
+	$("#addItemForm").dialog("open");
+}
+
+function closeAddForm() {
+	$("#addItemForm").dialog("close");
+}
+
+//当前日期
+function wol() {
+	var date = new Date();
+	var dateString = date.getFullYear() + '-' + (date.getMonth() + 1) + '-'
+			+ date.getDate();
+		document.getElementById("indate").value=dateString;
 }
 </script>
 </html>

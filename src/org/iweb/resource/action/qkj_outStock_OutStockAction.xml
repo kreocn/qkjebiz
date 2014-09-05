@@ -87,6 +87,10 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
+		
+		<action name="outStock_view" class="com.qkj.ware.action.OutStockAction" method="load">
+			<result>/jsp/ware/outStock/outStockView.jsp</result>
+		</action>
 		<!-- OutStock End chackManage-->
 	</package>
 </struts>

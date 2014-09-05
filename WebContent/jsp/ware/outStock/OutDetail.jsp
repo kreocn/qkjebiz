@@ -155,7 +155,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 <tr>
 <td class='firstRow'>出库明细:
 	<%-- <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_outStock_ADD') && outStock.status==0"> --%>
-	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_ADD')">
+	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_ADD') && @com.qkj.ware.action.warepower@checkPermit(outStock.store_id,'add')">
 	<br />
 	<input id="addItem" type="button" value="添加明细" onclick="commain();"/>
 	</s:if>
@@ -180,7 +180,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 	</td>
 	<td align="right"><s:property value="totel" /></td>
 	<td align="center">
-   	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_DEL')">
+   	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_DEL') && @com.qkj.ware.action.warepower@checkPermit(outStock.store_id,'del')">
    	[<a href="<s:url namespace="/outStock" action="outDetail_del"><s:param name="outDetail.uuid" value="uuid" /><s:param name="outDetail.lading_id" value="lading_id" /></s:url>" onclick="return isDel();">删除</a>]
    	</s:if>	   
     </td>
@@ -217,24 +217,17 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 				</s:if>
 				<s:elseif test="null != outStock && 'mdy' == viewFlag">
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_MDY') && 2==outStock.send">
-					<s:if test=""></s:if>
 					<s:submit id="save" name="save" value="保存" action="outStock_save" />
+					</s:if>
+					
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_SURE') && 2==outStock.send">
 					<s:submit value="确认" action="outStock_sure" onclick="return isOp('是否确认?\n确认后将不能更改!');"></s:submit>
+					</s:if>
+					
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_DEL')">
 					<s:submit id="delete" name="delete" value="删除" action="outStock_del" onclick="return isDel();" />
 					</s:if>
-					<script type="text/javascript">
-					$(function(){
-						$("#formEdit :input").change(function(){
-							if($("#saveoutStockStatus0").length>0)
-								$("#saveoutStockStatus0").attr("disabled","disabled");
-							if($("#saveoutStockStatus1").length>0)
-								$("#saveoutStockStatus1").attr("disabled","disabled");
-							$("#message").text("请先保存后才能进行其他相关操作");
-						});
-					});
-					</script>
-					</s:if>
+					
 					
 				</s:elseif>
 				<input type="button" value="返回" onclick="linkurl('<s:url action="outStock_list" namespace="/outStock"><s:param name="viewFlag">relist</s:param></s:url>');" />
@@ -267,14 +260,14 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 			</td>
 			</tr>
 			<tr>
-			<td class='firstRow'>单价:</td>
+			<td class='firstRow'><span style="color:red;">*</span>单价:</td>
 			<td class='secRow'>
 				<s:textfield name="outDetail.price" title="单价" dataType="number" controlName="单价" require="required" />
 				<span id="per_price_select_area"><select id="per_price_select"></select></span>
 			</td>
 			</tr>
 			<tr>
-			<td class='firstRow'>数量:</td>
+			<td class='firstRow'><span style="color:red;">*</span>数量:</td>
 			<td class='secRow'>
 				<s:textfield name="outDetail.num" title="数量" dataType="integer" controlName="数量" require="required" />
 				<span id="ladingItemnumCase"></span>

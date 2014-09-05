@@ -143,26 +143,25 @@ public class OutStockAction extends ActionSupport {
 	public String list() throws Exception {
 		ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_LIST");
 		String u = ContextHelper.getUserLoginUuid();
+		String code=ContextHelper.getUserLoginDept();
 		try {
 			map.clear();
 			if (outStock != null)
 				map.putAll(ToolsUtil.getMapByBean(outStock));
 			map.putAll(ContextHelper.getDefaultRequestMap4Page());
 			this.setPageSize(ContextHelper.getPageSize(map));
-			this.setCurrPage(ContextHelper.getCurrPage(map));		
-			this.setOutStocks(dao.list(map));
+			this.setCurrPage(ContextHelper.getCurrPage(map));	
+			if(ContextHelper.isAdmin()){//管理员
+				this.setOutStocks(dao.list(map));
+			}else{
+				map.put("username",u);
+				map.put("dept_code", code);
+				this.setOutStocks(dao.listPower(map));
+			}
+			
 			this.setRecCount(dao.getResultCount());
 			
-			WareDAO wd=new WareDAO();
-			if(ContextHelper.isAdmin()){//管理员
-				map.clear();
-				map.put("bug","bug");
-				this.setWares(wd.list(map));
-			}else{
-				map.clear();
-				map.put("useruuid",u);
-				this.setWares(wd.listByPower(map));
-			}
+			wareByPower(u, code);
 			
 			this.setOutStock(null);
 		} catch (Exception e) {
@@ -178,29 +177,20 @@ public class OutStockAction extends ActionSupport {
 
 	public String load() throws Exception {
 		String u = ContextHelper.getUserLoginUuid();
+		String code=ContextHelper.getUserLoginDept();
 		try {
 			if (null == viewFlag) {
 				this.setOutStock(null);
 				setMessage("你没有选择任何操作!");
 			}else if("new".equals(viewFlag)){
 				//出库仓库
-				WareDAO wd=new WareDAO();
-				if(ContextHelper.isAdmin()){//管理员
-					map.clear();
-					map.put("bug","bug");
-					this.setWares(wd.list(map));
-				}else{
-					map.clear();
-					map.put("useruuid",u);
-					this.setWares(wd.listByPower(map));
-				}
+				wareByPower(u, code);
 				this.setOutStock(null);
 			}else if ("add".equals(viewFlag)) {
 				this.setOutStock(null);
-				WareDAO wd=new WareDAO();
-				this.setWares(wd.list(null));
+				wareByPower(u, code);
 				this.setOutStock(null);
-			} else if ("mdy".equals(viewFlag)) {
+			} else if ("mdy".equals(viewFlag) || "view".equals(viewFlag) || "print".equals(viewFlag)) {
 				if (outStock.getUuid()<0&&null==outStock.getOrdernum())
 					this.setOutStock(null);
 				else {
@@ -215,17 +205,7 @@ public class OutStockAction extends ActionSupport {
 						map.put("ordernum", outStock.getOrdernum());
 					}
 					this.setOutStock((OutStock)dao.list(map).get(0));
-					WareDAO wd=new WareDAO();
-					if(ContextHelper.isAdmin()){//管理员
-						map.clear();
-						map.put("bug","bug");
-						this.setWares(wd.list(map));
-					}else{
-						map.clear();
-						map.put("useruuid",u);
-						this.setWares(wd.listByPower(map));
-					}
-					
+					wareByPower(u, code);
 					StockDAO sdao=new StockDAO();
 					map.clear();
 					map.put("store_id", outStock.getStore_id());
@@ -267,6 +247,22 @@ public class OutStockAction extends ActionSupport {
 			return "success";
 		}
 		
+	}
+
+	private void wareByPower(String u, String code) {
+		WareDAO wd=new WareDAO();
+		if(ContextHelper.isAdmin()){//管理员
+			map.clear();
+			map.put("bug","bug");
+			this.setWares(wd.list(map));
+		}else{
+			map.clear();
+			map.put("username",u);
+			map.put("dept_code", code);
+			map.put("add", 1);
+			map.put("bug","bug");
+			this.setWares(wd.listByPower(map));
+		}
 	}
 
 	public String add() throws Exception {

@@ -26,6 +26,7 @@ public class InStock {
 	private String lm_user_name;
 
 	// 以下为非数据库字段
+	private String prvg;
 
 	public String getUuid() {
 		return uuid;
@@ -170,6 +171,16 @@ public class InStock {
 	public void setContime(Date contime) {
 		this.contime = contime;
 	}
+
+	public String getPrvg() {
+		return prvg;
+	}
+
+	public void setPrvg(String prvg) {
+		this.prvg = prvg;
+	}
+	
+	
 	
 	
 }

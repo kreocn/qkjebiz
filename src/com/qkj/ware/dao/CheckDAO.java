@@ -8,6 +8,11 @@ public class CheckDAO extends AbstractDAO {
 		return super.list("check_getChecks", map);
 	}
 	
+	public List listByDate(Map<String, Object> map) {
+		//setCountMapid("check_getChecksCounts");
+		return super.list("check_getChecksByDate", map);
+	}
+	
 	public Object get(Object uuid) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("uuid", uuid);

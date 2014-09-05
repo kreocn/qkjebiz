@@ -7,6 +7,11 @@ public class OutStockDAO extends AbstractDAO {
 		setCountMapid("outStock_getOutStocksCounts");
 		return super.list("outStock_getOutStocks", map);
 	}
+
+	public List listPower(Map<String, Object> map) {
+		setCountMapid("outStock_getOutStocksCounts");
+		return super.list("outStock_getpower", map);
+	}
 	
 	public Object get(Object uuid) {
 		Map<String, Object> map = new HashMap<String, Object>();

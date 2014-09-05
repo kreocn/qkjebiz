@@ -1,5 +1,5 @@
+
 package com.qkj.ware.action;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -176,14 +176,24 @@ public class InStockAction extends ActionSupport {
 
 	public String list() throws Exception {
 		ContextHelper.isPermit("QKJ_WARE_INSTOCK_LIST");
+		String u = ContextHelper.getUserLoginUuid();
+		String code=ContextHelper.getUserLoginDept();
 		try {
 			map.clear();
 			if (inStock != null)
 				map.putAll(ToolsUtil.getMapByBean(inStock));
 			map.putAll(ContextHelper.getDefaultRequestMap4Page());
 			this.setPageSize(ContextHelper.getPageSize(map));
-			this.setCurrPage(ContextHelper.getCurrPage(map));		
-			this.setInStocks(dao.list(map));
+			this.setCurrPage(ContextHelper.getCurrPage(map));
+			if(ContextHelper.isAdmin()){//管理员
+				this.setInStocks(dao.list(map));
+			}else{
+				map.put("username",u);
+				map.put("dept_code", code);
+				this.setInStocks(dao.listbypo(map));
+			}
+			
+			
 			this.setRecCount(dao.getResultCount());
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
@@ -205,17 +215,7 @@ public class InStockAction extends ActionSupport {
 				setMessage("你没有选择任何操作!");
 			} else if ("add".equals(viewFlag)) {
 				this.setInStock(null);
-				WareDAO wd=new WareDAO();
-				if(ContextHelper.isAdmin()){//管理员
-					//map.clear();
-					//map.put("bug","bug");不包含破损库
-					this.setWares(wd.list(null));
-				}else{
-					map.clear();
-					map.put("username",u);
-					map.put("dept_code", code);
-					this.setWares(wd.listByPower(map));
-				}
+				wareByPower(u, code);
 				ProductDAO pdao = new ProductDAO();
 				this.setProducts(pdao.list(null));
 			} else if ("mdy".equals(viewFlag) || "view".equals(viewFlag) || "print".equals(viewFlag)) {
@@ -228,16 +228,7 @@ public class InStockAction extends ActionSupport {
 						map.put("status", 2);
 					}
 					this.setInStock((InStock)dao.list(map).get(0));
-					WareDAO wd=new WareDAO();
-					if(ContextHelper.isAdmin()){//管理员
-						map.clear();
-						map.put("bug","bug");
-						this.setWares(wd.list(map));
-					}else{
-						map.clear();
-						map.put("useruuid",u);
-						this.setWares(wd.listByPower(map));
-					}
+					wareByPower(u, code);
 					ProductDAO pdao = new ProductDAO();
 					this.setProducts(pdao.list(null));
 					InDetailDAO idao=new InDetailDAO();
@@ -255,6 +246,19 @@ public class InStockAction extends ActionSupport {
 			throw new Exception(this.getClass().getName() + "!load 读取数据错误:", e);
 		}
 		return SUCCESS;
+	}
+
+	private void wareByPower(String u, String code) {
+		WareDAO wd=new WareDAO();
+		if(ContextHelper.isAdmin()){//管理员
+			this.setWares(wd.list(null));
+		}else{
+			map.clear();
+			map.put("username",u);
+			map.put("dept_code", code);
+			map.put("add", 1);
+			this.setWares(wd.listByPower(map));
+		}
 	}
 
 	public String add() throws Exception {

@@ -15,6 +15,7 @@ public class Check {
 	//数据库以外
 	private String product_name;
 	private String ware_name;
+	private String state;
 
 	public Integer getUuid() {
 		return uuid;
@@ -86,6 +87,14 @@ public class Check {
 
 	public void setWare_name(String ware_name) {
 		this.ware_name = ware_name;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
 	}
 	
 	

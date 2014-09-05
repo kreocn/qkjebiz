@@ -78,7 +78,7 @@ $(function(){
 	  </tr>
 <s:iterator value="outStocks" status="sta">
 	  <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>" type="pickrow">
-	    <td align="center"><input name="uuid" type="checkbox" value="<s:property value="uuid" />" /></td>
+	    <td align="center"><%-- <input name="uuid" type="checkbox" value="<s:property value="uuid" />" /> --%></td>
 	    <td><s:property value="uuid" /></td>
 		<td><s:property value="operator_id" /></td>
 		<td><s:property value="take_id" /></td>
@@ -106,6 +106,9 @@ $(function(){
 	    	</s:if>
 	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_DEL')">
 	    	[<a href="<s:url namespace="/outStock" action="outStock_del"><s:param name="outStock.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>]
+	    	</s:if>	 
+	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_PRINT')  && send==4">
+	    	[<a target="_blank" href="<s:url namespace="/outStock" action="outStock_view"><s:param name="viewFlag">view</s:param><s:param name="outStock.uuid" value="uuid"></s:param></s:url>">查看/打印</a>]
 	    	</s:if>	   
 	    </td>
 	  </tr>

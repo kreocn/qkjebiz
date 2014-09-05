@@ -103,6 +103,8 @@ public class StockAction extends ActionSupport {
 
 	public String list() throws Exception {
 		ContextHelper.isPermit("QKJ_WARE_STOCK_LIST");
+		String u = ContextHelper.getUserLoginUuid();
+		String code=ContextHelper.getUserLoginDept();
 		try {
 			map.clear();
 			if (stock != null)
@@ -110,17 +112,39 @@ public class StockAction extends ActionSupport {
 				map.putAll(ContextHelper.getDefaultRequestMap4Page());
 				this.setPageSize(ContextHelper.getPageSize(map));
 				this.setCurrPage(ContextHelper.getCurrPage(map));		
-				this.setStocks(dao.list(map));
-				WareDAO wd=new WareDAO();
+				if(ContextHelper.isAdmin()){//管理员
+					this.setStocks(dao.list(map));
+				}else{
+					map.put("username",u);
+					map.put("dept_code", code);
+					this.setStocks(dao.listByPower(map));
+				}
+				
+				
 				ProductDAO pdao = new ProductDAO();
-				this.setWares(wd.list(null));
 				this.setProducts(pdao.list(null));
+				
+				wareByPower(u, code);
+				
 				this.setRecCount(dao.getResultCount());
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
 		}
 		return SUCCESS;
+	}
+
+	private void wareByPower(String u, String code) {
+		WareDAO wd=new WareDAO();
+		if(ContextHelper.isAdmin()){//管理员
+			this.setWares(wd.list(null));
+		}else{
+			map.clear();
+			map.put("username",u);
+			map.put("dept_code", code);
+			map.put("sel", 1);
+			this.setWares(wd.listByPower(map));
+		}
 	}
 	
 	public String relist() throws Exception {

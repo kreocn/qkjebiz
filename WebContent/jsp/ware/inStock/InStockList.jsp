@@ -86,18 +86,34 @@ $(function(){
 		<td><s:property value="lm_user_name" /></td>
 		<td><s:date name="lm_timer" format="yyyy-MM-dd HH:mm:ss" /></td>
 		<td align="center">
+		<s:if test="">
 			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_MDY')">
 	    	[<a href="<s:url namespace="/inStock" action="inStock_load"><s:param name="viewFlag">mdy</s:param><s:param name="inStock.uuid" value="uuid"></s:param></s:url>">修改</a>]
 	    	</s:if>
 	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_DEL')">
 	    	[<a href="<s:url namespace="/inStock" action="inStock_del"><s:param name="inStock.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>]
-	    	</s:if>	   
+	    	</s:if>	
+	    </s:if>
+	    <s:else>
+	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_PUTSEAL') && confirm==1">
+	    	[<a target="_blank" href="<s:url namespace="/inStock" action="inStock_view"><s:param name="viewFlag">view</s:param><s:param name="inStock.uuid" value="uuid"></s:param></s:url>">查看/打印</a>]
+	    	</s:if>
+	    </s:else>	   
 	    </td>
 	  </tr>
 </s:iterator>
 	  
+	 <tr>
+	    <td colspan="20" class="buttonarea">
+		<script type="text/javascript">
+		var spage = new ShowPage(${currPage});
+		spage.show2(${recCount},${pageSize},2);
+		</script>
+		</td>	    
+	  </tr>
 	  <tr>
 	    <td colspan="20" class="buttonarea">
+	    <s:actionerror/>
 	    <span id="message"><s:property value="message" /></span>
 		</td>
 	  </tr>

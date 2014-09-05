@@ -141,18 +141,18 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 	<table class="ilisttable" width="100%">
 		<s:if test="null != inStock">
 		  <tr>
-			<td class='firstRow'><span style="color:red;">*</span> 主键ID:</td>
-			<td class='secRow'><s:property value="inStock.uuid" /><s:hidden name="inStock.uuid" title="主键ID" /></td>
+			<td class='firstRow'><span style="color:red;">*</span> 入库单号:</td>
+			<td class='secRow' colspan="3"><s:property value="inStock.uuid" /><s:hidden name="inStock.uuid" title="主键ID" /></td>
 		</tr>
 		<tr>
 			<td class='firstRow'><span style="color:red;">*</span> 入库时间:</td>
-			<td class='secRow'><s:date name="inStock.date" format="yyyy-MM-dd" /><s:hidden name="inStock.date" title="入库时间" /></td>
+			<td class='secRow' colspan="3"><s:date name="inStock.date" format="yyyy-MM-dd" /><s:hidden name="inStock.date" title="入库时间" /></td>
 		</tr>
 		</s:if>
 		<s:else>
 		<tr>
 			<td class='firstRow'><span style="color:red;">*</span> 入库时间:</td>
-			<td class='secRow'>
+			<td class='secRow' colspan="3">
 			<s:textfield id="indate" name="inStock.date" title="入库时间"  controlName="入库时间"/>
 			<script type="text/javascript">$("#indate").datepicker();</script>
 			</td>
@@ -161,15 +161,15 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 		  
 <tr>
 <td class='firstRow'><span style="color:red;">*</span>经手人:</td>
-<td class='secRow'><s:textfield name="inStock.operator_id" title="经手人" require="required"  controlName="经手人" /></td>
+<td class='secRow' colspan="3"><s:textfield name="inStock.operator_id" title="经手人" require="required"  controlName="经手人" /></td>
 </tr>
 <tr>
 <td class='firstRow'><span style="color:red;">*</span> 保管员:</td>
-<td class='secRow'><s:textfield name="inStock.take_id" title="旧值" require="required" controlName="保管员" /></td>
+<td class='secRow' colspan="3"><s:textfield name="inStock.take_id" title="旧值" require="required" controlName="保管员" /></td>
 </tr>
 <tr>
 	<td class='firstRow'><span style="color:red;">*</span> 状态:</td>
-	<td class='secRow'>
+	<td class='secRow' colspan="3">
 			<select name="inStock.reason" title="状态">
 					<option value="0"
 					<s:if test="%{inStock.reason==0}">
@@ -180,18 +180,18 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 					 <s:if test="%{inStock.reason==1}">
 					 selected="selected"
 					</s:if>
-					>好货退</option>
+					>正常退货</option>
 					<option value="2" 
 					<s:if test="%{inStock.reason==2 }">
 					selected="selected"
 					</s:if>
-					>坏货退</option>
+					>损坏退货</option>
 			</select>
 	</td>
 </tr>
 <tr>
 	<td class='firstRow'><span style="color:red;">*</span> 入库仓库:</td>
-	<td class='secRow'>
+	<td class='secRow' colspan="3">
 			<select name="inStock.store_id" title="入库仓库" >
 					
 					<s:iterator value="wares" status="sta" var="x">
@@ -199,14 +199,14 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 					<s:if test="#x.uuid==inStock.store_id">
 					selected="selected"
 					</s:if>
-					/><s:property value="ware_name" /><s:property value="prvg" />
+					/><s:property value="ware_name" />
 					</s:iterator>
 			</select>
 	</td>
 </tr>
 <tr>
 	<td class='firstRow'><span style="color:red;">*</span>入库原因:</td>
-	<td class='secRow'>
+	<td class='secRow' colspan="3">
 	<s:textarea name="inStock.note" title="入库原因" cssStyle="width:80%;" rows="4" require="required" controlName="入库原因"></s:textarea>
 </tr>
 
@@ -214,9 +214,11 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 <tr>
 <td class='firstRow'>入库明细:
 	<%-- <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_ADD') && inStock.status==0"> --%>
-	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_ADD')">
+	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_ADD') && null==inStock.confirm">
+	<s:if test="@com.qkj.ware.action.warepower@checkPermit(inStock.store_id,'add')">
 	<br />
 	<input id="addItem" type="button" value="添加明细" />
+	</s:if>
 	</s:if>
 </td>
 <td class='secRow' colspan="3">
@@ -239,7 +241,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 	</td>
 	<td align="right"><s:property value="total" /></td>
 	<td align="center">
-   	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_INDETAIL_INDETAIL_DEL')">
+   	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_INDETAIL_INDETAIL_DEL') && @com.qkj.ware.action.warepower@checkPermit(inStock.store_id,'del')  && null==inStock.confirm">
    	[<a href="<s:url namespace="/inStock" action="inDetail_del"><s:param name="inDetail.uuid" value="uuid" /><s:param name="inDetail.lading_id" value="lading_id" /></s:url>" onclick="return isDel();">删除</a>]
    	</s:if>	   
     </td>
@@ -275,9 +277,11 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 					</s:if>
 				</s:if>
 				<s:elseif test="null != inStock && 'mdy' == viewFlag">
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_MDY') && null==inStock.confirm">
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_MDY') && null==inStock.confirm ">
 					<s:submit id="save" name="save" value="保存" action="inStock_save" />
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_SURE')">
 					<s:submit value="确认" action="inStock_sure" onclick="return isOp('是否确认?\n确认后将不能更改!');"></s:submit>
+					</s:if>
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_DEL')">
 					<s:submit id="delete" name="delete" value="删除" action="inStock_del" onclick="return isDel();" />
 					</s:if>
@@ -322,12 +326,12 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 			<tr>
 			<td class='firstRow'>单价:</td>
 			<td class='secRow'>
-				<s:textfield name="inDetail.price" title="单价" dataType="number" controlName="单价" require="required" />
-				<span id="per_price_select_area"><select id="per_price_select"></select></span>
+				<s:textfield name="inDetail.price" title="单价" dataType="number"  />
+				<!--<span id="per_price_select_area"><select id="per_price_select"></select></span>-->
 			</td>
 			</tr>
 			<tr>
-			<td class='firstRow'>数量:</td>
+			<td class='firstRow'><span style="color:red;">*</span>数量:</td>
 			<td class='secRow'>
 				<s:textfield name="inDetail.num" title="数量" dataType="integer" controlName="数量" require="required" />
 				<span id="ladingItemnumCase"></span>
@@ -335,7 +339,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 			</tr>
 			<tr>
 			<td class='firstRow'>合计:</td>
-			<td class='secRow'><s:textfield name="inDetail.total" title="合计" dataType="number" controlName="合计" require="required" /></td>
+			<td class='secRow'><s:textfield name="inDetail.total" title="合计" dataType="number" /></td>
 			</tr>
 
 		<tr>

@@ -187,18 +187,27 @@ public class AllotAction extends ActionSupport {
 
 	public String list() throws Exception {
 		ContextHelper.isPermit("QKJ_WARE_ALLOT_LIST");
+		String u = ContextHelper.getUserLoginUuid();
+		String code=ContextHelper.getUserLoginDept();
 		try {
 			map.clear();
 			if (allot != null)
 				map.putAll(ToolsUtil.getMapByBean(allot));
 			map.putAll(ContextHelper.getDefaultRequestMap4Page());
 			this.setPageSize(ContextHelper.getPageSize(map));
-			this.setCurrPage(ContextHelper.getCurrPage(map));		
-			this.setAllots(dao.list(map));
+			this.setCurrPage(ContextHelper.getCurrPage(map));
+			if(ContextHelper.isAdmin()){//管理员
+				this.setAllots(dao.list(map));
+			}else{
+				map.put("username",u);
+				map.put("dept_code", code);
+				this.setAllots(dao.listPower(map));
+			}
+			
 			this.setRecCount(dao.getResultCount());
 			
-			WareDAO wd=new WareDAO();
-			this.setWares(wd.list(null));
+			wareByPower(u, code);
+			
 			this.setAllot(null);
 			
 		} catch (Exception e) {
@@ -214,26 +223,15 @@ public class AllotAction extends ActionSupport {
 
 	public String load() throws Exception {
 		String u = ContextHelper.getUserLoginUuid();
+		String code=ContextHelper.getUserLoginDept();
 		try {
 			if (null == viewFlag) {
 				this.setAllot(null);
 				setMessage("你没有选择任何操作!");
 			} else if ("add".equals(viewFlag)) {
 				this.setAllot(null);
-				//入仓库
-				WareDAO wd=new WareDAO();
-				map.clear();
-				map.put("bug","bug");
-				this.setWares(wd.list(map));
-				this.setAllot(null);
-				//出仓库
-				if(u.equals("1")){//管理员
-					this.setWarepowers(wares);
-				}else{
-					map.clear();
-					map.put("useruuid",u);
-					this.setWarepowers(wd.listByPower(map));
-				}
+				wareByPower(u, code);
+				
 			} else if ("mdy".equals(viewFlag)) {
 				map.clear();
 				map.put("ordernum", allot.getOrdernum());
@@ -300,6 +298,32 @@ public class AllotAction extends ActionSupport {
 			throw new Exception(this.getClass().getName() + "!load 读取数据错误:", e);
 		}
 		return SUCCESS;
+	}
+
+	private void wareByPower(String u, String code) {
+		//入仓库
+		WareDAO wd=new WareDAO();
+		if(ContextHelper.isAdmin()){//管理员
+			this.setWares(wd.list(null));
+		}else{
+			map.clear();
+			map.put("username",u);
+			map.put("dept_code", code);
+			map.put("add", 1);
+			map.put("bug","bug");
+			this.setWares(wd.listByPower(map));
+		}
+		this.setAllot(null);
+		//出仓库
+		if(ContextHelper.isAdmin()){//管理员
+			this.setWarepowers(wares);
+		}else{
+			map.clear();
+			map.put("username",u);
+			map.put("dept_code", code);
+			map.put("add", 1);
+			this.setWares(wd.listByPower(map));
+		}
 	}
 
 	public String add() throws Exception {

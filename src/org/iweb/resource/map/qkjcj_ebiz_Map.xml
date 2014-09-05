@@ -233,14 +233,20 @@
 	<!-- 根据权限查询仓库且不包含破损库 -->
 	<select id="ebiz_getPower" resultClass="ware" parameterClass="java.util.Map">
 		<![CDATA[ 
-			SELECT w.*,s.`dept_code` dept_code,s.`prvg` prvg,s.`son` son,s.`username` username,u.`USER_NAME` user_name FROM qkj_t_warehouse w 
+			SELECT DISTINCT w.`uuid`, w.*,s.`dept_code` dept_code,s.`prvg` prvg,s.`son` son,s.`username` username,u.`USER_NAME` user_name FROM qkj_t_warehouse w 
 			LEFT JOIN qkj_t_stockpower s ON(w.`uuid`=s.`ware_id`) 
-			LEFT JOIN s_sys_user u ON (s.`username`=u.`UUID`) WHERE u.`UUID`=#username# OR 
-			(IF(son = 0, s.`dept_code`=#dept_code#, s.`dept_code` LIKE #dept_code#)  )
+			LEFT JOIN s_sys_user u ON (s.`username`=u.`UUID`) WHERE (u.`UUID`=#username# OR 
+			(IF(son = 0, s.`dept_code`=#dept_code#, s.`dept_code` LIKE #dept_code#)))
 			
 		]]>
 			<isNotEmpty prepend="AND" property="ware_id"><![CDATA[ s.ware_id=#ware_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="add"><![CDATA[ s.`prvg` LIKE '%1%'  ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="del"><![CDATA[ s.`prvg` LIKE '%2%' ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="edit"><![CDATA[ s.`prvg` LIKE '%3%'  ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="sel"><![CDATA[ s.`prvg` LIKE '%4%' ]]></isNotEmpty>
 			<isNotNull prepend="AND" property="bug"><![CDATA[ w.uuid<>6 ]]></isNotNull>
+			
+			<![CDATA[GROUP BY w.`uuid` ]]>
 	</select>
 	
 	<insert id="ebiz_addWare" parameterClass="ware">

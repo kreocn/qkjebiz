@@ -17,6 +17,22 @@
 
 		</dynamic>
 	</select>
+	
+	<select id="stock_getPower" resultClass="stock" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT  DISTINCT s.`uuid`,s.*,p.`title` product_name,w.`ware_name` store_name FROM qkj_r_stock s LEFT JOIN qkj_t_product p ON (s.`product_id`=p.`uuid`)
+			 LEFT JOIN qkj_t_warehouse w ON (s.`store_id`=w.`uuid`)
+			 LEFT JOIN qkj_t_stockpower  pw ON(pw.`ware_id`=s.store_id)
+			 WHERE (pw.`username`=#username# OR 
+			(IF(pw.son = 0, pw.`dept_code`=#dept_code#, pw.`dept_code` LIKE #dept_code#))) AND  pw.`prvg` LIKE '%4%' 
+		]]>
+			<isNotEmpty prepend="AND" property="product_id"><![CDATA[ s.product_id=#product_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="store_id"><![CDATA[ s.store_id=#store_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="quantity"><![CDATA[ s.quantity=#quantity# ]]></isNotEmpty>
+			
+		<![CDATA[ GROUP BY s.`uuid`]]>
+	</select>
+	
 	<select id="stock_getStocksBig" resultClass="stock" parameterClass="java.util.Map">
 		<![CDATA[ 
 			SELECT s.*,p.`title` product_name,w.`ware_name` store_name,p.`market_price` market_price,p.`agree_price_1` agree_price_1,p.`agree_price_2` agree_price_2,p.`agree_price_3` agree_price_3,p.`dealer_price` dealer_price,p.`group_price` group_price,p.`case_spec` case_spec FROM qkj_r_stock s 
@@ -32,13 +48,19 @@
 	</select>
 	<select id="stock_getStocksCounts" resultClass="int" parameterClass="java.util.Map">
 		<![CDATA[ 
-			Select Count(*) From qkj_r_stock
+			Select Count(*) FROM qkj_r_stock s LEFT JOIN qkj_t_product p ON (s.`product_id`=p.`uuid`)
+			 LEFT JOIN qkj_t_warehouse w ON (s.`store_id`=w.`uuid`)
+			 LEFT JOIN qkj_t_stockpower  pw ON(pw.`ware_id`=s.store_id)
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="product_id"><![CDATA[ product_id=#product_id# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="store_id"><![CDATA[ store_id=#store_id# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="quantity"><![CDATA[ quantity=#quantity# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="dept_code">
+			<![CDATA[ (pw.`username`=#username# OR 
+			(IF(pw.son = 0, pw.`dept_code`=#dept_code#, pw.`dept_code` LIKE #dept_code#))) AND  pw.`prvg` LIKE '%4%' GROUP BY s.`uuid` ]]>
+			</isNotEmpty>
 
 		</dynamic>
 	</select>

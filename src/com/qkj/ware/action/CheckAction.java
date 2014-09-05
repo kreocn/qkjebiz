@@ -131,16 +131,32 @@ public class CheckAction extends ActionSupport {
 
 	public String list() throws Exception {
 		ContextHelper.isPermit("QKJ_WARE_CHECK_LIST");
+		String u = ContextHelper.getUserLoginUuid();
+		String code=ContextHelper.getUserLoginDept();
+		String state=null;
 		try {
 			map.clear();
-			if (check != null)
+			if (check != null){
 				map.putAll(ToolsUtil.getMapByBean(check));
+				System.out.println(check.getState());
+				state=check.getState();
+			}
 			map.putAll(ContextHelper.getDefaultRequestMap4Page());
 			this.setPageSize(ContextHelper.getPageSize(map));
 			this.setCurrPage(ContextHelper.getCurrPage(map));
-			this.setChecks(dao.list(map));
+			this.setChecks(dao.listByDate(map));
+			
 			WareDAO wd=new WareDAO();
-			this.setWares(wd.list(null));
+			if(ContextHelper.isAdmin()){//管理员
+				this.setWares(wd.list(null));
+			}else{
+				map.clear();
+				map.put("username",u);
+				map.put("dept_code", code);
+				map.put("sel", 1);
+				this.setWares(wd.listByPower(map));
+			}
+			
 			ProductDAO pd=new ProductDAO();
 			this.setProducts(pd.list(null));
 			this.setRecCount(dao.getResultCount());
@@ -149,7 +165,11 @@ public class CheckAction extends ActionSupport {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
 		}
-		return SUCCESS;
+		if(state!=null){
+			return "DETAIL";
+		}else{
+			return "SUCCESS";
+		}
 	}
 
 	public String relist() throws Exception {
@@ -163,7 +183,9 @@ public class CheckAction extends ActionSupport {
 				setMessage("你没有选择任何操作!");
 			} else if ("add".equals(viewFlag)) {
 				StockDAO sdao = new StockDAO();
-				this.setStocks(sdao.list(null));
+				map.clear();
+				map.put("store_id", check.getStore_id());
+				this.setStocks(sdao.list(map));
 				this.setCheck(null);
 			} else if ("mdy".equals(viewFlag)) {
 				if (!(check == null || check.getUuid() == null)) {
