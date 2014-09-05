@@ -193,11 +193,11 @@ table {
 }
 
 .ht_top {
-	background: #363636; height: 45px; line-height: 45px; padding: 0 10px; overflow: hidden;
+	height: 45px; line-height: 45px; padding: 0 10px; overflow: hidden;background-color: #363636 !important;
 }
 
 .ht_lTit {
-	float: left; font-size: 16px; color: #fff;
+	float: left; font-size: 16px; color: #fff;font-weight: normal;letter-spacing: 1px;
 }
 
 .ht_rczuo {

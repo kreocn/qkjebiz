@@ -7,8 +7,8 @@
 	<a href="#" class="jqm-navmenu-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-bars ui-nodisc-icon ui-alt-icon ui-btn-left">Menu</a>
 	<div data-role="panel" class="jqm-navmenu-panel" data-position="left" data-display="overlay" data-theme="a">
 		<ul id="menuinit" class="jqm-list ui-alt-icon ui-nodisc-icon">
+			<!-- 
             <li data-filtertext="demos homepage" data-icon="home"><a href="#">首页</a></li>          
-              
             <li data-role="collapsible" data-enhanced="true" data-collapsed-icon="carat-d" data-expanded-icon="carat-u" data-iconpos="right" data-inset="false" class="ui-collapsible ui-collapsible-themed-content ui-collapsible-collapsed">
 				<h3 class="ui-collapsible-heading ui-collapsible-heading-collapsed"><a href="#" class="ui-collapsible-heading-toggle ui-btn ui-btn-icon-right ui-btn-inherit ui-icon-carat-d">业务管理</a></h3>
 				<div class="ui-collapsible-content ui-body-inherit ui-collapsible-content-collapsed" aria-hidden="true">
@@ -56,7 +56,7 @@
 				</div>
 			</li>
             <li data-role="collapsible" data-enhanced="true" data-collapsed-icon="carat-d" data-expanded-icon="carat-u" data-iconpos="right" data-inset="false" class="ui-collapsible ui-collapsible-themed-content ui-collapsible-collapsed">
-				<h3 class="ui-collapsible-heading ui-collapsible-heading-collapsed"><a href="#" class="ui-collapsible-heading-toggle ui-btn ui-btn-icon-right ui-btn-inherit ui-icon-carat-d">基本设置</a></h3>
+				<h3 class="ui-collapsible-heading ui-collapsible-heading-collapsed"><a href="http://www.163.com/" class="ui-collapsible-heading-toggle ui-btn ui-btn-icon-right ui-btn-inherit ui-icon-carat-d">基本设置</a></h3>
 				<div class="ui-collapsible-content ui-body-inherit ui-collapsible-content-collapsed" aria-hidden="true">
                     <ul>
                         <li><a href="#" data-ajax="false">我的资料</a></li>
@@ -64,6 +64,7 @@
                     </ul>
 				</div>
 			</li>
+			-->
 		</ul>
 	</div>
 </div>
@@ -72,6 +73,9 @@ var menuArray = new Array();
 var menuIndex = 0;
 //<s:iterator value="menus">
 menuArray[menuIndex++] = eval("(" + '{id:"${privilege_id}",p_id:"${parent_privilege}",name:"${privilege_name}",link:"${menu_url}",target:"${menu_target}",title:"${menu_title}"}' + ")"); //</s:iterator>
+
+var _m = $("#menuinit");
+_m.append('<li data-filtertext="demos homepage" data-icon="home"><a href="#">首页</a></li>');
 //开始循环
 //第一次循环,找出顶级元素
 for (var i = 0; i < menuArray.length; i++) {
@@ -79,6 +83,7 @@ for (var i = 0; i < menuArray.length; i++) {
 	if(menuArray[i].p_id=='0') {
 		menuArray[i]['rootFlag'] = true;
 		menuArray[i]['hpFlag'] = false;
+		_m.append('<li data-role="collapsible" data-enhanced="true" data-collapsed-icon="carat-d" data-expanded-icon="carat-u" data-iconpos="right" data-inset="false" class="ui-collapsible ui-collapsible-themed-content ui-collapsible-collapsed"><h3 class="ui-collapsible-heading ui-collapsible-heading-collapsed"><a href="#" onClick="mLink(\''+menuArray[i]['link']+'\')" class="ui-collapsible-heading-toggle ui-btn ui-btn-icon-right ui-btn-inherit ui-icon-carat-d">'+menuArray[i]['name']+'</a></h3></div></li>');
 	}  else {
 		menuArray[i]['rootFlag'] = false;
 		var hpFlag = false; 
@@ -93,7 +98,7 @@ for (var i = 0; i < menuArray.length; i++) {
 	}
 }
 for (var i = 0; i <= 10; i++) {
-	alert(JsonToString(menuArray[i]));
+	//alert(JsonToString(menuArray[i]));
 }
 function JsonToString(o){
 	var arr = [];
@@ -104,5 +109,12 @@ function JsonToString(o){
 	for ( var i in o)
 		arr.push("'" + i + "':" + fmt(o[i]));
 	return '{' + arr.join(',') + '}';
+}
+function mLink(url){
+	if("javascript"==url.substr(0,10)) {
+		return false;
+	}	else {
+		alert("/" + url);
+	}
 }
 	</script>

@@ -74,7 +74,7 @@ display: none;
 <s:elseif test="'FAIL' == viewFlag">请填写正确的[股东证券/账户卡号],请在卡号面前加0补足10位再试试?如有疑问,请致电我们!</s:elseif>
 <s:elseif test="'OK' == viewFlag">
 	<s:if test="null == cusInfoh.express_no">您的快递还没有发出,请耐心等待!</s:if>
-	<s:else>您的快递号为:<s:property value="cusInfoh.express_no" />, 您可以登录 <a href="http://www.ems.com.cn/mailtracking/you_jian_cha_xun.html" target="_blank">EMS查询网站</a> 查询快递详情</s:else>
+	<s:else>您的快递号为:<s:property value="cusInfoh.express_no" />(韵达快递), 您可以 <a href="http://ykjcx.yundasys.com/go.php?wen=${cusInfoh.express_no}" target="_blank">点击此处</a>  查询快递详情</s:else>
 </s:elseif>
 </div>
 </div>
