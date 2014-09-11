@@ -15,6 +15,7 @@
 			<!--<s:property value="org_name" />-->
 			<s:property value="dept_name" />
 			<s:property value="user_name" />
+			[<a href="javascript:;" onclick="top.hidePane('west');">隐藏左边</a>]
 			|
 			[<a href="javascript:;" onclick="top.toggleWorkSpacePane();">主页面全屏/取消</a>]
 			|

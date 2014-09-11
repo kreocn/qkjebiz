@@ -7,11 +7,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>菜单--<s:text name="APP_NAME" /></title>
 </head>
-<link rel="stylesheet" href="<s:url value="/css/css.css" />" />
-<link rel="stylesheet" href="<s:url value="/css/navigate.css" />" />
-<link rel="stylesheet" href="<s:url value="/css/main.css" />" />
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'/>
 <link rel="StyleSheet" href="<s:url value="/include/dtree/dtree.css" />" />
-<script type="text/javascript" src="<s:url value="/js/common.js" />"></script>
 <script type="text/javascript" src="<s:url value="/include/dtree/dtree.js" />"></script>
 <script type="text/javascript">
 function slink(url,target) {

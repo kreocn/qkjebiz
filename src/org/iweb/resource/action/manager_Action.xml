@@ -31,6 +31,9 @@
 		<action name="imain" class="org.iweb.common.action.ManageMainAction">
 			<result>/jsp/manager/imain.jsp</result>
 		</action>
+		<action name="ref" class="org.iweb.common.action.ManageMainAction" method="ref">
+			<result>/jsp/manager/ref.jsp</result>
+		</action>
 		<action name="default" class="org.iweb.common.action.DefaultAction">
 			<interceptor-ref name="myStackIndex" />
 			<result>/jsp/manager/default.jsp</result>

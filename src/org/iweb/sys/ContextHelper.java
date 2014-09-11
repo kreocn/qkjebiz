@@ -197,6 +197,19 @@ public class ContextHelper {
 	}
 
 	/**
+	 * 为方便得到USER_NAME而专门写的方法
+	 * 
+	 * @return
+	 */
+	public static String getUserLoginName() {
+		try {
+			return ContextHelper.getUserLoginInfo().getUser_name();
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	/**
 	 * 为方便得到Dept_code而专门写的方法
 	 * 
 	 * @return
