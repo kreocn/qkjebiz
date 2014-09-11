@@ -3,8 +3,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-<s:action name="ref" namespace="/manager" executeResult="true" />
 <title><s:text name="APP_NAME" /></title>
+<s:action name="ref" namespace="/manager" executeResult="true" />
 <link rel="stylesheet" href="<s:url value="/css/css.css" />" />
 <link rel="stylesheet" href="<s:url value="/css/main.css" />" />
 <style type="text/css">

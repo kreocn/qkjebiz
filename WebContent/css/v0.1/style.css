@@ -5,7 +5,7 @@ html {
 }
 
 html,body,img,p,ul {
-	margin: 0; padding: 0; border: 0;
+	margin: 0; padding: 0; border: 0; font-family: arial, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', '宋体', \5b8b\4f53, Tahoma, Arial, Helvetica, STHeiti;
 }
 
 body {
@@ -13,7 +13,7 @@ body {
 }
 
 body,input,select,textarea {
-	font-family: "微软雅黑"; color: #333;
+	color: #333;
 }
 
 a {
@@ -21,11 +21,15 @@ a {
 }
 
 .ht_top {
-	width: 100%; background: #363636; height: 45px; border-bottom: 1px solid #bbb;overflow: hidden;
+	width: 100%; background: #363636; height: 45px; border-bottom: 1px solid #bbb; overflow: hidden;
 }
 
 .ht_lTit {
-	float: left; background: url(../../images/top/ht_logo.gif) no-repeat; font-family: "微软雅黑"; padding-left: 45px; line-height: 24px; margin: 12px 0 0 15px; _display: inline; font-size: 18px; color: #fff; font-weight: normal; letter-spacing: 1px;
+	float: left; background: url(../../images/top/ht_logo.gif) no-repeat; padding-left: 45px; line-height: 24px; margin: 12px 0 0 15px; font-size: 18px; color: #fff; font-weight: normal; letter-spacing: 1px;
+}
+
+.ht_lTit2 {
+	padding-left: 5px; line-height: 45px; font-size: 18px; color: #fff; font-weight: normal; letter-spacing: 1px; text-align: center;
 }
 
 .ht_lMenu {
@@ -45,7 +49,7 @@ a {
 }
 
 .bottom_style {
-	text-align: right; line-height: 24px; color: #FFF; padding-right: 10px;background-color: #363636;
+	text-align: right; line-height: 24px; color: #FFF; padding-right: 10px; background-color: #363636;
 }
 
 .bottom_style a {

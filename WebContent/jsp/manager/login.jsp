@@ -4,64 +4,42 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
 <title><s:text name="APP_NAME" /></title>
-<link rel="stylesheet" href="<s:url value="/css/css.css" />" />
-<link rel="stylesheet" href="<s:url value="/css/main.css" />" />
-<script type="text/javascript" src="<s:url value="/js/common.js" />"></script>
-<script type="text/javascript">
-<!--
-function reloadImage() {
-	form1.pic.src = form1.pic.src;
-}
-//-->
-</script>
+<s:action name="ref" namespace="/manager" executeResult="true" />
 <style type="text/css">
-.print_prepare01 {
-background: url("<s:url value="/images/print/pageheader02.png" />") transparent no-repeat 0 0;display: none;
+.print_prepare {
+width: 0;height: 0;position: absolute;left: -9999px;top: -9999px;
 }
-.print_prepare02 {
-background: url("<s:url value="/images/print/pageheader02.png" />") transparent no-repeat 0 0;display: none;
+body {
+background-color: #363636;
+}
+.lg_main {
+width:100%;max-width: 360px;background-color: #FFFFF0;height: 260px;margin: 50px auto;border-radius: 5px;
+border:#000 solid 1px;
+-moz-box-shadow:0px 0px 15px 5px #000;              
+-webkit-box-shadow:0px 0px 15px 5px #000;           
+box-shadow:0px 0px 15px 5px #000; position: relative;
+-webkit-box-reflect: below 0 linear-gradient(to bottom,rgba(255,255,255,0),rgba(255,255,255,0.1));
+}
+.lg_title {
+font-size: 20px;color: #FFFFF0;background: #363636;width: 240px;margin: auto;text-align: center;border-radius: 0 0 5px 5px;line-height: 30px;height: 30px;border:#000 solid 1px;border-top:none;
+-moz-box-shadow:0px 0px 5px 0px #000;              
+-webkit-box-shadow:0px 0px 5px 0px #000;           
+box-shadow:0px 0px 5px 0px #000; 
 }
 </style>
 </head>
 <body>
-<div style=" text-align:center; margin-top:80px;">
-  <div style="margin:auto;text-align:center;"><img src="<s:url value="/images/logo.png" />" /></div>  
-  <div align="center" style="width:490px; margin:auto; line-height:180%;padding-left: 100px;">
-<s:form name="form1" action="check_login" namespace="/manager" onsubmit="return checkFormx(form1)" method="post" theme="simple">
-<table class="ilisttable" id="table1" width="50%" border="1" cellspacing="0" cellpadding="0" bordercolor="#8B8B8B">
-	  <tr>
-	    <td class="firstRow">用户名:</td>
-	    <td class="secRow"><s:textfield title="用户名" name="user.title" cssClass="input1" nullable="false" /></td>
-	  </tr>
-	  <tr>
-	    <td class="firstRow">密&nbsp;&nbsp;&nbsp;码:</td>
-	    <td class="secRow"><s:password title="密码" name="user.passwords" cssClass="input1" nullable="false" /></td>
-	  </tr>
-	  <%if("true".equals(org.iweb.sys.IWebConfig.getConfigMap().get("isCheckLoginRand"))){ %>
-	  <tr>
-	    <td class="firstRow">验证码:</td>
-	    <td class="secRow">
-	    	<s:textfield name="rand" cssStyle="width: 45%;" maxlength="4" />
-			<img name="pic" class="imglink" onclick="reloadImage();" src="<s:url value="/jsp/common/image.jsp" />" />
-		</td>
-	  </tr>
-	  <% } %>
-	  <tr>
-		<td colspan="2" class="buttonarea">		
-		<s:submit value="登录" /> <s:reset value="重置" /></td>
-	  </tr>
-</table>
-</s:form>
-<div style="text-align: center;"><span id="message"><s:property value="message" /></span></div>
-  </div>
+<div class="lg_main">
+	<div class="lg_title">商务系统登录</div>
+	<div class="lg_input">
+		<div class=""></div>
+	</div>
 </div>
 <!-- 提前加载图片 -->
 <div>
-<div class="print_prepare01"></div>
-<div class="print_prepare02"></div>
+<div class="print_prepare"><img src="<s:url value="/images/print/pageheader02.png" />" alt="" /></div>
+<div class="print_prepare"><img src="<s:url value="/images/print/pageheader02.png" />" alt="" /></div>
 </div>
 </body>
 </html>
