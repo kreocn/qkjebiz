@@ -1,14 +1,15 @@
-// JavaScript Document
+var ajax_url = "";
+
 $(document).ready(function(){
 	// 点击tr 选中tr
-	$(".tab_warp tr").click(function(){
-		$(this).toggleClass("trbg");
-		if ($(this).hasClass("trbg")) {
-			$(this).find("[type='checkbox']").attr("checked", true);
-		} else {
-			$(this).find("[type='checkbox']").attr("checked", false);
-		}
-	});
+	// $(".tab_warp tr").click(function(){
+	// $(this).toggleClass("trbg");
+	// if ($(this).hasClass("trbg")) {
+	// $(this).find("[type='checkbox']").attr("checked", true);
+	// } else {
+	// $(this).find("[type='checkbox']").attr("checked", false);
+	// }
+	// });
 	// table隔行变色and鼠标经过样式
 	$(".tab_warp tr:even").addClass("even");
 	$(".tab_warp tr:odd").addClass("odd");
@@ -37,6 +38,7 @@ $(document).ready(function(){
 	});
 });
 
+/* 获取触摸事件代码开始 */
 var pageTouch = { sPageX : 0,
 sPageY : 0,
 mPageX : 0,
@@ -50,17 +52,13 @@ $(document).ready(function(){
 		var th = e.touches[0];
 		pageTouch.sPageX = th.pageX;
 		pageTouch.sPageY = th.pageY;
-		// alert(pageTouch.sPageX + "," +pageTouch.sPageY);
 		touchStartEvent();
 	});
 
 	document.body.addEventListener('touchmove', function(e){
 		var th = e.touches[0];
-		// pageTouch.mPageX = th.pageX;
-		// pageTouch.mPageY = th.pageY;
 		pageTouch.ePageX = th.pageX;
 		pageTouch.ePageY = th.pageY;
-
 		// 判断位移,只要大于50,便确定移动
 		if (Math.abs(pageTouch.sPageX - pageTouch.ePageX) >= Math.abs(pageTouch.sPageY - pageTouch.ePageY)) {// X的位移大于Y,说明是横向移动
 			if ((pageTouch.sPageX - pageTouch.ePageX) > 50) {
@@ -79,16 +77,12 @@ $(document).ready(function(){
 				pageTouch.touchPosition = "";
 			}
 		}
-		//alert(pageTouch.ePageX + "," + pageTouch.ePageY);
-		//$("#message").html($("#message").html() + pageTouch.ePageX + "," + pageTouch.ePageY + "<br />");
 		if (pageTouch.touchPosition != "") touchMoveEvent();
 	});
 
 	document.body.addEventListener('touchend', function(e){
 		pageTouch.ePageX = e.changedTouches[0].pageX;
 		pageTouch.ePageY = e.changedTouches[0].pageY;
-		// alert((sPageX - ePageX) + "," + (sPageY - ePageY));
-		// alert((pageTouch.sPageX - pageTouch.ePageX) + "," + (pageTouch.sPageY - pageTouch.ePageY) + ":" + pageTouch.touchPosition);
 	});
 });
 
@@ -97,7 +91,8 @@ function touchStartEvent(){
 }
 
 function touchMoveEvent(){
-	if(pageTouch.touchPosition == "right") {
+	if (pageTouch.touchPosition == "right") {
 		window.top.menuShow();
 	}
 }
+/* 触摸事件代码结束 */

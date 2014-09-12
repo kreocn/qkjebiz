@@ -69,10 +69,7 @@
 
 	<div class="main_info">
 		<div class="sysnote">
-			<div class="note_title">系统公告<div id="message"></div>
-				<a href="javascript:;" onclick="window.top.menuHide();">Hide</a>
-				<a href="javascript:;" onclick="window.top.menuShow();">Show</a>
-			</div>
+			<div class="note_title">系统公告</div>
 			<div class="note_content">
 				常见问题:
 				<ul>

@@ -30,7 +30,7 @@ background: url("<s:url value="/images/print/pageheader02.png" />") transparent 
 <div style=" text-align:center; margin-top:80px;">
   <div style="margin:auto;text-align:center;"><img src="<s:url value="/images/logo.png" />" /></div>  
   <div align="center" style="width:490px; margin:auto; line-height:180%;padding-left: 100px;">
-<s:form name="form1" action="check_login" namespace="/manager" onsubmit="return checkFormx(form1)" method="post" theme="simple">
+<s:form id="mainForm" action="check_login" namespace="/manager" onsubmit="return checkFormx(form1)" method="post" theme="simple">
 <table class="ilisttable" id="table1" width="50%" border="1" cellspacing="0" cellpadding="0" bordercolor="#8B8B8B">
 	  <tr>
 	    <td class="firstRow">用户名:</td>

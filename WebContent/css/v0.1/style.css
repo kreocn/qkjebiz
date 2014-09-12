@@ -20,6 +20,10 @@ a {
 	color: #074f98; text-decoration: none;
 }
 
+.main {
+	width: 99%;margin: auto;
+}
+
 .ht_top {
 	width: 100%; background: #363636; height: 45px; border-bottom: 1px solid #bbb; overflow: hidden;
 }
@@ -61,15 +65,19 @@ a {
 }
 
 .tab_warp {
-	float: right; width: 84%;
+	
+}
+
+.tab_warp table {
+	width: 100%; border-collapse: collapse; border-spacing: 0;
 }
 
 .tab_warp td {
-	text-align: center; padding: 8px 0; font-size: 14px;
+	text-align: center; padding: 8px 2px; font-size: 14px;
 }
 
 .tab_warp th {
-	background: #059c77; color: #fff; font-size: 14px; padding: 8px 0;
+	background: #059c77; color: #fff; font-size: 14px; padding: 8px 2px;
 }
 
 .odd {
@@ -93,7 +101,7 @@ a {
 }
 /*label*/
 .label_con {
-	float: right; width: 84%; font-size: 14px;
+	float: right; width: 96%; font-size: 14px;
 }
 
 .label_main {
@@ -105,7 +113,7 @@ a {
 }
 
 .label_ltit {
-	float: left; width: 120px; text-align: right; padding-right: 2px; font-weight: bold;
+	float: left; width: 100px; text-align: right; padding-right: 2px; font-weight: bold;
 }
 
 .label_rwben {
@@ -113,7 +121,11 @@ a {
 }
 
 .label_rwb {
-	display: block; width: 150px;
+	display: block; width: 175px;
+}
+
+.label_rwb2 {
+	display: block; width: 452px;
 }
 
 .lb_text {
@@ -244,6 +256,14 @@ table {
 	font-size: 14px; padding: 10px 0;
 }
 
+.dl_msg {
+	clear: both; text-align: center; font-size: 24px; padding: 50px 0; line-height: 180%; background-color: #EFEFEF;
+}
+
+.dl_msg a {
+	color: #3c8df7; text-decoration: underline;
+}
+
 ::-webkit-scrollbar {
 	width: 11px; height: 14px;
 }
@@ -273,6 +293,9 @@ table {
 	}
 	.lb_lgsfy {
 		width: 49.89%;
+	}
+	.main {
+		width: 100%;
 	}
 }
 
@@ -315,12 +338,15 @@ table {
 	}
 }
 
-@media screen and (min-width:320px) and (max-width:660px) {
+@media screen and (min-width:320px) and (max-width:655px) {
 	.ht_lTit,.lb_text2 {
 		width: 300px;
 	}
 	.zhuangtai {
 		clear: both; margin-bottom: 5px;
+	}
+	.label_rwb2 {
+		width: 180px;
 	}
 }
 
@@ -343,6 +369,9 @@ table {
 }
 
 @media screen and (max-width:320px) {
+	.main {
+		width: 100%;
+	}
 	.ht_lTit,.td1,.td2,.td3,.td4,.td5,.fy_hide {
 		display: none;
 	}
@@ -375,5 +404,8 @@ table {
 	}
 	.ht_lMenu {
 		display: block; width: 36px; height: 36px; position: absolute; left: 15px; top: 3px; margin-top: 0px; padding-left: 0px; text-indent: -9999px; background-image: url(../../images/white/crate36x36.png); cursor: pointer;
+	}
+	.label_rwb2 {
+		width: 180px;
 	}
 }

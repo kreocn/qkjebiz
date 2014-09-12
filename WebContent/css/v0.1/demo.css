@@ -1,0 +1,53 @@
+@charset "utf-8";
+
+.lg_main {
+	width: 100%; max-width: 355px; background-color: #FFFFF0; height: 255px; margin: 100px auto; border-radius: 5px; border: #000 solid 1px; box-shadow: 0px 0px 15px 5px #000; position: relative; -webkit-box-reflect: below 0 linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.1));
+}
+
+.lg_title {
+	font-size: 20px; color: #FFFFF0; background: #363636; width: 240px; margin: auto; text-align: center; border-radius: 0 0 5px 5px; line-height: 32px; height: 32px; border: #000 solid 1px; border-top: none; box-shadow: 0px 0px 5px 0px #000;
+}
+
+.lg_input {
+	width: 240px; margin: 15px auto 0 auto;
+}
+
+.label_singlecol {
+	padding-bottom: 3px;
+}
+
+.label_singletitle {
+	font-weight: bold; padding: 3px 0px;
+}
+
+.label_singlecon {
+	
+}
+
+.label_singlecon input {
+	width: 100%; height: 32px; line-height: 30px; font-size: 18px; border-radius: 5px; border: none; border: #909090 solid 1px; border-color: #FEFEFE; padding: 0 3px 0 8px; margin: 0px; outline: none; box-shadow: 0px 0px 5px 0px #909090 inset; /**/
+}
+
+.label_singlecol input[type="button"],.label_singlecol input[type="submit"],.label_singlecol input[type="reset"] {
+	font-size: 14px; color: #FFFFF0; background: #363636; margin: auto; text-align: center; border-radius: 5px; line-height: 32px; height: 32px; border: #000 solid 1px; box-shadow: 0px 0px 5px 0px #000; font-weight: bold; padding: 0 15px; cursor: pointer;
+}
+
+.label_s2 {
+	padding-top: 16px; text-align: center;
+}
+
+.label_seq {
+	display: inline-block; width: 25px;
+}
+
+.style-a {
+	
+}
+
+.style-a input[type="text"] {
+	width: 100%; height: 32px; line-height: 30px; font-size: 18px; border-radius: 5px; border: none; border: #909090 solid 1px; border-color: #FEFEFE; padding: 0 3px 0 8px; margin: 0px; outline: none; box-shadow: 0px 0px 5px 0px #909090 inset; /**/
+}
+
+.label_singlecol input[type="button"],.label_singlecol input[type="submit"],.label_singlecol input[type="reset"] {
+	font-size: 14px; color: #FFFFF0; background: #363636; margin: auto; text-align: center; border-radius: 5px; line-height: 32px; height: 32px; border: #000 solid 1px; box-shadow: 0px 0px 5px 0px #000; font-weight: bold; padding: 0 15px; cursor: pointer;
+}

@@ -13,29 +13,36 @@ width: 0;height: 0;position: absolute;left: -9999px;top: -9999px;
 body {
 background-color: #363636;
 }
-.lg_main {
-width:100%;max-width: 360px;background-color: #FFFFF0;height: 260px;margin: 50px auto;border-radius: 5px;
-border:#000 solid 1px;
--moz-box-shadow:0px 0px 15px 5px #000;              
--webkit-box-shadow:0px 0px 15px 5px #000;           
-box-shadow:0px 0px 15px 5px #000; position: relative;
--webkit-box-reflect: below 0 linear-gradient(to bottom,rgba(255,255,255,0),rgba(255,255,255,0.1));
-}
-.lg_title {
-font-size: 20px;color: #FFFFF0;background: #363636;width: 240px;margin: auto;text-align: center;border-radius: 0 0 5px 5px;line-height: 30px;height: 30px;border:#000 solid 1px;border-top:none;
--moz-box-shadow:0px 0px 5px 0px #000;              
--webkit-box-shadow:0px 0px 5px 0px #000;           
-box-shadow:0px 0px 5px 0px #000; 
-}
 </style>
 </head>
 <body>
 <div class="lg_main">
 	<div class="lg_title">商务系统登录</div>
 	<div class="lg_input">
-		<div class=""></div>
+		<s:form id="mainForm" name="mainForm" action="check_login" namespace="/manager" method="post" theme="simple">
+        <div class="label_singlecol">
+            <div class="label_singletitle">用户名:</div>
+            <div class="label_singlecon"><s:textfield title="用户名" name="user.title" cssClass="validate[required]" nullable="false" /></div>
+        </div>
+        <div class="label_singlecol">
+            <div class="label_singletitle">密&nbsp;&nbsp;&nbsp;&nbsp;码:</div>
+            <div class="label_singlecon"><s:password title="密码" name="user.passwords" cssClass="validate[required]" nullable="false" /></div>
+        </div>
+        <div class="label_singlecol label_s2">
+        	<s:submit value="登 录" />
+        	<span class="label_seq"></span>
+        	<s:reset value="重 置" />
+        </div>
+        </s:form>
 	</div>
 </div>
+<script type="text/javascript">
+$(function(){
+	if($("#mainForm").length>0) {
+		$("#mainForm").validationEngine();
+	}
+});
+</script>
 <!-- 提前加载图片 -->
 <div>
 <div class="print_prepare"><img src="<s:url value="/images/print/pageheader02.png" />" alt="" /></div>
