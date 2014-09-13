@@ -21,7 +21,35 @@ a {
 }
 
 .main {
-	width: 99%;margin: auto;
+	width: 99%; margin: auto;
+}
+
+.lg_main {
+	width: 100%; max-width: 355px; background-color: #FFFFF0; margin: 100px auto; border-radius: 5px; border: #000 solid 1px; box-shadow: 0px 0px 15px 5px #000; position: relative; -webkit-box-reflect: below 0 linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.1));
+}
+
+.lg_title {
+	font-size: 20px; color: #FFFFF0; background: #363636; width: 240px; margin: auto; text-align: center; border-radius: 0 0 5px 5px; line-height: 32px; height: 32px; border: #000 solid 1px; border-top: none; box-shadow: 0px 0px 5px 0px #000;
+}
+
+.lg_input {
+	width: 240px; margin: 15px auto 0 auto;
+}
+
+.label_singlecol {
+	padding-bottom: 3px;
+}
+
+.label_singletitle {
+	font-weight: bold; padding: 3px 0px;
+}
+
+.label_s2 {
+	padding: 16px 0; text-align: center;
+}
+
+.label_seq {
+	display: inline-block; width: 25px;
 }
 
 .ht_top {
@@ -101,7 +129,7 @@ a {
 }
 /*label*/
 .label_con {
-	float: right; width: 96%; font-size: 14px;
+	font-size: 14px; vertical-align: middle;
 }
 
 .label_main {
@@ -117,15 +145,19 @@ a {
 }
 
 .label_rwben {
-	float: left; line-height: 30px;
+	float: left; line-height: 30px; width: 112px;
+}
+
+.label_rwben2 {
+	float: left; line-height: 30px; width: 325px;
+}
+
+.label_button {
+	width: 214px;
 }
 
 .label_rwb {
-	display: block; width: 175px;
-}
-
-.label_rwb2 {
-	display: block; width: 452px;
+	line-height: 30px; width: 110px; display: inline-block; vertical-align: middle;
 }
 
 .lb_text {
@@ -204,10 +236,6 @@ a {
 	padding-top: 5px;
 }
 
-table {
-	border-collapse: collapse;
-}
-
 .lb_jpin {
 	margin: 10px 0;
 }
@@ -264,6 +292,10 @@ table {
 	color: #3c8df7; text-decoration: underline;
 }
 
+.tac {
+	text-align: center;
+}
+
 ::-webkit-scrollbar {
 	width: 11px; height: 14px;
 }
@@ -284,7 +316,7 @@ table {
 	background: transparent;
 }
 
-@media screen and (min-width:320px) and (max-width:1200px) {
+@media screen and (max-width:1200px) {
 	.td5 {
 		display: none;
 	}
@@ -299,13 +331,13 @@ table {
 	}
 }
 
-@media screen and (min-width:960px) and (max-width:1086px) {
+@media screen and (max-width:1086px) {
 	.lb_lgsfy {
 		width: 49.79%;
 	}
 }
 
-@media screen and (min-width:320px) and (max-width:960px) {
+@media screen and (max-width:960px) {
 	.ht_lTit,.td4,.fy_hide {
 		display: none;
 	}
@@ -329,7 +361,7 @@ table {
 	}
 }
 
-@media screen and (min-width:320px) and (max-width:768px) {
+@media screen and (max-width:768px) {
 	.ht_lTit,.td3 {
 		display: none;
 	}
@@ -338,19 +370,19 @@ table {
 	}
 }
 
-@media screen and (min-width:320px) and (max-width:655px) {
+@media screen and (max-width:655px) {
 	.ht_lTit,.lb_text2 {
 		width: 300px;
 	}
 	.zhuangtai {
 		clear: both; margin-bottom: 5px;
 	}
-	.label_rwb2 {
-		width: 180px;
+	.label_rwben2 {
+		width: 175px;
 	}
 }
 
-@media screen and (min-width:320px) and (max-width:550px) {
+@media screen and (max-width:550px) {
 	.ht_lTit,.td2 {
 		display: none;
 	}
@@ -367,45 +399,4 @@ table {
 		clear: both; margin-bottom: 5px;
 	}
 }
-
-@media screen and (max-width:320px) {
-	.main {
-		width: 100%;
-	}
-	.ht_lTit,.td1,.td2,.td3,.td4,.td5,.fy_hide {
-		display: none;
-	}
-	.tab_warp .td0 {
-		display: table-cell;
-	}
-	.lb_gsfy {
-		width: 100%;
-	}
-	.lb_lgsfy {
-		width: 100%; border: 0; border-bottom: 1px solid #ccc;
-	}
-	.label_hang {
-		clear: both;
-	}
-	.label_con {
-		width: 440px;
-	}
-	.lb_text2 {
-		width: 300px;
-	}
-	.zhuangtai {
-		clear: both; margin-bottom: 5px;
-	}
-	.tab_warp {
-		width: 100%;
-	}
-	.dq_step {
-		padding: 10px;
-	}
-	.ht_lMenu {
-		display: block; width: 36px; height: 36px; position: absolute; left: 15px; top: 3px; margin-top: 0px; padding-left: 0px; text-indent: -9999px; background-image: url(../../images/white/crate36x36.png); cursor: pointer;
-	}
-	.label_rwb2 {
-		width: 180px;
-	}
 }

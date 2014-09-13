@@ -47,57 +47,63 @@ display: none;
             <div class="label_rwben"><span class="label_rwb"><s:textfield name="apply.uuid" /></span></div>
         </div>
         <div class="label_hang">
-            <div class="label_ltit">申请时间:</div>
-            <div class="label_rwben"><span class="label_rwb2">
-            	<span class="nowrap label_inline">
-				<input type="text" class="jqdate" name="apply.apply_time_begin" title="从" value="${it:formatDate(apply.apply_time_begin,'yyyy-MM-dd')}" />
-				</span>
-				<span class="label_inline">-</span>
-				<span class="nowrap label_inline">
-				<input  class="jqdate" type="text" name="apply.apply_time_end" title="到" value="${it:formatDate(apply.apply_time_end,'yyyy-MM-dd')}" />
-				</span>
-            </span></div>
-        </div>
-        </div>
-        <div class="label_main">
-        <div class="label_hang">
             <div class="label_ltit">事(%):</div>
             <div class="label_rwben"><span class="label_rwb"><s:textfield name="apply.title"/></span></div>
         </div>
         <div class="label_hang">
+            <div class="label_ltit">申请部门:</div>
+            <div class="label_rwben2">
+            	<span class="label_rwb">
+				<s:textfield title="部门名称" id="userdept_nameid" name="apply.apply_dept_name" readonly="true" />
+				<s:hidden title="部门代码" id="userdept_codeid" name="apply.apply_dept" readonly="true" />
+				</span>
+				<span class="label_inline nowrap">
+				<img class="mpoint" src='<s:url value="/images/open2.gif" />' onclick="SelectDept01('userdept_codeid','userdept_nameid');" />
+				<s:checkbox id="apply_is_sub_dept" name="apply.is_sub_dept" cssClass="regular-checkbox" />
+				<label for="apply_is_sub_dept"></label>包含子部门
+				<span id="ajax_member_message"></span>
+				</span>
+            </div>
+        </div>
+        <div class="label_hang">
+            <div class="label_ltit">申请时间:</div>
+            <div class="label_rwben2">
+            	<span class="label_rwb nowrap">
+				<input type="text" class="jqdate" name="apply.apply_time_begin" title="从" value="${it:formatDate(apply.apply_time_begin,'yyyy-MM-dd')}" />
+				</span>
+				<span class="label_inline">-</span>
+				<span class="label_rwb nowrap">
+				<input type="text" class="jqdate" name="apply.apply_time_end" title="到" value="${it:formatDate(apply.apply_time_end,'yyyy-MM-dd')}" />
+            	</span>
+            </div>
+        </div>
+        <div class="label_hang">
             <div class="label_ltit">审核时间:</div>
-            <div class="label_rwben"><span class="label_rwb2">
-            	<span class="nowrap label_inline">
+            <div class="label_rwben2">
+            	<span class="label_rwb nowrap">
 				<input  class="jqdate" type="text" name="apply.check_time_begin" title="从" value="${it:formatDate(apply.check_time_begin,'yyyy-MM-dd')}" />
 				</span>
 				<span class="label_inline">-</span>
-				<span class="nowrap label_inline">
+				<span class="label_rwb nowrap">
 				<input  class="jqdate" type="text" name="apply.check_time_end" title="到" value="${it:formatDate(apply.check_time_end,'yyyy-MM-dd')}" />
-				</span>
-            </span></div>
-        </div>
-        </div>
-        <div class="label_main">
-        <div class="label_hang">
-            <div class="label_ltit">申请部门:</div>
-            <div class="label_rwben"><span class="label_rwb2">
-            	<s:textfield title="部门" id="userdept_codeid" name="apply.apply_dept" readonly="true" />
-				<s:textfield title="部门名称" id="userdept_nameid" name="apply.apply_dept_name" readonly="true" />
-				<img class="mpoint" src='<s:url value="/images/open2.gif" />' onclick="SelectDept01('userdept_codeid','userdept_nameid');" />
-				<s:checkbox id="apply_is_sub_dept" name="apply.is_sub_dept" data-theme="ch" />
-				<label for="apply_is_sub_dept">包含子部门</label>
-				<span id="ajax_member_message"></span>
-            </span></div>
+            	</span>
+            </div>
         </div>
         <div class="label_hang">
             <div class="label_ltit">状态:</div>
-            <div class="label_rwben"><span class="label_rwb2">
+            <div class="label_rwben2">
+            	<span class="label_rwb">
             	<s:select name="apply.status_sp" title="状态" headerKey="" headerValue="-申请状态-" list="#{-1:'已作废',0:'新申请',5:'审核退回',10:'待审核',20:'大区经理已审',25:'销管经理已审',30:'运营总监已审'}" />
+				</span>
+				<span class="label_rwb">
 				<s:select id="form_apply_ship_status" name="apply.ship_status"  headerKey="" headerValue="-发货状态-" list="#{0:'未发货',10:'已发货',20:'已受理' }" />
-            </span></div>
+            	</span>
+            </div>
+        </div>
+        <div class="label_hang label_button tac">
+            <s:submit value="搜索" /> <s:reset value="重置" />
         </div>
         </div>
-        <div class="label_main tac"><s:submit value="搜索" /> <s:reset value="重置" /></div>
  	</div>
  	</s:form>
  	<div class="tab_warp">

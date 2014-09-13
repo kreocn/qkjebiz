@@ -16,7 +16,7 @@ background-color: #363636;
 </style>
 </head>
 <body>
-<div class="lg_main">
+<div class="main lg_main">
 	<div class="lg_title">商务系统登录</div>
 	<div class="lg_input">
 		<s:form id="mainForm" name="mainForm" action="check_login" namespace="/manager" method="post" theme="simple">

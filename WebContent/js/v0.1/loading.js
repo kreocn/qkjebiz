@@ -1,15 +1,6 @@
 var ajax_url = "";
 
 $(document).ready(function(){
-	// 点击tr 选中tr
-	// $(".tab_warp tr").click(function(){
-	// $(this).toggleClass("trbg");
-	// if ($(this).hasClass("trbg")) {
-	// $(this).find("[type='checkbox']").attr("checked", true);
-	// } else {
-	// $(this).find("[type='checkbox']").attr("checked", false);
-	// }
-	// });
 	// table隔行变色and鼠标经过样式
 	$(".tab_warp tr:even").addClass("even");
 	$(".tab_warp tr:odd").addClass("odd");
@@ -36,6 +27,9 @@ $(document).ready(function(){
 		}
 		document.getElementById('innertabel').innerHTML = str;
 	});
+	// 初始化日期
+	$(".jqdate").datepicker();
+	$(".main").addClass("input-a");
 });
 
 /* 获取触摸事件代码开始 */
