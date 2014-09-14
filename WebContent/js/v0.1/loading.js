@@ -1,5 +1,4 @@
-var ajax_url = "";
-
+var ajax_url = "/common_ajax/json_ajax";
 $(document).ready(function(){
 	// table隔行变色and鼠标经过样式
 	$(".tab_warp tr:even").addClass("even");
@@ -90,3 +89,15 @@ function touchMoveEvent(){
 	}
 }
 /* 触摸事件代码结束 */
+/* 全屏loading js控件开始 */
+var _spinner = new Spinner();
+function SpinStart(){
+	if (_spinner) {
+		_spinner.spin();
+		document.body.appendChild(_spinner.el);
+	}
+}
+function SpinStop(){
+	if (_spinner) _spinner.stop();
+}
+/* 全屏loading js控件结束 */

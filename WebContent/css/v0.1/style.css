@@ -137,7 +137,7 @@ a {
 }
 
 .label_hang {
-	float: left; line-height: 32px; margin: 3px 0;
+	float: left; line-height: 34px; margin: 3px 0;
 }
 
 .label_ltit {
@@ -145,11 +145,11 @@ a {
 }
 
 .label_rwben {
-	float: left; line-height: 30px; width: 112px;
+	float: left; line-height: 30px; width: 107px;
 }
 
 .label_rwben2 {
-	float: left; line-height: 30px; width: 325px;
+	float: left; line-height: 30px; width: 305px;
 }
 
 .label_button {
@@ -157,7 +157,7 @@ a {
 }
 
 .label_rwb {
-	line-height: 30px; width: 110px; display: inline-block; vertical-align: middle;
+	line-height: 30px; width: 105px; display: inline-block; vertical-align: middle;
 }
 
 .lb_text {
@@ -281,7 +281,11 @@ a {
 }
 
 .dq_step {
-	font-size: 14px; padding: 10px 0;
+	font-size: 14px; padding: 10px 0; margin: 0; position: relative;
+}
+
+.dq_step .opb {
+	position: absolute; right: 0; top: 4px;
 }
 
 .dl_msg {
@@ -296,6 +300,104 @@ a {
 	text-align: center;
 }
 
+.ib {
+	text-align: center;
+}
+
+.nw {
+	white-space: nowrap; word-break: break-all;
+}
+/*form style start*/
+.input-a input[type="text"],.input-a input[type="password"] {
+	width: 100%; height: 28px; line-height: 28px; font-size: 14px; border-radius: 5px; border: none; border: 1px solid #fefefe; text-indent: 8px; margin: 0; outline: none; box-shadow: 0px 0px 5px 0px #909090 inset;
+}
+
+.input-a select {
+	width: 100%; font-size: 14px; border-radius: 5px; border: none; border: 1px solid #fefefe; padding: 5px 5px 5px 4px; margin: 0; outline: none; box-shadow: 0px 0px 5px 0px #909090 inset;
+}
+
+.input-a textarea {
+	width: 100%; font-size: 14px; border-radius: 5px; border: none; border: 1px solid #fefefe; padding: 5px 8px; margin: 0; outline: none; box-shadow: 0px 0px 5px 0px #909090 inset; overflow-y: auto; overflow-x: hidden;
+}
+
+.input-a input[type="button"],.input-a input[type="submit"],.input-a input[type="reset"],.op-area a {
+	font-size: 14px; color: #fffff0; background: #363636; border-radius: 5px; line-height: 28px; height: 28px; border: 1px solid #363636; box-shadow: 0px 0px 5px 0px black; font-weight: bold; padding: 0 15px; cursor: pointer;
+}
+
+.op-area a {
+	display: inline-block; vertical-align: middle;
+}
+
+.input-black input[type="button"],.input-black input[type="submit"],.input-black input[type="reset"],.input-black a {
+	background-color: #363636; border-color: #363636; box-shadow: 0px 0px 5px 0px #000;
+}
+
+.input-gray input[type="button"],.input-gray input[type="submit"],.input-gray input[type="reset"],.input-gray a {
+	background-color: #999; border-color: #999; box-shadow: 0px 0px 5px 0px #808080;
+}
+
+.input-red input[type="button"],.input-red input[type="submit"],.input-red input[type="reset"],.input-red a {
+	background-color: #f00; border-color: #f00; box-shadow: 0px 0px 5px 0px #f00;
+}
+
+.input-green input[type="button"],.input-green input[type="submit"],.input-green input[type="reset"],.input-green a {
+	background-color: #059c77; border-color: #059c77; box-shadow: 0px 0px 5px 0px #008080;
+}
+
+.input-yellow input[type="button"],.input-yellow input[type="submit"],.input-yellow input[type="reset"],.input-yellow a {
+	background-color: #f7d401; border-color: #f7d401; box-shadow: 0px 0px 5px 0px #FFFF00;
+}
+
+.input-blue input[type="button"],.input-blue input[type="submit"],.input-blue input[type="reset"],.input-blue a {
+	background-color: #3477a1; border-color: #3477a1; box-shadow: 0px 0px 5px 0px blue;
+}
+
+.op-area a:hover,.input-black input:hover,.input-gray input:hover,.input-red input:hover,.input-green a:hover,.input-yellow a:hover,.input-blue a:hover {
+	opacity: 0.75;
+}
+
+/*checkbox*/
+.regular-checkbox {
+	display: none;
+}
+
+.regular-checkbox+label {
+	background-color: #fafafa; border: 1px solid #cacece; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05); padding: 9px; border-radius: 3px; display: inline-block; position: relative; top: 5px; margin-right: 5px; left: 2px; line-height: 16px;
+}
+
+.regular-checkbox+label:active,.regular-checkbox:checked+label:active {
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.regular-checkbox:checked+label {
+	background-color: #e9ecee; border: 1px solid #adb8c0; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.1); color: #99a1a7;
+}
+
+.regular-checkbox:checked+label:after {
+	content: '\2714'; font-size: 14px; position: absolute; top: 0px; left: 3px; color: #99a1a7;
+}
+/*radio*/
+.regular-radio {
+	display: none;
+}
+
+.regular-radio+label {
+	-webkit-appearance: none; background-color: #fafafa; border: 1px solid #cacece; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05); padding: 9px; border-radius: 50px; display: inline-block; position: relative; top: 5px; margin-right: 5px; left: 2px;
+}
+
+.regular-radio:checked+label:after {
+	content: ' '; width: 12px; height: 12px; border-radius: 50px; position: absolute; top: 3px; background: #99a1a7; box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.3); text-shadow: 0px; left: 3px; font-size: 32px;
+}
+
+.regular-radio:checked+label {
+	background-color: #e9ecee; color: #99a1a7; border: 1px solid #adb8c0; box-shadow: box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.1); ;
+}
+
+.regular-radio+label:active,.regular-radio:checked+label:active {
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px 1px 3px rgba(0, 0, 0, 0.1);
+}
+/*form style end*/
+/*滚动条样式START*/
 ::-webkit-scrollbar {
 	width: 11px; height: 14px;
 }
@@ -315,7 +417,7 @@ a {
 ::-webkit-scrollbar-corner {
 	background: transparent;
 }
-
+/*滚动条样式END*/
 @media screen and (max-width:1200px) {
 	.td5 {
 		display: none;
@@ -377,9 +479,6 @@ a {
 	.zhuangtai {
 		clear: both; margin-bottom: 5px;
 	}
-	.label_rwben2 {
-		width: 175px;
-	}
 }
 
 @media screen and (max-width:550px) {
@@ -390,7 +489,8 @@ a {
 		clear: both;
 	}
 	.label_con {
-		width: 440px;
+		/*width: 440px;*/
+		
 	}
 	.lb_text2 {
 		width: 300px;
@@ -399,4 +499,9 @@ a {
 		clear: both; margin-bottom: 5px;
 	}
 }
+
+@media screen and (max-width:410px) {
+	.label_rwben2 {
+		width: 107px;
+	}
 }

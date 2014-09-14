@@ -1,91 +1,22 @@
 @charset "utf-8";
-/*form style start*/
-.input-a input[type="text"],.input-a input[type="password"] {
-	width: 100%; height: 28px; line-height: 28px; font-size: 14px; border-radius: 5px; border: none; border: 1px solid #fefefe; text-indent: 8px; margin: 0; outline: none; box-shadow: 0px 0px 5px 0px #909090 inset;
+
+.pagination {
+	text-align: center; padding: 3px 0; background-color: #EFEFEF; margin: 1px 0; color: #059c77;
 }
 
-.input-a select {
-	width: 100%; font-size: 14px; border-radius: 5px; border: none; border: 1px solid #fefefe; padding: 5px 5px 5px 4px; margin: 0; outline: none; box-shadow: 0px 0px 5px 0px #909090 inset;
+.pagination a {
+	display: inline-block; background-color: #EFEFEF; margin: 0 1px; font-size: 14px; height: 25px; line-height: 25px; color: #059c77; min-width: 25px;
+	border: #059c77 solid 1px; font-weight: bold; border: #059c77 solid 1px;
 }
 
-.input-a textarea {
-	width: 100%; font-size: 14px; border-radius: 5px; border: none; border: 1px solid #fefefe; padding: 5px 8px; margin: 0; outline: none; box-shadow: 0px 0px 5px 0px #909090 inset; overflow-y: auto; overflow-x: hidden;
+.pagination a:hover {
+	background-color: #059c77; color: #FFF;
 }
 
-.input-a input[type="button"],.input-a input[type="submit"],.input-a input[type="reset"],.op-area a {
-	font-size: 14px; color: #fffff0; background: #363636; border-radius: 5px; line-height: 28px; height: 28px; border: 1px solid #363636; box-shadow: 0px 0px 5px 0px black; font-weight: bold; padding: 0 15px; cursor: pointer;
+.pagination a.current {
+	background-color: #059c77; color: #FFF;
 }
 
-.op-area a {
-	display: inline-block; vertical-align: middle;
+.pagination a.disabled {
+	color: #999; background-color: #EFEFEF; border-color: #999;
 }
-
-.input-black input[type="button"],.input-black input[type="submit"],.input-black input[type="reset"],.input-black a {
-	background-color: #363636; border-color: #363636; box-shadow: 0px 0px 5px 0px #000;
-}
-
-.input-gray input[type="button"],.input-gray input[type="submit"],.input-gray input[type="reset"],.input-gray a {
-	background-color: #999; border-color: #999; box-shadow: 0px 0px 5px 0px #808080;
-}
-
-.input-red input[type="button"],.input-red input[type="submit"],.input-red input[type="reset"],.input-red a {
-	background-color: #f00; border-color: #f00; box-shadow: 0px 0px 5px 0px #f00;
-}
-
-.input-green input[type="button"],.input-green input[type="submit"],.input-green input[type="reset"],.input-green a {
-	background-color: #63ba05; border-color: #63ba05; box-shadow: 0px 0px 5px 0px #008080;
-}
-
-.input-yellow input[type="button"],.input-yellow input[type="submit"],.input-yellow input[type="reset"],.input-yellow a {
-	background-color: #f7d401; border-color: #f7d401; box-shadow: 0px 0px 5px 0px #FFFF00;
-}
-
-.input-blue input[type="button"],.input-blue input[type="submit"],.input-blue input[type="reset"],.input-blue a {
-	background-color: #3477a1; border-color: #3477a1; box-shadow: 0px 0px 5px 0px blue;
-}
-
-.op-area a:hover,.input-black input:hover,.input-black a:hover,.input-gray input:hover,.input-gray a:hover,.input-red input:hover,.input-red a:hover,.input-green input:hover,.input-green a:hover,.input-yellow input:hover,.input-yellow a:hover,.input-blue input:hover,.input-blue a:hover {
-	opacity: 0.85;
-}
-
-/*checkbox*/
-.regular-checkbox {
-	display: none;
-}
-
-.regular-checkbox+label {
-	background-color: #fafafa; border: 1px solid #cacece; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05); padding: 9px; border-radius: 3px; display: inline-block; position: relative; top: 5px; margin-right: 5px; left: 2px; line-height: 16px;
-}
-
-.regular-checkbox+label:active,.regular-checkbox:checked+label:active {
-	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.regular-checkbox:checked+label {
-	background-color: #e9ecee; border: 1px solid #adb8c0; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05), inset 15px 10px -12px rgba(255, 255, 255, 0.1); color: #99a1a7;
-}
-
-.regular-checkbox:checked+label:after {
-	content: '\2714'; font-size: 14px; position: absolute; top: 0px; left: 3px; color: #99a1a7;
-}
-/*radio*/
-.regular-radio {
-	display: none;
-}
-
-.regular-radio+label {
-	-webkit-appearance: none; background-color: #fafafa; border: 1px solid #cacece; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05); padding: 9px; border-radius: 50px; display: inline-block; position: relative; top: 5px; margin-right: 5px; left: 2px;
-}
-
-.regular-radio:checked+label:after {
-	content: ' '; width: 12px; height: 12px; border-radius: 50px; position: absolute; top: 3px; background: #99a1a7; box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.3); text-shadow: 0px; left: 3px; font-size: 32px;
-}
-
-.regular-radio:checked+label {
-	background-color: #e9ecee; color: #99a1a7; border: 1px solid #adb8c0; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05), inset 15px 10px -12px rgba(255, 255, 255, 0.1), inset 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
-
-.regular-radio+label:active,.regular-radio:checked+label:active {
-	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px 1px 3px rgba(0, 0, 0, 0.1);
-}
-/*form style end*/

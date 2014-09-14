@@ -35,15 +35,16 @@ display: none;
 </style>
 <body>
 <div class="main" >
- 	<p class="dq_step">
+ 	<div class="dq_step">
 		${path}
-		<a href="#">添加至事由</a>
-	</p>
- 	<s:form name="form_serach" action="apply_list"  method="get" namespace="/qkjmanage" theme="simple">
+		<span class="opb lb op-area"><a href="#">添加至事由</a></span>
+	</div>
+ 	<s:form id="serachForm" name="serachForm" action="apply_list"  method="get" namespace="/qkjmanage" theme="simple">
+ 	<s:token />
  	<div class="label_con">
  	<div class="label_main">
         <div class="label_hang">
-            <div class="label_ltit">申请编号:</div>
+            <div class="label_ltit">编号:</div>
             <div class="label_rwben"><span class="label_rwb"><s:textfield name="apply.uuid" /></span></div>
         </div>
         <div class="label_hang">
@@ -57,7 +58,7 @@ display: none;
 				<s:textfield title="部门名称" id="userdept_nameid" name="apply.apply_dept_name" readonly="true" />
 				<s:hidden title="部门代码" id="userdept_codeid" name="apply.apply_dept" readonly="true" />
 				</span>
-				<span class="label_inline nowrap">
+				<span class="lb nw">
 				<img class="mpoint" src='<s:url value="/images/open2.gif" />' onclick="SelectDept01('userdept_codeid','userdept_nameid');" />
 				<s:checkbox id="apply_is_sub_dept" name="apply.is_sub_dept" cssClass="regular-checkbox" />
 				<label for="apply_is_sub_dept"></label>包含子部门
@@ -68,11 +69,11 @@ display: none;
         <div class="label_hang">
             <div class="label_ltit">申请时间:</div>
             <div class="label_rwben2">
-            	<span class="label_rwb nowrap">
+            	<span class="label_rwb nw">
 				<input type="text" class="jqdate" name="apply.apply_time_begin" title="从" value="${it:formatDate(apply.apply_time_begin,'yyyy-MM-dd')}" />
 				</span>
-				<span class="label_inline">-</span>
-				<span class="label_rwb nowrap">
+				<span class="lb">-</span>
+				<span class="label_rwb nw">
 				<input type="text" class="jqdate" name="apply.apply_time_end" title="到" value="${it:formatDate(apply.apply_time_end,'yyyy-MM-dd')}" />
             	</span>
             </div>
@@ -80,11 +81,11 @@ display: none;
         <div class="label_hang">
             <div class="label_ltit">审核时间:</div>
             <div class="label_rwben2">
-            	<span class="label_rwb nowrap">
+            	<span class="label_rwb nw">
 				<input  class="jqdate" type="text" name="apply.check_time_begin" title="从" value="${it:formatDate(apply.check_time_begin,'yyyy-MM-dd')}" />
 				</span>
-				<span class="label_inline">-</span>
-				<span class="label_rwb nowrap">
+				<span class="lb">-</span>
+				<span class="label_rwb nw">
 				<input  class="jqdate" type="text" name="apply.check_time_end" title="到" value="${it:formatDate(apply.check_time_end,'yyyy-MM-dd')}" />
             	</span>
             </div>
@@ -101,15 +102,15 @@ display: none;
             </div>
         </div>
         <div class="label_hang label_button tac">
-            <s:submit value="搜索" /> <s:reset value="重置" />
+            <s:submit value="搜索" /> <s:reset value="重置" /> 
         </div>
-        </div>
+	</div>
  	</div>
  	</s:form>
  	<div class="tab_warp">
 		<table>
 			<tr id="coltr">
-			    <th>申请编号</th>
+			    <th>编号</th>
 			    <th class="td1">申请时间</th>
 			    <th class="td1">申请部门</th>
 			    <th>申请人</th>
@@ -122,11 +123,11 @@ display: none;
 			<s:iterator value="applys" status="sta">
 			<tr id="showtr${uuid}">
 			    <td>${uuid}</td>
-			    <td class="td1 nowrap">${it:formatDate(apply_time,'yyyy-MM-dd')}</td>
-			    <td class="td1 nowrap">${apply_dept_name}</td>
-			    <td class="nowrap">${apply_user_name}</td>
+			    <td class="td1 nw">${it:formatDate(apply_time,'yyyy-MM-dd')}</td>
+			    <td class="td1 nw">${apply_dept_name}</td>
+			    <td class="nw">${apply_user_name}</td>
 				<td class="td3 longnote" title="${title}">${it:subString(title,40)}</td>
-				<td class="td2 nowrap" title="${check_user_name}-${it:formatDate(check_time,'yyyy-MM-dd HH:mm:ss')}-${check_note}">
+				<td class="td2 nw" title="${check_user_name}-${it:formatDate(check_time,'yyyy-MM-dd HH:mm:ss')}-${check_note}">
 					<s:if test="-1==status"><span class="message_error">已作废<br />(${check_user_name})</span></s:if>
 					<s:if test="0==status">新申请</s:if>
 					<s:if test="5==status"><span class="message_error">已退回<br />(${check_user_name})</span></s:if>
@@ -137,7 +138,7 @@ display: none;
 					</s:if>
 					<s:if test="30==status"><span class="message_pass">运营总监已审</span></s:if>
 				</td>
-				<td class="td4 nowrap">
+				<td class="td4 nw">
 					<s:if test="30==status">
 					<a  href="#mdyApplyShipInfoForm" data-rel="popup" data-position-to="window"  data="${uuid}" class="mdyApplyShipInfo_Link">
 					<s:if test="0==ship_status">未发货</s:if>
@@ -157,39 +158,34 @@ display: none;
 				<td class="td4">
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_VIEW')">
 					<s:if test="status==30">
-					<a data-role="button" data-ajax="false" data-inline="true" data-theme="lb" href="<s:url namespace="/qkjmanage" action="apply_print"><s:param name="apply.uuid" value="uuid"></s:param></s:url>">打印</a>
+					<a  href="<s:url namespace="/qkjmanage" action="apply_print"><s:param name="apply.uuid" value="uuid"></s:param></s:url>">打印</a>
 					</s:if>
 					<s:elseif test="status<=20">
-			    	<a  data-role="button"  data-ajax="false" data-inline="true" data-theme="lb" href="<s:url namespace="/qkjmanage" action="apply_load"><s:param name="viewFlag">mdy</s:param><s:param name="apply.uuid" value="uuid"></s:param></s:url>">修改</a>
+			    	<a href="<s:url namespace="/qkjmanage" action="apply_load"><s:param name="viewFlag">mdy</s:param><s:param name="apply.uuid" value="uuid"></s:param></s:url>">修改</a>
 			    	</s:elseif>
 			    	</s:if>
 			    	<s:if test="(status==0||status==5)&&@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_DEL')">
-			    	<a  data-role="button"  data-inline="true" data-theme="lb" href="<s:url namespace="/qkjmanage" action="apply_del"><s:param name="apply.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
+			    	<a href="<s:url namespace="/qkjmanage" action="apply_del"><s:param name="apply.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
 			    	</s:if>
 				</td>
-				<td class="td0"><a data-role="button" data-inline="true" data-theme="lb" onClick="showDetail('showtr${uuid}');">查看</a></td>
+				<td class="td0"><a onClick="showDetail('showtr${uuid}');">查看</a></td>
 			</tr>
 			</s:iterator>
-			<tr>
-			    <td colspan="20" class="pagearea">
-				<script type="text/javascript">
-				var spage = new ShowPage(${currPage});
-				spage.show2(${recCount},${pageSize},2);
-				</script>
-				</td>
-		  </tr>
 	    </table>
 	</div>
+	<script type="text/javascript">
+	//var spage = new ShowPage(${currPage});
+	//spage.show2(${recCount},${pageSize},2);
+	</script>
+	<div class="pagination" data='{count:${recCount},size:${pageSize},cur:${currPage},formid:"serachForm"}'></div>
+	<div class="pagination" data='{count:100000,size:15,cur:6,formid:"serachForm"}'></div>
  </div>
  <!-- <div data-role="footer"></div>  -->
  <!-- HIDDEN AREA BEGIN -->
  <div class="hidden_area">
- <div id="mdyApplyShipInfoForm" data-role="popup" data-overlay-theme="b" data-theme="a" data-corners="false" class="label_con ui-corner-all idialog" title="修改发货信息" style="width:360px;">
-   <div data-role="header" data-theme="th">
- 	修改发货信息
- 	<a data-role="button" data-icon="delete" data-iconpos="notext" data-inline="true" data-theme="b"  data-ajax="false" data-rel="back" class="ui-btn-right">X</a>
- </div>
+ <div id="mdyApplyShipInfoForm" data-role="popup" data-overlay-theme="b" data-theme="a" data-corners="false" class="label_con ui-corner-all idialog" title="修改发货信息">
 <s:form name="form_mdyApplyShipInfoForm" action="mdyApplyShipInfo" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple" data-ajax="false">
+	<s:token/>
 	<div class="label_main">
         <div class="label_hang">
             <div class="label_ltit">审核意见:</div>
@@ -227,10 +223,7 @@ display: none;
     </div>
 </s:form>
 </div>
-<div id="infoDetail" data-role="popup" data-theme="a" data-overlay-theme="b" class="label_con ui-corner-all idialog" style="width:450px;">
-<div data-role="header" data-theme="th">详情信息
-<a data-role="button" data-icon="delete" data-iconpos="notext" data-inline="true" data-theme="b"  data-ajax="false" data-rel="back" class="ui-btn-right">X</a>
-</div>
+<div id="infoDetail" data-role="popup" data-theme="a" data-overlay-theme="b" class="label_con ui-corner-all idialog" style="width:100%;">
 <div id="detailMain" data-role="content" class="label_main"></div>
 </div>
 </div>
