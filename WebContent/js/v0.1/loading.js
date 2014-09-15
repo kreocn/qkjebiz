@@ -8,27 +8,13 @@ $(document).ready(function(){
 	}).mouseout(function(){
 		$(this).removeClass("trhover");
 	});
-	// 查看详情
-	$(".detail").click(function(){
-		var t = $(this).index('.detail');
-		var le = $('tr:eq(0)').children().length;
-		var str = '';
-		for (var i = 0; i < le - 2; i++) {
-			var n = i + 1;
-			var th = $('tr:eq(0) th:eq(' + n + ')').text();
-			var m = t + 1;
-			if (i == le - 3) {
-				var td = $('tr:eq(' + m + ') td:eq(' + n + ')').html();
-			} else {
-				var td = $('tr:eq(' + m + ') td:eq(' + n + ')').text();
-			}
-			str += '<tr><td align="right" width="40%"><b>' + th + '：</b></td><td width="60%">' + td + '</td></tr>';
-		}
-		document.getElementById('innertabel').innerHTML = str;
-	});
 	// 初始化日期
 	$(".jqdate").datepicker();
 	$(".main,.idialog").addClass("input-a");
+
+	/* 查看详情专用 */
+	$("#infoDetail").dialog({ autoOpen : false,
+	modal : true });
 });
 
 /* 获取触摸事件代码开始 */
@@ -101,3 +87,23 @@ function SpinStop(){
 	if (_spinner) _spinner.stop();
 }
 /* 全屏loading js控件结束 */
+/* 查看详情专用函数开始 */
+function showDetail(trid){
+	var _h = "";
+	var ths = $("#coltr th");
+	$("#" + trid + " td").each(function(i, n){
+		if (i == ths.length - 1) { return; }
+		var cc = "label_rwben";
+		if ($(this).hasClass("longnote")) {
+			cc = "";
+		}
+		_h += '<div class="label_hang">';
+		_h += '<div class="label_ltit">' + ths[i].innerHTML + ':</div>';
+		_h += '<div class="' + cc + '">' + n.innerHTML + '</div>';
+		_h += '</div>';
+	});
+
+	$("#detailMain").empty().append(_h);
+	$("#infoDetail").dialog("open");
+}
+/* 查看详情专用函数结束 */

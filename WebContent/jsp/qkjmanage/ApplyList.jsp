@@ -13,49 +13,30 @@ $(function(){
 	$(function(){
 		$("#mdyApplyShipInfoForm").dialog({
 		      autoOpen: false,
-		      height: 300,
-		      width: 500,
 		      modal: true
 		});
 		$(".mdyApplyShipInfo_Link").click(function(){
 			var p_uuid = $(this).attr("data");
-			$("#form_apply_uuid").val(p_uuid);
-			$("#form_apply_ship_phone").val($("#ship_phone_"+p_uuid).text());
-			$("#form_apply_ship_type").val($("#ship_type_"+p_uuid).text());
-			$("#form_apply_ship_no").val($("#ship_no_"+p_uuid).text());
-			$("#form_apply_ship_date").val($("#ship_date_"+p_uuid).text());
-			$("#form_apply_ship_status").val($("#ship_status_"+p_uuid).text());
-			$("#form_apply_check_note").text($("#check_note_"+p_uuid).text());
+			setShipVal(p_uuid);
+			$("#mdyApplyShipInfoForm").dialog("open");
+		});
+		
+		$("#infoDetail").delegate(".mdyApplyShipInfo_Link","click",function(){
+			var p_uuid = $(this).attr("data");
+			setShipVal(p_uuid);
 			$("#mdyApplyShipInfoForm").dialog("open");
 		});
 	});
-	
-	$("#infoDetail").dialog({
-	      autoOpen: false,
-	      width:360,
-	      modal: true
-	});
 });
 
-function showDetail(trid){
-	var _h = "";
-	var ths = $("#coltr th");
-	$("#" + trid + " td").each(function(i,n){
-		if(i==ths.length-1) {
-			return ;
-		}
-		var cc = "label_rwben";
-		if($(this).hasClass("longnote")) {
-			cc = "label_rwben2";
-		}
-		_h += '<div class="label_hang">';
-		_h += '<div class="label_ltit">' + ths[i].innerHTML + ':</div>';
-		_h += '<div class="'+cc+'">' + n.innerHTML + '</div>';
-		_h += '</div>';
-	});
-
-	$("#detailMain").empty().append(_h);
-	$("#infoDetail").dialog("open");
+function setShipVal(p_uuid) {
+	$("#form_apply_uuid").val(p_uuid);
+	$("#form_apply_ship_phone").val($("#ship_phone_"+p_uuid).text());
+	$("#form_apply_ship_type").val($("#ship_type_"+p_uuid).text());
+	$("#form_apply_ship_no").val($("#ship_no_"+p_uuid).text());
+	$("#form_apply_ship_date").val($("#ship_date_"+p_uuid).text());
+	$("#form_apply_ship_status").val($("#ship_status_"+p_uuid).text());
+	$("#form_apply_check_note").text($("#check_note_"+p_uuid).text());
 }
 </script>
 <style type="text/css">
@@ -91,7 +72,7 @@ display: none;
 				<s:hidden title="部门代码" id="userdept_codeid" name="apply.apply_dept" readonly="true" />
 				</span>
 				<span class="lb nw">
-				<img class="mpoint" src='<s:url value="/images/open2.gif" />' onclick="selectDept();" />
+				<img class="detail" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid');" />
 				<s:checkbox id="apply_is_sub_dept" name="apply.is_sub_dept" cssClass="regular-checkbox" />
 				<label for="apply_is_sub_dept"></label>包含子部门
 				<span id="ajax_member_message"></span>
@@ -200,7 +181,7 @@ display: none;
 			    	<a  class="input-red" href="<s:url namespace="/qkjmanage" action="apply_del"><s:param name="apply.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
 			    	</s:if>
 				</td>
-				<td class="td0 op-area"><a onClick="showDetail('showtr${uuid}');">查看</a></td>
+				<td class="td0 op-area"><a onClick="showDetail('showtr${uuid}');" class="input-nostyle">查看</a></td>
 			</tr>
 			</s:iterator>
 	    </table>
@@ -255,7 +236,7 @@ display: none;
 </s:form>
 </div>
 <div id="infoDetail" class="idialog" title="查看详情" style="width:100%;">
-<div id="detailMain" class="label_main"></div>
+<div id="detailMain" class="label_main op-area"></div>
 </div>
 </div>
 <!-- HIDDEN AREA END -->

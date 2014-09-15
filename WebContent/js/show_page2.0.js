@@ -56,28 +56,28 @@ function ShowPage(v_aPage) {
 		prevpage=this.FromatPage((CurrPage-1),1,PageCount);  
 		nextpage=this.FromatPage((CurrPage+1),1,PageCount); 
 		if (CurrPage<=1&&PageCount<=1) {
-			FirstPageUrl="&nbsp;"+LinkFont3+FirstFont+LinkFont4+"&nbsp;";
-			PrevPageUrl="&nbsp;"+LinkFont3+PrevFont+LinkFont4+"&nbsp;";
-			NextPageUrl="&nbsp;"+LinkFont3+NextFont+LinkFont4+"&nbsp;";
-			LastPageUrl="&nbsp;"+LinkFont3+LastFont+LinkFont4+"&nbsp;";
+			FirstPageUrl="<a class='disabled'>"+LinkFont3+FirstFont+LinkFont4+"</a>";
+			PrevPageUrl="<a class='disabled'>"+LinkFont3+PrevFont+LinkFont4+"</a>";
+			NextPageUrl="<a class='disabled'>"+LinkFont3+NextFont+LinkFont4+"</a>";
+			LastPageUrl="<a class='disabled'>"+LinkFont3+LastFont+LinkFont4+"</a>";
 		}
 		else if (CurrPage==1&&PageCount>1) {
-			FirstPageUrl="&nbsp;"+LinkFont3+FirstFont+LinkFont4+"&nbsp;";
-			PrevPageUrl="&nbsp;"+LinkFont3+PrevFont+LinkFont4+"&nbsp;";
-			NextPageUrl="&nbsp;<A href=\""+url+"Page="+nextpage+"\">"+LinkFont1+NextFont+LinkFont2+"</A>&nbsp;";
-			LastPageUrl="&nbsp;<A href=\""+url+"Page="+PageCount+"\">"+LinkFont1+LastFont+LinkFont2+"</A>&nbsp;";
+			FirstPageUrl="<a class='disabled'>"+LinkFont3+FirstFont+LinkFont4+"</a>";
+			PrevPageUrl="<a class='disabled'>"+LinkFont3+PrevFont+LinkFont4+"</a>";
+			NextPageUrl="<a href=\""+url+"Page="+nextpage+"\" class='next'>"+LinkFont1+NextFont+LinkFont2+"</a>";
+			LastPageUrl="<a href=\""+url+"Page="+PageCount+"\" class='last'>"+LinkFont1+LastFont+LinkFont2+"</a>";
 		}
 		else if (CurrPage==PageCount) {
-			FirstPageUrl="&nbsp;<A href=\""+url+"Page=1\">"+LinkFont1+FirstFont+LinkFont2+"</A>&nbsp;";
-			PrevPageUrl="&nbsp;<A href=\""+url+"Page="+prevpage+"\">"+LinkFont1+PrevFont+LinkFont2+"</A>&nbsp;";
-			NextPageUrl="&nbsp;"+LinkFont3+NextFont+LinkFont4+"&nbsp;";
-			LastPageUrl="&nbsp;"+LinkFont3+LastFont+LinkFont4+"&nbsp;";
+			FirstPageUrl="<a href=\""+url+"Page=1\" class='first'>"+LinkFont1+FirstFont+LinkFont2+"</a>";
+			PrevPageUrl="<a href=\""+url+"Page="+prevpage+"\" class='prev'>"+LinkFont1+PrevFont+LinkFont2+"</a>";
+			NextPageUrl="<a class='disabled'>"+LinkFont3+NextFont+LinkFont4+"</a>";
+			LastPageUrl="<a class='disabled'>"+LinkFont3+LastFont+LinkFont4+"</a>";
 		}
 		else {
-			FirstPageUrl="&nbsp;<A href=\""+url+"Page=1\">"+LinkFont1+FirstFont+LinkFont2+"</A>&nbsp;";
-			PrevPageUrl="&nbsp;<A href=\""+url+"Page="+prevpage+"\">"+LinkFont1+PrevFont+LinkFont2+"</A>&nbsp;";
-			NextPageUrl="&nbsp;<A href=\""+url+"Page="+nextpage+"\">"+LinkFont1+NextFont+LinkFont2+"</A>&nbsp;";
-			LastPageUrl="&nbsp;<A href=\""+url+"Page="+PageCount+"\">"+LinkFont1+LastFont+LinkFont2+"</A>&nbsp;";
+			FirstPageUrl="<a href=\""+url+"Page=1\" class='first'>"+LinkFont1+FirstFont+LinkFont2+"</a>";
+			PrevPageUrl="<a href=\""+url+"Page="+prevpage+"\" class='prev'>"+LinkFont1+PrevFont+LinkFont2+"</a>";
+			NextPageUrl="<a href=\""+url+"Page="+nextpage+"\" class='next'>"+LinkFont1+NextFont+LinkFont2+"</a>";
+			LastPageUrl="<a href=\""+url+"Page="+PageCount+"\" class='last'>"+LinkFont1+LastFont+LinkFont2+"</a>";
 		}
 		
 		PageStart=this.FromatPage((CurrPage-PageNum),1,PageCount);  
@@ -91,11 +91,11 @@ function ShowPage(v_aPage) {
 			for (i=PageStart;i<=PageEnd;i++) {
 				if (i!=CurrPage) {
 					//document.write ("&nbsp;<A href=\""+url+"Page="+i+"\">"+PageNumFont1+i+PageNumFont2+"</A>&nbsp;");
-					show_html += "&nbsp;<A href=\""+url+"Page="+i+"\">"+PageNumFont1+i+PageNumFont2+"</A>&nbsp;";
+					show_html += "<a href=\""+url+"Page="+i+"\" class='page'>"+PageNumFont1+i+PageNumFont2+"</a>";
 				}
 				else {
 					//document.write ("&nbsp;"+PageNumFont3+i+PageNumFont4+"&nbsp;");
-					show_html += "&nbsp;"+PageNumFont3+i+PageNumFont4+"&nbsp;";
+					show_html += "<a class='current'>"+PageNumFont3+i+PageNumFont4+"";
 				}
 			}
 		}
@@ -110,7 +110,7 @@ function ShowPage(v_aPage) {
 	//每页显示资源数
 	//显示页的两边 显示的页的数量
 	this.show2 = function(recCount,pageSize,iPageNum) {
-		document.write(this.show("","","页:<font color='red'>","</font>/","<font color='red'>","</font>&nbsp;","","","&nbsp;&nbsp;共<font color='red'>","</font>条","首页","<",">","尾页","","<font color='red'>","</font>","[<font color='red'>","</font>]","","","&nbsp;","&nbsp;",recCount,pageSize,iPageNum));
+		document.write(this.show("","","<a class='disabled'>","/","","</a>","","","<a class='disabled'>","</a>","首页","&lt;","&gt;","尾页","","","","","","","","","",recCount,pageSize,iPageNum));
 	};
 	
 	this.show_html = function(recCount,pageSize,iPageNum) {
