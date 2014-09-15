@@ -17,10 +17,10 @@
 <script type="text/javascript" src="<c:url value="/js/v0.1/spin.js" />"></script>
 <script type="text/javascript" src="<c:url value="/js/v0.1/common.js" />"></script>
 <script type="text/javascript" src="<c:url value="/js/v0.1/demo.js" />"></script>
-<script type="text/javascript" src="<c:url value="/js/v0.1/jquery.paging.min.js" />"></script>
 <script type="text/javascript" src="<c:url value="/js/v0.1/loading.js" />"></script>
 <script type="text/javascript" src="<c:url value="/js/jquery.CommonUtil.js" />"></script>
 <script type="text/javascript" src="<c:url value="/js/common_ajax2.0.js" />"></script>
+<script type="text/javascript" src="<c:url value="/js/show_page2.0.js" />"></script>
 <!--[if lt IE 9]>
 <script type="text/javascript">
 window.onload=function(){

@@ -19,13 +19,17 @@ function Common_Ajax(result_div_id){
 	this.config = { action_url : "/common_ajax/json_ajax",
 	action_data_type : "json",
 	_loading_start : function(){
-		if (result_div_id) {
+		if (typeof (SpinStart) == 'function') {
+			SpinStart();
+		} else if (result_div_id) {
 			$('#' + result_div_id).append('<span id="ajax_load_message">正在获取数据...</span>');
 			$('#' + result_div_id).addClass('common_ajax_loading');
 		}
 	},
 	_loading_end : function(){
-		if (result_div_id) {
+		if (typeof (SpinStop) == 'function') {
+			SpinStop();
+		} else if (result_div_id) {
 			$('#' + result_div_id + " #ajax_load_message").remove();
 			$('#' + result_div_id).removeClass('common_ajax_loading');
 		}
@@ -61,7 +65,7 @@ function Common_Ajax(result_div_id){
 	},
 	_error : function(jqXHR, textStatus, errorThrown){
 		// if (showmsg) $('#' + result_div_id + " #ajax_load_message").text("获取数据异常!" + textStatus + ":" + errorThrown);
-		alert("获取数据异常!" + textStatus + ":" + errorThrown);
+		alert("获取数据错误!" + textStatus + ":" + errorThrown);
 	},
 	_complete : function(){
 		selfobj.config._loading_end();

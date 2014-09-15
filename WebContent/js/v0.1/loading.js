@@ -28,7 +28,7 @@ $(document).ready(function(){
 	});
 	// 初始化日期
 	$(".jqdate").datepicker();
-	$(".main").addClass("input-a");
+	$(".main,.idialog").addClass("input-a");
 });
 
 /* 获取触摸事件代码开始 */
