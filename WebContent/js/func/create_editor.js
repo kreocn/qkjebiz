@@ -1,7 +1,7 @@
 /**
  * xhexitor的封装简化版
  */
-function createXhEditor(selector, upload_url){
+function createHtmlEditor(selector, upload_url){
 	upload_url = upload_url || "/upload/put";
 	var $text = $(selector);
 	$text.css("width", "100%");

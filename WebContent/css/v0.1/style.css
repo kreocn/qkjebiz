@@ -146,19 +146,27 @@ a {
 }
 
 .label_ltit {
-	float: left; width: 100px; text-align: right; padding-right: 2px; font-weight: bold;
+	float: left; line-height: 34px; width: 95px; text-align: right; padding-right: 2px; font-weight: bold;
 }
 
 .label_rwben {
-	float: left; line-height: 34px; width: 107px; position: relative;
+	float: left; width: 106px; position: relative;
 }
 
 .label_rwben2 {
-	float: left; line-height: 34px; width: 305px; position: relative;
+	float: left; width: 309px; position: relative;
 }
 
 .label_rwbenx {
-	float: left; line-height: 34px; position: relative;
+	float: left; position: relative;
+}
+
+.label_rwb {
+	width: 105px; display: inline-block; vertical-align: middle;
+}
+
+.label_rwben2 .label_rwb {
+	width: 145px;
 }
 
 .label_hang_linput {
@@ -167,10 +175,6 @@ a {
 
 .label_button {
 	width: 214px;
-}
-
-.label_rwb {
-	line-height: 34px; width: 105px; display: inline-block; vertical-align: middle;
 }
 
 .lb_text {
@@ -317,6 +321,10 @@ a {
 	text-align: center;
 }
 
+.vam {
+	vertical-align: middle;
+}
+
 .ib {
 	text-align: center;
 }
@@ -350,11 +358,12 @@ a {
 	margin: 0; outline: none; box-shadow: 0px 0px 5px 0px #909090 inset;
 }
 
+/*
 .input-a select {
 	width: 100%; font-size: 14px; border-radius: 5px; border: none; border: 1px solid #fefefe; padding: 6px 4px; margin: 0; outline: none;
 	box-shadow: 0px 0px 5px 0px #909090 inset; appearance: none; -webkit-appearance: none; -moz-appearance: none; height: 36px;
 }
-
+*/
 .input-a textarea {
 	width: 100%; font-size: 14px; border-radius: 5px; border: none; border: 1px solid #fefefe; padding: 5px 0px; margin: 0; outline: none;
 	box-shadow: 0px 0px 5px 0px #909090 inset; overflow-y: auto; overflow-x: hidden;
@@ -464,7 +473,26 @@ input[type="button"].input-blue,input[type="submit"].input-blue,input[type="rese
 .approve_flag_pass {
 	color: #008000;
 }
+/*input-icon*/
+.iI {
+	background: url("../../images/icon/input-icon.png") no-repeat;
+}
 
+.iI-s {
+	background-position: right 0;
+}
+
+.iI-f {
+	background-position: 3px -25px; text-indent: 20px !important;
+}
+
+.iI-t {
+	background-position: 3px -57px; text-indent: 20px !important;
+}
+
+.iI-a {
+	background-position: 3px -57px; text-indent: 20px !important;
+}
 /*滚动条样式START*/
 ::-webkit-scrollbar {
 	width: 11px; height: 14px;
@@ -588,30 +616,50 @@ input[type="button"].input-blue,input[type="submit"].input-blue,input[type="rese
 }
 
 @media print {
-.printarea {
-display: block;
-}
-.noprint {
-display: none;
-}
-.ui-layout-south {
-display: none;
-}
-.ui-layout-north {
-display: none;
-}
-.ui-layout-east {
-display: none;
-}
-.printshow {
-display: table-row-group !important;
-}
-input,textarea,select {
-border: none !important; background: transparent;
-}
+	.printarea {
+		display: block;
+	}
+	.noprint {
+		display: none;
+	}
+	.ui-layout-south {
+		display: none;
+	}
+	.ui-layout-north {
+		display: none;
+	}
+	.ui-layout-east {
+		display: none;
+	}
+	.printshow {
+		display: table-row-group !important;
+	}
+	input,textarea,select {
+		border: none !important; background: transparent;
+	}
 }
 
 /*重写其他css*/
 .ui-dialog-title {
 	font-size: 14px;
+}
+
+.dk-option {
+	font-size: 12px;
+}
+
+.label_rwb .dk-selected {
+	line-height: 32px;
+}
+
+.label_rwb .dk-select,.label_rwb .dk-select-multi {
+	display: block; width: 100%;
+}
+
+.label_rwb .dk-selected:before {
+	margin: -1px 3px 0 0;
+}
+
+.label_rwb .dk-selected:after {
+	margin: 0 14px 0 0;
 }

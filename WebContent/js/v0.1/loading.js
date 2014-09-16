@@ -19,8 +19,10 @@ $(document).ready(function(){
 	$(".validForm").validationEngine();
 	/* 表单提示专用 */
 	$(".inputNote").inputNote();
-	/*生成编辑框*/
-	createXhEditor(".xheditorArea");
+	/* 美化select */
+	$(".selectKick").dropkick({ mobile : true });
+	/* 生成编辑框 */
+	createHtmlEditor(".xheditorArea");
 });
 
 /* 获取触摸事件代码开始 */
