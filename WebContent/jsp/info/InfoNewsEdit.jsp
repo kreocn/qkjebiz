@@ -249,7 +249,7 @@ var infoeditor01;
 var wb_smallimg;
 var wb_bigimg;
 $(function(){
-	createXhEditor("newscontentedit1");
+	createXhEditor("#newscontentedit1");
 	$.fn.xhuploadinit();
 	___select_infoclass_html_value = $('#selectInfoClass').html();
 	$('#selectInfoClass').empty();

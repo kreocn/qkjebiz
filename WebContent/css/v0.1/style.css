@@ -150,11 +150,19 @@ a {
 }
 
 .label_rwben {
-	float: left; line-height: 30px; width: 107px;
+	float: left; line-height: 34px; width: 107px; position: relative;
 }
 
 .label_rwben2 {
-	float: left; line-height: 30px; width: 305px;
+	float: left; line-height: 34px; width: 305px; position: relative;
+}
+
+.label_rwbenx {
+	float: left; line-height: 34px; position: relative;
+}
+
+.label_hang_linput {
+	width: 1000px !important;
 }
 
 .label_button {
@@ -162,7 +170,7 @@ a {
 }
 
 .label_rwb {
-	line-height: 30px; width: 105px; display: inline-block; vertical-align: middle;
+	line-height: 34px; width: 105px; display: inline-block; vertical-align: middle;
 }
 
 .lb_text {
@@ -294,7 +302,7 @@ a {
 }
 
 .dq_step .opb {
-	position: absolute; right: 0; top: 4px;
+	float: right; margin-left: 5px; position: relative; top: -5px;
 }
 
 .dl_msg {
@@ -315,6 +323,10 @@ a {
 
 .nw {
 	white-space: nowrap; word-break: break-all;
+}
+
+.note_area {
+	border: 1px solid #fefefe; border-radius: 5px; box-shadow: 0px 0px 5px 0px #909090 inset; padding: 5px;
 }
 
 .message_warning {
@@ -339,18 +351,18 @@ a {
 }
 
 .input-a select {
-	width: 100%; font-size: 14px; border-radius: 5px; border: none; border: 1px solid #fefefe; padding: 5px 5px 5px 4px; margin: 0; outline: none;
-	box-shadow: 0px 0px 5px 0px #909090 inset;
+	width: 100%; font-size: 14px; border-radius: 5px; border: none; border: 1px solid #fefefe; padding: 6px 4px; margin: 0; outline: none;
+	box-shadow: 0px 0px 5px 0px #909090 inset; appearance: none; -webkit-appearance: none; -moz-appearance: none; height: 36px;
 }
 
 .input-a textarea {
-	width: 100%; font-size: 14px; border-radius: 5px; border: none; border: 1px solid #fefefe; padding: 5px 8px; margin: 0; outline: none;
+	width: 100%; font-size: 14px; border-radius: 5px; border: none; border: 1px solid #fefefe; padding: 5px 0px; margin: 0; outline: none;
 	box-shadow: 0px 0px 5px 0px #909090 inset; overflow-y: auto; overflow-x: hidden;
 }
 
 .input-a input[type="button"],.input-a input[type="submit"],.input-a input[type="reset"],.op-area a {
 	font-size: 14px; color: #fffff0; background: #363636; border-radius: 5px; line-height: 22px; height: 22px; border: 1px solid #363636;
-	box-shadow: 0px 0px 5px 0px black; font-weight: bold; padding: 0 15px; cursor: pointer; margin: 1px 0px;
+	box-shadow: 0px 0px 5px 0px black; font-weight: bold; padding: 0 10px; cursor: pointer; margin: 1px 0px;
 }
 
 .op-area a {
@@ -433,6 +445,26 @@ input[type="button"].input-blue,input[type="submit"].input-blue,input[type="rese
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px 1px 3px rgba(0, 0, 0, 0.1);
 }
 /*form style end*/
+.approve_list {
+	
+}
+
+.approve_list ul {
+	margin-left: 15px; padding-left: 15px;
+}
+
+.approve_ad_time,.approve_check_user,.approve_flag,.approve_advice {
+	font-weight: bold;
+}
+
+.approve_flag_fail {
+	color: #FF0000;
+}
+
+.approve_flag_pass {
+	color: #008000;
+}
+
 /*滚动条样式START*/
 ::-webkit-scrollbar {
 	width: 11px; height: 14px;
@@ -467,6 +499,9 @@ input[type="button"].input-blue,input[type="submit"].input-blue,input[type="rese
 	.main {
 		width: 100%;
 	}
+	.label_hang_linput {
+		width: 800px !important;
+	}
 }
 
 @media screen and (max-width:1086px) {
@@ -498,6 +533,9 @@ input[type="button"].input-blue,input[type="submit"].input-blue,input[type="rese
 		display: block; width: 36px; height: 36px; position: absolute; left: 15px; top: 3px; margin-top: 0px; padding-left: 0px; text-indent: -9999px;
 		background-image: url(../../images/white/crate36x36.png); cursor: pointer;
 	}
+	.label_hang_linput {
+		width: 550px !important;
+	}
 }
 
 @media screen and (max-width:768px) {
@@ -515,6 +553,9 @@ input[type="button"].input-blue,input[type="submit"].input-blue,input[type="rese
 	}
 	.zhuangtai {
 		clear: both; margin-bottom: 5px;
+	}
+	.label_hang_linput {
+		width: 300px !important;
 	}
 }
 
@@ -541,6 +582,33 @@ input[type="button"].input-blue,input[type="submit"].input-blue,input[type="rese
 	.label_rwben2 {
 		width: 107px;
 	}
+	.label_hang_linput {
+		width: 170px !important;
+	}
+}
+
+@media print {
+.printarea {
+display: block;
+}
+.noprint {
+display: none;
+}
+.ui-layout-south {
+display: none;
+}
+.ui-layout-north {
+display: none;
+}
+.ui-layout-east {
+display: none;
+}
+.printshow {
+display: table-row-group !important;
+}
+input,textarea,select {
+border: none !important; background: transparent;
+}
 }
 
 /*重写其他css*/

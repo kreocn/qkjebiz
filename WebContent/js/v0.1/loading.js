@@ -15,6 +15,12 @@ $(document).ready(function(){
 	/* 查看详情专用 */
 	$("#infoDetail").dialog({ autoOpen : false,
 	modal : true });
+	/* 表单验证专用 */
+	$(".validForm").validationEngine();
+	/* 表单提示专用 */
+	$(".inputNote").inputNote();
+	/*生成编辑框*/
+	createXhEditor(".xheditorArea");
 });
 
 /* 获取触摸事件代码开始 */

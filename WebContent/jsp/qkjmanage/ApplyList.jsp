@@ -51,7 +51,9 @@ display: none;
 <div class="main" >
  	<div class="dq_step">
 		${path}
-		<span class="opb lb op-area"><a href="#">添加至事由</a></span>
+		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_ADD')">
+			<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="apply_load"><s:param name="viewFlag">add</s:param></s:url>">添加至事由</a></span>
+		</s:if>
 	</div>
  	<s:form id="serachForm" name="serachForm" action="apply_list"  method="get" namespace="/qkjmanage" theme="simple">
  	<div class="label_con">
@@ -171,7 +173,7 @@ display: none;
 				<td class="td4 op-area">
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_VIEW')">
 					<s:if test="status==30">
-					<a  class="input-gray" href="<s:url namespace="/qkjmanage" action="apply_print"><s:param name="apply.uuid" value="uuid"></s:param></s:url>">打印</a>
+					<a class="input-gray" href="<s:url namespace="/qkjmanage" action="apply_print"><s:param name="apply.uuid" value="uuid"></s:param></s:url>">打印</a>
 					</s:if>
 					<s:elseif test="status<=20">
 			    	<a  class="input-blue" href="<s:url namespace="/qkjmanage" action="apply_load"><s:param name="viewFlag">mdy</s:param><s:param name="apply.uuid" value="uuid"></s:param></s:url>">修改</a>
@@ -199,12 +201,11 @@ display: none;
  <!-- HIDDEN AREA BEGIN -->
  <div class="hidden_area">
  <div id="mdyApplyShipInfoForm" class="label_con idialog" title="修改发货信息">
-<s:form name="form_mdyApplyShipInfoForm" action="mdyApplyShipInfo" namespace="/qkjmanage" method="post" theme="simple" data-ajax="false">
-	<s:token/>
+<s:form name="form_mdyApplyShipInfoForm" action="mdyApplyShipInfo" cssClass="validForm" namespace="/qkjmanage" method="post" theme="simple">
 	<div class="label_main">
         <div class="label_hang">
             <div class="label_ltit">审核意见:</div>
-            <div class="label_rwben2"><span id="form_apply_check_note"></span></div>
+            <div class=""><span id="form_apply_check_note"></span></div>
         </div>
         <div class="label_hang">
             <div class="label_ltit">发货状态:</div>
@@ -212,7 +213,7 @@ display: none;
         </div>
 		<div class="label_hang">
             <div class="label_ltit">出库日期:</div>
-            <div class="label_rwben"><span class="label_rwb"><input id="form_apply_ship_date" class="jqdate" type="text" name="apply.ship_date" title="出库日期" value="${it:formatDate(apply.ship_date,'yyyy-MM-dd')}" dataType="date" controlName="出库日期" /></span></div>
+            <div class="label_rwben"><span class="label_rwb"><input id="form_apply_ship_date" class="jqdate validate[custom[date]]" type="text" name="apply.ship_date" title="出库日期" value="${it:formatDate(apply.ship_date,'yyyy-MM-dd')}" /></span></div>
         </div>
         <div class="label_hang">
             <div class="label_ltit">运单号:</div>

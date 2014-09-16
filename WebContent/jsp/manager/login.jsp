@@ -19,7 +19,7 @@ background-color: #363636;
 <div class="main lg_main">
 	<div class="lg_title">商务系统登录</div>
 	<div class="lg_input">
-		<s:form id="mainForm" name="mainForm" action="check_login" namespace="/manager" method="post" theme="simple">
+		<s:form id="mainForm" cssClass="validForm" name="mainForm" action="check_login" namespace="/manager" method="post" theme="simple">
         <div class="label_singlecol">
             <div class="label_singletitle">用户名:</div>
             <div class="label_singlecon"><s:textfield title="用户名" name="user.title" cssClass="validate[required]" nullable="false" /></div>
@@ -36,13 +36,6 @@ background-color: #363636;
         </s:form>
 	</div>
 </div>
-<script type="text/javascript">
-$(function(){
-	if($("#mainForm").length>0) {
-		$("#mainForm").validationEngine();
-	}
-});
-</script>
 <!-- 提前加载图片 -->
 <div>
 <div class="print_prepare"><img src="<s:url value="/images/print/pageheader02.png" />" alt="" /></div>

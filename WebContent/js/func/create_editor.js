@@ -1,9 +1,9 @@
 /**
  * xhexitor的封装简化版
  */
-function createXhEditor(obj_id, upload_url){
+function createXhEditor(selector, upload_url){
 	upload_url = upload_url || "/upload/put";
-	var $text = $('#' + obj_id);
+	var $text = $(selector);
 	$text.css("width", "100%");
 	$text.css("min-height", "300px");
 	$text.css("display", "none");
@@ -18,5 +18,5 @@ function createXhEditor(obj_id, upload_url){
 				// upMultiple : '1',
 				skin : 'nostyle' });
 	// editor.toggleFullscreen(true);
-	return editor
+	return editor;
 }
