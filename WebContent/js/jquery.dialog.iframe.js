@@ -56,7 +56,7 @@ var DialogIFrame = function(config){
 };
 
 var sobj01;
-var selectDept = function(dcode_id, dname_id, isLoad){
+var selectDept = function(dcode_id, dname_id, isLoad, p_m){
 	sobj01 = new DialogIFrame({ src : '/sys/dept_permit_select?objname=sobj01',
 	title : "选择部门",
 	width : 200,
@@ -65,11 +65,28 @@ var selectDept = function(dcode_id, dname_id, isLoad){
 		$("#" + dcode_id).val(val1);
 		$("#" + dname_id).val(val2);
 		if (isLoad) {
-			// loadManagers(val1);
+			loadManagers(val1, p_m);
 		}
 	};
 	sobj01.create();
 	sobj01.open();
 };
 
-// var loadMsg
+var loadManagers = function(dept_code, curr_apply_user){
+	var ajax = new Common_Ajax('ajax_member_message');
+	ajax.config.action_url = ajax_url;
+	ajax.config._success = function(data, textStatus){
+		$("#membermanagerid").clearAllOption();
+		$("#membermanagerid").addOption("--请选择--", "");
+		$.each(data, function(i, n){
+			$("#membermanagerid").addOption(n.user_name, n.uuid);
+		});
+		if (curr_apply_user != '') {
+			$("#membermanagerid").val(curr_apply_user);
+		}
+		$("#membermanagerid").dropkickRefresh();
+	};
+	ajax.addParameter("work", "AutoComplete");
+	ajax.addParameter("parameters", "privilege_id=QKJCJ_SYS_AJAXLOAD_USER&dept_code=" + encodeURI(dept_code));
+	ajax.sendAjax2();
+}

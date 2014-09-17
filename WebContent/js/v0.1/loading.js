@@ -20,6 +20,7 @@ $(document).ready(function(){
 	$(".inputNote").inputNote();
 	/* 美化select */
 	$(".selectKick").dropkick({ mobile : true });
+	// alert(dk_Array.length);
 	/* 生成编辑框 */
 	createHtmlEditor(".xheditorArea");
 	/* 设置"更多条件" */
@@ -140,32 +141,21 @@ function conCookie(condition_selector, checkbox_id){
 				if ($(this).attr("type") == "checkbox") {
 					if ($(this).is(":checked")) {
 						hv = true;
-						return;
-					} else {
-						hv = false;
+						return false;
 					}
-				} else if ($(this).val() != '') {
+				} else if ($(this).attr("type") != "hidden" && $(this).val() != '') {
 					hv = true;
-					return;
+					return false;
 				}
 			});
-			if ($("#" + checkbox_id).is(":checked")) {
-				$this.fadeIn();
-			} else {
-				if (!hv) {
-					$this.fadeOut();
-				}
-			}
+			if ($("#" + checkbox_id).is(":checked")) $this.fadeIn();
+			else if (!hv) $this.hide();
 		});
 	};
-
 	toggleCondition();
 	$("#" + checkbox_id).on("click", function(){
-		if ($(this).is(":checked")) {
-			spCo.values.set("d", "b");
-		} else {
-			spCo.values.set("d", "h");
-		}
+		if ($(this).is(":checked")) spCo.values.set("d", "b");
+		else spCo.values.set("d", "h");
 		spCo.save();
 		toggleCondition();
 	});

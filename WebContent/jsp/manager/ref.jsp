@@ -32,6 +32,7 @@
 <script type="text/javascript" src="<c:url value="/js/func/create_editor.js" />"></script>
 <script type="text/javascript" src="<c:url value="/include/jQuery/jquery.xhupload.js" />"></script>
 <script type="text/javascript" src="<c:url value="/js/HttpCookie.min.js" />"></script>
+<script type="text/javascript" src="<c:url value="/include/jQuery/jquery.select.js" />"></script>
 <!--[if lt IE 9]>
 <script type="text/javascript">
 window.onload=function(){
