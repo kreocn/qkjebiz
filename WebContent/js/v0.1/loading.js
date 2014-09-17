@@ -11,7 +11,6 @@ $(document).ready(function(){
 	// 初始化日期
 	$(".jqdate").datepicker();
 	$(".main,.idialog").addClass("input-a");
-
 	/* 查看详情专用 */
 	$("#infoDetail").dialog({ autoOpen : false,
 	modal : true });
@@ -23,6 +22,8 @@ $(document).ready(function(){
 	$(".selectKick").dropkick({ mobile : true });
 	/* 生成编辑框 */
 	createHtmlEditor(".xheditorArea");
+	/* 设置"更多条件" */
+	conCookie("#serachForm .label_hang", "search_mcondition");
 });
 
 /* 获取触摸事件代码开始 */
@@ -115,3 +116,58 @@ function showDetail(trid){
 	$("#infoDetail").dialog("open");
 }
 /* 查看详情专用函数结束 */
+/**
+ * 页面显示隐藏查询条件(需HttpCookie插件)
+ * 
+ * @param condition_selector
+ *            需要隐藏的区域selector
+ * @param checkbox_id
+ *            执行隐藏显示的checkboxid
+ */
+function conCookie(condition_selector, checkbox_id){
+	if ($(condition_selector + " #" + checkbox_id).length == 0) { return; }
+	var spCo = new HttpCookie("sc");// Serach Condition
+	if (spCo.isExisted() && spCo.values.getValues("d") == "h") { // d:dispaly h:hide b:block
+		$("#" + checkbox_id).removeAttr("checked");
+	} else {
+		$("#" + checkbox_id).attr("checked", "checked");
+	}
+	var toggleCondition = function(){
+		$(condition_selector).each(function(i){
+			var $this = $(this);
+			var hv = false;
+			$this.find(":input").each(function(){
+				if ($(this).attr("type") == "checkbox") {
+					if ($(this).is(":checked")) {
+						hv = true;
+						return;
+					} else {
+						hv = false;
+					}
+				} else if ($(this).val() != '') {
+					hv = true;
+					return;
+				}
+			});
+			if ($("#" + checkbox_id).is(":checked")) {
+				$this.fadeIn();
+			} else {
+				if (!hv) {
+					$this.fadeOut();
+				}
+			}
+		});
+	};
+
+	toggleCondition();
+	$("#" + checkbox_id).on("click", function(){
+		if ($(this).is(":checked")) {
+			spCo.values.set("d", "b");
+		} else {
+			spCo.values.set("d", "h");
+		}
+		spCo.save();
+		toggleCondition();
+	});
+}
+/* 页面显示隐藏查询条件结束 */

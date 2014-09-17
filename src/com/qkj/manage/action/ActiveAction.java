@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.iweb.sys.ActionAttr;
 import org.iweb.sys.ContextHelper;
 import org.iweb.sys.ToolsUtil;
 import org.iweb.sysvip.dao.MemberCapitalDAO;
@@ -27,7 +28,7 @@ import com.qkj.manage.domain.ActiveProduct;
 import com.qkj.manage.domain.Approve;
 import com.qkj.manage.domain.Product;
 
-public class ActiveAction extends ActionSupport {
+public class ActiveAction extends ActionSupport implements ActionAttr {
 	private static final long serialVersionUID = 1L;
 	private static Log log = LogFactory.getLog(ActiveAction.class);
 	private Map<String, Object> map = new HashMap<String, Object>();
@@ -54,6 +55,12 @@ public class ActiveAction extends ActionSupport {
 	private int recCount;
 	private int pageSize;
 	private int currPage;
+
+	private String path = "<a href='/manager/main'>首页</a>&nbsp;&gt;&nbsp;活动管理";
+
+	public String getPath() {
+		return path;
+	}
 
 	public String getIsApprover() {
 		return isApprover;
@@ -202,6 +209,7 @@ public class ActiveAction extends ActionSupport {
 			this.setCurrPage(ContextHelper.getCurrPage(map));
 			this.setActives(dao.list(map));
 			this.setRecCount(dao.getResultCount());
+			path = "<a href='/manager/main'>首页</a>&nbsp;&gt;&nbsp;活动列表";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
@@ -216,6 +224,7 @@ public class ActiveAction extends ActionSupport {
 				setMessage("你没有选择任何操作!");
 			} else if ("add".equals(viewFlag)) {
 				this.setActive(null);
+				path = "<a href='/manager/main'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/active_list?viewFlag=relist'>至事由列表</a>活动列表</a>&nbsp;&gt;&nbsp;增加活动";
 			} else if ("mdy".equals(viewFlag) || "view".equals(viewFlag)) {
 				if (!(active == null || active.getUuid() == null)) {
 					this.setActive((Active) dao.get(active.getUuid()));
@@ -243,7 +252,7 @@ public class ActiveAction extends ActionSupport {
 				/* 检查当前用户是否已经审阅 */
 				if (apdao.userIsIn(approves, ContextHelper.getUserLoginUuid())) this.setIsApprover("true");
 				else this.setIsApprover("false");
-
+				path = "<a href='/manager/main'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/active_list?viewFlag=relist'>至事由列表</a>活动列表</a>&nbsp;&gt;&nbsp;活动详情";
 			} else {
 				this.setActive(null);
 				setMessage("无操作类型!");

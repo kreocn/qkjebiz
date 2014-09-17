@@ -27,7 +27,7 @@ color: #008000;
 		${path}
 		<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="apply_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a></span>
 	</div>
-	<s:form id="serachForm" name="serachForm" action="apply_list"  method="get" namespace="/qkjmanage" theme="simple">
+	<s:form id="editForm" name="editForm" action="apply_list"  method="get" namespace="/qkjmanage" theme="simple">
 	<div class="label_con">
 		<s:if test="'mdy' == viewFlag">
 		<div class="label_main">
