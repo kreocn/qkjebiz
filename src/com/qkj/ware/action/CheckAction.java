@@ -11,7 +11,6 @@ import org.iweb.sys.ContextHelper;
 import org.iweb.sys.ToolsUtil;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.oracle.jrockit.jfr.Producer;
 import com.qkj.manage.dao.ProductDAO;
 import com.qkj.manage.domain.Product;
 import com.qkj.ware.dao.CheckDAO;
@@ -144,7 +143,6 @@ public class CheckAction extends ActionSupport {
 			map.putAll(ContextHelper.getDefaultRequestMap4Page());
 			this.setPageSize(ContextHelper.getPageSize(map));
 			this.setCurrPage(ContextHelper.getCurrPage(map));
-<<<<<<< HEAD
 			WareDAO wd=new WareDAO();
 			if(ContextHelper.isAdmin()){//管理员
 				this.setChecks(dao.list(map));
@@ -153,24 +151,12 @@ public class CheckAction extends ActionSupport {
 				map.put("username",u);
 				map.put("dept_code", code);
 				this.setChecks(dao.listByDate(map));
-=======
-			this.setChecks(dao.listByDate(map));
-			
-			WareDAO wd=new WareDAO();
-			if(ContextHelper.isAdmin()){//管理员
-				this.setWares(wd.list(null));
-			}else{
->>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 				map.clear();
 				map.put("username",u);
 				map.put("dept_code", code);
 				map.put("sel", 1);
 				this.setWares(wd.listByPower(map));
 			}
-<<<<<<< HEAD
-=======
-			
->>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 			ProductDAO pd=new ProductDAO();
 			this.setProducts(pd.list(null));
 			this.setRecCount(dao.getResultCount());
@@ -179,19 +165,11 @@ public class CheckAction extends ActionSupport {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
 		}
-<<<<<<< HEAD
 		/*if(state!=null){
 			return "DETAIL";
 		}else{*/
 			return "SUCCESS";
 		
-=======
-		if(state!=null){
-			return "DETAIL";
-		}else{
-			return "SUCCESS";
-		}
->>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 	}
 
 	public String relist() throws Exception {

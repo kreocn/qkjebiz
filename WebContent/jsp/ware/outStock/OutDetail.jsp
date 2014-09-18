@@ -19,13 +19,10 @@
 <script type="text/javascript" src="<s:url value="/js/common_ajax2.0.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/func/select_member.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/jquery.CommonUtil.js" />"></script>
-<<<<<<< HEAD
 
 <script type="text/javascript" src="<s:url value="/js/common_listtable.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/show_page.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/jquery.dialog.iframe.js" />"></script>
-=======
->>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 </head>
 <style type="text/css">
 .confirm_td{text-align:center;padding:5px 0 0!important;}
@@ -55,7 +52,6 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 	<!-- 主表显示 -->
 		<s:if test="null != outStock">
 		  <tr>
-<<<<<<< HEAD
 			  <td class='firstRow'><span style="color:red;">*</span> 单据号:</td>
 			  <td class='secRow' colspan="3">
 					<s:textfield name="outStock.ordernum" title="单据号"  rows="4" require="required" controlName="单据号"></s:textfield>
@@ -63,14 +59,6 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 			<s:hidden name="outStock.uuid"></s:hidden>
 			<s:hidden name="outStock.send"></s:hidden>
 			<s:hidden name="outDetail.lading_id"  title="出库单号" />
-=======
-			<td class='firstRow'><span style="color:red;">*</span> 出库单号:</td>
-			<td class='secRow' colspan="4"><s:property value="outStock.ordernum" />
-			<s:hidden name="outStock.uuid"></s:hidden>
-			<s:hidden name="outStock.send"></s:hidden>
-			<s:hidden name="outDetail.lading_id"  title="出库单号" /></td>
-			
->>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 		</tr>
 		<tr>
 		<td class='firstRow'><span style="color:red;">*</span> 出库时间:</td>
@@ -82,18 +70,13 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 				<s:if test='2==outStock.send'>新单</s:if>
 				<s:if test='3==outStock.send'>待审核</s:if>
 				<s:if test='4==outStock.send'>结案-<s:date name="lading.close_time" format="yyyy-MM-dd HH:mm:ss" /></s:if>
-<<<<<<< HEAD
 				<s:if test='5==outStock.send'>已取消订单</s:if>
-=======
-				<s:if test='5==outStock.send'><span class="message_error">未出货</span></s:if><s:if test='1==lading.out_flag'>已出货</s:if>
->>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 				<s:if test='6==outStock.send'><span class="message_error">未返利</span></s:if><s:if test='1==lading.rebates_flag'><span class="message_pass">返利中</span></s:if><s:if test='2==lading.rebates_flag'>已返利</s:if>
 			</td>
 		</tr>
 		</s:if>
 		<tr>
 		<td class='firstRow'><span style="color:red;">*</span>经手人:</td>
-<<<<<<< HEAD
 		<td class='secRow' colspan="3">
 							<s:textfield title="部门" id="userdept_codeid" name="outStock.dept_code" readonly="true" />
 							<s:textfield title="部门名称" id="userdept_nameid"  name="outStock.dept_name"  readonly="true" />
@@ -103,11 +86,6 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 							<s:property value="outStock.operator_name" />
 		</td>
 		
-=======
-		<td class='secRow'><s:textfield name="outStock.operator_id" title="经手人" require="required"  controlName="经手人" /></td>
-		<td class='firstRow'><span style="color:red;">*</span> 保管员:</td>
-		<td class='secRow' colspan="3"><s:textfield name="outStock.take_id" title="旧值" require="required" controlName="保管员" /></td>
->>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 		</tr>
 		<tr>
 			<td class='firstRow'><span style="color:red;">*</span> 状态:</td>
@@ -122,11 +100,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 							 <s:if test="%{outStock.reason==1}">
 							 selected="selected"
 							</s:if>
-<<<<<<< HEAD
 							>招待用酒</option>
-=======
-							>董事会出库</option>
->>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 							<option value="2" 
 							<s:if test="%{outStock.reason==2 }">
 							selected="selected"
@@ -137,14 +111,11 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 							selected="selected"
 							</s:if>
 							>报损</option>
-<<<<<<< HEAD
 							<option value="4" 
 							<s:if test="%{outStock.reason==4 }">
 							selected="selected"
 							</s:if>
 							>赠酒</option>
-=======
->>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 					</select>
 			</td>
 			<td class='firstRow'><span style="color:red;">*</span> 出库仓库:</td>
@@ -161,7 +132,6 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 					</select>
 			</td>
 		</tr>
-<<<<<<< HEAD
 		<s:if test="%{outStock.reason==2}">
 			<tr class="borrow" id="borrow"> 
 								<td class='firstRow'><span style="color: red;">*</span>
@@ -183,11 +153,6 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 <tr>
 	<td class='firstRow'>其它说明:<br />
 	<s:submit value="修改说明" action="outStock_note"></s:submit>
-=======
-
-<tr>
-	<td class='firstRow'>其它说明:</td>
->>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 	<td class='secRow' colspan="6">
 	<s:textarea name="outStock.note" title="其它说明" cssStyle="width:80%;" rows="4"></s:textarea>
 </tr>
@@ -220,22 +185,15 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 
 </s:else>
 
-<<<<<<< HEAD
 						
 						
 						
 						
-=======
->>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 <s:if test="null != outStock">
 <tr>
 <td class='firstRow'>出库明细:
 	<%-- <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_outStock_ADD') && outStock.status==0"> --%>
-<<<<<<< HEAD
 	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_ADD') && 2==outStock.send && @com.qkj.ware.action.warepower@checkPermit(outStock.store_id,'del')">
-=======
-	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_ADD') && @com.qkj.ware.action.warepower@checkPermit(outStock.store_id,'add')">
->>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 	<br />
 	<input id="addItem" type="button" value="添加明细" onclick="commain();"/>
 	</s:if>
@@ -248,13 +206,9 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 	<th>单价</th>
 	<th>订单数量</th>
 	<th>实际价格</th>
-<<<<<<< HEAD
 	<s:if test="2==outStock.send">
 	<th>操作</th>
 	</s:if>
-=======
-	<th>操作</th>
->>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
   </tr>
 <s:iterator value="outDetails" status="sta">
   <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>">
@@ -266,11 +220,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 	</td>
 	<td align="right"><s:property value="totel" /></td>
 	<td align="center">
-<<<<<<< HEAD
    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_DEL') && 2==outStock.send && @com.qkj.ware.action.warepower@checkPermit(outStock.store_id,'del')">
-=======
-   	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_DEL') && @com.qkj.ware.action.warepower@checkPermit(outStock.store_id,'del')">
->>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
    	[<a href="<s:url namespace="/outStock" action="outDetail_del"><s:param name="outDetail.uuid" value="uuid" /><s:param name="outDetail.lading_id" value="lading_id" /></s:url>" onclick="return isDel();">删除</a>]
    	</s:if>	   
     </td>
@@ -297,7 +247,6 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 		<td class='firstRow'>最后修改时间:</td>
 		<td class='secRow' colspan="3"><s:date name="outStock.lm_timer" format="yyyy-MM-dd HH:mm:ss" /></td>
 	</tr>
-<<<<<<< HEAD
 	<s:if test="%{outStock.manager_check!=null}">
 	<tr>
 		<td class='firstRow'>确认人:</td>
@@ -306,8 +255,6 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 		<td class='secRow'><s:date name="outStock.manager_check_time" format="yyyy-MM-dd HH:mm:ss" /></td>
 	</tr>
 	</s:if>
-=======
->>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 </s:if>
 		<tr>
 		<td colspan="20" class="buttonarea">
@@ -316,11 +263,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 					<s:submit id="add" name="add" value="保存&填写明细" action="outStock_add" />
 					</s:if>
 				</s:if>
-<<<<<<< HEAD
 				<s:elseif test="null != outStock && 'mdy' == viewFlag && outDetails!=null && @com.qkj.ware.action.warepower@checkPermit(outStock.store_id,'del')">
-=======
-				<s:elseif test="null != outStock && 'mdy' == viewFlag">
->>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_MDY') && 2==outStock.send">
 					<s:submit id="save" name="save" value="保存" action="outStock_save" />
 					</s:if>
@@ -329,7 +272,6 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 					<s:submit value="确认" action="outStock_sure" onclick="return isOp('是否确认?\n确认后将不能更改!');"></s:submit>
 					</s:if>
 					
-<<<<<<< HEAD
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_DEL') && 2==outStock.send">
 					<s:submit id="delete" name="delete" value="删除" action="outStock_del" onclick="return isDel();" />
 					</s:if>
@@ -337,13 +279,6 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_CENCLE') && 4==outStock.send && outStock.reason!=2">
 					<s:submit id="cencle" name="cencle" value="取消订单" action="outStock_cencle" onclick="return isOp('确认取消?');" />
 					</s:if>
-=======
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_DEL')">
-					<s:submit id="delete" name="delete" value="删除" action="outStock_del" onclick="return isDel();" />
-					</s:if>
-					
-					
->>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 				</s:elseif>
 				<input type="button" value="返回" onclick="linkurl('<s:url action="outStock_list" namespace="/outStock"><s:param name="viewFlag">relist</s:param></s:url>');" />
 			</td>
@@ -566,7 +501,6 @@ function wol() {
 		document.getElementById("indate").value=dateString;
 }
 </script>
-<<<<<<< HEAD
 <script type="text/javascript">
 
 var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
@@ -647,6 +581,4 @@ function showCause(s_id) {
 
 
 </script>
-=======
->>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 </html>

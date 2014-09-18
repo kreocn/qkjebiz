@@ -45,7 +45,6 @@ $(function(){
 <s:form name="form_serach" action="outStock_list"  method="get" namespace="/outStock" theme="simple">
 		<table class="ilisttable" id="serach_table" width="100%">
 			<tr>
-<<<<<<< HEAD
 			<td class='firstRow'>编号:</td>
 			<td class='secRow'><s:textfield name="outStock.uuid" title="编号" />
 			
@@ -108,16 +107,6 @@ $(function(){
 			</td>
 			</tr>
 			
-=======
-<td class='firstRow'>出库时间:</td>
-<td class='secRow'><s:textfield id="indate" name="outStock.date" title="出库时间" />
-<script type="text/javascript">$("#indate").datepicker();</script></td>
-
-<td class='firstRow'>出库仓库:</td>
-<td class='secRow'><s:select name="outStock.store_id" title="出库仓库" headerKey="" headerValue="--请选择--" list="wares" listKey="uuid" listValue="ware_name" /></td>
-
-</tr>
->>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 			<tr>
 			<td colspan="4" class="buttonarea">
 				<s:submit value="搜索" />
@@ -132,14 +121,8 @@ $(function(){
 	<col width="30" />
 	  <tr>
 	    <th><input name="uuidcheck" type="checkbox" /></th>
-<<<<<<< HEAD
 	    <th>编号</th>
 		<th>经办人</th>
-=======
-	    <th>主键自增</th>
-		<th>经办人</th>
-		<th>保管员</th>
->>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 		<th>单号</th>
 		<th>出库仓库</th>
 		<th>状态</th>
@@ -148,23 +131,15 @@ $(function(){
 	  </tr>
 <s:iterator value="outStocks" status="sta">
 	  <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>" type="pickrow">
-<<<<<<< HEAD
 	    <td align="center"></td>
 	    <td><s:property value="uuid" /></td>
 		<td><s:property value="operator_name" />(<s:property value="dept_name" />)</td>
-=======
-	    <td align="center"><%-- <input name="uuid" type="checkbox" value="<s:property value="uuid" />" /> --%></td>
-	    <td><s:property value="uuid" /></td>
-		<td><s:property value="operator_id" /></td>
-		<td><s:property value="take_id" /></td>
->>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 		<td><s:property value="ordernum" /></td>
 		<td><s:property value="ware_name" /></td>
 		<td><s:if test='0==send'>借出未还</s:if>
 				<s:if test='1==send'>借出已还</s:if>
 				<s:if test='2==send'>新单</s:if>
 				<s:if test='3==send'>待审核</s:if>
-<<<<<<< HEAD
 				<s:if test='4==send'>结案<s:date name="lading.close_time" format="yyyy-MM-dd HH:mm:ss" /></s:if>
 				<s:if test='5==send'>已取消订单</s:if>
 		</td>
@@ -173,20 +148,11 @@ $(function(){
 			<s:if test="%{reason==0}">销售出库
 					</s:if>
 					 <s:if test="%{reason==1}">招待用酒
-=======
-				<s:if test='4==send'>结案-<s:date name="lading.close_time" format="yyyy-MM-dd HH:mm:ss" /></s:if>
-		</td>
-		<td>
-			<s:if test="%{reason==0}">销售出库
-					</s:if>
-					 <s:if test="%{reason==1}">董事会出库
->>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 					</s:if>
 					<s:if test="%{reason==2 }">借货
 					</s:if>
 					<s:if test="%{reason==3 }">报损
 					</s:if>
-<<<<<<< HEAD
 					<s:if test="%{reason==4 }">赠酒
 					</s:if>
 		</td>
@@ -203,19 +169,6 @@ $(function(){
 	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_PRINT')  && send==4 && @com.qkj.ware.action.warepower@checkPermit(store_id,'del') && reason==2 && boflag==0">
 	    	[<a onclick="return isOp('确认归还?');" href="<s:url namespace="/outStock" action="outStock_borrow"><s:param name="outStock.uuid" value="uuid"></s:param></s:url>">还货</a>]
 	    	</s:if>	 
-=======
-		</td>
-		<td align="center">
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_MDY')">
-	    	[<a href="<s:url namespace="/outStock" action="outStock_load"><s:param name="viewFlag">mdy</s:param><s:param name="outStock.uuid" value="uuid"></s:param></s:url>">修改</a>]
-	    	</s:if>
-	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_DEL')">
-	    	[<a href="<s:url namespace="/outStock" action="outStock_del"><s:param name="outStock.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>]
-	    	</s:if>	 
-	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_PRINT')  && send==4">
-	    	[<a target="_blank" href="<s:url namespace="/outStock" action="outStock_view"><s:param name="viewFlag">view</s:param><s:param name="outStock.uuid" value="uuid"></s:param></s:url>">查看/打印</a>]
-	    	</s:if>	   
->>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 	    </td>
 	  </tr>
 </s:iterator>

@@ -131,11 +131,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 <div id="result">
 	<div class="itablemdy">
 	<div class="itabletitle">
-<<<<<<< HEAD
 		<span class="title1"><s:if test="null == inStock && 'add' == viewFlag">增加</s:if><s:elseif test="null != inStock && 'mdy' == viewFlag">修改</s:elseif>入库单（No.<s:property value="inStock.ordernum" />）</span>
-=======
-		<span class="title1"><s:if test="null == inStock && 'add' == viewFlag">增加</s:if><s:elseif test="null != inStock && 'mdy' == viewFlag">修改</s:elseif>入库单（No.<s:property value="inStock.uuid" />）</span>
->>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 		
 	</div>
 <s:form name="form1" action="inStock_add" namespace="/inStock" onsubmit="return validator(this);" method="post" theme="simple">
@@ -143,13 +139,8 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 	<table class="ilisttable" width="100%">
 		<s:if test="null != inStock">
 		  <tr>
-<<<<<<< HEAD
 			<td class='firstRow'><span style="color:red;">*</span> 单据号:</td>
 			<td class='secRow' colspan="3"><s:property value="inStock.ordernum" /><s:hidden name="inStock.uuid" title="主键ID" /></td>
-=======
-			<td class='firstRow'><span style="color:red;">*</span> 订单号:</td>
-			<td class='secRow' colspan="3"><s:property value="inStock.uuid" /><s:hidden name="inStock.uuid" title="主键ID" /></td>
->>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 		</tr>
 		<tr>
 			<td class='firstRow'><span style="color:red;">*</span> 入库时间:</td>
@@ -169,19 +160,11 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 <tr>
 <td class='firstRow'><span style="color:red;">*</span>经手人:</td>
 <td class='secRow' colspan="3">
-<<<<<<< HEAD
 <s:property value="inStock.operator_name" />
 </tr>
 <tr>
 <td class='firstRow'><span style="color:red;">*</span> 保管员:</td>
 <td class='secRow' colspan="3"><s:property value="inStock.take_name" /></td>
-=======
-<s:property value="inStock.operator_id" />
-</tr>
-<tr>
-<td class='firstRow'><span style="color:red;">*</span> 保管员:</td>
-<td class='secRow' colspan="3"><s:property value="inStock.take_id" /></td>
->>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 </tr>
 <tr>
 	<td class='firstRow'><span style="color:red;">*</span> 状态:</td>
@@ -223,7 +206,6 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 	<th>单价</th>
 	<th>订单数量</th>
 	<th>实际价格</th>
-	<th>操作</th>
   </tr>
 <s:iterator value="inDetails" status="sta">
   <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>">
@@ -258,7 +240,6 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 		<td class='firstRow'>最后修改时间:</td>
 		<td class='secRow'><s:date name="inStock.lm_timer" format="yyyy-MM-dd HH:mm:ss" /></td>
 	</tr>
-<<<<<<< HEAD
 	
 	<s:if test="%{inStock.conname!=null}">
 	<tr>
@@ -268,8 +249,6 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 		<td class='secRow'><s:date name="inStock.contime" format="yyyy-MM-dd HH:mm:ss" /></td>
 	</tr>
 	</s:if>
-=======
->>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 </s:if>
 		<tr>
 		<td colspan="20" class="buttonarea">
