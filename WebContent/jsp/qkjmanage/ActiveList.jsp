@@ -8,23 +8,6 @@
 <title>活动申请单列表--<s:text name="APP_NAME" /></title>
 </head>
 <s:action name="ref" namespace="/manager" executeResult="true" />
-<script type="text/javascript">
-//var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
-var curr_apply_dept = '${active.apply_dept}';
-//var curr_apply_user = '${active.apply_user}';
-$(function(){
-	CommonUtil.pickrow('table1');
-	CommonUtil.pickrowAll('table1','uuidcheck');
-	if(curr_apply_dept!='') {
-		loadManagers(curr_apply_dept,'${active.apply_user}');
-	}
-	if($(".ship_info").length>0) {
-		$(".ship_info").bind("click",function(){
-			alert($(this).attr("title"));
-		});
-	}
- });
-</script>
 <style type="text/css">
 .ship_info {
 cursor: pointer;
@@ -70,53 +53,49 @@ cursor: pointer;
         </div>
         <div class="label_hang">
             <div class="label_ltit">申请人:</div>
-            <div class="label_rwben">
-            	<div class="label_rwb"><s:select id="membermanagerid"  cssClass="selectKick" name="active.apply_user" list="#{}" headerKey="" headerValue="--请选择--" /></div>
+            <div class="label_rwben label_rwb">
+            	<s:select id="membermanagerid"  cssClass="selectKick" name="active.apply_user" list="#{}" headerKey="" headerValue="--请选择--" />
             </div>
 		</div>
 		<div class="label_hang">
             <div class="label_ltit">活动状态:</div>
-            <div class="label_rwben">
-            	<div class="label_rwb"><div class="label_rwb"><s:select name="active.status" cssClass="selectKick" headerKey="" headerValue="-活动状态-" list="#{0:'新申请',1:'申请审批中',2:'申请通过',3:'开始结案',4:'结案审批中',5:'结案通过'}" /></div></div>
-            </div>
+            <div class="label_rwben label_rwb"><s:select name="active.status" cssClass="selectKick" headerKey="" headerValue="-活动状态-" list="#{0:'新申请',1:'申请审批中',2:'申请通过',3:'开始结案',4:'结案审批中',5:'结案通过'}" /></div>
         </div>
         <div class="label_hang">
             <div class="label_ltit">(申)销售状态:</div>
-            <div class="label_rwben">
-            	<div class="label_rwb"><div class="label_rwb"><s:select name="active.sd_status" cssClass="selectKick"
+            <div class="label_rwben label_rwb"><s:select name="active.sd_status" cssClass="selectKick"
 				 list="#{0:'新单',5:'退回',10:'待审核',30:'大区经理已审',40:'运营总监已审',50:'业务副总已审',60:'总经理已审'}"
-				 headerKey="" headerValue="---请选择---" /></div></div>
+				 headerKey="" headerValue="--请选择--" />
             </div>
         </div>
         <div class="label_hang">
             <div class="label_ltit">(申)销管状态:</div>
-            <div class="label_rwben">
-            	<div class="label_rwb"><div class="label_rwb"><s:select name="active.smd_status" cssClass="selectKick"
+            <div class="label_rwben label_rwb"><s:select name="active.smd_status" cssClass="selectKick"
 				 list="#{0:'新单/未签收',5:'退回',10:'已签收',30:'销管经理已审',50:'销管副总已审'}"
-				 headerKey="" headerValue="---请选择---" /></div></div>
+				 headerKey="" headerValue="--请选择--" />
             </div>
         </div>
         
         <div class="label_hang">
             <div class="label_ltit">(结)销售状态:</div>
-            <div class="label_rwben">
-            	<div class="label_rwb"><div class="label_rwb"><s:select name="active.close_sd_status" cssClass="selectKick"
+            <div class="label_rwben label_rwb">
+            	<s:select name="active.close_sd_status" cssClass="selectKick"
 				 list="#{0:'新单',5:'退回',10:'待审核',30:'大区经理已审',40:'运营总监已审',50:'业务副总已审',60:'总经理已审'}"
-				 headerKey="" headerValue="---请选择---" /></div></div>
+				 headerKey="" headerValue="--请选择--" />
             </div>
         </div>
         <div class="label_hang">
             <div class="label_ltit">(结)销管状态:</div>
-            <div class="label_rwben">
-            	<div class="label_rwb"><div class="label_rwb"><s:select name="active.close_smd_status" cssClass="selectKick"
+            <div class="label_rwben label_rwb">
+            	<s:select name="active.close_smd_status" cssClass="selectKick"
 				 list="#{0:'新单/未签收',5:'退回',10:'已签收',30:'销管经理已审',50:'销管副总已审'}"
-				 headerKey="" headerValue="---请选择---" /></div></div>
+				 headerKey="" headerValue="--请选择--" />
             </div>
         </div>
         <div class="label_hang">
             <div class="label_ltit">发货状态:</div>
-            <div class="label_rwben">
-            	<div class="label_rwb"><s:select name="active.ship_status"  cssClass="selectKick" headerKey="" headerValue="-发货状态-" list="#{0:'未发货',10:'已发货',99:'其他' }" /></div>
+            <div class="label_rwben label_rwb">
+            	<s:select name="active.ship_status"  cssClass="selectKick" headerKey="" headerValue="-发货状态-" list="#{0:'未发货',10:'已发货',99:'其他' }" />
             </div>
         </div>
         <div class="label_hang">
@@ -190,8 +169,16 @@ cursor: pointer;
 				<s:if test="status==4"><font class="message_warning">结案审批中</font></s:if>
 				<s:if test="status==5"><font class="message_pass" title="${it:formatDate(close_pass_time,'yyyy-MM-dd HH:mm:ss')}">结案通过</font></s:if>
 				<s:if test="status==5">
-				<s:if test="ship_status==0"><font class="message_error">未发货</font></s:if>
-				<s:if test="ship_status==10"><font class="message_pass ship_info" title="发货时间:${it:formatDate(ship_date,'yyyy-MM-dd')}|运单号:${ship_no}|物流公司:${ship_type}|物流电话:${ship_phone}">已发货</font></s:if>
+				<s:if test="ship_status==0"><font class="message_error ship_info"  data="${uuid}">未发货</font></s:if>
+				<s:if test="ship_status==10"><font class="message_pass ship_info"  data="${uuid}">已发货</font></s:if>
+				<span class="ship_hidden_info" style="display:none;">
+					<span id="ship_no_${uuid}">${ship_no}</span>
+					<span id="ship_type_${uuid}">${ship_type}</span>
+					<span id="ship_date_${uuid}">${it:formatDate(ship_date,"yyyy-MM-dd")}</span>
+					<span id="ship_phone_${uuid}">${ship_phone}</span>
+					<span id="ship_status_${uuid}">${ship_status}</span>
+					<span id="active_remark_${uuid}">${remark}</span>
+				</span>
 				</s:if>
 			</td>
 			<td  class="td3">
@@ -269,9 +256,78 @@ cursor: pointer;
 	</div>
 </div>
  <!-- HIDDEN AREA BEGIN -->
+ <div id="mdyActiveShipInfoForm" class="label_con idialog" title="修改发货信息">
+<s:form name="form_mdyActiveShipInfoForm" action="mdyActiveShipInfo" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
+	<div class="label_main">
+        <div class="label_hang">
+            <div class="label_ltit">发货状态:</div>
+            <div class="label_rwben"><s:select id="e_active_ship_status" name="active.ship_status" list="#{0:'未发货',10:'已发货',99:'其他' }" /></div>
+        </div>
+		<div class="label_hang">
+            <div class="label_ltit">出库日期:</div>
+            <div class="label_rwben"><input id="e_active_ship_date" class="jqdate validate[custom[date]]" type="text" name="active.ship_date" title="出库日期" value="${it:formatDate(active.ship_date,'yyyy-MM-dd')}" /></div>
+        </div>
+        <div class="label_hang">
+            <div class="label_ltit">运单号:</div>
+            <div class="label_rwben"><s:textfield id="e_active_ship_no" cssClass="validate[maxSize[48]]" name="active.ship_no" title="运单号码" /></div>
+        </div>
+		<div class="label_hang">
+            <div class="label_ltit">物流名称:</div>
+            <div class="label_rwben"><s:textfield id="e_active_ship_type" name="active.ship_type" cssClass="validate[maxSize[32]]" title="物流类型/名称" /></div>
+        </div>
+        <div class="label_hang">
+            <div class="label_ltit">物流电话:</div>
+            <div class="label_rwben"><s:textfield id="e_ship_phone" name="active.ship_phone"  cssClass="validate[maxSize[48]]" title="物流电话" /></div>
+        </div>
+        <div class="label_hang">
+            <div class="label_ltit">备注:</div>
+            <div class="label_rwben"><s:textarea id="e_active_remark" name="active.remark" cssClass="validate[maxSize[65535]]" title="备注" cols="3" rows="4" /></div>
+        </div>
+        <div class="label_hang label_button tac">
+           	<s:hidden id="e_active_uuid" name="active.uuid" value="%{active.uuid}" />
+			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_MDYSHIPINFO')">
+			<s:submit id="mdyActiveShipInfo" name="mdyActiveShipInfo" value="确定" action="mdyActiveShipInfo" />
+			</s:if>
+        </div>
+    </div>
+</s:form>
+</div>
  <div class="hidden_area">
 <div id="infoDetail" class="idialog" title="查看详情" style="width:100%;"><div id="detailMain" class="label_main op-area"></div></div>
 </div>
 <!-- HIDDEN AREA END -->
+<script type="text/javascript">
+//var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
+var curr_apply_dept = '${active.apply_dept}';
+//var curr_apply_user = '${active.apply_user}';
+$(function(){
+	CommonUtil.pickrow('table1');
+	CommonUtil.pickrowAll('table1','uuidcheck');
+	if(curr_apply_dept!='') {
+		loadManagers(curr_apply_dept,'${active.apply_user}');
+	}
+	if($(".ship_info").length>0) {
+		$(".ship_info").bind("click",function(){
+			setShipVal($(this).attr("data"));
+			$("#mdyActiveShipInfoForm").dialog("open");
+			//alert($(this).attr("title"));
+		});
+	}
+	$("#mdyActiveShipInfoForm").dialog({
+	      autoOpen: false,
+	      modal: true
+	});
+ });
+ 
+function setShipVal(p_uuid) {
+	$("#e_active_uuid").val(p_uuid);
+	$("#e_active_ship_phone").val($("#ship_phone_"+p_uuid).text());
+	$("#e_active_ship_type").val($("#ship_type_"+p_uuid).text());
+	$("#e_active_ship_no").val($("#ship_no_"+p_uuid).text());
+	$("#e_active_ship_date").val($("#ship_date_"+p_uuid).text());
+	$("#e_active_ship_status").val($("#ship_status_"+p_uuid).text());
+	$("#e_active_remark").text($("#active_remark_"+p_uuid).text());
+}
+</script>
 </body>
 </html>

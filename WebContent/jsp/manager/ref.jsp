@@ -11,7 +11,9 @@
 <link rel="stylesheet" href="<c:url value="/include/jQuery/stylesheets/jquery.xhupload.css" />" />
 <link rel="stylesheet" href="<c:url value="/css/v0.1/demo.css" />" />
 <!-- <script type="text/javascript" src="<c:url value="/js/v0.1/jquery-1.9.0.min.js" />"></script> -->
-<script type="text/javascript" src="<c:url value="/include/jQuery/jquery-1.8.3.min.js" />"></script>
+<!-- <script type="text/javascript" src="<c:url value="/include/jQuery/jquery-1.8.3.min.js" />"></script> -->
+<script type="text/javascript" src="<c:url value="/js/v0.1/jquery-2.1.1.min.js" />"></script>
+<script type="text/javascript" src="<c:url value="/js/v0.1/jquery-migrate-1.2.1.min.js" />"></script>
 <script type="text/javascript" src="<c:url value="/include/jQuery/jquery-ui-1.10.3.custom.min.js" />"></script>
 <script type="text/javascript" src="<c:url value="/include/jQuery/jquery.ui.datepicker-zh.js" />"></script>
 <script type="text/javascript" src="<c:url value="/js/v0.1/jquery.validationEngine.js" />"></script>
@@ -33,6 +35,7 @@
 <script type="text/javascript" src="<c:url value="/include/jQuery/jquery.xhupload.js" />"></script>
 <script type="text/javascript" src="<c:url value="/js/HttpCookie.min.js" />"></script>
 <script type="text/javascript" src="<c:url value="/include/jQuery/jquery.select.js" />"></script>
+<script type="text/javascript" src="<c:url value="/js/func/select_member.js" />"></script>
 <!--[if lt IE 9]>
 <script type="text/javascript">
 window.onload=function(){

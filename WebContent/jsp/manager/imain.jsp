@@ -10,7 +10,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
 <link rel="stylesheet" href="<s:url value="/css/v0.1/style.css" />" />
 <link rel="stylesheet" href="<s:url value="/css/animate.css" />" />
-<script type="text/javascript" src="<s:url value="/js/v0.1/jquery-1.9.0.min.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/v0.1/jquery-2.1.1.min.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/v0.1/jquery-migrate-1.2.1.min.js" />"></script>
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery-ui-1.10.3.custom.min.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/v0.1/common.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/jquery.CommonUtil.js" />"></script>

@@ -162,7 +162,7 @@ a {
 }
 
 .label_rwb {
-	width: 105px; display: inline-block; vertical-align: middle;
+	width: 106px; display: inline-block; vertical-align: middle;
 }
 
 .label_rwben2 .label_rwb,.label_rwbenx .label_rwb {
@@ -221,6 +221,10 @@ a {
 	font-size: 14px;
 }
 
+.idialog500 {
+	width: 500px;
+}
+
 .lb_xxsm {
 	border: 1px solid #ccc; margin: 5px 0;
 }
@@ -266,7 +270,7 @@ a {
 }
 
 .lb_jpin td {
-	border: 1px solid #ccc; font-size: 12px; padding: 5px 0; text-align: center;
+	border-bottom: 1px solid #ccc; font-size: 12px; padding: 5px 0; text-align: center;
 }
 
 .lb_fasm {
@@ -662,4 +666,16 @@ input[type="button"].input-blue,input[type="submit"].input-blue,input[type="rese
 
 .label_rwb .dk-selected:after {
 	margin: 0 14px 0 0;
+}
+
+.portrait label.error,.landscape label.error {
+	color: red; font-size: 16px; font-weight: normal; line-height: 1.4; margin-top: 0.5em; width: 100%; float: none;
+}
+
+.landscape label.error {
+	display: inline-block; margin-left: 22%;
+}
+
+.portrait label.error {
+	margin-left: 0; display: block;
 }

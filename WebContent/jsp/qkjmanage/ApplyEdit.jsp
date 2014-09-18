@@ -27,7 +27,7 @@ color: #008000;
 		${path}
 		<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="apply_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a></span>
 	</div>
-	<s:form id="editForm" name="editForm" action="apply_list"  method="get" namespace="/qkjmanage" theme="simple">
+	<s:form id="editForm" name="editForm" cssClass="validForm" action="apply_list"  method="get" namespace="/qkjmanage" theme="simple">
 	<div class="label_con">
 		<s:if test="'mdy' == viewFlag">
 		<div class="label_main">
@@ -42,7 +42,7 @@ color: #008000;
             <div class="label_ltit">至:</div>
             <div class="label_rwbenx">
             	<s:if test="'add'==viewFlag || apply.status==0 || apply.status==5">
-				<s:textfield name="apply.touser" title="至" require="required" dataLength="0,255" controlName="至" cssClass="label_hang_linput"/>
+				<s:textfield name="apply.touser" title="至" cssClass="label_hang_linput validate[required,maxSize[255]]"/>
 				</s:if>
 				<s:else>${apply.touser}</s:else>
             </div>
@@ -53,7 +53,7 @@ color: #008000;
             <div class="label_ltit">事:</div>
             <div class="label_rwbenx">
 				<s:if test="'add'==viewFlag || apply.status==0 || apply.status==5">
-				<s:textfield name="apply.title" title="主题"  cssClass="label_hang_linput" />
+				<s:textfield name="apply.title" title="主题"  cssClass="label_hang_linput validate[required,maxSize[255]]" />
 				</s:if>
 				<s:else>${apply.title}</s:else>
             </div>
@@ -74,7 +74,7 @@ color: #008000;
             <div class="label_ltit">会审说明:</div>
             <div class="label_rwbenx">
             	<span class="message_prompt">填写参加会审的领导职位,如总经理,业务副总经理,销管副总经理</span>
-				<s:textfield name="apply.fullcheck_text" title="会审说明" dataLength="0,128" cssClass="label_hang_linput inputNote" />
+				<s:textfield name="apply.fullcheck_text" title="会审说明" cssClass="label_hang_linput inputNote validate[required,maxSize[128]]" />
             </div>
         </div>
         </div>
@@ -103,7 +103,7 @@ color: #008000;
 			${apply.note}
 			</s:if>
 			<s:else>
-			<s:textarea name="apply.note" title="详细说明" cssClass="xheditorArea" />
+			<s:textarea name="apply.note" title="详细说明" cssClass="xheditorArea validate[maxSize[65535]]" />
 			</s:else>
         	</div>
         </div>

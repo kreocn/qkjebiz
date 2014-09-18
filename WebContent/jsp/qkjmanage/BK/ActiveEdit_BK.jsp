@@ -7,13 +7,27 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>活动申请单管理--<s:text name="APP_NAME" /></title>
 </head>
-<s:action name="ref" namespace="/manager" executeResult="true" />
+<link rel="stylesheet" href="<s:url value="/css/css.css" />" />
+<link rel="stylesheet" href="<s:url value="/css/navigate.css" />" />
+<link rel="stylesheet" href="<s:url value="/css/main.css" />" />
+<script type="text/javascript" src="<s:url value="/js/form_validator.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/common_cptb.js" />"></script>
+<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-1.8.3.min.js" />"></script>
+<link rel="stylesheet" href="<s:url value="/include/jQuery/style.ui.smoothness/jquery-ui-1.10.3.min.css" />" />
+<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-ui-1.10.3.custom.min.js" />"></script>
+<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.ui.datepicker-zh.js" />"></script>
+<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.select.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/common_ajax2.0.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/func/select_member.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/jquery.CommonUtil.js" />"></script>
+<script type="text/javascript" src="/ckframe/include/widget.js"></script>
 <script type="text/javascript">
+var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
 var infoeditor01;
 $(function(){
 	if($("#active_note").length>0) {
-		//infoeditor01 = new widget_textarea();
-		//infoeditor01.init("active_note");
+		infoeditor01 = new widget_textarea();
+		infoeditor01.init("active_note");
 	}
 	$("#active_plan_start").datepicker();
 	$("#active_plan_end").datepicker();
@@ -40,7 +54,7 @@ $(function(){
 	});
 	
 	
-	SimpleLoadMember(ajax_url,$.noop);
+	SimpleLoadMember(ajax_url_action,$.noop);
 	$("#addMemberForm").dialog({
 	      autoOpen: false,
 	      height: 300,
@@ -66,7 +80,7 @@ function loadMemberInfo(member_id) {
 	$("#view_member_with_score").empty();
 	
 	var ajax = new Common_Ajax();
-	ajax.config.action_url = ajax_url;
+	ajax.config.action_url = ajax_url_action;
 	ajax.config._success = function(data, textStatus) {
 		var m = data[0];
 		$("#view_member_uuid").text(m.uuid);
@@ -131,177 +145,6 @@ color: #008000;
 }
 </style>
 <body>
-<div class="main">
-	<div class="dq_step">
-		${path}
-		<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="apply_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a></span>
-	</div>
-	<s:form id="editForm" name="editForm"  cssClass="validForm" action="apply_list"  method="get" namespace="/qkjmanage" theme="simple">
-	<div class="label_con">
-		<s:if test="'mdy' == viewFlag">
-		<div class="label_main">
-        <div class="label_hang">
-            <div class="label_ltit">申请编号:</div>
-            <div class="label_rwben">${active.uuid}<s:hidden name="active.uuid" /></div>
-        </div>
-        <div class="label_hang">
-            <div class="label_ltit">原编号:</div>
-            <div class="label_rwben">${active.uid }</div>
-        </div>
-        <div class="label_hang">
-            <div class="label_ltit">申请部门:</div>
-            <div class="label_rwben">${active.apply_dept_name}</div>
-        </div>
-        <div class="label_hang">
-            <div class="label_ltit">申请人员:</div>
-            <div class="label_rwben">${active.apply_user_name}</div>
-        </div>
-        </div>
-        <div class="label_main">
-        <div class="label_hang">
-            <div class="label_ltit">状态:</div>
-            <div class="label_rwbenx">
-                <div class="zhuangtai">
-					申请单状态:
-					<s:if test="active.status==-1"><font class="message_error">已作废</font></s:if>
-					<s:if test="active.status==0">新申请</s:if>
-					<s:if test="active.status==1"><font class="message_warning">申请审批中</font></s:if>
-					<s:if test="active.status==2"><font class="message_pass">申请通过-可以执行</font></s:if>
-					<s:if test="active.status==3">开始结案</s:if>
-					<s:if test="active.status==4"><font class="message_warning">结案审批中</font></s:if>
-					<s:if test="active.status==5"><font class="message_pass">结案通过</font></s:if>
-				</div>
-				<div class="zhuangtai" title="${it:formatDate(active.sd_time,'yyyy-MM-dd HH:mm:ss')}">
-					销售部审核状态:
-					<s:if test="active.sd_status==0">新单</s:if>
-					<s:if test="active.sd_status==5"><font class="message_error">审核退回</font>(${active.sd_user_name})</s:if>
-					<s:if test="active.sd_status==10"><font class="message_warning">待审核</font></s:if>
-					<s:if test="active.sd_status==30"><font class="message_pass">大区经理已审</font>(${active.sd_user_name})</s:if>
-					<s:if test="active.sd_status==40"><font class="message_pass">运营总监已审</font>(${active.sd_user_name})</s:if>
-					<s:if test="active.sd_status==50"><font class="message_pass">业务副总已审</font>(${active.sd_user_name})</s:if>
-					<s:if test="active.sd_status==60"><font class="message_pass">总经理已审</font>(${active.sd_user_name})</s:if>
-				</div>
-				<div class="zhuangtai" title="${it:formatDate(active.smd_time,'yyyy-MM-dd HH:mm:ss')}">
-					销管部审核状态:
-					<s:if test="active.smd_status==0">未签收</s:if>
-					<s:if test="active.smd_status==5"><font class="message_error">审核退回</font>(${active.smd_user_name})</s:if>
-					<s:if test="active.smd_status==10"><font class="message_warning">已签收</font></s:if>
-					<s:if test="active.smd_status==30"><font class="message_pass">销管经理已审</font>(${active.smd_user_name})</s:if>
-					<s:if test="active.smd_status==40"><font class="message_pass">销管部经理已审</font>(${active.smd_user_name})</s:if>
-					<s:if test="active.smd_status==50"><font class="message_pass">销管副总已审</font>(${active.smd_user_name})</s:if>
-				</div>
-				<s:hidden name="active.status" /><s:hidden name="active.sd_status" /><s:hidden name="active.smd_status" />
-				<span id="message"><s:property value="message" /></span>
-            </div>
-        </div>
-        </div>
-        </s:if>
-        <div class="label_main">
-        <div class="label_hang">
-            <div class="label_ltit">主题:</div>
-            <div class="label_rwbenx">
-            	<s:textfield name="active.theme" title="主题" cssClass="label_hang_linput validate[required,maxSize[255]]" />
-            </div>
-        </div>
-        </div>
-        <div class="label_main">
-        <div class="label_hang">
-            <div class="label_ltit">目的:</div>
-            <div class="label_rwbenx">
-            	<s:textfield name="active.purpose" title="主题" cssClass="label_hang_linput validate[required,maxSize[255]]" />
-            </div>
-        </div>
-        </div>
-        <div class="label_main">
-        <div class="label_hang">
-            <div class="label_ltit">活动时间:</div>
-            <div class="label_rwben2">
-            	<span class="label_rwb nw">
-				<input  class="jqdate iI iI-f validate[required,custom[date]]" type="text" name="active.plan_start" title="从" value="${it:formatDate(active.plan_start,'yyyy-MM-dd')}" />
-				</span>
-				<span class="label_rwb nw">
-				<input  class="jqdate iI iI-t validate[required,custom[date]]" type="text" name="active.plan_end" title="到" value="${it:formatDate(active.plan_end,'yyyy-MM-dd')}" />
-            	</span>
-            </div>
-        </div>
-         <div class="label_hang">
-         	<div class="label_ltit">活动地点:</div>
-         	<div class="label_rwben">
-         		<s:textfield name="active.address" title="活动地点" cssClass="validate[required,maxSize[255]]" />
-         	</div>
-         </div>
-         <div class="label_hang">
-         	<div class="label_ltit">执行人:</div>
-         	<div class="label_rwben">
-         		<s:textfield name="active.person" title="执行人" cssClass="validate[required,maxSize[128]]" />
-         	</div>
-         </div>
-        </div>
-        <div class="label_main">
-        <div class="label_hang">
-            <div class="label_ltit">活动预期:</div>
-            <div class="label_rwbenx">
-            	<s:textfield name="active.expect" title="主题" cssClass="label_hang_linput validate[required,maxSize[255]]" />
-            </div>
-        </div>
-        </div>
-        <div class="label_main">
-        	<div class="lb_xxsm">
-	        	<p class="lb_yjtit fy_hide">预计活动费用</p>
-	            <div class="lb_lgsfy">
-	            	<p class="lb_yjtit">公司预计费用</p>
-	                <div class="lb_yjcon">
-	                	<p class="lb_gstit">公司提供酒品</p>
-	                    <table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
-	                    	<tr>
-	                        	<th>品名</th>
-	                            <th>单价</th>
-	                            <th>数量(瓶)</th>
-	                            <th>合计</th>
-	                        </tr>
-	                        <s:iterator value="activeProducts" status="sta">
-							<tr>
-							<td class="nw">${product_name}</td>
-							<td class="nw">￥${per_price}</td>
-							<td class="nw">${num}</td>
-							<td class="nw">￥${total_price}</td>
-							</tr>
-							</s:iterator>
-	                    </table>
-	                	<p class="lb_gstit">公司预计费用合计</p>
-	                    <p class="lb_jwei">￥1908.0</p>
-	                </div>
-	            </div>
-	            <div class="lb_gsfy">
-	            	<p class="lb_yjtit">参与客户&预计费用</p>
-	                <div class="lb_yjcon">
-	                	<p class="lb_gstit">参与活动客户</p>
-	                    <table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
-	                    	<tr>
-	                        	<th>客户</th>
-	                            <th>名目</th>
-	                            <th>名目说明</th>
-	                            <th>金额</th>
-	                        </tr>
-	                        <tr>
-	                        	<td><a href="">山丹芬芳酒行</a></td>
-	                            <td>音响一台</td>
-	                            <td>承担一台音响费用</td>
-	                            <td>￥1100.0</td>
-	                        </tr>
-	                    </table>
-	                	<p class="lb_gstit">客户预计费用合计</p>
-	                    <p class="lb_jwei">￥1100.0</p>
-	                </div>
-	            </div>
-	            <div class="clear"></div>
-	            <p class="lb_yjbot">方案预计费用总计: 1908.0 + 1100.0 = ￥3008.0 </p>
-	        </div>
-        </div>
-	</div>
-	</s:form>
-</div>
-
 <div id="main">
 <div id="result">
 	<div class="itablemdy">
@@ -314,7 +157,82 @@ color: #008000;
 <s:form name="form1" action="active_add" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
 	<div class="ifromoperate" ></div>
 	<table class="ilisttable" width="100%">
+		<s:if test="null != active">
+		  <tr>
+			<td class='firstRow3'>申请编号:</td>
+			<td class='secRow3'>${active.uid}<s:hidden name="active.uid" /><s:hidden name="active.uuid" title="" /></td>
+			<td class='firstRow3'>申请部门:</td>
+			<td class='secRow3'><s:property value="active.apply_dept_name" /></td>
+			<td class='firstRow3'>申请人:</td>
+			<td class='secRow3'><s:property value="active.apply_user_name" /></td>
+			</tr>
+			<tr>
+			<td class='firstRow3'>状态:</td>
+			<td class='secRow3' colspan="5">
+				<span class="span_label">
+					申请单状态:
+					<s:if test="active.status==-1"><font class="message_error">已作废</font></s:if>
+					<s:if test="active.status==0">新申请</s:if>
+					<s:if test="active.status==1"><font class="message_warning">申请审批中</font></s:if>
+					<s:if test="active.status==2"><font class="message_pass">申请通过-可以执行</font></s:if>
+					<s:if test="active.status==3">开始结案</s:if>
+					<s:if test="active.status==4"><font class="message_warning">结案审批中</font></s:if>
+					<s:if test="active.status==5"><font class="message_pass">结案通过</font></s:if>
+				</span>
+
+				<span class="span_label" title="${it:formatDate(active.sd_time,'yyyy-MM-dd HH:mm:ss')}">
+					销售部审核状态:
+					<s:if test="active.sd_status==0">新单</s:if>
+					<s:if test="active.sd_status==5"><font class="message_error">审核退回</font>(${active.sd_user_name})</s:if>
+					<s:if test="active.sd_status==10"><font class="message_warning">待审核</font></s:if>
+					<s:if test="active.sd_status==30"><font class="message_pass">大区经理已审</font>(${active.sd_user_name})</s:if>
+					<s:if test="active.sd_status==40"><font class="message_pass">运营总监已审</font>(${active.sd_user_name})</s:if>
+					<s:if test="active.sd_status==50"><font class="message_pass">业务副总已审</font>(${active.sd_user_name})</s:if>
+					<s:if test="active.sd_status==60"><font class="message_pass">总经理已审</font>(${active.sd_user_name})</s:if>
+				</span>
+				
+				<span class="span_label">
+					销管部审核状态:
+					<s:if test="active.smd_status==0">未签收</s:if>
+					<s:if test="active.smd_status==5"><font class="message_error">审核退回</font>(${active.smd_user_name})</s:if>
+					<s:if test="active.smd_status==10"><font class="message_warning">已签收</font></s:if>
+					<s:if test="active.smd_status==30"><font class="message_pass">销管经理已审</font>(${active.smd_user_name})</s:if>
+					<s:if test="active.smd_status==40"><font class="message_pass">销管部经理已审</font>(${active.smd_user_name})</s:if>
+					<s:if test="active.smd_status==50"><font class="message_pass">销管副总已审</font>(${active.smd_user_name})</s:if>
+				</span>
+				<s:hidden name="active.status" /><s:hidden name="active.sd_status" /><s:hidden name="active.smd_status" />
+				<span id="message"><s:property value="message" /></span>
+			</td>
+			</tr>
+		</s:if>
 		<!-- --------------------------------------------------------------- -->
+		<tr>
+		<td class='firstRow3'><span style="color:red;">*</span> 主题:</td>
+		<td class='secRow3' colspan="5"><s:textfield name="active.theme" title="主题" require="required" dataLength="0,255" controlName="主题" cssStyle="width:80%;" /></td>
+		</tr>
+		<tr>
+		<td class='firstRow3'><span style="color:red;">*</span> 目的:</td>
+		<td class='secRow3' colspan="5"><s:textfield name="active.purpose" title="目的" require="required" dataLength="0,255" controlName="目的" cssStyle="width:80%;" /></td>
+		</tr>
+		<tr>
+		<td class='firstRow3'><span style="color:red;">*</span> 活动开始时间:</td>
+		<td class='secRow3'>
+			<input id="active_plan_start" type="text" name="active.plan_start" title="活动开始时间" value="${it:formatDate(active.plan_start,'yyyy-MM-dd')}" dataType="date" controlName="计划开始时间" require="required" />
+		</td>
+		<td class='firstRow3'><span style="color:red;">*</span> 活动结束时间:</td>
+		<td class='secRow3'>
+			<input id="active_plan_end" type="text" name="active.plan_end" title="活动结束时间" value="${it:formatDate(active.plan_end,'yyyy-MM-dd')}" dataType="date" controlName="计划开始时间" require="required" />
+		</td>
+		<td class='firstRow3'><span style="color:red;">*</span> 活动地点:</td>
+		<td class='secRow3'><s:textfield name="active.address" title="活动地点" require="required" dataLength="0,255" controlName="活动地点" /></td>
+		</tr>
+		<tr>
+		<td class='firstRow3'><span style="color:red;">*</span> 执行人:</td>
+		<td class='secRow3'><s:textfield name="active.person" title="执行人" require="required" dataLength="0,128" controlName="执行人" /></td>
+		<td class='firstRow3'><span style="color:red;">*</span> 活动预期:</td>
+		<td class='secRow3' colspan="3"><s:textfield name="active.expect" title="活动预期" require="required" dataLength="0,255" controlName="活动预期" cssStyle="width:80%;" /></td>
+		</tr>
+		
 		<s:if test="'mdy'==viewFlag && active!=null">
 		<tr><td colspan="6" height="5"></td></tr>
 		<tr><td colspan="6">

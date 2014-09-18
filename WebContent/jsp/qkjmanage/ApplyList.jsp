@@ -16,14 +16,12 @@ $(function(){
 		      modal: true
 		});
 		$(".mdyApplyShipInfo_Link").click(function(){
-			var p_uuid = $(this).attr("data");
-			setShipVal(p_uuid);
+			setShipVal($(this).attr("data"));
 			$("#mdyApplyShipInfoForm").dialog("open");
 		});
 		
 		$("#infoDetail").delegate(".mdyApplyShipInfo_Link","click",function(){
-			var p_uuid = $(this).attr("data");
-			setShipVal(p_uuid);
+			setShipVal($(this).attr("data"));
 			$("#mdyApplyShipInfoForm").dialog("open");
 		});
 	});
@@ -200,12 +198,12 @@ display: none;
  
  <!-- HIDDEN AREA BEGIN -->
  <div class="hidden_area">
- <div id="mdyApplyShipInfoForm" class="label_con idialog" title="修改发货信息">
+ <div id="mdyApplyShipInfoForm" class="label_con idialog idialog500" title="修改发货信息">
 <s:form name="form_mdyApplyShipInfoForm" action="mdyApplyShipInfo" cssClass="validForm" namespace="/qkjmanage" method="post" theme="simple">
 	<div class="label_main">
         <div class="label_hang">
             <div class="label_ltit">审核意见:</div>
-            <div class=""><span id="form_apply_check_note"></span></div>
+            <div><span id="form_apply_check_note"></span></div>
         </div>
         <div class="label_hang">
             <div class="label_ltit">发货状态:</div>
@@ -217,15 +215,15 @@ display: none;
         </div>
         <div class="label_hang">
             <div class="label_ltit">运单号:</div>
-            <div class="label_rwben"><span class="label_rwb"><s:textfield id="form_apply_ship_no" name="apply.ship_no" title="运单号码" dataLength="0,48" controlName="运单号码" /></span></div>
+            <div class="label_rwben"><span class="label_rwb"><s:textfield id="form_apply_ship_no" name="apply.ship_no" title="运单号码" cssClass="validate[required,maxSize[48]]" /></span></div>
         </div>
 		<div class="label_hang">
             <div class="label_ltit">物流名称:</div>
-            <div class="label_rwben"><span class="label_rwb"><s:textfield id="form_apply_ship_type" name="apply.ship_type" title="物流类型/名称" dataLength="0,32" controlName="物流电话" /></span></div>
+            <div class="label_rwben"><span class="label_rwb"><s:textfield id="form_apply_ship_type" name="apply.ship_type" title="物流类型/名称" cssClass="validate[required,maxSize[32]]" /></span></div>
         </div>
         <div class="label_hang">
             <div class="label_ltit">物流电话:</div>
-            <div class="label_rwben"><span class="label_rwb"><s:textfield id="form_apply_ship_phone" name="apply.ship_phone" title="物流电话" dataLength="0,48" controlName="物流电话" /></span></div>
+            <div class="label_rwben"><span class="label_rwb"><s:textfield id="form_apply_ship_phone" name="apply.ship_phone" title="物流电话"  cssClass="validate[required,maxSize[48]]" /></span></div>
         </div>
         <div class="label_hang  label_button tac">
            	<s:hidden id="form_apply_uuid" name="apply.uuid" value="%{apply.uuid}" />
