@@ -36,14 +36,13 @@
 	<!-- 主表显示 -->
 		<s:if test="null != outStock">
 		  <tr>
-			<td class='firstRow'><span style="color:red;">*</span> 出库单号:</td>
+			<td class='firstRow'> 单据号:</td>
 			<td class='secRow' colspan="3"><s:property value="outStock.ordernum" />
-			<s:hidden name="outStock.lading_id"  title="出库单号" />
 			<s:hidden name="outStock.uuid"></s:hidden>
 			</td>
 		  </tr>
 		  <tr>
-			<td class='firstRow'><span style="color:red;">*</span> 出库时间:</td>
+			<td class='firstRow'>出库时间:</td>
 			<td class='secRow'><s:date name="outStock.date" format="yyyy-MM-dd" /><s:hidden name="outStock.date" title="出库时间" /></td>
 			<td class='firstRow'>状态:</td>
 			<td class='secRow'>
@@ -56,12 +55,9 @@
 		</tr>
 		</s:if>
 		<tr>
-		<td class='firstRow'><span style="color:red;">*</span>经手人:</td>
-		<td class='secRow'>
-		<s:property value="outStock.operator_id" />
-		<td class='firstRow'><span style="color:red;">*</span> 保管员:</td>
+		<td class='firstRow'>经手人:</td>
 		<td class='secRow' colspan="3">
-		<s:property value="outStock.take_id" />
+		<s:property value="outStock.operator_name" />(<s:property value="outStock.dept_name" />)
 		</tr>
 
 
@@ -78,7 +74,7 @@
 				</td>
 				</tr>
 				<tr>
-				<td class='firstRow'>配送地点:</td>
+				<td class='firstRow'><span style="color:red;">*</span> 配送地点:</td>
 				<td class='secRow' colspan="6">
 				<s:textarea id="address" name="outStock.member_adress" title="配送地点" cssStyle="width:80%;" rows="2" require="required" controlName="配送地点"></s:textarea>
 				<br />
@@ -90,7 +86,7 @@
 			<tr>
 				<td class='firstRow'><span style="color:red;">*</span> 报损原因:</td>
 				<td class='secRow' colspan="3">
-				<s:textarea id="note" name="outStock.note" title="内容" cssStyle="width:80%;" rows="4" require="required" controlName="内容"></s:textarea>
+				<s:textarea id="note" name="outStock.bsreason" title="内容" cssStyle="width:80%;" rows="4" require="required" controlName="内容"></s:textarea>
 			</tr>
 		</s:elseif>
 		<s:else><!-- 其它出库，不审核，但要 填写目的地，收货人，联系方式，基本费用-->
@@ -106,7 +102,7 @@
 				</td>
 				</tr>
 				<tr>
-				<td class='firstRow'>配送地点:</td>
+				<td class='firstRow'><span style="color:red;">*</span> 配送地点:</td>
 				<td class='secRow' colspan="3">
 				<s:textarea id="address" name="outStock.member_adress" title="配送地点" cssStyle="width:80%;" rows="2" require="required" controlName="配送地点"></s:textarea>
 				</td>

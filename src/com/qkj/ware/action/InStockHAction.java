@@ -106,7 +106,7 @@ public class InStockHAction extends ActionSupport {
 			} else if ("add".equals(viewFlag)) {
 				this.setInStockH(null);
 			} else if ("mdy".equals(viewFlag)) {
-				if (!(inStockH == null || inStockH.getUuid() == null)) {
+				if (!(inStockH == null || inStockH.getUuid()>0)) {
 					this.setInStockH((InStockH) dao.get(inStockH.getUuid()));
 				} else {
 					this.setInStockH(null);

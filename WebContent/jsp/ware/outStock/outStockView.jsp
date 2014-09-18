@@ -52,31 +52,28 @@
 				<s:if test='2==outStock.send'>新单</s:if>
 				<s:if test='3==outStock.send'>待审核</s:if>
 				<s:if test='4==outStock.send'>结案-<s:date name="lading.close_time" format="yyyy-MM-dd HH:mm:ss" /></s:if>
-				<s:if test='5==outStock.send'><span class="message_error">未出货</span></s:if><s:if test='1==lading.out_flag'>已出货</s:if>
-				<s:if test='6==outStock.send'><span class="message_error">未返利</span></s:if><s:if test='1==lading.rebates_flag'><span class="message_pass">返利中</span></s:if><s:if test='2==lading.rebates_flag'>已返利</s:if>
+				<s:if test='5==outStock.send'>已取消订单</s:if>
 			</td>
 		</tr>
 		</s:if>
 		<tr>
 		<td class='firstRow'><span style="color:red;">*</span>经手人:</td>
-		<td class='secRow'><s:property value="outStock.operator_id" /></td>
+		<td class='secRow'><s:property value="outStock.operator_name" /></td>
 		<td class='firstRow'><span style="color:red;">*</span> 保管员:</td>
-		<td class='secRow' colspan="3"><s:property value="outStock.take_id" /></td>
+		<td class='secRow' colspan="3"><s:property value="outStock.take_name" /></td>
 		</tr>
 		<tr>
-			<td class='firstRow'><span style="color:red;">*</span> 状态:</td>
+			<td class='firstRow'><span style="color:red;">*</span> 单据性质:</td>
 			<td class='secRow'>
-							<s:if test="%{outStock.reason==0}">
-							 销售出库
+							<s:if test="%{outStock.reason==0}">销售出库
 							</s:if>
-							<s:if test="%{outStock.reason==1}">
-							董事会出库
+							 <s:if test="%{outStock.reason==1}">招待用酒
 							</s:if>
-							<s:if test="%{outStock.reason==2}">
-							借货
+							<s:if test="%{outStock.reason==2 }">借货
 							</s:if>
-							<s:if test="%{outStock.reason==3}">
-							 报损
+							<s:if test="%{outStock.reason==3 }">报损
+							</s:if>
+							<s:if test="%{outStock.reason==4 }">赠酒
 							</s:if>
 			</td>
 			<td class='firstRow'><span style="color:red;">*</span> 出库仓库:</td>
@@ -93,6 +90,23 @@
 					</select>
 			</td>
 		</tr>
+		<s:if test="%{outStock.reason==2}">
+			<tr class="borrow" id="borrow"> 
+								<td class='firstRow'><span style="color: red;">*</span>
+									借货仓库:</td>
+								<td class='secRow' colspan="3"><select name="outStock.borrowStore_id"
+									title="借货仓库">
+										<s:iterator value="borrowwares" status="sta" var="x">
+											<option 
+											<s:if test="#x.uuid==outStock.borrowStore_id">
+											selected="selected"
+											</s:if>
+											 value="<s:property value="uuid" />"/>
+											<s:property value="ware_name" />
+										</s:iterator>
+								</select></td>
+			</tr>
+		</s:if>
 
 <tr>
 	<td class='firstRow'>其它说明:</td>
@@ -161,7 +175,7 @@
 	<th>单价</th>
 	<th>订单数量</th>
 	<th>实际价格</th>
-	<th>操作</th>
+
   </tr>
 <s:iterator value="outDetails" status="sta">
   <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>">
@@ -195,6 +209,14 @@
 		<td class='firstRow'>最后修改时间:</td>
 		<td class='secRow' colspan="3"><s:date name="outStock.lm_timer" format="yyyy-MM-dd HH:mm:ss" /></td>
 	</tr>
+	<s:if test="%{outStock.manager_check!=null}">
+			<tr>
+				<td class='firstRow'>确认人:</td>
+				<td class='secRow'><s:property value="outStock.manager_check_user_name" /></td>
+				<td class='firstRow'>确认时间:</td>
+				<td class='secRow'><s:date name="outStock.manager_check_time" format="yyyy-MM-dd HH:mm:ss" /></td>
+			</tr>
+	</s:if>
 </s:if>
 		<tr>
 		<td colspan="20" class="buttonarea">

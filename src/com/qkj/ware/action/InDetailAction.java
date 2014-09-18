@@ -31,6 +31,9 @@ public class InDetailAction extends ActionSupport {
 	private int recCount;
 	private int pageSize;
 	private int currPage;
+	
+	private List<InDetail> inds;
+	private InDetail ind;
 
 	public InDetail getInDetail() {
 		return inDetail;
@@ -122,6 +125,22 @@ public class InDetailAction extends ActionSupport {
 	public void setInDetailh(InDetailH inDetailh) {
 		this.inDetailh = inDetailh;
 	}
+	
+	public List<InDetail> getInds() {
+		return inds;
+	}
+
+	public void setInds(List<InDetail> inds) {
+		this.inds = inds;
+	}
+
+	public InDetail getInd() {
+		return ind;
+	}
+
+	public void setInd(InDetail ind) {
+		this.ind = ind;
+	}
 
 	public String list() throws Exception {
 		ContextHelper.isPermit("QKJ_WARE_INSTOCK_LIST");
@@ -172,35 +191,24 @@ public class InDetailAction extends ActionSupport {
 	public String add() throws Exception {
 		ContextHelper.isPermit("QKJ_WARE_INSTOCK_ADD");
 		try {
-			//inDetail.setLm_user(ContextHelper.getUserLoginUuid());
-			//inDetail.setLm_time(new Date());
-			dao.add(inDetail);
+			map.clear();
+			map.put("lading_id", inDetail.getLading_id());
+			this.setInds(dao.list(map));
+			if(inds.size()>0){
+				for(int i=0;i<inds.size();i++){
+					ind=inds.get(i);
+					if(ind.getLading_id().equals(inDetail.getLading_id())&&ind.getNum()==inDetail.getNum()&&ind.getProduct_id()==inDetail.getProduct_id()){
+						break;
+					}else{
+						dao.add(inDetail);
+					}
+				}
+			}else{
+				dao.add(inDetail);
+			}
+			//修改主表的总价
 			InStockDAO ldao=new InStockDAO();
 			ldao.mdyTotalPrice(inDetail.getLading_id());
-			
-			//查询库存同一仓库中是否有此商品
-			StockDAO stockdao=new StockDAO();
-			map.clear();
-			map.put("product_id", inDetail.getProduct_id());
-			InStockDAO insdao=new InStockDAO();
-			inStock=(InStock)insdao.get(inDetail.getLading_id());
-			map.put("store_id", inStock.getStore_id());
-			this.setStock((Stock)stockdao.fingByPro(map));
-			//填加库存信息(己有修改库存，没有填加)
-			newStock=new Stock();
-			if(stock!=null){
-				stock.setQuantity(stock.getQuantity()+inDetail.getNum());
-				stockdao.save(stock);
-			}else{
-				int pro=inDetail.getProduct_id();
-				int num=inDetail.getNum();
-				int stor=inStock.getStore_id();
-				newStock.setProduct_id(pro);
-				newStock.setQuantity(num);
-				newStock.setStore_id(stor);
-				stockdao.add(newStock);
-			}
-			
 			
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!add 数据添加失败:", e);
@@ -229,17 +237,14 @@ public class InDetailAction extends ActionSupport {
 			this.setInDetail((InDetail)dao.get(inDetail.getUuid()));
 			this.setInDetailh(inDetail);
 			hdao.add(inDetailh);
-			dao.delete(inDetail);
-			//修改库存
-			StockDAO stockdao=new StockDAO();
-			stock.setQuantity(stock.getQuantity()-inDetail.getNum());
-			stockdao.save(stock);
-			//修改入库主表的总数量
+			
+			//修改入库主表的总价格
 			InStockDAO insdao=new InStockDAO();
 			inStock=(InStock)insdao.get(inDetail.getLading_id());
-			map.put("store_id", inStock.getStore_id());
-			stock.setQuantity(stock.getQuantity()-inDetail.getNum());
-			insdao.save(stock);
+			inStock.setTotal_price(inStock.getTotal_price()-inDetail.getTotal());
+			insdao.save(inStock);
+			
+			dao.delete(inDetail);
 			setMessage("删除成功!ID=" + inDetail.getUuid());
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!del 数据删除失败:", e);

@@ -62,9 +62,23 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 		<s:form name="form_serach" action="check_list"  method="post" namespace="/check" theme="simple">
 				<table class="ilisttable" id="serach_table" width="100%">
 					<tr>
-					<td align="center"><font style="font-weight: bold;">盘点日期:</font>
+					<td class='firstRow'>商品:</td>
+					<td class='secRow'><s:select name="check.product_id" title="商品" headerKey="" headerValue="--请选择--" list="products" listKey="uuid" listValue="title" /></td>
+					<td class='firstRow'>盘点仓库:</td>
+					<td class='secRow'><s:select name="check.store_id" title="仓库" headerKey="" headerValue="--请选择--" list="wares" listKey="uuid" listValue="ware_name" /></td>
+										
+					</tr>
+					<tr>
+					<td class='firstRow'><font style="font-weight: bold;">盘点日期:</font>
+					</td>
+					<td class='secRow'>
 					<s:textfield id="indate" name="check.date" title="盘点日期" />
 					<script type="text/javascript">$("#indate").datepicker();</script>
+					</td>
+					
+					</tr>
+					<tr>
+					<td colspan="4" class="buttonarea">
 					<s:submit value="搜索" />
 						<s:reset value="重置" />
 					</td>
@@ -76,19 +90,53 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 	
 	<!-- 分组查询 -->
 	<s:form name="form1" theme="simple">
-	<div id="cellar_list_exists" class="cellar_list">
-		<s:set name="pre_position_prefix" value="" />
+	<table class="ilisttable" id="table1" width="100%">
+	<col width="30" />
+	  <tr>
+	    <th><input name="uuidcheck" type="checkbox" /></th>
+	    <th>盘点日期</th>
+	    <th>盘点仓库</th>
+	    <th>商品名称</th>
+	   
+		<th>库存</th>
+		<th>差异数量</th>
+		<th>操作</th>
+	  </tr>
 		<s:iterator value="checks" status="sta">
+			  <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>" type="pickrow">
+			    <td align="center"><input name="uuid" type="checkbox" value="<s:property value="uuid" />" /></td>
+			    <td><s:property value="date" /></td>
+			    <td><s:property value="ware_name" /></td>
+			    <td><s:property value="product_name" /></td>
+			    
+				<td><s:property value="quantity" /></td>
+				<td><s:property value="num" /></td>
 		
-			<li>
-			<a  style="text-decoration:none;color:#000;" href="<s:url namespace="/check" action="check_list"><s:param name="check.date" value="%{getText('{0,date,yyyy-MM-dd }',{date})}"></s:param><s:param name="check.state" value="1"></s:param></s:url>">
-				<span class="cellar_no"><s:property value="%{getText('{0,date,yyyy-MM-dd }',{date})}"/></span>
-			</a>
-			</li>
-		
+				<td align="center">
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_CHECK_MDY')">
+			    	[<a href="<s:url namespace="/check" action="check_load"><s:param name="viewFlag">mdy</s:param><s:param name="check.uuid" value="uuid"></s:param></s:url>">修改</a>]
+			    	</s:if>
+			    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_CHECK_DEL')">
+			    	[<a href="<s:url namespace="/check" action="check_del"><s:param name="check.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>]
+			    	</s:if>	   
+			    </td>
+			  </tr>
 		</s:iterator>
-	</div>
-	</s:form>
+	  <tr>
+	    <td colspan="20" class="buttonarea">
+		<script type="text/javascript">
+		var spage = new ShowPage(${currPage});
+		spage.show2(${recCount},${pageSize},2);
+		</script>
+		</td>	    
+	  </tr>
+	  <tr>
+	    <td colspan="20" class="buttonarea">
+	    <span id="message"><s:property value="message" /></span>
+		</td>
+	  </tr>
+	</table>
+</s:form>
 	</div>
 </div>
 </div>

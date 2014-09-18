@@ -19,6 +19,10 @@
 <script type="text/javascript" src="<s:url value="/js/common_ajax2.0.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/func/select_member.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/jquery.CommonUtil.js" />"></script>
+
+<script type="text/javascript" src="<s:url value="/js/common_listtable.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/show_page.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/jquery.dialog.iframe.js" />"></script>
 </head>
 <style type="text/css">
 .confirm_td{text-align:center;padding:5px 0 0!important;}
@@ -48,12 +52,13 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 	<!-- 主表显示 -->
 		<s:if test="null != outStock">
 		  <tr>
-			<td class='firstRow'><span style="color:red;">*</span> 出库单号:</td>
-			<td class='secRow' colspan="4"><s:property value="outStock.ordernum" />
+			  <td class='firstRow'><span style="color:red;">*</span> 单据号:</td>
+			  <td class='secRow' colspan="3">
+					<s:textfield name="outStock.ordernum" title="单据号"  rows="4" require="required" controlName="单据号"></s:textfield>
+			  </td>
 			<s:hidden name="outStock.uuid"></s:hidden>
 			<s:hidden name="outStock.send"></s:hidden>
-			<s:hidden name="outDetail.lading_id"  title="出库单号" /></td>
-			
+			<s:hidden name="outDetail.lading_id"  title="出库单号" />
 		</tr>
 		<tr>
 		<td class='firstRow'><span style="color:red;">*</span> 出库时间:</td>
@@ -65,16 +70,22 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 				<s:if test='2==outStock.send'>新单</s:if>
 				<s:if test='3==outStock.send'>待审核</s:if>
 				<s:if test='4==outStock.send'>结案-<s:date name="lading.close_time" format="yyyy-MM-dd HH:mm:ss" /></s:if>
-				<s:if test='5==outStock.send'><span class="message_error">未出货</span></s:if><s:if test='1==lading.out_flag'>已出货</s:if>
+				<s:if test='5==outStock.send'>已取消订单</s:if>
 				<s:if test='6==outStock.send'><span class="message_error">未返利</span></s:if><s:if test='1==lading.rebates_flag'><span class="message_pass">返利中</span></s:if><s:if test='2==lading.rebates_flag'>已返利</s:if>
 			</td>
 		</tr>
 		</s:if>
 		<tr>
 		<td class='firstRow'><span style="color:red;">*</span>经手人:</td>
-		<td class='secRow'><s:textfield name="outStock.operator_id" title="经手人" require="required"  controlName="经手人" /></td>
-		<td class='firstRow'><span style="color:red;">*</span> 保管员:</td>
-		<td class='secRow' colspan="3"><s:textfield name="outStock.take_id" title="旧值" require="required" controlName="保管员" /></td>
+		<td class='secRow' colspan="3">
+							<s:textfield title="部门" id="userdept_codeid" name="outStock.dept_code" readonly="true" />
+							<s:textfield title="部门名称" id="userdept_nameid"  name="outStock.dept_name"  readonly="true" />
+							<img class="imglink" src='<s:url value="/images/open2.gif" />' onclick="selectDept();" />
+							<span id="ajax_member_message"></span>
+							<s:select id="membermanagerid" name="outStock.operator_id" list="#{}" headerKey="" headerValue="--请选择--" listKey="uuid"/>
+							<s:property value="outStock.operator_name" />
+		</td>
+		
 		</tr>
 		<tr>
 			<td class='firstRow'><span style="color:red;">*</span> 状态:</td>
@@ -89,7 +100,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 							 <s:if test="%{outStock.reason==1}">
 							 selected="selected"
 							</s:if>
-							>董事会出库</option>
+							>招待用酒</option>
 							<option value="2" 
 							<s:if test="%{outStock.reason==2 }">
 							selected="selected"
@@ -100,6 +111,11 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 							selected="selected"
 							</s:if>
 							>报损</option>
+							<option value="4" 
+							<s:if test="%{outStock.reason==4 }">
+							selected="selected"
+							</s:if>
+							>赠酒</option>
 					</select>
 			</td>
 			<td class='firstRow'><span style="color:red;">*</span> 出库仓库:</td>
@@ -116,9 +132,27 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 					</select>
 			</td>
 		</tr>
+		<s:if test="%{outStock.reason==2}">
+			<tr class="borrow" id="borrow"> 
+								<td class='firstRow'><span style="color: red;">*</span>
+									借货仓库:</td>
+								<td class='secRow' colspan="3"><select name="outStock.borrowStore_id"
+									title="借货仓库">
+										<s:iterator value="borrowwares" status="sta" var="x">
+											<option 
+											<s:if test="#x.uuid==outStock.borrowStore_id">
+											selected="selected"
+											</s:if>
+											 value="<s:property value="uuid" />"/>
+											<s:property value="ware_name" />
+										</s:iterator>
+								</select></td>
+			</tr>
+		</s:if>
 
 <tr>
-	<td class='firstRow'>其它说明:</td>
+	<td class='firstRow'>其它说明:<br />
+	<s:submit value="修改说明" action="outStock_note"></s:submit>
 	<td class='secRow' colspan="6">
 	<s:textarea name="outStock.note" title="其它说明" cssStyle="width:80%;" rows="4"></s:textarea>
 </tr>
@@ -151,11 +185,15 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 
 </s:else>
 
+						
+						
+						
+						
 <s:if test="null != outStock">
 <tr>
 <td class='firstRow'>出库明细:
 	<%-- <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_outStock_ADD') && outStock.status==0"> --%>
-	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_ADD') && @com.qkj.ware.action.warepower@checkPermit(outStock.store_id,'add')">
+	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_ADD') && 2==outStock.send && @com.qkj.ware.action.warepower@checkPermit(outStock.store_id,'del')">
 	<br />
 	<input id="addItem" type="button" value="添加明细" onclick="commain();"/>
 	</s:if>
@@ -168,7 +206,9 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 	<th>单价</th>
 	<th>订单数量</th>
 	<th>实际价格</th>
+	<s:if test="2==outStock.send">
 	<th>操作</th>
+	</s:if>
   </tr>
 <s:iterator value="outDetails" status="sta">
   <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>">
@@ -180,7 +220,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 	</td>
 	<td align="right"><s:property value="totel" /></td>
 	<td align="center">
-   	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_DEL') && @com.qkj.ware.action.warepower@checkPermit(outStock.store_id,'del')">
+   	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_DEL') && 2==outStock.send && @com.qkj.ware.action.warepower@checkPermit(outStock.store_id,'del')">
    	[<a href="<s:url namespace="/outStock" action="outDetail_del"><s:param name="outDetail.uuid" value="uuid" /><s:param name="outDetail.lading_id" value="lading_id" /></s:url>" onclick="return isDel();">删除</a>]
    	</s:if>	   
     </td>
@@ -207,6 +247,14 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 		<td class='firstRow'>最后修改时间:</td>
 		<td class='secRow' colspan="3"><s:date name="outStock.lm_timer" format="yyyy-MM-dd HH:mm:ss" /></td>
 	</tr>
+	<s:if test="%{outStock.manager_check!=null}">
+	<tr>
+		<td class='firstRow'>确认人:</td>
+		<td class='secRow'><s:property value="outStock.manager_check_user_name" /></td>
+		<td class='firstRow'>确认时间:</td>
+		<td class='secRow'><s:date name="outStock.manager_check_time" format="yyyy-MM-dd HH:mm:ss" /></td>
+	</tr>
+	</s:if>
 </s:if>
 		<tr>
 		<td colspan="20" class="buttonarea">
@@ -215,7 +263,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 					<s:submit id="add" name="add" value="保存&填写明细" action="outStock_add" />
 					</s:if>
 				</s:if>
-				<s:elseif test="null != outStock && 'mdy' == viewFlag">
+				<s:elseif test="null != outStock && 'mdy' == viewFlag && outDetails!=null && @com.qkj.ware.action.warepower@checkPermit(outStock.store_id,'del')">
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_MDY') && 2==outStock.send">
 					<s:submit id="save" name="save" value="保存" action="outStock_save" />
 					</s:if>
@@ -224,11 +272,13 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 					<s:submit value="确认" action="outStock_sure" onclick="return isOp('是否确认?\n确认后将不能更改!');"></s:submit>
 					</s:if>
 					
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_DEL')">
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_DEL') && 2==outStock.send">
 					<s:submit id="delete" name="delete" value="删除" action="outStock_del" onclick="return isDel();" />
 					</s:if>
 					
-					
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_CENCLE') && 4==outStock.send && outStock.reason!=2">
+					<s:submit id="cencle" name="cencle" value="取消订单" action="outStock_cencle" onclick="return isOp('确认取消?');" />
+					</s:if>
 				</s:elseif>
 				<input type="button" value="返回" onclick="linkurl('<s:url action="outStock_list" namespace="/outStock"><s:param name="viewFlag">relist</s:param></s:url>');" />
 			</td>
@@ -450,5 +500,85 @@ function wol() {
 			+ date.getDate();
 		document.getElementById("indate").value=dateString;
 }
+</script>
+<script type="text/javascript">
+
+var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
+var curr_apply_dept = '${leave.leave_dept}';
+var curr_apply_user = '${leave.leave_user}';
+$(function(){
+	CommonUtil.pickrow('table1');
+	CommonUtil.pickrowAll('table1','uuidcheck');
+	if(curr_apply_dept!='') {
+		loadManagers(curr_apply_dept);
+	}
+	
+	$("#AddLeaveForm").dialog({
+	      autoOpen: false,
+	      width: 300,
+	      height: 100,
+	      modal: true
+	});
+	
+	$("#AddLeaveLink").click(function(){
+		$("#AddLeaveForm").dialog("open");
+	});
+	
+	showLeaveMold(${leave.leave_type});
+	$("#searchLeaveType").change(function(){
+		showLeaveMold($(this).val());
+	});
+	
+	$(".leave_cause_show").tooltip({
+		items: "[data]",
+		content: function() {
+			//alert($(this).attr("data"));
+			return "<div class='show_dialog'>" + $("#leave_cause" + $(this).attr("data")).html() + "</div>";
+	  }
+	});
+});
+ 
+var sobj01;
+var selectDept = function() {
+	sobj01 = new DialogIFrame({src:'<s:url namespace="/sys" action="dept_permit_select" />?objname=sobj01',title:"选择部门"});
+	sobj01.selfAction = function(val1,val2) {
+		$("#userdept_codeid").val(val1);
+		$("#userdept_nameid").val(val2);
+		loadManagers(val1);
+	};
+	sobj01.create();
+	sobj01.open();
+};
+
+function loadManagers(dept_code) {
+	var ajax = new Common_Ajax('ajax_member_message');
+	ajax.config.action_url = ajax_url_action;
+	ajax.config._success = function(data, textStatus) {
+		$("#membermanagerid").clearAllOption();
+		$("#membermanagerid").addOption("--请选择--","");
+		$.each(data, function(i, n){
+			$("#membermanagerid").addOption(n.user_name,n.uuid);
+		});
+		if(curr_apply_user!='') {
+			$("#membermanagerid").val(curr_apply_user);
+		}
+	};
+	ajax.addParameter("work", "AutoComplete");
+	ajax.addParameter("parameters", "privilege_id=QKJCJ_SYS_AJAXLOAD_USER&dept_code=" + encodeURI(dept_code));
+	ajax.sendAjax2();
+}
+
+function addLeave(p_type) {
+	var add_url = '<s:url namespace="/adm" action="leave_load"><s:param name="viewFlag">add</s:param></s:url>';
+	add_url = add_url + "&leave.leave_type="+p_type;
+	//alert(add_url);
+	location.href = add_url;
+}
+
+function showCause(s_id) {
+	alert($("#"+s_id).text());
+}
+
+
 </script>
 </html>

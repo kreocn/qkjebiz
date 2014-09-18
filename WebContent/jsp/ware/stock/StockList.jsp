@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -39,13 +40,17 @@ $(function(){
 				<td class='firstRow'>商品名称:</td>
 				<td class='secRow'>
 				<s:select name="stock.product_id" title="状态" headerKey="" headerValue="--请选择--" list="products" listKey="uuid" listValue="title" />
-
 				</td>
-			</tr>
-			<tr>
+				
 				<td class='firstRow'>所在仓库:</td>
 				<td class='secRow'>
 				<s:select name="stock.store_id" title="状态" headerKey="" headerValue="--请选择--" list="wares" listKey="uuid" listValue="ware_name" />
+				</td>
+			</tr>
+			<tr>
+				<td class='firstRow'>(统计查询)商品名称:</td>
+				<td class='secRow'>
+				<s:select name="stock.groupQ" title="状态" headerKey="0" headerValue="--请选择--" list="products" listKey="uuid" listValue="title" />
 				</td>
 			</tr>
 			<tr>
@@ -73,7 +78,10 @@ $(function(){
 	    <td><s:property value="uuid" /></td>
 		<td><s:property value="product_name" /></td>
 		<td><s:property value="store_name" /></td>
-		<td><s:property value="quantity" />&nbsp;瓶</td>
+		<td>
+		<s:property value="quantity" />&nbsp;瓶
+		(<s:property value="%{(quantity/(case_spec*1.0)).toString().substring(0,3)}" />件)
+		</td>
 	  </tr>
 </s:iterator>
 	  <tr>

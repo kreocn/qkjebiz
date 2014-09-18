@@ -9,6 +9,7 @@
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ ordernum=#ordernum# ]]></isNotEmpty>
 <isNotEmpty prepend="AND" property="date"><![CDATA[ date=#date# ]]></isNotEmpty>
 <isNotEmpty prepend="AND" property="store_id"><![CDATA[ store_id=#store_id# ]]></isNotEmpty>
 <isNotEmpty prepend="AND" property="operator_id"><![CDATA[ operator_id=#operator_id# ]]></isNotEmpty>
@@ -37,8 +38,8 @@
 	</select>
 	<insert id="ware_addInStockH" parameterClass="inStockH">
 		<![CDATA[ 
-			Insert Into qkj_h_instock(date,store_id,operator_id,take_id,note,total_price,add_user,add_timer,lm_user,lm_timer,reason,confirm,conname,contime)
-			Values (#date#,#store_id#,#operator_id#,#take_id#,#note#,#total_price#,#add_user#,#add_timer#,#lm_user#,#lm_timer#,#reason#,#confirm#,#conname#,#contime#)
+			Insert Into qkj_t_instock(ordernum,date,store_id,operator_id,take_id,note,total_price,add_user,add_timer,lm_user,lm_timer,confirm,conname,contime,reason)
+			Values (#ordernum#,#date#,#store_id#,#operator_id#,#take_id#,#note#,#total_price#,#add_user#,#add_timer#,#lm_user#,#lm_timer#,#confirm#,#conname#,#contime#,#reason#)
 		]]>
 		<selectKey resultClass="int" keyProperty="uuid">
 		<![CDATA[ Select LAST_INSERT_ID() ]]>

@@ -10,7 +10,7 @@ public class InStockDAO extends AbstractDAO {
 	}
 	
 	public List listbypo(Map<String, Object> map) {
-		setCountMapid("inStock_getInStocksCounts");
+		setCountMapid("inStock_getInStocksCountsByPower");
 		return super.list("inStock_getIn", map);
 	}
 	
@@ -38,6 +38,9 @@ public class InStockDAO extends AbstractDAO {
 	
 	public int sure(Object parameters) {
 		return super.save("inStock_mdySure", parameters);
+	}
+	public int send(Object parameters) {
+		return super.save("inStock_mdySend", parameters);
 	}
 	
 	public int getResultCount() {

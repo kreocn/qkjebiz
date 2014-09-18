@@ -144,19 +144,20 @@ public class CheckAction extends ActionSupport {
 			map.putAll(ContextHelper.getDefaultRequestMap4Page());
 			this.setPageSize(ContextHelper.getPageSize(map));
 			this.setCurrPage(ContextHelper.getCurrPage(map));
-			this.setChecks(dao.listByDate(map));
-			
 			WareDAO wd=new WareDAO();
 			if(ContextHelper.isAdmin()){//管理员
+				this.setChecks(dao.list(map));
 				this.setWares(wd.list(null));
 			}else{
+				map.put("username",u);
+				map.put("dept_code", code);
+				this.setChecks(dao.listByDate(map));
 				map.clear();
 				map.put("username",u);
 				map.put("dept_code", code);
 				map.put("sel", 1);
 				this.setWares(wd.listByPower(map));
 			}
-			
 			ProductDAO pd=new ProductDAO();
 			this.setProducts(pd.list(null));
 			this.setRecCount(dao.getResultCount());
@@ -165,11 +166,11 @@ public class CheckAction extends ActionSupport {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
 		}
-		if(state!=null){
+		/*if(state!=null){
 			return "DETAIL";
-		}else{
+		}else{*/
 			return "SUCCESS";
-		}
+		
 	}
 
 	public String relist() throws Exception {

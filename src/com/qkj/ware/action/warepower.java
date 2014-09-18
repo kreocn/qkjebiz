@@ -34,7 +34,6 @@ public class warepower {
 	}
 
 	public static boolean checkPermit(String ware_id, String flag) {
-		System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaa");
 		UserLoginInfo ulf = ContextHelper.getUserLoginInfo();
 		String u = ContextHelper.getUserLoginUuid();
 		String code=ContextHelper.getUserLoginDept();

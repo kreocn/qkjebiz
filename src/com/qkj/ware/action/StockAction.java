@@ -113,11 +113,23 @@ public class StockAction extends ActionSupport {
 				this.setPageSize(ContextHelper.getPageSize(map));
 				this.setCurrPage(ContextHelper.getCurrPage(map));		
 				if(ContextHelper.isAdmin()){//管理员
-					this.setStocks(dao.list(map));
+					if(stock!=null&&stock.getGroupQ()!=0){//统计商品在所有仓库的数量
+						map.put("product_id", stock.getGroupQ());
+						this.setStocks(dao.listByGroup(map));
+					}else{
+						this.setStocks(dao.list(map));
+					}
+					
 				}else{
-					map.put("username",u);
-					map.put("dept_code", code);
-					this.setStocks(dao.listByPower(map));
+					if(stock!=null&&stock.getGroupQ()!=0){//统计商品在所有仓库的数量
+						map.put("product_id", stock.getGroupQ());
+						this.setStocks(dao.listPowerByGroup(map));
+					}else{
+						map.put("username",u);
+						map.put("dept_code", code);
+						this.setStocks(dao.listByPower(map));
+					}
+					
 				}
 				
 				

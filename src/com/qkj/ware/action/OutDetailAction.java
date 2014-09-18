@@ -173,7 +173,7 @@ public class OutDetailAction extends ActionSupport {
 	public String add() throws Exception {
 		ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_ADD");
 		try {
-			//修改库存
+			//判断库存是否足够
 			StockDAO stockdao=new StockDAO();
 			map.clear();
 			map.put("uuid", outDetail.getProduct_id());//出库祥表的product_id是库存id
@@ -181,7 +181,7 @@ public class OutDetailAction extends ActionSupport {
 			int quan=(stock.getQuantity()-stock.getFreezeNum())-outDetail.getNum();
 			stock.setQuantity(quan);
 			if(quan>=0){
-				stockdao.save(stock);
+				//stockdao.save(stock);
 				
 				//修改出库主表
 				OutStockDAO sdao=new OutStockDAO();

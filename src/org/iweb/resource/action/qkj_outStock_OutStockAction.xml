@@ -91,6 +91,31 @@
 		<action name="outStock_view" class="com.qkj.ware.action.OutStockAction" method="load">
 			<result>/jsp/ware/outStock/outStockView.jsp</result>
 		</action>
+		
+		<action name="outStock_cencle" class="com.qkj.ware.action.OutStockAction" method="cencle">
+			<result type="redirectAction">
+				<param name="actionName">outStock_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="outStock_borrow" class="com.qkj.ware.action.OutStockAction" method="borrow">
+			<result type="redirectAction">
+				<param name="actionName">outStock_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="outStock_note" class="com.qkj.ware.action.OutStockAction" method="note">
+			<result type="redirectAction">
+				<param name="actionName">outStock_load</param>
+				<param name="outStock.uuid">${outStock.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
 		<!-- OutStock End chackManage-->
 	</package>
 </struts>

@@ -2,7 +2,7 @@
 <!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
 <sqlMap>
 	<!-- Warepower Start -->
-	<typeAlias alias="warepower" type="com.qkj.ware.domain.Warepower" />
+	<typeAlias alias="warepower" type="com.qkj.ware.domain.Warepowers" />
 	<typeAlias alias="user" type="org.iweb.sys.domain.User" />
 	<select id="warepower_getWarepowers" resultClass="warepower" parameterClass="java.util.Map">
 		<![CDATA[ 

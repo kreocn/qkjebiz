@@ -191,8 +191,15 @@ public class AllotAction extends ActionSupport {
 		String code=ContextHelper.getUserLoginDept();
 		try {
 			map.clear();
-			if (allot != null)
-				map.putAll(ToolsUtil.getMapByBean(allot));
+			if (allot != null){
+				if(allot.getState()==-1){
+					map.putAll(ToolsUtil.getMapByBean(allot));
+					map.put("state", null);
+				}else{
+					map.putAll(ToolsUtil.getMapByBean(allot));
+				}
+				
+			}
 			map.putAll(ContextHelper.getDefaultRequestMap4Page());
 			this.setPageSize(ContextHelper.getPageSize(map));
 			this.setCurrPage(ContextHelper.getCurrPage(map));
@@ -206,7 +213,7 @@ public class AllotAction extends ActionSupport {
 			
 			this.setRecCount(dao.getResultCount());
 			
-			wareByPower(u, code);
+			wareByPower(u, code,"1");
 			
 			this.setAllot(null);
 			
@@ -230,7 +237,7 @@ public class AllotAction extends ActionSupport {
 				setMessage("你没有选择任何操作!");
 			} else if ("add".equals(viewFlag)) {
 				this.setAllot(null);
-				wareByPower(u, code);
+				wareByPower(u, code,null);
 				
 			} else if ("mdy".equals(viewFlag)) {
 				map.clear();
@@ -266,7 +273,7 @@ public class AllotAction extends ActionSupport {
 					this.setAllotDetails(adao.list(map));
 					
 					//判断是否有确认收货权限
-					int id=allot.getGoldid();
+					/*int id=allot.getGoldid();
 					map.clear();
 					map.put("useruuid",u);
 					if(ContextHelper.isAdmin()){//管理员
@@ -284,7 +291,7 @@ public class AllotAction extends ActionSupport {
 							
 						}
 						
-					}
+					}*/
 					
 				} else {
 					this.setAllot(null);
@@ -300,18 +307,13 @@ public class AllotAction extends ActionSupport {
 		return SUCCESS;
 	}
 
-	private void wareByPower(String u, String code) {
+	private void wareByPower(String u, String code,String flag) {
 		//入仓库
 		WareDAO wd=new WareDAO();
 		if(ContextHelper.isAdmin()){//管理员
-			this.setWares(wd.list(null));
-		}else{
 			map.clear();
-			map.put("username",u);
-			map.put("dept_code", code);
-			map.put("add", 1);
 			map.put("bug","bug");
-			this.setWares(wd.listByPower(map));
+			this.setWares(wd.list(map));
 		}
 		this.setAllot(null);
 		//出仓库
@@ -321,7 +323,11 @@ public class AllotAction extends ActionSupport {
 			map.clear();
 			map.put("username",u);
 			map.put("dept_code", code);
-			map.put("add", 1);
+			if(flag==null){
+				map.put("edit", 1);
+			}else{
+				map.put("sel", 1);
+			}
 			this.setWares(wd.listByPower(map));
 		}
 	}
@@ -331,7 +337,7 @@ public class AllotAction extends ActionSupport {
 		try {
 			Date d = new Date();
 			String u = ContextHelper.getUserLoginUuid();
-			allot.setOrdernum(ToolsUtil.getCommonUUID("A"));
+			//allot.setOrdernum(ToolsUtil.getCommonUUID("A"));
 			allot.setLm_user(u);
 			allot.setAdd_user(u);
 			allot.setLm_timer(new Date());
@@ -390,6 +396,8 @@ public class AllotAction extends ActionSupport {
 				//状态为已发货
 				allot.setUuid(allot.getUuid());
 				allot.setState(1);
+				allot.setFreDate(new Date());
+				allot.setFreUser(u);
 				dao.updateState(allot);
 			}
 			
@@ -404,11 +412,13 @@ public class AllotAction extends ActionSupport {
 	//收货
 	public String delivery() throws Exception{
 		AllotDetailDAO addao=new AllotDetailDAO();
-		int sourceId=0;
+		String u = ContextHelper.getUserLoginUuid();
 		map.clear();
 		map.put("lading_id", allot.getOrdernum());
 		this.setAllotDetails(addao.list(map));
 		this.setAllot((Allot)dao.list(map).get(0));
+		int godeid=allot.getGoldid();
+		int sourceid=allot.getSourceid();
 		if(allotDetails.size()>0){
 			for(int i=0;i<allotDetails.size();i++){
 				this.setAllotDetail(allotDetails.get(i));
@@ -416,7 +426,6 @@ public class AllotAction extends ActionSupport {
 				this.setStock((Stock)sdao.get(allotDetail.getStock_id()));
 				int totle=stock.getQuantity();
 				//调出仓库－库存
-				sourceId=stock.getUuid();
 				stock.setQuantity(totle-allotDetail.getNum());
 				map.clear();
 				map.put("quantity", stock.getQuantity());
@@ -425,7 +434,7 @@ public class AllotAction extends ActionSupport {
 				//调入仓库+库存(如果调入仓库没有此商品则填加记录，如果有修改库存)
 				map.clear();
 				map.put("product_id", stock.getProduct_id());
-				map.put("store_id", allot.getGoldid());
+				map.put("store_id", godeid);
 				this.setStocks(sdao.list(map));
 				if(stocks.size()>0){
 					this.setStock(stocks.get(0));
@@ -445,13 +454,17 @@ public class AllotAction extends ActionSupport {
 			//取消冻结库存
 			StockDAO sdao=new StockDAO();
 			map.clear();
-			map.put("uuid", sourceId);
+			map.put("uuid", sourceid);
 			map.put("freezeNum", 0);
 			sdao.updateFreezeNumById(map);
 			
 			//状态为已收货
 			allot.setUuid(allot.getUuid());
 			allot.setState(3);
+			allot.setDelivery(new Date());
+			allot.setFreDate(allot.getFreDate());
+			allot.setDeliUser(u);
+			allot.setFreUser(allot.getFreUser());
 			dao.updateState(allot);
 		}
 		return SUCCESS;

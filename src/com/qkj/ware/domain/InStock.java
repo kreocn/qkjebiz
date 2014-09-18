@@ -3,7 +3,8 @@ package com.qkj.ware.domain;
 import java.util.*;
 
 public class InStock {
-	private String uuid;// (varchar)
+	private Integer uuid;// (varchar)
+	private String ordernum;
 	private Date date;// (date)
 	private Integer store_id;// (int)
 	private String operator_id;// (int)经办人
@@ -20,6 +21,7 @@ public class InStock {
 	private Integer confirm;// (int)确认
 	private String conname;// (varchar)确认人
 	private Date contime;// (date)确认时间
+	private Integer send;
 
 	// 数据库外
 	private String add_user_name;
@@ -27,13 +29,35 @@ public class InStock {
 
 	// 以下为非数据库字段
 	private String prvg;
+	private String operator_name;
+	private String take_name;
+	
+	private String conname_u;
 
-	public String getUuid() {
+	
+	
+	public String getConname_u() {
+		return conname_u;
+	}
+
+	public void setConname_u(String conname_u) {
+		this.conname_u = conname_u;
+	}
+
+	public Integer getUuid() {
 		return uuid;
 	}
 
-	public void setUuid(String uuid) {
+	public void setUuid(Integer uuid) {
 		this.uuid = uuid;
+	}
+
+	public String getOrdernum() {
+		return ordernum;
+	}
+
+	public void setOrdernum(String ordernum) {
+		this.ordernum = ordernum;
 	}
 
 	public Date getDate() {
@@ -178,6 +202,30 @@ public class InStock {
 
 	public void setPrvg(String prvg) {
 		this.prvg = prvg;
+	}
+
+	public String getOperator_name() {
+		return operator_name;
+	}
+
+	public void setOperator_name(String operator_name) {
+		this.operator_name = operator_name;
+	}
+
+	public String getTake_name() {
+		return take_name;
+	}
+
+	public void setTake_name(String take_name) {
+		this.take_name = take_name;
+	}
+
+	public Integer getSend() {
+		return send;
+	}
+
+	public void setSend(Integer send) {
+		this.send = send;
 	}
 	
 	

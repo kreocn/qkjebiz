@@ -12,6 +12,7 @@ public class Stock {
 	private Integer cnum;
 
 	// 以下为非数据库字段
+	private Integer groupQ;
 	private String product_name;
 	private String store_name;
 	private double market_price;
@@ -141,5 +142,15 @@ public class Stock {
 	public void setFreezeNum(Integer freezeNum) {
 		this.freezeNum = freezeNum;
 	}
+
+	public Integer getGroupQ() {
+		return groupQ;
+	}
+
+	public void setGroupQ(Integer groupQ) {
+		this.groupQ = groupQ;
+	}
+	
+	
 
 }

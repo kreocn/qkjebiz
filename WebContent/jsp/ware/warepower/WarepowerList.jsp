@@ -87,14 +87,14 @@ $(function(){
 	     </td>
 	    <td><s:property value="ware_name" /></td>
 	    <td>
-	    <s:if test="%{prvg.indexOf('1')>=0}">增加&nbsp;</s:if>
-	    <s:if test="%{prvg.indexOf('2')>=0}">删除&nbsp;</s:if>
-	    <s:if test="%{prvg.indexOf('3')>=0}">修改&nbsp;</s:if>
+	    <s:if test="%{prvg.indexOf('1')>=0}">入库&nbsp;</s:if>
+	    <s:if test="%{prvg.indexOf('2')>=0}">出库&nbsp;</s:if>
+	    <s:if test="%{prvg.indexOf('3')>=0}">调库&nbsp;</s:if>
 	    <s:if test="%{prvg.indexOf('4')>=0}">查询&nbsp;</s:if>
 	    </td>
 
 		<td align="center">
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_WAREPOWER')">
+			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_WAREPOWER_MDY')">
 	    	[<a href="<s:url namespace="/warepower" action="warepower_load"><s:param name="viewFlag">mdy</s:param><s:param name="warepower.uuid" value="uuid"></s:param></s:url>">修改</a>]
 	    	</s:if>
 	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_WAREPOWER_DEL')">

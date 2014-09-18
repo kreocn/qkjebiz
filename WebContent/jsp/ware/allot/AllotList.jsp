@@ -44,20 +44,40 @@ $(function(){
 	<div class="ilistsearch">
 <s:form name="form_serach" action="allot_list"  method="get" namespace="/allot" theme="simple">
 		<table class="ilisttable" id="serach_table" width="100%">
-<tr>
-<td class='firstRow'>调库日期:</td>
-<td class='secRow'>
-<s:textfield id="indate" name="allot.date" title="调库时间" controlName="调库时间" />
-<script type="text/javascript">$("#indate").datepicker();</script>
-<td class='firstRow'>调出仓库:</td>
-<td class='secRow'>
-		<s:select name="allot.sourceid" title="调出仓库" headerKey="" headerValue="--请选择--" list="wares" listKey="uuid" listValue="ware_name" />
-</tr><tr>
-<td class='firstRow'>调入仓库:</td>
-<td class='secRow'>
-	<s:select name="allot.goldid" title="调入仓库" headerKey="" headerValue="--请选择--" list="wares" listKey="uuid" listValue="ware_name" />
-
-</tr>
+			<tr>
+			<td class='firstRow'>编号:</td>
+			<td class='secRow'><s:textfield name="allot.uuid" title="编号" />
+			<td class='firstRow'>单据号:</td>
+			<td class='secRow'>
+			<s:textfield name="allot.ordernum" title="单据号" />
+			</td>
+			</tr>
+			
+			<tr>
+			<td class='firstRow'>调库日期:</td>
+			<td class='secRow'>
+			<s:textfield id="indate" name="allot.date" title="调库时间" controlName="调库时间" />
+			<script type="text/javascript">$("#indate").datepicker();</script>
+			<td class='firstRow'>调出仓库:</td>
+			<td class='secRow'>
+					<s:select name="allot.sourceid" title="调出仓库" headerKey="" headerValue="--请选择--" list="wares" listKey="uuid" listValue="ware_name" />
+			</tr>
+			<tr>
+			<td class='firstRow'>调入仓库:</td>
+			<td class='secRow'>
+				<s:select name="allot.goldid" title="调入仓库" headerKey="" headerValue="--请选择--" list="wares" listKey="uuid" listValue="ware_name" /></td>
+			<td class='firstRow'>状态:</td>
+			<td class='secRow'>
+			<select name="allot.state" title="状态">
+					<option value="-1">---请选择---</option>
+					<option value="0">未发货</option>
+					<option value="1">已发货</option>
+					<option value="2">取消发货</option>
+					<option value="3">已收货</option>
+			</select>
+			</td>
+			
+			</tr>
 			<tr>
 			<td colspan="4" class="buttonarea">
 				<s:submit value="搜索" />
@@ -89,8 +109,8 @@ $(function(){
 	    <td><s:property value="uuid" /></td>
 	    <td><s:property value="ordernum" />
 	    <s:if test="%{state==0}"><font color="red">（未发货）</font></s:if>
-	    <s:if test="%{state==1}"><font color="red">（已发货）</font></s:if>
-	    <s:if test="%{state==2}"><font color="red">（取消发货）</font></s:if>
+	    <s:if test="%{state==1}"><font color="blue">（已发货）</font></s:if>
+	    <s:if test="%{state==2}"><font color="blue">（取消发货）</font></s:if>
 	    <s:if test="%{state==3}"><font color="red">（已收货）</font></s:if>
 	    </td>
 		<td><s:property value="goldName" /></td>
@@ -101,10 +121,10 @@ $(function(){
 		<td><s:date name="lm_timer" format="yyyy-MM-dd HH:mm:ss" /></td>
 
 		<td align="center">
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_MDY')">
+			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_MDY') && @com.qkj.ware.action.warepower@checkPermit(sourceId,'edit')">
 	    	[<a href="<s:url namespace="/allot" action="allot_load"><s:param name="viewFlag">mdy</s:param><s:param name="allot.uuid" value="uuid"></s:param></s:url>">修改</a>]
 	    	</s:if>
-	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_DEL')">
+	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_DEL') && @com.qkj.ware.action.warepower@checkPermit(sourceId,'edit') && (state==0||state==2)">
 	    	[<a href="<s:url namespace="/allot" action="allot_del"><s:param name="allot.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>]
 	    	</s:if>	   
 	    </td>

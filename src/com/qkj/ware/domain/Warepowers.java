@@ -1,6 +1,6 @@
 package com.qkj.ware.domain;
 
-public class Warepower {
+public class Warepowers {
 	private Integer uuid;// (int)
 	private Integer ware_id;// (int)仓库id
 	private String username;// (varchar)管理人员

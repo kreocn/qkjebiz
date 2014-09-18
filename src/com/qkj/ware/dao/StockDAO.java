@@ -1,5 +1,6 @@
 package com.qkj.ware.dao;
 import java.util.*;
+
 import org.iweb.sys.AbstractDAO;
 public class StockDAO extends AbstractDAO {
 
@@ -9,7 +10,7 @@ public class StockDAO extends AbstractDAO {
 	}
 	
 	public List listByPower(Map<String, Object> map) {
-		setCountMapid("stock_getStocksCounts");
+		setCountMapid("stock_getStocksCountsByPower");
 		return super.list("stock_getPower", map);
 	}
 	
@@ -48,6 +49,20 @@ public class StockDAO extends AbstractDAO {
 	
 	public int updateFreezeNumById(Map<String, Object> map){
 		return super.save("stock_mdyFreezeNumById", map);
+	}
+	
+	public int updatborrow (Map<String, Object> map){
+		return super.save("stock_borrow", map);
+	}
+	
+	//综合查询
+	public List listPowerByGroup(Map<String, Object> map) {
+		setCountMapid("stock_getStocksCountsByGroup");
+		return super.list("stock_getPowerByGroup", map);
+	}
+	public List listByGroup(Map<String, Object> map) {
+		setCountMapid("stock_getPowerCountsByGroup");
+		return super.list("stock_getByGroup", map);
 	}
 
 	public int getResultCount() {

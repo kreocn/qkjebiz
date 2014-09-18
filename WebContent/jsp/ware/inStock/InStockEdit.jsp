@@ -137,12 +137,20 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 		</span>	
 	</div>
 <s:form name="form1" action="inStock_add" namespace="/inStock" onsubmit="return validator(this);" method="post" theme="simple">
+
 	<div class="ifromoperate" ></div>
 	<table class="ilisttable" width="100%">
+		<tr>
+			<td class='firstRow'><span style="color:red;">*</span> 入库单号:</td>
+			<td class='secRow' colspan="3">
+			<s:textfield name="inStock.ordernum" title="单据号"  rows="4" require="required" controlName="单据号"></s:textfield>
+			</td>
+		</tr>
 		<s:if test="null != inStock">
 		  <tr>
-			<td class='firstRow'><span style="color:red;">*</span> 入库单号:</td>
-			<td class='secRow' colspan="3"><s:property value="inStock.uuid" /><s:hidden name="inStock.uuid" title="主键ID" /></td>
+		  	<s:hidden name="inStock.uuid" title="主键ID" />
+			<s:hidden name="inStock.take_id"></s:hidden>
+			<s:hidden name="inStock.operator_id"></s:hidden>
 		</tr>
 		<tr>
 			<td class='firstRow'><span style="color:red;">*</span> 入库时间:</td>
@@ -159,14 +167,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 		</tr>
 		</s:else>
 		  
-<tr>
-<td class='firstRow'><span style="color:red;">*</span>经手人:</td>
-<td class='secRow' colspan="3"><s:textfield name="inStock.operator_id" title="经手人" require="required"  controlName="经手人" /></td>
-</tr>
-<tr>
-<td class='firstRow'><span style="color:red;">*</span> 保管员:</td>
-<td class='secRow' colspan="3"><s:textfield name="inStock.take_id" title="旧值" require="required" controlName="保管员" /></td>
-</tr>
+
 <tr>
 	<td class='firstRow'><span style="color:red;">*</span> 状态:</td>
 	<td class='secRow' colspan="3">
@@ -214,7 +215,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 <tr>
 <td class='firstRow'>入库明细:
 	<%-- <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_ADD') && inStock.status==0"> --%>
-	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_ADD') && null==inStock.confirm">
+	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_ADD') && null==inStock.confirm && @com.qkj.ware.action.warepower@checkPermit(inStock.store_id,'add')">
 	<s:if test="@com.qkj.ware.action.warepower@checkPermit(inStock.store_id,'add')">
 	<br />
 	<input id="addItem" type="button" value="添加明细" />
@@ -229,7 +230,9 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 	<th>单价</th>
 	<th>订单数量</th>
 	<th>实际价格</th>
+	<s:if test="null==inStock.confirm">
 	<th>操作</th>
+	</s:if>
   </tr>
 <s:iterator value="inDetails" status="sta">
   <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>">
@@ -241,7 +244,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 	</td>
 	<td align="right"><s:property value="total" /></td>
 	<td align="center">
-   	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_INDETAIL_INDETAIL_DEL') && @com.qkj.ware.action.warepower@checkPermit(inStock.store_id,'del')  && null==inStock.confirm">
+   	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_INDETAIL_INDETAIL_DEL') && @com.qkj.ware.action.warepower@checkPermit(inStock.store_id,'add')  && null==inStock.confirm">
    	[<a href="<s:url namespace="/inStock" action="inDetail_del"><s:param name="inDetail.uuid" value="uuid" /><s:param name="inDetail.lading_id" value="lading_id" /></s:url>" onclick="return isDel();">删除</a>]
    	</s:if>	   
     </td>
@@ -268,6 +271,14 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 		<td class='firstRow'>最后修改时间:</td>
 		<td class='secRow'><s:date name="inStock.lm_timer" format="yyyy-MM-dd HH:mm:ss" /></td>
 	</tr>
+	<s:if test="%{inStock.conname!=null}">
+	<tr>
+		<td class='firstRow'>确认人:</td>
+		<td class='secRow'><s:property value="inStock.conname_u" /></td>
+		<td class='firstRow'>确认时间:</td>
+		<td class='secRow'><s:date name="inStock.contime" format="yyyy-MM-dd HH:mm:ss" /></td>
+	</tr>
+	</s:if>
 </s:if>
 		<tr>
 		<td colspan="20" class="buttonarea">
@@ -276,13 +287,14 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 					<s:submit id="add" name="add" value="保存&填写明细" action="inStock_add" />
 					</s:if>
 				</s:if>
-				<s:elseif test="null != inStock && 'mdy' == viewFlag">
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_MDY') && null==inStock.confirm ">
+				<s:elseif test="null != inStock && 'mdy' == viewFlag && @com.qkj.ware.action.warepower@checkPermit(inStock.store_id,'add')">
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_MDY') && null==inStock.confirm">
 					<s:submit id="save" name="save" value="保存" action="inStock_save" />
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_SURE')">
 					<s:submit value="确认" action="inStock_sure" onclick="return isOp('是否确认?\n确认后将不能更改!');"></s:submit>
 					</s:if>
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_DEL')">
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_DEL')  && null==inStock.confirm && inStock.confirm==null">
+				
 					<s:submit id="delete" name="delete" value="删除" action="inStock_del" onclick="return isDel();" />
 					</s:if>
 					<script type="text/javascript">
@@ -299,6 +311,9 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 					</s:if>
 					
 				</s:elseif>
+				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_CENCLE') && @com.qkj.ware.action.warepower@checkPermit(inStock.store_id,'add')  && inStock.confirm!=null && inStock.send!=1">
+					<s:submit id="cencle" name="cencle" value="取消订单" action="inStock_cencle" onclick="return isOp('确认取消?');" />
+					</s:if>
 				<input type="button" value="返回" onclick="linkurl('<s:url action="inStock_list" namespace="/inStock"><s:param name="viewFlag">relist</s:param></s:url>');" />
 			</td>
 		    

@@ -9,7 +9,7 @@ public class OutStockDAO extends AbstractDAO {
 	}
 
 	public List listPower(Map<String, Object> map) {
-		setCountMapid("outStock_getOutStocksCounts");
+		setCountMapid("outStock_getOutStocksCountsByPower");
 		return super.list("outStock_getpower", map);
 	}
 	
@@ -35,6 +35,10 @@ public class OutStockDAO extends AbstractDAO {
 		return super.delete("outStock_delOutStock", parameters);
 	}
 	
+	public int updateSend(Object parameters){
+		return super.save("outStock_mdySend", parameters);
+	}
+	
 	//销售出库填加会员信息
 	public int updateStockSale(Object parameters){
 		return super.save("outStock_mdyOutStockSale", parameters);
@@ -50,6 +54,13 @@ public class OutStockDAO extends AbstractDAO {
 	//总监审
 	public int updateCheckCoo(Object parameters){
 			return super.save("outStock_mdyCheckCoo", parameters);
+	}
+	//备注
+	public int updateNote(Object parameters){
+			return super.save("outStock_mdyNote", parameters);
+	}
+	public int updatebs(Object parameters){
+		return super.save("outStock_mdyOutStockBs", parameters);
 	}
 
 	public int getResultCount() {

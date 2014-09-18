@@ -9,7 +9,7 @@ public class CheckDAO extends AbstractDAO {
 	}
 	
 	public List listByDate(Map<String, Object> map) {
-		//setCountMapid("check_getChecksCounts");
+		//setCountMapid("check_getChecksCountsByPower");
 		return super.list("check_getChecksByDate", map);
 	}
 	

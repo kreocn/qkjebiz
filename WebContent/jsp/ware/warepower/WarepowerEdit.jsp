@@ -55,9 +55,9 @@
 			<s:hidden name="warepower.uuid" />
 			</td>
 			<td >  
-			<input type="checkbox" name="warepower.prvg"  value="1"  <s:if test="%{warepower.prvg.indexOf('1')>=0}">checked="checked"</s:if> >增加&nbsp;&nbsp;
-			<input type="checkbox" name="warepower.prvg"  value="2"  <s:if test="%{warepower.prvg.indexOf('2')>=0}">checked="checked"</s:if> > 删除&nbsp;&nbsp;
-			<input type="checkbox" name="warepower.prvg"  value="3"  <s:if test="%{warepower.prvg.indexOf('3')>=0}">checked="checked"</s:if> > 修改&nbsp;&nbsp;
+			<input type="checkbox" name="warepower.prvg"  value="1"  <s:if test="%{warepower.prvg.indexOf('1')>=0}">checked="checked"</s:if> >入库&nbsp;&nbsp;
+			<input type="checkbox" name="warepower.prvg"  value="2"  <s:if test="%{warepower.prvg.indexOf('2')>=0}">checked="checked"</s:if> > 出库&nbsp;&nbsp;
+			<input type="checkbox" name="warepower.prvg"  value="3"  <s:if test="%{warepower.prvg.indexOf('3')>=0}">checked="checked"</s:if> > 调库&nbsp;&nbsp;
 			<input type="checkbox" name="warepower.prvg"  value="4"  <s:if test="%{warepower.prvg.indexOf('4')>=0}">checked="checked"</s:if> > 查询&nbsp;&nbsp;
 			</td>
 		  </tr>
@@ -83,11 +83,11 @@
 			</td>
 			<td >
 			<s:checkbox name="warepowers[%{#sta.index}].prvg" 
-			  fieldValue="1"  /> 增加&nbsp;&nbsp;
+			  fieldValue="1"  /> 入库&nbsp;&nbsp;
 			<s:checkbox name="warepowers[%{#sta.index}].prvg"
-			  fieldValue="2"/> 删除&nbsp;&nbsp;
+			  fieldValue="2"/> 出库&nbsp;&nbsp;
 			<s:checkbox name="warepowers[%{#sta.index}].prvg" 
-			 fieldValue="3"/> 修改&nbsp;&nbsp;
+			 fieldValue="3"/> 调库&nbsp;&nbsp;
 			<s:checkbox name="warepowers[%{#sta.index}].prvg"  
 			fieldValue="4"/> 查询&nbsp;&nbsp;
 			</td>

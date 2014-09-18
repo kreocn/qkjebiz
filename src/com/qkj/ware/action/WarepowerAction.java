@@ -1,15 +1,17 @@
 package com.qkj.ware.action;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import org.apache.commons.logging.*;
-import org.iweb.sys.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.iweb.sys.ContextHelper;
+import org.iweb.sys.ToolsUtil;
 import org.iweb.sys.domain.User;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.qkj.ware.domain.Check;
-import com.qkj.ware.domain.Stock;
-import com.qkj.ware.domain.Warepower;
 import com.qkj.ware.dao.WarepowerDAO;
+import com.qkj.ware.domain.Warepowers;
 import com.qkjsys.ebiz.dao.WareDAO;
 import com.qkjsys.ebiz.domain.Ware;
 
@@ -19,8 +21,8 @@ public class WarepowerAction extends ActionSupport {
 	private Map<String, Object> map = new HashMap<String, Object>();
 	private WarepowerDAO dao = new WarepowerDAO();
 
-	private Warepower warepower;
-	private List<Warepower> warepowers;
+	private Warepowers warepower;
+	private List<Warepowers> warepowers;
 	private List<Ware> wares;
 	private List<User> users;
 	private String message;
@@ -38,19 +40,19 @@ public class WarepowerAction extends ActionSupport {
 		this.users = users;
 	}
 
-	public Warepower getWarepower() {
+	public Warepowers getWarepower() {
 		return warepower;
 	}
 
-	public void setWarepower(Warepower warepower) {
+	public void setWarepower(Warepowers warepower) {
 		this.warepower = warepower;
 	}
 
-	public List<Warepower> getWarepowers() {
+	public List<Warepowers> getWarepowers() {
 		return warepowers;
 	}
 
-	public void setWarepowers(List<Warepower> warepowers) {
+	public void setWarepowers(List<Warepowers> warepowers) {
 		this.warepowers = warepowers;
 	}
 
@@ -140,7 +142,7 @@ public class WarepowerAction extends ActionSupport {
 				this.setWarepower(null);
 			} else if ("mdy".equals(viewFlag)) {
 				if (!(warepower == null || warepower.getUuid() == null)) {
-					this.setWarepower((Warepower) dao.get(warepower.getUuid()));
+					this.setWarepower((Warepowers) dao.get(warepower.getUuid()));
 				} else {
 					
 					this.setWarepower(null);

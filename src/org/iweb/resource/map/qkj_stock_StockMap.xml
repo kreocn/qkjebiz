@@ -5,7 +5,7 @@
 	<typeAlias alias="stock" type="com.qkj.ware.domain.Stock" />
 	<select id="stock_getStocks" resultClass="stock" parameterClass="java.util.Map">
 		<![CDATA[ 
-			SELECT s.*,p.`title` product_name,w.`ware_name` store_name FROM qkj_r_stock s LEFT JOIN qkj_t_product p ON (s.`product_id`=p.`uuid`)
+			SELECT s.*,p.`title` product_name,w.`ware_name` store_name,p.`case_spec` case_spec FROM qkj_r_stock s LEFT JOIN qkj_t_product p ON (s.`product_id`=p.`uuid`)
 			 LEFT JOIN qkj_t_warehouse w ON (s.`store_id`=w.`uuid`)
 		]]>
 		<dynamic prepend="WHERE">
@@ -20,7 +20,7 @@
 	
 	<select id="stock_getPower" resultClass="stock" parameterClass="java.util.Map">
 		<![CDATA[ 
-			SELECT  DISTINCT s.`uuid`,s.*,p.`title` product_name,w.`ware_name` store_name FROM qkj_r_stock s LEFT JOIN qkj_t_product p ON (s.`product_id`=p.`uuid`)
+			SELECT  DISTINCT s.`uuid`,s.*,p.`title` product_name,w.`ware_name` store_name,p.`case_spec` case_spec FROM qkj_r_stock s LEFT JOIN qkj_t_product p ON (s.`product_id`=p.`uuid`)
 			 LEFT JOIN qkj_t_warehouse w ON (s.`store_id`=w.`uuid`)
 			 LEFT JOIN qkj_t_stockpower  pw ON(pw.`ware_id`=s.store_id)
 			 WHERE (pw.`username`=#username# OR 
@@ -31,6 +31,30 @@
 			<isNotEmpty prepend="AND" property="quantity"><![CDATA[ s.quantity=#quantity# ]]></isNotEmpty>
 			
 		<![CDATA[ GROUP BY s.`uuid`]]>
+	</select>
+	<!-- 查询一个商品在多个有权限仓库的总合 -->
+	<select id="stock_getPowerByGroup" resultClass="stock" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT aa.uuid UUID,aa.product_id product_id,SUM(aa.quantity) quantity,aa.store_id store_id,aa.freezeNum freezeNum,aa.product_name product_name,aa.store_name store_name,aa.case_spec case_spec FROM (
+			SELECT  DISTINCT s.`uuid`,s.`product_id` product_id, s.`quantity` quantity,s.`store_id` store_id,s.`freezeNum` freezeNum,p.`title` product_name,w.`ware_name` store_name,p.`case_spec` case_spec FROM qkj_r_stock s LEFT JOIN qkj_t_product p ON (s.`product_id`=p.`uuid`)
+			 LEFT JOIN qkj_t_warehouse w ON (s.`store_id`=w.`uuid`)
+			 LEFT JOIN qkj_t_stockpower  pw ON(pw.`ware_id`=s.store_id)
+			 WHERE s.`product_id`=#product_id# AND  (pw.`username`=#username# OR 
+			(IF(pw.son = 0, pw.`dept_code`=#dept_code#, pw.`dept_code` LIKE #dept_code#))) AND  pw.`prvg` LIKE '%4%'
+			) aa 
+		]]>
+	</select>
+	<select id="stock_getByGroup" resultClass="stock" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT aa.uuid UUID,aa.product_id product_id,SUM(aa.quantity) quantity,aa.store_id store_id,aa.freezeNum freezeNum,aa.product_name product_name,aa.store_name store_name,aa.case_spec case_spec FROM (
+			SELECT  DISTINCT s.`uuid`,s.`product_id` product_id, s.`quantity` quantity,s.`store_id` store_id,s.`freezeNum` freezeNum,p.`title` product_name,w.`ware_name` store_name,p.`case_spec` case_spec FROM qkj_r_stock s LEFT JOIN qkj_t_product p ON (s.`product_id`=p.`uuid`)
+			 LEFT JOIN qkj_t_warehouse w ON (s.`store_id`=w.`uuid`)
+			 LEFT JOIN qkj_t_stockpower  pw ON(pw.`ware_id`=s.store_id)
+			 WHERE s.`product_id`=#product_id# 
+			) aa 
+			
+		]]>
+			
 	</select>
 	
 	<select id="stock_getStocksBig" resultClass="stock" parameterClass="java.util.Map">
@@ -46,24 +70,72 @@
 			<isNotEmpty prepend="AND" property="quantity"><![CDATA[ s.quantity=#quantity# ]]></isNotEmpty>
 			
 	</select>
-	<select id="stock_getStocksCounts" resultClass="int" parameterClass="java.util.Map">
+	
+	
+	<select id="stock_getPowerCountsByGroup" resultClass="int" parameterClass="java.util.Map">
 		<![CDATA[ 
-			Select Count(*) FROM qkj_r_stock s LEFT JOIN qkj_t_product p ON (s.`product_id`=p.`uuid`)
+			Select Count(*) FROM (
+			SELECT  DISTINCT s.`uuid`,SUM(s.`quantity`) quantity,s.`product_id`,s.`store_id`,p.`title` product_name,w.`ware_name` store_name FROM qkj_r_stock s LEFT JOIN qkj_t_product p ON (s.`product_id`=p.`uuid`)
 			 LEFT JOIN qkj_t_warehouse w ON (s.`store_id`=w.`uuid`)
 			 LEFT JOIN qkj_t_stockpower  pw ON(pw.`ware_id`=s.store_id)
+			) aa
 		]]>
 		<dynamic prepend="WHERE">
-			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="product_id"><![CDATA[ product_id=#product_id# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="store_id"><![CDATA[ store_id=#store_id# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="quantity"><![CDATA[ quantity=#quantity# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="dept_code">
-			<![CDATA[ (pw.`username`=#username# OR 
-			(IF(pw.son = 0, pw.`dept_code`=#dept_code#, pw.`dept_code` LIKE #dept_code#))) AND  pw.`prvg` LIKE '%4%' GROUP BY s.`uuid` ]]>
-			</isNotEmpty>
-
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ s.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="product_id"><![CDATA[ s.product_id=#product_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="store_id"><![CDATA[ s.store_id=#store_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="quantity"><![CDATA[ s.quantity=#quantity# ]]></isNotEmpty>
 		</dynamic>
 	</select>
+	
+	<select id="stock_getStocksCountsByGroup" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) FROM (
+			SELECT  DISTINCT s.`uuid`,SUM(s.`quantity`) quantity,s.`product_id`,s.`store_id`,p.`title` product_name,w.`ware_name` store_name FROM qkj_r_stock s LEFT JOIN qkj_t_product p ON (s.`product_id`=p.`uuid`)
+			 LEFT JOIN qkj_t_warehouse w ON (s.`store_id`=w.`uuid`)
+			 LEFT JOIN qkj_t_stockpower  pw ON(pw.`ware_id`=s.store_id)
+			 WHERE (pw.`username`=#username# OR 
+			(IF(pw.son = 0, pw.`dept_code`=#dept_code#, pw.`dept_code` LIKE #dept_code#))) AND  pw.`prvg` LIKE '%4%' 
+			) aa
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ s.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="product_id"><![CDATA[ s.product_id=#product_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="store_id"><![CDATA[ s.store_id=#store_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="quantity"><![CDATA[ s.quantity=#quantity# ]]></isNotEmpty>
+		</dynamic>
+	</select>
+	
+	
+	<select id="stock_getStocksCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) FROM qkj_r_stock s 
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ s.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="product_id"><![CDATA[ s.product_id=#product_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="store_id"><![CDATA[ s.store_id=#store_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="quantity"><![CDATA[ s.quantity=#quantity# ]]></isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<select id="stock_getStocksCountsByPower" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT COUNT(*) FROM (SELECT DISTINCT s.`uuid`,s.`product_id` pro,s.`store_id` sto FROM qkj_r_stock s LEFT JOIN qkj_t_product p ON (s.`product_id`=p.`uuid`)
+			 LEFT JOIN qkj_t_warehouse w ON (s.`store_id`=w.`uuid`)
+			 LEFT JOIN qkj_t_stockpower  pw ON(pw.`ware_id`=s.store_id)
+			  WHERE (pw.`username`=#username# OR 
+			(IF(pw.son = 0, pw.`dept_code`=#dept_code#, pw.`dept_code` LIKE #dept_code#))) AND  pw.`prvg` LIKE '%4%') a
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ s.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="product_id"><![CDATA[ s.product_id=#product_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="store_id"><![CDATA[ s.store_id=#store_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="quantity"><![CDATA[ s.quantity=#quantity# ]]></isNotEmpty>
+		</dynamic>
+		
+	</select>
+	
 	<insert id="stock_addStock" parameterClass="stock">
 		<![CDATA[ 
 			Insert Into qkj_r_stock(product_id,store_id,quantity)
@@ -109,7 +181,11 @@
 			WHERE UUID =#uuid#
 		]]>
 	</update>
-	
-	
+	<!-- 还 -->
+	<update id="stock_borrow"  parameterClass="java.util.Map">
+		<![CDATA[
+			UPDATE qkj_r_stock SET quantity=#quantity#  WHERE  UUID =#uuid#
+		]]>
+	</update>
 	<!-- Stock End -->
 </sqlMap>

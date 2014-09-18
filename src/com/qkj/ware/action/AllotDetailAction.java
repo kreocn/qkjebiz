@@ -210,6 +210,7 @@ public class AllotDetailAction extends ActionSupport {
 
 	private void setAllotDh(AllotDetail allotDetail2) {
 		// TODO Auto-generated method stub
+		allotDh=new AllotDetailH();
 		allotDh.setLading_id(allotDetail2.getLading_id());
 		allotDh.setNum(allotDetail2.getNum());
 		allotDh.setStock_id(allotDetail2.getStock_id());

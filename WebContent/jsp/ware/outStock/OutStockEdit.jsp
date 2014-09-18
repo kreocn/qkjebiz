@@ -21,7 +21,14 @@
 <script type="text/javascript" src="<s:url value="/js/func/select_member.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/jquery.CommonUtil.js" />"></script>
 
+<script type="text/javascript" src="<s:url value="/js/common_listtable.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/show_page.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/jquery.dialog.iframe.js" />"></script>
+
 <style type="text/css">
+#borrow{
+display: none;
+}
 .confirm_td {
 	text-align: center;
 	padding: 5px 0 0 !important;
@@ -100,6 +107,13 @@ a.confirm_button:hover {
 					<div class="ifromoperate"></div>
 					<table class="ilisttable" width="100%">
 						<tr>
+							<td class='firstRow'><span style="color:red;">*</span> 单据号:</td>
+							<td class='secRow' colspan="3">
+							<s:textfield name="outStock.ordernum" title="单据号"  rows="4" require="required" controlName="单据号"></s:textfield>
+							</td>
+						</tr>
+						
+						<tr>
 							<td class='firstRow'><span style="color: red;">*</span>
 									出库时间:</td>
 							<td class='secRow'><s:textfield id="indate"
@@ -110,23 +124,15 @@ a.confirm_button:hover {
 						</tr>
 						<tr>
 							<td  class='firstRow'><span style="color: red;">*</span>经手人:</td>
-							<td  class='secRow'>
-							<s:textfield  name="outStock.operator_id" title="经手人" controlName="经手人" /></td>
-						</tr>
-						<tr>
-							<td class='firstRow'><span style="color: red;">*</span> 保管员:</td>
-							<td class='secRow'><s:textfield  name="outStock.take_id" title="保管员" controlName="保管员" /></td>
-						</tr>
-						<tr>
-							<td class='firstRow'><span style="color: red;">*</span> 状态:</td>
-							<td class='secRow'><select name="outStock.reason" title="状态">
-									<option value="0">销售出库</option>
-									<option value="1">董事会出库</option>
-									<option value="2">借货</option>
-									<option value="3">报损</option>
-								</select>
+							<td class='secRow3' colspan="3">
+							<s:textfield title="部门" id="userdept_codeid" name="outStock.dept_code" readonly="true" />
+							<s:textfield title="部门名称" id="userdept_nameid"  name="outStock.dept_name"  readonly="true" />
+							<img class="imglink" src='<s:url value="/images/open2.gif" />' onclick="selectDept();" />
+							<span id="ajax_member_message"></span>
+							<s:select id="membermanagerid" name="outStock.operator_id" list="#{}" headerKey="" headerValue="--请选择--" />
 							</td>
 						</tr>
+						
 						<tr>
 							<td class='firstRow'><span style="color: red;">*</span>
 								出库仓库:</td>
@@ -137,13 +143,35 @@ a.confirm_button:hover {
 										<option value="<s:property value="uuid" />"/>
 										<s:property value="ware_name" />
 									</s:iterator>
-							</select></td>
+							</select>
+							<span id="borrow">借货仓库:<select name="outStock.borrowStore_id"
+								title="借货仓库">
+									<s:iterator value="borrowwares" status="sta" var="x">
+										<option value="<s:property value="uuid" />"/>
+										<s:property value="ware_name" />
+									</s:iterator>
+							</select></span>
+							</td>
 						</tr>
+						
+						<tr>
+							<td class='firstRow'><span style="color: red;">*</span> 状态:</td>
+							<td class='secRow'><select id="out" name="outStock.reason" title="状态" onchange="borrow();">
+									<option value="0">销售出库</option>
+									<option value="2">借货</option>
+									<option value="3">报损</option>
+									<option value="1">招待用酒</option>
+									<option value="4">赠酒</option>
+								</select>
+							</td>
+						</tr>
+						
 						<tr>
 							<td class='firstRow'>其它说明:</td>
 							<td class='secRow'><s:textarea name="outStock.note"
 									title="其它说明" cssStyle="width:80%;" rows="4"></s:textarea>
 						</tr>
+						
 						<tr>
 							<td colspan="20" class="buttonarea"><s:if
 									test="null == outStock && 'new' == viewFlag">
@@ -165,6 +193,95 @@ a.confirm_button:hover {
 
 </body>
 
+<script type="text/javascript">
+
+function borrow(){
+	var bo=$("#out").val();
+	if(bo==2){
+		document.getElementById('borrow').style.display='block';
+	}else{
+		document.getElementById('borrow').style.display='none';
+	}
+	
+}
+var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
+var curr_apply_dept = '${leave.leave_dept}';
+var curr_apply_user = '${leave.leave_user}';
+$(function(){
+	CommonUtil.pickrow('table1');
+	CommonUtil.pickrowAll('table1','uuidcheck');
+	if(curr_apply_dept!='') {
+		loadManagers(curr_apply_dept);
+	}
+	
+	$("#AddLeaveForm").dialog({
+	      autoOpen: false,
+	      width: 300,
+	      height: 100,
+	      modal: true
+	});
+	
+	$("#AddLeaveLink").click(function(){
+		$("#AddLeaveForm").dialog("open");
+	});
+	
+	showLeaveMold(${leave.leave_type});
+	$("#searchLeaveType").change(function(){
+		showLeaveMold($(this).val());
+	});
+	
+	$(".leave_cause_show").tooltip({
+		items: "[data]",
+		content: function() {
+			//alert($(this).attr("data"));
+			return "<div class='show_dialog'>" + $("#leave_cause" + $(this).attr("data")).html() + "</div>";
+	  }
+	});
+});
+ 
+var sobj01;
+var selectDept = function() {
+	sobj01 = new DialogIFrame({src:'<s:url namespace="/sys" action="dept_permit_select" />?objname=sobj01',title:"选择部门"});
+	sobj01.selfAction = function(val1,val2) {
+		$("#userdept_codeid").val(val1);
+		$("#userdept_nameid").val(val2);
+		loadManagers(val1);
+	};
+	sobj01.create();
+	sobj01.open();
+};
+
+function loadManagers(dept_code) {
+	var ajax = new Common_Ajax('ajax_member_message');
+	ajax.config.action_url = ajax_url_action;
+	ajax.config._success = function(data, textStatus) {
+		$("#membermanagerid").clearAllOption();
+		$("#membermanagerid").addOption("--请选择--","");
+		$.each(data, function(i, n){
+			$("#membermanagerid").addOption(n.user_name,n.uuid);
+		});
+		if(curr_apply_user!='') {
+			$("#membermanagerid").val(curr_apply_user);
+		}
+	};
+	ajax.addParameter("work", "AutoComplete");
+	ajax.addParameter("parameters", "privilege_id=QKJCJ_SYS_AJAXLOAD_USER&dept_code=" + encodeURI(dept_code));
+	ajax.sendAjax2();
+}
+
+function addLeave(p_type) {
+	var add_url = '<s:url namespace="/adm" action="leave_load"><s:param name="viewFlag">add</s:param></s:url>';
+	add_url = add_url + "&leave.leave_type="+p_type;
+	//alert(add_url);
+	location.href = add_url;
+}
+
+function showCause(s_id) {
+	alert($("#"+s_id).text());
+}
+
+
+</script>
 <script type="text/javascript">
 	var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
 	var c_mid = '<s:property value="outStock.member_id" />';
