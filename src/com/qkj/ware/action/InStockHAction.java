@@ -1,10 +1,16 @@
 package com.qkj.ware.action;
-import java.util.*;
-import org.apache.commons.logging.*;
-import org.iweb.sys.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.iweb.sys.ContextHelper;
+import org.iweb.sys.ToolsUtil;
+
 import com.opensymphony.xwork2.ActionSupport;
-import com.qkj.ware.domain.InStockH;
 import com.qkj.ware.dao.InStockHDAO;
+import com.qkj.ware.domain.InStockH;
 
 public class InStockHAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;

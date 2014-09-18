@@ -14,6 +14,7 @@
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery-1.8.3.min.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/jquery.CommonUtil.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/show_page.js" />"></script>
+<<<<<<< HEAD
 
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery.select.js" />"></script>
 <link rel="stylesheet" href="<s:url value="/include/jQuery/style.ui.smoothness/jquery-ui-1.10.3.min.css" />" />
@@ -22,6 +23,8 @@
 <script type="text/javascript" src="<s:url value="/js/common_ajax2.0.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/func/select_member.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/jquery.CommonUtil.js" />"></script>
+=======
+>>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 <script type="text/javascript">
 $(function(){
 	CommonUtil.pickrow('table1');
@@ -44,6 +47,7 @@ $(function(){
 <s:form name="form_serach" action="inStock_list"  method="get" namespace="/inStock" theme="simple">
 		<table class="ilisttable" id="serach_table" width="100%">
 			<tr>
+<<<<<<< HEAD
 			<td class='firstRow'>编号:</td>
 			<td class='secRow'><s:textfield name="inStock.uuid" title="编号" />
 			
@@ -88,6 +92,18 @@ $(function(){
 			
 			</tr>
 			
+=======
+<td class='firstRow'>订单编号:</td>
+<td class='secRow'><s:textfield name="inStock.uuid" title="订单商品号"  controlName="订单号" /></td>
+<td class='firstRow'>添加人:</td>
+<td class='secRow'><s:textfield name="inStock.add_user_name" title="操作人" controlName="操作人IP" /></td>
+</tr><tr>
+<td class='firstRow'>经手人:</td>
+<td class='secRow'><s:textfield name="inStock.operator_id" title="订单商品号"  controlName="订单商品号" /></td>
+<td class='firstRow'>保管员:</td>
+<td class='secRow'><s:textfield name="inStock.take_id" title="操作类型"  controlName="操作类型" /></td>
+</tr>
+>>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 
 			<tr>
 			<td colspan="4" class="buttonarea">
@@ -103,22 +119,35 @@ $(function(){
 	<col width="30" />
 	  <tr>
 	    <th><input name="uuidcheck" type="checkbox" /></th>
+<<<<<<< HEAD
 	    <th>编号</th>
 	    <th>单据号</th>
 	    <th>总价</th>
 	    <th>单据性质</th>
 		<th>经手人</th>
 		<th>保管员</th>
+=======
+	    <th>订单编号</th>
+		<th>经手人</th>
+		<th>保管员</th>
+		<th>其它说明</th>
+		<th>总价</th>
+>>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 		<th>添加人</th>
 		<th>添加时间</th>
 		<th>修改人</th>
 		<th>修改时间</th>
+<<<<<<< HEAD
+=======
+
+>>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 		<th>操作</th>
 	  </tr>
 <s:iterator value="inStocks" status="sta">
 	  <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>" type="pickrow">
 	    <td align="center"><input name="uuid" type="checkbox" value="<s:property value="uuid" />" /></td>
 	    <td><s:property value="uuid" /></td>
+<<<<<<< HEAD
 	    <td><s:property value="ordernum" /></td>
 	    <td><s:property value="total_price"/></td>
 	    <td>
@@ -150,6 +179,30 @@ $(function(){
 	    	[<a target="_blank" href="<s:url namespace="/inStock" action="inStock_view"><s:param name="viewFlag">view</s:param><s:param name="inStock.uuid" value="uuid"></s:param></s:url>">查看/打印</a>]
 	    
 	    	</s:if>
+=======
+		<td><s:property value="operator_id" /></td>
+		<td><s:property value="take_id" /></td>
+		<td><s:property value="note" /></td>
+		<td><s:property value="total_price" /></td>
+		<td><s:property value="add_user_name" /></td>
+		<td><s:date name="add_timer" format="yyyy-MM-dd HH:mm:ss" /></td>
+		<td><s:property value="lm_user_name" /></td>
+		<td><s:date name="lm_timer" format="yyyy-MM-dd HH:mm:ss" /></td>
+		<td align="center">
+		<s:if test="">
+			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_MDY')">
+	    	[<a href="<s:url namespace="/inStock" action="inStock_load"><s:param name="viewFlag">mdy</s:param><s:param name="inStock.uuid" value="uuid"></s:param></s:url>">修改</a>]
+	    	</s:if>
+	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_DEL')">
+	    	[<a href="<s:url namespace="/inStock" action="inStock_del"><s:param name="inStock.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>]
+	    	</s:if>	
+	    </s:if>
+	    <s:else>
+	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_PUTSEAL') && confirm==1">
+	    	[<a target="_blank" href="<s:url namespace="/inStock" action="inStock_view"><s:param name="viewFlag">view</s:param><s:param name="inStock.uuid" value="uuid"></s:param></s:url>">查看/打印</a>]
+	    	</s:if>
+	    </s:else>	   
+>>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 	    </td>
 	  </tr>
 </s:iterator>

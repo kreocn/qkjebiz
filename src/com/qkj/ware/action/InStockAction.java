@@ -1,5 +1,5 @@
-
 package com.qkj.ware.action;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -14,11 +14,9 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.qkj.manage.dao.ProductDAO;
 import com.qkj.manage.domain.Product;
 import com.qkj.ware.dao.InDetailDAO;
-import com.qkj.ware.dao.InDetailHDAO;
 import com.qkj.ware.dao.InStockDAO;
 import com.qkj.ware.dao.InStockHDAO;
 import com.qkj.ware.dao.StockDAO;
-import com.qkj.ware.dao.WarepowerDAO;
 import com.qkj.ware.domain.InDetail;
 import com.qkj.ware.domain.InDetailH;
 import com.qkj.ware.domain.InStock;
@@ -33,7 +31,7 @@ public class InStockAction extends ActionSupport {
 	private static Log log = LogFactory.getLog(InStockAction.class);
 	private Map<String, Object> map = new HashMap<String, Object>();
 	private InStockDAO dao = new InStockDAO();
-	
+
 	private InStock inStock;
 	private Warepowers warep;
 	private InStockH inStockh;
@@ -51,7 +49,6 @@ public class InStockAction extends ActionSupport {
 	private int currPage;
 	private Stock newStock;
 
-	
 	public Stock getNewStock() {
 		return newStock;
 	}
@@ -115,7 +112,7 @@ public class InStockAction extends ActionSupport {
 	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
 	}
-	
+
 	public int getCurrPage() {
 		return currPage;
 	}
@@ -123,7 +120,6 @@ public class InStockAction extends ActionSupport {
 	public void setCurrPage(int currPage) {
 		this.currPage = currPage;
 	}
-	
 
 	public Warepowers getWarep() {
 		return warep;
@@ -148,7 +144,6 @@ public class InStockAction extends ActionSupport {
 	public void setWares(List<Ware> wares) {
 		this.wares = wares;
 	}
-	
 
 	public List<Product> getProducts() {
 		return products;
@@ -157,7 +152,6 @@ public class InStockAction extends ActionSupport {
 	public void setProducts(List<Product> products) {
 		this.products = products;
 	}
-	
 
 	public List<InDetail> getInDetails() {
 		return inDetails;
@@ -166,8 +160,7 @@ public class InStockAction extends ActionSupport {
 	public void setInDetails(List<InDetail> inDetails) {
 		this.inDetails = inDetails;
 	}
-	
-	
+
 	public InStockH getInStockh() {
 		return inStockh;
 	}
@@ -187,39 +180,39 @@ public class InStockAction extends ActionSupport {
 	public String list() throws Exception {
 		ContextHelper.isPermit("QKJ_WARE_INSTOCK_LIST");
 		String u = ContextHelper.getUserLoginUuid();
-		String code=ContextHelper.getUserLoginDept();
-		WareDAO wd=new WareDAO();
+		String code = ContextHelper.getUserLoginDept();
+		WareDAO wd = new WareDAO();
 		try {
 			map.clear();
-			if (inStock != null){
-				if(inStock!=null&&inStock.getReason()==-1){
+			if (inStock != null) {
+				if (inStock != null && inStock.getReason() == -1) {
 					inStock.setReason(null);
 				}
-				if(inStock!=null&&inStock.getSend()==-1){
+				if (inStock != null && inStock.getSend() == -1) {
 					inStock.setSend(null);
 				}
 				map.putAll(ToolsUtil.getMapByBean(inStock));
-			}	
+			}
 			map.putAll(ContextHelper.getDefaultRequestMap4Page());
 			this.setPageSize(ContextHelper.getPageSize(map));
 			this.setCurrPage(ContextHelper.getCurrPage(map));
-			
-			if(ContextHelper.isAdmin()){//管理员
+
+			if (ContextHelper.isAdmin()) {// 管理员
 				this.setInStocks(dao.list(map));
 				this.setWares(wd.list(null));
-			}else{
-				map.put("username",u);
+			} else {
+				map.put("username", u);
 				map.put("dept_code", code);
 				this.setInStocks(dao.listbypo(map));
 				map.clear();
-				map.put("username",u);
+				map.put("username", u);
 				map.put("dept_code", code);
 				map.put("sel", 1);
 				this.setWares(wd.listByPower(map));
 			}
-			
+
 			this.setInStock(null);
-			
+
 			this.setRecCount(dao.getResultCount());
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
@@ -227,14 +220,14 @@ public class InStockAction extends ActionSupport {
 		}
 		return SUCCESS;
 	}
-	
+
 	public String relist() throws Exception {
 		return SUCCESS;
 	}
 
 	public String load() throws Exception {
 		String u = ContextHelper.getUserLoginUuid();
-		String code=ContextHelper.getUserLoginDept();
+		String code = ContextHelper.getUserLoginDept();
 		try {
 			if (null == viewFlag) {
 				this.setInStock(null);
@@ -244,7 +237,8 @@ public class InStockAction extends ActionSupport {
 				wareByPower(u, code);
 				ProductDAO pdao = new ProductDAO();
 				this.setProducts(pdao.list(null));
-			} else if ("mdy".equals(viewFlag) || "view".equals(viewFlag) || "print".equals(viewFlag)) {
+			} else if ("mdy".equals(viewFlag) || "view".equals(viewFlag)
+					|| "print".equals(viewFlag)) {
 				map.clear();
 				map.put("uuid", inStock.getUuid());
 				if (null == map.get("uuid"))
@@ -253,16 +247,16 @@ public class InStockAction extends ActionSupport {
 					if ("view".equals(viewFlag)) {
 						map.put("status", 2);
 					}
-					this.setInStock((InStock)dao.list(map).get(0));
+					this.setInStock((InStock) dao.list(map).get(0));
 					wareByPower(u, code);
 					ProductDAO pdao = new ProductDAO();
 					this.setProducts(pdao.list(null));
-					InDetailDAO idao=new InDetailDAO();
+					InDetailDAO idao = new InDetailDAO();
 					map.clear();
 					map.put("lading_id", inStock.getUuid());
 					this.setInDetails(idao.list(map));
 				}
-				
+
 			} else {
 				this.setInStock(null);
 				setMessage("无操作类型!");
@@ -275,12 +269,12 @@ public class InStockAction extends ActionSupport {
 	}
 
 	private void wareByPower(String u, String code) {
-		WareDAO wd=new WareDAO();
-		if(ContextHelper.isAdmin()){//管理员
+		WareDAO wd = new WareDAO();
+		if (ContextHelper.isAdmin()) {// 管理员
 			this.setWares(wd.list(null));
-		}else{
+		} else {
 			map.clear();
-			map.put("username",u);
+			map.put("username", u);
 			map.put("dept_code", code);
 			map.put("add", 1);
 			this.setWares(wd.listByPower(map));
@@ -292,10 +286,10 @@ public class InStockAction extends ActionSupport {
 		try {
 			Date d = new Date();
 			String u = ContextHelper.getUserLoginUuid();
-			if(inStock.getReason().equals(1)){
-			}else if(inStock.getReason().equals(2)){
+			if (inStock.getReason().equals(1)) {
+			} else if (inStock.getReason().equals(2)) {
 				inStock.setStore_id(6);
-			}else{
+			} else {
 			}
 			inStock.setTake_id(u);
 			inStock.setOperator_id(u);
@@ -314,8 +308,8 @@ public class InStockAction extends ActionSupport {
 	public String save() throws Exception {
 		ContextHelper.isPermit("QKJ_WARE_INSTOCK_MDY");
 		try {
-			//inStock.setLm_user(ContextHelper.getUserLoginUuid());
-			//inStock.setLm_time(new Date());
+			// inStock.setLm_user(ContextHelper.getUserLoginUuid());
+			// inStock.setLm_time(new Date());
 			Date d = new Date();
 			String u = ContextHelper.getUserLoginUuid();
 			inStock.setLm_timer(new Date());
@@ -327,29 +321,29 @@ public class InStockAction extends ActionSupport {
 		}
 		return SUCCESS;
 	}
-	
+
 	public String cencle() throws Exception {
 		ContextHelper.isPermit("QKJ_WARE_INSTOCK_CENCLE");
 		try {
 			inStock.setSend(1);
 			dao.send(inStock);
-			//删除详表 
-			InDetailDAO idao=new InDetailDAO();
+			// 删除详表
+			InDetailDAO idao = new InDetailDAO();
 			map.clear();
 			map.put("lading_id", inStock.getUuid());
 			this.setInDetails(idao.list(map));
-			if(inDetails!=null){
-				for(int i=0;i<inDetails.size();i++){
+			if (inDetails != null) {
+				for (int i = 0; i < inDetails.size(); i++) {
 					this.setInDetail(inDetails.get(i));
 					map.clear();
 					map.put("product_id", inDetail.getProduct_id());
 					map.put("store_id", inStock.getStore_id());
-					StockDAO stockd=new StockDAO();
-					this.setStock((Stock)stockd.list(map).get(0));
-					
-					stock.setQuantity(stock.getQuantity()-inDetail.getNum());
-					stockd.save(stock);//改变库存
-					
+					StockDAO stockd = new StockDAO();
+					this.setStock((Stock) stockd.list(map).get(0));
+
+					stock.setQuantity(stock.getQuantity() - inDetail.getNum());
+					stockd.save(stock);// 改变库存
+
 				}
 			}
 		} catch (Exception e) {
@@ -362,11 +356,10 @@ public class InStockAction extends ActionSupport {
 	public String del() throws Exception {
 		ContextHelper.isPermit("QKJ_WARE_INSTOCK_DEL");
 		try {
-			InStockHDAO hdao=new InStockHDAO();
-			//删除详表 
-			InDetailDAO idao=new InDetailDAO();
-			
-			
+			InStockHDAO hdao = new InStockHDAO();
+			// 删除详表
+			InDetailDAO idao = new InDetailDAO();
+
 			map.clear();
 			map.put("lading_id", inStock.getUuid());
 			idao.delLading(map);
@@ -381,18 +374,18 @@ public class InStockAction extends ActionSupport {
 
 	private void setInDetailh(InDetail inDetail2) {
 		// TODO Auto-generated method stub
-		inDetailh=new InDetailH();
+		inDetailh = new InDetailH();
 		inDetailh.setLading_id(inDetail2.getLading_id());
 		inDetailh.setNum(inDetail2.getNum());
 		inDetailh.setPrice(inDetail2.getPrice());
 		inDetailh.setProduct_id(inDetail2.getProduct_id());
 		inDetailh.setTotal(inDetail2.getTotal());
-		
+
 	}
 
 	private void setInStockh(InStock inStock2) {
 		// TODO Auto-generated method stub
-		inStockh=new InStockH();
+		inStockh = new InStockH();
 		inStockh.setAdd_timer(inStock2.getAdd_timer());
 		inStockh.setAdd_user(inStock2.getAdd_user());
 		inStockh.setConfirm(inStock2.getConfirm());
@@ -409,59 +402,58 @@ public class InStockAction extends ActionSupport {
 		inStockh.setTotal_price(inStock2.getTotal_price());
 		inStockh.setOrdernum(inStock2.getOrdernum());
 	}
-	
-	//确认
-		public String sure() throws Exception {
-				ContextHelper.isPermit("QKJ_WARE_INSTOCK_ADD");
-				String u = ContextHelper.getUserLoginUuid();
-				try {
-					//修改库存
-					this.setInStock((InStock)dao.get(inStock.getUuid()));
-					
-					InDetailDAO idao=new InDetailDAO();
+
+	// 确认
+	public String sure() throws Exception {
+		ContextHelper.isPermit("QKJ_WARE_INSTOCK_ADD");
+		String u = ContextHelper.getUserLoginUuid();
+		try {
+			// 修改库存
+			this.setInStock((InStock) dao.get(inStock.getUuid()));
+
+			InDetailDAO idao = new InDetailDAO();
+			map.clear();
+			map.put("lading_id", inStock.getUuid());
+			this.setInDetails(idao.list(map));
+
+			if (inDetails != null && inDetails.size() > 0) {
+				for (int i = 0; i < inDetails.size(); i++) {
+					inDetail = new InDetail();
+					this.setInDetail(inDetails.get(i));
+					// 查询库存同一仓库中是否有此商品
+					StockDAO stockdao = new StockDAO();
 					map.clear();
-					map.put("lading_id", inStock.getUuid());
-					this.setInDetails(idao.list(map));
-					
-					if(inDetails!=null&&inDetails.size()>0){
-						for(int i=0;i<inDetails.size();i++){
-							inDetail=new InDetail();
-							this.setInDetail(inDetails.get(i));
-							//查询库存同一仓库中是否有此商品
-							StockDAO stockdao=new StockDAO();
-							map.clear();
-							map.put("product_id", inDetail.getProduct_id());
-							map.put("store_id", inStock.getStore_id());
-							this.setStock((Stock)stockdao.fingByPro(map));
-							
-							//填加库存信息(己有修改库存，没有填加)
-							newStock=new Stock();
-							if(stock!=null){
-								stock.setQuantity(stock.getQuantity()+inDetail.getNum());
-								stockdao.save(stock);
-							}else{
-								int pro=inDetail.getProduct_id();
-								int num=inDetail.getNum();
-								int stor=inStock.getStore_id();
-								newStock.setProduct_id(pro);
-								newStock.setQuantity(num);
-								newStock.setStore_id(stor);
-								stockdao.add(newStock);
-							}
-						}
+					map.put("product_id", inDetail.getProduct_id());
+					map.put("store_id", inStock.getStore_id());
+					this.setStock((Stock) stockdao.fingByPro(map));
+
+					// 填加库存信息(己有修改库存，没有填加)
+					newStock = new Stock();
+					if (stock != null) {
+						stock.setQuantity(stock.getQuantity()
+								+ inDetail.getNum());
+						stockdao.save(stock);
+					} else {
+						int pro = inDetail.getProduct_id();
+						int num = inDetail.getNum();
+						int stor = inStock.getStore_id();
+						newStock.setProduct_id(pro);
+						newStock.setQuantity(num);
+						newStock.setStore_id(stor);
+						stockdao.add(newStock);
 					}
-					
-					inStock.setConfirm(1);
-					inStock.setConname(u);
-					inStock.setContime(new Date());
-					dao.sure(inStock);
-					
-					
-					
-				} catch (Exception e) {
-					log.error(this.getClass().getName() + "!save 数据更新失败:", e);
-					throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
 				}
-				return SUCCESS;
 			}
+
+			inStock.setConfirm(1);
+			inStock.setConname(u);
+			inStock.setContime(new Date());
+			dao.sure(inStock);
+
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
 }

@@ -1,17 +1,20 @@
 package com.qkj.ware.action;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import org.apache.commons.logging.*;
-import org.iweb.sys.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.iweb.sys.ContextHelper;
+import org.iweb.sys.ToolsUtil;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.qkj.ware.domain.InDetail;
-import com.qkj.ware.domain.InDetailH;
 import com.qkj.ware.dao.InDetailDAO;
 import com.qkj.ware.dao.InDetailHDAO;
 import com.qkj.ware.dao.InStockDAO;
+import com.qkj.ware.domain.InDetail;
+import com.qkj.ware.domain.InDetailH;
 import com.qkj.ware.domain.InStock;
-import com.qkj.ware.dao.StockDAO;
 import com.qkj.ware.domain.Stock;
 
 public class InDetailAction extends ActionSupport {

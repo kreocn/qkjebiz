@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.iweb.sys.ActionAttr;
 import org.iweb.sys.ContextHelper;
 import org.iweb.sys.Parameters;
 import org.iweb.sys.ToolsUtil;
@@ -18,7 +19,7 @@ import com.qkj.manage.dao.ProcessDAO;
 import com.qkj.manage.domain.Apply;
 import com.qkj.manage.domain.Approve;
 
-public class ApplyAction extends ActionSupport {
+public class ApplyAction extends ActionSupport implements ActionAttr {
 	private static final long serialVersionUID = 1L;
 	private static Log log = LogFactory.getLog(ApplyAction.class);
 	private Map<String, Object> map = new HashMap<String, Object>();
@@ -31,9 +32,14 @@ public class ApplyAction extends ActionSupport {
 	private String isApprover;
 	private String message;
 	private String viewFlag;
+	private String path = "<a href='/manager/main'>首页</a>&nbsp;&gt;&nbsp;至事由管理";
 	private int recCount;
 	private int pageSize;
 	private int currPage;
+
+	public String getPath() {
+		return path;
+	}
 
 	public String getIsApprover() {
 		return isApprover;

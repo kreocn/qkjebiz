@@ -53,6 +53,8 @@
 				<s:if test='3==outStock.send'>待审核</s:if>
 				<s:if test='4==outStock.send'>结案-<s:date name="lading.close_time" format="yyyy-MM-dd HH:mm:ss" /></s:if>
 				<s:if test='5==outStock.send'>已取消订单</s:if>
+				<s:if test='5==outStock.send'><span class="message_error">未出货</span></s:if><s:if test='1==lading.out_flag'>已出货</s:if>
+				<s:if test='6==outStock.send'><span class="message_error">未返利</span></s:if><s:if test='1==lading.rebates_flag'><span class="message_pass">返利中</span></s:if><s:if test='2==lading.rebates_flag'>已返利</s:if>
 			</td>
 		</tr>
 		</s:if>
@@ -73,7 +75,25 @@
 							</s:if>
 							<s:if test="%{outStock.reason==3 }">报损
 							</s:if>
-							<s:if test="%{outStock.reason==4 }">赠酒
+							<s:if test="%{outStock.reason==4 }">赠酒</s:if>
+		<td class='secRow'><s:property value="outStock.operator_id" /></td>
+		<td class='firstRow'><span style="color:red;">*</span> 保管员:</td>
+		<td class='secRow' colspan="3"><s:property value="outStock.take_id" /></td>
+		</tr>
+		<tr>
+			<td class='firstRow'><span style="color:red;">*</span> 状态:</td>
+			<td class='secRow'>
+							<s:if test="%{outStock.reason==0}">
+							 销售出库
+							</s:if>
+							<s:if test="%{outStock.reason==1}">
+							董事会出库
+							</s:if>
+							<s:if test="%{outStock.reason==2}">
+							借货
+							</s:if>
+							<s:if test="%{outStock.reason==3}">
+							 报损
 							</s:if>
 			</td>
 			<td class='firstRow'><span style="color:red;">*</span> 出库仓库:</td>
@@ -175,7 +195,7 @@
 	<th>单价</th>
 	<th>订单数量</th>
 	<th>实际价格</th>
-
+	<th>操作</th>
   </tr>
 <s:iterator value="outDetails" status="sta">
   <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>">

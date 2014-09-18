@@ -1,14 +1,18 @@
 package com.qkj.ware.action;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import org.apache.commons.logging.*;
-import org.iweb.sys.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.iweb.sys.ContextHelper;
+import org.iweb.sys.ToolsUtil;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.qkj.manage.dao.ProductDAO;
 import com.qkj.manage.domain.Product;
-import com.qkj.ware.domain.Stock;
 import com.qkj.ware.dao.StockDAO;
+import com.qkj.ware.domain.Stock;
 import com.qkjsys.ebiz.dao.WareDAO;
 import com.qkjsys.ebiz.domain.Ware;
 

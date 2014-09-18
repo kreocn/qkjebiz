@@ -9,7 +9,11 @@ public class AllotDAO extends AbstractDAO {
 	}
 	
 	public List listPower(Map<String, Object> map) {
+<<<<<<< HEAD
 		setCountMapid("allot_getAllotsCountsByPower");
+=======
+		setCountMapid("allot_getAllotsCounts");
+>>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 		return super.list("allot_getbyPower", map);
 	}
 	

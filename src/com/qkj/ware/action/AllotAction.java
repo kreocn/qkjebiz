@@ -191,6 +191,7 @@ public class AllotAction extends ActionSupport {
 		String code=ContextHelper.getUserLoginDept();
 		try {
 			map.clear();
+<<<<<<< HEAD
 			if (allot != null){
 				if(allot.getState()==-1){
 					map.putAll(ToolsUtil.getMapByBean(allot));
@@ -200,6 +201,10 @@ public class AllotAction extends ActionSupport {
 				}
 				
 			}
+=======
+			if (allot != null)
+				map.putAll(ToolsUtil.getMapByBean(allot));
+>>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 			map.putAll(ContextHelper.getDefaultRequestMap4Page());
 			this.setPageSize(ContextHelper.getPageSize(map));
 			this.setCurrPage(ContextHelper.getCurrPage(map));
@@ -213,7 +218,11 @@ public class AllotAction extends ActionSupport {
 			
 			this.setRecCount(dao.getResultCount());
 			
+<<<<<<< HEAD
 			wareByPower(u, code,"1");
+=======
+			wareByPower(u, code);
+>>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 			
 			this.setAllot(null);
 			
@@ -237,7 +246,11 @@ public class AllotAction extends ActionSupport {
 				setMessage("你没有选择任何操作!");
 			} else if ("add".equals(viewFlag)) {
 				this.setAllot(null);
+<<<<<<< HEAD
 				wareByPower(u, code,null);
+=======
+				wareByPower(u, code);
+>>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 				
 			} else if ("mdy".equals(viewFlag)) {
 				map.clear();
@@ -273,7 +286,11 @@ public class AllotAction extends ActionSupport {
 					this.setAllotDetails(adao.list(map));
 					
 					//判断是否有确认收货权限
+<<<<<<< HEAD
 					/*int id=allot.getGoldid();
+=======
+					int id=allot.getGoldid();
+>>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 					map.clear();
 					map.put("useruuid",u);
 					if(ContextHelper.isAdmin()){//管理员
@@ -291,7 +308,11 @@ public class AllotAction extends ActionSupport {
 							
 						}
 						
+<<<<<<< HEAD
 					}*/
+=======
+					}
+>>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 					
 				} else {
 					this.setAllot(null);
@@ -307,6 +328,7 @@ public class AllotAction extends ActionSupport {
 		return SUCCESS;
 	}
 
+<<<<<<< HEAD
 	private void wareByPower(String u, String code,String flag) {
 		//入仓库
 		WareDAO wd=new WareDAO();
@@ -314,6 +336,20 @@ public class AllotAction extends ActionSupport {
 			map.clear();
 			map.put("bug","bug");
 			this.setWares(wd.list(map));
+=======
+	private void wareByPower(String u, String code) {
+		//入仓库
+		WareDAO wd=new WareDAO();
+		if(ContextHelper.isAdmin()){//管理员
+			this.setWares(wd.list(null));
+		}else{
+			map.clear();
+			map.put("username",u);
+			map.put("dept_code", code);
+			map.put("add", 1);
+			map.put("bug","bug");
+			this.setWares(wd.listByPower(map));
+>>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 		}
 		this.setAllot(null);
 		//出仓库
@@ -323,11 +359,15 @@ public class AllotAction extends ActionSupport {
 			map.clear();
 			map.put("username",u);
 			map.put("dept_code", code);
+<<<<<<< HEAD
 			if(flag==null){
 				map.put("edit", 1);
 			}else{
 				map.put("sel", 1);
 			}
+=======
+			map.put("add", 1);
+>>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 			this.setWares(wd.listByPower(map));
 		}
 	}
@@ -337,7 +377,11 @@ public class AllotAction extends ActionSupport {
 		try {
 			Date d = new Date();
 			String u = ContextHelper.getUserLoginUuid();
+<<<<<<< HEAD
 			//allot.setOrdernum(ToolsUtil.getCommonUUID("A"));
+=======
+			allot.setOrdernum(ToolsUtil.getCommonUUID("A"));
+>>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 			allot.setLm_user(u);
 			allot.setAdd_user(u);
 			allot.setLm_timer(new Date());
@@ -396,8 +440,11 @@ public class AllotAction extends ActionSupport {
 				//状态为已发货
 				allot.setUuid(allot.getUuid());
 				allot.setState(1);
+<<<<<<< HEAD
 				allot.setFreDate(new Date());
 				allot.setFreUser(u);
+=======
+>>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 				dao.updateState(allot);
 			}
 			
@@ -412,13 +459,20 @@ public class AllotAction extends ActionSupport {
 	//收货
 	public String delivery() throws Exception{
 		AllotDetailDAO addao=new AllotDetailDAO();
+<<<<<<< HEAD
 		String u = ContextHelper.getUserLoginUuid();
+=======
+		int sourceId=0;
+>>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 		map.clear();
 		map.put("lading_id", allot.getOrdernum());
 		this.setAllotDetails(addao.list(map));
 		this.setAllot((Allot)dao.list(map).get(0));
+<<<<<<< HEAD
 		int godeid=allot.getGoldid();
 		int sourceid=allot.getSourceid();
+=======
+>>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 		if(allotDetails.size()>0){
 			for(int i=0;i<allotDetails.size();i++){
 				this.setAllotDetail(allotDetails.get(i));
@@ -426,6 +480,10 @@ public class AllotAction extends ActionSupport {
 				this.setStock((Stock)sdao.get(allotDetail.getStock_id()));
 				int totle=stock.getQuantity();
 				//调出仓库－库存
+<<<<<<< HEAD
+=======
+				sourceId=stock.getUuid();
+>>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 				stock.setQuantity(totle-allotDetail.getNum());
 				map.clear();
 				map.put("quantity", stock.getQuantity());
@@ -434,7 +492,11 @@ public class AllotAction extends ActionSupport {
 				//调入仓库+库存(如果调入仓库没有此商品则填加记录，如果有修改库存)
 				map.clear();
 				map.put("product_id", stock.getProduct_id());
+<<<<<<< HEAD
 				map.put("store_id", godeid);
+=======
+				map.put("store_id", allot.getGoldid());
+>>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 				this.setStocks(sdao.list(map));
 				if(stocks.size()>0){
 					this.setStock(stocks.get(0));
@@ -454,17 +516,24 @@ public class AllotAction extends ActionSupport {
 			//取消冻结库存
 			StockDAO sdao=new StockDAO();
 			map.clear();
+<<<<<<< HEAD
 			map.put("uuid", sourceid);
+=======
+			map.put("uuid", sourceId);
+>>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 			map.put("freezeNum", 0);
 			sdao.updateFreezeNumById(map);
 			
 			//状态为已收货
 			allot.setUuid(allot.getUuid());
 			allot.setState(3);
+<<<<<<< HEAD
 			allot.setDelivery(new Date());
 			allot.setFreDate(allot.getFreDate());
 			allot.setDeliUser(u);
 			allot.setFreUser(allot.getFreUser());
+=======
+>>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 			dao.updateState(allot);
 		}
 		return SUCCESS;

@@ -50,10 +50,17 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 	<div class="itabletitle">
 		<span class="title1">盘点列表</span>
 		<span class="extra1">
+<<<<<<< HEAD
 			<a href="<s:url action="check_list" namespace="/check" />" >盘点列表</a>
 			<%-- <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_CHECK_PUTSEAL')">
 	    	<a target="_blank" href="<s:url namespace="/check" action="check_view"><s:param name="viewFlag">view</s:param><s:param name="check.uuid" value="uuid"></s:param></s:url>">查看/打印</a>
 	    	</s:if> --%>
+=======
+			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_CHECK_ADD')">
+			<a id="addItem" onclick="commain();" >添加盘点</a>
+			<!-- <a href="<s:url namespace="/check" action="check_load"><s:param name="viewFlag">add</s:param></s:url>" >添加盘点</a> -->
+			</s:if>
+>>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 		</span>
 	</div>	
 	<div class="ilistsearch">
@@ -99,7 +106,11 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 		<td><s:property value="num" /></td>
 
 		<td align="center">
+<<<<<<< HEAD
 			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_CHECK_MDY')">
+=======
+			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_CHECK')">
+>>>>>>> feb9453d51ca1c99062b5b6bd220313572c120f5
 	    	[<a href="<s:url namespace="/check" action="check_load"><s:param name="viewFlag">mdy</s:param><s:param name="check.uuid" value="uuid"></s:param></s:url>">修改</a>]
 	    	</s:if>
 	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_CHECK_DEL')">
