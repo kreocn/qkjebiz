@@ -104,11 +104,11 @@ display: none;
         <div class="label_hang">
             <div class="label_ltit">状态:</div>
             <div class="label_rwben2">
-            	<span class="label_rwb">
-            	<s:select name="apply.status_sp" cssClass="selectKick" title="状态" headerKey="" headerValue="-申请状态-" list="#{-1:'已作废',0:'新申请',5:'审核退回',10:'待审核',20:'大区经理已审',25:'销管经理已审',30:'运营总监已审'}" />
+            	<span class="label_rwb iselect">
+            	<s:select name="apply.status_sp" title="状态" headerKey="" headerValue="-申请状态-" list="#{-1:'已作废',0:'新申请',5:'审核退回',10:'待审核',20:'大区经理已审',25:'销管经理已审',30:'运营总监已审'}" />
 				</span>
-				<span class="label_rwb">
-				<s:select name="apply.ship_status" cssClass="selectKick" headerKey="" headerValue="-发货状态-" list="#{0:'未发货',10:'已发货',20:'已受理' }" />
+				<span class="label_rwb iselect">
+				<s:select name="apply.ship_status" headerKey="" headerValue="-发货状态-" list="#{0:'未发货',10:'已发货',20:'已受理' }" />
             	</span>
             </div>
         </div>
@@ -207,7 +207,7 @@ display: none;
         </div>
         <div class="label_hang">
             <div class="label_ltit">发货状态:</div>
-            <div class="label_rwben"><s:select id="form_apply_ship_status" name="apply.ship_status" list="#{0:'未发货',10:'已发货',20:'已受理' }" /></div>
+            <div class="label_rwben iselect"><s:select id="form_apply_ship_status" name="apply.ship_status" list="#{0:'未发货',10:'已发货',20:'已受理' }" /></div>
         </div>
 		<div class="label_hang">
             <div class="label_ltit">出库日期:</div>

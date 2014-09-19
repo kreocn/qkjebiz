@@ -6,7 +6,6 @@
 <link rel="stylesheet" href="<c:url value="/include/jQuery/style.ui.smoothness/jquery-ui-1.10.3.min.css" />" />
 <link rel="stylesheet" href="<c:url value="/css/v0.1/style.css" />" />
 <link rel="stylesheet" href="<c:url value="/css/v0.1/validationEngine.jquery.css" />" />
-<link rel="stylesheet" href="<c:url value="/css/v0.1/jquery.dropkick.css" />" />
 <link rel="stylesheet" href="<c:url value="/css/animate.css" />" />
 <link rel="stylesheet" href="<c:url value="/include/jQuery/stylesheets/jquery.xhupload.css" />" />
 <link rel="stylesheet" href="<c:url value="/css/v0.1/demo.css" />" />
@@ -23,8 +22,6 @@
 <script type="text/javascript" src="<c:url value="/js/v0.1/common.js" />"></script>
 <script type="text/javascript" src="<c:url value="/js/v0.1/demo.js" />"></script>
 <script type="text/javascript" src="<c:url value="/js/v0.1/loading.js" />"></script>
-<script type="text/javascript" src="<c:url value="/js/v0.1/dropkick.min.js" />"></script>
-<script type="text/javascript" src="<c:url value="/js/v0.1/dropkick.jquery.js" />"></script>
 <script type="text/javascript" src="<c:url value="/js/v0.1/jquery.inputnote.js" />"></script>
 <script type="text/javascript" src="<c:url value="/js/jquery.CommonUtil.js" />"></script>
 <script type="text/javascript" src="<c:url value="/js/common_ajax2.0.js" />"></script>

@@ -18,9 +18,6 @@ $(document).ready(function(){
 	$(".validForm").validationEngine();
 	/* 表单提示专用 */
 	$(".inputNote").inputNote();
-	/* 美化select */
-	$(".selectKick").dropkick({ mobile : true });
-	// alert(dk_Array.length);
 	/* 生成编辑框 */
 	createHtmlEditor(".xheditorArea");
 	/* 设置"更多条件" */

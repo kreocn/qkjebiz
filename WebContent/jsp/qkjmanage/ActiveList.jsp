@@ -54,48 +54,52 @@ cursor: pointer;
         <div class="label_hang">
             <div class="label_ltit">申请人:</div>
             <div class="label_rwben label_rwb">
-            	<s:select id="membermanagerid"  cssClass="selectKick" name="active.apply_user" list="#{}" headerKey="" headerValue="--请选择--" />
+            	<div class="iselect">
+            	<s:select id="membermanagerid" cssClass="selectKick" name="active.apply_user" list="#{}" headerKey="" headerValue="--请选择--" />
+            	</div>
             </div>
 		</div>
 		<div class="label_hang">
             <div class="label_ltit">活动状态:</div>
-            <div class="label_rwben label_rwb"><s:select name="active.status" cssClass="selectKick" headerKey="" headerValue="-活动状态-" list="#{0:'新申请',1:'申请审批中',2:'申请通过',3:'开始结案',4:'结案审批中',5:'结案通过'}" /></div>
+            <div class="label_rwben label_rwb"><div class="iselect"><s:select name="active.status" cssClass="selectKick" headerKey="" headerValue="-活动状态-" list="#{0:'新申请',1:'申请审批中',2:'申请通过',3:'开始结案',4:'结案审批中',5:'结案通过'}" /></div></div>
         </div>
         <div class="label_hang">
             <div class="label_ltit">(申)销售状态:</div>
-            <div class="label_rwben label_rwb"><s:select name="active.sd_status" cssClass="selectKick"
+            <div class="label_rwben label_rwb"><div class="iselect"><s:select name="active.sd_status" cssClass="selectKick"
 				 list="#{0:'新单',5:'退回',10:'待审核',30:'大区经理已审',40:'运营总监已审',50:'业务副总已审',60:'总经理已审'}"
-				 headerKey="" headerValue="--请选择--" />
+				 headerKey="" headerValue="--请选择--" /></div>
             </div>
         </div>
         <div class="label_hang">
             <div class="label_ltit">(申)销管状态:</div>
-            <div class="label_rwben label_rwb"><s:select name="active.smd_status" cssClass="selectKick"
+            <div class="label_rwben label_rwb"><div class="iselect"><s:select name="active.smd_status" cssClass="selectKick"
 				 list="#{0:'新单/未签收',5:'退回',10:'已签收',30:'销管经理已审',50:'销管副总已审'}"
-				 headerKey="" headerValue="--请选择--" />
+				 headerKey="" headerValue="--请选择--" /></div>
             </div>
         </div>
         
         <div class="label_hang">
             <div class="label_ltit">(结)销售状态:</div>
-            <div class="label_rwben label_rwb">
+            <div class="label_rwben label_rwb"><div class="iselect">
             	<s:select name="active.close_sd_status" cssClass="selectKick"
 				 list="#{0:'新单',5:'退回',10:'待审核',30:'大区经理已审',40:'运营总监已审',50:'业务副总已审',60:'总经理已审'}"
-				 headerKey="" headerValue="--请选择--" />
+				 headerKey="" headerValue="--请选择--" /></div>
             </div>
         </div>
         <div class="label_hang">
             <div class="label_ltit">(结)销管状态:</div>
-            <div class="label_rwben label_rwb">
+            <div class="label_rwben label_rwb"><div class="iselect">
             	<s:select name="active.close_smd_status" cssClass="selectKick"
 				 list="#{0:'新单/未签收',5:'退回',10:'已签收',30:'销管经理已审',50:'销管副总已审'}"
-				 headerKey="" headerValue="--请选择--" />
+				 headerKey="" headerValue="--请选择--" /></div>
             </div>
         </div>
         <div class="label_hang">
             <div class="label_ltit">发货状态:</div>
             <div class="label_rwben label_rwb">
+            	<div class="iselect">
             	<s:select name="active.ship_status"  cssClass="selectKick" headerKey="" headerValue="-发货状态-" list="#{0:'未发货',10:'已发货',99:'其他' }" />
+            	</div>
             </div>
         </div>
         <div class="label_hang">
@@ -310,7 +314,6 @@ $(function(){
 		$(".ship_info").bind("click",function(){
 			setShipVal($(this).attr("data"));
 			$("#mdyActiveShipInfoForm").dialog("open");
-			//alert($(this).attr("title"));
 		});
 	}
 	$("#mdyActiveShipInfoForm").dialog({

@@ -337,6 +337,14 @@ a {
 	white-space: nowrap; word-break: break-all;
 }
 
+.dn {
+	display: none;
+}
+
+.cr {
+	color: #FF0000;
+}
+
 .note_area {
 	border: 1px solid #fefefe; border-radius: 5px; box-shadow: 0px 0px 5px 0px #909090 inset; padding: 5px;
 }
@@ -362,12 +370,6 @@ a {
 	margin: 0; outline: none; box-shadow: 0px 0px 5px 0px #909090 inset;
 }
 
-/*
-.input-a select {
-	width: 100%; font-size: 14px; border-radius: 5px; border: none; border: 1px solid #fefefe; padding: 6px 4px; margin: 0; outline: none;
-	box-shadow: 0px 0px 5px 0px #909090 inset; appearance: none; -webkit-appearance: none; -moz-appearance: none; height: 36px;
-}
-*/
 .input-a textarea {
 	width: 100%; font-size: 14px; border-radius: 5px; border: none; border: 1px solid #fefefe; padding: 5px 0px; margin: 0; outline: none;
 	box-shadow: 0px 0px 5px 0px #909090 inset; overflow-y: auto; overflow-x: hidden;
@@ -457,6 +459,28 @@ input[type="button"].input-blue,input[type="submit"].input-blue,input[type="rese
 .regular-radio+label:active,.regular-radio:checked+label:active {
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px 1px 3px rgba(0, 0, 0, 0.1);
 }
+/*select*/
+.iselect {
+	display: inline-block; overflow: hidden; position: relative; background-color: white; border: 1px solid #fefefe; box-shadow: 0px 0px 5px 0px #909090 inset;
+	border-radius: 0.4em; padding: 0 3px 0 0; -o-text-overflow: ellipsis; text-overflow: ellipsis; height: 28px; line-height: 28px; overflow: hidden;
+}
+
+.iselect select {
+	width: 100%; border: none; background: transparent; background-image: none; outline: none; height: 24px; line-height: 24px; position: relative;
+	top: 2px; padding: 0px 3px 0 8px;
+}
+
+.iselect:before,.iselect:after {
+	content: ''; display: block; position: absolute; right: 5px; top: 2px; pointer-events: none;
+}
+
+.iselect:after {
+	position: absolute; right: 5px; width: 18px; height: 24px; background-color: #FFF; border-left: 1px solid #eee;
+}
+
+.iselect:before {
+	top: 50%; border: solid transparent; border-width: 0.25em 0.25em 0; border-top-color: #ccc; margin: -0.125em 0.3em 0 0.1em; z-index: 999;
+}
 /*form style end*/
 .approve_list {
 	
@@ -497,6 +521,28 @@ input[type="button"].input-blue,input[type="submit"].input-blue,input[type="rese
 .iI-a {
 	background-position: 3px -57px; text-indent: 20px !important;
 }
+/*翻页样式START*/
+.pagination {
+	text-align: center; padding: 3px 0; background-color: #EFEFEF; margin: 1px 0; color: #059c77;
+}
+
+.pagination a {
+	display: inline-block; background-color: #EFEFEF; margin: 0 1px; font-size: 14px; height: 25px; line-height: 25px; color: #059c77; min-width: 25px;
+	border: #059c77 solid 1px; font-weight: bold; border: #059c77 solid 1px;
+}
+
+.pagination a:hover {
+	background-color: #059c77; color: #FFF;
+}
+
+.pagination a.current {
+	background-color: #059c77; color: #FFF;
+}
+
+.pagination a.disabled {
+	color: #999; background-color: #EFEFEF; border-color: #999;
+}
+/*翻页样式STOP*/
 /*滚动条样式START*/
 ::-webkit-scrollbar {
 	width: 11px; height: 14px;
@@ -650,22 +696,6 @@ input[type="button"].input-blue,input[type="submit"].input-blue,input[type="rese
 
 .dk-option {
 	font-size: 12px;
-}
-
-.label_rwb .dk-selected {
-	line-height: 32px;
-}
-
-.label_rwb .dk-select,.label_rwb .dk-select-multi {
-	display: block; width: 100%;
-}
-
-.label_rwb .dk-selected:before {
-	margin: -1px 3px 0 0;
-}
-
-.label_rwb .dk-selected:after {
-	margin: 0 14px 0 0;
 }
 
 .portrait label.error,.landscape label.error {

@@ -84,7 +84,6 @@ var loadManagers = function(dept_code, curr_apply_user){
 		if (curr_apply_user != '') {
 			$("#membermanagerid").val(curr_apply_user);
 		}
-		$("#membermanagerid").dropkickRefresh();
 	};
 	ajax.addParameter("work", "AutoComplete");
 	ajax.addParameter("parameters", "privilege_id=QKJCJ_SYS_AJAXLOAD_USER&dept_code=" + encodeURI(dept_code));

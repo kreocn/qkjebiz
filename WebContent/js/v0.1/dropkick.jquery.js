@@ -20,3 +20,14 @@ jQuery.fn.dropkickRefresh = function(){
 		dk_Object.refresh();
 	});
 };
+
+/**
+ * 当select有改变时,调用重置dropkick
+ */
+jQuery.fn.dropkickChange = function(f){
+	if (typeof (f) != 'function') f = $.noop;
+	return $(this).each(function(i){
+		var dk_Object = dk_Array[$(this).attr("data-arrayid")];
+		dk_Object.data.settings.change = f;
+	});
+};

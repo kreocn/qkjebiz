@@ -1,6 +1,1 @@
 @charset "utf-8";
-.pagination {text-align: center; padding: 3px 0; background-color: #EFEFEF; margin: 1px 0; color: #059c77;}
-.pagination a {display: inline-block; background-color: #EFEFEF; margin: 0 1px; font-size: 14px; height: 25px; line-height: 25px; color: #059c77; min-width: 25px;border: #059c77 solid 1px; font-weight: bold; border: #059c77 solid 1px;}
-.pagination a:hover {background-color: #059c77; color: #FFF;}
-.pagination a.current {background-color: #059c77; color: #FFF;}
-.pagination a.disabled {color: #999; background-color: #EFEFEF; border-color: #999;}
