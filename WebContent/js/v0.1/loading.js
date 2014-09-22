@@ -16,6 +16,7 @@ $(document).ready(function(){
 	modal : true });
 	/* 表单验证专用 */
 	$(".validForm").validationEngine();
+	$(".validFormDialog").validationEngine({ promptPosition : "bottomLeft" }); // dialog的特殊性导致只能显示在表单下部
 	/* 表单提示专用 */
 	$(".inputNote").inputNote();
 	/* 生成编辑框 */

@@ -128,7 +128,7 @@ color: #008000;
 		${path}
 		<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="apply_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a></span>
 	</div>
-	<s:form id="editForm" name="editForm"  cssClass="validForm" action="apply_list"  method="get" namespace="/qkjmanage" theme="simple">
+	<s:form id="editForm" name="editForm" cssClass="validForm" action="apply_list"  method="get" namespace="/qkjmanage" theme="simple">
 	<div class="label_con">
 		<s:if test="'mdy' == viewFlag">
 		<div class="label_main">
@@ -513,36 +513,36 @@ color: #008000;
 <div class="dn">
 <!-- 添加酒品 -->
 <div id="addProductForm" class="label_con idialog" title="添加酒品">
-<s:form id="form_addProductForm" name="form_addProductForm" action="activeProduct_add" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
+<s:form id="form_addProductForm" name="form_addProductForm" cssClass="validFormDialog" action="activeProduct_add" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
 <div class="label_main">
 	<div class="label_hang">
 	    <div class="label_ltit">产品:</div>
 	    <div class="label_rwben label_rwb">
-	    	<select name="activeProduct.product_id" title="产品" class="selectKick validate[required]">
-				<option>--请选择--</option><s:iterator value="products" status="sta">
+	    	<div class="iselect">
+	    	<select name="activeProduct.product_id" title="产品" class="validate[required]">
+				<option>-请选择-</option><s:iterator value="products" status="sta">
 				<option data='<s:property value="market_price" />#<s:property value="group_price" />#<s:property value="dealer_price" />#<s:property value="agree_price_1" />#<s:property value="agree_price_2" />#<s:property value="agree_price_3" />' data_case='<s:property value="case_spec" />' value='<s:property value="uuid" />'><s:property value="title" /></option>
 			</s:iterator></select>
+			</div>
 	    </div>
 	</div>
 	<div class="label_hang">
 	    <div class="label_ltit">单价:</div>
 	    <div class="label_rwben">
-	    	<span class="label_rwb"><s:textfield name="activeProduct.per_price" title="单价" dataType="number" controlName="单价" require="required" /></span>
-			<span id="per_price_select_area" class="label_rwb"><select id="per_price_select"></select></span>
+	    	<span class="label_rwb"><s:textfield name="activeProduct.per_price" cssClass="validate[required,custom[number],maxSize[11]]" /></span>
+			<div id="per_price_select_area" class="label_rwb"><div class="iselect"><select id="per_price_select"></select></div></div>
 	    </div>
 	</div>
 	<div class="label_hang">
 	    <div class="label_ltit">数量:</div>
 	    <div class="label_rwben">
-    		<div class="nw"><s:textfield name="activeProduct.num" title="数量" dataType="integer" controlName="数量" require="required" />(瓶)</div>
+    		<div class="nw"><s:textfield name="activeProduct.num" cssClass="validate[required,custom[integer],maxSize[11]]" />瓶</div>
     		<span id="ladingItemnumCase nw"></span>
 	    </div>
 	</div>
 	<div class="label_hang">
 	    <div class="label_ltit">合计:</div>
-	    <div class="label_rwben nw">
-	    	<s:textfield name="activeProduct.total_price" title="合计" dataType="number" controlName="合计" require="required" />元
-	    </div>
+	    <div class="label_rwben nw"><s:textfield name="activeProduct.total_price" title="合计" cssClass="validate[required,custom[number],maxSize[11]]" />元</div>
 	</div>
 	 <div class="label_hang label_button tac">
 	 	<s:hidden name="activeProduct.active_id" value="%{active.uuid}" />
@@ -566,17 +566,13 @@ $(function(){
 	});
 	add_num_input.bind("keyup",function(){
 		add_total_price_input.val($(this).val()*add_per_price_input.val());
-		alert("AA");
 		setDataCase();
 	});
-	
 	$("#per_price_select_area").hide();
-	add_product_id.dropkickChange(function(){
+	add_product_id.bind("change",function(){
 		add_per_price_input.val("");
 		$("#per_price_select").clearAllOption();
-		alert("AAB:" + $(this).getSelectedAttr("data"));
 		if($(this).getSelectedAttr("data")==null || $(this).getSelectedAttr("data")=='') {
-			//alert("AAB");
 			$("#per_price_select_area").hide();
 		} else {
 			var ps = $(this).getSelectedAttr("data").split("#");
@@ -592,7 +588,6 @@ $(function(){
 			}
 		}
 	});
-	
 	$("#per_price_select").bind("change",function(){
 		add_per_price_input.val($(this).val());
 		add_total_price_input.val($(this).val()*add_num_input.val());
@@ -610,70 +605,65 @@ function setDataCase() {
 </script>
 
 <!-- 添加销售物料(公司) -->
-<div id="addPosmForm" title="添加销售物料(公司)">
-<s:form name="form_addPosmForm" action="activePosm_add" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
-<table class="ilisttable" width="100%">
-<tr>
-<td class='firstRow'><span style="color:red;">*</span> 名目:</td>
-<td class='secRow'><s:textfield name="activePosm.title" title="名目" require="required" dataLength="0,32" controlName="名目" /></td>
-</tr>
-<tr>
-<td class='firstRow'><span style="color:red;">*</span> 名目说明:</td>
-<td class='secRow'><s:textarea name="activePosm.note" title="说明" require="required" dataLength="0,255" controlName="说明" cssStyle="width:80%;" /></td>
-</tr>
-<tr>
-<td class='firstRow'><span style="color:red;">*</span> 金额:</td>
-<td class='secRow'><s:textfield name="activePosm.total_price" title="金额" require="required" dataLength="0,11" dataType="number" controlName="金额" />元</td>
-</tr>
-<tr>
-<td colspan="20" class="buttonarea">
-	<s:hidden name="activePosm.active_id" value="%{active.uuid}" />
-	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEPOSM_ADD')">
-	<s:submit id="add" name="add" value="确定" action="activePosm_add" />
+<div id="addPosmForm" class="label_con idialog" title="添加销售物料(公司)">
+<s:form name="form_addPosmForm" cssClass="validFormDialog" action="activePosm_add" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
+<div class="label_main">
+	<div class="label_hang">
+	    <div class="label_ltit">名目:</div>
+	    <div class="label_rwben label_rwb"><s:textfield name="activePosm.title" title="名目" cssClass="validate[required,maxSize[32]]" /></div>
+	</div>
+	<div class="label_hang">
+	    <div class="label_ltit">名目说明:</div>
+	    <div class="label_rwben label_rwb"><s:textfield name="activePosm.note" title="名目说明" cssClass="validate[required,maxSize[255]]" /></div>
+	</div>
+	<div class="label_hang">
+	    <div class="label_ltit">金额:</div>
+	    <div class="label_rwben label_rwb nw"><s:textfield name="activePosm.total_price" title="名目" cssClass="validate[required,custom[number],maxSize[11]]" />元</div>
+	</div>
+	<div class="label_hang label_button tac">
+	 	<s:hidden name="activePosm.active_id" value="%{active.uuid}" />
+		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEPOSM_ADD')">
+		<s:submit id="add" name="add" value="确定" action="activePosm_add" />
 	</s:if>
-</td>
-</tr>
-</table>
+	 </div>
+</div>
 </s:form>
 </div>
 
-<div id="addMemberForm" title="添加参与客户">
-<s:form name="form_addMemberForm" action="activeMemcost_add" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
-	<div class="ifromoperate" ></div>
-	<table class="ilisttable" width="100%">
-		<tr>
-		<td class='firstRow'><span style="color:red;">*</span> 会员编号:</td>
-		<td class='secRow'><s:textfield id="order_user_id" name="activeMemcost.member_id" title="会员号" require="required" dataLength="0,85" controlName="会员号" /></td>
-		</tr>
-		<tr>
-		<td class='firstRow'>会员手机:</td>
-		<td class='secRow'><s:textfield id="order_user_mobile" name="activeMemcost.member_mobile" title="手机" controlName="手机" /></td>
-		</tr>
-		<tr>
-		<td class='firstRow'>会员姓名:</td>
-		<td class='secRow'><s:textfield id="order_user_name" name="activeMemcost.member_name" title="姓名" controlName="姓名" /></td>
-		</tr>
-		<tr>
-		<td class='firstRow'><span style="color:red;">*</span> 名目:</td>
-		<td class='secRow'><s:textfield name="activeMemcost.title" title="名目" require="required" dataLength="0,32" controlName="名目" /></td>
-		</tr>
-		<tr>
-		<td class='firstRow'><span style="color:red;">*</span> 名目说明:</td>
-		<td class='secRow'><s:textarea name="activeMemcost.note" title="说明" require="required" dataLength="0,255" controlName="说明" cssStyle="width:80%;" /></td>
-		</tr>
-		<tr>
-		<td class='firstRow'><span style="color:red;">*</span> 金额:</td>
-		<td class='secRow'><s:textfield name="activeMemcost.total_price" title="金额" require="required" dataLength="0,11" dataType="number" controlName="金额" />元</td>
-		</tr>
-	<tr>
-	    <td colspan="20" class="buttonarea">
-	    	<s:hidden name="activeMemcost.active_id" value="%{active.uuid}" />
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEMEMCOST_ADD')">
-			<s:submit id="add" name="add" value="确定" action="activeMemcost_add" />
-			</s:if>
-		</td>
-    </tr>
-</table>	
+<div id="addMemberForm" class="label_con idialog" title="添加参与客户">
+<s:form name="form_addMemberForm" cssClass="validFormDialog" action="activeMemcost_add" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
+<div class="label_main">
+	<div class="label_hang">
+	    <div class="label_ltit">会员编号:</div>
+	    <div class="label_rwben label_rwb"><s:textfield id="order_user_id" name="activeMemcost.member_id" cssClass="validate[required,maxSize[85]]" /></div>
+	</div>
+	<div class="label_hang">
+	    <div class="label_ltit">会员手机:</div>
+	    <div class="label_rwben label_rwb"><s:textfield id="order_user_mobile" name="activeMemcost.member_mobile" cssClass="validate[custom[mobile]]"/></div>
+	</div>
+	<div class="label_hang">
+	    <div class="label_ltit">会员名称:</div>
+	    <div class="label_rwben label_rwb"><s:textfield id="order_user_name" name="activeMemcost.member_name" /></div>
+	</div>
+	<div class="label_hang">
+	    <div class="label_ltit">名目:</div>
+	    <div class="label_rwben label_rwb"><s:textfield name="activeMemcost.title" cssClass="validate[required]" /></div>
+	</div>
+	<div class="label_hang">
+	    <div class="label_ltit">名目说明:</div>
+	    <div class="label_rwben label_rwb"><s:textarea name="activeMemcost.note" cssClass="validate[required]"/></div>
+	</div>
+	<div class="label_hang">
+	    <div class="label_ltit">金额:</div>
+	    <div class="label_rwben label_rwb nw"><s:textfield name="activeMemcost.total_price" cssClass="validate[required]" />元</div>
+	</div>
+	<div class="label_hang label_button tac">
+	 	<s:hidden name="activeMemcost.active_id" value="%{active.uuid}" />
+		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEMEMCOST_ADD')">
+		<s:submit id="add" name="add" value="确定" action="activeMemcost_add" />
+		</s:if>
+	 </div>
+</div>
 </s:form>
 </div>
 <div id="viewMember" title="客户实时信息">
@@ -698,7 +688,7 @@ function setDataCase() {
 </div>
 
 <div id="approveFrom" title="审阅信息">
-<s:form name="form1" action="active_approve" namespace="/qkjmanage" onsubmit="return validator(this);" method="post"  theme="simple">
+<s:form name="form1" action="active_approve" cssClass="validForm" namespace="/qkjmanage" onsubmit="return validator(this);" method="post"  theme="simple">
 <input type="hidden" name="active.uuid" value="${active['uuid']}" />
 <input type="hidden" id="add_approve_flag" name="approve.flag" />
 <table class="ilisttable" width="100%">
