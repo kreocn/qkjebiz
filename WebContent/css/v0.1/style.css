@@ -142,7 +142,7 @@ a {
 }
 
 .label_hang {
-	float: left; line-height: 34px; margin: 3px 0; 
+	float: left; line-height: 34px; margin: 3px 0;
 }
 
 .label_ltit {
@@ -191,6 +191,10 @@ a {
 
 .zhuangtai {
 	float: left; background: #f1f1f1; border-radius: 5px; padding: 0 8px; margin-right: 5px;
+}
+
+.statusInline {
+	background: #f1f1f1; border-radius: 5px; padding: 0 8px; margin-right: 5px; display: inline-block;
 }
 
 .lb_detail {
@@ -266,7 +270,7 @@ a {
 }
 
 .lb_jpin th {
-	background: #059c77; color: #fff; padding: 6px 0; font-size: 14px;
+	background: #f1f1f1; color: #333; padding: 6px 0; font-size: 14px;
 }
 
 .lb_jpin td {
@@ -502,6 +506,10 @@ input[type="button"].input-blue,input[type="submit"].input-blue,input[type="rese
 .approve_flag_pass {
 	color: #008000;
 }
+
+.textBreak {
+	line-height: 130%;
+}
 /*input-icon*/
 .iI {
 	background: url("../../images/icon/input-icon.png") no-repeat;
@@ -687,6 +695,15 @@ input[type="button"].input-blue,input[type="submit"].input-blue,input[type="rese
 	}
 	input,textarea,select {
 		border: none !important; background: transparent;
+	}
+	.pt {
+		font-size: 16px; font-weight: bold;
+	}
+	.dq_step {
+		border-bottom: #666 solid 1px;
+	}
+	.main {
+		padding-top: 55px; background: url("../../images/print/pageheader02.png") transparent no-repeat 0 0;
 	}
 }
 

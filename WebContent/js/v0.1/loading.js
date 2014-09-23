@@ -23,6 +23,8 @@ $(document).ready(function(){
 	createHtmlEditor(".xheditorArea");
 	/* 设置"更多条件" */
 	conCookie("#serachForm .label_hang", "search_mcondition");
+	/* textArea 换行 */
+	$(".textBreak").textBreak();
 });
 
 /* 获取触摸事件代码开始 */

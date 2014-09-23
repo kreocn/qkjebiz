@@ -22,7 +22,7 @@
 <script type="text/javascript" src="<c:url value="/js/v0.1/common.js" />"></script>
 <script type="text/javascript" src="<c:url value="/js/v0.1/demo.js" />"></script>
 <script type="text/javascript" src="<c:url value="/js/v0.1/loading.js" />"></script>
-<script type="text/javascript" src="<c:url value="/js/v0.1/jquery.inputnote.js" />"></script>
+<script type="text/javascript" src="<c:url value="/js/v0.1/jquery.iplugin.js" />"></script>
 <script type="text/javascript" src="<c:url value="/js/jquery.CommonUtil.js" />"></script>
 <script type="text/javascript" src="<c:url value="/js/common_ajax2.0.js" />"></script>
 <script type="text/javascript" src="<c:url value="/js/show_page2.0.js" />"></script>

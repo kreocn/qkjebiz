@@ -128,7 +128,7 @@ color: #008000;
 		${path}
 		<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="apply_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a></span>
 	</div>
-	<s:form id="editForm" name="editForm" cssClass="validForm" action="apply_list"  method="get" namespace="/qkjmanage" theme="simple">
+	<s:form id="editForm" name="editForm" cssClass="validForm" action="active_load" namespace="/qkjmanage" method="post" theme="simple">
 	<div class="label_con">
 		<s:if test="'mdy' == viewFlag">
 		<div class="label_main">
@@ -142,7 +142,7 @@ color: #008000;
         </div>
         <div class="label_hang">
             <div class="label_ltit">申请部门:</div>
-            <div class="label_rwben">${active.apply_dept_name}</div>
+            <div class="label_rwbenx">${active.apply_dept_name}</div>
         </div>
         <div class="label_hang">
             <div class="label_ltit">申请人员:</div>
@@ -191,37 +191,15 @@ color: #008000;
         <div class="label_main">
         <div class="label_hang">
             <div class="label_ltit">主题:</div>
-            <div class="label_rwbenx">
-            	<s:textfield name="active.theme" title="主题" cssClass="label_hang_linput validate[required,maxSize[255]]" />
-            </div>
+            <div class="label_rwbenx"><s:textfield name="active.theme" title="主题" cssClass="label_hang_linput validate[required,maxSize[255]]" /></div>
         </div>
         </div>
         <div class="label_main">
         <div class="label_hang">
             <div class="label_ltit">目的:</div>
-            <div class="label_rwbenx">
-            	<s:textfield name="active.purpose" title="主题" cssClass="label_hang_linput validate[required,maxSize[255]]" />
-            </div>
+            <div class="label_rwbenx"><s:textfield name="active.purpose" title="主题" cssClass="label_hang_linput validate[required,maxSize[255]]" /></div>
         </div>
         </div>
-        
-        <div class="label_main">
-        <div class="label_hang">
-            <div class="label_ltit">目的:</div>
-            <div class="label_rwbenx">
-            	<div class="iselect">
-					<select name="a">
-						<option value="0">AAAAA</option>
-						<option value="1">AAAAA</option>
-						<option value="2">AAAAA</option>
-						<option value="3">AAAAA</option>
-						<option value="4">AAAAA</option>
-					</select>
-				</div>
-            </div>
-        </div>
-        </div>
-        
         <div class="label_main">
         <div class="label_hang">
             <div class="label_ltit">活动时间:</div>
@@ -469,7 +447,7 @@ color: #008000;
 				<s:submit id="mdyActiveSDStatus50" name="mdyActiveSDStatus50" cssClass="input-green" value="总经理-审核通过" action="mdyActiveSDStatus50" onclick="return isOp('确定执行此操作?');" />
 				<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
 				</s:if>
-				<div class="zhuangtai">
+				<div class="statusInline">
 					销售部审核状态:
 					<s:if test="active.sd_status==0">初始状态</s:if>
 					<s:if test="active.sd_status==5"><font class="message_error">审核退回</font>(${active.sd_user_name} ${it:formatDate(active.sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
@@ -494,7 +472,7 @@ color: #008000;
 				<s:submit id="mdyActiveSMDStatus40" name="mdyActiveSMDStatus40" cssClass="input-green" value="销管副总-审核通过" action="mdyActiveSMDStatus40" onclick="return isOp('确定执行此操作?');" />
 				<s:submit id="mdyActiveSMDStatus5" name="mdyActiveSMDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSMDStatus5" onclick="return isOp('确定执行此操作?');" />
 				</s:if>
-				<div class="zhuangtai">
+				<div class="statusInline">
 					销管部审核状态:
 					<s:if test="active.smd_status==0">未签收</s:if>
 					<s:if test="active.smd_status==5"><font class="message_error">审核退回</font>(${active.smd_user_name} ${it:formatDate(active.smd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
@@ -513,7 +491,7 @@ color: #008000;
 <div class="dn">
 <!-- 添加酒品 -->
 <div id="addProductForm" class="label_con idialog" title="添加酒品">
-<s:form id="form_addProductForm" name="form_addProductForm" cssClass="validFormDialog" action="activeProduct_add" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
+<s:form id="form_addProductForm" name="form_addProductForm" cssClass="validFormDialog" action="activeProduct_add" namespace="/qkjmanage" method="post" theme="simple">
 <div class="label_main">
 	<div class="label_hang">
 	    <div class="label_ltit">产品:</div>
@@ -606,7 +584,7 @@ function setDataCase() {
 
 <!-- 添加销售物料(公司) -->
 <div id="addPosmForm" class="label_con idialog" title="添加销售物料(公司)">
-<s:form name="form_addPosmForm" cssClass="validFormDialog" action="activePosm_add" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
+<s:form name="form_addPosmForm" cssClass="validFormDialog" action="activePosm_add" namespace="/qkjmanage" method="post" theme="simple">
 <div class="label_main">
 	<div class="label_hang">
 	    <div class="label_ltit">名目:</div>
@@ -631,7 +609,7 @@ function setDataCase() {
 </div>
 
 <div id="addMemberForm" class="label_con idialog" title="添加参与客户">
-<s:form name="form_addMemberForm" cssClass="validFormDialog" action="activeMemcost_add" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
+<s:form name="form_addMemberForm" cssClass="validFormDialog" action="activeMemcost_add" namespace="/qkjmanage" method="post" theme="simple">
 <div class="label_main">
 	<div class="label_hang">
 	    <div class="label_ltit">会员编号:</div>
@@ -666,40 +644,33 @@ function setDataCase() {
 </div>
 </s:form>
 </div>
-<div id="viewMember" title="客户实时信息">
-<table class="ilisttable" width="100%">
-	<tr>
-	<td class='firstRow'>会员编号:</td>
-	<td class='secRow'><span id="view_member_uuid"></span></td>
-	</tr>
-	<tr>
-	<td class='firstRow'>会员手机:</td>
-	<td class='secRow'><span id="view_member_mobile"></span></td>
-	</tr>
-	<tr>
-	<td class='firstRow'>会员姓名:</td>
-	<td class='secRow'><span id="view_member_name"></span></td>
-	</tr>
-	<tr>
-	<td class='firstRow'>可用随量积分:</td>
-	<td class='secRow'><span id="view_member_with_score"></span></td>
-	</tr>
-</table>	
+<div id="viewMember" class="label_con idialog" title="客户实时信息">
+<div class="label_main">
+	<div class="label_hang">
+	    <div class="label_ltit">会员编号:</div>
+	    <div id="view_member_uuid" class="label_rwben label_rwb"></div>
+	</div>
+	<div class="label_hang">
+	    <div class="label_ltit">会员编号:</div>
+	    <div id="view_member_mobile" class="label_rwben label_rwb"></div>
+	</div>
+	<div class="label_hang">
+	    <div class="label_ltit">会员编号:</div>
+	    <div id="view_member_name" class="label_rwben label_rwb"></div>
+	</div>
+	<div class="label_hang">
+	    <div class="label_ltit">会员编号:</div>
+	    <div id="view_member_with_score" class="label_rwben label_rwb"></div>
+	</div>
+</div>
 </div>
 
-<div id="approveFrom" title="审阅信息">
-<s:form name="form1" action="active_approve" cssClass="validForm" namespace="/qkjmanage" onsubmit="return validator(this);" method="post"  theme="simple">
+<div id="approveFrom" class="label_con idialog" title="审阅信息">
+<s:form name="form1" action="active_approve" cssClass="validForm" namespace="/qkjmanage" method="post"  theme="simple">
 <input type="hidden" name="active.uuid" value="${active['uuid']}" />
 <input type="hidden" id="add_approve_flag" name="approve.flag" />
-<table class="ilisttable" width="100%">
- <tr>
-<td class='firstRowx'>审阅意见:</td>
-<td class='secRowx'>
-<textarea name="approve.advice" style="width: 80%;"></textarea>
-</td>
-</tr>
-<tr>
-<td align="center" class="buttonarea" colspan="2">
+<div class="label_main"><textarea name="approve.advice" rows="3" ></textarea></div>
+<div class="label_main tac" style="padding: 5px 0;">
 	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_APPROVE')">
 	<input type="submit" name="approve_pass" value="审阅通过" onclick="return addApproveCheck(10);" />
 	<input type="submit" name="approve_fail" value="审阅不通过" onclick="return addApproveCheck(5);" />
@@ -707,9 +678,7 @@ function setDataCase() {
 	<s:if test="'true'==isApprover && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_APPROVEDELLAST')">
 	<s:submit name="active_approveDel" value="撤销最后一次审阅" action="active_approveDel" onclick="return isOp('确定进行此操作?');" />
 	</s:if>
-</td>
-</tr>
-</table>
+</div>
 </s:form>
 </div>
 <script type="text/javascript">

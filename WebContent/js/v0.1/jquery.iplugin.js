@@ -1,7 +1,6 @@
 /**
  * 专为输入框提示文本的插件
  */
-
 (function($){
 	$.fn.inputNote = function(options){
 		var opts = $.extend({ noteClass : "message_prompt" }, options);
@@ -35,6 +34,29 @@
 			nNode.click(function(){
 				$this.focus();
 			});
+		});
+	};
+})(jQuery);
+
+/**
+ * textarea换行插件,直接显示textarea的内容时,解决换行问题
+ */
+(function($){
+	$.fn.textBreak = function(options){
+		var opts = $.extend({ tag : "br" }, options);
+		return this.each(function(){
+			var $this = $(this);
+			var dd = $this.html();
+			if (opts.tag == "br" || opts.tag == "") {
+				dd = dd.replace(/\n/g, "<br>");
+				dd = dd.replace(/ /g, "&nbsp;");
+			} else {
+				dd = "<" + opts.tag + ">" + dd;
+				dd = dd.replace(/\n/g, "</" + opts.tag + ">" + "<" + opts.tag + ">");
+				dd = dd.replace(/ /g, "&nbsp;");
+				dd += "</" + opts.tag + ">";
+			}
+			$this.html(dd);
 		});
 	};
 })(jQuery);
