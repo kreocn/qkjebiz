@@ -104,10 +104,10 @@ cursor: pointer;
             <div class="label_ltit">申请通过时间:</div>
             <div class="label_rwben2">
             	<span class="label_rwb nw">
-				<input  class="jqdate iI iI-f" type="text" name="active.pass_time_start" title="从" value="${it:formatDate(active.pass_time_start,'yyyy-MM-dd')}" />
+				<input  class="datepicker iI iI-f" type="text" name="active.pass_time_start" title="从" value="${it:formatDate(active.pass_time_start,'yyyy-MM-dd')}" />
 				</span>
 				<span class="label_rwb nw">
-				<input  class="jqdate iI iI-t" type="text" name="active.pass_time_end" title="到" value="${it:formatDate(active.pass_time_end,'yyyy-MM-dd')}" />
+				<input  class="datepicker iI iI-t" type="text" name="active.pass_time_end" title="到" value="${it:formatDate(active.pass_time_end,'yyyy-MM-dd')}" />
             	</span>
             </div>
         </div>
@@ -115,10 +115,10 @@ cursor: pointer;
             <div class="label_ltit">结案通过时间:</div>
             <div class="label_rwben2">
             	<span class="label_rwb nw">
-				<input  class="jqdate iI iI-f" type="text" name="active.close_pass_time_start" title="从" value="${it:formatDate(active.close_pass_time_start,'yyyy-MM-dd')}" />
+				<input  class="datepicker iI iI-f" type="text" name="active.close_pass_time_start" title="从" value="${it:formatDate(active.close_pass_time_start,'yyyy-MM-dd')}" />
 				</span>
 				<span class="label_rwb nw">
-				<input  class="jqdate iI iI-t" type="text" name="active.close_pass_time_end" title="到" value="${it:formatDate(active.close_pass_time_end,'yyyy-MM-dd')}" />
+				<input  class="datepicker iI iI-t" type="text" name="active.close_pass_time_end" title="到" value="${it:formatDate(active.close_pass_time_end,'yyyy-MM-dd')}" />
             	</span>
             </div>
         </div>
@@ -126,10 +126,10 @@ cursor: pointer;
             <div class="label_ltit">计划开始时间:</div>
             <div class="label_rwben2">
             	<span class="label_rwb nw">
-				<input  class="jqdate iI iI-f" type="text" name="active.plan_start_begin" title="从" value="${it:formatDate(active.plan_start_begin,'yyyy-MM-dd')}" />
+				<input  class="datepicker iI iI-f" type="text" name="active.plan_start_begin" title="从" value="${it:formatDate(active.plan_start_begin,'yyyy-MM-dd')}" />
 				</span>
 				<span class="label_rwb nw">
-				<input  class="jqdate iI iI-t" type="text" name="active.plan_start_end" title="到" value="${it:formatDate(active.plan_start_end,'yyyy-MM-dd')}" />
+				<input  class="datepicker iI iI-t" type="text" name="active.plan_start_end" title="到" value="${it:formatDate(active.plan_start_end,'yyyy-MM-dd')}" />
             	</span>
             </div>
         </div>
@@ -267,7 +267,7 @@ cursor: pointer;
         </div>
 		<div class="label_hang">
             <div class="label_ltit">出库日期:</div>
-            <div class="label_rwben"><input id="e_active_ship_date" class="jqdate validate[custom[date]]" type="text" name="active.ship_date" title="出库日期" value="${it:formatDate(active.ship_date,'yyyy-MM-dd')}" /></div>
+            <div class="label_rwben"><input id="e_active_ship_date" class="datepicker validate[custom[date]]" type="text" name="active.ship_date" title="出库日期" value="${it:formatDate(active.ship_date,'yyyy-MM-dd')}" /></div>
         </div>
         <div class="label_hang">
             <div class="label_ltit">运单号:</div>

@@ -11,22 +11,13 @@
 <script type="text/javascript">
 var infoeditor01;
 $(function(){
-	if($("#active_note").length>0) {
-		//infoeditor01 = new widget_textarea();
-		//infoeditor01.init("active_note");
-	}
-	$("#active_plan_start").datepicker();
-	$("#active_plan_end").datepicker();
-	
 	$("#addProductForm").dialog({
 	      autoOpen: false,
 	      modal: true
 	});
-	
 	$("#addProduct").click(function(){
 		$("#addProductForm").dialog("open");
 	});
-	
 	$("#addPosmForm").dialog({
 	      autoOpen: false,
 	      modal: true
@@ -34,9 +25,6 @@ $(function(){
 	$("#addPosm").click(function(){
 		$("#addPosmForm").dialog("open");
 	});
-	
-	
-	SimpleLoadMember(ajax_url,$.noop);
 	$("#addMemberForm").dialog({
 	      autoOpen: false,
 	      modal: true
@@ -49,6 +37,7 @@ $(function(){
 	      autoOpen: false,
 	      modal: true
 	});
+	SimpleLoadMember(ajax_url,$.noop);
 });
 
 function loadMemberInfo(member_id) {
@@ -56,7 +45,6 @@ function loadMemberInfo(member_id) {
 	$("#view_member_mobile").empty();
 	$("#view_member_name").empty();
 	$("#view_member_with_score").empty();
-	
 	var ajax = new Common_Ajax();
 	ajax.config.action_url = ajax_url;
 	ajax.config._success = function(data, textStatus) {
@@ -126,7 +114,7 @@ color: #008000;
 <div class="main">
 	<div class="dq_step">
 		${path}
-		<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="apply_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a></span>
+		<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="active_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a></span>
 	</div>
 	<s:form id="editForm" name="editForm" cssClass="validForm" action="active_load" namespace="/qkjmanage" method="post" theme="simple">
 	<div class="label_con">
@@ -205,10 +193,10 @@ color: #008000;
             <div class="label_ltit">活动时间:</div>
             <div class="label_rwben2">
             	<span class="label_rwb nw">
-				<input  class="jqdate iI iI-f validate[required,custom[date]]" type="text" name="active.plan_start" title="从" value="${it:formatDate(active.plan_start,'yyyy-MM-dd')}" />
+				<input  class="datepicker iI iI-f validate[required,custom[date]]" type="text" name="active.plan_start" title="从" value="${it:formatDate(active.plan_start,'yyyy-MM-dd')}" />
 				</span>
 				<span class="label_rwb nw">
-				<input  class="jqdate iI iI-t validate[required,custom[date]]" type="text" name="active.plan_end" title="到" value="${it:formatDate(active.plan_end,'yyyy-MM-dd')}" />
+				<input  class="datepicker iI iI-t validate[required,custom[date]]" type="text" name="active.plan_end" title="到" value="${it:formatDate(active.plan_end,'yyyy-MM-dd')}" />
             	</span>
             </div>
         </div>
@@ -233,6 +221,7 @@ color: #008000;
             </div>
         </div>
         </div>
+        <s:if test="'mdy' == viewFlag">
         <div class="label_main">
         	<div class="lb_xxsm">
 	        	<p class="lb_yjtit fy_hide">预计活动费用</p>
@@ -334,6 +323,7 @@ color: #008000;
 	            <p class="lb_yjbot">方案预计费用总计: ${active.it_price} + ${active.mt_price} = ￥${active.it_price+active.mt_price}</p>
 	        </div>
         </div>
+        </s:if>
         <div class="label_main">
         <div class="label_hang">
             <div class="label_ltit">方案说明:</div>
@@ -343,12 +333,8 @@ color: #008000;
         </div>
         <div class="label_main">
         	<div class="note_area">
-        	<s:if test="apply.status>=10">
-			${active.note}
-			</s:if>
-			<s:else>
-			<s:textarea name="active.note" title="详细说明" cssClass="xheditorArea validate[maxSize[65535]]" />
-			</s:else>
+        	<s:if test="'add' == viewFlag || active.status==0"><s:textarea name="active.note" title="详细说明" cssClass="xheditorArea validate[maxSize[65535]]" /></s:if>
+			<s:else>${active.note}</s:else>
         	</div>
         </div>
         <div class="label_main">
@@ -360,6 +346,7 @@ color: #008000;
             </div>
         </div>
         </div>
+        <s:if test="'mdy' == viewFlag">
         <div class="label_main">
         <div class="label_hang">
             <div class="label_ltit">审阅情况:</div>
@@ -388,6 +375,7 @@ color: #008000;
             </div>
 		</div>
 		</div>
+		</s:if>
 		<div class="label_main">
         <div class="label_hang">
             <div class="label_ltit">相关操作:</div>
@@ -651,15 +639,15 @@ function setDataCase() {
 	    <div id="view_member_uuid" class="label_rwben label_rwb"></div>
 	</div>
 	<div class="label_hang">
-	    <div class="label_ltit">会员编号:</div>
+	    <div class="label_ltit">会员手机:</div>
 	    <div id="view_member_mobile" class="label_rwben label_rwb"></div>
 	</div>
 	<div class="label_hang">
-	    <div class="label_ltit">会员编号:</div>
+	    <div class="label_ltit">会员名称:</div>
 	    <div id="view_member_name" class="label_rwben label_rwb"></div>
 	</div>
 	<div class="label_hang">
-	    <div class="label_ltit">会员编号:</div>
+	    <div class="label_ltit">随量积分:</div>
 	    <div id="view_member_with_score" class="label_rwben label_rwb"></div>
 	</div>
 </div>

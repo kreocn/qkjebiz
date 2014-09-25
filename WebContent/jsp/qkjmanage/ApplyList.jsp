@@ -68,10 +68,10 @@ display: none;
             <div class="label_ltit">申请时间:</div>
             <div class="label_rwben2">
             	<span class="label_rwb nw">
-				<input type="text" class="jqdate iI iI-f" name="apply.apply_time_begin" title="从" value="${it:formatDate(apply.apply_time_begin,'yyyy-MM-dd')}" />
+				<input type="text" class="datepicker iI iI-f" name="apply.apply_time_begin" title="从" value="${it:formatDate(apply.apply_time_begin,'yyyy-MM-dd')}" />
 				</span>
 				<span class="label_rwb nw">
-				<input type="text" class="jqdate iI iI-t" name="apply.apply_time_end" title="到" value="${it:formatDate(apply.apply_time_end,'yyyy-MM-dd')}" />
+				<input type="text" class="datepicker iI iI-t" name="apply.apply_time_end" title="到" value="${it:formatDate(apply.apply_time_end,'yyyy-MM-dd')}" />
             	</span>
             </div>
         </div>
@@ -94,10 +94,10 @@ display: none;
             <div class="label_ltit">审核时间:</div>
             <div class="label_rwben2">
             	<span class="label_rwb nw">
-				<input  class="jqdate iI iI-f" type="text" name="apply.check_time_begin" title="从" value="${it:formatDate(apply.check_time_begin,'yyyy-MM-dd')}" />
+				<input  class="datepicker iI iI-f" type="text" name="apply.check_time_begin" title="从" value="${it:formatDate(apply.check_time_begin,'yyyy-MM-dd')}" />
 				</span>
 				<span class="label_rwb nw">
-				<input  class="jqdate iI iI-t" type="text" name="apply.check_time_end" title="到" value="${it:formatDate(apply.check_time_end,'yyyy-MM-dd')}" />
+				<input  class="datepicker iI iI-t" type="text" name="apply.check_time_end" title="到" value="${it:formatDate(apply.check_time_end,'yyyy-MM-dd')}" />
             	</span>
             </div>
         </div>
@@ -211,7 +211,7 @@ display: none;
         </div>
 		<div class="label_hang">
             <div class="label_ltit">出库日期:</div>
-            <div class="label_rwben"><span class="label_rwb"><input id="form_apply_ship_date" class="jqdate validate[custom[date]]" type="text" name="apply.ship_date" title="出库日期" value="${it:formatDate(apply.ship_date,'yyyy-MM-dd')}" /></span></div>
+            <div class="label_rwben"><span class="label_rwb"><input id="form_apply_ship_date" class="datepicker validate[custom[date]]" type="text" name="apply.ship_date" title="出库日期" value="${it:formatDate(apply.ship_date,'yyyy-MM-dd')}" /></span></div>
         </div>
         <div class="label_hang">
             <div class="label_ltit">运单号:</div>

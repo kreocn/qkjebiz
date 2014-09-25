@@ -9,7 +9,7 @@ $(document).ready(function(){
 		$(this).removeClass("trhover");
 	});
 	// 初始化日期
-	$(".jqdate").datepicker();
+	$(".datepicker").datepicker();
 	$(".main,.idialog").addClass("input-a");
 	/* 查看详情专用 */
 	$("#infoDetail").dialog({ autoOpen : false,
