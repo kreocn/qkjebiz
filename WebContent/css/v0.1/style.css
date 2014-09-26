@@ -165,6 +165,10 @@ a {
 	width: 106px; display: inline-block; vertical-align: middle;
 }
 
+.label_rwb_s {
+	width: 55px; display: inline-block; vertical-align: middle;
+}
+
 .label_rwben2 .label_rwb,.label_rwbenx .label_rwb {
 	width: 145px;
 }

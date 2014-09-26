@@ -17,6 +17,8 @@ $(document).ready(function(){
 	/* 表单验证专用 */
 	$(".validForm").validationEngine();
 	$(".validFormDialog").validationEngine({ promptPosition : "bottomLeft" }); // dialog的特殊性导致只能显示在表单下部
+	// data-prompt-position="inline" data-prompt-target="元素的ID"
+	//$("select")
 	/* 表单提示专用 */
 	$(".inputNote").inputNote();
 	/* 生成编辑框 */

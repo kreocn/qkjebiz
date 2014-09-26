@@ -76,13 +76,16 @@ var loadManagers = function(dept_code, curr_apply_user){
 	var ajax = new Common_Ajax('ajax_member_message');
 	ajax.config.action_url = ajax_url;
 	ajax.config._success = function(data, textStatus){
-		$("#membermanagerid").clearAllOption();
-		$("#membermanagerid").addOption("--请选择--", "");
-		$.each(data, function(i, n){
-			$("#membermanagerid").addOption(n.user_name, n.uuid);
-		});
-		if (curr_apply_user != '') {
-			$("#membermanagerid").val(curr_apply_user);
+		var uc = $("#membermanagerid");
+		if (uc.length > 0 && uc.get(0).tagName.toUpperCase() == 'SELECT') {
+			uc.clearAllOption();
+			uc.addOption("--请选择--", "");
+			$.each(data, function(i, n){
+				uc.addOption(n.user_name, n.uuid);
+			});
+			if (curr_apply_user != '') {
+				uc.val(curr_apply_user);
+			}
 		}
 	};
 	ajax.addParameter("work", "AutoComplete");

@@ -485,8 +485,7 @@ color: #008000;
 	    <div class="label_ltit">产品:</div>
 	    <div class="label_rwben label_rwb">
 	    	<div class="iselect">
-	    	<select name="activeProduct.product_id" title="产品" class="validate[required]">
-				<option>-请选择-</option><s:iterator value="products" status="sta">
+	    	<select name="activeProduct.product_id" title="产品"><s:iterator value="products" status="sta">
 				<option data='<s:property value="market_price" />#<s:property value="group_price" />#<s:property value="dealer_price" />#<s:property value="agree_price_1" />#<s:property value="agree_price_2" />#<s:property value="agree_price_3" />' data_case='<s:property value="case_spec" />' value='<s:property value="uuid" />'><s:property value="title" /></option>
 			</s:iterator></select>
 			</div>
