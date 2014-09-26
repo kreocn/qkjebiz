@@ -1,5 +1,5 @@
 /**
- * jquery上传插件
+ * jquery上传插件 使用方法 $.fn.xhuploadinit(); $("#uploadTextField").xhupload();
  */
 (function($){
 	$.fn.xhuploadinit = function(){

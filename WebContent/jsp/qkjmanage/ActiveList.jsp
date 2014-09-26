@@ -259,11 +259,11 @@ cursor: pointer;
 </div>
  <!-- HIDDEN AREA BEGIN -->
  <div id="mdyActiveShipInfoForm" class="label_con idialog" title="修改发货信息">
-<s:form name="form_mdyActiveShipInfoForm" action="mdyActiveShipInfo" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
+<s:form name="form_mdyActiveShipInfoForm" action="mdyActiveShipInfo" namespace="/qkjmanage" method="post" theme="simple">
 	<div class="label_main">
         <div class="label_hang">
             <div class="label_ltit">发货状态:</div>
-            <div class="label_rwben"><s:select id="e_active_ship_status" name="active.ship_status" list="#{0:'未发货',10:'已发货',99:'其他' }" /></div>
+            <div class="label_rwben"><div class="iselect"><s:select id="e_active_ship_status" name="active.ship_status" list="#{0:'未发货',10:'已发货',99:'其他' }" /></div></div>
         </div>
 		<div class="label_hang">
             <div class="label_ltit">出库日期:</div>
@@ -303,8 +303,6 @@ cursor: pointer;
 var curr_apply_dept = '${active.apply_dept}';
 //var curr_apply_user = '${active.apply_user}';
 $(function(){
-	CommonUtil.pickrow('table1');
-	CommonUtil.pickrowAll('table1','uuidcheck');
 	if(curr_apply_dept!='') {
 		loadManagers(curr_apply_dept,'${active.apply_user}');
 	}

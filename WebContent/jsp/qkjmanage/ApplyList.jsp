@@ -197,7 +197,7 @@ display: none;
  </div>
  
  <!-- HIDDEN AREA BEGIN -->
- <div class="hidden_area">
+ <div class="dn">
  <div id="mdyApplyShipInfoForm" class="label_con idialog idialog500" title="修改发货信息">
 <s:form name="form_mdyApplyShipInfoForm" action="mdyApplyShipInfo" cssClass="validForm" namespace="/qkjmanage" method="post" theme="simple">
 	<div class="label_main">

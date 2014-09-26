@@ -7,70 +7,23 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>工时管理--<s:text name="APP_NAME" /></title>
 </head>
-<s:action name="ref" namespace="/manager" executeResult="true" />
+<link rel="stylesheet" href="<s:url value="/css/css.css" />" />
+<link rel="stylesheet" href="<s:url value="/css/navigate.css" />" />
+<link rel="stylesheet" href="<s:url value="/css/main.css" />" />
+<script type="text/javascript" src="<s:url value="/js/form_validator.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/common_cptb.js" />"></script>
+<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-1.8.3.min.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/jquery.CommonUtil.js" />"></script>
+<link rel="stylesheet" href="<s:url value="/include/jQuery/style.ui.smoothness/jquery-ui-1.10.3.min.css" />" />
+<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-ui-1.10.3.custom.min.js" />"></script>
+<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.ui.datepicker-zh.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/jquery.dialog.iframe.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/common_ajax2.0.js" />"></script>
+<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.select.js" />"></script>
+<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-ui-timepicker-addon.js" />"></script>
+<script type="text/javascript" src="/ckframe/include/widget.js"></script>
 <body>
 <!--  0出差 1请假 2加班 3换休 -->
-<div class="main" title="修改发货信息">
-	<div class="dq_step">
-		${path}
-		<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="apply_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a></span>
-	</div>
-	<s:form id="editForm" name="editForm" cssClass="validForm" action="apply_load" namespace="/qkjmanage" method="post" theme="simple">
-	<div class="label_con">
-		<s:if test="'mdy' == viewFlag">
-		<div class="label_main">
-        <div class="label_hang">
-            <div class="label_ltit">申请编号:</div>
-            <div class="label_rwben"><s:property value="leave.uuid" /><s:hidden name="leave.uuid" title="申请编号" /></div>
-        </div>
-        <div class="label_hang">
-            <div class="label_ltit">当前状态:</div>
-            <div class="label_rwbenx">
-            	<div class="zhuangtai">
-				业务:
-				<s:if test="leave.check_status==0">新申请</s:if>
-				<s:if test="leave.check_status==5"><span class="message_error">已退回(${leave.check_user_name})</span></s:if>
-				<s:if test="leave.check_status==10"><span class="message_warning">待审核</span></s:if>
-				<s:if test="leave.check_status==20"><span class="message_pass">经理/大区已审(${leave.check_user_name})</span></s:if>
-				<s:if test="leave.check_status==30"><span class="message_pass">运营总监已审(${leave.check_user_name})</span></s:if>
-				<s:if test="leave.check_status==40"><span class="message_pass">业务副总已审(${leave.check_user_name})</span></s:if>
-				</div>
-				<div class="zhuangtai">
-				人事:
-				<s:if test="leave.check_status==5"><span class="message_error">已退回</span></s:if>
-				<s:elseif test="leave.acheck_status==0">未审核</s:elseif>
-				<s:if test="leave.acheck_status==10"><span class="message_pass">人事经理已审(${leave.acheck_user_name})</span></s:if>
-				<s:if test="leave.acheck_status==20"><span class="message_pass">行政副总已审(${leave.acheck_user_name})</span></s:if>
-				<s:if test="leave.acheck_status==30"><span class="message_pass">总经理已审(${leave.acheck_user_name})</span></s:if>
-				</div>
-            </div>
-        </div>
-        </div>
-        </s:if>
-        <div class="label_main">
-        <div class="label_hang">
-            <div class="label_ltit">申请部门:</div>
-            <div class="label_rwben nw">
-            	<span class="label_rwb">
-            	<s:textfield title="部门名称" id="userdept_nameid" name="leave.leave_dept_name" readonly="true" />
-				<s:hidden title="部门代码" id="userdept_codeid" name="leave.leave_dept" readonly="true" />
-				</span>
-				<img class="detail vam" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true);" />
-            </div>
-        </div>
-        <div class="label_hang">
-            <div class="label_ltit">申请人:</div>
-            <div class="label_rwben label_rwb">
-            	<div class="iselect"><s:select id="membermanagerid" cssClass="selectKick" name="leave.leave_user" list="#{}" headerKey="" headerValue="--请选择--" /></div>
-            </div>
-		</div>
-        </div>
-	</div>
-	</s:form>
-
-</div>
-
-
 <div id="main">
 <div id="result">
 	<div class="itablemdy">
@@ -93,6 +46,30 @@
 	<div class="ifromoperate" ><s:hidden name="leave.leave_type" /><s:hidden name="leave.check_status" /><s:hidden name="leave.acheck_status" /></div>
 	<table class="ilisttable" width="100%">
 		<s:if test="'mdy'==viewFlag">
+		<tr>
+		<td class='firstRow'><span style="color:red;">*</span> 申请编号:</td>
+		<td class='secRow'><s:property value="leave.uuid" /><s:hidden name="leave.uuid" title="申请编号" /></td>
+		<td class='firstRow'>当前状态:</td>
+		<td class='secRow'>
+			<span class="span_label">
+			业务:
+			<s:if test="leave.check_status==0">新申请</s:if>
+			<s:if test="leave.check_status==5"><span class="message_error">已退回(${leave.check_user_name})</span></s:if>
+			<s:if test="leave.check_status==10"><span class="message_warning">待审核</span></s:if>
+			<s:if test="leave.check_status==20"><span class="message_pass">经理/大区已审(${leave.check_user_name})</span></s:if>
+			<s:if test="leave.check_status==30"><span class="message_pass">运营总监已审(${leave.check_user_name})</span></s:if>
+			<s:if test="leave.check_status==40"><span class="message_pass">业务副总已审(${leave.check_user_name})</span></s:if>
+			</span>
+			<span class="span_label">
+			人事:
+			<s:if test="leave.check_status==5"><span class="message_error">已退回</span></s:if>
+			<s:elseif test="leave.acheck_status==0">未审核</s:elseif>
+			<s:if test="leave.acheck_status==10"><span class="message_pass">人事经理已审(${leave.acheck_user_name})</span></s:if>
+			<s:if test="leave.acheck_status==20"><span class="message_pass">行政副总已审(${leave.acheck_user_name})</span></s:if>
+			<s:if test="leave.acheck_status==30"><span class="message_pass">总经理已审(${leave.acheck_user_name})</span></s:if>
+			</span>
+		</td>
+		</tr>
 		<!-- 
 		<tr>
 		<td class='firstRow'>已补贴:</td>
@@ -245,13 +222,49 @@
 <script type="text/javascript">
 var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
 var curr_dept = '${leave.leave_dept}';
+var curr_user = '${leave.leave_user}';
+var infoeditor01;
 $(function(){
+	if($("#leave_cause").length>0) {
+		infoeditor01 = new widget_textarea();
+		infoeditor01.init("leave_cause");
+	}
 	if(curr_dept!='') {
-		loadManagers(curr_dept,'${leave.leave_user}');
+		loadManagers(curr_dept);
 	}
 	$('#leave_leave_end').datetimepicker({<s:if test="leave.leave_type!=4">stepMinute: 15,</s:if>altField: "#leave_leave_end_time"});
 	$('#leave_leave_start').datetimepicker({<s:if test="leave.leave_type!=4">stepMinute: 15,</s:if>altField: "#leave_leave_start_time"});
 });
+
+var sobj01;
+var selectDept = function() {
+	sobj01 = new DialogIFrame({src:'<s:url namespace="/sys" action="dept_permit_select" />?objname=sobj01',title:"选择部门"});
+	sobj01.selfAction = function(val1,val2) {
+		$("#userdept_codeid").val(val1);
+		$("#userdept_nameid").val(val2);
+		loadManagers(val1);
+	};
+	sobj01.create();
+	sobj01.open();
+};
+
+function loadManagers(dept_code) {
+	var ajax = new Common_Ajax('ajax_member_message');
+	ajax.config.action_url = ajax_url_action;
+	ajax.config._success = function(data, textStatus) {
+		$("#membermanagerid").clearAllOption();
+		$("#membermanagerid").addOption("--请选择--","");
+		$.each(data, function(i, n){
+			$("#membermanagerid").addOption(n.user_name,n.uuid);
+		});
+		if(curr_user!='') {
+			$("#membermanagerid").val(curr_user);
+		}
+	};
+	ajax.addParameter("work", "AutoComplete");
+	ajax.addParameter("parameters", "privilege_id=QKJCJ_SYS_AJAXLOAD_USER&dept_code=" + encodeURI(dept_code));
+	ajax.sendAjax2();
+}
 </script>
 </body>
 </html>
