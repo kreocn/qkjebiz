@@ -162,7 +162,7 @@ a {
 }
 
 .label_rwb {
-	width: 106px; display: inline-block; vertical-align: middle;
+	width: 106px; display: inline-block; /* vertical-align: middle;*/
 }
 
 .label_rwb_s {
@@ -171,6 +171,10 @@ a {
 
 .label_rwben2 .label_rwb,.label_rwbenx .label_rwb {
 	width: 145px;
+}
+
+.label_rwben2 .label_rwbx {
+	width: 106px;
 }
 
 .label_hang_linput {
@@ -341,12 +345,20 @@ a {
 	text-align: center;
 }
 
+.tar {
+	text-align: right;
+}
+
 .vam {
 	vertical-align: middle;
 }
 
 .ib {
 	text-align: center;
+}
+
+.bn {
+	border: none;
 }
 
 .nw {
@@ -522,13 +534,26 @@ input[type="button"].input-blue,input[type="submit"].input-blue,input[type="rese
 .textBreak {
 	line-height: 130%;
 }
+
+.op-vm {
+	
+}
+
+.op-vm:after {
+	content: ''; display: inline-block; line-height: 34x; width: 1px; visibility: hidden;
+}
+
+.op-vm input[type="button"],.op-vm a {
+	
+}
+
 /*input-icon*/
 .iI {
 	background: url("../../images/icon/input-icon.png") no-repeat;
 }
 
 .iI-s {
-	background-position: right 0;
+	background-position: 95% 7px;
 }
 
 .iI-f {
@@ -738,4 +763,8 @@ input[type="button"].input-blue,input[type="submit"].input-blue,input[type="rese
 
 .portrait label.error {
 	margin-left: 0; display: block;
+}
+
+.xheLayout {
+	line-height: normal;
 }

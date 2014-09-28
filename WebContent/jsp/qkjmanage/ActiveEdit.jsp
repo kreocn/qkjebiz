@@ -6,8 +6,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>活动申请单管理--<s:text name="APP_NAME" /></title>
-</head>
 <s:action name="ref" namespace="/manager" executeResult="true" />
+</head>
 <script type="text/javascript">
 var infoeditor01;
 $(function(){
@@ -387,7 +387,7 @@ color: #008000;
 				</s:if>
 				<s:elseif test="null != active && 'mdy' == viewFlag && active.status==0">
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_MDY')">
-					<s:submit id="save" name="save" value="保存" action="active_save" cssClass="input-blue" />
+					<s:submit name="save" value="保存" action="active_save" cssClass="input-blue" />
 					</s:if>
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_STATUS0')">
 					<s:submit id="mdyStatus0" name="mdyStatus0" value="报审" action="mdyStatus0" onclick="return isOp('确定执行此操作?');" cssClass="input-yellow" />
@@ -401,7 +401,7 @@ color: #008000;
 				<s:submit id="mdyStatus1" name="mdyStatus1" value="申请通过-可以执行" action="mdyStatus1" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
 				</s:if>
 				</s:elseif>
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_STATUS_1')">
+				<s:if test="(active.status==1 || active.status==2) && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_STATUS_1')">
 					<s:submit id="active_mdyStatus_1" name="active_mdyStatus_1" value="作废" action="active_mdyStatus_1" onclick="return isOp('确定执行此操作?');" cssClass="input-red" />
 				</s:if>
 				<s:if test="active.status==1 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_APPROVE')">

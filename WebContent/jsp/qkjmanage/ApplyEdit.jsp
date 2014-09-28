@@ -176,7 +176,7 @@ color: #008000;
 					<s:submit id="delete" name="delete" value="删除" action="apply_del" cssClass="input-red" onclick="return isDel();" />
 					</s:if>
 					</s:if>
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_CHECK_1')">
+					<s:if test="apply.status>=10 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_CHECK_1')">
 					<s:submit id="apply_check_1" name="apply_check_1" value="作废" action="apply_check_1"  cssClass="input-red" onclick="return isOp('确定进行此操作?');" />
 					</s:if>
 					<s:if test="apply.status==10 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_CHECK10')">

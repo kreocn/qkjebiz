@@ -6,8 +6,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>请假单列表--<s:text name="APP_NAME" /></title>
-</head>
 <s:action name="ref" namespace="/manager" executeResult="true" />
+</head>
 <style type="text/css">
 .show_dialog {
 }

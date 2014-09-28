@@ -80,11 +80,17 @@ var loadManagers = function(dept_code, curr_apply_user){
 		if (uc.length > 0 && uc.get(0).tagName.toUpperCase() == 'SELECT') {
 			uc.clearAllOption();
 			uc.addOption("--请选择--", "");
-			$.each(data, function(i, n){
-				uc.addOption(n.user_name, n.uuid);
-			});
-			if (curr_apply_user != '') {
-				uc.val(curr_apply_user);
+			var l = $(data).length;
+			if (l == 1) { // 如果只有一个结果,那么直接选中
+				uc.addOption($(data)[0].user_name, $(data)[0].uuid);
+				uc.setSelectedValue($(data)[0].uuid);
+			} else if (l > 1) {
+				$.each(data, function(i, n){
+					uc.addOption(n.user_name, n.uuid);
+				});
+				if (curr_apply_user != '') {
+					uc.val(curr_apply_user);
+				}
 			}
 		}
 	};

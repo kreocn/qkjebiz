@@ -6,8 +6,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>活动申请单列表--<s:text name="APP_NAME" /></title>
-</head>
 <s:action name="ref" namespace="/manager" executeResult="true" />
+</head>
 <style type="text/css">
 .ship_info {
 cursor: pointer;

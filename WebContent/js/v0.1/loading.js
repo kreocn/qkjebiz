@@ -17,10 +17,13 @@ $(document).ready(function(){
 	/* 表单验证专用 */
 	$(".validForm").validationEngine();
 	$(".validFormDialog").validationEngine({ promptPosition : "bottomLeft" }); // dialog的特殊性导致只能显示在表单下部
-	// data-prompt-position="inline" data-prompt-target="元素的ID"
-	//$("select")
 	/* 表单提示专用 */
 	$(".inputNote").inputNote();
+	/* 表单提交后即禁用所有表单下的提交按钮,防止重复提交 */
+	// $("form").submit(function(){
+	// $(this).find(":submit").attr("disabled", "disabled");
+	// return true;
+	// });
 	/* 生成编辑框 */
 	createHtmlEditor(".xheditorArea");
 	/* 设置"更多条件" */
