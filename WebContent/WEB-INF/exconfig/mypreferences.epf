@@ -1,4 +1,4 @@
-#Wed Sep 03 17:43:55 CST 2014
+#Mon Sep 15 08:53:36 CST 2014
 /instance/org.eclipse.wst.jsdt.core/org.eclipse.wst.jsdt.core.formatter.insert_new_line_before_while_in_do_statement=do not insert
 /instance/org.eclipse.wst.jsdt.core/org.eclipse.wst.jsdt.core.formatter.indent_statements_compare_to_body=true
 /instance/org.eclipse.wst.jsdt.core/org.eclipse.wst.jsdt.core.formatter.insert_space_before_closing_paren_in_switch=do not insert
@@ -26,6 +26,7 @@
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.comment.clear_blank_lines_in_block_comment=false
 /instance/org.eclipse.jdt.ui/useAnnotationsPrefPage=true
 /instance/org.eclipse.jdt.ui/formatter_profile=_MyEclipseConfig
+/instance/org.eclipse.wst.css.ui/css_content_assist_own_page_sort_order=org.eclipse.wst.css.ui.proposalCategory.cssTemplates\u0000org.eclipse.wst.css.ui.proposalCategory.css\u0000
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.insert_space_after_comma_in_method_declaration_throws=insert
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.insert_space_before_comma_in_allocation_expression=do not insert
 /instance/org.eclipse.wst.jsdt.ui/org.eclipse.wst.jsdt.ui.formatterprofiles.version=11
@@ -51,7 +52,7 @@
 /instance/org.eclipse.wst.jsdt.core/org.eclipse.wst.jsdt.core.formatter.blank_lines_before_member_type=1
 /instance/org.eclipse.debug.ui/preferredTargets=default\:default|
 /instance/org.eclipse.mylyn.tasks.ui/org.eclipse.mylyn.tasks.ui.filters.nonmatching=true
-/instance/org.eclipse.wst.css.core/lineWidth=320
+/instance/org.eclipse.wst.css.core/lineWidth=150
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.alignment_for_expressions_in_array_initializer=16
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.insert_space_before_colon_in_assert=insert
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.insert_space_before_closing_paren_in_for=do not insert
@@ -134,7 +135,7 @@
 /instance/org.eclipse.wst.jsdt.core/org.eclipse.wst.jsdt.core.formatter.insert_space_before_closing_bracket_in_array_reference=do not insert
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.blank_lines_after_imports=1
 /instance/org.eclipse.wst.jsdt.core/org.eclipse.wst.jsdt.core.formatter.insert_space_before_opening_brace_in_block=insert
-/instance/org.eclipse.wst.jsdt.web.core/jspIndexState=4
+/instance/org.eclipse.wst.jsdt.web.core/jspIndexState=1
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.alignment_for_parameters_in_constructor_declaration=16
 /instance/org.eclipse.wst.jsdt.core/org.eclipse.wst.jsdt.core.formatter.alignment_for_expressions_in_array_initializer=16
 /instance/org.eclipse.wst.jsdt.core/org.eclipse.wst.jsdt.core.formatter.insert_space_after_question_in_conditional=insert
@@ -221,8 +222,8 @@
 /instance/org.eclipse.egit.ui/commit_dialog_history_messages=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<messages>\r\n<message>COMMIT2014</message>\r\n<message>20140822-\u4F8B\u884C\u63D0\u4EA4&\#x0A;1.\u5DE5\u4E1A\u65C5\u6E38\u6A21\u5757\u4E0A\u7EBF&\#x0A;2.\u6D3B\u52A8/\u81F3\u4E8B\u7531\u6DFB\u52A0\u4F5C\u5E9F\u6D41\u7A0B&\#x0A;3.\u6D3B\u52A8/\u81F3\u4E8B\u7531\u589E\u52A0\u53D1\u8D27\u67E5\u8BE2\u6761\u4EF6&\#x0A;&\#x0A;Change-Id\: I0000000000000000000000000000000000000000&\#x0A;Signed-off-by\: kreocn &lt;kreo@qq.com&gt;&\#x0A;</message>\r\n<message>20140821-Sync</message>\r\n</messages>
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.insert_space_before_closing_paren_in_catch=do not insert
 /instance/org.eclipse.ui.workbench/org.eclipse.jface.textfont=1|Cambria|12.0|0|WINDOWS|1|-16|0|0|0|400|0|0|0|0|3|2|1|18|Cambria;
-/instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.insert_space_before_closing_paren_in_while=do not insert
 /instance/org.eclipse.wst.jsdt.core/org.eclipse.wst.jsdt.core.formatter.insert_space_between_empty_parens_in_enum_constant=do not insert
+/instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.insert_space_before_closing_paren_in_while=do not insert
 /instance/org.eclipse.rse.core/org.eclipse.rse.systemtype.local.systemType.defaultUserId=\u9A8F\u5B87
 /instance/org.eclipse.wst.jsdt.core/org.eclipse.wst.jsdt.core.formatter.insert_new_line_after_opening_brace_in_array_initializer=do not insert
 /instance/org.eclipse.wst.jsdt.core/org.eclipse.wst.jsdt.core.formatter.insert_new_line_in_empty_anonymous_type_declaration=insert
@@ -297,6 +298,7 @@
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.use_tabs_only_for_leading_indentations=false
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.insert_space_after_colon_in_case=insert
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.comment.indent_root_tags=true
+/instance/org.eclipse.wst.css.ui/css_content_assist_default_page_sort_order=org.eclipse.wst.css.ui.proposalCategory.css\u0000org.eclipse.wst.css.ui.proposalCategory.cssTemplates\u0000
 /instance/org.eclipse.wst.jsdt.core/org.eclipse.wst.jsdt.core.formatter.insert_space_after_comma_in_allocation_expression=insert
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.insert_space_after_opening_paren_in_method_invocation=do not insert
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.insert_space_before_parenthesized_expression_in_throw=insert
@@ -310,6 +312,7 @@
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.format_guardian_clause_on_one_line=true
 /instance/org.eclipse.debug.ui/org.eclipse.debug.ui.PREF_LAUNCH_PERSPECTIVES=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\r\n<launchPerspectives/>\r\n
 @org.eclipse.jst.jsp.core=1.2.602.v201401151909
+/instance/org.eclipse.wst.css.core/onePropertyPerLine=false
 /instance/org.eclipse.wst.jsdt.core/org.eclipse.wst.jsdt.core.formatter.insert_space_before_comma_in_method_declaration_parameters=do not insert
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.blank_lines_after_package=1
 /instance/org.eclipse.wst.jsdt.core/org.eclipse.wst.jsdt.core.formatter.insert_new_line_in_empty_enum_constant=insert
@@ -375,6 +378,7 @@
 /instance/org.eclipse.jdt.ui/formatter_settings_version=12
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.insert_space_before_opening_brace_in_enum_declaration=insert
 /instance/org.eclipse.jdt.ui/spelling_ignore_sentence=true
+/instance/org.eclipse.wst.css.ui/org.eclipse.wst.sse.ui.custom_templates=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates/>
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.brace_position_for_block=end_of_line
 /instance/org.eclipse.wst.jsdt.ui/org.eclipse.wst.jsdt.ui.editor.tab.width=
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.alignment_for_arguments_in_allocation_expression=16
@@ -459,7 +463,7 @@
 /instance/org.eclipse.wst.jsdt.core/org.eclipse.wst.jsdt.core.formatter.insert_space_after_opening_angle_bracket_in_parameterized_type_reference=do not insert
 /instance/org.eclipse.wst.jsdt.core/org.eclipse.wst.jsdt.core.formatter.insert_space_after_colon_in_conditional=insert
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.number_of_empty_lines_to_preserve=1
-/instance/org.eclipse.jst.jsp.ui/org.eclipse.wst.sse.ui.custom_templates=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates/>
+/instance/org.eclipse.jst.jsp.ui/org.eclipse.wst.sse.ui.custom_templates=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates><template autoinsert\="true" context\="jsp_new" deleted\="false" description\="JSP with html markup" enabled\="true" id\="org.eclipse.jst.jsp.ui.templates.jsphtml" name\="New JSP File (html)">&lt;%@ page language\="java" contentType\="text/html; charset\=${encoding}"\r\n    pageEncoding\="${encoding}"%&gt;\r\n&lt;\!DOCTYPE html&gt;\r\n&lt;html&gt;\r\n&lt;head&gt;\r\n&lt;meta http-equiv\="Content-Type" content\="text/html; charset\=${encoding}"&gt;\r\n&lt;title&gt;Insert title here&lt;/title&gt;\r\n&lt;/head&gt;\r\n&lt;body&gt;\r\n${cursor}\r\n&lt;/body&gt;\r\n&lt;/html&gt;</template></templates>
 /instance/org.eclipse.wst.jsdt.core/org.eclipse.wst.jsdt.core.formatter.comment.insert_new_line_for_parameter=insert
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.brace_position_for_enum_declaration=end_of_line
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.insert_space_before_semicolon=do not insert
@@ -566,7 +570,7 @@ file_export_version=3.0
 /instance/org.eclipse.jdt.ui/org.eclipse.jdt.ui.overrideannotation=true
 /instance/org.eclipse.wst.jsdt.core/org.eclipse.wst.jsdt.core.formatter.insert_space_after_at_in_annotation=do not insert
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.insert_space_after_opening_paren_in_try=do not insert
-/instance/org.eclipse.wst.server.core/runtimes=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\r\n<runtimes>\r\n  <runtime id\="Apache Tomcat v7.0" location\="D\:/apache-tomcat-7.0.53" name\="Apache Tomcat v7.0" runtime-type-id\="org.eclipse.jst.server.tomcat.runtime.70" timestamp\="0"/>\r\n</runtimes>\r\n
+/instance/org.eclipse.wst.server.core/runtimes=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\r\n<runtimes>\r\n  <runtime id\="Apache Tomcat v7.0" location\="D\:/apache-tomcat-7.0.53" name\="Apache Tomcat v7.0" runtime-type-id\="org.eclipse.jst.server.tomcat.runtime.70" timestamp\="0"/>\r\n  <runtime id\="HTTP Preview" name\="HTTP Preview" runtime-type-id\="org.eclipse.wst.server.preview.runtime" timestamp\="0"/>\r\n</runtimes>\r\n
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.brace_position_for_block_in_case=end_of_line
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.insert_space_before_comma_in_for_increments=do not insert
 @org.eclipse.wst.html.core=1.1.702.v201401301446

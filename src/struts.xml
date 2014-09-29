@@ -10,6 +10,11 @@
 			<interceptor name="log" class="org.iweb.sys.interceptor.LogInterceptor" />
 			<interceptor name="checkMemberLogin" class="org.iweb.sys.interceptor.MemberInterceptor" />
 
+			<!-- Token专用 -->
+			<interceptor-stack name="myToken">
+				<!-- <interceptor-ref name="token" /> -->
+				<interceptor-ref name="tokenSession" />
+			</interceptor-stack>
 			<!-- 去除UploadFile拦截器的defaultStack -->
 			<interceptor-stack name="myDefault">
 				<interceptor-ref name="exception" />

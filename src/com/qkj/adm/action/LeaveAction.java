@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.iweb.sys.ActionAttr;
 import org.iweb.sys.ContextHelper;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -14,7 +15,7 @@ import com.qkj.adm.dao.LeaveDAO;
 import com.qkj.adm.domain.Leave;
 import com.qkj.manage.dao.ProcessDAO;
 
-public class LeaveAction extends ActionSupport {
+public class LeaveAction extends ActionSupport implements ActionAttr {
 	private static final long serialVersionUID = 1L;
 	private static Log log = LogFactory.getLog(LeaveAction.class);
 	private Map<String, Object> map = new HashMap<String, Object>();
@@ -27,6 +28,11 @@ public class LeaveAction extends ActionSupport {
 	private int recCount;
 	private int pageSize;
 	private int currPage;
+	private String path = "<a href='/manager/main'>首页</a>&nbsp;&gt;&nbsp;工时管理";
+
+	public String getPath() {
+		return path;
+	}
 
 	public Leave getLeave() {
 		return leave;
@@ -95,6 +101,7 @@ public class LeaveAction extends ActionSupport {
 			this.setCurrPage(ContextHelper.getCurrPage(map));
 			this.setLeaves(dao.list(map));
 			this.setRecCount(dao.getResultCount());
+			path = "<a href='/manager/main'>首页</a>&nbsp;&gt;&nbsp;工时申请单列表";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
@@ -115,12 +122,14 @@ public class LeaveAction extends ActionSupport {
 				leave.setLeave_dept(ContextHelper.getUserLoginDept());
 				leave.setLeave_dept_name(ContextHelper.getUserLoginDeptName());
 				leave.setLeave_user(ContextHelper.getUserLoginUuid());
+				path = "<a href='/manager/main'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/leave_list?viewFlag=relist'>工时列表</a>&nbsp;&gt;&nbsp;添加申请单";
 			} else if ("mdy".equals(viewFlag)) {
 				if (!(leave == null || leave.getUuid() == null)) {
 					this.setLeave((Leave) dao.get(leave.getUuid()));
 				} else {
 					this.setLeave(null);
 				}
+				path = "<a href='/manager/main'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/leave_list?viewFlag=relist'>工时列表</a>&nbsp;&gt;&nbsp;修改申请单";
 			} else {
 				this.setLeave(null);
 				setMessage("无操作类型!");

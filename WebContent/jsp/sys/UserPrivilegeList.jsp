@@ -17,6 +17,8 @@
 <script type="text/javascript" src="<s:url value="/js/common_cptb.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/common_ajax2.0.js" />"></script>
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery-1.8.3.min.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/v0.1/spin.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/v0.1/loading.js" />"></script>
 <script type="text/javascript">
 var puuid = '<s:property value="privilege.uuid" />';
 var cflag = 0;//状态符,0代表新增状态 1代表修改状态
@@ -53,10 +55,7 @@ function getInfo(obj) {
 		$("#privilege\\.menu_url").val(json.menu_url);
 		$("#privilege\\.lm_user").text(json.lm_user);
 		$("#privilege\\.lm_time").text(formatDate(json.lm_time));
-		
-		
 		setControl("save");
-		
 		$("#message").text("获取数据成功!");
 	};
 	ajax.addParameter("privilege_id","SYS_MANAGER_PRIVILEGE_AJAX_LOAD");

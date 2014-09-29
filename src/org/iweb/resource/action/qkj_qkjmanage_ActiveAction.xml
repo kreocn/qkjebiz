@@ -37,7 +37,12 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
-
+		<action name="active_relist" class="com.qkj.manage.action.ActiveAction">
+			<result type="redirectAction">
+				<param name="actionName">active_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
 		<!-- 订单状态 -->
 		<!-- 作废 -->
 		<action name="active_mdyStatus_1" class="com.qkj.manage.action.ActiveAction" method="mdyStatus_1">
@@ -261,8 +266,7 @@
 		<!-- 发货信息修改 -->
 		<action name="mdyActiveShipInfo" class="com.qkj.manage.action.ActiveAction" method="mdyShipInfo">
 			<result type="redirectAction">
-				<param name="actionName">active_closeView</param>
-				<param name="active.uuid">${active.uuid}</param>
+				<param name="actionName">active_relist</param>
 			</result>
 		</action>
 

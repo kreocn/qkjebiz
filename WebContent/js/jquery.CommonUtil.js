@@ -235,7 +235,7 @@ var CommonUtil = {
 			dd = dd.replace(/\n/g, "<br>");
 			dd = dd.replace(/ /g, "&nbsp;");
 		}
-		return dd
+		return dd;
 	}
 // undifined
 };

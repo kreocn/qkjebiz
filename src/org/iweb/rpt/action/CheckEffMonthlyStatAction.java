@@ -290,36 +290,36 @@ public class CheckEffMonthlyStatAction extends ActionSupport {
 				.append("AND a.`uuid` = o.`biz_id`").append(")");
 
 		// 当月活动申请通过数量
-		if (n == 3) sql.append("SELECT a.`apply_dept`,d.`dept_cname`,COUNT(*) cout").append(" FROM qkjm_h_process p,qkjm_r_active a,s_sys_department d")
+		if (n == 3) sql.append("SELECT a.`apply_dept`,d.`dept_cname`,COUNT(DISTINCT biz_id) cout").append(" FROM qkjm_h_process p,qkjm_r_active a,s_sys_department d")
 				.append(" WHERE p.`process_id` = 1").append(" AND p.`biz_id` = a.`uuid`").append("AND p.`biz_sign` = 'ACTIVE_APPLY_PASS'")
 				.append("AND p.`biz_time` > DATE_ADD(CONCAT(").append("'").append(yearMonth).append("'").append(",'-26'), INTERVAL -1 MONTH)").append("AND CONCAT(").append("'")
 				.append(yearMonth).append("'").append(",'-26')").append("AND a.`apply_dept` = d.`dept_code`").append("AND a.`apply_dept` LIKE '").append(deptGroup).append("%'")
 				.append("GROUP BY a.`apply_dept`").append("UNION ALL").append(" SELECT b.apply_dept,rd.dept_cname,b.cout FROM (")
-				.append("SELECT SUBSTR(a.`apply_dept`,1,3) `apply_dept`,COUNT(*) cout").append(" FROM qkjm_h_process p,qkjm_r_active a,s_sys_department d")
+				.append("SELECT SUBSTR(a.`apply_dept`,1,3) `apply_dept`,COUNT(DISTINCT biz_id) cout").append(" FROM qkjm_h_process p,qkjm_r_active a,s_sys_department d")
 				.append(" WHERE p.`process_id` = 1").append(" AND p.`biz_id` = a.`uuid`").append("AND p.`biz_sign` = 'ACTIVE_APPLY_PASS'")
 				.append("AND p.`biz_time` > DATE_ADD(CONCAT(").append("'").append(yearMonth).append("'").append(",'-26'), INTERVAL -1 MONTH)").append("AND CONCAT(").append("'")
 				.append(yearMonth).append("'").append(",'-26')").append("AND a.`apply_dept` = d.`dept_code`").append("AND a.`apply_dept` LIKE '").append(deptGroup).append("%'")
 				.append("GROUP BY SUBSTR(a.`apply_dept`,1,3)").append(") b,s_sys_department rd").append(" WHERE b.apply_dept = rd.dept_code");
 
 		// 当月活动结案通过数量
-		if (n == 4) sql.append("SELECT a.`apply_dept`,d.`dept_cname`,COUNT(*) cout").append(" FROM qkjm_h_process p,qkjm_r_active a,s_sys_department d")
+		if (n == 4) sql.append("SELECT a.`apply_dept`,d.`dept_cname`,COUNT(DISTINCT biz_id) cout").append(" FROM qkjm_h_process p,qkjm_r_active a,s_sys_department d")
 				.append(" WHERE p.`process_id` = 1").append(" AND p.`biz_id` = a.`uuid`").append("AND p.`biz_sign` = 'ACTIVE_CLOSE_PASS'")
 				.append("AND p.`biz_time` > DATE_ADD(CONCAT(").append("'").append(yearMonth).append("'").append(",'-26'), INTERVAL -1 MONTH)").append("AND CONCAT(").append("'")
 				.append(yearMonth).append("'").append(",'-26')").append("AND a.`apply_dept` = d.`dept_code`").append("AND a.`apply_dept` LIKE '").append(deptGroup).append("%'")
 				.append("GROUP BY a.`apply_dept`").append("UNION ALL").append(" SELECT b.apply_dept,rd.dept_cname,b.cout FROM (")
-				.append("SELECT SUBSTR(a.`apply_dept`,1,3) `apply_dept`,COUNT(*) cout").append(" FROM qkjm_h_process p,qkjm_r_active a,s_sys_department d")
+				.append("SELECT SUBSTR(a.`apply_dept`,1,3) `apply_dept`,COUNT(DISTINCT biz_id) cout").append(" FROM qkjm_h_process p,qkjm_r_active a,s_sys_department d")
 				.append(" WHERE p.`process_id` = 1").append(" AND p.`biz_id` = a.`uuid`").append("AND p.`biz_sign` = 'ACTIVE_CLOSE_PASS'")
 				.append("AND p.`biz_time` > DATE_ADD(CONCAT(").append("'").append(yearMonth).append("'").append(",'-26'), INTERVAL -1 MONTH)").append("AND CONCAT(").append("'")
 				.append(yearMonth).append("'").append(",'-26')").append("AND a.`apply_dept` = d.`dept_code`").append("AND a.`apply_dept` LIKE '").append(deptGroup).append("%'")
 				.append("GROUP BY SUBSTR(a.`apply_dept`,1,3)").append(") b,s_sys_department rd").append(" WHERE b.apply_dept = rd.dept_code");
 
 		// 当月至事由通过数量
-		if (n == 5) sql.append("SELECT a.`apply_dept`,d.`dept_cname`,COUNT(*) cout").append(" FROM qkjm_h_process p,qkjm_r_apply a,s_sys_department d")
+		if (n == 5) sql.append("SELECT a.`apply_dept`,d.`dept_cname`,COUNT(DISTINCT biz_id) cout").append(" FROM qkjm_h_process p,qkjm_r_apply a,s_sys_department d")
 				.append(" WHERE p.`process_id` = 2").append(" AND p.`biz_id` = a.`uuid`").append("AND p.`biz_sign` = 'APPLY_CHANGE_STATUS'").append("AND biz_status01 = 30")
 				.append(" AND p.`biz_time` > DATE_ADD(CONCAT(").append("'").append(yearMonth).append("'").append(",'-26'), INTERVAL -1 MONTH)").append("AND CONCAT(").append("'")
 				.append(yearMonth).append("'").append(",'-26')").append("AND a.`apply_dept` = d.`dept_code`").append("AND a.`apply_dept` LIKE '").append(deptGroup).append("%'")
 				.append("GROUP BY a.`apply_dept`").append("UNION ALL").append(" SELECT b.apply_dept,rd.dept_cname,b.cout FROM (")
-				.append("SELECT SUBSTR(a.`apply_dept`,1,3) `apply_dept`,COUNT(*) cout").append(" FROM qkjm_h_process p,qkjm_r_apply a,s_sys_department d")
+				.append("SELECT SUBSTR(a.`apply_dept`,1,3) `apply_dept`,COUNT(DISTINCT biz_id) cout").append(" FROM qkjm_h_process p,qkjm_r_apply a,s_sys_department d")
 				.append(" WHERE p.`process_id` = 2").append(" AND p.`biz_id` = a.`uuid`").append("AND p.`biz_sign` = 'APPLY_CHANGE_STATUS'").append("AND biz_status01 = 30")
 				.append(" AND p.`biz_time` > DATE_ADD(CONCAT(").append("'").append(yearMonth).append("'").append(",'-26'), INTERVAL -1 MONTH)").append("AND CONCAT(").append("'")
 				.append(yearMonth).append("'").append(",'-26')").append("AND a.`apply_dept` = d.`dept_code`").append("AND a.`apply_dept` LIKE '").append(deptGroup).append("%'")
