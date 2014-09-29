@@ -11,7 +11,7 @@
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery-ui-timepicker-addon.js" />"></script>
 <body>
 <!--  0出差 1请假 2加班 3换休 -->
-<div class="main" title="修改发货信息">
+<div class="main">
 	<div class="dq_step">
 		${path}
 		(<s:if test="leave.leave_type==0">出差</s:if><s:if test="leave.leave_type==1">请假</s:if><s:if test="leave.leave_type==2">加班</s:if><s:if test="leave.leave_type==3">换休</s:if><s:if test="leave.leave_type==4">补签</s:if>)

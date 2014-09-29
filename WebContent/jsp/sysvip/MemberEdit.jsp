@@ -28,7 +28,7 @@ function checkManager() {
 }
 </script>
 <body>
-<div class="main" title="修改发货信息">
+<div class="main">
 <div class="dq_step">
 	${path}
 	<span class="opb lb op-area"><a href="<s:url action="member_list" namespace="/sysvip"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a></span>
@@ -39,7 +39,7 @@ function checkManager() {
 	<div class="label_main">
 	<div class="label_hang">
 		<div class="label_ltit">会员号:</div>
-		<div class="label_rwben label_rwb">${member.uuid}<s:hidden name="member.uuid" title="会员号" /></div>
+		<div class="label_rwben2">${member.uuid}<s:hidden name="member.uuid" title="会员号" /></div>
 	</div>
 	<div class="label_hang">
 		<div class="label_ltit">登录密码:</div>
@@ -55,13 +55,13 @@ function checkManager() {
 	<div class="label_hang">
 		<div class="label_ltit">会员手机:</div>
 		<div class="label_rwben2">
-			<span class="label_rwb label_rwbx"><s:textfield name="member.mobile" title="会员手机"  class="validate[required,custom[mobile]]" /></span>
+			<span class="label_rwb label_rwbx"><s:textfield name="member.mobile" title="会员手机" cssClass="validate[required,custom[mobile]]" /></span>
 			<span class="label_rwb nw"><s:radio name="member.is_mobile_check" title="手机验证"  list="#{0:'未验证',1:'已验证'}" value="1" cssClass="regular-radio" /></span>
 		</div>
 	</div>
 	<div class="label_hang">
 		<div class="label_ltit">会员名称:</div>
-		<div class="label_rwben label_rwb"><s:textfield name="member.member_name" title="会员名称" require="required" dataLength="0,85" controlName="会员名称" /></div>
+		<div class="label_rwben label_rwb"><s:textfield name="member.member_name" cssClass="validate[required,maxSize[85]]" /></div>
 	</div>
 	<div class="label_hang">
 		<div class="label_ltit">联系人姓名:</div>
@@ -112,6 +112,7 @@ function checkManager() {
 	</div>
 	</s:if>
 	</div>
+	<s:if test="'mdy'==viewFlag">
 	<div class="label_main">
 	<div class="label_hang">
 		<div class="label_ltit">注册来源:</div>
@@ -130,6 +131,7 @@ function checkManager() {
 		<div class="label_rwben2"><s:date name="member.last_login_time" format="yyyy-MM-dd HH:mm:ss" /></div>
 	</div>
 	</div>
+	</s:if>
 	<fieldset>
 	<legend>收货地址</legend>
 	<s:if test="'add' == viewFlag">
@@ -137,14 +139,15 @@ function checkManager() {
 		<div class="label_hang">
 			<div class="label_ltit">所在地区:</div>
 			<div class="label_rwbenx">
-				<div class="label_rwb iselect"><s:select id="memberAddress.province" name="memberAddress.province" title="省" list="#{}" require="required" controlName="所在地区"></s:select></div>
-				<div class="label_rwb iselect"><s:select id="memberAddress.city" name="memberAddress.city" title="市" list="#{}"></s:select></div>
-				<div class="label_rwb iselect"><s:select id="memberAddress.area" name="memberAddress.area" title="县" list="#{}"></s:select></div>
+				<div class="label_rwb iselect"><s:select id="memberAddress.province" name="memberAddress.province" title="省" list="#{}" cssClass="validate[required]" /></div>
+				<div class="label_rwb iselect"><s:select id="memberAddress.city" name="memberAddress.city" title="市" list="#{}" cssClass="validate[required]" data-prompt-position="inline" data-prompt-target="rm_x" /></div>
+				<div class="label_rwb iselect"><s:select id="memberAddress.area" name="memberAddress.area" title="县" list="#{}" /></div>
 				<script type="text/javascript">
 					var sa = new SArea($("#memberAddress\\.province") ,$("#memberAddress\\.city"),$("#memberAddress\\.area"));
 					sa.ajax_url = ajax_url;
 					sa.init(toHTML.un('<s:property value="memberAddress.province" />'),toHTML.un('<s:property value="memberAddress.city" />'),toHTML.un('<s:property value="memberAddress.area" />'));
 				</script>
+				<span id="rm_x" class="sva"></span>
 			</div>
 		</div>
 	</div>
@@ -198,16 +201,16 @@ function checkManager() {
 				<td><s:property value="street" /></td>
 				<td><s:property value="con_name" /></td>
 				<td><s:property value="mobile" /></td>
-				<td align="center">
+				<td>
 				<s:url id="setDefault" namespace="/sysvip" action="memberAddress_default">
 					<s:param name="memberAddress.uuid" value="uuid" />
 					<s:param name="memberAddress.member_id" value="member.uuid" />
 					<s:param name="memberAddress.defaultaddress">1</s:param>
 				</s:url>
-				<s:if test="0==defaultaddress"><a href="${setDefault}"><span class="noarea"></span></a></s:if>
-				<s:if test="1==defaultaddress"><span class="yesarea"></span></s:if>
+				<s:if test="0==defaultaddress"><a href="${setDefault}"><span class="aI aI-e"></span></a></s:if>
+				<s:if test="1==defaultaddress"><span class="aI aI-y"></span></s:if>
 				</td>
-				<td align="center">
+				<td>
 			    	[<a href="<s:url namespace="/sysvip" action="memberAddress_load"><s:param name="viewFlag">mdy</s:param><s:param name="memberAddress.uuid" value="uuid"></s:param></s:url>">修改</a>]
 			    	[<a href="<s:url namespace="/sysvip" action="memberAddress_del"><s:param name="memberAddress.uuid" value="uuid" /><s:param name="memberAddress.member_id" value="member.uuid" /></s:url>" onclick="return isDel();">删除</a>]
 			    </td>
@@ -226,10 +229,10 @@ function checkManager() {
 					<s:submit id="add" name="add" value="确定" action="member_add" />
 				</s:if>
 				<s:elseif test="'mdy' == viewFlag">
-					<s:submit id="save" name="save" value="保存" action="member_save" />
-					<s:submit id="delete" name="delete" value="删除" action="member_del" onclick="return isDel();" />
+					<s:submit id="save" name="save" value="保存" action="member_save" cssClass="input-blue" />
+					<s:submit id="delete" name="delete" value="删除" action="member_del" cssClass="input-red" onclick="return isDel();" />
 				</s:elseif>
-				<input type="button" value="返回" onclick="linkurl('<s:url action="member_list" namespace="/sysvip" />');" />
+				<input type="button" value="返回" onclick="linkurl('<s:url action="member_list" namespace="/sysvip" />');"  class="input-gray" />
         	</div>
     	</div>
 	</div>

@@ -22,7 +22,7 @@ color: #008000;
 </style>
 </head>
 <body>
-<div class="main" title="修改发货信息">
+<div class="main">
 	<div class="dq_step">
 		${path}
 		<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="apply_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a></span>

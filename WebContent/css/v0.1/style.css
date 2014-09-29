@@ -567,6 +567,25 @@ input[type="button"].input-blue,input[type="submit"].input-blue,input[type="rese
 .iI-a {
 	background-position: 3px -57px; text-indent: 20px !important;
 }
+
+/*area-icon*/
+.aI {
+	display: inline-block; width: 16px; height: 16px; background-image: url("../../images/icon/ico_warn.png"); background-color: transparent;
+	background-repeat: no-repeat;
+}
+
+.aI-y {
+	background-position: 0 0;
+}
+
+.aI-e {
+	background-position: 0 -50px;
+}
+
+.aI-q {
+	background-position: 0 -150px;
+}
+
 /*翻页样式START*/
 .pagination {
 	text-align: center; padding: 3px 0; background-color: #EFEFEF; margin: 1px 0; color: #059c77;
@@ -767,4 +786,12 @@ input[type="button"].input-blue,input[type="submit"].input-blue,input[type="rese
 
 .xheLayout {
 	line-height: normal;
+}
+
+.sva {
+	vertical-align: text-bottom;
+}
+
+.sva .formErrorContent {
+	background-color: #FFF !important; color: #ee0101 !important; padding: 0 !important;
 }
