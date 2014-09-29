@@ -166,7 +166,7 @@ a {
 }
 
 .label_rwben2 {
-	float: left; width: 309px; position: relative;
+	float: left; width: 309px; position: relative; line-height: normal;
 }
 
 .label_rwbenx {
@@ -218,7 +218,7 @@ a {
 }
 
 .user_sign img {
-	vertical-align: top; width: 100px; border-bottom: #f1f1f1 solid 1px; border-top: #f1f1f1 solid 1px;
+	vertical-align: top; width: 100px;
 }
 
 .statusInline {
@@ -373,6 +373,10 @@ a {
 	vertical-align: middle;
 }
 
+.vab {
+	vertical-align: bottom;
+}
+
 .ib {
 	text-align: center;
 }
@@ -391,6 +395,10 @@ a {
 
 .cr {
 	color: #FF0000;
+}
+
+.bgcw {
+	background-color: #FFF;
 }
 
 .note_area {
@@ -441,7 +449,7 @@ input[type="button"].input-gray,input[type="submit"].input-gray,input[type="rese
 }
 
 input[type="button"].input-red,input[type="submit"].input-red,input[type="reset"].input-red,a.input-red {
-	background-color: #f00; border-color: #f00;
+	background-color: #cc0055; border-color: #cc0055;
 }
 
 input[type="button"].input-green,input[type="submit"].input-green,input[type="reset"].input-green,a.input-green {
@@ -604,6 +612,10 @@ input[type="button"].input-blue,input[type="submit"].input-blue,input[type="rese
 
 .aI-q {
 	background-position: 0 -150px;
+}
+
+.dib {
+	display: inline; zoom: 1; *display: inline;
 }
 
 /*翻页样式START*/

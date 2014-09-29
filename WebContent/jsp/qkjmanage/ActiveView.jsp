@@ -104,11 +104,7 @@ color: #008000;
 					<s:if test="active.sd_status==5"><font class="message_error">审核退回</font>(${active.sd_user_name})</s:if>
 					<s:if test="active.sd_status==10"><font class="message_warning">待审核</font></s:if>
 					<s:if test="active.sd_status==30"><font class="message_pass">大区经理已审</font>(${active.sd_user_name})</s:if>
-					<s:if test="active.sd_status==40">
-						<font class="message_pass">运营总监已审</font>
-						<s:if test="active.sd_user_sign==null">	(${active.sd_user_name})</s:if>
-						<s:else><span class="user_sign"><img src="${active.sd_user_sign}" /></span></s:else>
-					</s:if>
+					<s:if test="active.sd_status==40">	<font class="message_pass">运营总监已审</font>(${active.sd_user_name})</s:if>
 					<s:if test="active.sd_status==50"><font class="message_pass">业务副总已审</font>(${active.sd_user_name})</s:if>
 					<s:if test="active.sd_status==60"><font class="message_pass">总经理已审</font>(${active.sd_user_name})</s:if>
 				</div>
@@ -117,22 +113,37 @@ color: #008000;
 					<s:if test="active.smd_status==0">未签收</s:if>
 					<s:if test="active.smd_status==5"><font class="message_error">审核退回</font>(${active.smd_user_name})</s:if>
 					<s:if test="active.smd_status==10"><font class="message_warning">已签收</font></s:if>
-					<s:if test="active.smd_status==30">
-						<font class="message_pass">销管经理已审</font>
-					</s:if>
+					<s:if test="active.smd_status==30"><font class="message_pass">销管经理已审</font>(${active.smd_user_name})</s:if>
 					<s:if test="active.smd_status==40"><font class="message_pass">销管部经理已审</font>(${active.smd_user_name})</s:if>
 					<s:if test="active.smd_status==50"><font class="message_pass">销管副总已审</font>(${active.smd_user_name})</s:if>
-					<br />
-					<p class="">${it:formatDate(active.smd_time,'yyyy-MM-dd HH:mm:ss')}</p>
-				</div>
-				<div class="">
-					<s:if test="active.smd_user_sign==null">(${active.smd_user_name})</s:if>
-					<s:else><span class="user_sign"><img src="${active.smd_user_sign}" /></span></s:else>
 				</div>
 				<s:hidden name="active.status" /><s:hidden name="active.sd_status" /><s:hidden name="active.smd_status" />
             </div>
         </div>
         </div>
+        <div class="label_main">
+        <div class="label_hang">
+            <div class="label_ltit">签字:</div>
+            <div class="label_rwbenx">
+            	<div class="zhuangtai bgcw">
+					<s:if test="active.sd_status==40">
+						<s:if test="active.sd_user_sign==null">	(${active.sd_user_name})</s:if>
+						<s:else><span class="user_sign"><img src="${active.sd_user_sign}" /></span></s:else>
+						<span class="vab">${it:formatDate(active.sd_time,'yyyy-MM-dd HH:mm:ss')}</span>
+					</s:if>
+				</div>
+				
+				<div class="zhuangtai bgcw">
+					<s:if test="active.smd_status==30">
+						<s:if test="active.smd_user_sign==null">(${active.smd_user_name})</s:if>
+						<s:else><span class="user_sign"><img src="${active.smd_user_sign}" /></span></s:else>
+						<span class="vab">${it:formatDate(active.smd_time,'yyyy-MM-dd HH:mm:ss')}</span>
+					</s:if>
+				</div>
+            </div>
+		</div>
+		</div>
+        
         <div class="label_main">
         <div class="label_hang">
             <div class="label_ltit">主题:</div>
