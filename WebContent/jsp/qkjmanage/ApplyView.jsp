@@ -7,15 +7,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>至事由申请管理--<s:text name="APP_NAME" /></title>
 </head>
-<link rel="stylesheet" href="<s:url value="/css/css.css" />" />
-<link rel="stylesheet" href="<s:url value="/css/navigate.css" />" />
-<link rel="stylesheet" href="<s:url value="/css/main.css" />" />
-<script type="text/javascript" src="<s:url value="/js/form_validator.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/common_cptb.js" />"></script>
+<link rel="stylesheet" href="<s:url value="/css/print.css" />" />
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery-1.8.3.min.js" />"></script>
-<link rel="stylesheet" href="<s:url value="/include/jQuery/style.ui.smoothness/jquery-ui-1.10.3.min.css" />" />
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-ui-1.10.3.custom.min.js" />"></script>
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.ui.datepicker-zh.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/jquery.CommonUtil.js" />"></script>
 <style type="text/css">
 .apply_print .apply_print * {
@@ -25,7 +18,7 @@ letter-spacing: 1px;
 border-top: #000 solid 1px;padding-top: 8px;
 }
 .apply_t {
-font-size: 18px;font-weight: bold;margin: 8px 5px;
+font-size: 18px;margin: 8px 5px;/*font-weight: bold;*/
 }
 .apply_hr {
 margin: 15px 5px;height: 3px;background-color: #000;
@@ -50,15 +43,10 @@ font-size: 24px;font-weight: bold;
 }
 </style>
 <body>
-<div id="main">
+<div id="main" class="printarea">
 <div id="result">
 	<div class="itablemdy">
-	<div class="itabletitle noprintarea">
-		<span class="title1">至事由打印</span>
-		<span class="extra1">
-			<a href="<s:url action="apply_list" namespace="/qkjmanage" />" >至事由申请列表</a>
-		</span>	
-	</div>
+	<div class="noprint tac"><input type="button" onclick="window.print();" value="打印本页"/></div>
 	<div class="apply_print">
 		<div class="apply_t apply_z">至：${apply.touser}</div>
 		<div class="apply_t apply_s">事：${apply.title} ${it:formatDate(apply.apply_time,'yyyy-MM-dd')}</div>
@@ -89,19 +77,15 @@ font-size: 24px;font-weight: bold;
 	<script type="text/javascript">
 		$("#apply_check_note_text").html(CommonUtil.rtextarea("apply_check_note", "div"));
 	</script>
-	<div class="noprintarea"><input type="button" onclick="window.print();" value="打印本页"/></div>
-	
-	
-	<div class="noprintarea">
-	<s:form name="form1" action="apply_add" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
-		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_CHECK_1')">
-		<s:hidden name="apply.uuid" /><s:hidden name="apply.status" /><s:hidden name="apply.sp_check_status" />
-		<s:submit id="apply_check_1" name="apply_check_1" value="作废" action="apply_check_1" onclick="return isOp('确定进行此操作?');" />
-		</s:if>
-	</s:form>
+	<div class="noprint tac">
+		<input type="button" onclick="window.print();" value="打印本页"/>
+		<s:form name="form1" action="apply_add" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
+			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_CHECK_1')">
+			<s:hidden name="apply.uuid" /><s:hidden name="apply.status" /><s:hidden name="apply.sp_check_status" />
+			<s:submit id="apply_check_1" name="apply_check_1" value="作废" action="apply_check_1" onclick="return isOp('确定进行此操作?');" />
+			</s:if>
+		</s:form>
 	</div>
-	
-	
 	</div>
 </div>
 </div>

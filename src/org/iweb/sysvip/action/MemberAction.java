@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.iweb.sys.ActionAttr;
 import org.iweb.sys.ContextHelper;
 import org.iweb.sys.MD5Plus;
 import org.iweb.sys.Parameters;
@@ -20,7 +21,7 @@ import org.iweb.sysvip.domain.MemberAddress;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-public class MemberAction extends ActionSupport {
+public class MemberAction extends ActionSupport implements ActionAttr {
 	private static final long serialVersionUID = 1L;
 	private static Log log = LogFactory.getLog(MemberAction.class);
 	private Map<String, Object> map = new HashMap<String, Object>();
@@ -38,6 +39,12 @@ public class MemberAction extends ActionSupport {
 	private String viewFlag;
 	private int recCount;
 	private int pageSize;
+
+	private String path = "<a href='/manager/main'>首页</a>&nbsp;&gt;&nbsp;工时管理";
+
+	public String getPath() {
+		return path;
+	}
 
 	public MemberAddress getMemberAddress() {
 		return memberAddress;

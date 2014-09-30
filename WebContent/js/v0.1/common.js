@@ -1,7 +1,3 @@
-/**
- * common_lite.js和common_listtable.js结合版,适合在edit界面还有listtable的情况
- */
-
 var toHTML = { on : function(str){
 	var a = [], i = 0;
 	for (; i < str.length;)

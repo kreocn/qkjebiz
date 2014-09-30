@@ -1,15 +1,5 @@
-var ajax_url = "";
-
+var ajax_url = "/common_ajax/json_ajax";
 $(document).ready(function(){
-	// 点击tr 选中tr
-	// $(".tab_warp tr").click(function(){
-	// $(this).toggleClass("trbg");
-	// if ($(this).hasClass("trbg")) {
-	// $(this).find("[type='checkbox']").attr("checked", true);
-	// } else {
-	// $(this).find("[type='checkbox']").attr("checked", false);
-	// }
-	// });
 	// table隔行变色and鼠标经过样式
 	$(".tab_warp tr:even").addClass("even");
 	$(".tab_warp tr:odd").addClass("odd");
@@ -18,24 +8,28 @@ $(document).ready(function(){
 	}).mouseout(function(){
 		$(this).removeClass("trhover");
 	});
-	// 查看详情
-	$(".detail").click(function(){
-		var t = $(this).index('.detail');
-		var le = $('tr:eq(0)').children().length;
-		var str = '';
-		for (var i = 0; i < le - 2; i++) {
-			var n = i + 1;
-			var th = $('tr:eq(0) th:eq(' + n + ')').text();
-			var m = t + 1;
-			if (i == le - 3) {
-				var td = $('tr:eq(' + m + ') td:eq(' + n + ')').html();
-			} else {
-				var td = $('tr:eq(' + m + ') td:eq(' + n + ')').text();
-			}
-			str += '<tr><td align="right" width="40%"><b>' + th + '：</b></td><td width="60%">' + td + '</td></tr>';
-		}
-		document.getElementById('innertabel').innerHTML = str;
-	});
+	// 初始化日期
+	$(".datepicker").datepicker();
+	$(".main,.idialog").addClass("input-a");
+	/* 查看详情专用 */
+	$("#infoDetail").dialog({ autoOpen : false,
+	modal : true });
+	/* 表单验证专用 */
+	$(".validForm").validationEngine({ promptPosition : "bottomRight" });
+	$(".validFormDialog").validationEngine({ promptPosition : "bottomLeft" }); // dialog的特殊性导致只能显示在表单下部
+	/* 表单提示专用 */
+	$(".inputNote").inputNote();
+	/* 表单提交后即禁用所有表单下的提交按钮,防止重复提交 */
+	// $("form").submit(function(){
+	// $(this).find(":submit").attr("disabled", "disabled");
+	// return true;
+	// });
+	/* 生成编辑框 */
+	createHtmlEditor(".xheditorArea");
+	/* 设置"更多条件" */
+	conCookie("#serachForm .label_hang", "search_mcondition");
+	/* textArea 换行 */
+	$(".textBreak").textBreak();
 });
 
 /* 获取触摸事件代码开始 */
@@ -96,3 +90,79 @@ function touchMoveEvent(){
 	}
 }
 /* 触摸事件代码结束 */
+/* 全屏loading js控件开始 */
+var _spinner = new Spinner();
+function SpinStart(){
+	if (_spinner) {
+		_spinner.spin();
+		document.body.appendChild(_spinner.el);
+	}
+}
+function SpinStop(){
+	if (_spinner) _spinner.stop();
+}
+/* 全屏loading js控件结束 */
+/* 查看详情专用函数开始 */
+function showDetail(trid){
+	var _h = "";
+	var ths = $("#coltr th");
+	$("#" + trid + " td").each(function(i, n){
+		if (i == ths.length - 1) { return; }
+		var cc = "label_rwben";
+		if ($(this).hasClass("longnote")) {
+			cc = "";
+		}
+		_h += '<div class="label_hang">';
+		_h += '<div class="label_ltit">' + ths[i].innerHTML + ':</div>';
+		_h += '<div class="' + cc + '">' + n.innerHTML + '</div>';
+		_h += '</div>';
+	});
+
+	$("#detailMain").empty().append(_h);
+	$("#infoDetail").dialog("open");
+}
+/* 查看详情专用函数结束 */
+/**
+ * 页面显示隐藏查询条件(需HttpCookie插件)
+ * 
+ * @param condition_selector
+ *            需要隐藏的区域selector
+ * @param checkbox_id
+ *            执行隐藏显示的checkboxid
+ */
+function conCookie(condition_selector, checkbox_id){
+	if ($(condition_selector + " #" + checkbox_id).length == 0) { return; }
+	var spCo = new HttpCookie("sc");// Serach Condition
+	if (spCo.isExisted() && spCo.values.getValues("d") == "h") { // d:dispaly h:hide b:block
+		$("#" + checkbox_id).removeAttr("checked");
+	} else {
+		$("#" + checkbox_id).attr("checked", "checked");
+	}
+	var toggleCondition = function(){
+		$(condition_selector).each(function(i){
+			var $this = $(this);
+			var hv = false;
+			$this.find(":input").each(function(){
+				if ($(this).attr("type") == "checkbox") {
+					if ($(this).is(":checked")) {
+						hv = true;
+						return false;
+					}
+				} else if ($(this).attr("type") != "hidden" && $(this).val() != '') {
+					hv = true;
+					return false;
+				}
+			});
+			if ($("#" + checkbox_id).is(":checked")) $this.fadeIn();
+			else if (!hv) $this.hide();
+		});
+	};
+	toggleCondition();
+	$("#" + checkbox_id).on("click", function(){
+		if ($(this).is(":checked")) spCo.values.set("d", "b");
+		else spCo.values.set("d", "h");
+		spCo.save();
+		toggleCondition();
+	});
+}
+/* 页面显示隐藏查询条件结束 */

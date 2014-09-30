@@ -6,130 +6,123 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>请假单列表--<s:text name="APP_NAME" /></title>
+<s:action name="ref" namespace="/manager" executeResult="true" />
 </head>
-<link rel="stylesheet" href="<s:url value="/css/css.css" />" />
-<link rel="stylesheet" href="<s:url value="/css/navigate.css" />" />
-<link rel="stylesheet" href="<s:url value="/css/main.css" />" />
-<script type="text/javascript" src="<s:url value="/js/common_listtable.js" />"></script>
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-1.8.3.min.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/jquery.CommonUtil.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/show_page.js" />"></script>
-<link rel="stylesheet" href="<s:url value="/include/jQuery/style.ui.smoothness/jquery-ui-1.10.3.min.css" />" />
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-ui-1.10.3.custom.min.js" />"></script>
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.ui.datepicker-zh.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/jquery.dialog.iframe.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/common_ajax2.0.js" />"></script>
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.select.js" />"></script>
 <style type="text/css">
 .show_dialog {
-/*width: 550px;*/
 }
 .ui-tooltip {
 max-width: 650px !important;
 }
 </style>
 <body>
-<div id="main">
-<div id="result">
-	<div class="itablemdy">
-	<div class="itabletitle">
-		<span class="title1">申请单列表</span>
-		<span class="extra1">
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_ADD')">
-			<a href="javascript:;" id="AddLeaveLink">添加申请单</a>
-			</s:if>
-		</span>
-	</div>	
-	<div class="ilistsearch">
-<s:form name="form_serach" action="leave_list"  method="get" namespace="/adm" theme="simple">
-		<table class="ilisttable" id="serach_table" width="100%">
-			<tr>
-			<td class='firstRow3'>编号:</td>
-			<td class='secRow3'><s:textfield name="leave.uuid" title="主键自增" /></td>
-			<td class='firstRow3'>类型:</td>
-			<td class='secRow3'>
-				<s:select id="searchLeaveType" name="leave.leave_type" title="类型"
+<div class="main" >
+ 	<div class="dq_step">
+		${path}
+		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_ADD')">
+			<span class="opb lb op-area"><a href="javascript:;" id="AddLeaveLink">添加申请单</a></span>
+		</s:if>
+	</div>
+ 	<s:form id="serachForm" name="serachForm" action="leave_list"  method="get" namespace="/adm" theme="simple">
+ 	<div class="label_con">
+ 	<div class="label_main">
+        <div class="label_hang">
+            <div class="label_ltit">编号:</div>
+            <div class="label_rwben"><s:textfield name="leave.uuid" /></div>
+        </div>
+        <div class="label_hang">
+            <div class="label_ltit">类型:</div>
+            <div class="label_rwben2">
+            	<span class="label_rwb iselect">
+            	<s:select id="searchLeaveType" name="leave.leave_type" title="类型"
 						list="#{0:'出差',1:'请假',2:'加班',3:'换休',4:'补签' }" headerKey="" headerValue="--请选择--" />
+				</span>
+				<span class="label_rwb iselect">
 				<s:select  id="searchLeaveMold" name="leave.leave_mold" list="#{'0':'年假','1':'病假','2':'事假','3':'婚假','4':'产假','5':'丧假','6':'陪产假','7':'其他' }"
 					headerKey="" headerValue="--请选择--" />
-			</td>
-			<td class='firstRow3'>查询日期:</td>
-			<td class='secRow3'>	
-				<input id="leave_serach_date" name="leave.serach_date" title="查询日期" value="${it:formatDate(leave.serach_date,'yyyy-MM-dd')}" />
-				<script type="text/javascript">$("#leave_serach_date").datepicker();</script>
-			</td>
-			</tr><tr>
-			<td class='firstRow3'>申请部门/人:</td>
-			<td class='secRow3' colspan="3">
-				<s:textfield title="部门" id="userdept_codeid" name="leave.leave_dept" readonly="true" />
-				<s:textfield title="部门名称" id="userdept_nameid" name="leave.leave_dept_name" readonly="true" />
-				<img class="imglink" src='<s:url value="/images/open2.gif" />' onclick="selectDept();" />
-				<span id="ajax_member_message"></span>
-				<s:select id="membermanagerid" name="leave.leave_user" list="#{}" headerKey="" headerValue="--请选择--" />
-			</td>
-			<td class='firstRow3'>补贴状态:</td>
-			<td class='secRow3'>
-				<s:select name="leave.allowance_status" list="#{0:'未补贴',1:'已补贴',2:'其他'}" headerKey="" headerValue="--请选择--" />
-			</td>
-			</tr>
-			<tr>
-			<td class='firstRow3'>业务审核状态:</td>
-			<td class='secRow3'>
-				<s:select name="leave.check_status" list="#{0:'新申请',5:'已退回',10:'待审核',20:'经理/大区已审',30:'运营总监已审',40:'业务副总已审' }" headerKey="" headerValue="--请选择--"  />
-			</td>
-			<td class='firstRow3'>人事审核状态:</td>
-			<td class='secRow3'>
-				<s:select name="leave.acheck_status" list="#{0:'未审核/已退回',10:'人事经理已审',20:'行政副总已审',30:'总经理已审' }" headerKey="" headerValue="--请选择--"  />
-			</td>
-			<td class='buttonarea' colspan="2">
-				<s:submit value="搜索" />
-			</td>
-			</tr>
-		</table>
-</s:form>
-	</div>
-<s:form name="form1" theme="simple">
-	<table class="ilisttable ilisttablex" id="table1" width="100%">
-	<col width="30" />
-	  <tr>
-	    <th><input name="uuidcheck" type="checkbox" /></th>
-	    <th>编号</th>
-	    <th>类型</th>
-	    <th>申请部门</th>
-		<th>申请人</th>
-		<th>开始时间</th>
-		<th>结束时间</th>
-		<th>共计(天)</th>
-		<th>事由</th>
-		<th>业务部门意见</th>
-		<th>人事部门意见</th>
-		<th>补偿?</th>
-		<th>操作</th>
-	  </tr>
+				</span>
+            </div>
+        </div>
+        <div class="label_hang">
+            <div class="label_ltit">查询日期:</div>
+            <div class="label_rwben"><input type="text" name="leave.serach_date" class="datepicker" value="${it:formatDate(leave.serach_date,'yyyy-MM-dd')}" /></div>
+        </div>
+        <div class="label_hang">
+            <div class="label_ltit">申请部门:</div>
+            <div class="label_rwben nw">
+            	<span class="label_rwb">
+            	<s:textfield title="部门名称" id="userdept_nameid" name="leave.leave_dept_name" readonly="true" />
+				<s:hidden title="部门代码" id="userdept_codeid" name="leave.leave_dept" readonly="true" />
+				</span>
+				<img class="detail vam" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true);" />
+            </div>
+        </div>
+        <div class="label_hang">
+            <div class="label_ltit">申请人:</div>
+            <div class="label_rwben label_rwb">
+            	<div class="iselect"><s:select id="membermanagerid" cssClass="selectKick" name="leave.leave_user" list="#{}" headerKey="" headerValue="--请选择--" /></div>
+            </div>
+		</div>
+        <div class="label_hang">
+            <div class="label_ltit">补贴状态:</div>
+            <div class="label_rwben label_rwb"><div class="iselect"><s:select name="leave.allowance_status" list="#{0:'未补贴',1:'已补贴',2:'其他'}" headerKey="" headerValue="--请选择--" /></div></div>
+        </div>
+        <div class="label_hang">
+            <div class="label_ltit">业务审核状态:</div>
+            <div class="label_rwben label_rwb"><div class="iselect"><s:select name="leave.check_status" list="#{0:'新申请',5:'已退回',10:'待审核',20:'经理/大区已审',30:'运营总监已审',40:'业务副总已审' }" headerKey="" headerValue="--请选择--"  /></div></div>
+        </div>
+        <div class="label_hang">
+            <div class="label_ltit">人事审核状态:</div>
+            <div class="label_rwben label_rwb"><div class="iselect"><s:select name="leave.acheck_status" list="#{0:'未审核/已退回',10:'人事经理已审',20:'行政副总已审',30:'总经理已审' }" headerKey="" headerValue="--请选择--"  /></div></div>
+        </div>
+        <div class="label_hang label_button tac">
+        	<s:checkbox id="search_mcondition" name="search_mcondition" fieldValue="true" value="true" cssClass="regular-checkbox" />
+			<label for="search_mcondition"></label>更多条件
+            <s:submit value="搜索" /> <s:reset value="重置" />
+        </div>
+    </div>
+    </div>
+    </s:form>
+<div class="tab_warp">
+<table>
+<tr id="coltr">
+	<th class="td1">编号</th>
+    <th class="td1">类型</th>
+    <th class="td2">申请部门</th>
+	<th class="td1">申请人</th>
+	<th class="td4">开始时间</th>
+	<th class="td4">结束时间</th>
+	<th class="td2">共计(天)</th>
+	<th class="td5">事由</th>
+	<th class="td3">业务部门意见</th>
+	<th class="td3">人事部门意见</th>
+	<th class="td5">补贴?</th>
+	<th class="td4">操作</th>
+	<th class="td0">查看</th>
+</tr>
 <s:iterator value="leaves" status="sta">
-	  <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>" type="pickrow">
-	    <td align="center"><input name="uuid" type="checkbox" value="<s:property value="uuid" />" /></td>
-	    <td><s:property value="uuid" /></td>
-	    <td>
+	  <tr id="showtr${uuid}">
+	    <td class="td1"><s:property value="uuid" /></td>
+	    <td class="td1">
 	    	<s:if test="leave_type==0">出差</s:if>
 	    	<s:if test="leave_type==1">请假</s:if>
 	    	<s:if test="leave_type==2">加班</s:if>
 	    	<s:if test="leave_type==3">换休</s:if>
 	    	<s:if test="leave_type==4">补签</s:if>
 	    </td>
-	    <td><s:property value="leave_dept_name" /></td>
-		<td><s:property value="leave_user_name" /></td>
-		<td><s:date name="leave_start" format="yyyy-MM-dd" /> <s:property value="leave_start_time" /></td>
-		<td><s:date name="leave_end" format="yyyy-MM-dd" /> <s:property value="leave_end_time" /></td>
-		<td><s:property value="totle" /></td>
-		<td>
+	    <td class="td2"><s:property value="leave_dept_name" /></td>
+		<td class="td1"><s:property value="leave_user_name" /></td>
+		<td class="td4"><s:date name="leave_start" format="yyyy-MM-dd" /> <s:property value="leave_start_time" /></td>
+		<td class="td4"><s:date name="leave_end" format="yyyy-MM-dd" /> <s:property value="leave_end_time" /></td>
+		<td class="td2"><s:property value="totle" /></td>
+		<td class="td5">
 			<a href="javascript:;"  class="leave_cause_show" data="${uuid}">[移此查看]</a>
 			<span id="leave_cause${uuid}" style="display:none;" class="leave_cause_shows">
 				<s:if test="leave_type==0">出差地点:${leave_mold}</s:if>
 				${cause}
 			</span>
 		</td>
-		<td>
+		<td class="td3">
 			<s:if test="check_status==0">新申请</s:if>
 			<s:if test="check_status==5"><span class="message_error">已退回</span></s:if>
 			<s:if test="check_status==10"><span class="message_warning">待审核</span></s:if>
@@ -137,162 +130,106 @@ max-width: 650px !important;
 			<s:if test="check_status==30"><span class="message_pass">运营总监已审</span></s:if>
 			<s:if test="check_status==40"><span class="message_pass">业务副总已审</span></s:if>
 		</td>
-		<td>
+		<td class="td3">
 			<s:if test="check_status==5"><span class="message_error">已退回</span></s:if>
 			<s:elseif test="acheck_status==0">未审核</s:elseif>
 			<s:if test="acheck_status==10"><span class="message_pass">人事经理已审</span></s:if>
 			<s:if test="acheck_status==20"><span class="message_pass">行政副总已审</span></s:if>
 			<s:if test="acheck_status==30"><span class="message_pass">总经理已审</span></s:if>
 		</td>
-		<td>
+		<td  class="td5">
 		<s:if test="leave_type==0 || leave_type==3">
-    	<s:if test="allowance_status==0"><span class="allowance_action message_error" uid="${uuid}" stat="${allowance_status}" title="${it:formatDate(allowance_date,'yyyy-MM-dd')}">未补偿</span></s:if>
-    	<s:if test="allowance_status==1"><span class="allowance_action message_pass" uid="${uuid}" stat="${allowance_status}" title="${it:formatDate(allowance_date,'yyyy-MM-dd')}">已补偿</span></s:if>
+    	<s:if test="allowance_status==0"><span class="allowance_action message_error" uid="${uuid}" stat="${allowance_status}" title="${it:formatDate(allowance_date,'yyyy-MM-dd')}">未补贴</span></s:if>
+    	<s:if test="allowance_status==1"><span class="allowance_action message_pass" uid="${uuid}" stat="${allowance_status}" title="${it:formatDate(allowance_date,'yyyy-MM-dd')}">已补贴</span></s:if>
     	<s:if test="allowance_status==2"><span class="allowance_action message_warn" uid="${uuid}" stat="${allowance_status}" title="${it:formatDate(allowance_date,'yyyy-MM-dd')}">其他</span></s:if>
     	</s:if>
 		</td>
-		<td align="center">
+		<td  class="td4 op-area">
 			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE')">
-	    	[<a href="<s:url namespace="/adm" action="leave_load"><s:param name="viewFlag">mdy</s:param><s:param name="leave.uuid" value="uuid"></s:param></s:url>">修改</a>]
+	    	<a class="input-blue" href="<s:url namespace="/adm" action="leave_load"><s:param name="viewFlag">mdy</s:param><s:param name="leave.uuid" value="uuid"></s:param></s:url>">修改</a>
 	    	</s:if>
 	    	<s:if test="check_status>=20">
-	    	[<a href="<s:url namespace="/adm" action="leave_print"><s:param name="leave.uuid" value="uuid" /><s:param name="leave.leave_type" value="leave_type" /></s:url>">打印</a>]
+	    	<a class="input-gray" href="<s:url namespace="/adm" action="leave_print"><s:param name="leave.uuid" value="uuid" /><s:param name="leave.leave_type" value="leave_type" /></s:url>">打印</a>
 	    	</s:if>
 	    	<s:if test="check_status<=5&&@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_DEL')">
-	    	[<a href="<s:url namespace="/adm" action="leave_del"><s:param name="leave.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>]
+	    	<a class="input-red" href="<s:url namespace="/adm" action="leave_del"><s:param name="leave.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
 	    	</s:if>	   
 	    </td>
+	    <td class="td0 op-area"><a onClick="showDetail('showtr${uuid}');" class="input-nostyle">查看</a></td>
 	  </tr>
 </s:iterator>
-	  <tr>
-	    <td colspan="20" class="buttonarea">
-		<script type="text/javascript">
-		var spage = new ShowPage(${currPage});
-		spage.show2(${recCount},${pageSize},2);
-		</script>
-		</td>	    
-	  </tr>
-	  <tr>
-	    <td colspan="20" class="buttonarea">
-	    <span id="message"><s:property value="message" /></span>
-		</td>
-	  </tr>
-	</table>
-</s:form>
-	</div>
+</table>
 </div>
+<div class="pagination"><script type="text/javascript">var spage = new ShowPage(${currPage});	spage.show2(${recCount},${pageSize},2);</script></div>
 </div>
-<div id="AddLeaveForm" title="请选择申请单类型" style="display: none;">
+
+ <!-- HIDDEN AREA BEGIN -->
+ <div class="dn">
+<div id="AddLeaveForm" class="label_con idialog" title="请选择申请单类型">
 <p align="center">
-<input type="button" value="出差" onclick="addLeave(0);"  />
-<input type="button" value="请假" onclick="addLeave(1);"  />
-<input type="button" value="加班" onclick="addLeave(2);"  />
-<input type="button" value="换休" onclick="addLeave(3);"  />
-<input type="button" value="补签" onclick="addLeave(4);"  />
+<input type="button" value="出差" onclick="addLeave(0);" class="xm15 ym10" />
+<input type="button" value="请假" onclick="addLeave(1);" class="xm15 ym10"   />
+<input type="button" value="加班" onclick="addLeave(2);" class="xm15 ym10"   />
+</p>
+<p align="center">
+<input type="button" value="换休" onclick="addLeave(3);" class="xm15 ym10"   />
+<input type="button" value="补签" onclick="addLeave(4);" class="xm15 ym10"   />
 </p>
 </div>
 
-<div id="AddAllowanceForm" title="修改补贴状态" style="display: none;">
-<s:form name="form1" action="leave_list_allowance" namespace="/adm" onsubmit="return validator(this);" method="post" theme="simple">
-<s:hidden id="leave_uuid_allowance" name="leave.uuid" />
-<table class="ilisttable" width="100%">
-<tr>
-<td class='firstRow'>补贴状态:</td>
-<td class='secRow'><s:select id="allowance_status_allowance" name="leave.allowance_status" list="#{0:'未补贴',1:'已补贴',2:'其他'}" headerKey="" headerValue="--请选择--" /></td>
-</tr>
-<tr>
-<td class='firstRow'>补贴时间:</td>
-<td class='secRow'>
-	<input id="allowance_date_allowance" name="leave.allowance_date" title="查询日期" value="${it:formatDate(leave.allowance_date,'yyyy-MM-dd')}" />
-	<script type="text/javascript">$("#allowance_date_allowance").datepicker();</script>
-</td>
-</tr>
-<tr>
-<td class='buttonarea' colspan="2"><s:submit id="leave_list_allowance" name="leave_list_allowance" value="确定" action="leave_list_allowance" /></td>
-</tr>
-</table>
+<div id="AddAllowanceForm" title="修改补贴状态" class="label_con idialog">
+<s:form name="form1" action="leave_list_allowance" namespace="/adm" method="post" theme="simple">
+<div class="label_main">
+	<div class="label_hang">
+	    <div class="label_ltit">补贴状态:</div>
+	    <div class="label_rwben"><div class="iselect"><s:select id="allowance_status_allowance" name="leave.allowance_status" list="#{0:'未补贴',1:'已补贴',2:'其他'}" headerKey="" headerValue="--请选择--" /></div></div>
+	</div>
+	<div class="label_hang">
+	    <div class="label_ltit">补贴时间:</div>
+	    <div class="label_rwben"><input id="allowance_date_allowance" class="datepicker" type="text" name="leave.allowance_date" title="查询日期" value="${it:formatDate(leave.allowance_date,'yyyy-MM-dd')}" /></div>
+	</div>
+	<div class="label_hang label_button tac">
+		<s:hidden id="leave_uuid_allowance" name="leave.uuid" />
+		<s:submit id="leave_list_allowance" name="leave_list_allowance" value="确定" action="leave_list_allowance" />
+	</div>
+</div>
 </s:form>
 </div>
-
+</div>
+<!-- HIDDEN AREA END -->
 <script type="text/javascript">
-var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
-var curr_apply_dept = '${leave.leave_dept}';
-var curr_apply_user = '${leave.leave_user}';
+var curr_apply_dept ='${leave.leave_dept}';
 $(function(){
-	CommonUtil.pickrow('table1');
-	CommonUtil.pickrowAll('table1','uuidcheck');
 	if(curr_apply_dept!='') {
-		loadManagers(curr_apply_dept);
+		loadManagers(curr_apply_dept,'${leave.leave_user}');
 	}
-	
 	$("#AddLeaveForm").dialog({
 	      autoOpen: false,
-	      width: 300,
-	      height: 100,
 	      modal: true
 	});
-	
 	$("#AddAllowanceForm").dialog({
 	      autoOpen: false,
-	      width: 260,
-	      height: 150,
 	      modal: true
 	});
-	
 	addAllowance();
-	
 	$("#AddLeaveLink").click(function(){
 		$("#AddLeaveForm").dialog("open");
 	});
-	
 	showLeaveMold(${leave.leave_type});
 	$("#searchLeaveType").change(function(){
 		showLeaveMold($(this).val());
 	});
-	
 	$(".leave_cause_show").tooltip({
 		items: "[data]",
 		content: function() {
-			//alert($(this).attr("data"));
 			return "<div class='show_dialog'>" + $("#leave_cause" + $(this).attr("data")).html() + "</div>";
 	  }
 	});
 });
- 
-var sobj01;
-var selectDept = function() {
-	sobj01 = new DialogIFrame({src:'<s:url namespace="/sys" action="dept_permit_select" />?objname=sobj01',title:"选择部门"});
-	sobj01.selfAction = function(val1,val2) {
-		$("#userdept_codeid").val(val1);
-		$("#userdept_nameid").val(val2);
-		loadManagers(val1);
-	};
-	sobj01.create();
-	sobj01.open();
-};
-
-function loadManagers(dept_code) {
-	var ajax = new Common_Ajax('ajax_member_message');
-	ajax.config.action_url = ajax_url_action;
-	ajax.config._success = function(data, textStatus) {
-		$("#membermanagerid").clearAllOption();
-		$("#membermanagerid").addOption("--请选择--","");
-		$.each(data, function(i, n){
-			$("#membermanagerid").addOption(n.user_name,n.uuid);
-		});
-		if(curr_apply_user!='') {
-			$("#membermanagerid").val(curr_apply_user);
-		}
-	};
-	ajax.addParameter("work", "AutoComplete");
-	ajax.addParameter("parameters", "privilege_id=QKJCJ_SYS_AJAXLOAD_USER&dept_code=" + encodeURI(dept_code));
-	ajax.sendAjax2();
-}
 
 function addLeave(p_type) {
 	var add_url = '<s:url namespace="/adm" action="leave_load"><s:param name="viewFlag">add</s:param></s:url>';
 	add_url = add_url + "&leave.leave_type="+p_type;
-	//alert(add_url);
 	location.href = add_url;
 }
 
