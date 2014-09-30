@@ -28,18 +28,12 @@ public class CheckAction extends ActionSupport {
 
 	private Check check;
 	private List<Check> checks;
-<<<<<<< HEAD
-=======
 	private int stock_id;
->>>>>>> ware
 	private List<Stock> stocks;
 	private List<Stock> pageStocks;
 	private List<Ware> wares;
 	private List<Product> products;
-<<<<<<< HEAD
-=======
 	private List<Check> checkDates;
->>>>>>> ware
 	private String message;
 	private String viewFlag;
 	private int recCount;
@@ -47,8 +41,6 @@ public class CheckAction extends ActionSupport {
 	private int currPage;
 
 	
-<<<<<<< HEAD
-=======
 	
 
 	public int getStock_id() {
@@ -67,7 +59,6 @@ public class CheckAction extends ActionSupport {
 		this.checkDates = checkDates;
 	}
 
->>>>>>> ware
 	public List<Stock> getPageStocks() {
 		return pageStocks;
 	}
@@ -168,16 +159,6 @@ public class CheckAction extends ActionSupport {
 				map.putAll(ToolsUtil.getMapByBean(check));
 				System.out.println(check.getState());
 				state=check.getState();
-<<<<<<< HEAD
-			}
-			map.putAll(ContextHelper.getDefaultRequestMap4Page());
-			this.setPageSize(ContextHelper.getPageSize(map));
-			this.setCurrPage(ContextHelper.getCurrPage(map));
-			WareDAO wd=new WareDAO();
-			if(ContextHelper.isAdmin()){//管理员
-				this.setChecks(dao.list(map));
-				this.setWares(wd.list(null));
-=======
 			}else{
 				map.clear();
 				map.put("date", new Date());
@@ -192,7 +173,6 @@ public class CheckAction extends ActionSupport {
 				map.put("type", "0");//非藏酒库
 				this.setWares(wd.list(map));
 				this.setCheckDates(dao.listGroByDate(null));
->>>>>>> ware
 			}else{
 				map.put("username",u);
 				map.put("dept_code", code);
@@ -202,13 +182,10 @@ public class CheckAction extends ActionSupport {
 				map.put("dept_code", code);
 				map.put("sel", 1);
 				this.setWares(wd.listByPower(map));
-<<<<<<< HEAD
-=======
 				map.clear();
 				map.put("username",u);
 				map.put("dept_code", code);
 				this.setCheckDates(dao.listGroByDatePower(map));
->>>>>>> ware
 			}
 			ProductDAO pd=new ProductDAO();
 			this.setProducts(pd.list(null));
@@ -237,11 +214,6 @@ public class CheckAction extends ActionSupport {
 			} else if ("add".equals(viewFlag)) {
 				StockDAO sdao = new StockDAO();
 				map.clear();
-<<<<<<< HEAD
-				map.put("store_id", check.getStore_id());
-				this.setStocks(sdao.list(map));
-				this.setCheck(null);
-=======
 				if(check!=null){
 					map.put("store_id", check.getStore_id());
 					this.setStocks(sdao.listCheck(map));
@@ -253,7 +225,6 @@ public class CheckAction extends ActionSupport {
 				check=new Check();
 				check.setUuid(1);
 				check.setStock_id(null);
->>>>>>> ware
 			} else if ("mdy".equals(viewFlag)) {
 				if (!(check == null || check.getUuid() == null)) {
 					this.setCheck((Check) dao.get(check.getUuid()));
@@ -284,8 +255,6 @@ public class CheckAction extends ActionSupport {
 					check.setDate(new Date());
 					check.setQuantity(s.getQuantity());
 					check.setNum(s.getCnum());
-<<<<<<< HEAD
-=======
 					if(s.getZdnum()!=null){
 						check.setZdnum(s.getZdnum());
 					}else{
@@ -314,7 +283,6 @@ public class CheckAction extends ActionSupport {
 					}else{
 						check.setQnum(0);
 					}
->>>>>>> ware
 					dao.add(check);
 				}
 			}

@@ -4,12 +4,6 @@ import org.iweb.sys.AbstractDAO;
 public class CheckDAO extends AbstractDAO {
 
 	public List list(Map<String, Object> map) {
-<<<<<<< HEAD
-		setCountMapid("check_getChecksCounts");
-		return super.list("check_getChecks", map);
-	}
-	
-=======
 		//setCountMapid("check_getChecksCounts");
 		return super.list("check_getChecks", map);
 	}
@@ -24,7 +18,6 @@ public class CheckDAO extends AbstractDAO {
 		return super.list("check_getGroupByDatePower", map);
 	}
 	
->>>>>>> ware
 	public List listByDate(Map<String, Object> map) {
 		return super.list("check_getChecksByDate", map);
 	}

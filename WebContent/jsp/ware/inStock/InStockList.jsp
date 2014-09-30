@@ -74,10 +74,7 @@ $(function(){
 					<option value="0">正常入库</option>
 					<option value="1">正常退货</option>
 					<option value="2" >损坏退货</option>
-<<<<<<< HEAD
-=======
 					<option value="3" >其它</option>
->>>>>>> ware
 			</select>
 			</td>
 			
@@ -150,11 +147,7 @@ $(function(){
 	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_DEL') && @com.qkj.ware.action.warepower@checkPermit(store_id,'add') && confirm==null">
 	    	[<a href="<s:url namespace="/inStock" action="inStock_del"><s:param name="inStock.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>]
 	    	</s:if>	
-<<<<<<< HEAD
-	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_PUTSEAL') && confirm==1 && @com.qkj.ware.action.warepower@checkPermit(store_id,'sel')">
-=======
 	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_PUTSEAL') && confirm==1 && @com.qkj.ware.action.warepower@checkPermit(store_id,'add')">
->>>>>>> ware
 	    	[<a target="_blank" href="<s:url namespace="/inStock" action="inStock_view"><s:param name="viewFlag">view</s:param><s:param name="inStock.uuid" value="uuid"></s:param></s:url>">查看/打印</a>]
 	    
 	    	</s:if>

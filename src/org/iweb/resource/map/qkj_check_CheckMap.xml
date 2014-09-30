@@ -10,16 +10,6 @@
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ c.uuid=#uuid# ]]></isNotEmpty>
-<<<<<<< HEAD
-<isNotEmpty prepend="AND" property="product_id"><![CDATA[ c.product_id=#product_id# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="store_id"><![CDATA[ c.store_id=#store_id# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="date"><![CDATA[ c.date=#date# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="quantity"><![CDATA[ c.quantity=#quantity# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="num"><![CDATA[ c.num=#num# ]]></isNotEmpty>
-
-		</dynamic>
-		<![CDATA[ GROUP BY c.`date` LIMIT 1000 ]]>
-=======
 			<isNotEmpty prepend="AND" property="product_id"><![CDATA[ c.product_id=#product_id# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="store_id"><![CDATA[ c.store_id=#store_id# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="date"><![CDATA[ c.date=#date# ]]></isNotEmpty>
@@ -28,21 +18,15 @@
 
 		</dynamic>
 		<![CDATA[  LIMIT 1000 ]]>
->>>>>>> ware
 	</select>
-	<!-- 鏃ユ湡鍒嗙粍鏌ヨ涓旀牴鎹潈闄?-->
+	<!-- 閺冦儲婀￠崚鍡欑矋閺屻儴顕楁稉鏃€鐗撮幑顔芥綀闂?-->
 	<select id="check_getChecksByDate" resultClass="check" parameterClass="java.util.Map">
 		<![CDATA[ 
 			SELECT DISTINCT c.`uuid`,c.*,p.`title` product_name,w.`ware_name` ware_name FROM qkj_t_check c 
 			LEFT JOIN qkj_t_product p ON (c.`product_id`=p.`uuid`)
 			LEFT JOIN qkj_t_warehouse w ON(c.`store_id`=w.`uuid`)
 			LEFT JOIN qkj_t_stockpower s ON (s.`ware_id`=c.`store_id`)
-<<<<<<< HEAD
-			WHERE ((s.`username`=#username# OR 
-			(IF(s.son = 0, s.`dept_code`=#dept_code#, s.`dept_code` LIKE #dept_code#))) AND s.`prvg` LIKE '%4%' )
-=======
 			WHERE (s.`username`=#username#  AND s.`prvg` LIKE '%4%' )
->>>>>>> ware
 		]]>
 			<isNotEmpty prepend="AND" property="product_id"><![CDATA[ c.product_id=#product_id# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="store_id"><![CDATA[ c.store_id=#store_id# ]]></isNotEmpty>
@@ -69,13 +53,8 @@
 	
 	<insert id="check_addCheck" parameterClass="check">
 		<![CDATA[ 
-<<<<<<< HEAD
-			Insert Into qkj_t_check(stock_id,product_id,store_id,date,quantity,num)
-			Values (#stock_id#,#product_id#,#store_id#,#date#,#quantity#,#num#)
-=======
 			Insert Into qkj_t_check(stock_id,product_id,store_id,date,quantity,num,zdnum,znum,snum,qnum,jnum)
 			Values (#stock_id#,#product_id#,#store_id#,#date#,#quantity#,#num#,#zdnum#,#znum#,#snum#,#qnum#,#jnum#)
->>>>>>> ware
 		]]>
 		<selectKey resultClass="int" keyProperty="uuid">
 		<![CDATA[ Select LAST_INSERT_ID() ]]>
@@ -94,10 +73,8 @@
 		Delete From qkj_t_check Where uuid=#uuid#
 	]]>
 	</delete>
-<<<<<<< HEAD
-=======
 	
-	<!-- 查询盘点日期 -->
+	<!-- 鏌ヨ鐩樼偣鏃ユ湡 -->
 	<select id="check_getGroupByDate" resultClass="check" parameterClass="java.util.Map">
 		<![CDATA[ 
 			SELECT * FROM qkj_t_check c GROUP BY c.`date`
@@ -113,6 +90,5 @@
 				GROUP BY c.`date`
 		]]>
 	</select>
->>>>>>> ware
 	<!-- Check End -->
 </sqlMap>

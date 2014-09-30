@@ -35,12 +35,9 @@ public class AllotDAO extends AbstractDAO {
 		return super.save("allot_mdyAllotState", parameters);
 	}
 	
-<<<<<<< HEAD
-=======
 	public int updateSure(Object parameters){
 		return super.save("allot_mdySure", parameters);
 	}
->>>>>>> ware
 	public int getResultCount() {
 		return super.getResultCount();
 	}
