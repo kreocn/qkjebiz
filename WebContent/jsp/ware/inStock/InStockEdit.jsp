@@ -141,9 +141,9 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 	<div class="ifromoperate" ></div>
 	<table class="ilisttable" width="100%">
 		<tr>
-			<td class='firstRow'><span style="color:red;">*</span> 入库单号:</td>
+			<td class='firstRow'>入库单号:</td>
 			<td class='secRow' colspan="3">
-			<s:textfield name="inStock.ordernum" title="单据号"  rows="4" require="required" controlName="单据号"></s:textfield>
+			<s:textfield name="inStock.ordernum" title="单据号"  rows="4"></s:textfield>
 			</td>
 		</tr>
 		<s:if test="null != inStock">
@@ -187,6 +187,11 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 					selected="selected"
 					</s:if>
 					>损坏退货</option>
+					<option value="3" 
+					<s:if test="%{inStock.reason==3 }">
+					selected="selected"
+					</s:if>
+					>其它</option>
 			</select>
 	</td>
 </tr>

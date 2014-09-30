@@ -21,7 +21,12 @@ public class Stock {
 	private BigDecimal agree_price_3;
 	private double dealer_price;
 	private double group_price;
-	private int case_spec;
+	private Integer case_spec;
+	private Integer zdnum;
+	private Integer znum;
+	private Integer snum;
+	private Integer qnum;
+	private Integer jnum;
 
 	public Integer getCnum() {
 		return cnum;
@@ -111,11 +116,13 @@ public class Stock {
 		this.group_price = group_price;
 	}
 
-	public int getCase_spec() {
+	
+
+	public Integer getCase_spec() {
 		return case_spec;
 	}
 
-	public void setCase_spec(int case_spec) {
+	public void setCase_spec(Integer case_spec) {
 		this.case_spec = case_spec;
 	}
 
@@ -150,6 +157,48 @@ public class Stock {
 	public void setGroupQ(Integer groupQ) {
 		this.groupQ = groupQ;
 	}
+
+	public Integer getZdnum() {
+		return zdnum;
+	}
+
+	public void setZdnum(Integer zdnum) {
+		this.zdnum = zdnum;
+	}
+
+	public Integer getZnum() {
+		return znum;
+	}
+
+	public void setZnum(Integer znum) {
+		this.znum = znum;
+	}
+
+	public Integer getSnum() {
+		return snum;
+	}
+
+	public void setSnum(Integer snum) {
+		this.snum = snum;
+	}
+
+	public Integer getQnum() {
+		return qnum;
+	}
+
+	public void setQnum(Integer qnum) {
+		this.qnum = qnum;
+	}
+
+	public Integer getJnum() {
+		return jnum;
+	}
+
+	public void setJnum(Integer jnum) {
+		this.jnum = jnum;
+	}
+
+	
 	
 	
 

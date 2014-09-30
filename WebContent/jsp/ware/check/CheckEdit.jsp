@@ -26,7 +26,7 @@
 <s:form name="form1" action="check_add" namespace="/check" onsubmit="return validator(this);" method="post" theme="simple">
 	<div class="ifromoperate" ></div>
 	<table class="ilisttable" width="100%">
-		<s:if test="null != check">
+		<s:if test="null != check && check.stock_id!=null">
 		<tr>
 		<td class='firstRow'><span style="color:red;">*</span> 主键ID:</td>
 		<td class='secRow'><s:property value="check.uuid" /><s:hidden name="check.uuid" title="主键ID" /></td>
@@ -53,6 +53,11 @@
 		    <th>商品名称</th>
 		    <th>所在仓库</th>
 			<th>库存</th>
+			<th>招待用酒</th>
+			<th>赠酒</th>
+			<th>报损</th>
+			<th>借酒</th>
+			<th>其它</th>
 			<th>变动数量</th>
 	  	</tr>
 	  	<s:iterator value="stocks" status="sta">
@@ -63,13 +68,41 @@
 		    	<s:hidden name="pageStocks[%{#sta.index}].product_id" value="%{product_id}" />
 		    	<s:hidden name="pageStocks[%{#sta.index}].store_id" value="%{store_id}" />
 		    	<s:hidden name="pageStocks[%{#sta.index}].quantity" value="%{quantity}" />
+		    	
+		    	<s:hidden name="pageStocks[%{#sta.index}].zdnum" value="%{zdnum}"/>
+				<s:hidden name="pageStocks[%{#sta.index}].znum" value="%{znum}"/>
+				<s:hidden name="pageStocks[%{#sta.index}].snum" value="%{snum}"/>
+				<s:hidden name="pageStocks[%{#sta.index}].jnum" value="%{jnum}"/>
+				<s:hidden name="pageStocks[%{#sta.index}].qnum" value="%{qnum}"/>
 		    </td>
 			<td><s:property value="store_name" /></td>
 			<td><s:property value="quantity" /></td>
-			<td><s:textfield name="pageStocks[%{#sta.index}].cnum" value="0"></s:textfield></td>
+			<td>
+			<s:if test="zdnum==null">0</s:if>
+			<s:else>
+			<s:property value="zdnum"></s:property></s:else></td>
+			<td>
+			<s:if test="zdnum==null">0</s:if>
+			<s:else>
+			<s:property value="znum"></s:property></s:else></td>
+			<td>
+			<s:if test="zdnum==null">0</s:if>
+			<s:else>
+			<s:property value="snum"></s:property></s:else></td>
+			<td>
+			<s:if test="zdnum==null">0</s:if>
+			<s:else>
+			<s:property value="jnum"></s:property></s:else></td>
+			<td>
+			<s:if test="zdnum==null">0</s:if>
+			<s:else>
+			<s:property value="qnum"></s:property></s:else></td>
+			<td>
+			<s:textfield name="pageStocks[%{#sta.index}].cnum" value="0"></s:textfield></td>
 		  </tr>
 		</s:iterator>
 		</s:else>
+		
 		<tr>
 		    <td colspan="20" class="buttonarea">
 		    	

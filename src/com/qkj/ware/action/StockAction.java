@@ -31,6 +31,25 @@ public class StockAction extends ActionSupport {
 	private int recCount;
 	private int pageSize;
 	private int currPage;
+	private List<Stock> inproducts;
+	private String t=null;
+	
+	
+	public String getT() {
+		return t;
+	}
+
+	public void setT(String t) {
+		this.t = t;
+	}
+
+	public List<Stock> getInproducts() {
+		return inproducts;
+	}
+
+	public void setInproducts(List<Stock> inproducts) {
+		this.inproducts = inproducts;
+	}
 
 	public Stock getStock() {
 		return stock;
@@ -120,6 +139,7 @@ public class StockAction extends ActionSupport {
 					if(stock!=null&&stock.getGroupQ()!=0){//统计商品在所有仓库的数量
 						map.put("product_id", stock.getGroupQ());
 						this.setStocks(dao.listByGroup(map));
+						t="1";
 					}else{
 						this.setStocks(dao.list(map));
 					}
@@ -127,16 +147,17 @@ public class StockAction extends ActionSupport {
 				}else{
 					if(stock!=null&&stock.getGroupQ()!=0){//统计商品在所有仓库的数量
 						map.put("product_id", stock.getGroupQ());
+						map.put("username",u);
+						map.put("dept_code", code);
 						this.setStocks(dao.listPowerByGroup(map));
+						t="1";
 					}else{
 						map.put("username",u);
 						map.put("dept_code", code);
 						this.setStocks(dao.listByPower(map));
 					}
-					
 				}
-				
-				
+				this.setInproducts(stocks);
 				ProductDAO pdao = new ProductDAO();
 				this.setProducts(pdao.list(null));
 				
@@ -153,7 +174,9 @@ public class StockAction extends ActionSupport {
 	private void wareByPower(String u, String code) {
 		WareDAO wd=new WareDAO();
 		if(ContextHelper.isAdmin()){//管理员
-			this.setWares(wd.list(null));
+			map.clear();
+			map.put("type", "0");//非藏酒库
+			this.setWares(wd.list(map));
 		}else{
 			map.clear();
 			map.put("username",u);

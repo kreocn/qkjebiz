@@ -50,10 +50,27 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 	<div class="ifromoperate" ></div>
 	<table class="ilisttable" width="100%">
 		<tr>
-			  <td class='firstRow'><span style="color:red;">*</span> 单据号:</td>
+			  <td class='firstRow'>单据号:</td>
 			  <td class='secRow' colspan="3">
-					<s:textfield name="allot.ordernum" title="单据号"  rows="4" require="required" controlName="单据号"></s:textfield>
+					<s:textfield name="allot.ordernum" title="单据号" rows="4"></s:textfield>
 			  </td>
+		</tr>
+		<tr>
+		<td class='firstRow'><span style="color:red;">*</span> 单据性质:</td>
+		<td class='secRow' colspan="3">
+				<select id="allot.reason" name="allot.reason" title="单据性质" >
+				
+					<option value="0" 
+					<s:if test="allot.reason==0">selected="selected"</s:if>
+					>调库</option>
+					<option value="1"
+					<s:if test="allot.reason==1">selected="selected"</s:if>
+					>借货</option>
+					<option value="2" 
+					<s:if test="allot.reason==2">selected="selected"</s:if>
+					>还货</option>
+				</select>
+		</td>
 		</tr>
 		<s:if test="null != allot">
 		  <tr>
@@ -67,8 +84,10 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 	    <s:if test="%{allot.state==1}"><font color="red">（已发货）</font></s:if>
 	    <s:if test="%{allot.state==2}"><font color="red">（取消发货）</font></s:if>
 	    <s:if test="%{allot.state==3}"><font color="red">（已收货）</font></s:if>
+	     <s:if test="%{allot.state==4}"><font color="red">（经手人确认）</font></s:if>
 </td>
 </tr>
+
 <tr>
 		<td class='firstRow'><span style="color:red;">*</span> 调库日期:</td>
 		<td class='secRow' colspan="3">
@@ -125,7 +144,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 <s:if test="null != allot">
 <tr>
 <td class='firstRow'>调库明细:
-	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_ADD') && allot.state==0 && @com.qkj.ware.action.warepower@checkPermit(sourceId,'edit')">
+	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_ADD') && allot.state==0 && @com.qkj.ware.action.warepower@checkPermit(allot.sourceid,'edit')">
 	<br />
 	<input id="addItem" type="button" value="添加明细" />
 	</s:if>
@@ -136,6 +155,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
     <th>主键</th>
 	<th>产品名称</th>
 	<th>调库数量</th>
+	<s:if test="allot.reason!=0"><th>已还数量</th></s:if>
 	<s:if test="%{allot.state==0||allot.state==2}">
 	<th>操作</th>
 	</s:if>
@@ -147,6 +167,11 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 	<td align="center">
 		<s:property value="num" />(<s:property value="num/(case_spec*1.0)" /> 件)
 	</td>
+	<s:if test="allot.reason!=0">
+	<td>
+	<s:property value="bnum" />(<s:property value="bnum/(case_spec*1.0)" /> 件)
+	</td>
+	</s:if>
 	<s:if test="%{allot.state==0||allot.state==2}">
 	<td align="center">
    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_DEL')">
@@ -170,7 +195,15 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 		<td class='secRow'><s:property value="allot.lm_user_name" /></td>
 		<td class='firstRow'>最后修改时间:</td>
 		<td class='secRow'><s:date name="allot.lm_timer" format="yyyy-MM-dd HH:mm:ss" /></td>
-	</tr>
+		</tr>
+		<s:if test="allot.sureUser!=null">
+		<tr>
+		<td class='firstRow'>确认人/经手人:</td>
+		<td class='secRow'><s:property value="allot.sureUser_name" /></td>
+		<td class='firstRow'>确认时间:</td>
+		<td class='secRow'><s:date name="allot.sureDate" format="yyyy-MM-dd HH:mm:ss" /></td>
+		</tr>
+		</s:if>
 	
 </s:if>
 
@@ -184,7 +217,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 					<s:submit id="add" name="add" value="保存&填写明细" action="allot_add" onclick="return xt();"/>
 					</s:if>
 				</s:if>
-				<s:elseif test="null != allot && 'mdy' == viewFlag && @com.qkj.ware.action.warepower@checkPermit(sourceId,'edit')">
+				<s:elseif test="null != allot && 'mdy' == viewFlag && @com.qkj.ware.action.warepower@checkPermit(allot.sourceid,'edit')">
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_MDY')">
 					<s:if test="%{allot.state==0||allot.state==2}">
 					<s:submit id="save" name="save" value="保存" action="allot_save" onclick="return xt();"/>
@@ -197,12 +230,20 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 					</s:if>
 					</s:if>
 					
-					<s:if test="%{allot.state==1}">
+					<s:if test="allot.state==1 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_CENCLE')">
 					<s:submit id="freeze" name="freeze" value="取消发货" action="allot_cancel" onclick="return isOp('确认取消发货?');"></s:submit>
 					</s:if>
 					
-					<s:if test="%{allot.state==1}">
+				</s:elseif>
+				
+				<s:elseif test="null != allot && 'mdy' == viewFlag && @com.qkj.ware.action.warepower@checkPermit(allot.goldid,'edit')">
+					
+					<s:if test="allot.state==4 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_DELI') ">
 					<s:submit id="freeze" name="freeze" value="确认收货" onclick="return isOp('确认收货?');" action="allot_delivery"></s:submit>
+					</s:if>
+					
+					<s:if test="allot.state==1 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_SURE') ">
+					<s:submit id="freeze" name="freeze" value="经手人确认" onclick="return isOp('确认发货?');" action="allot_sure"></s:submit>
 					</s:if>
 					
 				</s:elseif>
@@ -241,7 +282,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 			
 		<tr>
 		    <td colspan="20" class="buttonarea">
-				<s:hidden name="allotDetail.lading_id" title="调货单ID" value="%{allot.ordernum}" />
+				<s:hidden name="allotDetail.lading_id" title="调货单ID" value="%{allot.uuid}" />
 				<s:hidden name="allotDetail.goldId" title="调入仓库" value="%{allot.goldid}"></s:hidden>
 				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_ADD')">
 				<s:submit id="add" name="add" value="确定" action="allotDetail_add" />

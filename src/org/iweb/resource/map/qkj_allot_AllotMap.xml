@@ -5,10 +5,11 @@
 	<typeAlias alias="allot" type="com.qkj.ware.domain.Allot" />
 	<select id="allot_getAllots" resultClass="allot" parameterClass="java.util.Map">
 		<![CDATA[ 
-			SELECT i.*,addu.`USER_NAME` add_user_name,lmu.`USER_NAME` lm_user_name,w.`ware_name` sourceName,g.`ware_name` goldName  FROM qkj_t_allot i LEFT JOIN s_sys_user addu ON (i.add_user=addu.`UUID`) 
+			SELECT i.*,addu.`USER_NAME` add_user_name,lmu.`USER_NAME` lm_user_name,w.`ware_name` sourceName,g.`ware_name` goldName,sure.`USER_NAME` sureUser_name   FROM qkj_t_allot i LEFT JOIN s_sys_user addu ON (i.add_user=addu.`UUID`) 
 			LEFT JOIN s_sys_user lmu ON (i.lm_user=lmu.`UUID`)
 			LEFT JOIN qkj_t_warehouse w ON (i.`sourceId`=w.`uuid`)
 			LEFT JOIN qkj_t_warehouse g ON(i.`goldId`=g.`uuid`)
+			LEFT JOIN s_sys_user sure ON (i.`sureUser`=sure.`UUID`)
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ i.uuid=#uuid# ]]></isNotEmpty>
@@ -28,14 +29,14 @@
 	
 	<select id="allot_getbyPower" resultClass="allot" parameterClass="java.util.Map">
 		<![CDATA[ 
-			SELECT DISTINCT i.`uuid`,i.*,addu.`USER_NAME` add_user_name,lmu.`USER_NAME` lm_user_name,w.`ware_name` sourceName,g.`ware_name` goldName  FROM qkj_t_allot i LEFT JOIN s_sys_user addu ON (i.add_user=addu.`UUID`) 
+			SELECT DISTINCT i.`uuid`,i.*,addu.`USER_NAME` add_user_name,lmu.`USER_NAME` lm_user_name,w.`ware_name` sourceName,g.`ware_name` goldName,sure.`USER_NAME` sureUser_name  FROM qkj_t_allot i LEFT JOIN s_sys_user addu ON (i.add_user=addu.`UUID`) 
 			LEFT JOIN s_sys_user lmu ON (i.lm_user=lmu.`UUID`)
 			LEFT JOIN qkj_t_warehouse w ON (i.`sourceId`=w.`uuid`)
 			LEFT JOIN qkj_t_warehouse g ON(i.`goldId`=g.`uuid`)
 			LEFT JOIN qkj_t_stockpower  s ON(s.`ware_id`=i.`sourceId`)
 			LEFT JOIN qkj_t_stockpower  sg ON(sg.`ware_id`=i.`goldId`)
-			WHERE ((s.`username`=#username# OR 
-			(IF(s.son = 0, s.`dept_code`=#dept_code#, s.`dept_code` LIKE #dept_code#))) AND s.`prvg` LIKE '%4%' )
+			LEFT JOIN s_sys_user sure ON (i.`sureUser`=sure.`UUID`)
+			WHERE ((s.`username`=#username# || sg.`username`=#username# )  AND (s.`prvg` LIKE '%4%' or sg.`prvg` LIKE '%4%' ))
 		]]>
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ i.uuid=#uuid# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="state"><![CDATA[ i.state=#state# ]]></isNotEmpty>
@@ -77,8 +78,8 @@
 			LEFT JOIN qkj_t_warehouse g ON(i.`goldId`=g.`uuid`)
 			LEFT JOIN qkj_t_stockpower  s ON(s.`ware_id`=i.`sourceId`)
 			LEFT JOIN qkj_t_stockpower  sg ON(sg.`ware_id`=i.`goldId`)
-			WHERE ((s.`username`=#username# OR 
-			(IF(s.son = 0, s.`dept_code`=#dept_code#, s.`dept_code` LIKE #dept_code#))) AND s.`prvg` LIKE '%4%' )
+			LEFT JOIN s_sys_user sure ON (i.`sureUser`=sure.`UUID`)
+			WHERE ((s.`username`=#username# || sg.`username`=#username# )  AND (s.`prvg` LIKE '%4%' or sg.`prvg` LIKE '%4%' ) )
 			) a
 		]]>
 		<dynamic prepend="WHERE">
@@ -98,9 +99,14 @@
 	
 	<insert id="allot_addAllot" parameterClass="allot">
 		<![CDATA[ 
-			Insert Into qkj_t_allot(ordernum,date,sourceid,goldid,note,add_user,add_timer,lm_user,lm_timer)
-			Values (#ordernum#,#date#,#sourceid#,#goldid#,#note#,#add_user#,#add_timer#,#lm_user#,#lm_timer#)
+			Insert Into qkj_t_allot(ordernum,date,sourceid,goldid,note,add_user,add_timer,lm_user,lm_timer,reason)
+			Values (#ordernum#,#date#,#sourceid#,#goldid#,#note#,#add_user#,#add_timer#,#lm_user#,#lm_timer#,#reason#)
 		]]>
+		<selectKey resultClass="int" keyProperty="uuid">
+		<![CDATA[ 
+			Select LAST_INSERT_ID()
+		]]>
+		</selectKey>
 	</insert>
 	<update id="allot_mdyAllot" parameterClass="allot">
 		<![CDATA[
@@ -111,7 +117,8 @@ sourceid=#sourceid#,
 goldid=#goldid#,
 note=#note#,
 lm_user=#lm_user#,
-lm_timer=#lm_timer#
+lm_timer=#lm_timer#,
+reason=#reason#
 			Where uuid = #uuid#
 		]]>
 	</update>
@@ -130,6 +137,17 @@ lm_timer=#lm_timer#
 			delivery=#delivery#,
 			freUser=#freUser#,
 			deliUser=#deliUser#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<update id="allot_mdySure" parameterClass="allot">
+		<![CDATA[
+			Update qkj_t_allot
+			Set 
+			state=#state#,
+			sureDate=#sureDate#,
+			sureUser=#sureUser#
 			Where uuid = #uuid#
 		]]>
 	</update>

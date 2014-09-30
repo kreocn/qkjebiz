@@ -200,6 +200,7 @@ public class OutStockAction extends ActionSupport {
 				this.setOutStocks(dao.list(map));
 				map.clear();
 				map.put("bug","bug");
+				map.put("type", "0");//非藏酒库
 				this.setWares(wd.list(map));
 			}else{
 				map.put("username",u);
@@ -252,9 +253,6 @@ public class OutStockAction extends ActionSupport {
 					if(outStock.getUuid()>0){
 						map.clear();
 						map.put("uuid", outStock.getUuid());
-					}else if(null!=outStock.getOrdernum()){
-						map.clear();
-						map.put("ordernum", outStock.getOrdernum());
 					}
 					this.setOutStock((OutStock)dao.list(map).get(0));
 					wareByPower(u, code);
@@ -265,7 +263,7 @@ public class OutStockAction extends ActionSupport {
 					
 					OutDetailDAO idao=new OutDetailDAO();
 					map.clear();
-					map.put("lading_id", outStock.getOrdernum());
+					map.put("lading_id", outStock.getUuid());
 					this.setOutDetails(idao.list(map));
 				}
 			} else {
@@ -306,6 +304,7 @@ public class OutStockAction extends ActionSupport {
 		if(ContextHelper.isAdmin()){//管理员
 			map.clear();
 			map.put("bug","bug");
+			map.put("type", "0");//非藏酒库
 			this.setWares(wd.list(map));
 			this.setBorrowwares(wares);
 		}else{
@@ -390,7 +389,7 @@ public class OutStockAction extends ActionSupport {
 			//修改库存
 			StockDAO stockdao=new StockDAO();
 			map.clear();
-			map.put("lading_id",outStock.getOrdernum());
+			map.put("lading_id",outStock.getUuid());
 			this.setOutDetails(odao.list(map));
 			if(outDetails.size()>0){
 				for(int i=0;i<outDetails.size();i++){
@@ -426,7 +425,7 @@ public class OutStockAction extends ActionSupport {
 			//修改库存
 			StockDAO stockdao=new StockDAO();
 			map.clear();
-			map.put("lading_id",outStock.getOrdernum());
+			map.put("lading_id",outStock.getUuid());
 			this.setOutDetails(odao.list(map));
 			if(outDetails.size()>0){
 				for(int i=0;i<outDetails.size();i++){
@@ -438,7 +437,7 @@ public class OutStockAction extends ActionSupport {
 				
 				//删除详表
 				map.clear();
-				map.put("lading_id",outStock.getOrdernum());
+				map.put("lading_id",outStock.getUuid());
 				odao.deleteByLading(map);
 			}
 			
@@ -513,7 +512,7 @@ public class OutStockAction extends ActionSupport {
 			StockDAO stockdao=new StockDAO();
 			OutDetailDAO idao=new OutDetailDAO();
 			map.clear();
-			map.put("lading_id", outStock.getOrdernum());
+			map.put("lading_id", outStock.getUuid());
 			this.setOutDetails(idao.list(map));
 			if(outDetails.size()>0){
 				for(int i=0;i<outDetails.size();i++){
@@ -576,7 +575,7 @@ public class OutStockAction extends ActionSupport {
 				this.setOutStock((OutStock)dao.get(outStock.getUuid()));
 				OutDetailDAO odd=new OutDetailDAO();
 				map.clear();
-				map.put("lading_id", outStock.getOrdernum());
+				map.put("lading_id", outStock.getUuid());
 				this.setOutDetails(odd.list(map));
 				if(outDetails.size()>0){
 					for(int i=0;i<outDetails.size();i++){

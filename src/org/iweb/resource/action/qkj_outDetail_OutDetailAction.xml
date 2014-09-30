@@ -21,7 +21,7 @@
 		<action name="outDetail_add" class="com.qkj.ware.action.OutDetailAction" method="add">
 			<result type="redirectAction">
 				<param name="actionName">outStock_load</param>
-				<param name="outStock.ordernum">${outDetail.lading_id}</param>
+				<param name="outStock.uuid">${outDetail.lading_id}</param>
 				<param name="viewFlag">mdy</param>
 				<param name="message">${message}</param>
 			</result>
@@ -36,7 +36,7 @@
 		<action name="outDetail_del" class="com.qkj.ware.action.OutDetailAction" method="del">
 			<result type="redirectAction">
 				<param name="actionName">outStock_load</param>
-				<param name="outStock.ordernum">${outDetail.lading_id}</param>
+				<param name="outStock.uuid">${outDetail.lading_id}</param>
 				<param name="viewFlag">mdy</param>
 				<param name="message">${message}</param>
 			</result>

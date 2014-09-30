@@ -198,8 +198,10 @@ public class InStockAction extends ActionSupport {
 			this.setCurrPage(ContextHelper.getCurrPage(map));
 
 			if (ContextHelper.isAdmin()) {// 管理员
+				map.clear();
+				map.put("type", "0");//非藏酒库
 				this.setInStocks(dao.list(map));
-				this.setWares(wd.list(null));
+				this.setWares(wd.list(map));
 			} else {
 				map.put("username", u);
 				map.put("dept_code", code);
@@ -271,7 +273,9 @@ public class InStockAction extends ActionSupport {
 	private void wareByPower(String u, String code) {
 		WareDAO wd = new WareDAO();
 		if (ContextHelper.isAdmin()) {// 管理员
-			this.setWares(wd.list(null));
+			map.clear();
+			map.put("type", "0");//非藏酒库
+			this.setWares(wd.list(map));
 		} else {
 			map.clear();
 			map.put("username", u);

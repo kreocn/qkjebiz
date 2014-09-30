@@ -31,15 +31,15 @@
 	<select id="inStock_getIn" resultClass="inStock" parameterClass="java.util.Map">
 		<![CDATA[ 
 			SELECT DISTINCT i.`uuid`,i.*,addu.`USER_NAME` add_user_name,lmu.`USER_NAME` lm_user_name,g.`USER_NAME` operator_name, t.`USER_NAME` take_name,s.`USER_NAME` conname_u FROM 
-			qkj_t_instock i LEFT JOIN s_sys_user addu ON (i.add_user=addu.`UUID`) 
+			qkj_t_instock i 
+			LEFT JOIN s_sys_user addu ON (i.add_user=addu.`UUID`) 
 			LEFT JOIN s_sys_user lmu ON (i.lm_user=lmu.`UUID`)
 			LEFT JOIN s_sys_user g ON(g.`UUID`=i.`operator_id`)
 			LEFT JOIN s_sys_user t ON(t.`UUID`=i.`take_id`) 
 			LEFT JOIN s_sys_user s ON (i.`conname`=s.`UUID`)
-			LEFT JOIN qkj_t_stockpower  s ON(s.`ware_id`=i.`store_id`)
+			LEFT JOIN qkj_t_stockpower  sp ON(sp.`ware_id`=i.`store_id`)
 			WHERE 
-			 (s.`username`=#username# OR 
-			(IF(s.son = 0, s.`dept_code`=#dept_code#, s.`dept_code` LIKE #dept_code#))) AND s.`prvg` LIKE '%4%'
+			 sp.`username`=#username#  AND sp.`prvg` LIKE '%4%'
 		]]>
 		<isNotEmpty prepend="AND" property="date"><![CDATA[ i.date=#date# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="ordernum"><![CDATA[ i.ordernum=#ordernum# ]]></isNotEmpty>
@@ -80,11 +80,10 @@
 				LEFT JOIN s_sys_user lmu ON (i.lm_user=lmu.`UUID`)
 				LEFT JOIN s_sys_user g ON(g.`UUID`=i.`operator_id`)
 				LEFT JOIN s_sys_user t ON(t.`UUID`=i.`take_id`) 
-				LEFT JOIN qkj_t_stockpower  s ON(s.`ware_id`=i.`store_id`)
+				LEFT JOIN qkj_t_stockpower  sp ON(sp.`ware_id`=i.`store_id`)
 				LEFT JOIN s_sys_user s ON (i.`conname`=s.`UUID`)
 				WHERE 
-				 (s.`username`=#username# OR 
-				(IF(s.son = 0, s.`dept_code`=#dept_code#, s.`dept_code` LIKE #dept_code#))) AND s.`prvg` LIKE '%4%'
+				 sp.`username`=#username#  AND sp.`prvg` LIKE '%4%'
 			) a
 		]]>
 		<dynamic prepend="WHERE">

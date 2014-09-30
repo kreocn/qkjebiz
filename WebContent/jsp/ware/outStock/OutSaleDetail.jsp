@@ -107,9 +107,15 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 	<!-- 主表显示 -->
 		<s:if test="null != outStock">
 		  <tr>
+<<<<<<< HEAD
 		  	<td class='firstRow'><span style="color:red;">*</span> 单据号:</td>
 			<td class='secRow' colspan="3">
 				<s:textfield name="outStock.ordernum" title="单据号"  rows="4" require="required" controlName="单据号"></s:textfield>
+=======
+		  	<td class='firstRow'>单据号:</td>
+			<td class='secRow' colspan="3">
+				<s:textfield name="outStock.ordernum" title="单据号"  rows="4"></s:textfield>
+>>>>>>> ware
 				<s:hidden name="outDetail.lading_id"  title="出库单号" />
 				<s:hidden name="outStock.uuid"/>
 				<s:hidden name="outStock.send"/>
@@ -131,6 +137,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 			</td>
 		</tr>
 		</s:if>
+<<<<<<< HEAD
 		<tr>
 		<td class='firstRow'><span style="color:red;">*</span>经手人:</td>
 		<td class='secRow' colspan="3">
@@ -142,6 +149,9 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 							<s:property value="outStock.operator_name" />
 		</td>
 		</tr>
+=======
+		
+>>>>>>> ware
 		<tr>
 			<td class='firstRow'><span style="color:red;">*</span> 状态:</td>
 			<td class='secRow'>
@@ -156,11 +166,15 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 							 selected="selected"
 							</s:if>
 							>招待用酒</option>
+<<<<<<< HEAD
 							<option value="2" 
 							<s:if test="%{outStock.reason==2 }">
 							selected="selected"
 							</s:if>
 							>借货</option>
+=======
+							
+>>>>>>> ware
 							<option value="3" 
 							<s:if test="%{outStock.reason==3 }">
 							selected="selected"
@@ -171,6 +185,14 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 							selected="selected"
 							</s:if>
 							>赠酒</option>
+<<<<<<< HEAD
+=======
+							<option value="5" 
+							<s:if test="%{outStock.reason==5 }">
+							selected="selected"
+							</s:if>
+							>其它</option>
+>>>>>>> ware
 					</select>
 			</td>
 			<td class='firstRow'><span style="color:red;">*</span> 出库仓库:</td>
@@ -282,7 +304,11 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 			</tr>
 			<s:if test="%{outStock.manager_check!=null}">
 			<tr>
+<<<<<<< HEAD
 				<td class='firstRow'>确认人:</td>
+=======
+				<td class='firstRow'>确认人/经手人:</td>
+>>>>>>> ware
 				<td class='secRow'><s:property value="outStock.manager_check_user_name" /></td>
 				<td class='firstRow'>确认时间:</td>
 				<td class='secRow'><s:date name="outStock.manager_check_time" format="yyyy-MM-dd HH:mm:ss" /></td>
@@ -305,7 +331,11 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 					
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_SURE') && 2==outStock.send">
 					<s:if test="%{outDetails.size>0}">
+<<<<<<< HEAD
 					<s:submit value="确认" action="outStock_sure" onclick="return isOp('是否确认?\n确认后将不能更改!');"></s:submit>
+=======
+					<s:submit value="经手人确认" action="outStock_sure" onclick="return isOp('是否确认?\n确认后将不能更改!');"></s:submit>
+>>>>>>> ware
 					</s:if>
 					</s:if>
 					
@@ -366,7 +396,11 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 			</tr>
 		<tr>
 		    <td colspan="20" class="buttonarea">
+<<<<<<< HEAD
 				<s:hidden name="outDetail.lading_id" title="提货单ID" value="%{outStock.ordernum}" />
+=======
+				<s:hidden name="outDetail.lading_id" title="提货单ID" value="%{outStock.uuid}" />
+>>>>>>> ware
 				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_ADD')">
 				<s:submit id="add" name="add" value="确定" action="outDetail_add" />
 				</s:if>

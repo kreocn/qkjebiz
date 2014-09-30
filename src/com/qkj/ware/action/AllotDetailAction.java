@@ -11,6 +11,7 @@ import org.iweb.sys.ToolsUtil;
 import com.opensymphony.xwork2.ActionSupport;
 import com.qkj.ware.dao.AllotDetailDAO;
 import com.qkj.ware.dao.AllotDetailHDAO;
+import com.qkj.ware.dao.StockDAO;
 import com.qkj.ware.domain.Allot;
 import com.qkj.ware.domain.AllotDetail;
 import com.qkj.ware.domain.AllotDetailH;
@@ -174,7 +175,20 @@ public class AllotDetailAction extends ActionSupport {
 	public String add() throws Exception {
 		ContextHelper.isPermit("QKJ_WARE_ALLOT_ADD");
 		try {
-			dao.add(allotDetail);
+			//判断库存是否足够
+			StockDAO stockdao=new StockDAO();
+			map.clear();
+			map.put("uuid", allotDetail.getStock_id());//出库祥表的product_id是库存id
+			this.setStock((Stock)stockdao.fingByPro(map));
+			int quan=(stock.getQuantity()-stock.getFreezeNum())-allotDetail.getNum();
+			stock.setQuantity(quan);
+			if(quan>=0){
+				dao.add(allotDetail);
+			}else{
+				setMessage("库存数量不足！");
+			}
+			
+			
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!add 数据添加失败:", e);
 			throw new Exception(this.getClass().getName() + "!add 数据添加失败:", e);

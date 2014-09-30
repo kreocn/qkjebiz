@@ -197,17 +197,22 @@ public class InDetailAction extends ActionSupport {
 			map.clear();
 			map.put("lading_id", inDetail.getLading_id());
 			this.setInds(dao.list(map));
+			Boolean falg=true;
 			if(inds.size()>0){
 				for(int i=0;i<inds.size();i++){
 					ind=inds.get(i);
 					if(ind.getLading_id().equals(inDetail.getLading_id())&&ind.getNum()==inDetail.getNum()&&ind.getProduct_id()==inDetail.getProduct_id()){
+						falg=false;
 						break;
-					}else{
-						dao.add(inDetail);
 					}
 				}
+				if(falg==true){
+					dao.add(inDetail);
+					}
 			}else{
+				if(falg==true){
 				dao.add(inDetail);
+				}
 			}
 			//修改主表的总价
 			InStockDAO ldao=new InStockDAO();

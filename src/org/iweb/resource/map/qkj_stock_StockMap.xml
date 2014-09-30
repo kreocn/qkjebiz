@@ -17,14 +17,51 @@
 
 		</dynamic>
 	</select>
+	<!-- 盘点 -->
+	<select id="stock_getChecks" resultClass="stock" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT s.*,p.`title` product_name,w.`ware_name` store_name,p.`case_spec` case_spec ,sst.zdnum zdnum,sst.znum znum,sst.snum snum,sst.qnum qnum,sst.jnum jnum 
+	FROM qkj_r_stock s 
+	LEFT JOIN qkj_t_product p ON (s.`product_id`=p.`uuid`)
+	LEFT JOIN qkj_t_warehouse w ON (s.`store_id`=w.`uuid`) 
+	LEFT JOIN (
+		SELECT t.product_id product_id,t.zdnum zdnum,t.znum znum,t.snum snum,t.qnum qnum,t.jnum jnum FROM (
+				SELECT outd.`product_id` product_id,SUM(outd.`num`) zdnum,0 znum,0 snum,0 qnum,0 jnum FROM qkj_t_outstock sto 
+				LEFT JOIN qkj_t_outdetail outd ON (sto.`uuid`=outd.`lading_id`)  WHERE sto.`store_id`=#store_id# AND sto.`reason`=1 GROUP BY  outd.`product_id`
+				UNION ALL
+
+				SELECT outd.`product_id` product_id,0 zdnum,SUM(outd.`num`) znum,0 snum,0 qnum,0 jnum FROM qkj_t_outstock sto 
+				LEFT JOIN qkj_t_outdetail outd ON (sto.`uuid`=outd.`lading_id`)  WHERE sto.`store_id`=#store_id# AND sto.`reason`=4 GROUP BY  outd.`product_id`
+
+				UNION ALL
+				SELECT outd.`product_id` product_id,0 zdnum,0 znum,SUM(outd.`num`) snum,0 qnum,0 jnum FROM qkj_t_outstock sto 
+				LEFT JOIN qkj_t_outdetail outd ON (sto.`uuid`=outd.`lading_id`)  WHERE sto.`store_id`=#store_id# AND sto.`reason`=3 GROUP BY  outd.`product_id`
+
+				UNION ALL 
+				SELECT outd.`product_id` product_id,0 zdnum,0 znum,0 snum,SUM(outd.`num`) qnum,0 jnum FROM qkj_t_outstock sto 
+				LEFT JOIN qkj_t_outdetail outd ON (sto.`uuid`=outd.`lading_id`)  WHERE sto.`store_id`=#store_id# AND sto.`reason`=5 GROUP BY  outd.`product_id`
+
+				UNION ALL 
+				SELECT ald.`stock_id` product_id,0 zdnum,0 znum,0 snum,0 qnum,SUM(ald.`num`) jnum FROM qkj_t_allot al 
+				LEFT JOIN qkj_t_allotdetail ald ON (al.uuid=ald.`lading_id`) WHERE al.`sourceId`=#store_id# AND al.`reason`=1) t
+	)sst ON (s.`uuid`=sst.product_id)
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ s.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="product_id"><![CDATA[ s.product_id=#product_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="store_id"><![CDATA[ s.store_id=#store_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="quantity"><![CDATA[ s.quantity=#quantity# ]]></isNotEmpty>
+			
+
+		</dynamic>
+	</select>
 	
 	<select id="stock_getPower" resultClass="stock" parameterClass="java.util.Map">
 		<![CDATA[ 
 			SELECT  DISTINCT s.`uuid`,s.*,p.`title` product_name,w.`ware_name` store_name,p.`case_spec` case_spec FROM qkj_r_stock s LEFT JOIN qkj_t_product p ON (s.`product_id`=p.`uuid`)
 			 LEFT JOIN qkj_t_warehouse w ON (s.`store_id`=w.`uuid`)
 			 LEFT JOIN qkj_t_stockpower  pw ON(pw.`ware_id`=s.store_id)
-			 WHERE (pw.`username`=#username# OR 
-			(IF(pw.son = 0, pw.`dept_code`=#dept_code#, pw.`dept_code` LIKE #dept_code#))) AND  pw.`prvg` LIKE '%4%' 
+			 WHERE pw.`username`=#username#  AND  pw.`prvg` LIKE '%4%' 
 		]]>
 			<isNotEmpty prepend="AND" property="product_id"><![CDATA[ s.product_id=#product_id# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="store_id"><![CDATA[ s.store_id=#store_id# ]]></isNotEmpty>
@@ -39,8 +76,7 @@
 			SELECT  DISTINCT s.`uuid`,s.`product_id` product_id, s.`quantity` quantity,s.`store_id` store_id,s.`freezeNum` freezeNum,p.`title` product_name,w.`ware_name` store_name,p.`case_spec` case_spec FROM qkj_r_stock s LEFT JOIN qkj_t_product p ON (s.`product_id`=p.`uuid`)
 			 LEFT JOIN qkj_t_warehouse w ON (s.`store_id`=w.`uuid`)
 			 LEFT JOIN qkj_t_stockpower  pw ON(pw.`ware_id`=s.store_id)
-			 WHERE s.`product_id`=#product_id# AND  (pw.`username`=#username# OR 
-			(IF(pw.son = 0, pw.`dept_code`=#dept_code#, pw.`dept_code` LIKE #dept_code#))) AND  pw.`prvg` LIKE '%4%'
+			 WHERE s.`product_id`=#product_id# AND  pw.`username`=#username#  AND  pw.`prvg` LIKE '%4%'
 			) aa 
 		]]>
 	</select>
@@ -94,8 +130,7 @@
 			SELECT  DISTINCT s.`uuid`,SUM(s.`quantity`) quantity,s.`product_id`,s.`store_id`,p.`title` product_name,w.`ware_name` store_name FROM qkj_r_stock s LEFT JOIN qkj_t_product p ON (s.`product_id`=p.`uuid`)
 			 LEFT JOIN qkj_t_warehouse w ON (s.`store_id`=w.`uuid`)
 			 LEFT JOIN qkj_t_stockpower  pw ON(pw.`ware_id`=s.store_id)
-			 WHERE (pw.`username`=#username# OR 
-			(IF(pw.son = 0, pw.`dept_code`=#dept_code#, pw.`dept_code` LIKE #dept_code#))) AND  pw.`prvg` LIKE '%4%' 
+			 WHERE pw.`username`=#username#  AND  pw.`prvg` LIKE '%4%' 
 			) aa
 		]]>
 		<dynamic prepend="WHERE">
@@ -124,8 +159,7 @@
 			SELECT COUNT(*) FROM (SELECT DISTINCT s.`uuid`,s.`product_id` pro,s.`store_id` sto FROM qkj_r_stock s LEFT JOIN qkj_t_product p ON (s.`product_id`=p.`uuid`)
 			 LEFT JOIN qkj_t_warehouse w ON (s.`store_id`=w.`uuid`)
 			 LEFT JOIN qkj_t_stockpower  pw ON(pw.`ware_id`=s.store_id)
-			  WHERE (pw.`username`=#username# OR 
-			(IF(pw.son = 0, pw.`dept_code`=#dept_code#, pw.`dept_code` LIKE #dept_code#))) AND  pw.`prvg` LIKE '%4%') a
+			  WHERE pw.`username`=#username#  AND  pw.`prvg` LIKE '%4%') a
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ s.uuid=#uuid# ]]></isNotEmpty>

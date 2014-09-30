@@ -107,9 +107,9 @@ a.confirm_button:hover {
 					<div class="ifromoperate"></div>
 					<table class="ilisttable" width="100%">
 						<tr>
-							<td class='firstRow'><span style="color:red;">*</span> 单据号:</td>
+							<td class='firstRow'> 单据号:</td>
 							<td class='secRow' colspan="3">
-							<s:textfield name="outStock.ordernum" title="单据号"  rows="4" require="required" controlName="单据号"></s:textfield>
+							<s:textfield name="outStock.ordernum" title="单据号"  rows="4"></s:textfield>
 							</td>
 						</tr>
 						
@@ -122,16 +122,7 @@ a.confirm_button:hover {
 											$("#indate").datepicker();
 										</script></td>
 						</tr>
-						<tr>
-							<td  class='firstRow'><span style="color: red;">*</span>经手人:</td>
-							<td class='secRow3' colspan="3">
-							<s:textfield title="部门" id="userdept_codeid" name="outStock.dept_code" readonly="true" />
-							<s:textfield title="部门名称" id="userdept_nameid"  name="outStock.dept_name"  readonly="true" />
-							<img class="imglink" src='<s:url value="/images/open2.gif" />' onclick="selectDept();" />
-							<span id="ajax_member_message"></span>
-							<s:select id="membermanagerid" name="outStock.operator_id" list="#{}" headerKey="" headerValue="--请选择--" />
-							</td>
-						</tr>
+						
 						
 						<tr>
 							<td class='firstRow'><span style="color: red;">*</span>
@@ -144,13 +135,7 @@ a.confirm_button:hover {
 										<s:property value="ware_name" />
 									</s:iterator>
 							</select>
-							<span id="borrow">借货仓库:<select name="outStock.borrowStore_id"
-								title="借货仓库">
-									<s:iterator value="borrowwares" status="sta" var="x">
-										<option value="<s:property value="uuid" />"/>
-										<s:property value="ware_name" />
-									</s:iterator>
-							</select></span>
+							
 							</td>
 						</tr>
 						
@@ -158,10 +143,11 @@ a.confirm_button:hover {
 							<td class='firstRow'><span style="color: red;">*</span> 状态:</td>
 							<td class='secRow'><select id="out" name="outStock.reason" title="状态" onchange="borrow();">
 									<option value="0">销售出库</option>
-									<option value="2">借货</option>
+									
 									<option value="3">报损</option>
 									<option value="1">招待用酒</option>
 									<option value="4">赠酒</option>
+									<option value="5">其它</option>
 								</select>
 							</td>
 						</tr>

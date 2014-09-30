@@ -13,17 +13,31 @@ public class Allot {
 	private Date add_timer;// (datetime)
 	private String lm_user;// (varchar)
 	private Date lm_timer;// (datetime)
-	private Integer state;
+	private Integer state;//0未发货1已发货2取消发货3已收货4.确认发货
 	private Date freDate;
 	private Date delivery;
 	private String freUser;
 	private String deliUser;
+	private Date sureDate;
+	private String sureUser;
+	private String reason;
+	private String bstate;
 
 	// 以下为非数据库字段
 	private String add_user_name;
 	private String lm_user_name;
 	private String sourceName;
 	private String goldName;
+	private String sureUser_name;
+
+	
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
 
 	public Integer getUuid() {
 		return uuid;
@@ -175,6 +189,38 @@ public class Allot {
 
 	public void setDeliUser(String deliUser) {
 		this.deliUser = deliUser;
+	}
+
+	public Date getSureDate() {
+		return sureDate;
+	}
+
+	public void setSureDate(Date sureDate) {
+		this.sureDate = sureDate;
+	}
+
+	public String getSureUser() {
+		return sureUser;
+	}
+
+	public void setSureUser(String sureUser) {
+		this.sureUser = sureUser;
+	}
+
+	public String getSureUser_name() {
+		return sureUser_name;
+	}
+
+	public void setSureUser_name(String sureUser_name) {
+		this.sureUser_name = sureUser_name;
+	}
+
+	public String getBstate() {
+		return bstate;
+	}
+
+	public void setBstate(String bstate) {
+		this.bstate = bstate;
 	}
 	
 	

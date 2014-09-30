@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="bordetail_bordetail" extends="default" namespace="/bordetail">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- Bordetail Start -->
+		<action name="bordetail_list" class="com.qkj.ware.action.BordetailAction" method="list">
+			<result>/jsp/ware/bordetail/BordetailList.jsp</result>
+		</action>
+		<action name="bordetail_relist" class="com.qkj.ware.action.BordetailAction" method="relist">
+			<result type="redirectAction">
+				<param name="actionName">bordetail_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+		<action name="bordetail_load" class="com.qkj.ware.action.BordetailAction" method="load">
+			<result>/jsp/ware/bordetail/BordetailEdit.jsp</result>
+		</action>
+		<action name="bordetail_add" class="com.qkj.ware.action.BordetailAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">bordetail_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="bordetail_save" class="com.qkj.ware.action.BordetailAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">bordetail_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="bordetail_del" class="com.qkj.ware.action.BordetailAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">bordetail_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- Bordetail End -->
+	</package>
+</struts>
