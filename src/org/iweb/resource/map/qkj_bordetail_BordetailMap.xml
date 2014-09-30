@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
+<sqlMap>
+	<!-- Bordetail Start -->
+	<typeAlias alias="bordetail" type="com.qkj.ware.domain.Bordetail" />
+	<select id="bordetail_getBordetails" resultClass="bordetail" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT bord.*,p.`title` product_name,w.`ware_name` bware,sb.`ware_name` sware FROM qkj_t_bordetail bord 
+			LEFT JOIN qkj_t_outstock os ON (os.`uuid`=bord.`back_id`)
+			LEFT JOIN qkj_t_product p ON (bord.`product_id`=p.`uuid`)
+			LEFT JOIN qkj_t_warehouse w ON (bord.`bstore_id`=w.`uuid`)
+			LEFT JOIN qkj_t_warehouse sb ON (bord.`sstor_id`=sb.`uuid`)
+
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="product_id"><![CDATA[ product_id=#product_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="bstore_id"><![CDATA[ bstore_id=#bstore_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="sstor_id"><![CDATA[ sstor_id=#sstor_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="bnum"><![CDATA[ bnum=#bnum# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="back_id"><![CDATA[ back_id=#back_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="land_id"><![CDATA[ land_id=#land_id# ]]></isNotEmpty>
+
+		</dynamic>
+		<![CDATA[ LIMIT 1000 ]]>
+	</select>
+	<select id="bordetail_getBordetailsCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) From qkj_t_bordetail
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="product_id"><![CDATA[ product_id=#product_id# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="bstore_id"><![CDATA[ bstore_id=#bstore_id# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="sstor_id"><![CDATA[ sstor_id=#sstor_id# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="bnum"><![CDATA[ bnum=#bnum# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="back_id"><![CDATA[ back_id=#back_id# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="land_id"><![CDATA[ land_id=#land_id# ]]></isNotEmpty>
+
+		</dynamic>
+		<![CDATA[ LIMIT 1000 ]]>
+	</select>
+	<insert id="bordetail_addBordetail" parameterClass="bordetail">
+		<![CDATA[ 
+			Insert Into qkj_t_bordetail(product_id,bstore_id,sstor_id,bnum,bdate,back_id,land_id)
+			Values (#product_id#,#bstore_id#,#sstor_id#,#bnum#,#bdate#,#back_id#,#land_id#)
+		]]>
+		<selectKey resultClass="int" keyProperty="uuid">
+		<![CDATA[ Select LAST_INSERT_ID() ]]>
+		</selectKey>
+	</insert>
+	<update id="bordetail_mdyBordetail" parameterClass="bordetail">
+		<![CDATA[
+			Update qkj_t_bordetail
+			Set product_id=#product_id#,
+bstore_id=#bstore_id#,
+sstor_id=#sstor_id#,
+bnum=#bnum#,
+bdate=#bdate#,
+back_id=#back_id#,
+land_id=#land_id#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="bordetail_delBordetail" parameterClass="bordetail">
+	<![CDATA[
+		Delete From qkj_t_bordetail Where uuid=#uuid#
+	]]>
+	</delete>
+	<!-- Bordetail End -->
+</sqlMap>
