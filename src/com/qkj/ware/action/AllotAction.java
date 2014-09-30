@@ -250,22 +250,11 @@ public class AllotAction extends ActionSupport {
 				if (!(allot == null || allot.getUuid() == null)||null!=map.get("ordernum")) {
 					if(allot.getUuid()!=null){
 						this.setAllot((Allot) dao.get(allot.getUuid()));
-					}else{
+					}/*else{
 						this.setAllot((Allot)dao.list(map).get(0));
-					}
-					//入仓库
-					WareDAO wd=new WareDAO();
-					map.clear();
-					map.put("bug","bug");
-					this.setWares(wd.list(map));
-					//出仓库
-					if(u.equals("1")){//管理员
-						this.setWarepowers(wares);
-					}else{
-						map.clear();
-						map.put("useruuid",u);
-						this.setWarepowers(wd.listByPower(map));
-					}
+					}*/
+					//仓库
+					wareByPower(u, code,"1");
 					//库存
 					StockDAO sdao=new StockDAO();
 					map.clear();
@@ -274,7 +263,7 @@ public class AllotAction extends ActionSupport {
 					//祥表
 					AllotDetailDAO adao=new AllotDetailDAO();
 					map.clear();
-					map.put("lading_id", allot.getOrdernum());
+					map.put("lading_id", allot.getUuid());
 					this.setAllotDetails(adao.list(map));
 					
 					//判断是否有确认收货权限
@@ -313,14 +302,12 @@ public class AllotAction extends ActionSupport {
 	}
 
 	private void wareByPower(String u, String code,String flag) {
-		//入仓库
+		//入仓库为所有仓库
 		WareDAO wd=new WareDAO();
-		if(ContextHelper.isAdmin()){//管理员
 			map.clear();
 			map.put("bug","bug");
+			map.put("type", "0");//非藏酒库
 			this.setWares(wd.list(map));
-		}
-		this.setAllot(null);
 		//出仓库
 		if(ContextHelper.isAdmin()){//管理员
 			this.setWarepowers(wares);
@@ -328,12 +315,8 @@ public class AllotAction extends ActionSupport {
 			map.clear();
 			map.put("username",u);
 			map.put("dept_code", code);
-			if(flag==null){
-				map.put("edit", 1);
-			}else{
-				map.put("sel", 1);
-			}
-			this.setWares(wd.listByPower(map));
+			map.put("edit", 1);
+			this.setWarepowers(wd.listByPower(map));
 		}
 	}
 
@@ -348,9 +331,9 @@ public class AllotAction extends ActionSupport {
 			allot.setLm_timer(new Date());
 			allot.setAdd_timer(d);
 			dao.add(allot);
-			map.clear();
+			/*map.clear();
 			map.put("ordernum", allot.getOrdernum());
-			this.setAllot((Allot)dao.list(map).get(0));
+			this.setAllot((Allot)dao.list(map).get(0));*/
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!add 数据添加失败:", e);
 			throw new Exception(this.getClass().getName() + "!add 数据添加失败:", e);
@@ -378,7 +361,7 @@ public class AllotAction extends ActionSupport {
 			//检查库存是否足够
 			AllotDetailDAO addao=new AllotDetailDAO();
 			map.clear();
-			map.put("lading_id", allot.getOrdernum());
+			map.put("lading_id", allot.getUuid());
 			this.setAllotDetails(addao.list(map));
 			if(allotDetails.size()>0){
 				for(int i=0;i<allotDetails.size();i++){
@@ -414,14 +397,35 @@ public class AllotAction extends ActionSupport {
 		
 	}
 	
+	//确认经手人
+	public String sure() throws Exception{
+		ContextHelper.isPermit("QKJ_WARE_ALLOT_SURE");
+		String u = ContextHelper.getUserLoginUuid();
+		try {
+				//状态为已确认发货
+				allot.setState(4);
+				allot.setSureDate(new Date());
+				allot.setSureUser(u);
+				dao.updateSure(allot);
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
+		}
+		return SUCCESS;
+		
+	}
+	
+	
 	//收货
 	public String delivery() throws Exception{
+		ContextHelper.isPermit("QKJ_WARE_ALLOT_DELI");
 		AllotDetailDAO addao=new AllotDetailDAO();
 		String u = ContextHelper.getUserLoginUuid();
 		map.clear();
-		map.put("lading_id", allot.getOrdernum());
+		map.put("lading_id", allot.getUuid());
 		this.setAllotDetails(addao.list(map));
 		this.setAllot((Allot)dao.list(map).get(0));
+		String resion=allot.getReason();
 		int godeid=allot.getGoldid();
 		int sourceid=allot.getSourceid();
 		if(allotDetails.size()>0){
@@ -435,33 +439,48 @@ public class AllotAction extends ActionSupport {
 				map.clear();
 				map.put("quantity", stock.getQuantity());
 				map.put("uuid", stock.getUuid());
-				sdao.updateTotleById(map);
+				int sto_id=stock.getUuid();//调出仓库id
+				int freenum=stock.getFreezeNum();//冻结的库存
+				if(!resion.equals("2")){
+					sdao.updateTotleById(map);
+				}
+				
 				//调入仓库+库存(如果调入仓库没有此商品则填加记录，如果有修改库存)
 				map.clear();
 				map.put("product_id", stock.getProduct_id());
 				map.put("store_id", godeid);
 				this.setStocks(sdao.list(map));
+				int gnum=0;//调入仓库库存
 				if(stocks.size()>0){
 					this.setStock(stocks.get(0));
 					stock.setQuantity(stock.getQuantity()+allotDetail.getNum());
 					map.clear();
 					map.put("quantity", stock.getQuantity());
 					map.put("uuid", stock.getUuid());
-					sdao.updateTotleById(map);
+					gnum=allotDetail.getNum();
+					if(!resion.equals("2")){
+						sdao.updateTotleById(map);
+					}
+					
+					
 				}else{
 					stock.setProduct_id(stock.getProduct_id());
 					stock.setStore_id(allot.getGoldid());
 					stock.setQuantity(allotDetail.getNum());
-					sdao.add(stock);
+					gnum=allotDetail.getNum();
+					if(!resion.equals("2")){
+						sdao.add(stock);
+					}
 					
 				}
+				//取消冻结库存
+				//StockDAO sdao=new StockDAO();
+				map.clear();
+				map.put("uuid", sto_id);
+				map.put("freezeNum", (freenum-gnum));
+				sdao.updateFreezeNumById(map);
 			}
-			//取消冻结库存
-			StockDAO sdao=new StockDAO();
-			map.clear();
-			map.put("uuid", sourceid);
-			map.put("freezeNum", 0);
-			sdao.updateFreezeNumById(map);
+			
 			
 			//状态为已收货
 			allot.setUuid(allot.getUuid());
@@ -477,12 +496,12 @@ public class AllotAction extends ActionSupport {
 	
 	//取消发货
 	public String cancel() throws Exception{
-		ContextHelper.isPermit("QKJ_WARE_ALLOT_MDY");
+		ContextHelper.isPermit("QKJ_WARE_ALLOT_CENCLE");
 		try {
 			//检查库存是否足够
 			AllotDetailDAO addao=new AllotDetailDAO();
 			map.clear();
-			map.put("lading_id", allot.getOrdernum());
+			map.put("lading_id", allot.getUuid());
 			this.setAllotDetails(addao.list(map));
 			if(allotDetails.size()>0){
 				for(int i=0;i<allotDetails.size();i++){
@@ -518,7 +537,7 @@ public class AllotAction extends ActionSupport {
 			
 			AllotDetailDAO adDao=new AllotDetailDAO();
 			map.clear();
-			map.put("lading_id", allot.getOrdernum());
+			map.put("lading_id", allot.getUuid());
 			this.setAllotDetails(adDao.list(map));
 			//删除详表
 			if(allotDetails.size()>0){

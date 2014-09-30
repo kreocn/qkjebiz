@@ -21,7 +21,7 @@
 		<action name="allotDetail_add" class="com.qkj.ware.action.AllotDetailAction" method="add">
 			<result type="redirectAction">
 				<param name="actionName">allot_load</param>
-				<param name="allot.ordernum">${allotDetail.lading_id}</param>
+				<param name="allot.uuid">${allotDetail.lading_id}</param>
 				<param name="viewFlag">mdy</param>
 				<param name="message">${message}</param>
 			</result>
@@ -36,7 +36,7 @@
 		<action name="allotDetail_del" class="com.qkj.ware.action.AllotDetailAction" method="del">
 			<result type="redirectAction">
 				<param name="actionName">allot_load</param>
-				<param name="allot.ordernum">${allotDetail.lading_id}</param>
+				<param name="allot.uuid">${allotDetail.lading_id}</param>
 				<param name="viewFlag">mdy</param>
 				<param name="message">${message}</param>
 			</result>

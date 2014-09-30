@@ -44,8 +44,7 @@
 			LEFT JOIN s_sys_user t ON (i.`take_id`=t.`UUID`)
 			LEFT JOIN qkj_t_stockpower  s ON(s.`ware_id`=i.`store_id`)
 			WHERE 
-			 (s.`username`=#username# OR 
-			(IF(s.son = 0, s.`dept_code`=#dept_code#, s.`dept_code` LIKE #dept_code#))) AND s.`prvg` LIKE '%4%'
+			 s.`username`=#username#  AND s.`prvg` LIKE '%4%'
 		]]>
 			<isNotEmpty prepend="AND" property="order"><![CDATA[ i.send!=#send# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="ordernum"><![CDATA[ i.ordernum=#ordernum# ]]></isNotEmpty>
@@ -97,8 +96,7 @@
 			LEFT JOIN s_sys_user t ON (i.`take_id`=t.`UUID`)
 			LEFT JOIN qkj_t_stockpower  s ON(s.`ware_id`=i.`store_id`)
 			WHERE 
-			 (s.`username`=#username# OR 
-			(IF(s.son = 0, s.`dept_code`=#dept_code#, s.`dept_code` LIKE #dept_code#))) AND s.`prvg` LIKE '%4%'
+			 s.`username`=#username#  AND s.`prvg` LIKE '%4%'
 			) a
 		]]>
 		<dynamic prepend="WHERE">

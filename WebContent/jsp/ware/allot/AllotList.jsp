@@ -74,6 +74,7 @@ $(function(){
 					<option value="1">已发货</option>
 					<option value="2">取消发货</option>
 					<option value="3">已收货</option>
+					<option value="4">确认发货</option>
 			</select>
 			</td>
 			
@@ -94,6 +95,7 @@ $(function(){
 	    <th><input name="uuidcheck" type="checkbox" /></th>
 	    <th>主键自增</th>
 	    <th>调库单号</th>
+	    <th>单据性质</th>
 		<th>调入仓库</th>
 		<th>调出仓库</th>
 		<th>添加人</th>
@@ -112,6 +114,24 @@ $(function(){
 	    <s:if test="%{state==1}"><font color="blue">（已发货）</font></s:if>
 	    <s:if test="%{state==2}"><font color="blue">（取消发货）</font></s:if>
 	    <s:if test="%{state==3}"><font color="red">（已收货）</font></s:if>
+	     <s:if test="%{state==4}"><font color="blue">（确认发货）</font></s:if>
+	    </td>
+	    <td><s:if test="%{reason==0}"><font color="red">调库</font></s:if>
+	    <s:if test="%{reason==1}"><font color="red">借货</font>
+	    （
+	    	<s:if test="%{bstate==0}"><font color="red">未还</font></s:if>
+	    <s:if test="%{bstate==1}"><font color="red">未还清</font></s:if>
+	    <s:if test="%{bstate==2}"><font color="red">已还清</font></s:if>
+	    	）
+	    </s:if>
+	    <s:if test="%{reason==2}"><font color="red">还货</font>
+	    （
+	    	<s:if test="%{bstate==0}"><font color="red">未还</font></s:if>
+	    <s:if test="%{bstate==1}"><font color="red">未还清</font></s:if>
+	    <s:if test="%{bstate==2}"><font color="red">已还清</font></s:if>
+	    	）
+	    </s:if>
+	    	
 	    </td>
 		<td><s:property value="goldName" /></td>
 		<td><s:property value="sourceName" /></td>
@@ -121,15 +141,25 @@ $(function(){
 		<td><s:date name="lm_timer" format="yyyy-MM-dd HH:mm:ss" /></td>
 
 		<td align="center">
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_MDY') && @com.qkj.ware.action.warepower@checkPermit(sourceId,'edit')">
+			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_MDY')">
 	    	[<a href="<s:url namespace="/allot" action="allot_load"><s:param name="viewFlag">mdy</s:param><s:param name="allot.uuid" value="uuid"></s:param></s:url>">修改</a>]
 	    	</s:if>
-	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_DEL') && @com.qkj.ware.action.warepower@checkPermit(sourceId,'edit') && (state==0||state==2)">
+	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_DEL') && @com.qkj.ware.action.warepower@checkPermit(sourceid,'edit') && (state==0||state==2)">
 	    	[<a href="<s:url namespace="/allot" action="allot_del"><s:param name="allot.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>]
-	    	</s:if>	   
+	    	</s:if>	
+	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_MDY') && @com.qkj.ware.action.warepower@checkPermit(sourceid,'edit') && (reason==2)">
+	    	[<a target="_blank" href="<s:url namespace="/bordetail" action="bordetail_list"><s:param name="bordetail.back_id" value="uuid"></s:param></s:url>">还货明细</a>]
+	    	
+	    	</s:if>   
 	    </td>
 	  </tr>
+	  
 </s:iterator>
+	  <tr>
+	  <td colspan="20">
+	  <font color="red">注意：还货单中若有多出的商品，则还货单状态为“未还清”，此多出的数量不在库存中标记，请管理员自行记录！</font>
+	  </td>
+	  </tr>
 	  <tr>
 	    <td colspan="20" class="buttonarea">
 		<script type="text/javascript">

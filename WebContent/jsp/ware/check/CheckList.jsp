@@ -72,10 +72,12 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 					<td class='firstRow'><font style="font-weight: bold;">盘点日期:</font>
 					</td>
 					<td class='secRow'>
-					<s:textfield id="indate" name="check.date" title="盘点日期" />
-					<script type="text/javascript">$("#indate").datepicker();</script>
-					</td>
-					
+					<select name="check.date" title="盘点日期" >
+							<s:iterator value="checkDates" status="sta" var="x">
+							<option value="<s:property value="date" />" 
+							/><s:date name="date" format="yyyy-MM-dd" />
+							</s:iterator>
+					</select>
 					</tr>
 					<tr>
 					<td colspan="4" class="buttonarea">
@@ -94,23 +96,34 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 	<col width="30" />
 	  <tr>
 	    <th><input name="uuidcheck" type="checkbox" /></th>
-	    <th>盘点日期</th>
+	    
 	    <th>盘点仓库</th>
 	    <th>商品名称</th>
-	   
+	    <th>盘点日期</th>
 		<th>库存</th>
 		<th>差异数量</th>
+		<th>招待用酒</th>
+			<th>赠酒</th>
+			<th>报损</th>
+			<th>借酒</th>
+			<th>其它</th>
 		<th>操作</th>
 	  </tr>
 		<s:iterator value="checks" status="sta">
 			  <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>" type="pickrow">
 			    <td align="center"><input name="uuid" type="checkbox" value="<s:property value="uuid" />" /></td>
-			    <td><s:property value="date" /></td>
+			    
 			    <td><s:property value="ware_name" /></td>
 			    <td><s:property value="product_name" /></td>
-			    
+			    <td><s:date name="date" format="yyyy-MM-dd" /></td>
 				<td><s:property value="quantity" /></td>
 				<td><s:property value="num" /></td>
+				<td><s:property value="zdnum"></s:property></td>
+				<td><s:property value="znum"></s:property></td>
+				<td><s:property value="snum"></s:property></td>
+				<td><s:property value="jnum"></s:property></td>
+				<td><s:property value="qnum"></s:property></td>
+				
 		
 				<td align="center">
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_CHECK_MDY')">
@@ -122,14 +135,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 			    </td>
 			  </tr>
 		</s:iterator>
-	  <tr>
-	    <td colspan="20" class="buttonarea">
-		<script type="text/javascript">
-		var spage = new ShowPage(${currPage});
-		spage.show2(${recCount},${pageSize},2);
-		</script>
-		</td>	    
-	  </tr>
+	 
 	  <tr>
 	    <td colspan="20" class="buttonarea">
 	    <span id="message"><s:property value="message" /></span>

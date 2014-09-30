@@ -33,7 +33,7 @@ public class warepower {
 		this.wares = wares;
 	}
 
-	public static boolean checkPermit(String ware_id, String flag) {
+	public static boolean checkPermit(int ware_id, String flag) {
 		System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaa");
 		UserLoginInfo ulf = ContextHelper.getUserLoginInfo();
 		String u = ContextHelper.getUserLoginUuid();
@@ -44,6 +44,7 @@ public class warepower {
 			map.clear();
 			map.put("username",u);
 			map.put("dept_code", code);
+			map.put("ware_id", ware_id);
 			if(flag.equals("add")){
 				map.put("add", 1);
 			}else if(flag.equals("del")){
@@ -70,7 +71,7 @@ public class warepower {
 	 *            多权限判断标准 true = && | false == ||
 	 * @return
 	 */
-	public static boolean checkWare(String ware_id, String flag) {
+	public static boolean checkWare(int ware_id, String flag) {
 		String u = ContextHelper.getUserLoginUuid();
 		String code=ContextHelper.getUserLoginDept();
 		WareDAO wd=new WareDAO();
@@ -79,6 +80,7 @@ public class warepower {
 			map.clear();
 			map.put("username",u);
 			map.put("dept_code", code);
+			map.put("ware_id", ware_id);
 			if(flag.equals("add")){
 				map.put("add", 1);
 			}else if(flag.equals("del")){

@@ -54,12 +54,6 @@
 			</td>
 		</tr>
 		</s:if>
-		<tr>
-		<td class='firstRow'>经手人:</td>
-		<td class='secRow' colspan="3">
-		<s:property value="outStock.operator_name" />(<s:property value="outStock.dept_name" />)
-		</tr>
-
 
 		<s:if test="%{outStock.reason==0}"><!-- 销售出库，填加会员信息，要审核 -->
 		<tr>

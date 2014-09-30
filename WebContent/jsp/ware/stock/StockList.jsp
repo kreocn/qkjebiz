@@ -50,7 +50,7 @@ $(function(){
 			<tr>
 				<td class='firstRow'>(统计查询)商品名称:</td>
 				<td class='secRow'>
-				<s:select name="stock.groupQ" title="状态" headerKey="0" headerValue="--请选择--" list="products" listKey="uuid" listValue="title" />
+				<s:select name="stock.groupQ" title="状态" headerKey="0" headerValue="--请选择--" list="inproducts" listKey="product_id" listValue="product_name" />
 				</td>
 			</tr>
 			<tr>
@@ -69,7 +69,9 @@ $(function(){
 	    <th><input name="uuidcheck" type="checkbox" /></th>
 	    <th>主键ID</th>
 	    <th>商品名称</th>
+	    <s:if test="t==null">
 	    <th>所在仓库</th>
+	    </s:if>
 		<th>库存数量</th>
 	  </tr>
 <s:iterator value="stocks" status="sta">
@@ -77,7 +79,9 @@ $(function(){
 	    <td align="center"><input name="uuid" type="checkbox" value="<s:property value="uuid" />" /></td>
 	    <td><s:property value="uuid" /></td>
 		<td><s:property value="product_name" /></td>
+		<s:if test="t==null">
 		<td><s:property value="store_name" /></td>
+		</s:if>
 		<td>
 		<s:property value="quantity" />&nbsp;瓶
 		(<s:property value="%{(quantity/(case_spec*1.0)).toString().substring(0,3)}" />件)

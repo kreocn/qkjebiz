@@ -82,4 +82,5 @@
 	<sqlMap resource="org/iweb/resource/map/qkj_ware_InStockHMap.xml" /> 
 	<sqlMap resource="org/iweb/resource/map/qkj_ware_OutDetailHMap.xml" /> 
 	<sqlMap resource="org/iweb/resource/map/qkj_ware_OutStockHMap.xml" /> 
+	<sqlMap resource="org/iweb/resource/map/qkj_bordetail_BordetailMap.xml" />
 </sqlMapConfig>

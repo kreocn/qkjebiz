@@ -64,6 +64,11 @@ public class StockDAO extends AbstractDAO {
 		setCountMapid("stock_getPowerCountsByGroup");
 		return super.list("stock_getByGroup", map);
 	}
+	
+	//盘点
+	public List listCheck(Map<String, Object> map) {
+		return super.list("stock_getChecks", map);
+	}
 
 	public int getResultCount() {
 		return super.getResultCount();

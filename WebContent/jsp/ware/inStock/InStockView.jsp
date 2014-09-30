@@ -131,7 +131,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 <div id="result">
 	<div class="itablemdy">
 	<div class="itabletitle">
-		<span class="title1"><s:if test="null == inStock && 'add' == viewFlag">增加</s:if><s:elseif test="null != inStock && 'mdy' == viewFlag">修改</s:elseif>入库单（No.<s:property value="inStock.ordernum" />）</span>
+		<span class="title1"><s:if test="null == inStock && 'add' == viewFlag">增加</s:if><s:elseif test="null != inStock && 'mdy' == viewFlag">修改</s:elseif>入库单（No.<s:property value="inStock.uuid" />）</span>
 		
 	</div>
 <s:form name="form1" action="inStock_add" namespace="/inStock" onsubmit="return validator(this);" method="post" theme="simple">
@@ -172,6 +172,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 		<s:if test="%{inStock.reason==0}">正常入库</s:if>
 		<s:if test="%{inStock.reason==1}">正常退货</s:if>
 		<s:if test="%{inStock.reason==2 }">损坏退货</s:if>
+		<s:if test="%{inStock.reason==3 }">其它</s:if>
 	</td>
 </tr>
 <tr>

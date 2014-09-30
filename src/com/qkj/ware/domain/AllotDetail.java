@@ -7,7 +7,7 @@ public class AllotDetail {
 	private String lading_id;// (varchar)
 	private Integer stock_id;// (int)
 	private Integer num;// (int)
-
+    private Integer bnum;
 	// 以下为非数据库字段
 
 	private String product_name;
@@ -60,5 +60,15 @@ public class AllotDetail {
 	public void setCase_spec(int case_spec) {
 		this.case_spec = case_spec;
 	}
+
+	public Integer getBnum() {
+		return bnum;
+	}
+
+	public void setBnum(Integer bnum) {
+		this.bnum = bnum;
+	}
+	
+	
 
 }

@@ -191,9 +191,7 @@ public class OutDetailAction extends ActionSupport {
 				
 				//修改出库主表
 				OutStockDAO sdao=new OutStockDAO();
-				map.clear();
-				map.put("ordernum", outDetail.getLading_id());
-				this.setNewoutdStock((OutStock)sdao.list(map).get(0));
+				this.setNewoutdStock((OutStock)sdao.get(outDetail.getLading_id()));
 				if(newoutdStock.getReason()!=3){//不是报损
 					double num=0;
 					if(newoutdStock.getTotal_price()==null){
@@ -209,6 +207,7 @@ public class OutDetailAction extends ActionSupport {
 				}
 				//填加祥表
 				dao.add(outDetail);
+				
 			}else{
 				setMessage("1");
 			}

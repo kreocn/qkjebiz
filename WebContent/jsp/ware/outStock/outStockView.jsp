@@ -27,7 +27,7 @@
 <div id="result">
 	<div class="itablemdy">
 	<div class="itabletitle">
-		<span class="title1"><s:if test="null == outStock && 'add' == viewFlag">增加</s:if><s:elseif test="null != outStock && 'mdy' == viewFlag">修改</s:elseif>出库单（NO.<s:property value="outStock.ordernum" />）</span>
+		<span class="title1"><s:if test="null == outStock && 'add' == viewFlag">增加</s:if><s:elseif test="null != outStock && 'mdy' == viewFlag">修改</s:elseif>出库单（NO.<s:property value="outStock.uuid" />）</span>
 	</div>
 <s:form name="form1" action="outStock_add" namespace="/outStock" onsubmit="return validator(this);" method="post" theme="simple">
 	<div class="ifromoperate" ></div>
@@ -56,12 +56,7 @@
 			</td>
 		</tr>
 		</s:if>
-		<tr>
-		<td class='firstRow'><span style="color:red;">*</span>经手人:</td>
-		<td class='secRow'><s:property value="outStock.operator_name" /></td>
-		<td class='firstRow'><span style="color:red;">*</span> 保管员:</td>
-		<td class='secRow' colspan="3"><s:property value="outStock.take_name" /></td>
-		</tr>
+		
 		<tr>
 			<td class='firstRow'><span style="color:red;">*</span> 单据性质:</td>
 			<td class='secRow'>
@@ -69,11 +64,12 @@
 							</s:if>
 							 <s:if test="%{outStock.reason==1}">招待用酒
 							</s:if>
-							<s:if test="%{outStock.reason==2 }">借货
-							</s:if>
+							
 							<s:if test="%{outStock.reason==3 }">报损
 							</s:if>
 							<s:if test="%{outStock.reason==4 }">赠酒
+							</s:if>
+							<s:if test="%{outStock.reason==5 }">其它
 							</s:if>
 			</td>
 			<td class='firstRow'><span style="color:red;">*</span> 出库仓库:</td>
@@ -90,23 +86,7 @@
 					</select>
 			</td>
 		</tr>
-		<s:if test="%{outStock.reason==2}">
-			<tr class="borrow" id="borrow"> 
-								<td class='firstRow'><span style="color: red;">*</span>
-									借货仓库:</td>
-								<td class='secRow' colspan="3"><select name="outStock.borrowStore_id"
-									title="借货仓库">
-										<s:iterator value="borrowwares" status="sta" var="x">
-											<option 
-											<s:if test="#x.uuid==outStock.borrowStore_id">
-											selected="selected"
-											</s:if>
-											 value="<s:property value="uuid" />"/>
-											<s:property value="ware_name" />
-										</s:iterator>
-								</select></td>
-			</tr>
-		</s:if>
+		
 
 <tr>
 	<td class='firstRow'>其它说明:</td>
@@ -211,7 +191,7 @@
 	</tr>
 	<s:if test="%{outStock.manager_check!=null}">
 			<tr>
-				<td class='firstRow'>确认人:</td>
+				<td class='firstRow'>确认人/经手人:</td>
 				<td class='secRow'><s:property value="outStock.manager_check_user_name" /></td>
 				<td class='firstRow'>确认时间:</td>
 				<td class='secRow'><s:date name="outStock.manager_check_time" format="yyyy-MM-dd HH:mm:ss" /></td>

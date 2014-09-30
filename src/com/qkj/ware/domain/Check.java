@@ -11,6 +11,11 @@ public class Check {
 	private Date date;
 	private Integer quantity;// (int)库存数量
 	private Integer num;// (int)盘点实际数量
+	private Integer zdnum;
+	private Integer znum;
+	private Integer snum;
+	private Integer qnum;
+	private Integer jnum;
 	
 	//数据库以外
 	private String product_name;
@@ -95,6 +100,46 @@ public class Check {
 
 	public void setState(String state) {
 		this.state = state;
+	}
+
+	public Integer getZdnum() {
+		return zdnum;
+	}
+
+	public void setZdnum(Integer zdnum) {
+		this.zdnum = zdnum;
+	}
+
+	public Integer getZnum() {
+		return znum;
+	}
+
+	public void setZnum(Integer znum) {
+		this.znum = znum;
+	}
+
+	public Integer getSnum() {
+		return snum;
+	}
+
+	public void setSnum(Integer snum) {
+		this.snum = snum;
+	}
+
+	public Integer getQnum() {
+		return qnum;
+	}
+
+	public void setQnum(Integer qnum) {
+		this.qnum = qnum;
+	}
+
+	public Integer getJnum() {
+		return jnum;
+	}
+
+	public void setJnum(Integer jnum) {
+		this.jnum = jnum;
 	}
 	
 	

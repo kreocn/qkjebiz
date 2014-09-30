@@ -51,6 +51,15 @@
 			</result>
 		</action>
 		
+		<action name="allot_sure" class="com.qkj.ware.action.AllotAction" method="sure">
+			<result type="redirectAction">
+				<param name="actionName">allot_load</param>
+				<param name="allot.uuid">${allot.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
 		<action name="allot_cancel" class="com.qkj.ware.action.AllotAction" method="cancel">
 			<result type="redirectAction">
 				<param name="actionName">allot_load</param>
