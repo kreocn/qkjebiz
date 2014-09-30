@@ -158,7 +158,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 
 <!--盘点仓库 -->
 <div id="addItemForm" title="选择盘点仓库">
-<s:form id="form_addItem" name="form_addItem" action="check_load?viewFlag=add" namespace="/check" onsubmit="return validator(this);" method="post" theme="simple">
+<s:form id="form_addItem" name="form_addItem" action="check_load" namespace="/check" onsubmit="return validator(this);" method="post" theme="simple">
 	<table class="ilisttable" width="100%">
 		  <tr>
 			<td class='firstRow'><span style="color:red;">*</span> 盘点仓库:</td>
@@ -170,12 +170,13 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 		    <td colspan="20" class="buttonarea">
 				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_CHECK_ADD')">
 				
-				<s:submit id="add" name="add" value="确定" />
+				<s:submit id="add" name="add" value="确定"  />
 				</s:if>
 				<input type="button" value="关闭" onclick="closeAddForm();" />
 			</td>
 	    </tr>
 	</table>	
+	<s:hidden name="viewFlag" value="add" />
 </s:form>
 </div>
 </body>
