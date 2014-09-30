@@ -43,23 +43,15 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 .confirmd_cancel{background-position:-150px -150px;}
 .fd_button{width:50px;height:50px;font-size:14px;border:#333 solid 1px;border-radius:5px;cursor:pointer;}
 </style>
-<<<<<<< HEAD
-
-=======
 <style type='text/css'>
 @media screen{.printhide{display:block}} 
 @media print{.printhide{display:none}}
 </style>
->>>>>>> ware
 <body>
 <div id="main">
 <div id="result">
 	<div class="itablemdy">
-<<<<<<< HEAD
-	<div class="itabletitle">
-=======
 	<div class="itabletitle  printhide">
->>>>>>> ware
 		<span class="title1">盘点列表</span>
 		<span class="extra1">
 			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_CHECK_ADD')">
@@ -69,11 +61,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 		</span>
 	</div>	
 	<!-- 条件查询 -->
-<<<<<<< HEAD
-	<div class="ilistsearch">
-=======
 	<div class="ilistsearch printhide">
->>>>>>> ware
 		<s:form name="form_serach" action="check_list"  method="post" namespace="/check" theme="simple">
 				<table class="ilisttable" id="serach_table" width="100%">
 					<tr>
@@ -87,28 +75,17 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 					<td class='firstRow'><font style="font-weight: bold;">盘点日期:</font>
 					</td>
 					<td class='secRow'>
-<<<<<<< HEAD
-					<s:textfield id="indate" name="check.date" title="盘点日期" />
-					<script type="text/javascript">$("#indate").datepicker();</script>
-					</td>
-					
-=======
 					<select name="check.date" title="盘点日期" >
 							<s:iterator value="checkDates" status="sta" var="x">
 							<option value="<s:property value="date" />" 
 							/><s:date name="date" format="yyyy-MM-dd" />
 							</s:iterator>
 					</select>
->>>>>>> ware
 					</tr>
 					<tr>
 					<td colspan="4" class="buttonarea">
 					<s:submit value="搜索" />
-<<<<<<< HEAD
-						<s:reset value="重置" />
-=======
 					<s:reset value="重置" />
->>>>>>> ware
 					</td>
 					</tr>
 					
@@ -122,15 +99,6 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 	<col width="30" />
 	  <tr>
 	    <th><input name="uuidcheck" type="checkbox" /></th>
-<<<<<<< HEAD
-	    <th>盘点日期</th>
-	    <th>盘点仓库</th>
-	    <th>商品名称</th>
-	   
-		<th>库存</th>
-		<th>差异数量</th>
-		<th>操作</th>
-=======
 	    
 	    <th>盘点仓库</th>
 	    <th>商品名称</th>
@@ -143,21 +111,10 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 			<th>借酒</th>
 			<th>其它</th>
 		<th class="printhide">操作</th>
->>>>>>> ware
 	  </tr>
 		<s:iterator value="checks" status="sta">
 			  <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>" type="pickrow">
 			    <td align="center"><input name="uuid" type="checkbox" value="<s:property value="uuid" />" /></td>
-<<<<<<< HEAD
-			    <td><s:property value="date" /></td>
-			    <td><s:property value="ware_name" /></td>
-			    <td><s:property value="product_name" /></td>
-			    
-				<td><s:property value="quantity" /></td>
-				<td><s:property value="num" /></td>
-		
-				<td align="center">
-=======
 			    
 			    <td><s:property value="ware_name" /></td>
 			    <td><s:property value="product_name" /></td>
@@ -172,7 +129,6 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 				
 		
 				<td align="center" class="printhide">
->>>>>>> ware
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_CHECK_MDY')">
 			    	[<a href="<s:url namespace="/check" action="check_load"><s:param name="viewFlag">mdy</s:param><s:param name="check.uuid" value="uuid"></s:param></s:url>">修改</a>]
 			    	</s:if>
@@ -182,32 +138,18 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 			    </td>
 			  </tr>
 		</s:iterator>
-<<<<<<< HEAD
-	  <tr>
-	    <td colspan="20" class="buttonarea">
-		<script type="text/javascript">
-		var spage = new ShowPage(${currPage});
-		spage.show2(${recCount},${pageSize},2);
-		</script>
-		</td>	    
-	  </tr>
-=======
 	 
->>>>>>> ware
 	  <tr>
 	    <td colspan="20" class="buttonarea">
 	    <span id="message"><s:property value="message" /></span>
 		</td>
 	  </tr>
-<<<<<<< HEAD
-=======
 	  <tr>
 		<td colspan="20" class="buttonarea">
 			<div class="printarea"><input type="button" onclick="window.print();" value="打印本页"/></div>	
 		</td>
 		    
 	    </tr>
->>>>>>> ware
 	</table>
 </s:form>
 	</div>

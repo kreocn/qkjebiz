@@ -79,15 +79,7 @@ $(function(){
 							 selected="selected"
 							</s:if>
 							>招待用酒</option>
-<<<<<<< HEAD
-							<option value="2" 
-							<s:if test="%{outStock.reason==2 }">
-							selected="selected"
-							</s:if>
-							>借货</option>
-=======
 							
->>>>>>> ware
 							<option value="3" 
 							<s:if test="%{outStock.reason==3 }">
 							selected="selected"
@@ -98,14 +90,11 @@ $(function(){
 							selected="selected"
 							</s:if>
 							>赠酒</option>
-<<<<<<< HEAD
-=======
 							<option value="5" 
 							<s:if test="%{outStock.reason==5 }">
 							selected="selected"
 							</s:if>
 							>其它</option>
->>>>>>> ware
 			</select>
 			
 			</td>
@@ -145,11 +134,7 @@ $(function(){
 	  <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>" type="pickrow">
 	    <td align="center"></td>
 	    <td><s:property value="uuid" /></td>
-<<<<<<< HEAD
-		<td><s:property value="operator_name" />(<s:property value="dept_name" />)</td>
-=======
 		<td><s:property value="manager_check_user_name" /></td>
->>>>>>> ware
 		<td><s:property value="ordernum" /></td>
 		<td><s:property value="ware_name" /></td>
 		<td><s:if test='0==send'>借出未还</s:if>
@@ -165,21 +150,13 @@ $(function(){
 					</s:if>
 					 <s:if test="%{reason==1}">招待用酒
 					</s:if>
-<<<<<<< HEAD
-					<s:if test="%{reason==2 }">借货
-					</s:if>
-=======
 					
->>>>>>> ware
 					<s:if test="%{reason==3 }">报损
 					</s:if>
 					<s:if test="%{reason==4 }">赠酒
 					</s:if>
-<<<<<<< HEAD
-=======
 					<s:if test="%{reason==5 }">其它
 					</s:if>
->>>>>>> ware
 		</td>
 		<td align="center">
 			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_MDY') && @com.qkj.ware.action.warepower@checkPermit(store_id,'del')">
