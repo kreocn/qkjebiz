@@ -6,67 +6,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>活动申请单管理--<s:text name="APP_NAME" /></title>
+<s:action name="ref" namespace="/manager" executeResult="true" />
 </head>
-<link rel="stylesheet" href="<s:url value="/css/css.css" />" />
-<link rel="stylesheet" href="<s:url value="/css/navigate.css" />" />
-<link rel="stylesheet" href="<s:url value="/css/main.css" />" />
-<script type="text/javascript" src="<s:url value="/js/form_validator.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/common_cptb.js" />"></script>
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-1.8.3.min.js" />"></script>
-<link rel="stylesheet" href="<s:url value="/include/jQuery/style.ui.smoothness/jquery-ui-1.10.3.min.css" />" />
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-ui-1.10.3.custom.min.js" />"></script>
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.ui.datepicker-zh.js" />"></script>
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.select.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/common_ajax2.0.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/func/select_member.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/jquery.CommonUtil.js" />"></script>
-<script type="text/javascript" src="/ckframe/include/widget.js"></script>
-<script type="text/javascript">
-var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
-var infoeditor01;
-$(function(){
-	$("#viewMember").dialog({
-	      autoOpen: false,
-	      height: 180,
-	      width: 400,
-	      modal: true
-	});
-});
-
-function loadMember(member_id) {
-	var ajax = new Common_Ajax();
-	ajax.config.action_url = ajax_url_action;
-	ajax.config._success = function(data, textStatus) {
-		var m = data[0];
-		$("#activeMemcost_with_score").attr("dataBetween","0,"+m.with_score);
-		$("#with_score_remain").text("此客户还有随量积分:" + m.with_score);
-	};
-	ajax.addParameter("work", "AutoComplete");
-	ajax.addParameter("parameters", "privilege_id=QKJ_QKJMANAGER_AJAXLOAD_MEMBER&uuid=" + member_id);
-	ajax.sendAjax();
-}
-
-function loadMemberInfo(member_id) {
-	$("#view_member_uuid").text("正在加载...");
-	$("#view_member_mobile").empty();
-	$("#view_member_name").empty();
-	$("#view_member_with_score").empty();
-	
-	var ajax = new Common_Ajax();
-	ajax.config.action_url = ajax_url_action;
-	ajax.config._success = function(data, textStatus) {
-		var m = data[0];
-		$("#view_member_uuid").text(m.uuid);
-		$("#view_member_mobile").text(m.mobile);
-		$("#view_member_name").text(m.member_name);
-		$("#view_member_with_score").text(m.with_score);
-		$("#viewMember").dialog("open");
-	};
-	ajax.addParameter("work", "AutoComplete");
-	ajax.addParameter("parameters", "privilege_id=QKJ_QKJMANAGER_AJAXLOAD_MEMBER&uuid=" + member_id);
-	ajax.sendAjax();
-}
-</script>
 <style type="text/css">
 .active_icost {padding: 3px 5px;}
 .active_icost_left {}
@@ -100,350 +41,259 @@ font-size: 14px;
 }
 </style>
 <body>
-<div id="main">
-<div id="result">
-	<div class="itablemdy">
-	<div class="itabletitle">
-		<span class="title1">活动结案单(${active.uid})</span>
-		<span class="extra1 printarea">
-			<a href="<s:url action="active_relist" namespace="/qkjmanage" />" >活动列表</a>
-		</span>	
-	</div>
-<s:form name="form_mdyCloseActive" action="mdyCloseActive" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
-	<div class="ifromoperate" ></div>
-	<table class="ilisttable" width="100%">
-		<s:if test="null != active">
-		  <tr>
-			<td class='firstRow3'><span style="color:red;">*</span> 申请编号:</td>
-			<td class='secRow3'>${active.uid}<s:hidden name="active.uid" /><s:hidden name="active.uuid" title="" /></td>
-			<td class='firstRow3'><span style="color:red;">*</span> 申请部门:</td>
-			<td class='secRow3'><s:property value="active.apply_dept_name" /></td>
-			<td class='firstRow3'><span style="color:red;">*</span> 申请人:</td>
-			<td class='secRow3'><s:property value="active.apply_user_name" /></td>
-			</tr>
-			<tr>
-			<td class='firstRow3'>结案单状态:</td>
-			<td class='secRow3'>
-				<s:if test="active.status==-1"><font class="message_error">已作废</font></s:if>
-				<s:if test="active.status==2"><span class="span_label"><font class="message_prompt">未开始结案</font></span></s:if>
-				<s:if test="active.status==3"><span class="span_label">开始结案</span></s:if>
-				<s:if test="active.status==4"><span class="span_label"><font class="message_warning">结案审批中</font></span></s:if>
-				<s:if test="active.status==5">
-					<span class="span_label"><font class="message_pass">结案通过</font></span>
-					<span class="nowrap" title="${it:formatDate(active.close_pass_time,'yyyy-MM-dd HH:mm:ss')}">${it:formatDate(active.close_pass_time,'yyyy-MM-dd')}</span>
-				</s:if>
-			</td>
-			<td class='firstRow3'><span style="color:red;">*</span> 销售部审核:</td>
-			<td class='secRow3'>	
-				<s:if test="active.close_sd_status>0">
-					<s:if test="active.close_sd_status==0"><span class="span_label">新单</span></s:if>
-					<s:if test="active.close_sd_status==5"><span class="span_label"><font class="message_error">审核退回</font>(${active.close_sd_user_name})</span></s:if>
-					<s:if test="active.close_sd_status==10"><span class="span_label"><font class="message_warning">待审核</font></span></s:if>
-					<s:if test="active.close_sd_status==30"><span class="span_label"><font class="message_pass">大区经理已审</font>(${active.close_sd_user_name})</span></s:if>
-					<s:if test="active.close_sd_status==40">
-						<s:if test="active.close_sd_user_sign==null">
-						<span class="span_label"><font class="message_pass">运营总监已审</font>(${active.close_sd_user_name})</span>
-						</s:if>
-						<s:else>
-						<span class="user_sign">
-							<img alt="" src="${active.close_sd_user_sign}" /><br />
-						</span>
-						</s:else>
-					</s:if>
-					<s:if test="active.close_sd_status==50"><span class="span_label"><font class="message_pass">业务副总已审</font>(${active.close_sd_user_name})</span></s:if>
-					<s:if test="active.close_sd_status==60"><span class="span_label"><font class="message_pass">总经理已审</font>(${active.close_sd_user_name})</span></s:if>
-					<span class="nowrap" title="${it:formatDate(active.close_sd_time,'yyyy-MM-dd HH:mm:ss')}">${it:formatDate(active.close_sd_time,'yyyy-MM-dd')}</span>
-				</s:if>
-			</td>
-			<td class='firstRow3'><span style="color:red;">*</span> 销管部审核:</td>
-			<td class='secRow3'>
-				<s:if test="active.close_smd_status>0">
-					<s:if test="active.close_smd_status==0"><span class="span_label">未签收</span></s:if>
-					<s:if test="active.close_smd_status==5"><span class="span_label"><font class="message_error">审核退回</font>(${active.close_smd_user_name})</span></s:if>
-					<s:if test="active.close_smd_status==10"><span class="span_label"><font class="message_warning">已签收</font></span></s:if>
-					<s:if test="active.close_smd_status==30">
-						<s:if test="active.close_smd_user_sign==null">
-						<span class="span_label"><font class="message_pass">销管经理已审</font>(${active.close_smd_user_name})</span>
-						</s:if>
-						<s:else>
-						<span class="user_sign">
-						<img alt="" src="${active.close_smd_user_sign}" />
-						</span>
-						</s:else>
-					</s:if>
-					<s:if test="active.close_smd_status==40"><span class="span_label"><font class="message_pass">销管部经理已审</font>(${active.close_smd_user_name})</span></s:if>
-					<s:if test="active.close_smd_status==50"><span class="span_label"><font class="message_pass">销管副总已审</font>(${active.close_smd_user_name})</span></s:if>
-				</s:if>
-				<span class="nowrap" title="${it:formatDate(active.close_smd_time,'yyyy-MM-dd HH:mm:ss')}">${it:formatDate(active.close_smd_time,'yyyy-MM-dd')}</span>
-			</td>
-			</tr>
-			
-			<tbody class="printshow">
-			<tr class="sign_tr">
-			<td class='firstRow3'>财务部:</td>
-			<td class='secRow3 message_prompt' valign="top" colspan="5">(签字/日期)</td>
-			</tr>
-			<tr class="sign_tr">
-			<td class='firstRow3'>数据中心:</td>
-			<td class='secRow3 message_prompt' valign="top" colspan="5">(签字/日期)</td>
-			</tr>
-			<tr class="sign_tr">
-			<td class='firstRow3'>销售管理部经理:</td>
-			<td class='secRow3 message_prompt' valign="top" colspan="5">(签字/日期)</td>
-			</tr>
-			<tr class="sign_tr">
-			<td class='firstRow3'>销售管理副总经理:</td>
-			<td class='secRow3 message_prompt' valign="top" colspan="5">(签字/日期)</td>
-			</tr>
-			<tr class="sign_tr">
-			<td class='firstRow3'>总经理:</td>
-			<td class='secRow3 message_prompt'valign="top" colspan="5">(签字/日期)</td>
-			</tr>
-			</tbody>
-		</s:if>
-		<!-- --------------------------------------------------------------- -->
-		<tr>
-		<td class='firstRow3'><span style="color:red;">*</span> 主题:</td>
-		<td class='secRow3' colspan="5">${active.theme}</td>
-		</tr>
-		<tr>
-		<td class='firstRow3'><span style="color:red;">*</span> 目的:</td>
-		<td class='secRow3' colspan="5">${active.purpose}</td>
-		</tr>
-		<tr>
-		<td class='firstRow3'><span style="color:red;">*</span> 活动开始时间:</td>
-		<td class='secRow3'>${it:formatDate(active.plan_start,'yyyy-MM-dd')}</td>
-		<td class='firstRow3'><span style="color:red;">*</span> 活动结束时间:</td>
-		<td class='secRow3'>${it:formatDate(active.plan_end,'yyyy-MM-dd')}	</td>
-		<td class='firstRow3'><span style="color:red;">*</span> 活动地点:</td>
-		<td class='secRow3'>${active.address}</td>
-		</tr>
-		<tr>
-		<td class='firstRow3'><span style="color:red;">*</span> 执行人:</td>
-		<td class='secRow3'>${active.person}</td>
-		<td class='firstRow3'><span style="color:red;">*</span> 活动预期:</td>
-		<td class='secRow3' colspan="3">${active.expect}</td>
-		</tr>
-		<tr><td colspan="6" height="5"></td></tr>
-		<tr><td colspan="6">
-		<s:if test="active.status>=3">
-		<div class="money_div" style="border: #FF0000 solid 1px;">
-		<table class="ilisttable" width="100%">
-			<tr><td class='firstRow3' colspan="6" style="text-align: center;">实际活动费用</td></tr>
-			<tr>
-				<td class='firstRowx' colspan="3" style="text-align: center;" width="45%;">
-					公司实际费用
-					<s:if test="active.status==3 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEPRODUCT_ADD')">
-					<input type="button" id="addProduct" value="添加酒品" />
-					</s:if>
-					<s:if test="active.status==3 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEPOSM_ADD')">
-					<input type="button" id="addPosm" value="销售物料" />
-					</s:if>
-				</td>
-				<td class='firstRowx' colspan="3" style="text-align: center;" width="55%;">
-					参与客户承担费用&随量积分
-					<s:if test="active.status==3 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEMEMCOST_ADD')">
-					<input type="button" id="addMember" value="添加客户" />
-					</s:if>
-				</td>
-			</tr>
-			<tr>
-			<td class='secRowx' colspan="3" valign="top">
-			<div class="active_icost active_icost_left">
-			
-<s:if test="activeProductsClose.size != 0">
-			<div class="active_p_title">公司提供酒品(瓶装酒:瓶|散酒:公斤)</div>
-			<div class="active_p_list">
-				<table class="ilisttable listtable_show" width="100%">
-				<tr>
-				<th>品名</th>
-				<th>单价</th>
-				<th>数量</th>
-				<th>合计</th>
-				</tr>
-				<s:iterator value="activeProductsClose" status="sta">
-				<tr>
-				<td class="nowrap">${product_name}</td>
-				<td class="nowrap">￥${per_price}</td>
-				<td class="nowrap" align="center">${num}</td>
-				<td class="nowrap" align="center">￥${total_price}</td>
-				</tr>
-				</s:iterator>
-				</table>
-			</div>
-</s:if>
-<s:if test="activePosmsClose.size != 0">
-			<div class="active_p_title active_p_title_second">公司销售物料(除酒品之外的其他费用,全部算物料)</div>
-			<div class="active_p_list">
-				<table class="ilisttable listtable_show" width="100%">
-				<tr>
-				<th>名目</th>
-				<th>名目说明</th>
-				<th>金额</th>
-				</tr>
-				<s:iterator value="activePosmsClose" status="sta">
-				<tr>
-				<td>${title}</td>
-				<td>${note}</td>
-				<td class="nowrap" align="center">￥${total_price}</td>
-				</tr>
-				</s:iterator>
-				</table>
-			</div>
-</s:if>
-			</div>
-			</td>
-			<td class='secRowx' colspan="3" valign="top">
-				<div class="active_icost active_icost_right">
-				<s:set var="totle_with_score" value="0" />
-<s:if test="activeMemcostsClose.size != 0">
-			<div class="active_p_title">参与活动客户</div>
-			<div class="active_p_list">
-				<table class="ilisttable listtable_show" width="100%">
-				<tr>
-				<th>客户</th>
-				<th>名目</th>
-				<th>名目说明</th>
-				<th>金额</th>
-				<th>扣除随量积分</th>
-				</tr>
-				<s:iterator value="activeMemcostsClose" status="sta">
-				<tr>
-				<td><a href="javascript:;" onclick="loadMemberInfo('${member_id}');">${member_name}</a></td>
-				<td>${title}</td>
-				<td>${note}</td>
-				<td class="nowrap" align="center">￥${total_price}</td>
-				<td class="nowrap" align="center">${with_score}</td>
-				</tr>
-				</s:iterator>
-				</table>
-			</div>
-</s:if>
-				</div>
-			</td>
-			</tr>
-			<tr>
-			<td class='secRowx' colspan="3" valign="top">
-				<div class="active_icost">
-				<div class="active_p_title active_p_title_second">公司实际费用合计</div>
-				<div class="active_p_list p_tm">￥${active.close_it_price}</div>
-				</div>
-			</td>
-			<td class='secRowx' colspan="3" valign="top">
-				<div class="active_icost">
-				<div class="active_p_title active_p_title_second">客户实际费用合计</div>
-				<div class="active_p_list p_tm">￥${active.close_mt_price}</div>
-				</div>
-			</td>
-			</tr>
-			<tr><td class='firstRowx' colspan="6" style="text-align: center;">
-				<span class="message_error">
-					方案实际费用总计: ${active.close_it_price} + ${active.close_mt_price} = ￥${active.close_it_price+active.close_mt_price}
-					&nbsp;&nbsp;&nbsp;
-					需扣除随量积分总数:	<s:property value="#totle_with_score" />
-				</span>
-			</td></tr>
-		</table>
+<div class="main">
+<div class="dq_step">
+	<span class="pt">活动结案单</span>
+	<span class="opb lb op-area noprint"><a href="<s:url namespace="/qkjmanage" action="apply_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a></span>
+	<span class="opb lb op-area noprint"><input type="button" onclick="window.print();" value="打印本页"/></span>
+</div>
+<s:form id="editForm" name="editForm" action="apply_list"  method="get" namespace="/qkjmanage" theme="simple">
+<div class="label_con">
+<div class="label_main">
+<div class="label_hang">
+    <div class="label_ltit">申请编号:</div>
+    <div class="label_rwben">${active.uuid}<s:hidden name="active.uuid" /></div>
+</div>
+<div class="label_hang">
+    <div class="label_ltit">原编号:</div>
+    <div class="label_rwben">${active.uid }</div>
+</div>
+<div class="label_hang">
+    <div class="label_ltit">申请部门:</div>
+    <div class="label_rwbenx">${active.apply_dept_name}</div>
+</div>
+<div class="label_hang">
+    <div class="label_ltit">申请人员:</div>
+    <div class="label_rwben">${active.apply_user_name}</div>
+</div>
+</div>
+
+<div class="label_main">
+   <div class="label_hang">
+       <div class="label_ltit">状态:</div>
+       <div class="label_rwbenx">
+           <div class="zhuangtai">
+申请单状态:
+<s:if test="active.status==-1"><font class="message_error">已作废</font></s:if>
+<s:if test="active.status==0">新申请</s:if>
+<s:if test="active.status==1"><font class="message_warning">申请审批中</font></s:if>
+<s:if test="active.status==2"><font class="message_pass">申请通过-可以执行</font></s:if>
+<s:if test="active.status==3">开始结案</s:if>
+<s:if test="active.status==4"><font class="message_warning">结案审批中</font></s:if>
+<s:if test="active.status==5"><font class="message_pass">结案通过</font></s:if>
+</div>
+<div class="zhuangtai" title="${it:formatDate(active.sd_time,'yyyy-MM-dd HH:mm:ss')}">
+销售部审核:
+<s:if test="active.close_sd_status==0">新单</s:if>
+<s:if test="active.close_sd_status==5"><font class="message_error">审核退回</font>(${active.sd_user_name})</s:if>
+<s:if test="active.close_sd_status==10"><font class="message_warning">待审核</font></s:if>
+<s:if test="active.close_sd_status==30"><font class="message_pass">大区经理已审</font>(${active.sd_user_name})</s:if>
+<s:if test="active.close_sd_status==40"><span class="message_pass">运营总监已审</span>(${active.sd_user_name})</s:if>
+<s:if test="active.close_sd_status==50"><font class="message_pass">业务副总已审</font>(${active.sd_user_name})</s:if>
+<s:if test="active.close_sd_status==60"><font class="message_pass">总经理已审</font>(${active.sd_user_name})</s:if>
+</div>
+<div class="zhuangtai" title="${it:formatDate(active.smd_time,'yyyy-MM-dd HH:mm:ss')}">
+销管部状态:
+<s:if test="active.close_smd_status==0">未签收</s:if>
+<s:if test="active.close_smd_status==5"><font class="message_error">审核退回</font>(${active.smd_user_name})</s:if>
+<s:if test="active.close_smd_status==10"><font class="message_warning">已签收</font></s:if>
+<s:if test="active.close_smd_status==30"><span class="message_pass">销管经理已审</span>(${active.smd_user_name})</s:if>
+<s:if test="active.close_smd_status==40"><font class="message_pass">销管部经理已审</font>(${active.smd_user_name})</s:if>
+<s:if test="active.close_smd_status==50"><font class="message_pass">销管副总已审</font>(${active.smd_user_name})</s:if>
+</div>
+<s:hidden name="active.status" /><s:hidden name="active.close_sd_status" /><s:hidden name="active.close_smd_status" />
+     </div>
+ </div>
+ </div>
+ 
+ <div class="label_main">
+      <div class="label_hang">
+          <div class="label_ltit">签字:</div>
+          <div class="label_rwbenx">
+          	<div class="zhuangtai bgcw">
+			<s:if test="active.close_sd_status==40">
+				<s:if test="active.close_sd_user_sign==null">	(${active.sd_user_name})</s:if>
+				<s:else><span class="user_sign"><img src="${active.sd_user_sign}" /></span></s:else>
+				<span class="vab">${it:formatDate(active.sd_time,'yyyy-MM-dd HH:mm:ss')}</span>
+			</s:if>
 		</div>
-	</s:if>
-		</td></tr>
-		<tr><td colspan="6" height="5"></td></tr>
-		<s:if test="active.status==3">
-		<tr><td class='firstRowx' colspan="6" style="text-align: center;">活动概况</td></tr>
-		<tr>
-		<td class='secRow3' colspan="6">${active.close_note}</td>
-		</tr>
-		<tr><td colspan="6" height="5"></td></tr>
-		</s:if>
-		<s:elseif test="active.status>3">
-		<tr><td colspan="6">
-			<div class="money_div">
-			<table class="ilisttable" width="100%">
-			<tr><td class='firstRowx' colspan="6" style="text-align: center;">活动概况</td></tr>
-			<tr>
-			<td class='secRow3' colspan="6">
-				${active.close_note}
-			</td>
-			</tr>
-			</table>
-			</div>
-		</td></tr>
-		</s:elseif>
-		<tr><td colspan="6" height="5"></td></tr>
-		<tr>
-			<td colspan="6">
-			<div class="money_div">
-			<table class="ilisttable" width="100%">
-			<tr>
-				<td class='firstRowx' colspan="8" style="text-align: center;">
-					发货信息
-					<s:if test="active.ship_status==0"><span class="message_error">【未发货】</span></s:if>
-					<s:if test="active.ship_status==10"><span class="message_pass">【已发货】</span></s:if>
-					<s:if test="active.ship_status==99"><span class="message_pass">【其他】</span></s:if>
-				</td>
-			</tr>
-			<tr>
-			<td class='firstRowx'>发货时间:</td>
-			<td class='secRowx'>${it:formatDate(active.ship_date,'yyyy-MM-dd')}</td>
-			<td class='firstRowx'>运单号:</td>
-			<td class='secRowx'>${active.ship_no}</td>
-			<td class='firstRowx'>物流名称:</td>
-			<td class='secRowx'>${active.ship_type}</td>
-			<td class='firstRowx'>物流电话:</td>
-			<td class='secRowx'>${active.ship_phone}</td>
-			</tr>
-			</table>
-			</div>
-			</td>
-		</tr>
-		<tr><td colspan="6" height="5"></td></tr>
-		<tr>
-			<td colspan="6">
-			<div class="money_div">
-			<table class="ilisttable" width="100%">
-			<tr><td class='firstRowx oneditor' colspan="6" style="text-align: center;">备注</td></tr>
-			<tr>
-			<td id="active_remark" class='secRow3' colspan="6">${active.remark }</td>
-			</tr>
-			</table>
-			</div>
-			</td>
-		</tr>
-		<tr class="printarea">
-		<td class='firstRow3'>相关操作:</td>
-		<td class='secRow3' colspan="5">
+		
+		<div class="zhuangtai bgcw">
+			<s:if test="active.close_smd_status==30">
+				<s:if test="active.close_smd_user_sign==null">(${active.smd_user_name})</s:if>
+				<s:else><span class="user_sign"><img src="${active.smd_user_sign}" /></span></s:else>
+				<span class="vab">${it:formatDate(active.smd_time,'yyyy-MM-dd HH:mm:ss')}</span>
+			</s:if>
+		</div>
+          </div>
+</div>
+</div>
+		
+ <div class="label_main label_main_sep"></div>
+ <div class="label_main">
+ <div class="label_hang label_hang_sign">
+     <div class="label_ltit">财务部:</div>
+     <div class="label_rwbenx label_rwb_sign">(签字/日期)</div>
+ </div>
+ </div>
+ <div class="label_main label_main_sep"></div>
+ <div class="label_main">
+ <div class="label_hang label_hang_sign">
+     <div class="label_ltit">数据中心:</div>
+     <div class="label_rwbenx label_rwb_sign">(签字/日期)</div>
+ </div>
+ </div>
+ <div class="label_main label_main_sep"></div>
+ <div class="label_main">
+ <div class="label_hang label_hang_sign">
+     <div class="label_ltit">销管部经理:</div>
+     <div class="label_rwbenx label_rwb_sign">(签字/日期)</div>
+ </div>
+ </div>
+ <div class="label_main label_main_sep"></div>
+ <div class="label_main">
+ <div class="label_hang label_hang_sign">
+     <div class="label_ltit">销管副总:</div>
+     <div class="label_rwbenx label_rwb_sign">(签字/日期)</div>
+ </div>
+ </div>
+ <div class="label_main label_main_sep"></div>
+ <div class="label_main">
+ <div class="label_hang label_hang_sign">
+     <div class="label_ltit">总经理:</div>
+     <div class="label_rwbenx label_rwb_sign">(签字/日期)</div>
+ </div>
+ </div>
+ <div class="label_main label_main_sep"></div>
+ <div class="label_main">
+ <div class="label_hang">
+     <div class="label_ltit">主题:</div>
+     <div class="label_rwbenx">${active.theme}</div>
+ </div>
+ </div>
+ <div class="label_main">
+ <div class="label_hang">
+     <div class="label_ltit">目的:</div>
+     <div class="label_rwbenx">${active.purpose}</div>
+ </div>
+ </div>
+ <div class="label_main">
+ <div class="label_hang">
+     <div class="label_ltit">活动时间:</div>
+     <div class="label_rwben2 nw">${it:formatDate(active.plan_start,'yyyy-MM-dd')} - ${it:formatDate(active.plan_end,'yyyy-MM-dd')}</div>
+ </div>
+  <div class="label_hang">
+  	<div class="label_ltit">活动地点:</div>
+  	<div class="label_rwben">${active.address}</div>
+  </div>
+  <div class="label_hang">
+  	<div class="label_ltit">执行人:</div>
+  	<div class="label_rwben">${active.person}</div>
+  </div>
+ </div>
+ <div class="label_main">
+ <div class="label_hang">
+     <div class="label_ltit">活动预期:</div>
+     <div class="label_rwbenx">${active.expect}</div>
+ </div>
+ </div>
+ <div class="label_main">
+<div class="lb_xxsm">
+	<p class="lb_yjtit fy_hide">实际活动费用</p>
+    <div class="lb_lgsfy">
+    	<p class="lb_yjtit">公司费用</p>
+        <div class="lb_yjcon">
+        	<p class="lb_gstit">公司提供酒品</p>
+            <table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+            	<tr>
+                	<th>品名</th>
+                    <th>单价</th>
+                    <th>数量(瓶)</th>
+                    <th>合计</th>
+                </tr>
+                <s:iterator value="activeProductsClose" status="sta">
+<tr>
+<td class="nw">${product_name}</td>
+<td class="nw">￥${per_price}</td>
+<td class="nw">${num}</td>
+<td class="nw">￥${total_price}</td>
+</tr>
+</s:iterator>
+              </table>
+              <p class="lb_gstit">公司销售物料(除酒品之外的其他费用,全部算物料)</p>
+              <table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+              	<tr>
+<th>名目</th>
+<th>名目说明</th>
+<th>金额</th>
+</tr>
+<s:iterator value="activePosmsClose" status="sta">
+<tr>
+<td>${title}</td>
+<td>${note}</td>
+<td class="nw">￥${total_price}</td>
+</tr>
+</s:iterator>
+           </table>
+       	<p class="lb_gstit">公司预计费用合计</p>
+           <p class="lb_jwei">￥${active.close_it_price}</p>
+          </div>
+      </div>
+      <div class="lb_gsfy">
+      	<p class="lb_yjtit">参与客户费用</p>
+          <div class="lb_yjcon">
+          	<p class="lb_gstit">参与活动客户</p>
+              <table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+              	<tr>
+<th>客户</th>
+<th>名目</th>
+<th>名目说明</th>
+<th>金额</th>
+</tr>
+<s:iterator value="activeMemcostsClose" status="sta">
+<tr>
+<td><a href="javascript:;" onclick="loadMemberInfo('${member_id}');">${member_name}</a></td>
+<td>${title}</td>
+<td>${note}</td>
+<td class="nw">￥${total_price}</td>
+</tr>
+</s:iterator>
+           </table>
+       	<p class="lb_gstit">客户费用合计</p>
+           <p class="lb_jwei">￥${active.close_mt_price}</p>
+       </div>
+   </div>
+   <div class="clear"></div>
+   <p class="lb_yjbot cr"> 方案实际费用总计: ${active.close_it_price} + ${active.close_mt_price} = ￥${active.close_it_price+active.close_mt_price}</p>
+ </div>
+</div>
+ 
+ <div class="label_main">
+ <div class="label_hang">
+     <div class="label_ltit">活动概况:</div>
+     <div class="label_rwbenx label_hang_linput">
+     </div>
+ </div>
+ </div>
+ <div class="label_main">
+ 	<div class="note_area">${active.close_note}</div>
+</div>
+
+<div class="label_main noprint">
+     <div class="label_hang">
+         <div class="label_ltit">相关操作:</div>
+         <div class="label_rwbenx">
 			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_STATUS_1')">
 				<s:submit id="active_mdyStatus_1" name="active_mdyStatus_1" value="作废" action="active_mdyStatus_1" onclick="return isOp('确定执行此操作?');" />
 			</s:if>
 			<input type="button" value="返回" onclick="linkurl('<s:url action="active_relist" namespace="/qkjmanage" />');" />
 			<input type="button" onclick="window.print();" value="打印本页"/>
 			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_MDYSHIPINFO')">	(发货信息功能已移动到列表页)</s:if>
-		</td>
-		</tr>
-	</table>	
+        </div>
+       </div>
+</div>
+</div>
 </s:form>
-	</div>
-</div>
-</div>
-<div id="viewMember" title="客户实时信息">
-<table class="ilisttable" width="100%">
-	<tr>
-	<td class='firstRow'>会员编号:</td>
-	<td class='secRow'><span id="view_member_uuid"></span></td>
-	</tr>
-	<tr>
-	<td class='firstRow'>会员手机:</td>
-	<td class='secRow'><span id="view_member_mobile"></span></td>
-	</tr>
-	<tr>
-	<td class='firstRow'>会员姓名:</td>
-	<td class='secRow'><span id="view_member_name"></span></td>
-	</tr>
-	<tr>
-	<td class='firstRow'>可用随量积分:</td>
-	<td class='secRow'><span id="view_member_with_score"></span></td>
-	</tr>
-</table>	
 </div>
 </body>
 </html>

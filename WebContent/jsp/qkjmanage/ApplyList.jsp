@@ -215,15 +215,15 @@ display: none;
         </div>
         <div class="label_hang">
             <div class="label_ltit">运单号:</div>
-            <div class="label_rwben"><span class="label_rwb"><s:textfield id="form_apply_ship_no" name="apply.ship_no" title="运单号码" cssClass="validate[required,maxSize[48]]" /></span></div>
+            <div class="label_rwben"><span class="label_rwb"><s:textfield id="form_apply_ship_no" name="apply.ship_no" title="运单号码" cssClass="validate[maxSize[48]]" /></span></div>
         </div>
 		<div class="label_hang">
             <div class="label_ltit">物流名称:</div>
-            <div class="label_rwben"><span class="label_rwb"><s:textfield id="form_apply_ship_type" name="apply.ship_type" title="物流类型/名称" cssClass="validate[required,maxSize[32]]" /></span></div>
+            <div class="label_rwben"><span class="label_rwb"><s:textfield id="form_apply_ship_type" name="apply.ship_type" title="物流类型/名称" cssClass="validate[maxSize[32]]" /></span></div>
         </div>
         <div class="label_hang">
             <div class="label_ltit">物流电话:</div>
-            <div class="label_rwben"><span class="label_rwb"><s:textfield id="form_apply_ship_phone" name="apply.ship_phone" title="物流电话"  cssClass="validate[required,maxSize[48]]" /></span></div>
+            <div class="label_rwben"><span class="label_rwb"><s:textfield id="form_apply_ship_phone" name="apply.ship_phone" title="物流电话"  cssClass="validate[maxSize[48]]" /></span></div>
         </div>
         <div class="label_hang  label_button tac">
            	<s:hidden id="form_apply_uuid" name="apply.uuid" value="%{apply.uuid}" />
