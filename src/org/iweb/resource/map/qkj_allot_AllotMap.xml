@@ -36,7 +36,7 @@
 			LEFT JOIN qkj_t_stockpower  s ON(s.`ware_id`=i.`sourceId`)
 			LEFT JOIN qkj_t_stockpower  sg ON(sg.`ware_id`=i.`goldId`)
 			LEFT JOIN s_sys_user sure ON (i.`sureUser`=sure.`UUID`)
-			WHERE (s.`username`=#username#  AND (s.`prvg` LIKE '%4%' or sg.`prvg` LIKE '%4%' ))
+			WHERE ((s.`username`=#username# || sg.`username`=#username# )  AND (s.`prvg` LIKE '%4%' or sg.`prvg` LIKE '%4%' ))
 		]]>
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ i.uuid=#uuid# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="state"><![CDATA[ i.state=#state# ]]></isNotEmpty>
@@ -79,7 +79,7 @@
 			LEFT JOIN qkj_t_stockpower  s ON(s.`ware_id`=i.`sourceId`)
 			LEFT JOIN qkj_t_stockpower  sg ON(sg.`ware_id`=i.`goldId`)
 			LEFT JOIN s_sys_user sure ON (i.`sureUser`=sure.`UUID`)
-			WHERE (s.`username`=#username#  AND (s.`prvg` LIKE '%4%' or sg.`prvg` LIKE '%4%' ) )
+			WHERE ((s.`username`=#username# || sg.`username`=#username# )  AND (s.`prvg` LIKE '%4%' or sg.`prvg` LIKE '%4%' ) )
 			) a
 		]]>
 		<dynamic prepend="WHERE">

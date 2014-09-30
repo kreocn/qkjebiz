@@ -255,6 +255,12 @@ public class AllotAction extends ActionSupport {
 					}*/
 					//仓库
 					wareByPower(u, code,"1");
+					
+					//确认发货后，出库仓库显示为所有
+					//出仓库
+					if(allot.getState()!=0 || allot.getState()!=1){
+						this.setWarepowers(this.getWares());
+					}
 					//库存
 					StockDAO sdao=new StockDAO();
 					map.clear();

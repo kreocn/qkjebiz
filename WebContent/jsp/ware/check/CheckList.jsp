@@ -43,12 +43,15 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 .confirmd_cancel{background-position:-150px -150px;}
 .fd_button{width:50px;height:50px;font-size:14px;border:#333 solid 1px;border-radius:5px;cursor:pointer;}
 </style>
-
+<style type='text/css'>
+@media screen{.printhide{display:block}} 
+@media print{.printhide{display:none}}
+</style>
 <body>
 <div id="main">
 <div id="result">
 	<div class="itablemdy">
-	<div class="itabletitle">
+	<div class="itabletitle  printhide">
 		<span class="title1">盘点列表</span>
 		<span class="extra1">
 			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_CHECK_ADD')">
@@ -58,7 +61,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 		</span>
 	</div>	
 	<!-- 条件查询 -->
-	<div class="ilistsearch">
+	<div class="ilistsearch printhide">
 		<s:form name="form_serach" action="check_list"  method="post" namespace="/check" theme="simple">
 				<table class="ilisttable" id="serach_table" width="100%">
 					<tr>
@@ -82,7 +85,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 					<tr>
 					<td colspan="4" class="buttonarea">
 					<s:submit value="搜索" />
-						<s:reset value="重置" />
+					<s:reset value="重置" />
 					</td>
 					</tr>
 					
@@ -107,7 +110,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 			<th>报损</th>
 			<th>借酒</th>
 			<th>其它</th>
-		<th>操作</th>
+		<th class="printhide">操作</th>
 	  </tr>
 		<s:iterator value="checks" status="sta">
 			  <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>" type="pickrow">
@@ -125,7 +128,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 				<td><s:property value="qnum"></s:property></td>
 				
 		
-				<td align="center">
+				<td align="center" class="printhide">
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_CHECK_MDY')">
 			    	[<a href="<s:url namespace="/check" action="check_load"><s:param name="viewFlag">mdy</s:param><s:param name="check.uuid" value="uuid"></s:param></s:url>">修改</a>]
 			    	</s:if>
@@ -141,6 +144,12 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 	    <span id="message"><s:property value="message" /></span>
 		</td>
 	  </tr>
+	  <tr>
+		<td colspan="20" class="buttonarea">
+			<div class="printarea"><input type="button" onclick="window.print();" value="打印本页"/></div>	
+		</td>
+		    
+	    </tr>
 	</table>
 </s:form>
 	</div>

@@ -144,7 +144,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 <s:if test="null != allot">
 <tr>
 <td class='firstRow'>调库明细:
-	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_ADD') && allot.state==0 && @com.qkj.ware.action.warepower@checkPermit(sourceId,'edit')">
+	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_ADD') && allot.state==0 && @com.qkj.ware.action.warepower@checkPermit(allot.sourceid,'edit')">
 	<br />
 	<input id="addItem" type="button" value="添加明细" />
 	</s:if>
@@ -232,14 +232,6 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 					
 					<s:if test="allot.state==1 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_CENCLE')">
 					<s:submit id="freeze" name="freeze" value="取消发货" action="allot_cancel" onclick="return isOp('确认取消发货?');"></s:submit>
-					</s:if>
-					
-					<s:if test="allot.state==4 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_DELI') ">
-					<s:submit id="freeze" name="freeze" value="确认收货" onclick="return isOp('确认收货?');" action="allot_delivery"></s:submit>
-					</s:if>
-					
-					<s:if test="allot.state==1 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_SURE') ">
-					<s:submit id="freeze" name="freeze" value="经手人确认" onclick="return isOp('确认发货?');" action="allot_sure"></s:submit>
 					</s:if>
 					
 				</s:elseif>
