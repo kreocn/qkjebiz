@@ -41,7 +41,7 @@ $(function(){
 	<col width="30" />
 	  <tr>
 	    <th><input name="uuidcheck" type="checkbox" /></th>
-	    <th>主键</th>
+	    <th>编号</th>
 	    <th>商品名称</th>
 	    <th>还货仓库</th>
 	    <th>借货仓库</th>

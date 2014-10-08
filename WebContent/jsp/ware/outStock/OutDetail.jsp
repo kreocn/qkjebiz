@@ -74,13 +74,42 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 				<s:if test='6==outStock.send'><span class="message_error">未返利</span></s:if><s:if test='1==lading.rebates_flag'><span class="message_pass">返利中</span></s:if><s:if test='2==lading.rebates_flag'>已返利</s:if>
 			</td>
 		</tr>
-		</s:if>
+		
 		<tr>
-		
-		
+			<td class='firstRow'><span style="color:red;">*</span> 单据性质:</td>
+			<td class='secRow'>
+			<s:hidden name="outStock.reason" value="%{outStock.reason}"></s:hidden>
+					<s:if test="%{outStock.reason==0}">销售出库
+					</s:if>
+					 <s:if test="%{outStock.reason==1}">招待用酒
+					</s:if>
+					
+					<s:if test="%{outStock.reason==3 }">报损
+					</s:if>
+					<s:if test="%{outStock.reason==4 }">赠酒
+					</s:if>
+					<s:if test="%{outStock.reason==5 }">其它
+					</s:if>
+			</td>
+			<td class='firstRow'><span style="color:red;">*</span> 出库仓库:</td>
+			<td class='secRow' colspan="3">
+					<select name="outStock.store_id" title="出库仓库" >
+							
+							<s:iterator value="wares" status="sta" var="x">
+							<option value="<s:property value="uuid" />" 
+							<s:if test="#x.uuid==outStock.store_id">
+							selected="selected"
+							</s:if>
+							/><s:property value="ware_name" />
+							</s:iterator>
+					</select>
+			</td>
 		</tr>
+		</s:if>
+		
+		<s:else>
 		<tr>
-			<td class='firstRow'><span style="color:red;">*</span> 状态:</td>
+			<td class='firstRow'><span style="color:red;">*</span> 单据性质:</td>
 			<td class='secRow'>
 					<select name="outStock.reason" title="状态">
 							<option value="0"
@@ -125,6 +154,10 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 					</select>
 			</td>
 		</tr>
+		
+		</s:else>
+		
+		
 		
 
 <tr>
@@ -178,7 +211,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 <td class='secRow' colspan="6">
 <table class="ilisttable" id="table_item" width="100%">
   <tr>
-    <th>主键编号</th>
+    <th>编号</th>
 	<th>产品名称</th>
 	<th>单价</th>
 	<th>订单数量</th>
@@ -193,7 +226,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 	<td><s:property value="product_name" /></td>
 	<td align="right"><s:property value="price" /></td>
 	<td align="center">
-		<s:property value="num" />(<s:property value="num/(case_spec*1.0)" /> 件)
+		<s:property value="num" />(<s:property value="%{(num/(case_spec*1.0)).toString().substring(0,3)}" />件)
 	</td>
 	<td align="right"><s:property value="totel" /></td>
 	<td align="center">

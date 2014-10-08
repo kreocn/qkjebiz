@@ -117,7 +117,7 @@
 			Update qkj_t_instock
 			Set 
 			ordernum=#ordernum#,
-			store_id=#store_id#,
+			
 			operator_id=#operator_id#,
 			take_id=#take_id#,
 			note=#note#,

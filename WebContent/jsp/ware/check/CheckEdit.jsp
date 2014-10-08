@@ -28,8 +28,8 @@
 	<table class="ilisttable" width="100%">
 		<s:if test="null != check && check.stock_id!=null">
 		<tr>
-		<td class='firstRow'><span style="color:red;">*</span> 主键ID:</td>
-		<td class='secRow'><s:property value="check.uuid" /><s:hidden name="check.uuid" title="主键ID" /></td>
+		<td class='firstRow'><span style="color:red;">*</span> 编号:</td>
+		<td class='secRow'><s:property value="check.uuid" /><s:hidden name="check.uuid" title="编号" /></td>
 		</tr>
 		<tr>
 		<td class='firstRow'><span style="color:red;">*</span> 商品名称:</td>

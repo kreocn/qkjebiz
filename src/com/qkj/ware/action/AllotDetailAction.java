@@ -9,6 +9,7 @@ import org.iweb.sys.ContextHelper;
 import org.iweb.sys.ToolsUtil;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.qkj.ware.dao.AllotDAO;
 import com.qkj.ware.dao.AllotDetailDAO;
 import com.qkj.ware.dao.AllotDetailHDAO;
 import com.qkj.ware.dao.StockDAO;
@@ -26,6 +27,10 @@ public class AllotDetailAction extends ActionSupport {
 	private AllotDetail allotDetail;
 	private AllotDetailH allotDh;
 	private Allot allot;
+	private Allot allotflag;
+	private AllotDetail allotDetailflag;
+	private List<AllotDetail> aldflaglist;
+	private List<Allot> allotflags;
 	private List<AllotDetail> allotDetails;
 	private List<Stock> stocks;
 	private String message;
@@ -34,8 +39,40 @@ public class AllotDetailAction extends ActionSupport {
 	private int recCount;
 	private int pageSize;
 	private int currPage;
-
 	
+	
+	public List<AllotDetail> getAldflaglist() {
+		return aldflaglist;
+	}
+
+	public void setAldflaglist(List<AllotDetail> aldflaglist) {
+		this.aldflaglist = aldflaglist;
+	}
+
+	public AllotDetail getAllotDetailflag() {
+		return allotDetailflag;
+	}
+
+	public void setAllotDetailflag(AllotDetail allotDetailflag) {
+		this.allotDetailflag = allotDetailflag;
+	}
+
+	public List<Allot> getAllotflags() {
+		return allotflags;
+	}
+
+	public void setAllotflags(List<Allot> allotflags) {
+		this.allotflags = allotflags;
+	}
+
+	public Allot getAllotflag() {
+		return allotflag;
+	}
+
+	public void setAllotflag(Allot allotflag) {
+		this.allotflag = allotflag;
+	}
+
 	public AllotDetailH getAllotDh() {
 		return allotDh;
 	}
@@ -176,16 +213,48 @@ public class AllotDetailAction extends ActionSupport {
 		ContextHelper.isPermit("QKJ_WARE_ALLOT_ADD");
 		try {
 			//判断库存是否足够
+			int pnum=0;//借货总数量
 			StockDAO stockdao=new StockDAO();
 			map.clear();
-			map.put("uuid", allotDetail.getStock_id());//出库祥表的product_id是库存id
+			map.put("uuid", allotDetail.getStock_id());//出库祥表库存id
 			this.setStock((Stock)stockdao.fingByPro(map));
-			int quan=(stock.getQuantity()-stock.getFreezeNum())-allotDetail.getNum();
-			stock.setQuantity(quan);
-			if(quan>=0){
-				dao.add(allotDetail);
+			
+			if(allot!=null&&allot.getReason().equals("2")){//还货数量不能大于全部借货单数量
+				int stocid=allot.getGoldid();
+				map.clear();
+				map.put("reason", "1");
+				map.put("sourceid",allot.getGoldid());
+				AllotDAO all=new AllotDAO();
+				this.setAllotflags(all.list(map));
+				for(int i=0;i<allotflags.size();i++){
+					this.setAllotflag(allotflags.get(i));
+					map.clear();
+					map.put("lading_id", allotflag.getUuid());
+					this.setAldflaglist(dao.list(map));
+					for(int j=0;j<aldflaglist.size();j++){
+						this.setAllotDetailflag(aldflaglist.get(j));
+						int spro=stock.getProduct_id();
+						int dpro=allotDetailflag.getPuid();
+						if(dpro==spro){
+							pnum=pnum+allotDetailflag.getNum();
+						}else{
+							continue;
+						}
+					}
+				}
+				
+			}
+			
+			if(allot!=null&&allot.getReason().equals("2")&&pnum<allotDetail.getNum()){
+				setMessage("还货数量不能大于总借货数量！");
 			}else{
-				setMessage("库存数量不足！");
+				int quan=(stock.getQuantity()-stock.getFreezeNum())-allotDetail.getNum();
+				stock.setQuantity(quan);
+				if(quan>=0){
+					dao.add(allotDetail);
+				}else{
+					setMessage("库存数量不足！");
+				}
 			}
 			
 			

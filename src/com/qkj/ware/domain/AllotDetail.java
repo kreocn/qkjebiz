@@ -8,10 +8,20 @@ public class AllotDetail {
 	private Integer stock_id;// (int)
 	private Integer num;// (int)
     private Integer bnum;
+   
 	// 以下为非数据库字段
-
+    private Integer puid;
 	private String product_name;
 	private int case_spec;
+
+	
+	public Integer getPuid() {
+		return puid;
+	}
+
+	public void setPuid(Integer puid) {
+		this.puid = puid;
+	}
 
 	public Integer getUuid() {
 		return uuid;

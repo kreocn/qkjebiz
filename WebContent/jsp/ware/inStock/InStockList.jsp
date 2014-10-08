@@ -126,7 +126,7 @@ $(function(){
 	    <s:if test="%{reason==0}">正常入库</s:if>
 		<s:if test="%{reason==1}">正常退货</s:if>
 		<s:if test="%{reason==2 }">损坏退货</s:if>
-		
+		<s:if test="%{reason==3 }">其它</s:if>
 		(<s:if test="confirm==null">未确认</s:if>
 		<s:if test="confirm!=null">已确认</s:if>
 		)

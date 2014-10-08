@@ -5,7 +5,7 @@
 	<typeAlias alias="allotDetail" type="com.qkj.ware.domain.AllotDetail" />
 	<select id="allot_getAllotDetails" resultClass="allotDetail" parameterClass="java.util.Map">
 		<![CDATA[ 
-			SELECT i.*,p.`title` product_name,p.`case_spec` case_spec FROM qkj_t_allotDetail i LEFT JOIN qkj_r_stock s ON (i.`stock_id`=s.`uuid`)
+			SELECT i.*,p.`uuid` puid,p.`title` product_name,p.`case_spec` case_spec FROM qkj_t_allotdetail i LEFT JOIN qkj_r_stock s ON (i.`stock_id`=s.`uuid`)
 			LEFT JOIN qkj_t_product p ON(s.`product_id`=p.`uuid`)
 		]]>
 		<dynamic prepend="WHERE">
@@ -19,7 +19,7 @@
 	</select>
 	<select id="allot_getAllotDetailsCounts" resultClass="int" parameterClass="java.util.Map">
 		<![CDATA[ 
-			Select Count(*) From qkj_t_allotDetail
+			Select Count(*) From qkj_t_allotdetail
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
@@ -32,13 +32,13 @@
 	</select>
 	<insert id="allot_addAllotDetail" parameterClass="allotDetail">
 		<![CDATA[ 
-			Insert Into qkj_t_allotDetail(lading_id,stock_id,num)
+			Insert Into qkj_t_allotdetail(lading_id,stock_id,num)
 			Values (#lading_id#,#stock_id#,#num#)
 		]]>
 	</insert>
 	<update id="allot_mdyAllotDetail" parameterClass="allotDetail">
 		<![CDATA[
-			Update qkj_t_allotDetail
+			Update qkj_t_allotdetail
 			Set lading_id=#lading_id#,
 stock_id=#stock_id#,
 num=#num#
@@ -47,7 +47,7 @@ num=#num#
 	</update>
 	<delete id="allot_delAllotDetail" parameterClass="allotDetail">
 	<![CDATA[
-		Delete From qkj_t_allotDetail Where uuid=#uuid#
+		Delete From qkj_t_allotdetail Where uuid=#uuid#
 	]]>
 	</delete>
 	<!-- AllotDetail End -->

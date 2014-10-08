@@ -148,13 +148,24 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 		</tr>
 		<s:if test="null != inStock">
 		  <tr>
-		  	<s:hidden name="inStock.uuid" title="主键ID" />
+		  	<s:hidden name="inStock.uuid" title="编号" />
 			<s:hidden name="inStock.take_id"></s:hidden>
 			<s:hidden name="inStock.operator_id"></s:hidden>
 		</tr>
 		<tr>
 			<td class='firstRow'><span style="color:red;">*</span> 入库时间:</td>
 			<td class='secRow' colspan="3"><s:date name="inStock.date" format="yyyy-MM-dd" /><s:hidden name="inStock.date" title="入库时间" /></td>
+		</tr>
+		
+		<tr>
+			<td class='firstRow'><span style="color:red;">*</span> 单据性质:</td>
+			<td class='secRow' colspan="3">
+			<s:if test="%{inStock.reason==0}">正常入库</s:if>
+			<s:if test="%{inStock.reason==1}">正常退货</s:if>
+			<s:if test="%{inStock.reason==2 }">损坏退货</s:if>
+			<s:if test="%{inStock.reason==3 }">其它</s:if>
+			<s:hidden name="inStock.reason" value="%{inStock.reason}" />
+			</td>
 		</tr>
 		</s:if>
 		<s:else>
@@ -165,36 +176,37 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 			<script type="text/javascript">$("#indate").datepicker();</script>
 			</td>
 		</tr>
+		<tr>
+			<td class='firstRow'><span style="color:red;">*</span> 单据性质:</td>
+			<td class='secRow' colspan="3">
+					<select name="inStock.reason" title="状态">
+							<option value="0"
+							<s:if test="%{inStock.reason==0}">
+							 selected="selected"
+							</s:if>
+							>正常入库</option>
+							<option value="1"
+							 <s:if test="%{inStock.reason==1}">
+							 selected="selected"
+							</s:if>
+							>正常退货</option>
+							<option value="2" 
+							<s:if test="%{inStock.reason==2 }">
+							selected="selected"
+							</s:if>
+							>损坏退货</option>
+							<option value="3" 
+							<s:if test="%{inStock.reason==3 }">
+							selected="selected"
+							</s:if>
+							>其它</option>
+					</select>
+			</td>
+		</tr>
 		</s:else>
 		  
 
-<tr>
-	<td class='firstRow'><span style="color:red;">*</span> 状态:</td>
-	<td class='secRow' colspan="3">
-			<select name="inStock.reason" title="状态">
-					<option value="0"
-					<s:if test="%{inStock.reason==0}">
-					 selected="selected"
-					</s:if>
-					>正常入库</option>
-					<option value="1"
-					 <s:if test="%{inStock.reason==1}">
-					 selected="selected"
-					</s:if>
-					>正常退货</option>
-					<option value="2" 
-					<s:if test="%{inStock.reason==2 }">
-					selected="selected"
-					</s:if>
-					>损坏退货</option>
-					<option value="3" 
-					<s:if test="%{inStock.reason==3 }">
-					selected="selected"
-					</s:if>
-					>其它</option>
-			</select>
-	</td>
-</tr>
+
 <tr>
 	<td class='firstRow'><span style="color:red;">*</span> 入库仓库:</td>
 	<td class='secRow' colspan="3">
@@ -230,7 +242,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 <td class='secRow' colspan="3">
 <table class="ilisttable" id="table_item" width="100%">
   <tr>
-    <th>主键编号</th>
+    <th>编号</th>
 	<th>产品名称</th>
 	<th>单价</th>
 	<th>订单数量</th>
@@ -245,7 +257,8 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 	<td><s:property value="product_name" /></td>
 	<td align="right"><s:property value="price" /></td>
 	<td align="center">
-		<s:property value="num" />(<s:property value="num/(case_spec*1.0)" /> 件)
+		<s:property value="num" />
+		(<s:property value="%{(num/(case_spec*1.0)).toString().substring(0,3)}" />件)
 	</td>
 	<td align="right"><s:property value="total" /></td>
 	<td align="center">

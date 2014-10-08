@@ -67,7 +67,7 @@ $(function(){
 	<col width="30" />
 	  <tr>
 	    <th><input name="uuidcheck" type="checkbox" /></th>
-	    <th>主键ID</th>
+	    <th>编号</th>
 	    <th>商品名称</th>
 	    <s:if test="t==null">
 	    <th>所在仓库</th>
@@ -83,8 +83,8 @@ $(function(){
 		<td><s:property value="store_name" /></td>
 		</s:if>
 		<td>
-		<s:property value="quantity" />&nbsp;瓶
-		(<s:property value="%{(quantity/(case_spec*1.0)).toString().substring(0,3)}" />件)
+		<s:property value="%{quantity-freezeNum}" />&nbsp;瓶
+		(<s:property value="%{((quantity-freezeNum)/(case_spec*1.0)).toString().substring(0,3)}" />件)
 		</td>
 	  </tr>
 </s:iterator>

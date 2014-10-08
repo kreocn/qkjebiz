@@ -140,7 +140,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 		<s:if test="null != inStock">
 		  <tr>
 			<td class='firstRow'><span style="color:red;">*</span> 单据号:</td>
-			<td class='secRow' colspan="3"><s:property value="inStock.ordernum" /><s:hidden name="inStock.uuid" title="主键ID" /></td>
+			<td class='secRow' colspan="3"><s:property value="inStock.ordernum" /><s:hidden name="inStock.uuid" title="编号" /></td>
 		</tr>
 		<tr>
 			<td class='firstRow'><span style="color:red;">*</span> 入库时间:</td>
@@ -202,7 +202,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 <td class='secRow' colspan="3">
 <table class="ilisttable" id="table_item" width="100%">
   <tr>
-    <th>主键编号</th>
+    <th>编号</th>
 	<th>产品名称</th>
 	<th>单价</th>
 	<th>订单数量</th>
@@ -214,7 +214,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 	<td><s:property value="product_name" /></td>
 	<td align="right"><s:property value="price" /></td>
 	<td align="center">
-		<s:property value="num" />(<s:property value="num/(case_spec*1.0)" /> 件)
+		<s:property value="num" />(<s:property value="%{(num/(case_spec*1.0)).toString().substring(0,3)}" />件)
 	</td>
 	<td align="right"><s:property value="total" /></td>
 	

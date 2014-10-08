@@ -28,8 +28,8 @@
 	<table class="ilisttable" width="100%">
 		<s:if test="'mdy' == viewFlag">
 		  <tr>
-<td class='firstRow'><span style="color:red;">*</span> 主键:</td>
-<td class='secRow'><s:property value="bordetail.uuid" /><s:hidden name="bordetail.uuid" title="主键" /></td>
+<td class='firstRow'><span style="color:red;">*</span> 编号:</td>
+<td class='secRow'><s:property value="bordetail.uuid" /><s:hidden name="bordetail.uuid" title="编号" /></td>
 </tr>
 <tr>
 <td class='firstRow'><span style="color:red;">*</span> 商品:</td>

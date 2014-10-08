@@ -127,7 +127,9 @@
 		<![CDATA[
 			Update qkj_t_outstock
 			Set date=#date#,
-			store_id=#store_id#,
+			bsreason=#bsreason#,
+			ordernum=#ordernum#,
+			
 			operator_id=#operator_id#,
 			dept_name=#dept_name#,
 			dept_code=#dept_code#,

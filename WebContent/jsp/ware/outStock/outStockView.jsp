@@ -150,7 +150,7 @@
 <td class='secRow' colspan="6">
 <table class="ilisttable" id="table_item" width="100%">
   <tr>
-    <th>主键编号</th>
+    <th>编号</th>
 	<th>产品名称</th>
 	<th>单价</th>
 	<th>订单数量</th>
@@ -163,7 +163,7 @@
 	<td><s:property value="product_name" /></td>
 	<td align="right"><s:property value="price" /></td>
 	<td align="center">
-		<s:property value="num" />(<s:property value="num/(case_spec*1.0)" /> 件)
+		<s:property value="num" />(<s:property value="%{(num/(case_spec*1.0)).toString().substring(0,3)}" />件)
 	</td>
 	<td align="right"><s:property value="totel" /></td>
   </tr>

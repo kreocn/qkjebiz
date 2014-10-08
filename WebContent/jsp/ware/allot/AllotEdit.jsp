@@ -74,8 +74,8 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 		</tr>
 		<s:if test="null != allot">
 		  <tr>
-		<td class='firstRow'><span style="color:red;">*</span> 主键自增:</td>
-		<td class='secRow' colspan="3"><s:property value="allot.uuid" /><s:hidden name="allot.uuid" title="主键自增" /></td>
+		<td class='firstRow'><span style="color:red;">*</span> 编号:</td>
+		<td class='secRow' colspan="3"><s:property value="allot.uuid" /><s:hidden name="allot.uuid" title="编号" /></td>
 		</tr>
 <tr>
 <td class='firstRow'><span style="color:red;">*</span> 状态:</td>
@@ -149,10 +149,10 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 	<input id="addItem" type="button" value="添加明细" />
 	</s:if>
 </td>
-<td class='secRow' colspan="3">
+<td class='secRow' colspan="20">
 <table class="ilisttable" id="table_item" width="100%">
   <tr>
-    <th>主键</th>
+    <th>编号</th>
 	<th>产品名称</th>
 	<th>调库数量</th>
 	<s:if test="allot.reason!=0"><th>已还数量</th></s:if>
@@ -165,11 +165,11 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
     <td align="center"><s:property value="uuid" /></td>
 	<td><s:property value="product_name" /></td>
 	<td align="center">
-		<s:property value="num" />(<s:property value="num/(case_spec*1.0)" /> 件)
+		<s:property value="num" />(<s:property value="%{(num/(case_spec*1.0)).toString().substring(0,3)}" />件)
 	</td>
 	<s:if test="allot.reason!=0">
 	<td>
-	<s:property value="bnum" />(<s:property value="bnum/(case_spec*1.0)" /> 件)
+	<s:property value="bnum" />(<s:property value="%{(bnum/(case_spec*1.0)).toString().substring(0,3)}" />件)
 	</td>
 	</s:if>
 	<s:if test="%{allot.state==0||allot.state==2}">
@@ -181,6 +181,28 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
     </s:if>
   </tr>
 </s:iterator>
+	<s:if test="%{allot.reason==2}">
+		<tr>
+		    <th>商品名称</th>
+		    <th>还货仓库</th>
+		    <th>借货仓库</th>
+			<th>还货数量</th>
+			<th>归还时间</th>
+			<th>还货编号</th>
+			<th>借货编号</th>
+		  </tr>
+	<s:iterator value="bordetails" status="sta">
+		  <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>" type="pickrow">
+		    <td><s:property value="product_name"/></td>
+		    <td><s:property value="bware"/></td>
+			<td><s:property value="sware" /></td>
+			<td><s:property value="bdate" /></td>
+			<td><s:property value="bnum" /></td>
+			<td><s:property value="back_id" /></td>
+			<td><s:property value="land_id" /></td>
+		  </tr>
+	</s:iterator>
+	</s:if>
 </table>
 </td>
 </tr>
@@ -218,6 +240,8 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 					</s:if>
 				</s:if>
 				<s:elseif test="null != allot && 'mdy' == viewFlag && @com.qkj.ware.action.warepower@checkPermit(allot.sourceid,'edit')">
+					<s:if test="allot.state!=2">
+					
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_MDY')">
 					<s:if test="%{allot.state==0||allot.state==2}">
 					<s:submit id="save" name="save" value="保存" action="allot_save" onclick="return xt();"/>
@@ -226,6 +250,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 					</s:if>
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_DEL') && (allot.state==0||allot.state==2)">
 					<s:submit id="delete" name="delete" value="删除" action="allot_del" onclick="return isDel();" />
+					</s:if>
 					</s:if>
 					</s:if>
 					</s:if>
@@ -283,7 +308,8 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 		<tr>
 		    <td colspan="20" class="buttonarea">
 				<s:hidden name="allotDetail.lading_id" title="调货单ID" value="%{allot.uuid}" />
-				<s:hidden name="allotDetail.goldId" title="调入仓库" value="%{allot.goldid}"></s:hidden>
+				<s:hidden name="allot.goldid" title="调入仓库" value="%{allot.goldid}"></s:hidden>
+				<s:hidden name="allot.reason" value="%{allot.reason}"/>
 				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_ADD')">
 				<s:submit id="add" name="add" value="确定" action="allotDetail_add" />
 				</s:if>

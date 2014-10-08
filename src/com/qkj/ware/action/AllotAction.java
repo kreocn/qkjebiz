@@ -14,11 +14,13 @@ import com.qkj.ware.dao.AllotDAO;
 import com.qkj.ware.dao.AllotDetailDAO;
 import com.qkj.ware.dao.AllotDetailHDAO;
 import com.qkj.ware.dao.AllotHDAO;
+import com.qkj.ware.dao.BordetailDAO;
 import com.qkj.ware.dao.StockDAO;
 import com.qkj.ware.domain.Allot;
 import com.qkj.ware.domain.AllotDetail;
 import com.qkj.ware.domain.AllotDetailH;
 import com.qkj.ware.domain.AllotH;
+import com.qkj.ware.domain.Bordetail;
 import com.qkj.ware.domain.Stock;
 import com.qkjsys.ebiz.dao.WareDAO;
 import com.qkjsys.ebiz.domain.Ware;
@@ -45,12 +47,27 @@ public class AllotAction extends ActionSupport {
 	private int recCount;
 	private int pageSize;
 	private int currPage;
-	
+	private Bordetail bordetail;
+	private List<Bordetail> bordetails;
 	private int flag=0;
 
 	
-	
-	
+	public Bordetail getBordetail() {
+		return bordetail;
+	}
+
+	public void setBordetail(Bordetail bordetail) {
+		this.bordetail = bordetail;
+	}
+
+	public List<Bordetail> getBordetails() {
+		return bordetails;
+	}
+
+	public void setBordetails(List<Bordetail> bordetails) {
+		this.bordetails = bordetails;
+	}
+
 	public AllotH getAlloth() {
 		return alloth;
 	}
@@ -250,9 +267,7 @@ public class AllotAction extends ActionSupport {
 				if (!(allot == null || allot.getUuid() == null)||null!=map.get("ordernum")) {
 					if(allot.getUuid()!=null){
 						this.setAllot((Allot) dao.get(allot.getUuid()));
-					}/*else{
-						this.setAllot((Allot)dao.list(map).get(0));
-					}*/
+					}
 					//仓库
 					wareByPower(u, code,"1");
 					
@@ -271,27 +286,12 @@ public class AllotAction extends ActionSupport {
 					map.clear();
 					map.put("lading_id", allot.getUuid());
 					this.setAllotDetails(adao.list(map));
-					
-					//判断是否有确认收货权限
-					/*int id=allot.getGoldid();
-					map.clear();
-					map.put("useruuid",u);
-					if(ContextHelper.isAdmin()){//管理员
-						this.setFlag(1);
-					}else{
-						this.setWarepowers(wd.listByPower(map));
-						for(int i=0;i<warepowers.size();i++){
-							this.setWare(warepowers.get(i));
-							if(id==ware.getUuid()){//有权限
-								this.setFlag(1);
-								break;
-							}else{
-								this.setFlag(0);
-							}
-							
-						}
-						
-					}*/
+					if(allot.getReason().equals("2")){//还货明细
+						BordetailDAO bd=new BordetailDAO();
+						map.clear();
+						map.put("back_id", allot.getUuid());
+						this.setBordetails(bd.list(map));
+					}
 					
 				} else {
 					this.setAllot(null);
@@ -430,7 +430,7 @@ public class AllotAction extends ActionSupport {
 		map.clear();
 		map.put("lading_id", allot.getUuid());
 		this.setAllotDetails(addao.list(map));
-		this.setAllot((Allot)dao.list(map).get(0));
+		this.setAllot((Allot)dao.get(allot.getUuid()));
 		String resion=allot.getReason();
 		int godeid=allot.getGoldid();
 		int sourceid=allot.getSourceid();

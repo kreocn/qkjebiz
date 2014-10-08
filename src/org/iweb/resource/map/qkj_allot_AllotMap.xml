@@ -22,7 +22,7 @@
 			<isNotEmpty prepend="AND" property="add_timer"><![CDATA[ i.add_timer=#add_timer# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="lm_user"><![CDATA[ i.lm_user=#lm_user# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="lm_user_name"><![CDATA[ lmu.user_name=#lm_user_name# ]]></isNotEmpty>
-
+			<isNotEmpty prepend="AND" property="reason"><![CDATA[ i.reason=#reason# ]]></isNotEmpty>
 		</dynamic>
 		<![CDATA[ Order By i.add_timer Desc LIMIT 0, 500 ]]>
 	</select>
@@ -112,13 +112,13 @@
 		<![CDATA[
 			Update qkj_t_allot
 			Set ordernum=#ordernum#,
-date=#date#,
-sourceid=#sourceid#,
-goldid=#goldid#,
-note=#note#,
-lm_user=#lm_user#,
-lm_timer=#lm_timer#,
-reason=#reason#
+			ordernum=#ordernum#,
+			date=#date#,
+			
+			note=#note#,
+			lm_user=#lm_user#,
+			lm_timer=#lm_timer#
+			
 			Where uuid = #uuid#
 		]]>
 	</update>

@@ -417,7 +417,7 @@ public class OutStockAction extends ActionSupport {
 			this.setOutStock((OutStock)dao.get(outStock.getUuid()));
 			this.setOutStockh(outStock);
 			OutStockHDAO mhd=new OutStockHDAO();
-			mhd.add(outStockh);
+			//mhd.add(outStockh);
 			
 			dao.delete(outStock);
 			setMessage("删除成功!ID=" + outStock.getUuid());
@@ -432,7 +432,7 @@ public class OutStockAction extends ActionSupport {
 					this.setOutDetail(outDetails.get(i));
 					OutDetailHDAO hd=new OutDetailHDAO();
 					this.setOutDetailh(outDetail);
-					hd.add(outDetailh);//填加历史
+					//hd.add(outDetailh);//填加历史
 				}
 				
 				//删除详表
