@@ -121,7 +121,7 @@ public class UploadAction extends ActionSupport {
 			// 上传到阿里云存储
 			OSSUtil_IMG.uploadFile(filename, in, contentLength);
 			// 返回图片地址
-			msg = "http://images.qkjchina.com/" + filename;
+			msg = "!http://images.qkjchina.com/" + filename;
 
 			log.info("上传文件成功:" + msg);
 		} else {
