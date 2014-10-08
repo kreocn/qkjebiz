@@ -35,7 +35,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 	private int recCount;
 	private int pageSize;
 	private int currPage;
-	private String path = "<a href='/manager/main'>首页</a>&nbsp;&gt;&nbsp;至事由管理";
+	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;至事由管理";
 
 	public String getPath() {
 		return path;
@@ -148,7 +148,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 			this.setCurrPage(Integer.parseInt((ToolsUtil.isEmpty(map.get(Parameters.Current_Page_Str)) ? "1" : map.get(Parameters.Current_Page_Str)).toString()));
 			this.setApplys(dao.list(map));
 			this.setRecCount(dao.getResultCount());
-			path = "<a href='/manager/main'>首页</a>&nbsp;&gt;&nbsp;至事由列表";
+			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;至事由列表";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
@@ -168,7 +168,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 				setMessage("你没有选择任何操作!");
 			} else if ("add".equals(viewFlag)) {
 				this.setApply(null);
-				path = "<a href='/manager/main'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/apply_list?viewFlag=relist'>至事由列表</a>&nbsp;&gt;&nbsp;增加至事由";
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/apply_list?viewFlag=relist'>至事由列表</a>&nbsp;&gt;&nbsp;增加至事由";
 			} else if ("mdy".equals(viewFlag)) {
 				if (!(apply == null || apply.getUuid() == null)) {
 					this.setApply((Apply) dao.get(apply.getUuid()));
@@ -182,7 +182,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 				/* 检查当前用户是否已经审阅 */
 				if (adao.userIsIn(approves, ContextHelper.getUserLoginUuid())) this.setIsApprover("true");
 				else this.setIsApprover("false");
-				path = "<a href='/manager/main'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/apply_list?viewFlag=relist'>至事由列表</a>&nbsp;&gt;&nbsp;至事由详情";
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/apply_list?viewFlag=relist'>至事由列表</a>&nbsp;&gt;&nbsp;至事由详情";
 			} else {
 				this.setApply(null);
 				setMessage("无操作类型!");

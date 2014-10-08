@@ -28,7 +28,7 @@ public class LeaveAction extends ActionSupport implements ActionAttr {
 	private int recCount;
 	private int pageSize;
 	private int currPage;
-	private String path = "<a href='/manager/main'>首页</a>&nbsp;&gt;&nbsp;工时管理";
+	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;工时管理";
 
 	public String getPath() {
 		return path;
@@ -101,7 +101,7 @@ public class LeaveAction extends ActionSupport implements ActionAttr {
 			this.setCurrPage(ContextHelper.getCurrPage(map));
 			this.setLeaves(dao.list(map));
 			this.setRecCount(dao.getResultCount());
-			path = "<a href='/manager/main'>首页</a>&nbsp;&gt;&nbsp;工时申请单列表";
+			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;工时申请单列表";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
@@ -122,14 +122,14 @@ public class LeaveAction extends ActionSupport implements ActionAttr {
 				leave.setLeave_dept(ContextHelper.getUserLoginDept());
 				leave.setLeave_dept_name(ContextHelper.getUserLoginDeptName());
 				leave.setLeave_user(ContextHelper.getUserLoginUuid());
-				path = "<a href='/manager/main'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/leave_list?viewFlag=relist'>工时列表</a>&nbsp;&gt;&nbsp;添加申请单";
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/adm/leave_list?viewFlag=relist'>工时列表</a>&nbsp;&gt;&nbsp;添加申请单";
 			} else if ("mdy".equals(viewFlag)) {
 				if (!(leave == null || leave.getUuid() == null)) {
 					this.setLeave((Leave) dao.get(leave.getUuid()));
 				} else {
 					this.setLeave(null);
 				}
-				path = "<a href='/manager/main'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/leave_list?viewFlag=relist'>工时列表</a>&nbsp;&gt;&nbsp;修改申请单";
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/adm/leave_list?viewFlag=relist'>工时列表</a>&nbsp;&gt;&nbsp;修改申请单";
 			} else {
 				this.setLeave(null);
 				setMessage("无操作类型!");

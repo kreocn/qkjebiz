@@ -40,7 +40,7 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 	private int recCount;
 	private int pageSize;
 
-	private String path = "<a href='/manager/main'>首页</a>&nbsp;&gt;&nbsp;工时管理";
+	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;工时管理";
 
 	public String getPath() {
 		return path;
@@ -129,6 +129,8 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 			this.setMembers(dao.list(map));
 			this.setRecCount(dao.getResultCount());
+
+			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;会员列表";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
@@ -147,6 +149,7 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 				member.setDept_name(ContextHelper.getUserLoginDeptName());
 				member.setManager(ContextHelper.getUserLoginUuid());
 				// this.setMember(null);
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/sysvip/member_list?viewFlag=relist'>会员列表</a>&nbsp;&gt;&nbsp;添加会员";
 			} else if ("mdy".equals(viewFlag)) {
 				map.clear();
 				map.put("uuid", member.getUuid());
@@ -162,6 +165,7 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 				MemberAddressDAO mdao = new MemberAddressDAO();
 				map.put("member_id", member.getUuid());
 				this.setMemberAddresses(mdao.list(map));
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/sysvip/member_list?viewFlag=relist'>会员列表</a>&nbsp;&gt;&nbsp;修改会员信息";
 			} else {
 				this.setMember(null);
 				setMessage("无操作类型!");
