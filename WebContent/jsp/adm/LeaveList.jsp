@@ -115,7 +115,7 @@ max-width: 650px !important;
 		<td class="td4"><s:date name="leave_start" format="yyyy-MM-dd" /> <s:property value="leave_start_time" /></td>
 		<td class="td4"><s:date name="leave_end" format="yyyy-MM-dd" /> <s:property value="leave_end_time" /></td>
 		<td class="td2"><s:property value="totle" /></td>
-		<td class="td5">
+		<td class="td5 nsd">
 			<a href="javascript:;"  class="leave_cause_show" data="${uuid}">[移此查看]</a>
 			<span id="leave_cause${uuid}" style="display:none;" class="leave_cause_shows">
 				<s:if test="leave_type==0">出差地点:${leave_mold}</s:if>
@@ -195,6 +195,7 @@ max-width: 650px !important;
 </div>
 </s:form>
 </div>
+<div id="infoDetail" class="idialog" title="查看详情" style="width:100%;"><div id="detailMain" class="label_main op-area"></div></div>
 </div>
 <!-- HIDDEN AREA END -->
 <script type="text/javascript">

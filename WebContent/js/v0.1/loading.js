@@ -108,14 +108,16 @@ function showDetail(trid){
 	var ths = $("#coltr th");
 	$("#" + trid + " td").each(function(i, n){
 		if (i == ths.length - 1) { return; }
-		var cc = "label_rwben";
-		if ($(this).hasClass("longnote")) {
-			cc = "";
+		if (!$(this).hasClass("nsd")) {
+			var cc = "label_rwben";
+			if ($(this).hasClass("longnote")) {
+				cc = "";
+			}
+			_h += '<div class="label_hang">';
+			_h += '<div class="label_ltit">' + ths[i].innerHTML + ':</div>';
+			_h += '<div class="' + cc + '">' + n.innerHTML + '</div>';
+			_h += '</div>';
 		}
-		_h += '<div class="label_hang">';
-		_h += '<div class="label_ltit">' + ths[i].innerHTML + ':</div>';
-		_h += '<div class="' + cc + '">' + n.innerHTML + '</div>';
-		_h += '</div>';
 	});
 
 	$("#detailMain").empty().append(_h);
