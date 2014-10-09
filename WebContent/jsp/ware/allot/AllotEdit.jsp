@@ -183,6 +183,11 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 </s:iterator>
 	<s:if test="%{allot.reason==2}">
 		<tr>
+		<td style="font-weight: bold;" colspan="20">
+		还货明细
+		</td>
+		</tr>
+		<tr>
 		    <th>商品名称</th>
 		    <th>还货仓库</th>
 		    <th>借货仓库</th>
@@ -261,7 +266,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 					
 				</s:elseif>
 				
-				<s:elseif test="null != allot && 'mdy' == viewFlag && @com.qkj.ware.action.warepower@checkPermit(allot.goldid,'edit')">
+				<s:if test="null != allot && 'mdy' == viewFlag && @com.qkj.ware.action.warepower@checkPermit(allot.goldid,'edit')">
 					
 					<s:if test="allot.state==4 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_DELI') ">
 					<s:submit id="freeze" name="freeze" value="确认收货" onclick="return isOp('确认收货?');" action="allot_delivery"></s:submit>
@@ -271,7 +276,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 					<s:submit id="freeze" name="freeze" value="经手人确认" onclick="return isOp('确认发货?');" action="allot_sure"></s:submit>
 					</s:if>
 					
-				</s:elseif>
+				</s:if>
 				<input type="button" value="返回" onclick="linkurl('<s:url action="allot_relist" namespace="/allot" />');" />
 			</td>
 	    </tr>
