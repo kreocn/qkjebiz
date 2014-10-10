@@ -88,7 +88,7 @@
 <script type="text/javascript" src="<s:url value="/js/func/create_editor.js" />"></script>
 <script type="text/javascript">
 	$(function(){
-		createXhEditor("warenoteid");
+		createHtmlEditor("#warenoteid");
 	});
 </script>
 </html>

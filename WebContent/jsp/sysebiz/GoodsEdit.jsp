@@ -41,7 +41,7 @@ $(function(){
 		}
 	};	
 	showInfoColumn();
-	createXhEditor("goodsdescriptionid");
+	createHtmlEditor("#goodsdescriptionid");
 	
 	BrowseServer(0);
 	//wb_smallImg = new widget_button({ inputid :"goods_small_img", objname : "wb_smallImg" });

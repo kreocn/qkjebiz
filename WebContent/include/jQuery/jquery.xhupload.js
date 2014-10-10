@@ -105,7 +105,11 @@
 					if (jobj.err != '') {
 						alert("err:" + jobj.err);
 					} else {
-						$("#" + $("#xhUploadFile").data("recallid")).val(jobj.msg);
+						var msg = jobj.msg;
+						if (msg.substr(0, 1) == '!') {
+							msg = msg.substring(1);
+						}
+						$("#" + $("#xhUploadFile").data("recallid")).val(msg);
 					}
 				} else {
 					alert("上传文件错误,文件最大不能超过10M.");
@@ -132,3 +136,12 @@
 		} });
 	};
 })(jQuery);
+
+String.prototype.startWith = function(str){
+	var reg = new RegExp("^" + str);
+	return reg.test(this);
+};
+String.prototype.endWith = function(str){
+	var reg = new RegExp(str + "$");
+	return reg.test(this);
+};
