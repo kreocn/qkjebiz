@@ -661,7 +661,7 @@ input[type="button"].input-blue,input[type="submit"].input-blue,input[type="rese
 	background: transparent;
 }
 /*滚动条样式END*/
-@media screen and (max-width:1200px) {
+@media screen and (max-width:1180px) {
 	.td5 {
 		display: none;
 	}
@@ -679,7 +679,7 @@ input[type="button"].input-blue,input[type="submit"].input-blue,input[type="rese
 	}
 }
 
-@media screen and (max-width:1086px) {
+@media screen and (max-width:1050px) {
 	.lb_lgsfy {
 		width: 49.79%;
 	}
