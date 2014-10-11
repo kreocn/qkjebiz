@@ -181,7 +181,7 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
     </s:if>
   </tr>
 </s:iterator>
-	<s:if test="%{allot.reason==2}">
+	<s:if test="%{allot.reason==2 && allotDetails.size>0 }">
 		<tr>
 		<td style="font-weight: bold;" colspan="20">
 		还货明细
