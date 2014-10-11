@@ -13,6 +13,7 @@
 <link rel="StyleSheet" href="<s:url value="/include/dtree/dtree.css" />" />
 <link rel="stylesheet" href="<s:url value="/include/jQuery/stylesheets/jquery-ui-1.10.3.custom.min.css" />" />
 <link rel="stylesheet" href="<s:url value="/include/jQuery/stylesheets/jquery.xhupload.css" />" />
+<script type="text/javascript" src="<s:url value="/include/dtree/dtree.js" />"></script>
 <body>
 	<div id="main" style="width: 98%;">
 		<div id="result">
@@ -230,7 +231,6 @@
 		</div>
 	</div>
 </body>
-<script type="text/javascript" src="<s:url value="/include/dtree/dtree.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/form_validator.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/common_cptb.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/common_prototype.js" />"></script>
