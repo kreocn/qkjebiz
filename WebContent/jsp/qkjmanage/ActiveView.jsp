@@ -61,7 +61,7 @@ color: #008000;
 <div class="main">
 	<div class="dq_step">
 		<span class="pt">活动申请单</span>
-		<span class="opb lb op-area noprint"><a href="<s:url namespace="/qkjmanage" action="apply_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a></span>
+		<span class="opb lb op-area noprint"><a href="<s:url namespace="/qkjmanage" action="active_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a></span>
 		<span class="opb lb op-area noprint"><input type="button" onclick="window.print();" value="打印本页"/></span>
 	</div>
 	<s:form id="editForm" name="editForm" cssClass="validForm" action="apply_list"  method="get" namespace="/qkjmanage" theme="simple">
