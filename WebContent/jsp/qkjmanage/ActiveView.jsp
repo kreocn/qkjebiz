@@ -143,6 +143,51 @@ color: #008000;
             </div>
 		</div>
 		</div>
+		
+		<div class="label_main">
+        <div class="label_hang">
+            <div class="label_ltit">财务部</div>
+            <div class="label_rwbenx">
+            	<div class="zhuangtai bgcw">
+					(签字/日期)
+				</div>
+				
+            </div>
+		</div>
+		</div>
+		<div class="label_main">
+        <div class="label_hang">
+            <div class="label_ltit">销售管理部经理:</div>
+            <div class="label_rwbenx">
+            	<div class="zhuangtai bgcw">
+					(签字/日期)
+				</div>
+				
+            </div>
+		</div>
+		</div>
+		<div class="label_main">
+        <div class="label_hang">
+            <div class="label_ltit">销售管理副总经理:</div>
+            <div class="label_rwbenx">
+            	<div class="zhuangtai bgcw">
+					(签字/日期)
+				</div>
+				
+            </div>
+		</div>
+		</div>
+		<div class="label_main">
+        <div class="label_hang">
+            <div class="label_ltit">总经理</div>
+            <div class="label_rwbenx">
+            	<div class="zhuangtai bgcw">
+					(签字/日期)
+				</div>
+				
+            </div>
+		</div>
+		</div>
         
         <div class="label_main">
         <div class="label_hang">
