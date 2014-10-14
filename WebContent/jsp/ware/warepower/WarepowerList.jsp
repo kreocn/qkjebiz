@@ -71,7 +71,7 @@
 		<th class="td4">操作</th>
 
 	  	</tr>
-	  	<s:iterator value="allots" status="sta">
+	  	<s:iterator value="warepowers" status="sta">
 	  		<tr id="showtr${uuid}">
 	  			<td class="td1 nw"><s:property value="uuid" /></td>
 			    <td class="td1 nw">

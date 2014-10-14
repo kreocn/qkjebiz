@@ -6,89 +6,109 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>仓库列表--<s:text name="APP_NAME" /></title>
+<s:action name="ref" namespace="/manager" executeResult="true" />
 </head>
-<link rel="stylesheet" href="<s:url value="/css/css.css" />" />
-<link rel="stylesheet" href="<s:url value="/css/navigate.css" />" />
-<link rel="stylesheet" href="<s:url value="/css/main.css" />" />
-<link rel="stylesheet" href="<s:url value="/include/jQuery/stylesheets/jquery-ui-1.10.3.custom.min.css" />" />
 <body>
-	<div id="main">
-		<div id="result">
-			<div class="itablemdy">
-				<div class="itabletitle">
-					<s:if test="null == ware && 'add' == viewFlag">增加</s:if>
-					<s:elseif test="null != ware && 'mdy' == viewFlag">修改</s:elseif>
-					仓库
-				</div>
-				<s:form name="form1" action="ware_add" namespace="/sysebiz" onsubmit="return validator(this);" method="post" theme="simple">
-					<div class="ifromoperate"></div>
-					<table class="ilisttable" width="100%" border="1" cellspacing="0" cellpadding="0" bordercolor="#8B8B8B">
-						<s:if test="null != ware">
-							<tr>
-								<td class="firstRow">仓库编号:</td>
-								<td class="secRow"><s:property value="ware.uuid" /> <s:hidden id="ware.uuid" name="ware.uuid" /></td>
-							</tr>
-						</s:if>
-						<tr>
-							<td class="firstRow"><span style="color: red;">*</span>仓库类型:</td>
-							<td class="secRow"><s:select title="仓库类型" id="ware.ware_class" name="ware.ware_class" list="#{0:'普通库', 1:'藏酒库'}" value="1" require="required" controlName="仓库类型" /></td>
-						</tr>
-						<tr>
-							<td class="firstRow"><span style="color: red;">*</span>仓库名称:</td>
-							<td class="secRow"><s:textfield id="ware.ware_name" name="ware.ware_name" title="仓库名称" require="required" controlName="仓库名称" /></td>
-						</tr>
-						<tr>
-							<td class="firstRow">仓库地点:</td>
-							<td class="secRow"><s:textfield id="ware.address" name="ware.address" title="仓库地点" cssStyle="width:50%;" /> <!-- 
-		    	<s:textfield id="ware.map_data" name="ware.map_data" title="仓库地图点" />
-		    	 --></td>
-						</tr>
-						<tr>
-							<td class="firstRow">仓库简短描述:</td>
-							<td class="secRow"><s:textarea name="ware.short_note" cssStyle="width:50%;" rows="3" title="仓库简短描述" /></td>
-						</tr>
-						<tr>
-							<td class="titleRow" colspan="2">仓库详细描述</td>
-						</tr>
-						<tr>
-							<td class="secRow" colspan="2"><textarea cols="100" id="warenoteid" name="ware.note" rows="6" style="display: none;"><s:property value="ware.note" /></textarea></td>
-						</tr>
-						<s:if test="null != ware">
-							<tr>
-								<td class="firstRow">修改人:</td>
-								<td class="secRow"><s:property value="ware.lm_user" /> <s:hidden name="ware.lm_user" /></td>
-							</tr>
-							<tr>
-								<td class="firstRow">修改时间:</td>
-								<td class="secRow"><s:date name="ware.lm_time" format="yyyy-MM-dd HH:mm:ss" /></td>
-							</tr>
-						</s:if>
-						<tr>
-							<td colspan="20" class="buttonarea"><span id="message"><s:property value="message" /></span> <s:if test="null == ware && 'add' == viewFlag">
-									<s:submit id="add" name="add" value="确定" action="ware_add" />
-								</s:if> <s:elseif test="null != ware && 'mdy' == viewFlag">
-									<s:submit id="save" name="save" value="保存" action="ware_save" />
-									<s:submit id="delete" name="delete" value="删除" action="ware_del" onclick="return isDel();" />
-								</s:elseif> <input type="button" value="返回" onclick="linkurl('<s:url action="ware_list" namespace="/sysebiz" />');" /></td>
-						</tr>
-					</table>
-				</s:form>
-			</div>
+<div class="main">
+	<div class="dq_step">
+		${path}
+		<span class="opb lb op-area">
+		<a href="<s:url action="ware_list" namespace="/sysebiz" />" >返回列表</a>
+		</span>
+	</div>
+	<s:form id="editForm" name="editForm" cssClass="validForm" action="ware_add" namespace="/sysebiz" method="post" theme="simple">
+	<div class="label_con">
+	<s:if test="null != ware">
+	<div class="label_main">
+	       <div class="label_hang">
+		         <div class="label_ltit">编号:</div>
+		         <div class="label_rwb"><s:property value="ware.uuid" /> <s:hidden id="ware.uuid" name="ware.uuid" /></div>
+	       	</div>
+	 </div>
+	</s:if>
+	<div class="label_main">
+	       <div class="label_hang">
+		         <div class="label_ltit">仓库类型:</div>
+		         <div class="label_rwben label_rwb">
+	            	<div class="iselect">
+	            	<s:select cssClass="selectKick" title="仓库类型" id="ware.ware_class" name="ware.ware_class" list="#{0:'普通库', 1:'藏酒库'}" value="1" require="required" controlName="仓库类型" />
+	            	</div>
+	            </div>
+	       	</div>
+	 </div>
+	 <div class="label_main">
+	       <div class="label_hang">
+		         <div class="label_ltit">仓库名称:</div>
+		         <div class="label_rwben2">
+		         <div class="label_rwb"><s:textfield id="ware.ware_name" name="ware.ware_name" title="仓库名称" require="required" cssClass="label_hang_linput validate[required,maxSize[100]]" /></div>
+		         </div>
+	       	</div>
+	 </div>
+	 <div class="label_main">
+	       <div class="label_hang">
+		         <div class="label_ltit">仓库地点:</div>
+		         <div class="label_rwben2">
+		         <div class="label_rwb"><s:textfield id="ware.address" name="ware.address" title="仓库地点" cssClass="label_hang_linput validate[maxSize[255]]" /></div>
+		         </div>
+	       	</div>
+	 </div>
+	 <div class="label_main">
+        <div class="label_hang">
+            <div class="label_ltit">简短描述:</div>
+            <div class="label_rwbenx">
+            	<s:textarea name="ware.short_note" cssStyle="width:50%;" rows="3" title="仓库简短描述" cssClass="label_hang_linput validate[maxSize[128]]" />
+            </div>
+        </div>
+      </div>
+      
+      <div class="label_main">
+        <div class="label_hang">
+            <div class="label_ltit">仓库详细描述:</div>
+            <div class="label_rwbenx">
+            </div>
+        </div>
+        </div>
+        <div class="label_main">
+        	<div class="note_area">
+        	<s:textarea name="ware.note" title="详细说明" cssClass="xheditorArea validate[maxSize[65535]]" />
+        	</div>
+        </div>
+        <s:if test="null != ware">
+        	<div class="label_main">
+        		<div class="label_hang">
+		            <div class="label_ltit">修改人:</div>
+		            <div class="label_rwben">
+		           <s:property value="ware.lm_user" /> <s:hidden name="ware.lm_user" />
+		            </div>
+	       		</div>
+	       		<div class="label_hang">
+		            <div class="label_ltit">修改时间:</div>
+		            <div class="label_rwben2">
+		            <s:date name="ware.lm_time" format="yyyy-MM-dd HH:mm:ss" />
+		            </div>
+	       		</div>
+        	</div>
+	    </s:if>
+	    <div class="label_main">
+		<div class="label_hang">
+            <div class="label_ltit">相关操作:</div>
+            <div class="label_rwbenx">
+            <span id="message"><s:property value="message" /></span>
+            	
+            	<s:if test="null == ware && 'add' == viewFlag">
+				<s:submit id="add" name="add" value="确定" action="ware_add" cssClass="input-blue"/>
+				</s:if>
+				<s:elseif test="null != ware && 'mdy' == viewFlag">
+				<s:submit id="save" name="save" value="保存" action="ware_save" cssClass="input-blue"/>
+				<s:submit id="delete" name="delete" value="删除" action="ware_del" onclick="return isDel();" cssClass="input-red"/>
+				</s:elseif>
+				<input type="button" value="返回" onclick="linkurl('<s:url action="ware_list" namespace="/sysebiz" />');" />
+				
+            </div>
+		</div>
 		</div>
 	</div>
+	</s:form>
+</div>
 </body>
-<script type="text/javascript" src="<s:url value="/js/form_validator.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/common_lite.js" />"></script>
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-1.8.3.min.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/jquery.CommonUtil.js" />"></script>
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-1.8.3.min.js" />"></script>
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-ui-1.10.3.custom.min.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/xheditor/xheditor-1.2.1.min.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/xheditor/xheditor_lang/zh-cn.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/func/create_editor.js" />"></script>
-<script type="text/javascript">
-	$(function(){
-		createXhEditor("warenoteid");
-	});
-</script>
 </html>
