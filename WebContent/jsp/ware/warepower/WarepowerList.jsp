@@ -67,9 +67,9 @@
 		<th class="td1">编号</th>
 		<th class="td1">管理员</th>
 		<th class="td1">仓库</th>
-		<th class="td1">权限</th>
+		<th class="td3">权限</th>
 		<th class="td4">操作</th>
-
+		<th class="td0">查看</th>
 	  	</tr>
 	  	<s:iterator value="warepowers" status="sta">
 	  		<tr id="showtr${uuid}">
@@ -79,7 +79,7 @@
 			     <s:else><s:property value="dept_name" /></s:else>
 			     </td>
 			    <td class="td1 nw"><s:property value="ware_name" /></td>
-			    <td class="td1 nw">
+			    <td class="td3 nw">
 			    <s:if test="%{prvg.indexOf('1')>=0}">入库&nbsp;</s:if>
 			    <s:if test="%{prvg.indexOf('2')>=0}">出库&nbsp;</s:if>
 			    <s:if test="%{prvg.indexOf('3')>=0}">调库&nbsp;</s:if>
@@ -94,7 +94,7 @@
 			    	<a class="input-red" href="<s:url namespace="/warepower" action="warepower_del"><s:param name="warepower.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
 			    	</s:if>	   
 			    </td>
-				
+				<td class="td0 op-area"><a onClick="showDetail('showtr${uuid}');" class="input-nostyle">查看</a></td>
 	  		</tr>
 	  	</s:iterator>
  		</table>
@@ -104,6 +104,9 @@
 		var spage = new ShowPage(${currPage});
 		spage.show2(${recCount},${pageSize},2);
 		</script>
+	</div>
+	<div class="hidden_area">
+	<div id="infoDetail" class="idialog" title="查看详情" style="width:100%;"><div id="detailMain" class="label_main op-area"></div></div>
 	</div>
 </div>
 </body>

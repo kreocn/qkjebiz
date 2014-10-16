@@ -63,7 +63,7 @@
 	    <th class="td2">所在仓库</th>
 	    </s:if>
 		<th class="td1">库存数量</th>
-		
+		<th class="td0">查看</th>
 	  	</tr>
 	  	<s:iterator value="stocks" status="sta">
 	  		<tr id="showtr${uuid}">
@@ -76,6 +76,7 @@
 				<s:property value="%{quantity-freezeNum}" />&nbsp;瓶
 				(<s:property value="%{((quantity-freezeNum)/(case_spec*1.0)).toString().substring(0,3)}" />件)
 				</td>
+				<td class="td0 op-area"><a onClick="showDetail('showtr${uuid}');" class="input-nostyle">查看</a></td>
 	  		</tr>
 	  	</s:iterator>
  		</table>
@@ -86,7 +87,9 @@
 		spage.show2(${recCount},${pageSize},2);
 		</script>
 	</div>
- 	
+ 	<div class="hidden_area">
+	<div id="infoDetail" class="idialog" title="查看详情" style="width:100%;"><div id="detailMain" class="label_main op-area"></div></div>
+	</div>
 </div>
 </body>
 </html>

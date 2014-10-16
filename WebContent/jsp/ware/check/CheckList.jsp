@@ -81,8 +81,9 @@
 		<th class="td3">报损</th>
 		<th class="td3">借酒</th>
 		<th class="td3">其它</th>
-		<th class="td4 printhide">操作</th>
+		<th class="td4"><div class="printhide">操作</div></th>
 		
+		<th class="td0">查看</th>
 		 
 	  	</tr>
 	  	<s:iterator value="checks" status="sta">
@@ -99,15 +100,18 @@
 				<td class="td3 nw"><s:property value="jnum"></s:property></td>
 				<td class="td3 nw"><s:property value="qnum"></s:property></td>
 				
-		
-				<td class="td4 op-area printhide">
+				
+				<td class="td4 op-area">
+				<div class="printhide">
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_CHECK_MDY')">
 			    	<a class="input-blue" href="<s:url namespace="/check" action="check_load"><s:param name="viewFlag">mdy</s:param><s:param name="check.uuid" value="uuid"></s:param></s:url>">修改</a>
 			    	</s:if>
 			    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_CHECK_DEL')">
 			    	<a class="input-red" href="<s:url namespace="/check" action="check_del"><s:param name="check.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
-			    	</s:if>	   
+			    	</s:if>	
+			    </div>   
 			    </td>
+				<td class="td0 op-area"><div class="printhide"><a onClick="showDetail('showtr${uuid}');" class="input-nostyle">查看</a></div></td>
 				
 	  		</tr>
 	  	</s:iterator>
@@ -145,6 +149,10 @@
 	<s:hidden name="viewFlag" value="add" />
 </s:form>
 </div>
+
+<div class="hidden_area">
+	<div id="infoDetail" class="idialog" title="查看详情" style="width:100%;"><div id="detailMain" class="label_main op-area"></div></div>
+	</div>
 </div>
 </body>
 

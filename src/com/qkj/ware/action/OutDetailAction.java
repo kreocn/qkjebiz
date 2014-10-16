@@ -248,7 +248,7 @@ public class OutDetailAction extends ActionSupport {
 			//修改出库主表的总价格
 			OutStockDAO insdao=new OutStockDAO();
 			map.clear();
-			map.put("ordernum", outDetail.getLading_id());
+			map.put("uuid", outDetail.getLading_id());
 			outStock=(OutStock)insdao.list(map).get(0);
 			outStock.setTotal_price(outStock.getTotal_price()-outDetail.getTotel());
 			if(outStock.getReason()!=3){

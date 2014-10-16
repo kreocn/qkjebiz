@@ -65,15 +65,16 @@
 		<div class="tab_warp">
 	 		<table>
 	 		<tr id="coltr">
-			<th>商品名称</th>
-		    <th>所在仓库</th>
-			<th>库存</th>
-			<th>招待用酒</th>
-			<th>赠酒</th>
-			<th>报损</th>
-			<th>借酒</th>
-			<th>其它</th>
-			<th>变动数量</th>
+			<th class="td1">商品名称</th>
+		    <th class="td3">所在仓库</th>
+			<th class="td1">库存</th>
+			<th class="td2">招待用酒</th>
+			<th class="td3">赠酒</th>
+			<th class="td3">报损</th>
+			<th class="td2">借酒</th>
+			<th class="td2">其它</th>
+			<th class="td1">变动数量</th>
+			<th class="td0">查看</th>
 			 
 		  	</tr>
 		  	<s:iterator value="stocks" status="sta">
@@ -88,32 +89,32 @@
 				<s:hidden name="pageStocks[%{#sta.index}].jnum" value="%{jnum}"/>
 				<s:hidden name="pageStocks[%{#sta.index}].qnum" value="%{qnum}"/>
 		  		<tr id="showtr${uuid}">
-		  			<td class="nw"><s:property value="product_name" /></td>
-		  			<td class="nw"><s:property value="store_name" /></td>
-				    <td class="nw"><s:property value="quantity" /></td>
-				    <td class="nw">
+		  			<td class="td1 nw"><s:property value="product_name" /></td>
+		  			<td class="td3 nw"><s:property value="store_name" /></td>
+				    <td class="td1 nw"><s:property value="quantity" /></td>
+				    <td class="td2 nw">
 						<s:if test="zdnum==null">0</s:if>
 						<s:else>
 						<s:property value="zdnum"></s:property></s:else></td>
-						<td class="nw">
+						<td class="td3 nw">
 						<s:if test="zdnum==null">0</s:if>
 						<s:else>
 						<s:property value="znum"></s:property></s:else></td>
-						<td class="nw">
+						<td class="td3 nw">
 						<s:if test="zdnum==null">0</s:if>
 						<s:else>
 						<s:property value="snum"></s:property></s:else></td>
-						<td class="nw">
+						<td class="td2 nw">
 						<s:if test="zdnum==null">0</s:if>
 						<s:else>
 						<s:property value="jnum"></s:property></s:else></td>
-						<td class="nw">
+						<td class="td2 nw">
 						<s:if test="zdnum==null">0</s:if>
 						<s:else>
 						<s:property value="qnum"></s:property></s:else></td>
-						<td class="nw">
+						<td class="td1 nw">
 						<s:textfield name="pageStocks[%{#sta.index}].cnum" value="0"></s:textfield></td>
-					
+						<td class="td0 op-area"><div class="printhide"><a onClick="showDetail('showtr${uuid}');" class="input-nostyle">查看</a></div></td>
 		  		</tr>
 		  	</s:iterator>
 	 		</table>
@@ -143,7 +144,10 @@
 		</div>
 	</s:form>
 </div>
-
+<div class="hidden_area">
+	<div id="infoDetail" class="idialog" title="查看详情" style="width:100%;"><div id="detailMain" class="label_main op-area"></div></div>
+	</div>
+</div>
 
 
 </body>

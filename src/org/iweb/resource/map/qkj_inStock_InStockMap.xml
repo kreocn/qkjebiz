@@ -23,6 +23,8 @@
 			<isNotEmpty prepend="AND" property="add_user"><![CDATA[ i.add_user=#add_user# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="reason"><![CDATA[ i.reason=#reason# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="send"><![CDATA[ i.send=#send# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_start"><![CDATA[ i.date>=#date_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_end"><![CDATA[ i.date<=DATE_ADD(#date_end#,INTERVAL 1 day) ]]></isNotEmpty>
 
 		</dynamic>
 		<![CDATA[ Order By i.add_timer Desc LIMIT 0, 500 ]]>
@@ -50,6 +52,8 @@
 		<isNotEmpty prepend="AND" property="add_user"><![CDATA[ i.add_user=#add_user# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="reason"><![CDATA[ i.reason=#reason# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="send"><![CDATA[ i.send=#send# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_start"><![CDATA[ i.date>=#date_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_end"><![CDATA[ i.date<=DATE_ADD(#date_end#,INTERVAL 1 day) ]]></isNotEmpty>
 
 		<![CDATA[ GROUP BY i.`uuid` Order By i.add_timer Desc LIMIT 0, 500 ]]>
 	</select>
@@ -70,6 +74,8 @@
 			<isNotEmpty prepend="AND" property="add_user"><![CDATA[ add_user=#add_user# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="reason"><![CDATA[ reason=#reason# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="send"><![CDATA[ send=#send# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_start"><![CDATA[ date>=#date_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_end"><![CDATA[ date<=DATE_ADD(#date_end#,INTERVAL 1 day) ]]></isNotEmpty>
 		</dynamic>
 	</select>
 	<select id="inStock_getInStocksCountsByPower" resultClass="int" parameterClass="java.util.Map">
@@ -96,6 +102,8 @@
 			<isNotEmpty prepend="AND" property="add_user"><![CDATA[ add_user=#add_user# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="reason"><![CDATA[ reason=#reason# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="send"><![CDATA[ send=#send# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_start"><![CDATA[ date>=#date_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_end"><![CDATA[ date<=DATE_ADD(#date_end#,INTERVAL 1 day) ]]></isNotEmpty>
 
 		</dynamic>
 	</select>

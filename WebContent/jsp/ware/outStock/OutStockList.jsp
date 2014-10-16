@@ -120,6 +120,7 @@
 		<th class="td3">状态</th>
 		<th class="td1">单据性质</th>
 		<th class="td4">操作</th>
+		<th class="td0">查看</th>
 	  	</tr>
 	  	<s:iterator value="outStocks" status="sta">
 	  		<tr id="showtr${uuid}">
@@ -158,6 +159,7 @@
 			    	<a class="input-gray" href="<s:url namespace="/outStock" action="outStock_view"><s:param name="viewFlag">view</s:param><s:param name="outStock.uuid" value="uuid"></s:param></s:url>">打印</a>
 			    	</s:if>	  
 		    	</td>
+		    	<td class="td0 op-area"><a onClick="showDetail('showtr${uuid}');" class="input-nostyle">查看</a></td>
 	  		</tr>
 	  	</s:iterator>
  		</table>
@@ -167,6 +169,10 @@
 		var spage = new ShowPage(${currPage});
 		spage.show2(${recCount},${pageSize},2);
 		</script>
+	</div>
+	
+	<div class="hidden_area">
+	<div id="infoDetail" class="idialog" title="查看详情" style="width:100%;"><div id="detailMain" class="label_main op-area"></div></div>
 	</div>
 </div>
 </body>

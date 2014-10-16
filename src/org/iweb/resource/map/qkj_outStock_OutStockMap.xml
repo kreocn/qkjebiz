@@ -28,6 +28,9 @@
 			<isNotEmpty prepend="AND" property="total_price"><![CDATA[ i.total_price=#total_price# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="add_user"><![CDATA[ i.add_user=#add_user# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="manager_check_user"><![CDATA[ i.manager_check_user=#manager_check_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_start"><![CDATA[ i.date>=#date_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_end"><![CDATA[ i.date<=DATE_ADD(#date_end#,INTERVAL 1 day) ]]></isNotEmpty>
+			
 		</dynamic>
 		<![CDATA[ Order By i.add_timer Desc LIMIT 0, 500 ]]>
 	</select>
@@ -59,6 +62,9 @@
 			<isNotEmpty prepend="AND" property="total_price"><![CDATA[ i.total_price=#total_price# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="add_user"><![CDATA[ i.add_user=#add_user# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="manager_check_user"><![CDATA[ i.manager_check_user=#manager_check_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_start"><![CDATA[ i.date>=#date_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_end"><![CDATA[ i.date<=DATE_ADD(#date_end#,INTERVAL 1 day) ]]></isNotEmpty>
+			
 
 		<![CDATA[ GROUP BY i.`uuid` Order By i.add_timer Desc LIMIT 0, 500 ]]>
 	</select>
@@ -81,6 +87,9 @@
 			<isNotEmpty prepend="AND" property="total_price"><![CDATA[ total_price=#total_price# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="add_user"><![CDATA[ add_user=#add_user# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="manager_check_user"><![CDATA[ manager_check_user=#manager_check_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_start"><![CDATA[ date>=#date_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_end"><![CDATA[ date<=DATE_ADD(#date_end#,INTERVAL 1 day) ]]></isNotEmpty>
+			
 		</dynamic>
 	</select>
 	<select id="outStock_getOutStocksCountsByPower" resultClass="int" parameterClass="java.util.Map">
@@ -113,6 +122,9 @@
 			<isNotEmpty prepend="AND" property="total_price"><![CDATA[ total_price=#total_price# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="add_user"><![CDATA[ add_user=#add_user# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="manager_check_user"><![CDATA[ manager_check_user=#manager_check_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_start"><![CDATA[ date>=#date_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_end"><![CDATA[ date<=DATE_ADD(#date_end#,INTERVAL 1 day) ]]></isNotEmpty>
+			
 		</dynamic>
 	</select>
 	

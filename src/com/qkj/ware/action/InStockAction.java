@@ -198,7 +198,6 @@ public class InStockAction extends ActionSupport {
 			this.setCurrPage(ContextHelper.getCurrPage(map));
 
 			if (ContextHelper.isAdmin()) {// 管理员
-				map.clear();
 				map.put("type", "0");//非藏酒库
 				this.setInStocks(dao.list(map));
 				this.setWares(wd.list(map));

@@ -211,6 +211,8 @@ font-size: 14px;
 									</tr>
 					</s:iterator>
 					</table>
+					<p class="lb_gstit">合计</p>
+	                <p class="lb_jwei"><s:property value="inStock.total_price" /></p>
 		        </div>
 			</fieldset>
         </s:if>
@@ -281,7 +283,7 @@ font-size: 14px;
 		            <div class="label_ltit">数量:</div>
 		            <div class="label_rwben2">
 		            <div class="label_rwb">
-						<s:textfield name="inDetail.num" title="数量" dataType="integer" controlName="数量" require="required" />
+						<s:textfield id="num" name="inDetail.num" title="数量" dataType="integer" cssClass="validate[required]" />
 						<span id="ladingItemnumCase"></span>
 					</div>
 		            </div>
@@ -295,7 +297,7 @@ font-size: 14px;
 			        <div class="label_hang label_button tac">																				
 			         <s:hidden name="inDetail.lading_id" title="提货单ID" value="%{inStock.uuid}" />
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_ADD')">
-					<s:submit id="add" name="add" value="确定" action="inDetail_add" />
+					<s:submit id="add" name="add" value="确定" action="inDetail_add" onclick="return flag();" />
 					</s:if>
 					<input type="button" value="关闭" onclick="closeAddForm();" />															
 			        </div>
@@ -310,6 +312,13 @@ font-size: 14px;
 
 </body>
 <script type="text/javascript">
+function flag(){
+	var num=$("#num").val();
+	if(num==null||num==""){
+		alert("数量不能为空！");
+		return false;
+	}
+}
 var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
 var c_mid = '<s:property value="outStock.member_id" />';
 $(function() {

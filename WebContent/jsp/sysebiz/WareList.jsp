@@ -52,9 +52,9 @@
 		<th class="td1">编号</th>
 		<th class="td1">仓库类型</th>
 		<th class="td1">仓库名称</th>
-		<th class="td1">仓库地址</th>
+		<th class="td3">仓库地址</th>
 		<th class="td4">操作</th>
-		
+		<th class="td0">查看</th>
 
 	  	</tr>
 	  	<s:iterator value="wares" status="sta">
@@ -65,11 +65,12 @@
 			    	<s:elseif test="1==ware_class">藏酒库</s:elseif>
 			    </td>
 			    <td class="td1 nw"><s:property value="ware_name" /></td>
-				<td class="td1 nw"><s:property value="address" /></td>
+				<td class="td3 nw"><s:property value="address" /></td>
 				<td class="td4 op-area">
 			    	<a class="input-blue" href="<s:url namespace="/sysebiz" action="ware_load"><s:param name="viewFlag">mdy</s:param><s:param name="ware.uuid" value="uuid"></s:param></s:url>">修改</a>
 			    	<a class="input-red" href="<s:url namespace="/sysebiz" action="ware_del"><s:param name="ware.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
 			    </td>
+			    <td class="td0 op-area"><a onClick="showDetail('showtr${uuid}');" class="input-nostyle">查看</a></td>
 	  		</tr>
 	  	</s:iterator>
  		</table>
@@ -79,6 +80,9 @@
 		var spage = new ShowPage(${currPage});
 		spage.show2(${recCount},${pageSize},2);
 		</script>
+	</div>
+	<div class="hidden_area">
+	<div id="infoDetail" class="idialog" title="查看详情" style="width:100%;"><div id="detailMain" class="label_main op-area"></div></div>
 	</div>
 </div>
 </html>

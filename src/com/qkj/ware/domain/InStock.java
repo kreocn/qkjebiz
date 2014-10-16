@@ -31,7 +31,8 @@ public class InStock {
 	private String prvg;
 	private String operator_name;
 	private String take_name;
-	
+	private Date date_start;
+	private Date date_end;
 	private String conname_u;
 
 	
@@ -226,6 +227,22 @@ public class InStock {
 
 	public void setSend(Integer send) {
 		this.send = send;
+	}
+
+	public Date getDate_start() {
+		return date_start;
+	}
+
+	public void setDate_start(Date date_start) {
+		this.date_start = date_start;
+	}
+
+	public Date getDate_end() {
+		return date_end;
+	}
+
+	public void setDate_end(Date date_end) {
+		this.date_end = date_end;
 	}
 	
 	
