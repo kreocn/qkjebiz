@@ -59,6 +59,7 @@ public class Customer {
 	//
 	private String[] distributions;
 	private String[] failed_reasons;
+	private String is_recode;
 
 	public Integer getRecode_count() {
 		return recode_count;
@@ -484,4 +485,12 @@ public class Customer {
 		this.sale_type = sale_type;
 	}
 
+	public String getIs_recode() {
+		return is_recode;
+	}
+
+	public void setIs_recode(String is_recode) {
+		this.is_recode = is_recode;
+	}
+	
 }

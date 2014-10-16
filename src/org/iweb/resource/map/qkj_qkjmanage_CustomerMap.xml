@@ -28,6 +28,7 @@
 			<![CDATA[ c.dept_code In ]]>
 				<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
 			</isNotEmpty>
+			<isEqual property="is_recode" compareValue="true"><![CDATA[ and cr.recode_count>2 ]]></isEqual>
 		</dynamic>
 		<![CDATA[ Order By c.uuid Desc ]]>
 	</select>
@@ -53,6 +54,7 @@
 			<![CDATA[ c.dept_code In ]]>
 				<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
 			</isNotEmpty>
+			<isEqual property="is_recode" compareValue="true"><![CDATA[ and cr.recode_count>2 ]]></isEqual>
 		</dynamic>
 	</select>
 	<insert id="qkjmanage_addCustomer" parameterClass="customer">

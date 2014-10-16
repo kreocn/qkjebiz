@@ -108,6 +108,8 @@ function loadManagers(dept_code) {
 				<s:select id="membermanagerid" name="customer.manager" list="#{}" headerKey="" headerValue="--请选择--"  require="required" controlName="所属人"  />
 				<s:checkbox id="customer_is_sub_dept" name="customer.is_sub_dept" />
 				<label for="customer_is_sub_dept">包含子部门</label>
+				<s:checkbox id="customer_is_sub_dept" name="customer.is_recode" />
+				<label for="customer_is_sub_dept">有2次以上的回访记录的客户</label>
 			</td>
 			<td class='firstRow3'>客户重要等级(>=):</td>
 			<td class='secRow3'>
