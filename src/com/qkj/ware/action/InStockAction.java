@@ -48,6 +48,15 @@ public class InStockAction extends ActionSupport {
 	private int pageSize;
 	private int currPage;
 	private Stock newStock;
+	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;入库管理";
+	
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
 
 	public Stock getNewStock() {
 		return newStock;
@@ -215,6 +224,7 @@ public class InStockAction extends ActionSupport {
 			this.setInStock(null);
 
 			this.setRecCount(dao.getResultCount());
+			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;入库列表";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
@@ -238,6 +248,7 @@ public class InStockAction extends ActionSupport {
 				wareByPower(u, code);
 				ProductDAO pdao = new ProductDAO();
 				this.setProducts(pdao.list(null));
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/inStock/inStock_list'>入库列表</a>&nbsp;&gt;&nbsp;增加入库";
 			} else if ("mdy".equals(viewFlag) || "view".equals(viewFlag)
 					|| "print".equals(viewFlag)) {
 				map.clear();
@@ -257,7 +268,7 @@ public class InStockAction extends ActionSupport {
 					map.put("lading_id", inStock.getUuid());
 					this.setInDetails(idao.list(map));
 				}
-
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/inStock/inStock_list'>入库列表</a>&nbsp;&gt;&nbsp;入库详情";
 			} else {
 				this.setInStock(null);
 				setMessage("无操作类型!");

@@ -10,6 +10,9 @@ import org.apache.commons.logging.LogFactory;
 import org.iweb.sys.ContextHelper;
 import org.iweb.sys.Parameters;
 import org.iweb.sys.ToolsUtil;
+import org.iweb.sys.dao.UserDAO;
+import org.iweb.sys.domain.Department;
+import org.iweb.sys.domain.User;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.qkj.sche.dao.ScheduleDAO;
@@ -28,12 +31,37 @@ public class ScheAction extends ActionSupport {
 
 	private Schedule sche;
 	private List<Schedule> sches;
+	private List<User> users;
+	private List<Department> depts;
 	private String message;
 	private String viewFlag;
 	private int recCount;
 	private int pageSize;
-
+	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;公告管理";
 	
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
+
+	public List<Department> getDepts() {
+		return depts;
+	}
+
+	public void setDepts(List<Department> depts) {
+		this.depts = depts;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
 
 	public Map<String, Object> getMap() {
 		return map;
@@ -103,6 +131,7 @@ public class ScheAction extends ActionSupport {
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 			this.setSches(dao.list(map));
 			this.setRecCount(dao.getResultCount());
+			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;公告列表";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
@@ -120,6 +149,7 @@ public class ScheAction extends ActionSupport {
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 			this.setSches(dao.list(map));
 			this.setRecCount(dao.getResultCount());
+			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;公告列表";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
@@ -135,13 +165,16 @@ public class ScheAction extends ActionSupport {
 			} else if ("add".equals(viewFlag)) {
 				System.out.println("load                                       add");
 				this.setSche(null);
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/sche/schedule_leftList'>公告列表</a>&nbsp;&gt;&nbsp;增加公告";
 			} else if ("mdy".equals(viewFlag)) {
 				map.clear();
-				map.put("ssid", sche.getSsid());
+				map.put("ssid", sche.getUuid());
 				if (null == map.get("ssid"))
 					this.setSche(null);
 				else
 					this.setSche((Schedule) dao.list(map).get(0));
+				
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/sche/schedule_leftList'>公告列表</a>&nbsp;&gt;&nbsp;公告详情";
 			} else {
 				this.setSche(null);
 				setMessage("无操作类型!");
@@ -184,11 +217,27 @@ public class ScheAction extends ActionSupport {
 		ContextHelper.isPermit("QKJ_SCHE_LIST_DEL");
 		try {
 			dao.delete(sche);
-			setMessage("删除成功!ID=" + sche.getSsid());
+			setMessage("删除成功!ID=" + sche.getUuid());
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!del 数据删除失败:", e);
 			throw new Exception(this.getClass().getName() + "!del 数据删除失败:", e);
 		}
 		return SUCCESS;
 	}
+	
+	//查询收件人
+	public String ruser(String u) throws Exception{
+		String ruser=null;
+		try {
+			map.clear();
+			map.put("user_name", u);
+			UserDAO userdao=new UserDAO();
+			this.setUsers(userdao.list(map));
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return ruser;
+	}
+	
 }

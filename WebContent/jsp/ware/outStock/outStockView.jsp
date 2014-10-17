@@ -11,9 +11,8 @@
 <body>
 	<div class="main">
 		<div class="dq_step">
-			${path} <span class="opb lb op-area"> <span class="extra1">
+			${path} <span class="opb lb op-area">
 					<a href="<s:url action="outStock_list" namespace="/outStock" />">出库列表</a>
-			</span>
 			</span>
 		</div>
 		<!-- 页面修改 -->

@@ -44,8 +44,17 @@ public class OutStockAction extends ActionSupport {
 	private int recCount;
 	private int pageSize;
 	private int currPage;
-
+	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;出库管理";
 	
+	
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+
 	public List<Ware> getBorrowwares() {
 		return borrowwares;
 	}
@@ -217,6 +226,7 @@ public class OutStockAction extends ActionSupport {
 			this.setRecCount(dao.getResultCount());
 			
 			this.setOutStock(null);
+			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;出库列表";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
@@ -239,10 +249,12 @@ public class OutStockAction extends ActionSupport {
 				//出库仓库
 				wareByPower(u, code);
 				this.setOutStock(null);
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/outStock/outStock_list'>出库列表</a>&nbsp;&gt;&nbsp;增加出库";
 			}else if ("add".equals(viewFlag)) {
 				this.setOutStock(null);
 				wareByPower(u, code);
 				this.setOutStock(null);
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/outStock/outStock_list'>出库列表</a>&nbsp;&gt;&nbsp;增加出库";
 			} else if ("mdy".equals(viewFlag) || "view".equals(viewFlag) || "print".equals(viewFlag)) {
 				if (outStock.getUuid()<0&&null==outStock.getOrdernum())
 					this.setOutStock(null);
@@ -266,6 +278,7 @@ public class OutStockAction extends ActionSupport {
 					map.put("lading_id", outStock.getUuid());
 					this.setOutDetails(idao.list(map));
 				}
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/outStock/outStock_list'>出库列表</a>&nbsp;&gt;&nbsp;出库详情";
 			} else {
 				this.setOutStock(null);
 				setMessage("无操作类型!");

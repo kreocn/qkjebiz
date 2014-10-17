@@ -12,11 +12,9 @@
 <body>
 <div class="main">
 	<div class="dq_step">
-		${path}
-		<s:if test="null == outStock && 'add' == viewFlag">增加</s:if>
-						<s:elseif test="null != outStock && 'mdy' == viewFlag">修改</s:elseif>出库
-					<span class="extra1"> <a href="<s:url action="outStock_list" namespace="/outStock" />">出库列表</a>
-					</span>
+		${path}<span class="opb lb op-area">
+		<a href="<s:url action="outStock_list" namespace="/outStock" />">出库列表</a>
+		</span>
 	</div>
 	<s:form id="editForm" name="editForm" cssClass="validForm" action="outStock_add" namespace="/outStock" method="post" theme="simple">
 	<div class="label_con">

@@ -7,7 +7,7 @@
 		SELECT g.* FROM qkj_t_schedule g
 		]]>
 		<dynamic prepend="WHERE">
-			<isNotNull prepend="AND" property="ssid"><![CDATA[ g.ssid=#ssid# ]]></isNotNull>
+			<isNotNull prepend="AND" property="uuid"><![CDATA[ g.uuid=#uuid# ]]></isNotNull>
 			<isNotNull prepend="AND" property="title"><![CDATA[ g.title=#title# ]]></isNotNull>
 		</dynamic>
 	</select>
@@ -23,12 +23,12 @@
 			Set title=#title#,
 				content=#content#,
 				sdate=#sdate#
-			Where ssId=#ssid#
+			Where uuid=#uuid#
 		]]>
 	</update>
 	<delete id="sche_delSche_ss" parameterClass="schedule">
 		<![CDATA[
-			Delete From qkj_t_schedule Where ssId=#ssid#
+			Delete From qkj_t_schedule Where uuid=#uuid#
 		]]>
 		
 	</delete>

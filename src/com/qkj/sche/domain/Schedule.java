@@ -3,15 +3,17 @@ package com.qkj.sche.domain;
 import java.util.Date;
 
 public class Schedule {
-	private Integer ssid;// (int)
+	private Integer uuid;// (int)
 	private String title;// 标题
 	private String content;// 内容
 	private String sdate;// 日期
-	public Integer getSsid() {
-		return ssid;
+	private String r_uuid;//接收人
+	
+	public Integer getUuid() {
+		return uuid;
 	}
-	public void setSsid(Integer ssid) {
-		this.ssid = ssid;
+	public void setUuid(Integer uuid) {
+		this.uuid = uuid;
 	}
 	public String getTitle() {
 		return title;
@@ -30,6 +32,12 @@ public class Schedule {
 	}
 	public void setSdate(String sdate) {
 		this.sdate = sdate;
+	}
+	public String getR_uuid() {
+		return r_uuid;
+	}
+	public void setR_uuid(String r_uuid) {
+		this.r_uuid = r_uuid;
 	}
 	
 	

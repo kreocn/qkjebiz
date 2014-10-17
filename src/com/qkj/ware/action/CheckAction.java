@@ -39,9 +39,17 @@ public class CheckAction extends ActionSupport {
 	private int recCount;
 	private int pageSize;
 	private int currPage;
+	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;盘点管理";
+	
+	
 
-	
-	
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
 
 	public int getStock_id() {
 		return stock_id;
@@ -191,6 +199,7 @@ public class CheckAction extends ActionSupport {
 			this.setProducts(pd.list(null));
 			this.setRecCount(dao.getResultCount());
 			this.setCheck(null);
+			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;盘点列表";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
@@ -225,12 +234,14 @@ public class CheckAction extends ActionSupport {
 				check=new Check();
 				check.setUuid(1);
 				check.setStock_id(null);
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/check/check_list'>盘点列表</a>&nbsp;&gt;&nbsp;增加盘点";
 			} else if ("mdy".equals(viewFlag)) {
 				if (!(check == null || check.getUuid() == null)) {
 					this.setCheck((Check) dao.get(check.getUuid()));
 				} else {
 					this.setCheck(null);
 				}
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/check/check_list'>盘点列表</a>&nbsp;&gt;&nbsp;盘点详情";
 			} else {
 				this.setCheck(null);
 				setMessage("无操作类型!");

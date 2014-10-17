@@ -14,7 +14,6 @@
 	<div class="dq_step">
 		${path}
 		<span class="opb lb op-area">
-		<span class="title1"><s:if test="null == outStock && 'add' == viewFlag">增加</s:if><s:elseif test="null != outStock && 'mdy' == viewFlag">修改</s:elseif>出库</span>
 		<a href="<s:url action="outStock_list" namespace="/outStock" />" >出库列表</a>
 		</span>
 	</div>

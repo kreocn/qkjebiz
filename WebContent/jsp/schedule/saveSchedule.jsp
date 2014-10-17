@@ -1,96 +1,123 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
+<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>系统更新保存</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>公告管理--<s:text name="APP_NAME" /></title>
+<s:action name="ref" namespace="/manager" executeResult="true" />
 </head>
-<link rel="stylesheet" href="<s:url value="/css/css.css" />" />
-<link rel="stylesheet" href="<s:url value="/css/main.css" />" />
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-1.8.3.min.js" />"></script>
-<!-- 文本编辑器 -->
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-ui-1.10.3.custom.min.js" />"></script>
-<script type="text/javascript" src="/ckframe/include/widget.js"></script>
-<!-- 日期样式 -->
-<link rel="stylesheet" href="<s:url value="/include/jQuery/style.ui.smoothness/jquery-ui-1.10.3.min.css" />" />
-<!-- 日期样式 --1992-01-02-->
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.ui.datepicker-zh.js" />"></script>
-
-
 
 <body>
-<div id="main">
-<div id="result">
-	<div class="itablemdy">
-	<div class="itabletitle"><s:if test="null == sche && 'add' == viewFlag">增加</s:if><s:elseif test="null != sche && 'mdy' == viewFlag">修改</s:elseif>系统</div>
-<s:form name="form1" action="sche_add" namespace="/sysebiz" onsubmit="return validator(this);" method="post" theme="simple">
-	<div class="ifromoperate" ></div>
-	<table class="ilisttable" width="100%" border="1" cellspacing="0" cellpadding="0" bordercolor="#8B8B8B">
-		<s:if test="null != sche">	
-		  <tr>
-		    <td class="firstRow">编号:</td>
-		    <td class="secRow"><s:property value="sche.ssid" />
-			<s:hidden id="sche.ssid" name="sche.ssid" />
-			</td>	
-		  </tr>
-		</s:if>
-		  
-		  <tr>
-		    <td class="firstRow"><span style="color:red;">*</span>标题:</td>
-		    <td class="secRow">
-		    	<s:textfield id="sche.title" name="sche.title" title="标题" require="required" controlName="标题" cssStyle="width:40%;" />
-		    	
-		    </td>
-		  </tr>
-		  <tr>
-		    <td class="firstRow">日期:</td>
-		    <td class="secRow">
-		    <input id="active_plan_start" type="text" name="sche.sdate" title="活动开始时间" value="${sche.sdate}" dataType="date" controlName="计划开始时间" require="required" />
-		    	<script type="text/javascript">$("#active_plan_start").datepicker();</script>
-		    	<!-- 
-		    	<s:textfield id="ware.map_data" name="ware.map_data" title="仓库地图点" />
-		    	 -->
-		    </td>
-		  </tr>
-		 
-		  <tr>
-		  	<td class="titleRow" colspan="2">内容 </td>
-		  </tr>
-		  <tr>
-		    <td class="secRow" colspan="2">
-				<textarea cols="100" id="warenoteid" name="sche.content" rows="6"><s:property value="sche.content" /></textarea>
-		    </td>
-		  </tr>  
-		
-		<tr>
-		    <td colspan="20" class="buttonarea"><span id="message"><s:property value="message" /></span>
-				<s:if test="null == sche && 'add' == viewFlag">
-					<s:submit id="add" name="add" value="确定" action="schedule_add" />
+
+	<div class="main">
+		<div class="dq_step">
+			${path} <span class="opb lb op-area"> <a
+				href="<s:url action="schedule_leftList" namespace="/sche" />">公告列表</a>
+			</span>
+		</div>
+		<!-- 页面修改 -->
+		<s:form id="editForm" name="editForm" cssClass="validForm"
+			action="sche_add" namespace="/sche" method="post" theme="simple">
+			<div class="label_con">
+				<s:if test="null != sche">
+					<div class="label_main">
+						<div class="label_hang">
+							<div class="label_ltit">编号:</div>
+							<div class="label_rwb">
+								<s:property value="sche.uuid" />
+								<s:hidden id="sche.uuid" name="sche.uuid" />
+							</div>
+						</div>
+					</div>
+					<div class="label_main">
+					<div class="label_hang">
+			            <div class="label_ltit">发送给:</div>
+			            <div class="label_rwbenx">
+			            	<span class="message_prompt">不填写，则对所有人公开！</span>
+							<s:textfield id="r_uuid" name="sche.r_uuid" title="接收人" cssClass="label_hang_linput inputNote validate[maxSize[255]]" />
+			            </div>
+			        </div>
+					</div>
+					<div class="label_main">
+						<div class="label_hang">
+							<div class="label_ltit">日期:</div>
+							<div class="label_rwb">
+								<s:property value="sche.sdate" />
+								<s:hidden id="sche.uuid" name="sche.sdate" />
+							</div>
+						</div>
+					</div>
 				</s:if>
-				<s:elseif test="null != sche && 'mdy' == viewFlag">
-					<s:submit id="save" name="save" value="保存" action="schedule_save" />
-					<s:submit id="delete" name="delete" value="删除" action="sche_del" onclick="return isDel();" />
-				</s:elseif>
-				<input type="button" value="返回" onclick="linkurl('<s:url action="sche_list" namespace="/sysebiz" />');" />
-			</td>
-	    </tr>
-	</table>	
-</s:form>
+
+				<s:else>
+					<div class="label_hang">
+			            <div class="label_ltit">发送给:</div>
+			            <div class="label_rwbenx">
+			            	<span class="message_prompt">不填写，则对所有人公开！</span>
+							<s:textfield id="r_uuid" name="sche.r_uuid" title="接收人" cssClass="label_hang_linput inputNote validate[maxSize[255]]" />
+			            </div>
+			        </div>
+					<div class="label_main">
+						<div class="label_hang">
+							<div class="label_ltit">日期:</div>
+							<div class="label_rwben2">
+								<span class="label_rwb nw"> <input
+									class="datepicker iI-t validate[required,custom[date]]"
+									type="text" name="sche.sdate"
+									value="${it:formatDate(inStock.date,'yyyy-MM-dd')}" />
+								</span>
+							</div>
+						</div>
+					</div>
+				</s:else>
+				<div class="label_main">
+					<div class="label_hang">
+						<div class="label_ltit">主题:</div>
+						<div class="label_rwben">
+							<s:textfield name="sche.title" title="主题"
+								cssClass="label_hang_linput validate[required,maxSize[255]]" />
+						</div>
+					</div>
+				</div>
+
+
+				<div class="label_main">
+					<div class="label_hang">
+						<div class="label_ltit">公告内容:</div>
+						<div class="label_rwbenx"></div>
+					</div>
+				</div>
+				<div class="label_main">
+					<div class="note_area">
+						<s:textarea name="sche.content" title="公告内容"
+							cssClass="xheditorArea validate[maxSize[65535]]" />
+					</div>
+				</div>
+				<div class="label_main">
+					<div class="label_hang">
+						<div class="label_ltit">相关操作:</div>
+						<div class="label_rwbenx">
+							<span id="message"><s:property value="message" /></span>
+							<s:if test="null == sche && 'add' == viewFlag">
+								<s:submit id="add" name="add" value="确定" action="schedule_add"
+									cssClass="input-blue" />
+							</s:if>
+							<s:elseif test="null != sche && 'mdy' == viewFlag">
+								<s:submit id="save" name="save" value="保存"
+									action="schedule_save" cssClass="input-blue" />
+								<s:submit id="delete" name="delete" value="删除" action="sche_del"
+									cssClass="input-red" onclick="return isDel();" />
+							</s:elseif>
+							<input type="button" class="input-gray" value="返回"
+								onclick="linkurl('<s:url action="schedule_leftList" namespace="/sche" />');" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</s:form>
 	</div>
-</div>
-</div>
 </body>
-
-<script type="text/javascript">
-var infoeditor01;
-$(function(){
-	infoeditor01 = new widget_textarea();
-	infoeditor01.init("warenoteid");
-});
-
-$("#orderGoods_storage_date").datepicker();
-</script>
 </html>
