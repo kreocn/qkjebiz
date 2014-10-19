@@ -58,7 +58,7 @@ display: none;
  	<div class="label_main">
         <div class="label_hang">
             <div class="label_ltit">编号:</div>
-            <div class="label_rwben"><s:textfield name="apply.uuid" /></div>
+            <div class="label_rwben"><s:textfield name='apply.uuid' /></div>
         </div>
         <div class="label_hang">
             <div class="label_ltit">事(%):</div>
@@ -105,7 +105,7 @@ display: none;
             <div class="label_ltit">状态:</div>
             <div class="label_rwben2">
             	<span class="label_rwb iselect">
-            	<s:select name="apply.status_sp" title="状态" headerKey="" headerValue="-申请状态-" list="#{-1:'已作废',0:'新申请',5:'审核退回',10:'待审核',20:'大区经理已审',25:'销管经理已审',30:'运营总监已审'}" />
+            	<s:select name="apply.status_sp" title="状态" headerKey="" headerValue="-申请状态-" list="#{-1:'已作废',0:'新申请',5:'审核退回',10:'待审核',20:'经理/大区已审',25:'销管经理已审',30:'运营总监已审'}" />
 				</span>
 				<span class="label_rwb iselect">
 				<s:select name="apply.ship_status" headerKey="" headerValue="-发货状态-" list="#{0:'未发货',10:'已发货',20:'已受理' }" />
@@ -146,7 +146,7 @@ display: none;
 					<s:if test="5==status"><span class="message_error">已退回(${check_user_name})</span></s:if>
 					<s:if test="10==status"><span class="message_warning">待审核</span></s:if>
 					<s:if test="20==status">
-					<s:if test="0==sp_check_status || 5==sp_check_status"><span class="message_pass">大区经理已审</span></s:if>
+					<s:if test="0==sp_check_status || 5==sp_check_status"><span class="message_pass">经理/大区已审</span></s:if>
 					<s:elseif test="10==sp_check_status"><span class="message_pass">销管经理已审</span></s:elseif>
 					</s:if>
 					<s:if test="30==status"><span class="message_pass">运营总监已审</span></s:if>
@@ -234,9 +234,7 @@ display: none;
     </div>
 </s:form>
 </div>
-<div id="infoDetail" class="idialog" title="查看详情" style="width:100%;">
-<div id="detailMain" class="label_main op-area"></div>
-</div>
+<div id="infoDetail" class="idialog" title="查看详情" style="width:100%;"><div id="detailMain" class="label_main op-area"></div></div>
 </div>
 <!-- HIDDEN AREA END -->
 </body>

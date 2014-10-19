@@ -54,8 +54,7 @@ public class TableColumn {
 	/**
 	 * 时间元素初始化
 	 */
-	public TableColumn(String name, String title, int insert, int update, int show, int search, int stype,
-			String datePatten, int now) {
+	public TableColumn(String name, String title, int insert, int update, int show, int search, int stype, String datePatten, int now) {
 		this.name = name;
 		this.title = title;
 		this.insert = insert;
@@ -70,8 +69,7 @@ public class TableColumn {
 	/**
 	 * 通用元素初始化
 	 */
-	public TableColumn(String name, String title, int key, int insert, int update, int show, int search, int stype,
-			List<ListObject> slist) {
+	public TableColumn(String name, String title, int key, int insert, int update, int show, int search, int stype, List<ListObject> slist) {
 		this.name = name;
 		this.title = title;
 		this.key = key;
@@ -86,8 +84,7 @@ public class TableColumn {
 	/**
 	 * 通用元素初始化
 	 */
-	public TableColumn(String name, String title, int key, int insert, int update, int show, int search, int stype,
-			List<ListObject> slist, String datePatten) {
+	public TableColumn(String name, String title, int key, int insert, int update, int show, int search, int stype, List<ListObject> slist, String datePatten) {
 		this.name = name;
 		this.title = title;
 		this.key = key;
@@ -277,122 +274,109 @@ public class TableColumn {
 					sb.append(this.getName()).append(".").append(this.getName()).append("list");
 				} else {
 					boolean isNumber = false;
-					if ("Integer".equals(this.getJtype()) || "Float".equals(this.getJtype())
-							|| "Double".equals(this.getJtype())) {
+					if ("Integer".equals(this.getJtype()) || "Float".equals(this.getJtype()) || "Double".equals(this.getJtype())) {
 						isNumber = true;
 					}
-
 					for (ListObject l : slist) {
-						sb.append("<s:if test=\"").append(isNumber ? "" : "'").append(l.getKey())
-								.append(isNumber ? "" : "'").append("==").append(this.getName() + "\">")
+						sb.append("<s:if test=\"").append(isNumber ? "" : "'").append(l.getKey()).append(isNumber ? "" : "'").append("==").append(this.getName() + "\">")
 								.append(l.getValue()).append("</s:if>");
 					}
 				}
 			} else if ("Date".equals(jtype)) {
-				sb.append("<s:date name=\"").append(this.getName()).append("\" format=\"").append(this.getDatePatten())
-						.append("\" />");
+				sb.append("${it:formatDate(").append(this.getName()).append(",'").append(this.getDatePatten()).append("')}");
 			} else {
-				sb.append("<s:property value=\"").append(this.getName()).append("\" />");
+				sb.append("${").append(this.getName()).append("}");
 			}
 		} else {
 			String inputName = class_alias + "." + this.getName(); // 表单名称
 			if (this.getStype() == 0) {
-				sb.append("<s:textfield name=\"").append(inputName).append("\" ").append("title=\"")
-						.append(this.getTitle()).append("\"").append(getValidForm(class_alias, ctx)).append(" />");
+				// ").append("").append("
+				sb.append("<s:textfield name='").append(inputName).append("' ").append(getStyle(class_alias, ctx)).append(" />");
 			} else if (this.getStype() == 1) {
-				sb.append("<s:select name=\"").append(inputName).append("\" ").append("title=\"")
-						.append(this.getTitle()).append("\" headerKey=\"\" headerValue=\"--请选择--\" ").append("list=\"")
-						.append(getListFrom()).append("\" />");
+				sb.append("<span class=\"label_rwb iselect\"><s:select name=\"").append("inputName").append("\" ");
+				if (this.getNullable() == 1) sb.append(" headerKey=\"\" headerValue=\"-请选择-\"");
+				sb.append(" list=\"").append(getListFrom()).append("\" ").append(getStyle(class_alias, ctx)).append(" /></span>");
 			} else if (this.getStype() == 2) {
-				sb.append("<s:radio name=\"").append(inputName).append("\" ").append("title=\"")
-						.append(this.getTitle()).append("\"  ").append("list=\"").append(getListFrom()).append("\" />");
+				sb.append("<s:radio name=\"").append(inputName).append("\" ").append("list=\"").append(getListFrom()).append("\" ").append(getStyle(class_alias, ctx))
+						.append(" />");
 			} else if (this.getStype() == 3) {
-				sb.append("<s:checkboxlist name=\"").append(inputName).append("\" ").append("title=\"")
-						.append(this.getTitle()).append("\"  ").append("list=\"").append(getListFrom()).append("\" />");
+				sb.append("<s:checkboxlist name=\"").append(inputName).append("\" ").append("list=\"").append(getListFrom()).append("\" ").append(getStyle(class_alias, ctx))
+						.append(" />");
 			} else if (this.getStype() == 4) {
-				sb.append("<s:hidden name=\"").append(inputName).append("\" ").append("title=\"")
-						.append(this.getTitle()).append("\"").append(" />");
+				sb.append("<s:hidden name='").append(inputName).append("' />");
 			} else if (this.getStype() == 5 || this.getStype() == 6) {
-				if ("Date".equals(this.getJtype())) {
-					sb.append("<s:date name=\"").append(inputName).append("\" format=\"").append(this.getDatePatten())
-							.append("\" />");
+				if (ctx == 1) {
+					sb.append("<s:textfield name='").append(inputName).append("' ").append(getStyle(class_alias, ctx)).append(" />");
 				} else {
-					sb.append("<s:property value=\"").append(inputName).append("\" />");
+					if ("Date".equals(this.getJtype())) {
+						sb.append("${it:formatDate(").append(this.getName()).append(",'").append(this.getDatePatten()).append("')}");
+					} else {
+						sb.append("${").append(this.getName()).append("}");
+					}
+					if (this.getStype() == 5) sb.append("<s:hidden name=\"").append(inputName).append("\" />");
 				}
-				if (this.getStype() == 5) sb.append("<s:hidden name=\"").append(inputName).append("\" ")
-						.append("title=\"").append(this.getTitle()).append("\"").append(" />");
 			} else if (this.getStype() == 8) {
-				sb.append("<textarea id=\"")
-						.append(class_alias)
-						.append(this.getName())
-						.append("id\" name=\"")
-						.append(inputName)
-						.append("\" > <s:property value=\"")
-						.append(inputName)
-						.append("\" /></textarea>\n")
-						.append("<script type=\"text/javascript\">\n")
-						.append("CKEDITOR.editorConfig = function(config) {\n")
-						.append("config.language = 'zh-cn';config.toolbar = 'Full';\n")
-						.append("config.filebrowserBrowseUrl='<s:url value=\"/include/ckfinder/ckfinder.html\" />';\n")
-						.append("config.filebrowserImageBrowseUrl='<s:url value=\"/include/ckfinder/ckfinder.html?type=Images\" />';\n")
-						.append("config.filebrowserFlashBrowseUrl='<s:url value=\"/include/ckfinder/ckfinder.html?type=Flash\" />';\n")
-						.append("config.filebrowserUploadUrl='<s:url value=\"/include/ckfinder/core/connector/java/connector.java\" />?type=Files&command=QuickUpload';\n")
-						.append("config.filebrowserImageUploadUrl='<s:url value=\"/include/ckfinder/core/connector/java/connector.java\" />?type=Images&command=QuickUpload';\n")
-						.append("config.filebrowserFlashUploadUrl='<s:url value=\"/include/ckfinder/core/connector/java/connector.java\" />?type=Flash&command=QuickUpload';\n")
-						.append("config.filebrowserWindowWidth = '1000';\n")
-						.append("config.filebrowserWindowHeight = '700';};\n").append("var ").append(class_alias)
-						.append(this.getName()).append("id_editor = CKEDITOR.replace('")
-						.append(class_alias + this.getName()).append("id');\n").append("CKFinder.setupCKEditor(")
-						.append(class_alias).append(this.getName()).append("id_editor, '/ckfinder/');\n</script>");
+				sb.append("<s:textarea name=\"").append(inputName).append("\" />");
 			}
 		}
 		return sb.toString();
 	}
 
 	/**
-	 * JS校验,或者其他功能(比如Date选择控件)
+	 * JS校验,或者其他功能(比如Date选择控件,HTML编辑框等)
 	 * 
 	 * @param class_alias
 	 * @param ctx
 	 * @return
 	 * @date 2014-1-1 下午12:59:17
 	 */
-	private String getValidForm(String class_alias, int ctx) {
+	private String getStyle(String class_alias, int ctx) {
+		StringBuffer fc = new StringBuffer(); // 需要附加的样式class
+		StringBuffer va = new StringBuffer(); // 校验参数
+
 		StringBuffer sb = new StringBuffer();
 		if (this.getNullable() == 1 && ctx == 0) {
-			sb.append(" require=\"required\"");
+			va.append("required,");
 		}
 		if (this.getHmax() > 0) {
 			if (ToolsUtil.isIn(this.getJtype(), new String[] { "Integer", "Float", "Double" })) {
-				sb.append(" dataLength=\"0,").append(this.getMax()).append("\"");
+				va.append("maxSize[").append(this.getMax()).append("],");
 			} else {
-				sb.append(" dataLength=\"0,").append(this.getHmax()).append("\"");
+				va.append("maxSize[").append(this.getHmax()).append("],");
 			}
 		}
-		// System.out.println(this.getName() + ":" + this.getJtype());
 		switch (this.getJtype()) {
 		case "Integer":
-			sb.append(" dataType=\"integer\"");
+			va.append("custom[integer],");
 			break;
 		case "Float":
-			sb.append(" dataType=\"float\"");
+			va.append("custom[float],");
 			break;
 		case "Double":
-			sb.append(" dataType=\"number\"");
+			va.append("custom[number],");
 			break;
 		case "Date":
-			sb.append(" value=\"%{getText('global.date',{").append(class_alias + ".").append(this.getName())
-					.append("})=='null'?'':getText('global.date',{").append(class_alias).append(".")
-					.append(this.getName()).append("})}\"").append(" dataType=\"date\"");
+			va.append("custom[date],");
+			fc.append(" datepicker");
 			break;
 		default:
 			break;
 		}
-
-		if (sb.length() > 0) {
-			sb.append(" controlName=\"").append(this.getTitle()).append("\"");
+		// 添加特殊class
+		switch (this.getStype()) {
+		case 2:
+			fc.append(" regular-radio");
+			break;
+		case 3:
+			fc.append(" regular-checkbox");
+			break;
+		case 8:
+			fc.append(" xheditorArea");
+			break;
+		default:
+			break;
 		}
-
+		sb.append("cssClass='").append(fc).append(" validate[").append(va).append("]'");
 		return sb.toString();
 	}
 
@@ -408,15 +392,13 @@ public class TableColumn {
 			sb.append(this.getName()).append(".").append(this.getName()).append("list");
 		} else {
 			boolean isNumber = false;
-			if ("Integer".equals(this.getJtype()) || "Float".equals(this.getJtype())
-					|| "Double".equals(this.getJtype())) {
+			if ("Integer".equals(this.getJtype()) || "Float".equals(this.getJtype()) || "Double".equals(this.getJtype())) {
 				isNumber = true;
 			}
 
 			sb.append("#{");
 			for (ListObject l : slist) {
-				sb.append(isNumber ? "" : "'").append(l.getKey()).append(isNumber ? "" : "'").append(":").append("'")
-						.append(l.getValue()).append("',");
+				sb.append(isNumber ? "" : "'").append(l.getKey()).append(isNumber ? "" : "'").append(":").append("'").append(l.getValue()).append("',");
 			}
 			sb.replace(sb.length() - 1, sb.length(), "}");
 		}

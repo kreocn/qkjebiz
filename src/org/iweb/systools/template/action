@@ -1,6 +1,6 @@
 package $action_package$;
 $action_import$
-public class $file_s_name$Action extends ActionSupport {
+public class $file_s_name$Action extends ActionSupport implements ActionAttr {
 	private static final long serialVersionUID = 1L;
 	private static Log log = LogFactory.getLog($file_s_name$Action.class);
 	private Map<String, Object> map = new HashMap<String, Object>();
@@ -13,6 +13,10 @@ public class $file_s_name$Action extends ActionSupport {
 	private int recCount;
 	private int pageSize;
 	private int currPage;
+	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;$app_name$";
+	public String getPath() {
+		return path;
+	}
 
 	public $file_s_name$ get$file_s_name$() {
 		return $class_alias$;
@@ -81,6 +85,7 @@ public class $file_s_name$Action extends ActionSupport {
 			this.setCurrPage(ContextHelper.getCurrPage(map));		
 			this.set$file_s_name$s(dao.list(map));
 			this.setRecCount(dao.getResultCount());
+			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;$app_name$列表";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
@@ -99,12 +104,14 @@ public class $file_s_name$Action extends ActionSupport {
 				setMessage("你没有选择任何操作!");
 			} else if ("add".equals(viewFlag)) {
 				this.set$file_s_name$(null);
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/$name_space$/$class_alias$_relist'>$app_name$列表</a>&nbsp;&gt;&nbsp;增加$app_name$";
 			} else if ("mdy".equals(viewFlag)) {
 				if (!($class_alias$ == null || $class_alias$.getUuid() == null)) {
 					this.set$file_s_name$(($file_s_name$) dao.get($class_alias$.getUuid()));
 				} else {
 					this.set$file_s_name$(null);
 				}
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/$name_space$/$class_alias$_relist'>$app_name$列表</a>&nbsp;&gt;&nbsp;增加$app_name$";
 			} else {
 				this.set$file_s_name$(null);
 				setMessage("无操作类型!");

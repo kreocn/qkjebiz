@@ -180,7 +180,7 @@ color: #008000;
 					<s:submit id="apply_check_1" name="apply_check_1" value="作废" action="apply_check_1"  cssClass="input-red" onclick="return isOp('确定进行此操作?');" />
 					</s:if>
 					<s:if test="apply.status==10 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_CHECK10')">
-					<s:submit id="apply_check10" name="apply_check10" value="大区经理审核通过" cssClass="input-green" action="apply_check10" onclick="return isOp('确定进行此操作?');" />
+					<s:submit id="apply_check10" name="apply_check10" value="经理/大区审核通过" cssClass="input-green" action="apply_check10" onclick="return isOp('确定进行此操作?');" />
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_CHECK5')">
 					<s:submit id="apply_check5" name="apply_check5" value="审核不通过"  cssClass="input-red" action="apply_check5" onclick="return isOp('确定进行此操作?');" />
 					</s:if>
