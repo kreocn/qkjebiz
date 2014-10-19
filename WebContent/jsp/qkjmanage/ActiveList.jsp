@@ -64,7 +64,7 @@ cursor: pointer;
         <div class="label_hang">
             <div class="label_ltit">(申)销售状态:</div>
             <div class="label_rwben label_rwb"><div class="iselect"><s:select name="active.sd_status" cssClass="selectKick"
-				 list="#{0:'新单',5:'退回',10:'待审核',30:'大区经理已审',40:'运营总监已审',50:'业务副总已审',60:'总经理已审'}"
+				 list="#{0:'新单',5:'退回',10:'待审核',30:'经理/大区已审',40:'运营总监已审',50:'业务副总已审',60:'总经理已审'}"
 				 headerKey="" headerValue="--请选择--" /></div>
             </div>
         </div>
@@ -80,7 +80,7 @@ cursor: pointer;
             <div class="label_ltit">(结)销售状态:</div>
             <div class="label_rwben label_rwb"><div class="iselect">
             	<s:select name="active.close_sd_status" cssClass="selectKick"
-				 list="#{0:'新单',5:'退回',10:'待审核',30:'大区经理已审',40:'运营总监已审',50:'业务副总已审',60:'总经理已审'}"
+				 list="#{0:'新单',5:'退回',10:'待审核',30:'经理/大区已审',40:'运营总监已审',50:'业务副总已审',60:'总经理已审'}"
 				 headerKey="" headerValue="--请选择--" /></div>
             </div>
         </div>
@@ -171,8 +171,10 @@ cursor: pointer;
 				<s:if test="status==4"><font class="message_warning">结案审批中</font></s:if>
 				<s:if test="status==5"><font class="message_pass" title="${it:formatDate(close_pass_time,'yyyy-MM-dd HH:mm:ss')}">结案通过</font></s:if>
 				<s:if test="status==5">
-				<s:if test="ship_status==0"><font class="message_error ship_info"  data="${uuid}">未发货</font></s:if>
-				<s:if test="ship_status==10"><font class="message_pass ship_info"  data="${uuid}">已发货</font></s:if>
+				<span class="op-area">
+				<s:if test="ship_status==0"><a class="ship_info input-nostyle"  data="${uuid}">未发货</a></s:if>
+				<s:if test="ship_status==10"><a class="ship_info input-nostyle"  data="${uuid}"><span class="message_pass">已发货</span></a></s:if>
+				</span>
 				<span class="ship_hidden_info" style="display:none;">
 					<span id="ship_no_${uuid}">${ship_no}</span>
 					<span id="ship_type_${uuid}">${ship_type}</span>
@@ -188,7 +190,7 @@ cursor: pointer;
 					<s:if test="sd_status==0">新单</s:if>
 					<s:if test="sd_status==5"><font class="message_error" title="${sd_user_name} ${it:formatDate(sd_time,'yyyy-MM-dd HH:mm:ss')}">审核退回</font></s:if>
 					<s:if test="sd_status==10"><font class="message_warning">待审核</font></s:if>
-					<s:if test="sd_status==30"><font class="message_pass" title="${sd_user_name} ${it:formatDate(sd_time,'yyyy-MM-dd HH:mm:ss')}">大区经理已审</font></s:if>
+					<s:if test="sd_status==30"><font class="message_pass" title="${sd_user_name} ${it:formatDate(sd_time,'yyyy-MM-dd HH:mm:ss')}">经理/大区已审</font></s:if>
 					<s:if test="sd_status==40"><font class="message_pass" title="${sd_user_name} ${it:formatDate(sd_time,'yyyy-MM-dd HH:mm:ss')}">运营总监已审</font></s:if>
 					<s:if test="sd_status==50"><font class="message_pass" title="${sd_user_name} ${it:formatDate(sd_time,'yyyy-MM-dd HH:mm:ss')}">业务副总已审</font></s:if>
 					<s:if test="sd_status==60"><font class="message_pass" title="${sd_user_name} ${it:formatDate(sd_time,'yyyy-MM-dd HH:mm:ss')}">总经理已审</font></s:if>
@@ -197,7 +199,7 @@ cursor: pointer;
 				<s:if test="close_sd_status==0">新单</s:if>
 				<s:if test="close_sd_status==5"><font class="message_error" title="${close_sd_user_name} ${it:formatDate(close_sd_time,'yyyy-MM-dd HH:mm:ss')}">审核退回</font></s:if>
 				<s:if test="close_sd_status==10"><font class="message_warning">待审核</font></s:if>
-				<s:if test="close_sd_status==30"><font class="message_pass" title="${close_sd_user_name} ${it:formatDate(close_sd_time,'yyyy-MM-dd HH:mm:ss')}">大区经理已审</font></s:if>
+				<s:if test="close_sd_status==30"><font class="message_pass" title="${close_sd_user_name} ${it:formatDate(close_sd_time,'yyyy-MM-dd HH:mm:ss')}">经理/大区已审</font></s:if>
 				<s:if test="close_sd_status==40"><font class="message_pass" title="${close_sd_user_name} ${it:formatDate(close_sd_time,'yyyy-MM-dd HH:mm:ss')}">运营总监已审</font></s:if>
 				<s:if test="close_sd_status==50"><font class="message_pass" title="${close_sd_user_name} ${it:formatDate(close_sd_time,'yyyy-MM-dd HH:mm:ss')}">业务副总已审</font></s:if>
 				<s:if test="close_sd_status==60"><font class="message_pass" title="${close_sd_user_name} ${it:formatDate(close_sd_time,'yyyy-MM-dd HH:mm:ss')}">总经理已审</font></s:if>

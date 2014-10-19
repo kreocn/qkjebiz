@@ -174,7 +174,7 @@ color: #008000;
 					<s:if test="active.close_sd_status==0">新单</s:if>
 					<s:if test="active.close_sd_status==5"><font class="message_error">审核退回</font>(${active.close_sd_user_name})</s:if>
 					<s:if test="active.close_sd_status==10"><font class="message_warning">待审核</font></s:if>
-					<s:if test="active.close_sd_status==30"><font class="message_pass">大区经理已审</font>(${active.close_sd_user_name})</s:if>
+					<s:if test="active.close_sd_status==30"><font class="message_pass">经理/大区已审</font>(${active.close_sd_user_name})</s:if>
 					<s:if test="active.close_sd_status==40"><font class="message_pass">运营总监已审</font>(${active.close_sd_user_name})</s:if>
 					<s:if test="active.close_sd_status==50"><font class="message_pass">业务副总已审</font>(${active.close_sd_user_name})</s:if>
 					<s:if test="active.close_sd_status==60"><font class="message_pass">总经理已审</font>(${active.close_sd_user_name})</s:if>
@@ -515,7 +515,7 @@ color: #008000;
             <div class="label_ltit">销售部审核:</div>
             <div class="label_rwbenx">
 				<s:if test="10==active.close_sd_status && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS10')">
-				<s:submit cssClass="input-green" name="mdyCloseActiveSDStatus10" value="大区经理-审核通过" action="mdyCloseActiveSDStatus10" onclick="return isOp('确定执行此操作?');" />
+				<s:submit cssClass="input-green" name="mdyCloseActiveSDStatus10" value="经理/大区-审核通过" action="mdyCloseActiveSDStatus10" onclick="return isOp('确定执行此操作?');" />
 				<s:submit cssClass="input-red" name="mdyCloseActiveSDStatus5" value="审核不通过" action="mdyCloseActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
 				</s:if>
 				<s:if test="30==active.close_sd_status && 30==active.close_smd_status && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS30')">
@@ -536,7 +536,7 @@ color: #008000;
 					<s:if test="active.close_sd_status==0">新单</s:if>
 					<s:if test="active.close_sd_status==5"><font class="message_error">审核退回</font>(${active.close_sd_user_name} ${it:formatDate(active.close_sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 					<s:if test="active.close_sd_status==10"><font class="message_warning">待审核</font></s:if>
-					<s:if test="active.close_sd_status==30"><font class="message_pass">大区经理已审</font>(${active.close_sd_user_name} ${it:formatDate(active.close_sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+					<s:if test="active.close_sd_status==30"><font class="message_pass">经理/大区已审</font>(${active.close_sd_user_name} ${it:formatDate(active.close_sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 					<s:if test="active.close_sd_status==40"><font class="message_pass">运营总监已审</font>(${active.close_sd_user_name} ${it:formatDate(active.close_sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 					<s:if test="active.close_sd_status==50"><font class="message_pass">业务副总已审</font>(${active.close_sd_user_name} ${it:formatDate(active.close_sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 					<s:if test="active.close_sd_status==60"><font class="message_pass">总经理已审</font>(${active.close_sd_user_name} ${it:formatDate(active.close_sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
