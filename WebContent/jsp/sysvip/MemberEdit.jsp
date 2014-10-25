@@ -99,7 +99,7 @@ function checkManager() {
 		<div class="label_rwben2 nw">
 			<div class="label_rwb"><s:textfield title="部门名称" id="userdept_nameid" name="member.dept_name" readonly="true" /></div>
 			<s:hidden id="userdept_codeid" name="member.dept_code" />
-			<img class="imglink" src='<s:url value="/images/open2.gif" />' onclick="selectDept();" />
+			<img class="imglink" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true);" />
 		</div>
 	</div>
 	<div class="label_hang">

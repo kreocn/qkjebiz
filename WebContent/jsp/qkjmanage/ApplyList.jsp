@@ -234,7 +234,6 @@ display: none;
     </div>
 </s:form>
 </div>
-<div id="infoDetail" class="idialog" title="查看详情" style="width:100%;"><div id="detailMain" class="label_main op-area"></div></div>
 </div>
 <!-- HIDDEN AREA END -->
 </body>

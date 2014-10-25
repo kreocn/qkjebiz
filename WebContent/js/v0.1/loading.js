@@ -102,7 +102,7 @@ function SpinStop(){
 	if (_spinner) _spinner.stop();
 }
 /* 全屏loading js控件结束 */
-/* 查看详情专用函数开始 */
+/* 查看详情专用函数开始 
 function showDetail(trid){
 	var _h = "";
 	var ths = $("#coltr th");
@@ -122,6 +122,40 @@ function showDetail(trid){
 
 	$("#detailMain").empty().append(_h);
 	$("#infoDetail").dialog("open");
+}
+*/
+function showDetail(trid){
+	var ths = $("#coltr th");
+	var $s = $("#" + trid);
+	//showtr123
+	var uid = trid.substr(6);
+	var d_id = "detailtr" + uid;
+	//alert(trid.substr(6));
+	if($("#" + d_id).length==0) {
+		var _h = '<tr id="'+d_id+'" class="detailtr"><td colspan="20" class="idialog"><div class="label_main op-area detail-content">';
+		$s.find("td").each(function(i, n){
+			if (i == ths.length - 1) { return; }
+			if (!$(this).hasClass("nsd")) {
+				var cc = "label_rwben";
+				if ($(this).hasClass("longnote")) {
+					cc = "label_rwbenx";
+				}
+				_h += '<div class="label_hang">';
+				_h += '<div class="label_ltit">' + ths[i].innerHTML + ':</div>';
+				_h += '<div class="' + cc + '">' + n.innerHTML + '</div>';
+				_h += '</div>';
+			}
+		});
+		_h += '</div>	</td></tr>';
+		$s.after(_h);
+	}
+	var $d = $("#" + d_id);
+	if(!$cu.isVisible($d)) {
+		$d.siblings(".detailtr").hide();
+		$d.slideDown();
+	} else {
+		$d.hide();
+	}
 }
 /* 查看详情专用函数结束 */
 /**

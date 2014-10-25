@@ -257,6 +257,14 @@ a {
 	width: 500px;
 }
 
+.detailtr {
+	display: none;
+}
+
+.detail-content {
+	border: #059c77 dotted 1px;
+}
+
 .lb_xxsm {
 	border: 1px solid #ccc; margin: 5px 0;
 }
