@@ -14,7 +14,9 @@
 	<div class="dq_step">
 		${path}
 			<span class="opb lb op-area">
+			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SCHE_ADDSCHE')">
 			<a href="<s:url namespace="/sche" action="schedule_load"><s:param name="viewFlag">add</s:param></s:url>" >添加公告</a>
+			</s:if>
 			</span>
 	</div>
 	<!-- 条件查询 -->

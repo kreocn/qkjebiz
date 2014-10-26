@@ -18,6 +18,16 @@ public class CommonDAO extends AbstractDAO {
 		map.put("sqltext", sqltext);
 		return super.list("commonSelectMapList", map);
 	}
+	
+	public List listbytime(Map<String, Object> map) {
+		//setCountMapid("qkjmanage_getApplysCounts");
+		return super.list("find_activetime", map);
+	}
+	public List listbynum(Map<String, Object> map) {
+		//setCountMapid("qkjmanage_getApplysCounts");
+		return super.list("find_activenum", map);
+	}
+	
 
 	/**
 	 * 结果集只有一行的情况下适用

@@ -92,14 +92,16 @@ padding-left: 5px;padding-right: 5px;
 		<th>总监审核时间</th>
 		<th>申请通过时间</th>
 	  </tr>
+	  <s:iterator value="activeAvgTime" status="sta">
 	  <tr class="oddStyle">
-	    <td>${activeAvgTime.total}</td>
-	    <td>${activeAvgTime.edit}</td>
-		<td>${activeAvgTime.mct}</td>
-		<td>${activeAvgTime.xct}</td>
-	    <td>${activeAvgTime.zct}</td>
-		<td>${activeAvgTime.pct}</td>
+	    <td>${total}</td>
+	    <td>${edit}</td>
+		<td>${mct}</td>
+		<td>${xct}</td>
+	    <td>${zct}</td>
+		<td>${pct}</td>
 	  </tr>
+	  </s:iterator>
 	</table>
 	</div>
 	</div>
@@ -138,14 +140,16 @@ padding-left: 5px;padding-right: 5px;
 		<th>总监审核时间</th>
 		<th>申请通过时间</th>
 	  </tr>
+	  <s:iterator value="activeCloseAvgTime" status="sta">
 	  <tr class="oddStyle">
-	    <td>${activeCloseAvgTime.total}</td>
-	    <td>${activeCloseAvgTime.edit}</td>
-		<td>${activeCloseAvgTime.mct}</td>
-		<td>${activeCloseAvgTime.xct}</td>
-	    <td>${activeCloseAvgTime.zct}</td>
-		<td>${activeCloseAvgTime.pct}</td>
+	    <td>${total}</td>
+	    <td>${edit}</td>
+		<td>${mct}</td>
+		<td>${xct}</td>
+	    <td>${zct}</td>
+		<td>${pct}</td>
 	  </tr>
+	  </s:iterator>
 	</table>
 	</div>
 	</div>
@@ -182,12 +186,14 @@ padding-left: 5px;padding-right: 5px;
 		<th>大区审核时间</th>
 		<th>总监审核时间</th>
 	  </tr>
+	  <s:iterator value="applyAvgTime" status="sta">
 	  <tr class="oddStyle">
-	    <td>${applyAvgTime.total}</td>
-	    <td>${applyAvgTime.edit}</td>
-		<td>${applyAvgTime.mct}</td>
-	    <td>${applyAvgTime.zct}</td>
+	    <td>${total}</td>
+	    <td>${edit}</td>
+		<td>${mct}</td>
+	    <td>${zct}</td>
 	  </tr>
+	  </s:iterator>
 	</table>
 	</div>
 	</div>

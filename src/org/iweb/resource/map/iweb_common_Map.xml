@@ -3,6 +3,8 @@
 <sqlMap>
 	<!-- UploadClass Start -->
 	<typeAlias alias="uploadClass" type="org.iweb.fileupload.domain.UploadClass" />
+	<typeAlias alias="ativeTime" type="org.iweb.rpt.domain.ActiveTime" />
+	<typeAlias alias="ativeNum" type="org.iweb.rpt.domain.ActiveNum" />
 	<select id="upload_getClass" resultClass="uploadClass" parameterClass="java.util.Map">
 		<![CDATA[ 
 			Select * From t_upload_class
@@ -314,5 +316,27 @@
 	<!-- 适用性map,使用sqltext作为sql输入点,适合小查询使用 -->
 	<select id="commonSelectMapList" resultClass="java.util.HashMap" parameterClass="java.util.Map" remapResults="true">
 		$sqltext$
+	</select>
+	
+	
+	<select id="find_activetime" resultClass="ativeTime" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT * FROM rpt_m_activetime
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotNull>
+			<isNotNull prepend="AND" property="atype"><![CDATA[ atype=#atype# ]]></isNotNull>
+			<isNotNull prepend="AND" property="uuid"><![CDATA[ adate LIKE CONCAT(#adate#,'%')]]></isNotNull>
+		</dynamic>
+	</select>
+	<select id="find_activenum" resultClass="ativeNum" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT * FROM rpt_m_activenum 
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotNull>
+			<isNotNull prepend="AND" property="atype"><![CDATA[ atype=#atype# ]]></isNotNull>
+			<isNotNull prepend="AND" property="uuid"><![CDATA[ adate LIKE CONCAT(#adate#,'%') ]]></isNotNull>
+		</dynamic>
 	</select>
 </sqlMap>
