@@ -137,7 +137,7 @@ function showDetail(trid){
 			if (i == ths.length - 1) { return; }
 			if (!$(this).hasClass("nsd")) {
 				var cc = "label_rwben";
-				if ($(this).hasClass("longnote")) {
+				if ($(this).hasClass("longnote") || $(this).hasClass("op-area")) {
 					cc = "label_rwbenx";
 				}
 				_h += '<div class="label_hang">';

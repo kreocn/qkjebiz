@@ -112,8 +112,8 @@ max-width: 650px !important;
 	    </td>
 	    <td class="td2"><s:property value="leave_dept_name" /></td>
 		<td class="td1"><s:property value="leave_user_name" /></td>
-		<td class="td4"><s:date name="leave_start" format="yyyy-MM-dd" /> <s:property value="leave_start_time" /></td>
-		<td class="td4"><s:date name="leave_end" format="yyyy-MM-dd" /> <s:property value="leave_end_time" /></td>
+		<td class="td4 longnote"><s:date name="leave_start" format="yyyy-MM-dd" /> <s:property value="leave_start_time" /></td>
+		<td class="td4 longnote"><s:date name="leave_end" format="yyyy-MM-dd" /> <s:property value="leave_end_time" /></td>
 		<td class="td2"><s:property value="totle" /></td>
 		<td class="td5 nsd">
 			<a href="javascript:;"  class="leave_cause_show" data="${uuid}">[移此查看]</a>
