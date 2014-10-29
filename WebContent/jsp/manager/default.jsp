@@ -4,6 +4,14 @@
 <html>
 <head>
 <title><s:text name="APP_NAME" /></title>
+<script type="text/javascript">
+if(top==window) {
+	window.location.href="/manager/imain";
+	//alert("true");
+} else {
+	//alert("false");
+}
+</script>
 <s:action name="ref" namespace="/manager" executeResult="true" />
 <link rel="stylesheet" href="<s:url value="/css/css.css" />" />
 <link rel="stylesheet" href="<s:url value="/css/main.css" />" />
@@ -66,10 +74,10 @@
 </style>
 </head>
 <body>
-
 	<div class="main_info">
 		<div class="sysnote">
 			<div class="note_title">系统公告</div>
+			<p style="color: red;"><span id="pointx"></span><span id="pointy"></span></p>
 			<div class="note_content">
 				<p>新版系统上线，<font style="color: #FF0000;">活动、至事由、工时和会员管理</font>四个模块已经实现新版改版工作。</p>
 				<p>&nbsp;</p>
@@ -327,17 +335,17 @@
 			</div>
 		</div>
         -->
-	<script type="text/javascript">
-		var toggleCon = function(o){
-			$(o).find(".update_content").toggle();
-		};
+<script type="text/javascript">
+var toggleCon = function(o){
+	$(o).find(".update_content").toggle();
+};
 
-		$(function(){
-			$(".update_info").click(function(){
-				toggleCon($(this));
-			});
-		});
-	</script>
+$(function(){
+	$(".update_info").click(function(){
+		toggleCon($(this));
+	});
+});
+</script>
 </body>
 
 </html>

@@ -124,19 +124,24 @@ function toggleMenu(){
 }
 
 function menuShow(){
-	if (!$cu.isVisible($(".ui-layout-west"))) {
-		removeExClass();
-		$(".ui-layout-west").addClass("ui-layout-pane-show bounceInLeft animated");
+	if ($(top).width() <= 960) {
+		if (!$cu.isVisible($(".ui-layout-west"))) {
+			removeExClass();
+			$(".ui-layout-west").addClass("ui-layout-pane-show bounceInLeft animated");
+		}
 	}
 }
 
 function menuHide(){
-	if ($cu.isVisible($(".ui-layout-west"))) {
-		$(".ui-layout-west").addClass("ui-layout-pane-show");
-		$(".ui-layout-west").addClass("bounceOutLeft animated");
-		$(".ui-layout-west").fadeOut(500, function(){
-			removeExClass();
-		});
+	// alert($(top).width());
+	if ($(top).width() <= 960) {
+		if ($cu.isVisible($(".ui-layout-west"))) {
+			$(".ui-layout-west").addClass("ui-layout-pane-show");
+			$(".ui-layout-west").addClass("bounceOutLeft animated");
+			$(".ui-layout-west").fadeOut(500, function(){
+				removeExClass();
+			});
+		}
 	}
 }
 

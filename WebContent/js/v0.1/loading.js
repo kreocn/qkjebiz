@@ -42,6 +42,7 @@ ePageY : 0,
 touchPosition : "" };
 
 $(document).ready(function(){
+	var movedistance = 60;
 	document.body.addEventListener('touchstart', function(e){
 		var th = e.touches[0];
 		pageTouch.sPageX = th.pageX;
@@ -53,30 +54,31 @@ $(document).ready(function(){
 		var th = e.touches[0];
 		pageTouch.ePageX = th.pageX;
 		pageTouch.ePageY = th.pageY;
+	});
+
+	document.body.addEventListener('touchend', function(e){
+		// var th = e.touches[0];
+		pageTouch.ePageX = e.changedTouches[0].pageX;
+		pageTouch.ePageY = e.changedTouches[0].pageY;
 		// 判断位移,只要大于50,便确定移动
 		if (Math.abs(pageTouch.sPageX - pageTouch.ePageX) >= Math.abs(pageTouch.sPageY - pageTouch.ePageY)) {// X的位移大于Y,说明是横向移动
-			if ((pageTouch.sPageX - pageTouch.ePageX) > 50) {
+			if ((pageTouch.sPageX - pageTouch.ePageX) > movedistance) {
 				pageTouch.touchPosition = "left";
-			} else if ((pageTouch.sPageX - pageTouch.ePageX) < -50) {
+			} else if ((pageTouch.sPageX - pageTouch.ePageX) < (0 - movedistance)) {
 				pageTouch.touchPosition = "right";
 			} else {
 				pageTouch.touchPosition = "";
 			}
 		} else {
-			if ((pageTouch.sPageY - pageTouch.ePageY) > 50) {
+			if ((pageTouch.sPageY - pageTouch.ePageY) > movedistance) {
 				pageTouch.touchPosition = "up";
-			} else if ((pageTouch.sPageY - pageTouch.ePageY) < -50) {
+			} else if ((pageTouch.sPageY - pageTouch.ePageY) < (0 - movedistance)) {
 				pageTouch.touchPosition = "down";
 			} else {
 				pageTouch.touchPosition = "";
 			}
 		}
 		if (pageTouch.touchPosition != "") touchMoveEvent();
-	});
-
-	document.body.addEventListener('touchend', function(e){
-		pageTouch.ePageX = e.changedTouches[0].pageX;
-		pageTouch.ePageY = e.changedTouches[0].pageY;
 	});
 });
 
@@ -102,37 +104,16 @@ function SpinStop(){
 	if (_spinner) _spinner.stop();
 }
 /* 全屏loading js控件结束 */
-/* 查看详情专用函数开始 
-function showDetail(trid){
-	var _h = "";
-	var ths = $("#coltr th");
-	$("#" + trid + " td").each(function(i, n){
-		if (i == ths.length - 1) { return; }
-		if (!$(this).hasClass("nsd")) {
-			var cc = "label_rwben";
-			if ($(this).hasClass("longnote")) {
-				cc = "";
-			}
-			_h += '<div class="label_hang">';
-			_h += '<div class="label_ltit">' + ths[i].innerHTML + ':</div>';
-			_h += '<div class="' + cc + '">' + n.innerHTML + '</div>';
-			_h += '</div>';
-		}
-	});
-
-	$("#detailMain").empty().append(_h);
-	$("#infoDetail").dialog("open");
-}
-*/
+/* 查看详情专用函数开始 */
 function showDetail(trid){
 	var ths = $("#coltr th");
 	var $s = $("#" + trid);
-	//showtr123
+	// showtr123
 	var uid = trid.substr(6);
 	var d_id = "detailtr" + uid;
-	//alert(trid.substr(6));
-	if($("#" + d_id).length==0) {
-		var _h = '<tr id="'+d_id+'" class="detailtr"><td colspan="20" class="idialog"><div class="label_main op-area detail-content">';
+	// alert(trid.substr(6));
+	if ($("#" + d_id).length == 0) {
+		var _h = '<tr id="' + d_id + '" class="detailtr"><td colspan="20" class="idialog"><div class="label_main op-area detail-content">';
 		$s.find("td").each(function(i, n){
 			if (i == ths.length - 1) { return; }
 			if (!$(this).hasClass("nsd")) {
@@ -150,7 +131,7 @@ function showDetail(trid){
 		$s.after(_h);
 	}
 	var $d = $("#" + d_id);
-	if(!$cu.isVisible($d)) {
+	if (!$cu.isVisible($d)) {
 		$d.siblings(".detailtr").hide();
 		$d.slideDown();
 	} else {
@@ -202,3 +183,16 @@ function conCookie(condition_selector, checkbox_id){
 	});
 }
 /* 页面显示隐藏查询条件结束 */
+
+/* 判断移动平台 */
+var navType = function(){
+	if (/android/i.test(navigator.userAgent)) {
+		// todo : android
+		return "android";
+	} else if (/ipad|iphone|mac/i.test(navigator.userAgent)) {
+		// todo : ios
+		return "ios";
+	} else {
+		return "pc";
+	}
+}

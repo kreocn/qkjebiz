@@ -247,7 +247,7 @@ cursor: pointer;
 		    	<a class="input-red" href="<s:url namespace="/qkjmanage" action="active_del"><s:param name="active.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
 		    	</s:if>	   
 		    </td>
-		    <td class="td0 op-area"><a onClick="showDetail('showtr${uuid}');" class="input-nostyle">查看</a></td>
+		    <td class="td0 op-area"><a onclick="showDetail('showtr${uuid}');" href="javascript:;" class="input-nostyle">查看</a></td>
 	  	</tr>
 	  	</s:iterator>
  		</table>
