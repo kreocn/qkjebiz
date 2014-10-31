@@ -161,7 +161,7 @@ cursor: pointer;
 			<td class="td2 nw">${apply_dept_name}</td>
 			<td class="td1 nw">${apply_user_name}</td>
 			<td class="td5 longnote" title="${theme}">${it:subString(theme,22)}</td>
-			<td class="td5 nw" title="${address}" class="nowrap">${it:subString(address,6)}</td>
+			<td class="td5 nw" title="${address}">${it:subString(address,6)}</td>
 			<td  class="td1">
 				<s:if test="status==-1"><font class="message_error">已作废</font></s:if>
 				<s:if test="status==0">新申请</s:if>
@@ -295,9 +295,6 @@ cursor: pointer;
         </div>
     </div>
 </s:form>
-</div>
- <div class="hidden_area">
-<div id="infoDetail" class="idialog" title="查看详情" style="width:100%;"><div id="detailMain" class="label_main op-area"></div></div>
 </div>
 <!-- HIDDEN AREA END -->
 <script type="text/javascript">
