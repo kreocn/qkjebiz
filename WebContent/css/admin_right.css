@@ -1,0 +1,76 @@
+@charset "utf-8";
+*{
+	margin:0;
+	padding:0;
+	border:0;
+}
+table{
+	border-collapse:collapse;
+}
+.ht_right{
+	background:;
+	font-family:"微软雅黑";
+	height:100%;
+}
+.ht_tablb{
+	float:left;
+	border:1px solid #bdbdbd;
+	width:45%;
+	background:#fff;
+	color:#555;
+}
+.ht_tabtit{
+	text-align:center;
+	font-size:16px;
+	line-height:40px;
+	background:#00c4d9;
+	width:100%;
+	color:#fff;
+	font-weight:bold;
+	letter-spacing:2px;
+}
+.ht_tabtit2{
+	font-family:"微软雅黑";
+	text-align:center;
+	font-size:16px;
+	line-height:40px;
+	background:#7cc576;
+	width:100%;
+	color:#fff;
+	font-weight:bold;
+	letter-spacing:2px;
+}
+.ht_tabtit3{
+	text-align:center;
+	font-size:16px;
+	line-height:40px;
+	background:#f5d70d;
+	width:100%;
+	color:#555;
+	font-weight:bold;
+	letter-spacing:2px;
+}
+
+.tab_warp table {
+	width: 100%; border-collapse: collapse; border-spacing: 0;
+}
+
+.tab_warp td {
+	text-align: center; padding: 0 2px; font-size: 14px; height: 33px; vertical-align: middle;
+}
+
+.tab_warp th {
+	background: #059c77; color: #fff; font-size: 14px; padding: 0 2px; height: 33px; white-space: nowrap; word-break: break-all; vertical-align: middle;
+}
+.ht_table{font-family:"微软雅黑"; border:none;}
+.ht_table td{
+	border:1px solid #d3d3d3;
+	font-size:14px;
+	text-align:center;
+	padding:0 2px;
+	height: 33px;
+	vertical-align: middle;
+}
+.ht_table .ht_tabth{
+	color:#0097a7;
+}

@@ -179,3 +179,37 @@ input,textarea,select {
 border: none !important; background: transparent;
 }
 }
+
+.ht_tablb{
+	float:left;
+	border:1px solid #bdbdbd;
+	width:48%;
+	background:#fff;
+	color:#555;
+}
+.ht_tabtit2{
+	font-family:"微软雅黑";
+	text-align:center;
+	font-size:16px;
+	line-height:40px;
+	background:#7cc576;
+	width:100%;
+	color:#fff;
+	font-weight:bold;
+	letter-spacing:2px;
+}
+.ht_tabcon{
+	padding:10px;
+}
+.ht_tabcon p{
+	font-size:14px;
+	color:#333;
+	line-height:25px;
+}
+.ht_tabcon p a{
+	font-size:14px;
+	color:#333;
+	background-color:#ffffff;
+	line-height:25px;
+	text-decoration: none;
+}

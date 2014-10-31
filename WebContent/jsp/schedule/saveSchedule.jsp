@@ -14,8 +14,8 @@
 
 	<div class="main">
 		<div class="dq_step">
-			${path} <span class="opb lb op-area"> <a
-				href="<s:url action="schedule_leftList" namespace="/sche" />">公告列表</a>
+			${path} <span class="opb lb op-area"> <s:if test="'view' != viewFlag"><a
+				href="<s:url action="schedule_leftList" namespace="/sche" />">公告列表</a></s:if>
 			</span>
 		</div>
 		<!-- 页面修改 -->
@@ -36,11 +36,44 @@
 					<div class="label_hang">
 			            <div class="label_ltit">发送给:</div>
 			            <div class="label_rwbenx">
-			            	<span class="message_prompt">不填写，则对所有人公开！</span>
-							<s:textfield id="r_uuid" name="sche.r_uuid" title="接收人" cssClass="label_hang_linput inputNote validate[maxSize[255]]" />
+			            	<%-- <span class="message_prompt">不填写，则对所有人公开！</span> --%>
+			            	<s:if test="'view' == viewFlag">
+			            	<s:property value="sche.r_uuid" />
+			            	</s:if>
+			            	<s:else>
+							<s:textfield id="r_uuid" name="sche.r_uuid" title="接收人" cssClass="label_hang_linput inputNote validate[required,maxSize[255]]" />
+							</s:else>
 			            </div>
 			        </div>
 					</div>
+					<s:if test="null != sche && 'mdy' == viewFlag && @com.qkj.ware.action.warepower@checkSche(sche.uuid)">
+					<div class="label_main">
+						<div class="label_hang">
+			            <div class="label_ltit">部门:</div>
+			            <div class="label_rwben nw">
+			            	<span class="label_rwb">
+			            	<s:textfield title="部门名称" id="userdept_nameid"   readonly="true" />
+							<s:hidden title="部门代码" id="userdept_codeid"  readonly="true" />
+							</span>
+							<img class="detail vam" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true);" />
+				            </div>
+					        </div>
+					        <div class="label_hang">
+				            <div class="label_ltit">接收人:</div>
+				            <div class="label_rwben label_rwb">
+				            	<div class="iselect">
+				            	<s:select id="membermanagerid" cssClass="selectKick"  list="#{}" headerKey="" headerValue="--请选择--"  controlName="申请人"/>
+				            	</div>
+				            </div>
+						 </div>
+						 <div class="label_hang">
+				            <div class="label_rwben2">
+				            	<input id="sendee" type="button" value="确认接收人">
+				            	<input id="delsend" type="button" value="删除接收人">
+				            </div>
+						 </div>
+				     </div>
+				     </s:if>
 					<div class="label_main">
 						<div class="label_hang">
 							<div class="label_ltit">日期:</div>
@@ -53,13 +86,41 @@
 				</s:if>
 
 				<s:else>
-					<div class="label_hang">
-			            <div class="label_ltit">发送给:</div>
-			            <div class="label_rwbenx">
-			            	<span class="message_prompt">不填写，则对所有人公开！</span>
-							<s:textfield id="r_uuid" name="sche.r_uuid" title="接收人" cssClass="label_hang_linput inputNote validate[maxSize[255]]" />
-			            </div>
+					<div class="label_main">
+						<div class="label_hang">
+				            <div class="label_ltit">发送给:</div>
+				            <div class="label_rwbenx">
+				            	<%-- <span class="message_prompt">不填写，则对所有人公开！</span> --%>
+								<s:textfield id="r_uuid" name="sche.r_uuid" title="接收人" cssClass="label_hang_linput inputNote validate[required,maxSize[255]]" readonly="true"/>
+				            </div>
+				        </div>
 			        </div>
+			        <div class="label_main">
+						<div class="label_hang">
+			            <div class="label_ltit">部门:</div>
+			            <div class="label_rwben nw">
+			            	<span class="label_rwb">
+			            	<s:textfield title="部门名称" id="userdept_nameid"   readonly="true" />
+							<s:hidden title="部门代码" id="userdept_codeid"  readonly="true" />
+							</span>
+							<img class="detail vam" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true);" />
+				            </div>
+					        </div>
+					        <div class="label_hang">
+				            <div class="label_ltit">接收人:</div>
+				            <div class="label_rwben label_rwb">
+				            	<div class="iselect">
+				            	<s:select id="membermanagerid" cssClass="selectKick"  list="#{}" headerKey="" headerValue="--请选择--"  controlName="申请人"/>
+				            	</div>
+				            </div>
+						 </div>
+						 <div class="label_hang">
+				            <div class="label_rwben2">
+				            	<input id="sendee" type="button" value="确认接收人">
+				            	<input id="delsend" type="button" value="删除接收人">
+				            </div>
+						 </div>
+				     </div>
 					<div class="label_main">
 						<div class="label_hang">
 							<div class="label_ltit">日期:</div>
@@ -72,8 +133,69 @@
 							</div>
 						</div>
 					</div>
+					
 				</s:else>
-				<div class="label_main">
+				<s:if test="'view' == viewFlag">
+					<div class="label_main">
+				        <div class="label_hang">
+				            <div class="label_ltit">公告类別:</div>
+				             <div class="label_rwben2">
+			       				<span class="label_rwb">
+				            	 <s:if test="sche.type==0">部门手册</s:if>
+								<s:if test="sche.type==1">公司制度和章程</s:if>
+								<s:if test="sche.type==2">公司文件</s:if>
+								<s:if test="sche.type==3">更新公告</s:if>
+				            	</span>
+				            </div>
+				        </div>
+				     </div>
+			       
+			    </s:if>
+			    <s:else>
+			    <div class="label_main">
+				        <div class="label_hang">
+				            <div class="label_ltit">公告类別:</div>
+				             <div class="label_rwben2">
+			       				<span class="label_rwb iselect">
+				            	<select cssClass="selectKick" name="sche.type" title="状态">
+											<option value="0"
+											<s:if test="%{sche.type==0}">
+											 selected="selected"
+											</s:if>
+											>部门手册</option>
+											<option value="1"
+											 <s:if test="%{sche.type==1}">
+											 selected="selected"
+											</s:if>
+											>公司制度和章程</option>
+											<option value="2" 
+											<s:if test="%{sche.type==2 }">
+											selected="selected"
+											</s:if>
+											>公司文件</option>
+											<option value="3" 
+											<s:if test="%{sche.type==3 }">
+											selected="selected"
+											</s:if>
+											>更新公告</option>
+									</select>
+				            	</span>
+				            </div>
+				        </div>
+				     </div>
+			    </s:else>
+				<s:if test="'view' == viewFlag">
+			      <div class="label_main">
+					<div class="label_hang">
+						<div class="label_ltit">主题:</div>
+						<div class="label_rwben">
+							<s:property value="sche.title" />
+						</div>
+					</div>
+				</div>
+			    </s:if>
+			    <s:else>
+			    <div class="label_main">
 					<div class="label_hang">
 						<div class="label_ltit">主题:</div>
 						<div class="label_rwben">
@@ -82,9 +204,21 @@
 						</div>
 					</div>
 				</div>
+			    </s:else>
+				
+				
+				<s:if test="null != sche && null !=sche.user_name">
+					<div class="label_main">
+					<div class="label_hang">
+						<div class="label_ltit">已阅人:</div>
+						<div class="label_rwben">
+						<s:property value="sche.user_name" />
+						</div>
+					</div>
+				</div>
+				</s:if>
 
-
-				<div class="label_main">
+			    <div class="label_main">
 					<div class="label_hang">
 						<div class="label_ltit">公告内容:</div>
 						<div class="label_rwbenx"></div>
@@ -96,6 +230,7 @@
 							cssClass="xheditorArea validate[maxSize[65535]]" />
 					</div>
 				</div>
+				
 				<div class="label_main">
 					<div class="label_hang">
 						<div class="label_ltit">相关操作:</div>
@@ -105,14 +240,16 @@
 								<s:submit id="add" name="add" value="确定" action="schedule_add"
 									cssClass="input-blue" />
 							</s:if>
-							<s:elseif test="null != sche && 'mdy' == viewFlag">
+							<s:elseif test="null != sche && 'mdy' == viewFlag && @com.qkj.ware.action.warepower@checkSche(sche.uuid)">
 								<s:submit id="save" name="save" value="保存"
 									action="schedule_save" cssClass="input-blue" />
 								<s:submit id="delete" name="delete" value="删除" action="sche_del"
 									cssClass="input-red" onclick="return isDel();" />
 							</s:elseif>
+							<s:if test="'view' != viewFlag">
 							<input type="button" class="input-gray" value="返回"
 								onclick="linkurl('<s:url action="schedule_leftList" namespace="/sche" />');" />
+							</s:if>
 						</div>
 					</div>
 				</div>
@@ -120,4 +257,38 @@
 		</s:form>
 	</div>
 </body>
+<script type="text/javascript">
+$("#sendee").click(function() {
+	sendeeForm();
+});
+$("#delsend").click(function() {
+	var ru=$("#r_uuid").val();
+	var a = ru.substring(0,ru.lastIndexOf(";"));
+	var b=a.substring(0,a.lastIndexOf(";"))+";";
+	if(b==";"){
+		$("#r_uuid").val(null);
+	}else{
+		$("#r_uuid").val(b);
+	}
+	
+	
+});
+
+function sendeeForm() {
+	//接收人
+	var ruid=$("#r_uuid").val();
+	//接收人的下拉
+	var  rl=$("#membermanagerid").val();
+	var type = document.getElementById("membermanagerid");
+	var rlname=type[type.selectedIndex].text;
+	var  depat=$("#userdept_codeid").val();
+	var depname=$("#userdept_nameid").val();
+	if(rl==null||rl==""){
+		$("#r_uuid").val(ruid+depname+" "+depat+";");
+	}else{
+		$("#r_uuid").val(ruid+rlname+" "+rl+";");
+	}
+	
+}
+</script>
 </html>

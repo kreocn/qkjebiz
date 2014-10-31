@@ -9,6 +9,10 @@
 		<action name="schedule_list" class="com.qkj.sche.action.ScheAction" method="list">
 			<result>/jsp/manager/main.jsp</result>
 		</action>
+		<action name="schedule_read" class="com.qkj.sche.action.ScheAction" method="read">
+			<result>/jsp/manager/main.jsp</result>
+		</action>
+		
 		<action name="schedule_load" class="com.qkj.sche.action.ScheAction" method="load">
 			<result>/jsp/schedule/saveSchedule.jsp</result>
 		</action>
