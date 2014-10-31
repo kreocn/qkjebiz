@@ -32,12 +32,20 @@ public class ScheduleDAO extends AbstractDAO {
 		return super.list("sche_getSche_ss", map);
 	}
 	
+	public List listpage(Map<String, Object> map) {
+		return super.list("sche_getSche_page", map);
+	}
+	
 	public List listy(Map<String, Object> map) {
 		return super.list("sche_getScheY", map);
 	}
 	
 	public List listbyr(Map<String, Object> map) {
 		return super.list("sche_getSche_byr", map);
+	}
+	
+	public List listbypage(Map<String, Object> map) {
+		return super.list("sche_getSche_bypage", map);
 	}
 	
 	public List listusercode(Map<String, Object> map) {

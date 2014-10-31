@@ -14,7 +14,7 @@
 
 	<div class="main">
 		<div class="dq_step">
-			${path} <span class="opb lb op-area"> <s:if test="'view' != viewFlag"><a
+			${path} <span class="opb lb op-area"> <s:if test="'view' != viewFlag && @org.iweb.sys.ContextHelper@checkPermit('QKJ_SCHE_LIST')"><a
 				href="<s:url action="schedule_leftList" namespace="/sche" />">公告列表</a></s:if>
 			</span>
 		</div>
@@ -236,15 +236,19 @@
 						<div class="label_ltit">相关操作:</div>
 						<div class="label_rwbenx">
 							<span id="message"><s:property value="message" /></span>
-							<s:if test="null == sche && 'add' == viewFlag">
+							<s:if test="null == sche && 'add' == viewFlag && @org.iweb.sys.ContextHelper@checkPermit('QKJ_SCHE_ADDSCHE')">
 								<s:submit id="add" name="add" value="确定" action="schedule_add"
 									cssClass="input-blue" />
 							</s:if>
 							<s:elseif test="null != sche && 'mdy' == viewFlag && @com.qkj.ware.action.warepower@checkSche(sche.uuid)">
+								<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SCHE_LIST_UPDATE')">
 								<s:submit id="save" name="save" value="保存"
 									action="schedule_save" cssClass="input-blue" />
+								</s:if>
+								<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SCHE_LIST_DEL')">
 								<s:submit id="delete" name="delete" value="删除" action="sche_del"
 									cssClass="input-red" onclick="return isDel();" />
+								</s:if>
 							</s:elseif>
 							<s:if test="'view' != viewFlag">
 							<input type="button" class="input-gray" value="返回"
