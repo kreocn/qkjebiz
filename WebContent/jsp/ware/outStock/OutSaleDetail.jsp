@@ -6,135 +6,44 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>出库管理--<s:text name="APP_NAME" /></title>
-<link rel="stylesheet" href="<s:url value="/css/css.css" />" />
-<link rel="stylesheet" href="<s:url value="/css/navigate.css" />" />
-<link rel="stylesheet" href="<s:url value="/css/main.css" />" />
-<script type="text/javascript" src="<s:url value="/js/form_validator.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/common_cptb.js" />"></script>
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-1.8.3.min.js" />"></script>
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.select.js" />"></script>
-<link rel="stylesheet" href="<s:url value="/include/jQuery/style.ui.smoothness/jquery-ui-1.10.3.min.css" />" />
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-ui-1.10.3.custom.min.js" />"></script>
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.ui.datepicker-zh.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/common_ajax2.0.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/func/select_member.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/jquery.CommonUtil.js" />"></script>
-
-<script type="text/javascript" src="<s:url value="/js/common_listtable.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/show_page.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/jquery.dialog.iframe.js" />"></script>
+<s:action name="ref" namespace="/manager" executeResult="true" />
 </head>
-<style type="text/css">
-.confirm_td{text-align:center;padding:5px 0 0!important;}
-.confirm_button{margin:auto;display:block;border:#333 solid 1px;border-radius:3px;font-size:28px;margin-bottom:5px;color:#333;}
-a.confirm_button{width:100px;text-decoration:none;cursor:pointer;}
-a.confirm_button:hover{background-color:#333;color:#FFF;}
-.confirm_ok{line-height:50px;}
-.confirm_cancel{line-height:35px;}
-.confirmd{display:block;margin:auto;text-indent:-9999px;width:50px;height:50px;background:url(../images/icon/yesno_wb.png) transparent no-repeat;}
-.confirmd_ok{background-position:-150px 0;}
-.confirmd_cancel{background-position:-150px -150px;}
-.fd_button{width:50px;height:50px;font-size:14px;border:#333 solid 1px;border-radius:5px;cursor:pointer;}
-</style>
-<body onload="wol();">
-<div id="main">
-<div id="result">
-	<div class="itablemdy">
-	<div class="itabletitle">
-		<span class="title1"><s:if test="null == outStock && 'add' == viewFlag">增加</s:if><s:elseif test="null != outStock && 'mdy' == viewFlag">修改</s:elseif>出库</span>
-		<span class="extra1">
-			<a href="<s:url action="outStock_list" namespace="/outStock" />" >出库列表</a>
-		</span>	
-	</div>
-<s:form name="form1" action="outStock_add" namespace="/outStock" onsubmit="return validator(this);" method="post" theme="simple">
-	<div class="ifromoperate" ></div>
-	<table class="ilisttable" width="100%">
-	<%-- <s:if test="null!=outStock && (3==outStock.send||4==outStock.send)">
-		<tr>
-			<td class='firstRow'>确认表单:</td>
-			<td class="tablearea" colspan="3">
-			<table class="ilisttable" width="100%">
-			<tr>
-				<th style="width: 20%;">渠道/运营经理确认</th>
-				<!-- <th style="width: 20%;">销售部经理确认</th>
-				<th style="width: 20%;">市场部经理确认</th> -->
-				<th style="width: 20%;">运营总监确认</th>
-			</tr>
-			<tr>
-			<td class="confirm_td">
-				<s:if test="0==outStock.manager_check">
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_MANAGE')">
-				<a href='<s:url action="outStock_chackManage"><s:param name="outStock.uuid" value="outStock.uuid" /></s:url>' class="confirm_button confirm_ok" onclick="return isOp('是否通过审核?\n审核操作不能取消!');">通过</a>
-				</s:if>
-				<s:else><span class="confirmd confirmd_cancel">-</span></s:else>
-				</s:if>
-				<s:if test="1==outStock.manager_check">
-				<span  title='<s:property value="outStock.manager_check_user_name" /> <s:date name="outStock.manager_check_time" format="yyyy-MM-dd HH:mm:ss" />'>审核已通过</span>
-				</s:if>
-			</td>
-			
-			
-			<td class="confirm_td">
-				<s:if test="0==outStock.coo_check">
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_COO')">
-				<a href='<s:url action="outStock_chackCoo"><s:param name="outStock.uuid" value="outStock.uuid" /></s:url>' class="confirm_button confirm_ok" onclick="return isOp('是否通过审核?\n审核操作不能取消!');">通过</a>
-				</s:if>
-				<s:else><span class="confirmd confirmd_cancel">-</span></s:else>
-				</s:if>
-				<s:if test="1==outStock.coo_check">
-				<span title='<s:property value="outStock.coo_check_user_name" /> <s:date name="outStock.coo_check_time" format="yyyy-MM-dd HH:mm:ss" />'>审核已通过</span>
-				</s:if>
-			</td>
-			</tr>
-			
-			
-			</table>
-			</td>
-		</tr>
-		<tr>
-		<td class='firstRow'>申请人/销售人:</td>
-		<td class='secRow'>
-			<s:property value="outStock.add_user_name" />
-		</td>
-		<td class='firstRow'>申请时间:</td>
-		<td class='secRow'><s:date name="outStock.add_timer" format="yyyy-MM-dd HH:mm:ss" /></td>
-		</tr>
-		</s:if> --%>
-		
-		
-	
 
-	<!-- 主表显示 -->
+<body>
+<div class="main">
+	<div class="dq_step">
+		${path}
+		<span class="opb lb op-area">
+			<a href="<s:url action="outStock_list" namespace="/outStock" />" >出库列表</a>
+		</span>
+	</div>
+	<!-- 页面修改 -->
+	<s:form id="editForm" name="editForm" cssClass="validForm" action="outStock_add" namespace="/outStock"  method="post" theme="simple">
+	<div class="label_con">
+		<!-- 主表显示 -->
 		<s:if test="null != outStock">
-		  <tr>
-		  	<td class='firstRow'>单据号:</td>
-			<td class='secRow' colspan="3">
-				<s:textfield name="outStock.ordernum" title="单据号"  rows="4"></s:textfield>
-				<s:hidden name="outDetail.lading_id"  title="出库单号" />
-				<s:hidden name="outStock.uuid"/>
-				<s:hidden name="outStock.send"/>
-			</td>
-			
-		  </tr>
-		  <tr>
-			<td class='firstRow'><span style="color:red;">*</span> 出库时间:</td>
-			<td class='secRow'><s:date name="outStock.date" format="yyyy-MM-dd" /><s:hidden name="outStock.date" title="出库时间" /></td>
-			<td class='firstRow'>状态:</td>
-			<td class='secRow'>
-				<s:if test='0==outStock.send'>借出未还</s:if>
-				<s:if test='1==outStock.send'>借出已还</s:if>
-				<s:if test='2==outStock.send'>新单</s:if>
-				<s:if test='3==outStock.send'>待审核</s:if>
-				<s:if test='4==outStock.send'>结案<s:date name="lading.close_time" format="yyyy-MM-dd HH:mm:ss" /></s:if>
-				<s:if test='5==outStock.send'>已取消订单</s:if>
-				<s:if test='6==outStock.send'><span class="message_error">未返利</span></s:if><s:if test='1==lading.rebates_flag'><span class="message_pass">返利中</span></s:if><s:if test='2==lading.rebates_flag'>已返利</s:if>
-			</td>
-		</tr>
-		<tr>
-			<td class='firstRow'><span style="color:red;">*</span> 单据性质:</td>
-			<td class='secRow'>
-			<s:hidden name="outStock.reason" value="%{outStock.reason}"></s:hidden>
-					<s:if test="%{outStock.reason==0}">销售出库
+		<s:hidden name="outDetail.lading_id"  title="出库单号" />
+		<s:hidden name="outStock.uuid"/>
+		<s:hidden name="outStock.send"/>
+		<s:hidden name="outStock.date" value="%{outStock.date}" />
+		<s:hidden name="outStock.reason" value="%{outStock.reason}"/>
+        	<div class="label_main">
+	        	<div class="label_hang">
+		            <div class="label_ltit">单据号:</div>
+		            <div class="label_rwben2">
+		            <div class="label_rwb"><s:textfield name="outStock.ordernum" title="单据号"  rows="4"/></div>
+		            </div>
+	       		</div>
+	        	<div class="label_hang">
+		            <div class="label_ltit">出库时间:</div>
+		            <div class="label_rwben">
+		            <s:date name="outStock.date" format="yyyy-MM-dd" />
+		            </div>
+	       		</div>
+	       		<div class="label_hang">
+		            <div class="label_ltit">单据性质:</div>
+		            <div class="label_rwben">
+		            <s:if test="%{outStock.reason==0}">销售出库
 					</s:if>
 					 <s:if test="%{outStock.reason==1}">招待用酒
 					</s:if>
@@ -145,10 +54,29 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 					</s:if>
 					<s:if test="%{outStock.reason==5 }">其它
 					</s:if>
-			</td>
-			<td class='firstRow'><span style="color:red;">*</span> 出库仓库:</td>
-			<td class='secRow' colspan="3">
-					<select name="outStock.store_id" title="出库仓库" >
+		            </div>
+	       		</div>
+	       		<div class="label_hang">
+	            <div class="label_ltit">状态:</div>
+	            <div class="label_rwben2">
+			       <span class="label_rwb iselect">
+	            	<s:if test='0==outStock.send'>借出未还</s:if>
+					<s:if test='1==outStock.send'>借出已还</s:if>
+					<s:if test='2==outStock.send'>新单</s:if>
+					<s:if test='3==outStock.send'>待审核</s:if>
+					<s:if test='4==outStock.send'>结案<s:date name="lading.close_time" format="yyyy-MM-dd HH:mm:ss" /></s:if>
+					<s:if test='5==outStock.send'>已取消订单</s:if>
+					<s:if test='6==outStock.send'><span class="message_error">未返利</span></s:if><s:if test='1==lading.rebates_flag'><span class="message_pass">返利中</span></s:if><s:if test='2==lading.rebates_flag'>已返利</s:if>
+				
+	            	</span>
+	            </div>
+	            </div>
+	            
+	            <div class="label_hang">
+	            <div class="label_ltit">出库仓库:</div>
+	            <div class="label_rwben2">
+			       <span class="label_rwb iselect">
+			       <select id="membermanagerid" cssClass="selectKick" name="outStock.store_id" title="出库仓库" >
 							
 							<s:iterator value="wares" status="sta" var="x">
 							<option value="<s:property value="uuid" />" 
@@ -158,15 +86,65 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 							/><s:property value="ware_name" />
 							</s:iterator>
 					</select>
-			</td>
-		</tr>
-		</s:if>
-		
-		<s:else>
-		<tr>
-			<td class='firstRow'><span style="color:red;">*</span> 单据性质:</td>
-			<td class='secRow'>
-					<select name="outStock.reason" title="状态">
+	            	</span>
+	            </div>
+	        </div>
+	       		<div class="label_hang">
+		            <div class="label_ltit">添加人:</div>
+		            <div class="label_rwben">
+		            <s:property value="outStock.add_user_name" />
+		            </div>
+	       		</div>
+	       		
+	       		<div class="label_hang">
+				<div class="label_ltit">添加时间:</div>
+				<div class="label_rwben2"><s:date name="outStock.add_timer" format="yyyy-MM-dd HH:mm:ss" /></div>
+				</div>
+	       		<div class="label_hang">
+		            <div class="label_ltit">最后修改人:</div>
+		            <div class="label_rwben">
+		            <s:property value="outStock.lm_user_name" />
+		            </div>
+	       		</div>
+	       		<div class="label_hang">
+		            <div class="label_ltit">最后修改时间:</div>
+		            <div class="label_rwben2">
+		            <s:date name="outStock.lm_timer" format="yyyy-MM-dd HH:mm:ss" />
+		            </div>
+	       		</div>
+	       		<s:if test="%{outStock.manager_check!=null}">
+	       		<div class="label_hang">
+		            <div class="label_ltit">确认人/经手人:</div>
+		            <div class="label_rwben">
+		            <s:property value="outStock.manager_check_user_name" />
+		            </div>
+	       		</div>
+	       		<div class="label_hang">
+		            <div class="label_ltit">确认时间:</div>
+		            <div class="label_rwben2">
+		            <s:date name="outStock.manager_check_time" format="yyyy-MM-dd HH:mm:ss" />
+		            </div>
+	       		</div>
+	       		</s:if>
+			</div>
+			
+        </s:if>
+        
+        <s:else>
+        <div class="label_main">
+        	<div class="label_hang">
+		            <div class="label_ltit">出库单号:</div>
+		            <div class="label_rwben2">
+		            <div class="label_rwb"><s:textfield name="outStock.ordernum" title="单据号" /></div>
+		            </div>
+	       		</div>
+		</div>
+		<div class="label_main">
+	        <div class="label_hang">
+	            <div class="label_ltit">单据性质:</div>
+	            <div class="label_rwben label_rwb">
+	            	<div class="iselect">
+	            	<select id="membermanagerid" cssClass="selectKick" name="outStock.reason" title="状态">
 							<option value="0"
 							<s:if test="%{outStock.reason==0}">
 							 selected="selected"
@@ -194,10 +172,16 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 							</s:if>
 							>其它</option>
 					</select>
-			</td>
-			<td class='firstRow'><span style="color:red;">*</span> 出库仓库:</td>
-			<td class='secRow' colspan="3">
-					<select name="outStock.store_id" title="出库仓库" >
+	            	</div>
+	            </div>
+	        </div>
+	     </div>
+	     <div class="label_main">
+	     	<div class="label_hang">
+	            <div class="label_ltit">出库仓库:</div>
+	            <div class="label_rwben2">
+			       <span class="label_rwb iselect">
+			       <select id="membermanagerid" cssClass="selectKick" name="outStock.store_id" title="出库仓库" >
 							
 							<s:iterator value="wares" status="sta" var="x">
 							<option value="<s:property value="uuid" />" 
@@ -207,200 +191,216 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 							/><s:property value="ware_name" />
 							</s:iterator>
 					</select>
-			</td>
-		</tr>
+	            	</span>
+	            </div>
+	        </div>
+	     </div>
+        </s:else>
+        <div class="label_main">
+        <div class="label_hang">
+            <div class="label_ltit">其它说明:<br/><s:submit value="修改说明" action="outStock_note"/></div>
+            <div class="label_rwbenx">
+            	<s:textarea id="apply_check_note" name="outStock.note" title="其它说明" rows="4" cssClass="label_hang_linput validate[maxSize[128]]"></s:textarea>
+            </div>
+        </div>
+        </div>
+        <div class="label_main">
+        		<div class="label_hang">
+	       		<div class="label_ltit">客户信息:</div>
+	       		</div>
+	       		<div class="label_hang">
+		            <div class="label_ltit">会员号:</div>
+		            <div class="label_rwb">
+		            <s:textfield id="order_user_id" name="outStock.member_id" title="会员号" cssClass="validate[required]" />
+		            </div>
+	       		</div>
+	       		<div class="label_hang">
+		            <div class="label_ltit">手机:</div>
+		            <div class="label_rwb">
+		            <s:textfield id="order_user_mobile" name="outStock.member_mebile"  title="手机" controlName="手机" />
+		            </div>
+	       		</div>
+	       		<div class="label_hang">
+		            <div class="label_ltit">姓名:</div>
+		            <div class="label_rwb">
+		            <s:textfield id="order_user_name" name="outStock.member_name" title="姓名" controlName="姓名" cssClass="validate[required,maxSize[85]]"/>
+		            </div>
+	       		</div>
+	 </div>
+	 <div class="label_main">
+        <div class="label_hang">
+            <div class="label_ltit">配送地点:</div>
+            <div class="label_rwbenx">
+            	<s:textarea id="address" name="outStock.member_adress" title="配送地点" rows="4" cssClass="label_hang_linput validate[required,maxSize[128]]"></s:textarea>
+            	<br />
+				选择预设地址:<select id="selectAddress"></select>
+            </div>
+        </div>
+     </div>
+        <!-- 明细 -->
+       <s:if test="null != outStock">
+	        <fieldset>
+			<legend>出库明细</legend>
 		
-		</s:else>
-		<tr>
-			<td class='firstRow'>其它说明:
-			<br />
-			<s:submit value="修改说明" action="outStock_note"></s:submit>
-			</td>
-			<td class='secRow' colspan="6">
-			<s:textarea name="outStock.note" title="其它说明" cssStyle="width:80%;" rows="4"></s:textarea>
-		</tr>
-		
-		<tr>
-				<td class='firstRow'><span style="color:red;">*</span> 客户信息:</td>
-				<td class='secRow' colspan="6">
-				会员号:
-				<s:textfield id="order_user_id" name="outStock.member_id" title="会员号" require="required" dataLength="0,85" controlName="会员号" />
-				手机:
-				<s:textfield id="order_user_mobile" name="outStock.member_mebile"  title="手机" controlName="手机" />
-				姓名:
-				<s:textfield id="order_user_name" name="outStock.member_name" title="姓名" controlName="姓名" />
-				</td>
-		</tr>
-		<tr>
-		<td class='firstRow'>配送地点:</td>
-		<td class='secRow' colspan="6">
-		<s:textarea id="address" name="outStock.address" title="配送地点" cssStyle="width:80%;" rows="2" require="required" controlName="配送地点"></s:textarea>
-		<br />
-		选择预设地址:<select id="selectAddress"></select>
-		</td>
-		</tr>
-		
-		
-	<!-- 详表 -->
-		<s:if test="null != outStock">
-		<tr>
-		<td class='firstRow'>出库明细:
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_ADD') && 2==outStock.send && @com.qkj.ware.action.warepower@checkPermit(outStock.store_id,'del')">
-			<br />
-			<input id="addItem" type="button" value="添加明细" onclick="commain();"/>
-			</s:if>
-		</td>
-		<td class='secRow' colspan="6">
-		<table class="ilisttable" id="table_item" width="100%">
-		  <tr>
-		    <th>编号</th>
-			<th>产品名称</th>
-			<th>单价</th>
-			<th>订单数量</th>
-			<th>实际价格</th>
-			<s:if test="2==outStock.send">
-			<th>操作</th>
-			</s:if>
-		  </tr>
-		<s:iterator value="outDetails" status="sta">
-		  <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>">
-		    <td align="center"><s:property value="uuid" /></td>
-			<td><s:property value="product_name" /></td>
-			<td align="right"><s:property value="price" /></td>
-			<td align="center">
-				<s:property value="num" />(<s:property value="%{(num/(case_spec*1.0)).toString().substring(0,3)}" />件)
-			</td>
-			<td align="right"><s:property value="totel" /></td>
-			<td align="center">
-		   	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_DEL') && 2==outStock.send && @com.qkj.ware.action.warepower@checkPermit(outStock.store_id,'del')">
-		   	[<a href="<s:url namespace="/outStock" action="outDetail_del"><s:param name="outDetail.uuid" value="uuid" /><s:param name="outDetail.lading_id" value="lading_id" /></s:url>" onclick="return isDel();">删除</a>]
-		   	</s:if>	   
-		    </td>
-		  </tr>
-		</s:iterator>
-			<tr>
-			<td></td><td></td><td></td>
-			<td align="right">总计:</td>
-			<td align="right"><s:property value="outStock.total_price" /></td>
-			<td></td>
-			</tr>
-			<s:if test="%{message!=null&&message==1}">
-			<tr>
-			<td align="center" colspan="6"><font color="red">库存不足！</font></td>
-			</tr>
-			</s:if>
-		</table>
-		</td>
-		</tr>
-			<tr>
-				<td class='firstRow'>添加人:</td>
-				<td class='secRow'><s:property value="outStock.add_user_name" /></td>
-				<td class='firstRow'>添加时间:</td>
-				<td class='secRow' colspan="3"><s:date name="outStock.add_timer" format="yyyy-MM-dd HH:mm:ss" /></td>
-				</tr>
-				<tr>
-				<td class='firstRow'>最后修改人:</td>
-				<td class='secRow'><s:property value="outStock.lm_user_name" /></td>
-				<td class='firstRow'>最后修改时间:</td>
-				<td class='secRow' colspan="3"><s:date name="outStock.lm_timer" format="yyyy-MM-dd HH:mm:ss" /></td>
-			</tr>
-			<s:if test="%{outStock.manager_check!=null}">
-			<tr>
-				<td class='firstRow'>确认人/经手人:</td>
-				<td class='secRow'><s:property value="outStock.manager_check_user_name" /></td>
-				<td class='firstRow'>确认时间:</td>
-				<td class='secRow'><s:date name="outStock.manager_check_time" format="yyyy-MM-dd HH:mm:ss" /></td>
-			</tr>
-	</s:if>
-		</s:if>
-		
-		
-		<tr>
-		<td colspan="20" class="buttonarea">
-				<s:if test="null == outStock && 'add' == viewFlag && @com.qkj.ware.action.warepower@checkPermit(outStock.store_id,'del')">
+			 <div class="label_main">
+					<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+					<tr>
+						<th>编号</th>
+						<th>产品名称</th>
+						<th>单价</th>
+						<th>订单数量</th>
+						<th>实际价格</th>
+						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_ADD') && 2==outStock.send && @com.qkj.ware.action.warepower@checkPermit(outStock.store_id,'del')">
+						<th>
+						<a id="addItem" onclick="commain();" >添加出库明细</a>
+						</th>
+						</s:if>
+					</tr>
+					<s:iterator value="outDetails" status="sta">
+									<tr>
+									<td class="nw"><s:property value="uuid" /></td>
+									<td class="nw"><s:property value="product_name" /></td>
+									<td class="nw"><s:property value="price" /></td>
+									<td class="nw">
+										<s:property value="num" />(<s:property value="%{(num/(case_spec*1.0)).toString().substring(0,3)}" />件)
+									</td>
+									<td class="nw"><s:property value="totel" /></td>
+									<td>
+								   	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_DEL') && 2==outStock.send && @com.qkj.ware.action.warepower@checkPermit(outStock.store_id,'del')">
+								   	[<a href="<s:url namespace="/outStock" action="outDetail_del"><s:param name="outDetail.uuid" value="uuid" /><s:param name="outDetail.lading_id" value="lading_id" /></s:url>" onclick="return isDel();">删除</a>]
+								   	</s:if>	   
+								    </td>
+									</tr>
+					</s:iterator>
+					</table>
+					<p class="lb_gstit">合计</p>
+	                <p class="lb_jwei"><s:property value="outStock.total_price" />
+	                <s:if test="%{message!=null&&message==1}">
+					<font color="red">库存不足！</font>
+					</s:if>
+	                </p>
+		        </div>
+			</fieldset>
+        </s:if>
+        
+       <div class="label_main">
+		<div class="label_hang">
+            <div class="label_ltit">相关操作:</div>
+            <div class="label_rwbenx">
+            <span id="message"><s:property value="message" /></span>
+            	<s:if test="null == outStock && 'add' == viewFlag && @com.qkj.ware.action.warepower@checkPermit(outStock.store_id,'del')">
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_ADD')">
-					<s:submit id="add" name="add" value="保存&填写明细" action="outStock_add" />
+					<s:submit id="add" name="add" value="保存&填写明细" action="outStock_add" cssClass="input-blue"/>
 					</s:if>
 				</s:if>
 				<s:elseif test="null != outStock && 'mdy' == viewFlag">
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_MDY') && 2==outStock.send">
-					<s:submit id="save" name="save" value="保存" action="outStock_save" />
+					<s:submit id="save" name="save" value="保存" action="outStock_save" cssClass="input-blue"/>
 					</s:if>
 					
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_SURE') && 2==outStock.send">
 					<s:if test="%{outDetails.size>0}">
-					<s:submit value="经手人确认" action="outStock_sure" onclick="return isOp('是否确认?\n确认后将不能更改!');"></s:submit>
+					<s:submit value="经手人确认" action="outStock_sure" onclick="return isOp('是否确认?\n确认后将不能更改!');" cssClass="input-yellow"></s:submit>
 					</s:if>
 					</s:if>
 					
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_DEL') && 2==outStock.send">
-					<s:submit id="delete" name="delete" value="删除" action="outStock_del" onclick="return isDel();" />
+					<s:submit id="delete" name="delete" value="删除" action="outStock_del" onclick="return isDel();" cssClass="input-red"/>
 					</s:if>
 					
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_CENCLE') && 4==outStock.send && @com.qkj.ware.action.warepower@checkPermit(outStock.store_id,'edit')">
-					<s:submit id="cencle" name="cencle" value="取消订单" action="outStock_cencle" onclick="return isOp('确认取消?');" />
+					<s:submit id="cencle" name="cencle" value="取消订单" action="outStock_cencle" onclick="return isOp('确认取消?');" cssClass="input-red"/>
 					</s:if>
 				</s:elseif>
-				<input type="button" value="返回" onclick="linkurl('<s:url action="outStock_list" namespace="/outStock"><s:param name="viewFlag">relist</s:param></s:url>');" />
-			</td>
-	    </tr>
-	</table>	
+				<input type="button" value="返回" class="input-gray" onclick="linkurl('<s:url action="outStock_list" namespace="/outStock"><s:param name="viewFlag">relist</s:param></s:url>');" />
+            </div>
+		</div>
+		</div>
+	</div>
 	</s:form>
 </div>
-</div>
-</div>
 
+
+<!--出库祥表 -->
 <div id="addItemForm" title="添加明细">
 <s:form id="form_addItem" name="form_addItem" action="outDetail_add" namespace="/outDetail" onsubmit="return validator(this);" method="post" theme="simple">
-	<table class="ilisttable" width="100%">
+	<table>
 		  <tr>
-			<td class='firstRow'><span style="color:red;">*</span> 产品:</td>
-			<td class='secRow'>
-			<s:hidden id="member_id" name="mid"></s:hidden>
-			<s:hidden id="member_mebile" name="mmebile"></s:hidden>
-			<s:hidden id="member_name" name="mname"></s:hidden>
-			<s:hidden id="member_adress" name="madress"></s:hidden>
-			<s:hidden id="member_price" name="mprice"></s:hidden>
-			<select name="outDetail.product_id" title="产品">
-				<option>--请选择--</option>
-				<s:iterator value="stocks" status="sta">
-				<option data='<s:property value="market_price" />#<s:property value="group_price" />#<s:property value="dealer_price" />#<s:property value="agree_price_1" />#<s:property value="agree_price_2" />#<s:property value="agree_price_3" />' data_case='<s:property value="case_spec" />' value='<s:property value="uuid" />'><s:property value="product_name" /></option>
-				</s:iterator>
-			</select>
+		   	<td>
+		   	<div class="label_main">
+				<div id="addItemForm" class="label_con" title="请选择出库商品">	
+					<div class="label_hang">
+					<s:hidden id="member_id" name="mid"></s:hidden>
+					<s:hidden id="member_mebile" name="mmebile"></s:hidden>
+					<s:hidden id="member_name" name="mname"></s:hidden>
+					<s:hidden id="member_adress" name="madress"></s:hidden>
+					<s:hidden id="member_price" name="mprice"></s:hidden>
+			            <div class="label_ltit">商品:</div>
+			            <div class="label_rwben2">
+			            	<span class="label_rwb iselect">
+			            	<select id="membermanagerid" name="outDetail.product_id" title="产品">
+								<option>--请选择--</option>
+								<s:iterator value="stocks" status="sta">
+								<option data='<s:property value="market_price" />#<s:property value="group_price" />#<s:property value="dealer_price" />#<s:property value="agree_price_1" />#<s:property value="agree_price_2" />#<s:property value="agree_price_3" />' data_case='<s:property value="case_spec" />' value='<s:property value="uuid" />'><s:property value="product_name" /></option>
+								</s:iterator>
+							</select>
+							</span>
+			            </div>
+			        </div>																		
+					
+			        <div class="label_hang">
+		            <div class="label_ltit">单价:</div>
+		            <div class="label_rwben2">
+		            <div class="label_rwb">
+		            <s:textfield id="pri" name="outDetail.price" title="单价" dataType="number" cssClass="validate[required]" />
+					<span id="per_price_select_area"><select id="per_price_select"></select></span>
+					</div>
+		            </div>
+	       		</div>
+	       		<div class="label_hang">
+		            <div class="label_ltit">数量:</div>
+		            <div class="label_rwben2">
+		            <div class="label_rwb">
+			            <s:textfield id="num" name="outDetail.num" title="数量" dataType="integer" cssClass="validate[required]" />
+						<span id="ladingItemnumCase"></span>
+					</div>
+		            </div>
+	       		</div>	
+	       		<div class="label_hang">
+		            <div class="label_ltit">合计:</div>
+		            <div class="label_rwben2">
+		            <div class="label_rwb"><s:textfield name="outDetail.totel" title="合计"/></div>
+		            </div>
+	       		</div>																				
+			        <div class="label_hang label_button tac">
+			        <s:hidden name="outDetail.lading_id" title="提货单ID" value="%{outStock.uuid}" />
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_ADD')">
+					<s:submit id="add" name="add" value="确定" action="outDetail_add" onclick="return flag();"/>
+					</s:if>
+					<input type="button" value="关闭" onclick="closeAddForm();" />	
+			        </div>
+			       </div>																				
+				</div>
 			</td>
-			</tr>
-			<tr>
-			<td class='firstRow'><span style="color:red;">*</span>单价:</td>
-			<td class='secRow'>
-				<s:textfield name="outDetail.price" title="单价" dataType="number" controlName="单价" require="required" />
-				<span id="per_price_select_area"><select id="per_price_select"></select></span>
-			</td>
-			</tr>
-			<tr>
-			<td class='firstRow'><span style="color:red;">*</span>数量:</td>
-			<td class='secRow'>
-				<s:textfield name="outDetail.num" title="数量" dataType="integer" controlName="数量" require="required" />
-				<span id="ladingItemnumCase"></span>
-			</td>
-			</tr>
-			<tr>
-			<td class='firstRow'>合计:</td>
-			<td class='secRow'>
-			<s:textfield name="outDetail.totel" title="合计"/>
-			</tr>
-		<tr>
-		    <td colspan="20" class="buttonarea">
-				<s:hidden name="outDetail.lading_id" title="提货单ID" value="%{outStock.uuid}" />
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_ADD')">
-				<s:submit id="add" name="add" value="确定" action="outDetail_add" />
-				</s:if>
-				<input type="button" value="关闭" onclick="closeAddForm();" />
-			</td>
-	    </tr>
+		 	</tr>
 	</table>	
 </s:form>
 </div>
+
+</body>
 <script type="text/javascript">
+function flag(){
+	var num=$("#num").val();
+	var pri=$("#pri").val();
+	if(num==null||num==""){
+		alert("数量不能为空！");
+		return false;
+	}
+	if(pri==null||pri==""){
+		alert("单价不能为空！");
+		return false;
+	}
+}
 function commain(){
 	var id=$("#order_user_id").val();
 	var mebile=$("#order_user_mobile").val();
@@ -477,7 +477,7 @@ $(function() {
 	}
 	$("#addItemForm").dialog({
 	      autoOpen: false,
-	      height: 200,
+	      height: 300,
 	      width: 600,
 	      modal: true
 	});

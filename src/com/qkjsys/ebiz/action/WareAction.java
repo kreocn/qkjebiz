@@ -27,6 +27,15 @@ public class WareAction extends ActionSupport {
 	private String viewFlag;
 	private int recCount;
 	private int pageSize;
+	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;仓库权限管理";
+	
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
 
 	public Ware getWare() {
 		return ware;
@@ -86,6 +95,7 @@ public class WareAction extends ActionSupport {
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 			this.setWares(dao.list(map));
 			this.setRecCount(dao.getResultCount());
+			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;仓库列表";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
@@ -100,6 +110,7 @@ public class WareAction extends ActionSupport {
 				setMessage("你没有选择任何操作!");
 			} else if ("add".equals(viewFlag)) {
 				this.setWare(null);
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/sysebiz/ware_list'>仓库列表</a>&nbsp;&gt;&nbsp;增加仓库";
 			} else if ("mdy".equals(viewFlag)) {
 				map.clear();
 				map.put("uuid", ware.getUuid());

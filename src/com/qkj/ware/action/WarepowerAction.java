@@ -30,8 +30,17 @@ public class WarepowerAction extends ActionSupport {
 	private int recCount;
 	private int pageSize;
 	private int currPage;
-
+	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;仓库权限管理";
 	
+	
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+
 	public List<User> getUsers() {
 		return users;
 	}
@@ -120,6 +129,7 @@ public class WarepowerAction extends ActionSupport {
 			this.setWares(wd.list(null));
 			this.setRecCount(dao.getResultCount());
 			this.setWarepower(null);
+			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;仓库权限列表";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
@@ -140,6 +150,7 @@ public class WarepowerAction extends ActionSupport {
 				WareDAO wd=new WareDAO();
 				this.setWares(wd.list(null));
 				this.setWarepower(null);
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/warepower/warepower_list'>仓库权限列表</a>&nbsp;&gt;&nbsp;增加仓库权限";
 			} else if ("mdy".equals(viewFlag)) {
 				if (!(warepower == null || warepower.getUuid() == null)) {
 					this.setWarepower((Warepowers) dao.get(warepower.getUuid()));
@@ -148,7 +159,7 @@ public class WarepowerAction extends ActionSupport {
 					this.setWarepower(null);
 					
 				}
-
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/warepower/warepower_list'>仓库权限列表</a>&nbsp;&gt;&nbsp;仓库权限详情";
 			} else {
 				this.setWarepower(null);
 				setMessage("无操作类型!");

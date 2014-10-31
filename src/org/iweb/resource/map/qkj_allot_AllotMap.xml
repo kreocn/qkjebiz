@@ -23,6 +23,9 @@
 			<isNotEmpty prepend="AND" property="lm_user"><![CDATA[ i.lm_user=#lm_user# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="lm_user_name"><![CDATA[ lmu.user_name=#lm_user_name# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="reason"><![CDATA[ i.reason=#reason# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_start"><![CDATA[ i.date>=#date_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_end"><![CDATA[ i.date<=DATE_ADD(#date_end#,INTERVAL 1 day) ]]></isNotEmpty>
+			
 		</dynamic>
 		<![CDATA[ Order By i.add_timer Desc LIMIT 0, 500 ]]>
 	</select>
@@ -48,6 +51,9 @@
 			<isNotEmpty prepend="AND" property="add_timer"><![CDATA[ i.add_timer=#add_timer# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="lm_user"><![CDATA[ i.lm_user=#lm_user# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="lm_user_name"><![CDATA[ lmu.user_name=#lm_user_name# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_start"><![CDATA[ i.date>=#date_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_end"><![CDATA[ i.date<=DATE_ADD(#date_end#,INTERVAL 1 day) ]]></isNotEmpty>
+			
 
 		<![CDATA[ GROUP BY i.`uuid` Order By i.add_timer Desc LIMIT 0, 500 ]]>
 	</select>
@@ -66,6 +72,9 @@
 			<isNotEmpty prepend="AND" property="note"><![CDATA[ note=#note# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="add_timer"><![CDATA[ add_timer=#add_timer# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="lm_user"><![CDATA[ lm_user=#lm_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_start"><![CDATA[ date>=#date_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_end"><![CDATA[ date<=DATE_ADD(#date_end#,INTERVAL 1 day) ]]></isNotEmpty>
+			
 		</dynamic>
 		<![CDATA[ LIMIT 1000 ]]>
 	</select>
@@ -92,6 +101,9 @@
 			<isNotEmpty prepend="AND" property="note"><![CDATA[ note=#note# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="add_timer"><![CDATA[ add_timer=#add_timer# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="lm_user"><![CDATA[ lm_user=#lm_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_start"><![CDATA[ date>=#date_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_end"><![CDATA[ date<=DATE_ADD(#date_end#,INTERVAL 1 day) ]]></isNotEmpty>
+			
 		</dynamic>
 		<![CDATA[ LIMIT 1000 ]]>
 	</select>

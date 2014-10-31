@@ -34,7 +34,16 @@ public class StockAction extends ActionSupport {
 	private List<Stock> inproducts;
 	private String t=null;
 	
+	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;库存管理";
 	
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+
 	public String getT() {
 		return t;
 	}
@@ -164,6 +173,7 @@ public class StockAction extends ActionSupport {
 				wareByPower(u, code);
 				
 				this.setRecCount(dao.getResultCount());
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;库存列表";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
