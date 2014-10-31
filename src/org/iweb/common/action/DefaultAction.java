@@ -100,13 +100,22 @@ public class DefaultAction extends ActionSupport {
 	@Override
 	public String execute() throws Exception {
 	/*	ContextHelper.isPermit("QKJ_SCHE");*/
+		String u = ContextHelper.getUserLoginUuid();
+		String code = ContextHelper.getUserLoginDept();
 		try {
 			map.clear();
 			if (sche != null)
 				map.putAll(ToolsUtil.getMapByBean(sche));
 			map.putAll(ContextHelper.getDefaultRequestMap4Page());
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
-			this.setSches(dao.list(map));
+			if (ContextHelper.isAdmin()) {// 管理员
+				this.setSches(dao.list(map));
+			}else{
+				map.put("puuid", u);
+				map.put("ruuid", u);
+				map.put("dept_code", code);
+				this.setSches(dao.listbyr(map));
+			}
 			this.setRecCount(dao.getResultCount());
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);

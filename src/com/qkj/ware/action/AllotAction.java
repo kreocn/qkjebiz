@@ -50,8 +50,17 @@ public class AllotAction extends ActionSupport {
 	private Bordetail bordetail;
 	private List<Bordetail> bordetails;
 	private int flag=0;
+	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;调库管理";
 
 	
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+
 	public Bordetail getBordetail() {
 		return bordetail;
 	}
@@ -238,7 +247,7 @@ public class AllotAction extends ActionSupport {
 			wareByPower(u, code,"1");
 			
 			this.setAllot(null);
-			
+			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;调库列表";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
@@ -260,7 +269,7 @@ public class AllotAction extends ActionSupport {
 			} else if ("add".equals(viewFlag)) {
 				this.setAllot(null);
 				wareByPower(u, code,null);
-				
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/allot/allot_list'>调库列表</a>&nbsp;&gt;&nbsp;增加调库";
 			} else if ("mdy".equals(viewFlag)) {
 				map.clear();
 				map.put("ordernum", allot.getOrdernum());
@@ -296,6 +305,7 @@ public class AllotAction extends ActionSupport {
 				} else {
 					this.setAllot(null);
 				}
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/allot/allot_list'>调库列表</a>&nbsp;&gt;&nbsp;调库详情";
 			} else {
 				this.setAllot(null);
 				setMessage("无操作类型!");

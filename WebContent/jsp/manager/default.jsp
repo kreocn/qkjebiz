@@ -107,16 +107,30 @@ if(top==window) {
 				</ul>
 			</div>
 		</div>
-		<s:iterator value="sches" status="sch">
-			<div class="update_info <s:if  test = "#sch.index==0">active_info</s:if>">
-				<div class="update_title">${sdate}${title}</div>
-				<div class="update_content">
-					<dl>
-						<dt>${content}</dt>
-					</dl>
-				</div>
+		<div class="ht_tablb">
+		    <div class="ht_tabtit2">公司内部公告</div>
+		    <div class="ht_tabcon">
+	            <s:iterator value="sches" status="sch">
+	             
+	            <p>
+	            <a class="input-blue" href="<s:url namespace="/sche" action="schedule_load"><s:param name="viewFlag">view</s:param><s:param name="sche.uuid" value="uuid"></s:param></s:url>">
+	            [<s:if test="type==0">部门手册</s:if>
+				<s:if test="type==1">公司制度</s:if>
+				<s:if test="type==2">公司文件</s:if>
+				<s:if test="type==3">更新公告</s:if>]&nbsp;
+				${title}&nbsp;(${sdate})</a></p>
+				
+	            </s:iterator>
+		    </div>
+		    <div class="pagination">
+				<script type="text/javascript">
+				var spage = new ShowPage(${currPage});
+				spage.show2(${recCount},${pageSize},2);
+				</script>
 			</div>
-		</s:iterator>
+		</div>
+		<div>
+		</div>
 	</div>
 	<!-- 
 		<div class="update_info">
@@ -335,17 +349,17 @@ if(top==window) {
 			</div>
 		</div>
         -->
-<script type="text/javascript">
-var toggleCon = function(o){
-	$(o).find(".update_content").toggle();
-};
-
-$(function(){
-	$(".update_info").click(function(){
-		toggleCon($(this));
-	});
-});
-</script>
+		<script type="text/javascript">
+		var toggleCon = function(o){
+			$(o).find(".update_content").toggle();
+		};
+		
+		$(function(){
+			$(".update_info").click(function(){
+				toggleCon($(this));
+			});
+		});
+		</script>
 </body>
 
 </html>

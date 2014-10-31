@@ -6,65 +6,79 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>盘点管理--<s:text name="APP_NAME" /></title>
+<s:action name="ref" namespace="/manager" executeResult="true" />
 </head>
-<link rel="stylesheet" href="<s:url value="/css/css.css" />" />
-<link rel="stylesheet" href="<s:url value="/css/navigate.css" />" />
-<link rel="stylesheet" href="<s:url value="/css/main.css" />" />
-<script type="text/javascript" src="<s:url value="/js/form_validator.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/common_cptb.js" />"></script>
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-1.8.3.min.js" />"></script>
 <body>
-<div id="main">
-<div id="result">
-	<div class="itablemdy">
-	<div class="itabletitle">
-		<span class="title1"><s:if test="'add' == viewFlag">增加</s:if><s:elseif test="'mdy' == viewFlag">修改</s:elseif>盘点</span>
-		<span class="extra1">
-			<a href="<s:url action="check_list" namespace="/check" />" >盘点列表</a>
-		</span>	
+<div class="main">
+	<div class="dq_step">
+		${path}
+		<span class="opb lb op-area">
+		<a href="<s:url action="check_list" namespace="/check" />" >盘点列表</a>
+		</span>
 	</div>
-<s:form name="form1" action="check_add" namespace="/check" onsubmit="return validator(this);" method="post" theme="simple">
-	<div class="ifromoperate" ></div>
-	<table class="ilisttable" width="100%">
-		<s:if test="null != check && check.stock_id!=null">
-		<tr>
-		<td class='firstRow'><span style="color:red;">*</span> 编号:</td>
-		<td class='secRow'><s:property value="check.uuid" /><s:hidden name="check.uuid" title="编号" /></td>
-		</tr>
-		<tr>
-		<td class='firstRow'><span style="color:red;">*</span> 商品名称:</td>
-		<td class='secRow'><s:property value="check.product_name" /></td>
-		</tr>
-		<tr>
-		<td class='firstRow'><span style="color:red;">*</span> 所在仓库:</td>
-		<td class='secRow'><s:property value="check.ware_name" /></td>
-		</tr>
-		<tr>
-		<td class='firstRow'><span style="color:red;">*</span> 库存数量:</td>
-		<td class='secRow'><s:property value="check.quantity" /></td>
-		</tr>
-		<tr>
-		<td class='firstRow'><span style="color:red;">*</span> 相差数量:</td>
-		<td class='secRow'><s:textfield name="check.num"></s:textfield></td>
-		</tr>
-		</s:if>
-		<s:else>
-		<tr>
-		    <th>商品名称</th>
-		    <th>所在仓库</th>
-			<th>库存</th>
-			<th>招待用酒</th>
-			<th>赠酒</th>
-			<th>报损</th>
-			<th>借酒</th>
-			<th>其它</th>
-			<th>变动数量</th>
-	  	</tr>
-	  	<s:iterator value="stocks" status="sta">
-		  <tr>
-		    <td>
-		    	<s:property value="product_name" />
-		    	<s:hidden name="pageStocks[%{#sta.index}].uuid" value="%{uuid}" />
+	<!-- 页面修改 -->
+	<s:form id="editForm" name="editForm" cssClass="validForm" action="check_add" namespace="/check" method="post" theme="simple">
+	<s:if test="null != check && check.stock_id!=null">
+	<div class="label_main">
+	        	<div class="label_hang">
+		            <div class="label_ltit">编号:</div>
+		            <div class="label_rwben2">
+		            <div class="label_rwb"><s:property value="check.uuid" /><s:hidden name="check.uuid" title="编号" /></div>
+		            </div>
+	       		</div>
+	 </div>
+	 <div class="label_main">
+	        	<div class="label_hang">
+		            <div class="label_ltit">商品名称:</div>
+		            <div class="label_rwben2">
+		            <div class="label_rwb"><s:property value="check.product_name" /></div>
+		            </div>
+	       		</div>
+	 </div>
+	 <div class="label_main">
+	        	<div class="label_hang">
+		            <div class="label_ltit">所在仓库:</div>
+		            <div class="label_rwben2">
+		            <div class="label_rwb"><s:property value="check.ware_name" /></div>
+		            </div>
+	       		</div>
+	 </div>
+	 <div class="label_main">
+	        	<div class="label_hang">
+		            <div class="label_ltit">库存数量:</div>
+		            <div class="label_rwben2">
+		            <div class="label_rwb"><s:property value="check.quantity" /></div>
+		            </div>
+	       		</div>
+	 </div>
+	 <div class="label_main">
+	        	<div class="label_hang">
+		            <div class="label_ltit">相差数量:</div>
+		            <div class="label_rwben2">
+		            <div class="label_rwb"><s:textfield name="check.num"></s:textfield></div>
+		            </div>
+	       		</div>
+	 </div>
+	</s:if>
+	<!-- 填加 -->
+	<s:else>
+		<div class="tab_warp">
+	 		<table>
+	 		<tr id="coltr">
+			<th class="td1">商品名称</th>
+		    <th class="td3">所在仓库</th>
+			<th class="td1">库存</th>
+			<th class="td2">招待用酒</th>
+			<th class="td3">赠酒</th>
+			<th class="td3">报损</th>
+			<th class="td2">借酒</th>
+			<th class="td2">其它</th>
+			<th class="td1">变动数量</th>
+			<th class="td0">查看</th>
+			 
+		  	</tr>
+		  	<s:iterator value="stocks" status="sta">
+		  		<s:hidden name="pageStocks[%{#sta.index}].uuid" value="%{uuid}" />
 		    	<s:hidden name="pageStocks[%{#sta.index}].product_id" value="%{product_id}" />
 		    	<s:hidden name="pageStocks[%{#sta.index}].store_id" value="%{store_id}" />
 		    	<s:hidden name="pageStocks[%{#sta.index}].quantity" value="%{quantity}" />
@@ -74,152 +88,67 @@
 				<s:hidden name="pageStocks[%{#sta.index}].snum" value="%{snum}"/>
 				<s:hidden name="pageStocks[%{#sta.index}].jnum" value="%{jnum}"/>
 				<s:hidden name="pageStocks[%{#sta.index}].qnum" value="%{qnum}"/>
-		    </td>
-			<td><s:property value="store_name" /></td>
-			<td><s:property value="quantity" /></td>
-			<td>
-			<s:if test="zdnum==null">0</s:if>
-			<s:else>
-			<s:property value="zdnum"></s:property></s:else></td>
-			<td>
-			<s:if test="zdnum==null">0</s:if>
-			<s:else>
-			<s:property value="znum"></s:property></s:else></td>
-			<td>
-			<s:if test="zdnum==null">0</s:if>
-			<s:else>
-			<s:property value="snum"></s:property></s:else></td>
-			<td>
-			<s:if test="zdnum==null">0</s:if>
-			<s:else>
-			<s:property value="jnum"></s:property></s:else></td>
-			<td>
-			<s:if test="zdnum==null">0</s:if>
-			<s:else>
-			<s:property value="qnum"></s:property></s:else></td>
-			<td>
-			<s:textfield name="pageStocks[%{#sta.index}].cnum" value="0"></s:textfield></td>
-		  </tr>
-		</s:iterator>
-		</s:else>
-		
-		<tr>
-		    <td colspan="20" class="buttonarea">
-		    	
-		    	<span id="message"><s:property value="message" /></span>
+		  		<tr id="showtr${uuid}">
+		  			<td class="td1 nw"><s:property value="product_name" /></td>
+		  			<td class="td3 nw"><s:property value="store_name" /></td>
+				    <td class="td1 nw"><s:property value="quantity" /></td>
+				    <td class="td2 nw">
+						<s:if test="zdnum==null">0</s:if>
+						<s:else>
+						<s:property value="zdnum"></s:property></s:else></td>
+						<td class="td3 nw">
+						<s:if test="zdnum==null">0</s:if>
+						<s:else>
+						<s:property value="znum"></s:property></s:else></td>
+						<td class="td3 nw">
+						<s:if test="zdnum==null">0</s:if>
+						<s:else>
+						<s:property value="snum"></s:property></s:else></td>
+						<td class="td2 nw">
+						<s:if test="zdnum==null">0</s:if>
+						<s:else>
+						<s:property value="jnum"></s:property></s:else></td>
+						<td class="td2 nw">
+						<s:if test="zdnum==null">0</s:if>
+						<s:else>
+						<s:property value="qnum"></s:property></s:else></td>
+						<td class="td1 nw">
+						<s:textfield name="pageStocks[%{#sta.index}].cnum" value="0"></s:textfield></td>
+						<td class="td0 op-area"><div class="printhide"><a onClick="showDetail('showtr${uuid}');" class="input-nostyle">查看</a></div></td>
+		  		</tr>
+		  	</s:iterator>
+	 		</table>
+	 	</div>
+	</s:else>
+	<div class="label_main">
+		<div class="label_hang">
+            <div class="label_ltit">相关操作:</div>
+            <div class="label_rwbenx">
+            <span id="message"><s:property value="message" /></span>
 				<s:if test="'add' == viewFlag">
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_CHECK_ADD')">
-					<s:submit id="add" name="add" value="确定" action="check_add" />
+					<s:submit id="add" name="add" value="确定" cssClass="input-blue" action="check_add" />
 					</s:if>
 				</s:if>
 				<s:elseif test="'mdy' == viewFlag">
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_CHECK_MDY')">
-					<s:submit id="save" name="save" value="保存"  action="check_save"  />
+					<s:submit id="save" name="save" value="保存" cssClass="input-blue"  action="check_save"  />
 					</s:if>
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_CHECK_DEL')">
-					<s:submit id="delete" name="delete" value="删除" action="check_del" onclick="return isDel();" />
+					<s:submit id="delete" name="delete" value="删除" cssClass="input-red" action="check_del" onclick="return isDel();" />
 					</s:if>
 				</s:elseif>
-				<input type="button" value="返回" onclick="linkurl('<s:url action="check_relist" namespace="/check" />');" />
-			</td>
-	    </tr>
-	</table>	
-</s:form>
+				<input type="button" value="返回" class="input-gray" onclick="linkurl('<s:url action="check_relist" namespace="/check" />');" />
+            </div>
+		</div>
+		</div>
+	</s:form>
+</div>
+<div class="hidden_area">
+	<div id="infoDetail" class="idialog" title="查看详情" style="width:100%;"><div id="detailMain" class="label_main op-area"></div></div>
 	</div>
 </div>
-</div>
+
+
 </body>
-<script type="text/javascript">
-var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
-var c_mid = '<s:property value="outStock.member_id" />';
-$(function() {
-	SimpleLoadMember(ajax_url_action,function(event, ui) {loadAddress(ui.item.order_user_id);});
-	if(c_mid!='') {
-		loadAddress(c_mid);
-	}
-	$("#addItemForm").dialog({
-	      autoOpen: false,
-	      height: 200,
-	      width: 600,
-	      modal: true
-	});
-	$("#addItem").click(function() {
-		openAddForm();
-	});
-	
-	$("#addoutStockPay").dialog({
-	      autoOpen: false,
-	      height: 200,
-	      width: 600,
-	      modal: true
-	});
-	$("#addoutStockPayOpen").click(function() {
-		$("#addoutStockPay").dialog("open");
-	});
-	
-	//outStock_fd_date
-	if($("#outStock_fd_date").length>0) {
-		$("#outStock_fd_date").datepicker();
-	}
-	
-	// 此段代码可以方式回车提交
-	jQuery(function($){
-	    $("form").keypress(function(e){
-	        if(e.keyCode == 13) {
-	            e.preventDefault();
-	        }
-	    });  
-	});
-	
-	CommonUtil.pickrow('fd_list_table');
-});
-
-function loadAddress(memberid) {
-	var ajax = new Common_Ajax();
-	ajax.config.action_url = ajax_url_action;
-	ajax.config._success = function(data, textStatus) {
-		createAddreeeSelect(data);
-	};
-	ajax.addParameter("privilege_id", "QKJCJ_SYSEBIZ_AJAXLOAD_ADDRESS");
-	ajax.addParameter("parameters", "member_id=" + memberid);
-	ajax.sendAjax();
-}
-
-var c_data=new Array(); // 保存当前用户的所有联系人信息
-function createAddreeeSelect(p_data) {
-	var selectid = $("#selectAddress");
-	selectid.clearAllOption();
-	var sh = "";
-	for ( var i = 0; i < p_data.length; i++) {
-		selectid.addOption(i+"-"+ p_data[i].province,i);
-		sh += p_data[i].province + " " + p_data[i].city + " " + p_data[i].area + " " + p_data[i].street + "  " 
-			+ p_data[i].con_name + ' 收  邮编:' + p_data[i].post + ' 联系电话:' + p_data[i].mobile;
-		if (p_data[i].defaultaddress == 1) {
-			$(":input[name='outStock.address']").val(sh);
-			selectid.setSelectedValue(i);
-		}
-		c_data[i] = sh;
-		sh="";
-	}
-	selectid.unbind().bind("change",function(){
-		$(":input[name='outStock.address']").val(c_data[$(this).getSelectedValue()]);
-	});
-}
-
-function openAddForm() {
-	$("#addItemForm").dialog("open");
-}
-
-function closeAddForm() {
-	$("#addItemForm").dialog("close");
-}
-
-//当前日期
-function wol() {
-	var date = new Date();
-	var dateString = date.getFullYear() + '-' + (date.getMonth() + 1) + '-'
-			+ date.getDate();
-		document.getElementById("indate").value=dateString;
-}
-</script>
 </html>

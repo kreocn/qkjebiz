@@ -1,64 +1,58 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
+<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>调库管理--<s:text name="APP_NAME" /></title>
+<s:action name="ref" namespace="/manager" executeResult="true" />
 </head>
-<link rel="stylesheet" href="<s:url value="/css/css.css" />" />
-<link rel="stylesheet" href="<s:url value="/css/navigate.css" />" />
-<link rel="stylesheet" href="<s:url value="/css/main.css" />" />
-<script type="text/javascript" src="<s:url value="/js/form_validator.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/common_cptb.js" />"></script>
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-1.8.3.min.js" />"></script>
 
-
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.select.js" />"></script>
-<link rel="stylesheet" href="<s:url value="/include/jQuery/style.ui.smoothness/jquery-ui-1.10.3.min.css" />" />
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-ui-1.10.3.custom.min.js" />"></script>
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.ui.datepicker-zh.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/common_ajax2.0.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/func/select_member.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/jquery.CommonUtil.js" />"></script>
-
-<style type="text/css">
-.confirm_td{text-align:center;padding:5px 0 0!important;}
-.confirm_button{margin:auto;display:block;border:#333 solid 1px;border-radius:3px;font-size:28px;margin-bottom:5px;color:#333;}
-a.confirm_button{width:100px;text-decoration:none;cursor:pointer;}
-a.confirm_button:hover{background-color:#333;color:#FFF;}
-.confirm_ok{line-height:50px;}
-.confirm_cancel{line-height:35px;}
-.confirmd{display:block;margin:auto;text-indent:-9999px;width:50px;height:50px;background:url(../images/icon/yesno_wb.png) transparent no-repeat;}
-.confirmd_ok{background-position:-150px 0;}
-.confirmd_cancel{background-position:-150px -150px;}
-.fd_button{width:50px;height:50px;font-size:14px;border:#333 solid 1px;border-radius:5px;cursor:pointer;}
-</style>
-
-<body onload="wol();">
-<div id="main">
-<div id="result">
-	<div class="itablemdy">
-	<div class="itabletitle">
-		<span class="title1"><s:if test="null == allot && 'add' == viewFlag">增加</s:if><s:elseif test="null != allot && 'mdy' == viewFlag">修改</s:elseif>调库</span>
-		<span class="extra1">
-			<a href="<s:url action="allot_list" namespace="/allot" />" >调库列表</a>
-		</span>	
+<body>
+<div class="main">
+	<div class="dq_step">
+		${path}
+		<span class="opb lb op-area">
+		<a href="<s:url action="allot_list" namespace="/allot" />" >调库列表</a>
+		</span>
 	</div>
-<s:form id="form1" name="form1" action="allot_add" namespace="/allot" onsubmit="return validator(this);" method="post" theme="simple">
-	<div class="ifromoperate" ></div>
-	<table class="ilisttable" width="100%">
-		<tr>
-			  <td class='firstRow'>单据号:</td>
-			  <td class='secRow' colspan="3">
-					<s:textfield name="allot.ordernum" title="单据号" rows="4"></s:textfield>
-			  </td>
-		</tr>
-		<tr>
-		<td class='firstRow'><span style="color:red;">*</span> 单据性质:</td>
-		<td class='secRow' colspan="3">
-				<select id="allot.reason" name="allot.reason" title="单据性质" >
+	<!-- 页面修改 -->
+	<s:form id="editForm" name="editForm" cssClass="validForm" action="allot_add" namespace="/allot" onsubmit="return validator(this);" method="post" theme="simple">
+	<div class="label_con">
+	<!-- 修改 -->
+		<s:if test="null != allot">
+			<s:hidden name="allot.uuid" title="编号" />
+			<s:hidden name="allot.date" title="入库时间" />
+			<div class="label_main">
+				<div class="label_hang">
+		            <div class="label_ltit">调货编号:</div>
+		            <div class="label_rwb">${allot.uuid }
+		             <s:if test="%{allot.state==0}"><font color="red">（未发货）</font></s:if>
+				    <s:if test="%{allot.state==1}"><font color="red">（已发货）</font></s:if>
+				    <s:if test="%{allot.state==2}"><font color="red">（取消发货）</font></s:if>
+				    <s:if test="%{allot.state==3}"><font color="red">（已收货）</font></s:if>
+				     <s:if test="%{allot.state==4}"><font color="red">（经手人确认）</font></s:if>
+		            </div>
+	       		</div>
+				<div class="label_hang">
+		            <div class="label_ltit">单据号:</div>
+		            <div class="label_rwben2">
+		            <div class="label_rwb"><s:textfield name="allot.ordernum" title="单据号" rows="4"></s:textfield></div>
+		            </div>
+	       		</div>
+	       		<div class="label_hang">
+		            <div class="label_ltit">调库日期:</div>
+		            <div class="label_rwben">
+		           <s:date name="allot.date" format="yyyy-MM-dd" />
+		            </div>
+	       		</div>
+			</div>
+        	<div class="label_main">
+	       		<div class="label_hang">
+		            <div class="label_ltit">单据性质:</div>
+		            <div class="label_rwben">
+		            <select id="allot.reason" name="allot.reason" title="单据性质" >
 				
 					<option value="0" 
 					<s:if test="allot.reason==0">selected="selected"</s:if>
@@ -70,178 +64,222 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 					<s:if test="allot.reason==2">selected="selected"</s:if>
 					>还货</option>
 				</select>
-		</td>
-		</tr>
-		<s:if test="null != allot">
-		  <tr>
-		<td class='firstRow'><span style="color:red;">*</span> 编号:</td>
-		<td class='secRow' colspan="3"><s:property value="allot.uuid" /><s:hidden name="allot.uuid" title="编号" /></td>
-		</tr>
-<tr>
-<td class='firstRow'><span style="color:red;">*</span> 状态:</td>
-<td class='secRow' colspan="3">
-		<s:if test="%{allot.state==0}"><font color="red">（未发货）</font></s:if>
-	    <s:if test="%{allot.state==1}"><font color="red">（已发货）</font></s:if>
-	    <s:if test="%{allot.state==2}"><font color="red">（取消发货）</font></s:if>
-	    <s:if test="%{allot.state==3}"><font color="red">（已收货）</font></s:if>
-	     <s:if test="%{allot.state==4}"><font color="red">（经手人确认）</font></s:if>
-</td>
-</tr>
-
-<tr>
-		<td class='firstRow'><span style="color:red;">*</span> 调库日期:</td>
-		<td class='secRow' colspan="3">
-		<s:date name="allot.date" format="yyyy-MM-dd" /><s:hidden name="allot.date" title="入库时间" />
-		</td>
-</tr>
-		</s:if>
-		<s:else>
-		<tr>
-		<td class='firstRow'><span style="color:red;">*</span> 调库日期:</td>
-		<td class='secRow' colspan="3">
-		<s:textfield id="indate" name="allot.date" title="调库时间" controlName="调库时间" />
-		<script type="text/javascript">$("#indate").datepicker();</script>
-		</td>
-		</tr>
-		</s:else>
-		  <tr>
-<td class='firstRow'><span style="color:red;">*</span> 调出仓库:</td>
-<td class='secRow' colspan="3">
-	<select id="allot.sourceid" name="allot.sourceid" title="调出仓库" >
-					
-					<s:iterator value="warepowers" status="sta" var="x">
-					<option value="<s:property value="uuid" />" 
-					<s:if test="#x.uuid==allot.sourceid">
-					selected="selected"
-					</s:if>
-					/><s:property value="ware_name" />
+		            </div>
+	       		</div>
+	       		
+		        <div class="label_hang">
+		            <div class="label_ltit">调入仓库:</div>
+		            <div class="label_rwben2">
+				       <span class="label_rwb iselect">
+					       <select id="membermanagerid" name="allot.goldid" title="调入仓库" >
+								<s:iterator value="wares" status="sta" var="x">
+								<option value="<s:property value="uuid" />" 
+								<s:if test="#x.uuid==allot.goldid">
+								selected="selected"
+								</s:if>
+								/><s:property value="ware_name" />
+								</s:iterator>
+							</select>
+		            	</span>
+		            </div>
+		        </div>
+		        <div class="label_hang">
+		            <div class="label_ltit">调出仓库:</div>
+		            <div class="label_rwben2">
+				       <span class="label_rwb iselect">
+					       <select id="membermanagerid" name="allot.sourceid" title="调出仓库" >
+								<s:iterator value="warepowers" status="sta" var="x">
+								<option value="<s:property value="uuid" />" 
+								<s:if test="#x.uuid==allot.sourceid">
+								selected="selected"
+								</s:if>
+								/><s:property value="ware_name" />
+								</s:iterator>
+							</select>
+					       
+		            	</span>
+		            </div>
+		        </div>
+        
+	       		<div class="label_hang">
+		            <div class="label_ltit">添加人:</div>
+		            <div class="label_rwben">
+		            <s:property value="allot.add_user_name" />
+		            </div>
+	       		</div>
+	       		
+	       		<div class="label_hang">
+				<div class="label_ltit">添加时间:</div>
+				<div class="label_rwben2"><s:date name="allot.add_timer" format="yyyy-MM-dd HH:mm:ss" /></div>
+				</div>
+	       		<div class="label_hang">
+		            <div class="label_ltit">最后修改人:</div>
+		            <div class="label_rwben">
+		            <s:property value="allot.lm_user_name" />
+		            </div>
+	       		</div>
+	       		<div class="label_hang">
+		            <div class="label_ltit">最后修改时间:</div>
+		            <div class="label_rwben2">
+		            <s:date name="allot.lm_timer" format="yyyy-MM-dd HH:mm:ss" />
+		            </div>
+	       		</div>
+	       		<s:if test="allot.sureUser!=null">
+	       		<div class="label_hang">
+		            <div class="label_ltit">确认人/经手人:</div>
+		            <div class="label_rwben">
+		            <s:property value="allot.sureUser_name" />
+		            </div>
+	       		</div>
+	       		<div class="label_hang">
+		            <div class="label_ltit">确认时间:</div>
+		            <div class="label_rwben2">
+		            <s:date name="allot.sureDate" format="yyyy-MM-dd HH:mm:ss" />
+		            </div>
+	       		</div>
+	       		</s:if>
+			</div>
+			
+        </s:if>
+        <!-- 填加 -->
+        <s:else>
+        <div class="label_main">
+        	<div class="label_hang">
+		            <div class="label_ltit">单据号:</div>
+		            <div class="label_rwben2">
+		            <div class="label_rwb"><s:textfield name="allot.ordernum" title="单据号" rows="4"></s:textfield></div>
+		            </div>
+	       		</div>
+		</div>
+        <div class="label_main">
+	        <div class="label_hang">
+	            <div class="label_ltit">调库日期:</div>
+	            <div class="label_rwben2">
+	            	<span class="label_rwb nw">
+					<input class="datepicker iI-t validate[required,custom[date]]" type="text"  name="allot.date" value="${it:formatDate(allot.date,'yyyy-MM-dd')}" />
+					</span>
+	            </div>
+	        </div>
+	     </div>
+	    <div class="label_main">
+	        <div class="label_hang">
+		            <div class="label_ltit">单据性质:</div>
+		            <div class="label_rwben">
+		            <select id="allot.reason" name="allot.reason" title="单据性质" >
+				
+					<option value="0" 
+					<s:if test="allot.reason==0">selected="selected"</s:if>
+					>调库</option>
+					<option value="1"
+					<s:if test="allot.reason==1">selected="selected"</s:if>
+					>借货</option>
+					<option value="2" 
+					<s:if test="allot.reason==2">selected="selected"</s:if>
+					>还货</option>
+				</select>
+		            </div>
+	       		</div>
+	     </div>
+	     <div class="label_main">
+	        <div class="label_hang">
+	            <div class="label_ltit">调入仓库:</div>
+	            <div class="label_rwben2">
+			       <span class="label_rwb iselect">
+				       <select id="membermanagerid" name="allot.goldid" title="调入仓库" >
+							<s:iterator value="wares" status="sta" var="x">
+							<option value="<s:property value="uuid" />" 
+							<s:if test="#x.uuid==allot.goldid">
+							selected="selected"
+							</s:if>
+							/><s:property value="ware_name" />
+							</s:iterator>
+						</select>
+	            	</span>
+	            </div>
+	        </div>
+        </div>
+        <div class="label_main">
+	        <div class="label_hang">
+	            <div class="label_ltit">调出仓库:</div>
+	            <div class="label_rwben2">
+			       <span class="label_rwb iselect">
+				       <select id="membermanagerid" name="allot.sourceid" title="调出仓库" >
+							<s:iterator value="warepowers" status="sta" var="x">
+							<option value="<s:property value="uuid" />" 
+							<s:if test="#x.uuid==allot.sourceid">
+							selected="selected"
+							</s:if>
+							/><s:property value="ware_name" />
+							</s:iterator>
+						</select>
+				       
+	            	</span>
+	            </div>
+	        </div>
+        </div>
+        </s:else>
+        
+        <div class="label_main">
+        <div class="label_hang">
+            <div class="label_ltit">其它说明:</div>
+            <div class="label_rwbenx">
+            	<s:textarea id="apply_check_note" name="allot.note" title="其它说明" rows="4" cssClass="label_hang_linput validate[maxSize[128]]"></s:textarea>
+            </div>
+        </div>
+        </div>
+        
+        <!-- 明细 -->
+        <s:if test="null != allot">
+	        <fieldset>
+			<legend>调库明细</legend>
+			 <div class="label_main">
+					<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+					<tr>
+						<th>编号</th>
+						<th>产品名称</th>
+						<th>调库数量</th>
+						<s:if test="allot.reason!=0"><th>已还数量</th></s:if>
+						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_ADD') && allot.state==0 && @com.qkj.ware.action.warepower@checkPermit(allot.sourceid,'edit')">
+						<th>
+						<a id="addItem" onclick="commain();">添加调库明细</a>
+						</th>
+						</s:if>
+						
+					</tr>
+					<s:iterator value="allotDetails" status="sta">
+									<tr>
+									<td class="nw"><s:property value="uuid" /></td>
+									<td class="nw"><s:property value="product_name" /></td>
+									<td class="nw">
+										<s:property value="num" />(<s:property value="%{(num/(case_spec*1.0)).toString().substring(0,3)}" />件)
+									</td>
+									<s:if test="allot.reason!=0">
+									<td class="nw">
+									<s:property value="bnum" />(<s:property value="%{(bnum/(case_spec*1.0)).toString().substring(0,3)}" />件)
+									</td>
+									</s:if>
+									<s:if test="%{allot.state==0||allot.state==2}">
+									<td>
+								   	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_DEL')">
+								   	[<a href="<s:url namespace="/allot" action="allotDetail_del"><s:param name="allotDetail.uuid" value="uuid" /><s:param name="allotDetail.lading_id" value="lading_id" /></s:url>" onclick="return isDel();">删除</a>]
+								   	</s:if>	   
+								    </td>
+								    </s:if>
+									</tr>
 					</s:iterator>
-			</select>
-</tr>
-<tr>
-<td class='firstRow'><span style="color:red;">*</span> 调入仓库:</td>
-<td class='secRow' colspan="3">
-	<select id="allot.goldid" name="allot.goldid" title="调入仓库" >
-					
-					<s:iterator value="wares" status="sta" var="x">
-					<option value="<s:property value="uuid" />" 
-					<s:if test="#x.uuid==allot.goldid">
-					selected="selected"
-					</s:if>
-					/><s:property value="ware_name" />
-					</s:iterator>
-	</select>
-</tr>
-
-<tr>
-<td class='firstRow' >其它说明:</td>
-<td class='secRow' colspan="3">
-<s:textarea name="allot.note" title="其它说明" cssStyle="width:80%;" rows="4"></s:textarea>
-</td>
-</tr>
-
-
-<s:if test="null != allot">
-<tr>
-<td class='firstRow'>调库明细:
-	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_ADD') && allot.state==0 && @com.qkj.ware.action.warepower@checkPermit(allot.sourceid,'edit')">
-	<br />
-	<input id="addItem" type="button" value="添加明细" />
-	</s:if>
-</td>
-<td class='secRow' colspan="20">
-<table class="ilisttable" id="table_item" width="100%">
-  <tr>
-    <th>编号</th>
-	<th>产品名称</th>
-	<th>调库数量</th>
-	<s:if test="allot.reason!=0"><th>已还数量</th></s:if>
-	<s:if test="%{allot.state==0||allot.state==2}">
-	<th>操作</th>
-	</s:if>
-  </tr>
-<s:iterator value="allotDetails" status="sta">
-  <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>">
-    <td align="center"><s:property value="uuid" /></td>
-	<td><s:property value="product_name" /></td>
-	<td align="center">
-		<s:property value="num" />(<s:property value="%{(num/(case_spec*1.0)).toString().substring(0,3)}" />件)
-	</td>
-	<s:if test="allot.reason!=0">
-	<td>
-	<s:property value="bnum" />(<s:property value="%{(bnum/(case_spec*1.0)).toString().substring(0,3)}" />件)
-	</td>
-	</s:if>
-	<s:if test="%{allot.state==0||allot.state==2}">
-	<td align="center">
-   	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_DEL')">
-   	[<a href="<s:url namespace="/allot" action="allotDetail_del"><s:param name="allotDetail.uuid" value="uuid" /><s:param name="allotDetail.lading_id" value="lading_id" /></s:url>" onclick="return isDel();">删除</a>]
-   	</s:if>	   
-    </td>
-    </s:if>
-  </tr>
-</s:iterator>
-	<s:if test="%{allot.reason==2}">
-		<tr>
-		<td style="font-weight: bold;" colspan="20">
-		还货明细
-		</td>
-		</tr>
-		<tr>
-		    <th>商品名称</th>
-		    <th>还货仓库</th>
-		    <th>借货仓库</th>
-			<th>还货数量</th>
-			<th>归还时间</th>
-			<th>还货编号</th>
-			<th>借货编号</th>
-		  </tr>
-	<s:iterator value="bordetails" status="sta">
-		  <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>" type="pickrow">
-		    <td><s:property value="product_name"/></td>
-		    <td><s:property value="bware"/></td>
-			<td><s:property value="sware" /></td>
-			<td><s:property value="bdate" /></td>
-			<td><s:property value="bnum" /></td>
-			<td><s:property value="back_id" /></td>
-			<td><s:property value="land_id" /></td>
-		  </tr>
-	</s:iterator>
-	</s:if>
-</table>
-</td>
-</tr>
-	<tr>
-		<td class='firstRow'>添加人:</td>
-		<td class='secRow'><s:property value="allot.add_user_name" /></td>
-		<td class='firstRow'>添加时间:</td>
-		<td class='secRow'><s:date name="allot.add_timer" format="yyyy-MM-dd HH:mm:ss" /></td>
-		</tr>
-		<tr>
-		<td class='firstRow'>最后修改人:</td>
-		<td class='secRow'><s:property value="allot.lm_user_name" /></td>
-		<td class='firstRow'>最后修改时间:</td>
-		<td class='secRow'><s:date name="allot.lm_timer" format="yyyy-MM-dd HH:mm:ss" /></td>
-		</tr>
-		<s:if test="allot.sureUser!=null">
-		<tr>
-		<td class='firstRow'>确认人/经手人:</td>
-		<td class='secRow'><s:property value="allot.sureUser_name" /></td>
-		<td class='firstRow'>确认时间:</td>
-		<td class='secRow'><s:date name="allot.sureDate" format="yyyy-MM-dd HH:mm:ss" /></td>
-		</tr>
-		</s:if>
-	
-</s:if>
-
-
-		<tr>
-		    <td colspan="20" class="buttonarea">
-		    	
-		    	<span id="message"><s:property value="message" /></span>
-				<s:if test="null == allot && 'add' == viewFlag">
+					</table>
+		        </div>
+			</fieldset>
+        </s:if>
+        
+       <div class="label_main">
+		<div class="label_hang">
+            <div class="label_ltit">相关操作:</div>
+            <div class="label_rwbenx">
+            <span id="message"><s:property value="message" /></span>
+            	<s:if test="null == allot && 'add' == viewFlag">
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_ADD')">
-					<s:submit id="add" name="add" value="保存&填写明细" action="allot_add" onclick="return xt();"/>
+					<s:submit id="add" name="add" value="保存&填写明细" action="allot_add" cssClass="input-blue" onclick="return xt();"/>
 					</s:if>
 				</s:if>
 				<s:elseif test="null != allot && 'mdy' == viewFlag && @com.qkj.ware.action.warepower@checkPermit(allot.sourceid,'edit')">
@@ -249,21 +287,19 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 					
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_MDY')">
 					<s:if test="%{allot.state==0||allot.state==2}">
-					<s:submit id="save" name="save" value="保存" action="allot_save" onclick="return xt();"/>
+					<s:submit id="save" name="save" value="保存" action="allot_save" cssClass="input-blue" onclick="return xt();"/>
 					<s:if test="%{allotDetails.size>0}">
-					<s:submit id="freeze" name="freeze" value="发货" action="allot_freeze" onclick="return isOp('是否确认发货?\n发货后将不能更改!');"></s:submit>
+					<s:submit id="freeze" name="freeze" value="发货" action="allot_freeze"  cssClass="input-green" onclick="return isOp('是否确认发货?\n发货后将不能更改!');"></s:submit>
 					</s:if>
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_DEL') && (allot.state==0||allot.state==2)">
-					<s:submit id="delete" name="delete" value="删除" action="allot_del" onclick="return isDel();" />
+					<s:submit id="delete" name="delete" value="删除" action="allot_del"  cssClass="input-red" onclick="return isDel();" />
 					</s:if>
 					</s:if>
 					</s:if>
 					</s:if>
-					
 					<s:if test="allot.state==1 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_CENCLE')">
-					<s:submit id="freeze" name="freeze" value="取消发货" action="allot_cancel" onclick="return isOp('确认取消发货?');"></s:submit>
+					<s:submit id="freeze" name="freeze" value="取消发货" action="allot_cancel"  cssClass="input-red" onclick="return isOp('确认取消发货?');"></s:submit>
 					</s:if>
-					
 				</s:elseif>
 				
 				<s:if test="null != allot && 'mdy' == viewFlag && @com.qkj.ware.action.warepower@checkPermit(allot.goldid,'edit')">
@@ -273,68 +309,75 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 					</s:if>
 					
 					<s:if test="allot.state==1 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_SURE') ">
-					<s:submit id="freeze" name="freeze" value="经手人确认" onclick="return isOp('确认发货?');" action="allot_sure"></s:submit>
+					<s:submit id="freeze" name="freeze" value="经手人确认" onclick="return isOp('确认发货?');" cssClass="input-yellow" action="allot_sure"></s:submit>
 					</s:if>
 					
 				</s:if>
-				<input type="button" value="返回" onclick="linkurl('<s:url action="allot_relist" namespace="/allot" />');" />
-			</td>
-	    </tr>
-	</table>	
-</s:form>
+				
+				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_CENCLE') && @com.qkj.ware.action.warepower@checkPermit(inStock.store_id,'add')  && inStock.confirm!=null && inStock.send!=1">
+					<s:submit cssClass="input-red" id="cencle" name="cencle" value="取消订单" action="inStock_cencle" onclick="return isOp('确认取消?');" />
+					</s:if>
+				<input type="button" value="返回" class="input-gray" onclick="linkurl('<s:url action="allot_relist" namespace="/allot" />');" />
+            </div>
+		</div>
+		</div>
 	</div>
-</div>
+	</s:form>
 </div>
 
+<!--盘点仓库 -->
 <div id="addItemForm" title="添加明细">
-<s:form id="form_addItem" name="form_addItem" action="allotDetail_add" namespace="/allot" onsubmit="return validator(this);" method="post" theme="simple">
-	<table class="ilisttable" width="100%">
+<s:form id="form_addItem" name="form_addItem" action="inDetail_add" namespace="/inDetail" onsubmit="return validator(this);" method="post" theme="simple">
+	<table>
 		  <tr>
-			<td class='firstRow'><span style="color:red;">*</span> 产品:</td>
-			<td class='secRow'>
-			<select name="allotDetail.stock_id" title="产品">
-				<option>--请选择--</option>
-				<s:iterator value="stocks" status="sta">
-				<option data='<s:property value="market_price" />#<s:property value="group_price" />#<s:property value="dealer_price" />#<s:property value="agree_price_1" />#<s:property value="agree_price_2" />#<s:property value="agree_price_3" />' data_case='<s:property value="case_spec" />' value='<s:property value="uuid" />'><s:property value="product_name" /></option>
-				</s:iterator>
-			</select>
+		   	<td>
+		   	<div class="label_main">
+				<div id="addItemForm" class="label_con" title="请选择调库商品">	
+					<div class="label_hang">
+			            <div class="label_ltit">商品:</div>
+			            <div class="label_rwben2">
+			            	<span class="label_rwb iselect">
+			            	<select id="membermanagerid" name="allotDetail.stock_id" title="产品">
+								<option>--请选择--</option>
+								<s:iterator value="stocks" status="sta">
+								<option data='<s:property value="market_price" />#<s:property value="group_price" />#<s:property value="dealer_price" />#<s:property value="agree_price_1" />#<s:property value="agree_price_2" />#<s:property value="agree_price_3" />' data_case='<s:property value="case_spec" />' value='<s:property value="uuid" />'><s:property value="product_name" /></option>
+								</s:iterator>
+							</select>
+							</span>
+			            </div>
+			        </div>																		
+					
+	       		<div class="label_hang">
+		            <div class="label_ltit">数量:</div>
+		            <div class="label_rwben2">
+		            <div class="label_rwb">
+						<s:textfield name="allotDetail.num" title="数量" dataType="integer" controlName="数量" require="required" />
+						<span id="ladingItemnumCase"></span>
+					</div>
+		            </div>
+	       		</div>	
+			        <div class="label_hang label_button tac">																				
+			         <s:hidden name="allotDetail.lading_id" title="调货单ID" value="%{allot.uuid}" />
+					<s:hidden name="allot.goldid" title="调入仓库" value="%{allot.goldid}"></s:hidden>
+					<s:hidden name="allot.reason" value="%{allot.reason}"/>
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_ADD')">
+					<s:submit id="add" name="add" value="确定" action="allotDetail_add" />
+					</s:if>
+					<input type="button" value="关闭" onclick="closeAddForm();" />
+			        </div>
+			       </div>																				
+				</div>
 			</td>
-			</tr>
-			<tr>
-			
-			<td class='firstRow'>数量:</td>
-			<td class='secRow'>
-				<s:textfield name="allotDetail.num" title="数量" dataType="integer" controlName="数量" require="required" />
-				<span id="ladingItemnumCase"></span>
-			</td>
-			</tr>
-			
-			
-		<tr>
-		    <td colspan="20" class="buttonarea">
-				<s:hidden name="allotDetail.lading_id" title="调货单ID" value="%{allot.uuid}" />
-				<s:hidden name="allot.goldid" title="调入仓库" value="%{allot.goldid}"></s:hidden>
-				<s:hidden name="allot.reason" value="%{allot.reason}"/>
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_ADD')">
-				<s:submit id="add" name="add" value="确定" action="allotDetail_add" />
-				</s:if>
-				<input type="button" value="关闭" onclick="closeAddForm();" />
-			</td>
-	    </tr>
+		 	</tr>
 	</table>	
+	<s:hidden name="viewFlag" value="add" />
 </s:form>
 </div>
+
+</body>
 <script type="text/javascript">
-function xt(){
-	var source=document.getElementById('allot.sourceid').value;
-	var gold=document.getElementById('allot.goldid').value;
-	if(source==gold){
-		alert("调入仓库调出仓库不能一致！");
-		return false;
-	}
-}
 var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
-var c_mid = '<s:property value="lading.member_id" />';
+var c_mid = '<s:property value="outStock.member_id" />';
 $(function() {
 	SimpleLoadMember(ajax_url_action,function(event, ui) {loadAddress(ui.item.order_user_id);});
 	if(c_mid!='') {
@@ -342,29 +385,13 @@ $(function() {
 	}
 	$("#addItemForm").dialog({
 	      autoOpen: false,
-	      height: 200,
+	      height: 300,
 	      width: 600,
 	      modal: true
 	});
 	$("#addItem").click(function() {
 		openAddForm();
 	});
-	
-	$("#addLadingPay").dialog({
-	      autoOpen: false,
-	      height: 200,
-	      width: 600,
-	      modal: true
-	});
-	$("#addLadingPayOpen").click(function() {
-		$("#addLadingPay").dialog("open");
-	});
-	
-	//lading_fd_date
-	if($("#lading_fd_date").length>0) {
-		$("#lading_fd_date").datepicker();
-	}
-	
 	// 此段代码可以方式回车提交
 	jQuery(function($){
 	    $("form").keypress(function(e){
@@ -376,39 +403,6 @@ $(function() {
 	
 	CommonUtil.pickrow('fd_list_table');
 });
-
-function loadAddress(memberid) {
-	var ajax = new Common_Ajax();
-	ajax.config.action_url = ajax_url_action;
-	ajax.config._success = function(data, textStatus) {
-		createAddreeeSelect(data);
-	};
-	ajax.addParameter("privilege_id", "QKJCJ_SYSEBIZ_AJAXLOAD_ADDRESS");
-	ajax.addParameter("parameters", "member_id=" + memberid);
-	ajax.sendAjax();
-}
-
-var c_data=new Array(); // 保存当前用户的所有联系人信息
-function createAddreeeSelect(p_data) {
-	var selectid = $("#selectAddress");
-	selectid.clearAllOption();
-	var sh = "";
-	for ( var i = 0; i < p_data.length; i++) {
-		selectid.addOption(i+"-"+ p_data[i].province,i);
-		sh += p_data[i].province + " " + p_data[i].city + " " + p_data[i].area + " " + p_data[i].street + "  " 
-			+ p_data[i].con_name + ' 收  邮编:' + p_data[i].post + ' 联系电话:' + p_data[i].mobile;
-		if (p_data[i].defaultaddress == 1) {
-			$(":input[name='lading.address']").val(sh);
-			selectid.setSelectedValue(i);
-		}
-		c_data[i] = sh;
-		sh="";
-	}
-	selectid.unbind().bind("change",function(){
-		$(":input[name='lading.address']").val(c_data[$(this).getSelectedValue()]);
-	});
-}
-
 function openAddForm() {
 	$("#addItemForm").dialog("open");
 }
@@ -418,14 +412,14 @@ function closeAddForm() {
 }
 </script>
 <script type="text/javascript">
-//当前日期
-function wol() {
-	var date = new Date();
-	var dateString = date.getFullYear() + '-' + (date.getMonth() + 1) + '-'
-			+ date.getDate();
-		document.getElementById("indate").value=dateString;
+function xt(){
+	var source = $("#editForm :input[name='allot.sourceid']");
+	var gold = $("#editForm :input[name='allot.goldid']");
+	if(source==gold){
+		alert("调入仓库调出仓库不能一致！");
+		return false;
+	}
 }
-
 var add_per_price_input = $("#form_addItem :input[name='allotDetail.price']");
 var add_num_input = $("#form_addItem :input[name='allotDetail.num']");
 var add_total_price_input = $("#form_addItem :input[name='allotDetail.total']");
@@ -477,5 +471,4 @@ function setDataCase() {
 	}
 }
 </script>
-</body>
 </html>

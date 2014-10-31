@@ -227,6 +227,8 @@
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotNull prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotNull>
+			<isNotNull prepend="AND" property="ware_name"><![CDATA[ ware_name=#ware_name# ]]></isNotNull>
+			<isNotNull prepend="AND" property="ware_class"><![CDATA[ ware_class=#ware_class# ]]></isNotNull>
 			<isNotNull prepend="AND" property="bug"><![CDATA[ uuid<>6 ]]></isNotNull>
 			<isNotNull prepend="AND" property="type"><![CDATA[ `ware_class`=0 ]]></isNotNull>
 		</dynamic>
