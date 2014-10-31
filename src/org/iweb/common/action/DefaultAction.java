@@ -109,12 +109,12 @@ public class DefaultAction extends ActionSupport {
 			map.putAll(ContextHelper.getDefaultRequestMap4Page());
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 			if (ContextHelper.isAdmin()) {// 管理员
-				this.setSches(dao.list(map));
+				this.setSches(dao.listpage(map));
 			}else{
 				map.put("puuid", u);
 				map.put("ruuid", u);
 				map.put("dept_code", code);
-				this.setSches(dao.listbyr(map));
+				this.setSches(dao.listbypage(map));
 			}
 			this.setRecCount(dao.getResultCount());
 		} catch (Exception e) {

@@ -17,6 +17,21 @@
 		</dynamic>
 		<![CDATA[ GROUP BY g.`uuid` ]]>
 	</select>
+	
+	<select id="sche_getSche_page" resultClass="schedule" parameterClass="java.util.Map">
+		<![CDATA[ 
+		SELECT DISTINCT g.`uuid` uuid, d.uuid guuid,g.`TITLE` title,g.`SDATE` sdate,g.`flag` flag,g.`CONTENT` content,g.type type,d.`p_uuid` p_uuid,pu.`USER_NAME` p_name FROM qkj_t_schedule g LEFT JOIN qkj_t_scheduser d ON (g.`uuid`=d.`infor_uuid`)
+		LEFT JOIN s_sys_user pu ON (d.`p_uuid`=pu.`UUID`) 
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="uuid"><![CDATA[ g.uuid=#uuid# ]]></isNotNull>
+			<isNotNull prepend="AND" property="title"><![CDATA[ g.title=#title# ]]></isNotNull>
+			<isNotNull prepend="AND" property="type"><![CDATA[ g.type=#type# ]]></isNotNull>
+			<isNotNull prepend="AND" property="p_uuid"><![CDATA[ d.p_uuid=#p_uuid# ]]></isNotNull>
+		</dynamic>
+		<![CDATA[ GROUP BY g.`uuid` LIMIT 5 ]]>
+	</select>
+	
 	<!-- 查询姓名 -->
 	<select id="sche_getScheY" resultClass="schedule" parameterClass="java.util.Map">
 		<![CDATA[ 
@@ -42,7 +57,7 @@
 		SELECT g.`uuid` UUID,g.`TITLE` title,g.`SDATE` sdate,g.`CONTENT` content,g.`flag` flag,g.type type,d.`r_uuid` r_uuid,d.`p_uuid` puuid,0 r_name,pu.`USER_NAME` p_name FROM qkj_t_schedule g LEFT JOIN qkj_t_scheduser d ON (g.`uuid`=d.`infor_uuid`)
 		LEFT JOIN s_sys_user pu ON (d.`p_uuid`=pu.`UUID`)
 		WHERE d.`r_uuid`=0 OR pu.`UUID`=#puuid#
-		) a group by a.uuid
+		) a 
 
 		]]>
 		<dynamic prepend="WHERE">
@@ -51,6 +66,35 @@
 			<isNotNull prepend="AND" property="type"><![CDATA[ g.type=#type# ]]></isNotNull>
 			<isNotNull prepend="AND" property="p_uuid"><![CDATA[ d.p_uuid=#p_uuid# ]]></isNotNull>
 		</dynamic>
+		<![CDATA[ group by a.uuid ]]>
+	</select>
+	
+	<select id="sche_getSche_bypage" resultClass="schedule" parameterClass="java.util.Map">
+		<![CDATA[ 
+		SELECT a.uuid UUID,a.title title,a.sdate sdate,a.content content,a.flag flag,a.type type,a.r_uuid r_uuid,a.puuid puuid, a.r_name r_name,a.p_name p_name FROM (
+		SELECT g.`uuid` UUID,g.`TITLE` title,g.`SDATE` sdate,g.`CONTENT` content,g.`flag` flag,g.type type,d.`r_uuid` r_uuid,d.`p_uuid` puuid,ru.`USER_NAME` r_name,pu.`USER_NAME` p_name FROM qkj_t_schedule g LEFT JOIN qkj_t_scheduser d ON (g.`uuid`=d.`infor_uuid`)
+		LEFT JOIN s_sys_user ru ON (d.`r_uuid`=ru.`UUID`)
+		LEFT JOIN s_sys_user pu ON (d.`p_uuid`=pu.`UUID`)
+		WHERE ru.`UUID`=#ruuid# OR pu.`UUID`=#puuid#
+		UNION ALL 
+		SELECT g.`uuid` UUID,g.`TITLE` title,g.`SDATE` sdate,g.`CONTENT` content,g.`flag` flag,g.type type,d.`r_uuid` r_uuid,d.`p_uuid` puuid,rd.`dept_cname` r_name,pu.`USER_NAME` p_name FROM qkj_t_schedule g LEFT JOIN qkj_t_scheduser d ON (g.`uuid`=d.`infor_uuid`)
+		LEFT JOIN s_sys_department rd ON (d.`r_uuid`=rd.`DEPT_CODE`)
+		LEFT JOIN s_sys_user pu ON (d.`p_uuid`=pu.`UUID`)
+		WHERE rd.`DEPT_CODE` LIKE CONCAT(#dept_code#,'%')
+		UNION ALL
+		SELECT g.`uuid` UUID,g.`TITLE` title,g.`SDATE` sdate,g.`CONTENT` content,g.`flag` flag,g.type type,d.`r_uuid` r_uuid,d.`p_uuid` puuid,0 r_name,pu.`USER_NAME` p_name FROM qkj_t_schedule g LEFT JOIN qkj_t_scheduser d ON (g.`uuid`=d.`infor_uuid`)
+		LEFT JOIN s_sys_user pu ON (d.`p_uuid`=pu.`UUID`)
+		WHERE d.`r_uuid`=0 OR pu.`UUID`=#puuid#
+		) a 
+
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="uuid"><![CDATA[ a.uuid=#uuid# ]]></isNotNull>
+			<isNotNull prepend="AND" property="title"><![CDATA[ a.title=#title# ]]></isNotNull>
+			<isNotNull prepend="AND" property="type"><![CDATA[ g.type=#type# ]]></isNotNull>
+			<isNotNull prepend="AND" property="p_uuid"><![CDATA[ d.p_uuid=#p_uuid# ]]></isNotNull>
+		</dynamic>
+		<![CDATA[ group by a.uuid LIMIT 5]]>
 	</select>
 	<!-- 妯＄硦鏌ヨ鎺ユ敹浜?-->
 	<select id="sche_getusercode" resultClass="usercode" parameterClass="java.util.Map">

@@ -138,7 +138,7 @@
 			    	
 			    	</s:if>   --%> 
 			    </td>
-			    <td class="td0 op-area"><a onClick="showDetail('showtr${uuid}');" class="input-nostyle">查看</a></td>
+			    <td class="td0 op-area"><a href="javascript:;" onClick="showDetail('showtr${uuid}');" class="input-nostyle">查看</a></td>
 	  		</tr>
 	  	</s:iterator>
  		</table>

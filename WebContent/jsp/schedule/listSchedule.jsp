@@ -77,14 +77,20 @@
 				</td>
 				<td class="td4 op-area">
 				<s:if test="@com.qkj.ware.action.warepower@checkSche(uuid)">
-			    	<a class="input-blue" href="<s:url namespace="/sche" action="schedule_load"><s:param name="viewFlag">mdy</s:param><s:param name="sche.uuid" value="uuid"></s:param></s:url>">修改</a>
-			    	<a class="input-red" href="<s:url namespace="/sche" action="schedule_del"><s:param name="sche.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SCHE_LIST_UPDATE')">
+					<a class="input-blue" href="<s:url namespace="/sche" action="schedule_load"><s:param name="viewFlag">mdy</s:param><s:param name="sche.uuid" value="uuid"></s:param></s:url>">修改</a>
+					</s:if>
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SCHE_LIST_DEL')">
+					<a class="input-red" href="<s:url namespace="/sche" action="schedule_del"><s:param name="sche.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
+					</s:if>
+			    	
+			    	
 			    </s:if>
 			    <s:else>
 			    <a class="input-blue" href="<s:url namespace="/sche" action="schedule_load"><s:param name="viewFlag">view</s:param><s:param name="sche.uuid" value="uuid"></s:param></s:url>">详情</a>
 			    </s:else>	
 			    </td>
-			    <td class="td0 op-area"><a  href="javascript:;" onClick="showDetail('showtr${uuid}');" class="input-nostyle">查看</a></td>
+			    <td class="td0 op-area"><a href="javascript:;" onClick="showDetail('showtr${uuid}');" class="input-nostyle">查看</a></td>
 	  		</tr>
 	  	</s:iterator>
  		</table>

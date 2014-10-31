@@ -71,6 +71,10 @@ if(top==window) {
 .update_content {
 	display: none;
 }
+.ht_right{
+font-size:14px;
+float: right;
+}
 </style>
 </head>
 <body>
@@ -122,12 +126,9 @@ if(top==window) {
 				
 	            </s:iterator>
 		    </div>
-		    <div class="pagination">
-				<script type="text/javascript">
-				var spage = new ShowPage(${currPage});
-				spage.show2(${recCount},${pageSize},2);
-				</script>
-			</div>
+		    <div class="ht_right">
+		    <a href='/sche/schedule_leftList'>>>更多公告信息</a>
+		    </div>
 		</div>
 		<div>
 		</div>

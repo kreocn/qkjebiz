@@ -114,7 +114,7 @@
 						<s:property value="qnum"></s:property></s:else></td>
 						<td class="td1 nw">
 						<s:textfield name="pageStocks[%{#sta.index}].cnum" value="0"></s:textfield></td>
-						<td class="td0 op-area"><div class="printhide"><a onClick="showDetail('showtr${uuid}');" class="input-nostyle">查看</a></div></td>
+						<td class="td0 op-area"><div class="printhide"><a href="javascript:;" onClick="showDetail('showtr${uuid}');" class="input-nostyle">查看</a></div></td>
 		  		</tr>
 		  	</s:iterator>
 	 		</table>
