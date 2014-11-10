@@ -51,6 +51,15 @@ public class Active {
 	private String ship_no;// 运单号码
 	private String ship_type;// 物流名称
 	private String ship_phone;// 物流单号
+	private Integer fd_status;
+	private String fd_user;
+	private Date fd_time;
+	private Integer close_fd_status;
+	private String close_fd_user;
+	private Date close_fd_time;
+	private Integer close_nd_status;
+	private String close_nd_user;
+	private Date close_nd_time;
 
 	// 非数据库字段
 	private String apply_dept_name;
@@ -63,6 +72,10 @@ public class Active {
 	private String smd_user_sign;
 	private String close_sd_user_sign;
 	private String close_smd_user_sign;
+	private String biz_user;
+	private String puser_sign;
+	private String puser_name;
+	private Date biz_time;
 
 	// 查询使用字段
 	private String is_sub_dept;
@@ -72,6 +85,91 @@ public class Active {
 	private Date pass_time_end;
 	private Date close_pass_time_start;
 	private Date close_pass_time_end;
+	private String fd_user_name;
+	private String close_fd_name;
+	private String close_nd_name;
+	
+	
+	
+	public Date getBiz_time() {
+		return biz_time;
+	}
+
+	public void setBiz_time(Date biz_time) {
+		this.biz_time = biz_time;
+	}
+
+	public Integer getFd_status() {
+		return fd_status;
+	}
+
+	public void setFd_status(Integer fd_status) {
+		this.fd_status = fd_status;
+	}
+
+	public String getFd_user() {
+		return fd_user;
+	}
+
+	public void setFd_user(String fd_user) {
+		this.fd_user = fd_user;
+	}
+
+	public Date getFd_time() {
+		return fd_time;
+	}
+
+	public void setFd_time(Date fd_time) {
+		this.fd_time = fd_time;
+	}
+
+	public Integer getClose_fd_status() {
+		return close_fd_status;
+	}
+
+	public void setClose_fd_status(Integer close_fd_status) {
+		this.close_fd_status = close_fd_status;
+	}
+
+	public String getClose_fd_user() {
+		return close_fd_user;
+	}
+
+	public void setClose_fd_user(String close_fd_user) {
+		this.close_fd_user = close_fd_user;
+	}
+
+	public Date getClose_fd_time() {
+		return close_fd_time;
+	}
+
+	public void setClose_fd_time(Date close_fd_time) {
+		this.close_fd_time = close_fd_time;
+	}
+
+	public Integer getClose_nd_status() {
+		return close_nd_status;
+	}
+
+	public void setClose_nd_status(Integer close_nd_status) {
+		this.close_nd_status = close_nd_status;
+	}
+
+	public String getClose_nd_user() {
+		return close_nd_user;
+	}
+
+	public void setClose_nd_user(String close_nd_user) {
+		this.close_nd_user = close_nd_user;
+	}
+
+	public Date getClose_nd_time() {
+		return close_nd_time;
+	}
+
+	public void setClose_nd_time(Date close_nd_time) {
+		this.close_nd_time = close_nd_time;
+	}
 
 	public String getShip_type() {
 		return ship_type;
@@ -560,5 +658,55 @@ public class Active {
 	public void setPlan_start_end(Date plan_start_end) {
 		this.plan_start_end = plan_start_end;
 	}
+
+	public String getFd_user_name() {
+		return fd_user_name;
+	}
+
+	public void setFd_user_name(String fd_user_name) {
+		this.fd_user_name = fd_user_name;
+	}
+
+	public String getClose_fd_name() {
+		return close_fd_name;
+	}
+
+	public void setClose_fd_name(String close_fd_name) {
+		this.close_fd_name = close_fd_name;
+	}
+
+	public String getClose_nd_name() {
+		return close_nd_name;
+	}
+
+	public void setClose_nd_name(String close_nd_name) {
+		this.close_nd_name = close_nd_name;
+	}
+
+	public String getBiz_user() {
+		return biz_user;
+	}
+
+	public void setBiz_user(String biz_user) {
+		this.biz_user = biz_user;
+	}
+
+	public String getPuser_sign() {
+		return puser_sign;
+	}
+
+	public void setPuser_sign(String puser_sign) {
+		this.puser_sign = puser_sign;
+	}
+
+	public String getPuser_name() {
+		return puser_name;
+	}
+
+	public void setPuser_name(String puser_name) {
+		this.puser_name = puser_name;
+	}
+	
+	
 
 }

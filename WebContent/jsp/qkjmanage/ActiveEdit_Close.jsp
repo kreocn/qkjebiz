@@ -188,6 +188,18 @@ color: #008000;
 					<s:if test="active.close_smd_status==40"><font class="message_pass">销管部经理已审</font>(${active.close_smd_user_name})</s:if>
 					<s:if test="active.close_smd_status==50"><font class="message_pass">销管副总已审</font>(${active.close_smd_user_name})</s:if>
 				</div>
+				<div class="zhuangtai" title="${it:formatDate(active.close_smd_time,'yyyy-MM-dd HH:mm:ss')}">
+					财务部审核状态:
+					<s:if test="active.close_fd_status==0 || active.fd_status==null">未确认</s:if>
+					<s:if test="active.close_fd_status==5"><font class="message_error">审核退回</font>(${active.close_fd_name}})</s:if>
+					<s:if test="active.close_fd_status==10"><font class="message_pass">财务已审</font>(${active.close_fd_name}})</s:if>
+				</div>
+				<div class="zhuangtai" title="${it:formatDate(active.close_smd_time,'yyyy-MM-dd HH:mm:ss')}">
+					数据中心审核状态:
+					<s:if test="active.close_nd_status==0 || active.close_nd_status==null">未确认</s:if>
+					<s:if test="active.close_nd_status==5"><font class="message_error">审核退回</font>(${active.close_nd_name})</s:if>
+					<s:if test="active.close_nd_status==10"><font class="message_pass">数据中心已审</font>(${active.close_nd_name})</s:if>
+				</div>
 				<s:hidden name="active.status" /><s:hidden name="active.close_sd_status" /><s:hidden name="active.close_smd_status" />
 				<span id="message"><s:property value="message" /></span>
             </div>
@@ -514,6 +526,7 @@ color: #008000;
         <div class="label_hang">
             <div class="label_ltit">销售部审核:</div>
             <div class="label_rwbenx">
+            ${active.close_sd_status }  ${active.close_smd_status }
 				<s:if test="10==active.close_sd_status && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS10')">
 				<s:submit cssClass="input-green" name="mdyCloseActiveSDStatus10" value="经理/大区-审核通过" action="mdyCloseActiveSDStatus10" onclick="return isOp('确定执行此操作?');" />
 				<s:submit cssClass="input-red" name="mdyCloseActiveSDStatus5" value="审核不通过" action="mdyCloseActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
@@ -522,11 +535,11 @@ color: #008000;
 				<s:submit cssClass="input-green" name="mdyCloseActiveSDStatus30" value="运营总监-审核通过" action="mdyCloseActiveSDStatus30" onclick="return isOp('确定执行此操作?');" />
 				<s:submit cssClass="input-red" name="mdyCloseActiveSDStatus5" value="审核不通过" action="mdyCloseActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
 				</s:if>
-				<s:if test="40==active.close_sd_status && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS40')">
+				<s:if test="40==active.close_sd_status && active.close_smd_status==40 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS40')">
 				<s:submit cssClass="input-green" name="mdyCloseActiveSDStatus40" value="业务副总-审核通过" action="mdyCloseActiveSDStatus40" onclick="return isOp('确定执行此操作?');" />
 				<s:submit cssClass="input-red" name="mdyCloseActiveSDStatus5" value="审核不通过" action="mdyCloseActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
 				</s:if>
-				<s:if test="50==active.close_sd_status && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS10')">
+				<s:if test="50==active.close_sd_status && active.close_smd_status==50 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS10')">
 				<s:submit cssClass="input-green" name="mdyCloseActiveSDStatus50" value="总经理-审核通过" action="mdyCloseActiveSDStatus50" onclick="return isOp('确定执行此操作?');" />
 				<s:submit cssClass="input-red" name="mdyCloseActiveSDStatus5" value="审核不通过" action="mdyCloseActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
 				</s:if>
@@ -554,7 +567,12 @@ color: #008000;
 				<s:submit cssClass="input-green" name="mdyCloseActiveSMDStatus10" value="销管经理-审核通过" action="mdyCloseActiveSMDStatus10" onclick="return isOp('确定执行此操作?');" />
 				<s:submit cssClass="input-red" name="mdyCloseActiveSMDStatus5" value="审核不通过" action="mdyCloseActiveSMDStatus5" onclick="return isOp('确定执行此操作?');" />
 				</s:if>
-				<s:if test="30==active.close_smd_status && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SMDSTATUS30')">
+				<s:if test="30==active.close_smd_status && active.close_sd_status==40 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SMDSTATUS50')">
+				<s:submit id="mdyCloseActiveSMDStatus50" name="mdyCloseActiveSMDStatus50" cssClass="input-green" value="销管部经理-审核通过" action="mdyCloseActiveSMDStatus50" onclick="return isOp('确定执行此操作?');" />
+				<s:submit id="mdyCloseActiveSMDStatus5" name="mdyCloseActiveSMDStatus5" cssClass="input-red" value="审核不通过" action="mdyCloseActiveSMDStatus5" onclick="return isOp('确定执行此操作?');" />
+				</s:if>
+				
+				<s:if test="40==active.close_smd_status && active.close_sd_status==50 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SMDSTATUS30')">
 				<s:submit cssClass="input-green" name="mdyCloseActiveSMDStatus30" value="销管副总-审核通过" action="mdyCloseActiveSMDStatus30" onclick="return isOp('确定执行此操作?');" />
 				<s:submit cssClass="input-red" name="mdyCloseActiveSMDStatus5" value="审核不通过" action="mdyCloseActiveSMDStatus5" onclick="return isOp('确定执行此操作?');" />
 				</s:if>
@@ -571,6 +589,46 @@ color: #008000;
 				</s:if>
             </div>
         </div>
+        </div>
+        
+        <div class="label_main">
+        <div class="label_hang">
+            <div class="label_ltit">财务审核:</div>
+            <div class="label_rwbenx">
+				<!-- 财务 -->
+				<s:if test="(50==active.close_sd_status || 60==active.close_sd_status ) && active.close_smd_status==50 && 10!=active.close_fd_status && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_FDCSTATUS10')">
+				<s:submit id="mdyActiveFDCSTATUS10" name="mdyActiveFDCSTATUS10" cssClass="input-green" value="财务-审核通过" action="mdyActiveFDCSTATUS10" onclick="return isOp('确定执行此操作?');" />
+				<s:submit id="mdyActiveFDCStatus5" name="mdyActiveFDCStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveFDCSTATUS" onclick="return isOp('确定执行此操作?');" />
+				</s:if>
+				<div class="statusInline">
+					财务部审核状态:
+					<s:if test="active.close_fd_status==0 || active.fd_status==null">未确认</s:if>
+					<s:if test="active.close_fd_status==5"><font class="message_error">审核退回</font>(${active.close_fd_name} ${it:formatDate(active.close_fd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+					<s:if test="active.close_fd_status==10"><font class="message_pass">财务已审</font>(${active.close_fd_name} ${it:formatDate(active.close_fd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+				</div>
+        	</div>
+        </div>
+        
+        </div>
+        
+        <div class="label_main">
+        <div class="label_hang">
+            <div class="label_ltit">数据中心审核:</div>
+            <div class="label_rwbenx">
+				<!-- 财务 -->
+				<s:if test="(50==active.close_sd_status || 60==active.close_sd_status )&& active.close_smd_status==50 && 10!=active.close_nd_status && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_NDCSTATUS10')">
+				<s:submit id="mdyActiveNDCSTATUS10" name="mdyActiveNDCSTATUS10" cssClass="input-green" value="数据中心-审核通过" action="mdyActiveNDCSTATUS10" onclick="return isOp('确定执行此操作?');" />
+				<s:submit id="mdyActiveNDCSTATUS5" name="mdyActiveNDCSTATUS5" cssClass="input-red" value="审核不通过" action="mdyActiveNDCSTATUS5" onclick="return isOp('确定执行此操作?');" />
+				</s:if>
+				<div class="statusInline">
+					数据中心审核状态:
+					<s:if test="active.close_nd_status==0 || active.close_nd_status==null">未确认</s:if>
+					<s:if test="active.close_nd_status==5"><font class="message_error">审核退回</font>(${active.close_nd_name} ${it:formatDate(active.close_nd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+					<s:if test="active.close_nd_status==10"><font class="message_pass">数据中心已审</font>(${active.close_nd_name} ${it:formatDate(active.close_nd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+				</div>
+        	</div>
+        </div>
+        
         </div>
         </s:if>
 	</div>
