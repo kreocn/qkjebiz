@@ -127,7 +127,7 @@ color: #008000;
             <div class="label_rwbenx">
             <s:iterator value="activeSing" status="sta">
             	<div class="zhuangtai bgcw">
-					<s:if test="active.sd_status==40 && puser_sign!=null">
+					<s:if test="puser_sign!=null">
 						<s:if test="puser_sign==null">	(${puser_name})</s:if>
 						<s:else><span class="user_sign"><img src="${puser_sign}" /></span></s:else>
 						<span class="vab">${it:formatDate(biz_time,'yyyy-MM-dd HH:mm:ss')}</span>
@@ -167,19 +167,20 @@ color: #008000;
 		 </div>
 		 </div>
 		
-		<div class="label_main label_main_sep"></div>
+		
+		 
+		 <div class="label_main label_main_sep"></div>
 		 <div class="label_main">
 		 <div class="label_hang label_hang_sign">
 		     <div class="label_ltit">销管副总:</div>
 		     <div class="label_rwbenx label_rwb_sign">(签字/日期)
-		     <s:if test="fActive!=null">
-		     <span class="user_sign"><img src="${fActive.puser_sign}" /></span>
+		     <s:if test="fuActive!=null">
+		     <span class="user_sign"><img src="${fuActive.puser_sign}" /></span>
 		     </s:if>
 		     </div>
 		 </div>
 		 </div>
 		
-		<div class="label_main">
        <div class="label_main label_main_sep"></div>
 		 <div class="label_main">
 		 <div class="label_hang label_hang_sign">

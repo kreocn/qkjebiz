@@ -48,7 +48,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	private List<Active> activeSing;
 	private Active zongActive;
 	private Active guanActive;
-	private Active fActive;
+	private Active fuActive;
 
 	private Approve approve;
 	private List<Approve> approves;
@@ -78,12 +78,14 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		this.guanActive = guanActive;
 	}
 
-	public Active getfActive() {
-		return fActive;
+	
+
+	public Active getFuActive() {
+		return fuActive;
 	}
 
-	public void setfActive(Active fActive) {
-		this.fActive = fActive;
+	public void setFuActive(Active fuActive) {
+		this.fuActive = fuActive;
 	}
 
 	public List<Active> getActiveSing() {
@@ -313,6 +315,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				map.put("biz_id", active.getUuid());
 				this.setActiveSing(dao.listSing(map));
 				
+				if(active.getSd_status()==60){//总经理已审
 				map.clear();
 				map.put("sq", "sq");
 				map.put("biz_id", active.getUuid());
@@ -321,16 +324,19 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				if(n.size()>0){
 					this.setZongActive((Active)n.get(0));
 				}
+				}
 				
-				
+				if(active.getSmd_status()==50){//销管部经理已审
 				map.clear();
 				map.put("sq", "sq");
 				map.put("biz_id", active.getUuid());
 				map.put("smd50", "zong");
 				List<Active> s=dao.listSing(map);
 				if(s.size()>0){
-					this.setfActive((Active)s.get(0));
+					this.setFuActive((Active)s.get(0));
+					System.out.println(fuActive.getPuser_sign());
 				}
+				
 				map.clear();
 				map.put("sq", "sq");
 				map.put("biz_id", active.getUuid());
@@ -338,6 +344,18 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				List<Active> t=dao.listSing(map);
 				if(t.size()>0){
 					this.setGuanActive((Active)t.get(0));
+				}
+				}
+				
+				if(active.getSmd_status()==40){//销管部经理已审
+				map.clear();
+				map.put("sq", "sq");
+				map.put("biz_id", active.getUuid());
+				map.put("smd40", "zong");
+				List<Active> t=dao.listSing(map);
+				if(t.size()>0){
+					this.setGuanActive((Active)t.get(0));
+				}
 				}
 				
 				map.clear();
@@ -910,31 +928,48 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				map.put("biz_id", active.getUuid());
 				this.setActiveSing(dao.listSing(map));
 				
-				map.clear();
-				map.put("ja", "sq");
-				map.put("biz_id", active.getUuid());
-				map.put("csd60", "zong");
-				List<Active> n=dao.listSing(map);
-				if(n.size()>0){
-					this.setZongActive((Active)n.get(0));
+				if(active.getClose_sd_status()==60){//总经理已审
+					map.clear();
+					map.put("ja", "sq");
+					map.put("biz_id", active.getUuid());
+					map.put("csd60", "zong");
+					List<Active> n=dao.listSing(map);
+					if(n.size()>0){
+						this.setZongActive((Active)n.get(0));
+					}
 				}
 				
-				map.clear();
-				map.put("ja", "sq");
-				map.put("biz_id", active.getUuid());
-				map.put("csmd50", "zong");
-				List<Active> s=dao.listSing(map);
-				if(s.size()>0){
-					this.setfActive((Active)s.get(0));
+				if(active.getClose_smd_status()==50){//销管副总已审
+					map.clear();
+					map.put("ja", "sq");
+					map.put("biz_id", active.getUuid());
+					map.put("csmd50", "zong");
+					List<Active> s=dao.listSing(map);
+					if(s.size()>0){
+						this.setFuActive((Active)s.get(0));
+					}
+					
+					map.clear();
+					map.put("ja", "sq");
+					map.put("biz_id", active.getUuid());
+					map.put("csmd40", "zong");
+					List<Active> t=dao.listSing(map);
+					if(t.size()>0){
+						this.setGuanActive((Active)t.get(0));
+					}
 				}
-				map.clear();
-				map.put("ja", "sq");
-				map.put("biz_id", active.getUuid());
-				map.put("csmd40", "zong");
-				List<Active> t=dao.listSing(map);
-				if(t.size()>0){
-					this.setGuanActive((Active)t.get(0));
+				
+				if(active.getClose_smd_status()==40){//销管部经理已审
+					map.clear();
+					map.put("ja", "sq");
+					map.put("biz_id", active.getUuid());
+					map.put("csmd40", "zong");
+					List<Active> t=dao.listSing(map);
+					if(t.size()>0){
+						this.setGuanActive((Active)t.get(0));
+					}
 				}
+				
 
 				ActiveProductDAO adao = new ActiveProductDAO();
 				ActivePosmDAO podao = new ActivePosmDAO();
