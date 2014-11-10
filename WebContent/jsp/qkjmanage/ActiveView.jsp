@@ -56,6 +56,7 @@ color: #FF0000;
 .approve_flag_pass {
 color: #008000;
 }
+
 </style>
 <body>
 <div class="main">
