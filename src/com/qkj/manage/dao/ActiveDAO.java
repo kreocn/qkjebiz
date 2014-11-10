@@ -12,6 +12,10 @@ public class ActiveDAO extends AbstractDAO {
 		setCountMapid("qkjmanage_getActivesCounts");
 		return super.list("qkjmanage_getActives", map);
 	}
+	
+	public List listSing(Map<String, Object> map) {
+		return super.list("qkjmanage_getsign", map);
+	}
 
 	public Object get(Object uuid) {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -41,6 +45,16 @@ public class ActiveDAO extends AbstractDAO {
 
 	public int mdyActiveSMDStatus(Object parameters) {
 		return super.save("qkjmanage_mdyActiveSMDStatus", parameters);
+	}
+	
+	public int mdyActiveFDStatus(Object parameters) {
+		return super.save("qkjmanage_mdyActiveFDStatus", parameters);
+	}
+	public int mdyActiveFDCStatus(Object parameters) {
+		return super.save("qkjmanage_mdyActiveFDCStatus", parameters);
+	}
+	public int mdyActiveNDCStatus(Object parameters) {
+		return super.save("qkjmanage_mdyActiveNDCStatus", parameters);
 	}
 
 	public int mdyActiveItPrice(String active_id) {

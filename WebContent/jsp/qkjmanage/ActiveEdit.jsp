@@ -170,6 +170,13 @@ color: #008000;
 					<s:if test="active.smd_status==40"><font class="message_pass">销管部经理已审</font>(${active.smd_user_name})</s:if>
 					<s:if test="active.smd_status==50"><font class="message_pass">销管副总已审</font>(${active.smd_user_name})</s:if>
 				</div>
+				<div class="zhuangtai" title="${it:formatDate(active.smd_time,'yyyy-MM-dd HH:mm:ss')}">
+					财务审核状态:
+					<s:if test="active.fd_status==0">未确认</s:if>
+					<s:if test="active.fd_status==5"><font class="message_error">审核退回</font>(${active.fd_user_name})</s:if>
+					<s:if test="active.fd_status==10"><font class="message_pass">财务已审</font>(${active.fd_user_name})</s:if>
+				</div>
+				
 				<s:hidden name="active.status" /><s:hidden name="active.sd_status" /><s:hidden name="active.smd_status" />
 				<span id="message"><s:property value="message" /></span>
             </div>
@@ -435,6 +442,8 @@ color: #008000;
 				<s:submit id="mdyActiveSDStatus50" name="mdyActiveSDStatus50" cssClass="input-green" value="总经理-审核通过" action="mdyActiveSDStatus50" onclick="return isOp('确定执行此操作?');" />
 				<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
 				</s:if>
+				
+				
 				<div class="statusInline">
 					销售部审核状态:
 					<s:if test="active.sd_status==0">初始状态</s:if>
@@ -448,6 +457,7 @@ color: #008000;
         	</div>
         </div>
         </div>
+        
         <div class="label_main">
         <div class="label_hang">
             <div class="label_ltit">销管审核:</div>
@@ -456,7 +466,11 @@ color: #008000;
 				<s:submit id="mdyActiveSMDStatus10" name="mdyActiveSMDStatus10" cssClass="input-green" value="销管经理-审核通过" action="mdyActiveSMDStatus10" onclick="return isOp('确定执行此操作?');" />
 				<s:submit id="mdyActiveSMDStatus5" name="mdyActiveSMDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSMDStatus5" onclick="return isOp('确定执行此操作?');" />
 				</s:if>
-				<s:if test="30==active.smd_status && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_SMDSTATUS40')">
+				<s:if test="30==active.smd_status && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_SMDSTATUS10')">
+				<s:submit id="mdyActiveSMDStatus50" name="mdyActiveSMDStatus50" cssClass="input-green" value="销管部经理-审核通过" action="mdyActiveSMDStatus50" onclick="return isOp('确定执行此操作?');" />
+				<s:submit id="mdyActiveSMDStatus5" name="mdyActiveSMDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSMDStatus5" onclick="return isOp('确定执行此操作?');" />
+				</s:if>
+				<s:if test="40==active.smd_status  && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_SMDSTATUS40')">
 				<s:submit id="mdyActiveSMDStatus40" name="mdyActiveSMDStatus40" cssClass="input-green" value="销管副总-审核通过" action="mdyActiveSMDStatus40" onclick="return isOp('确定执行此操作?');" />
 				<s:submit id="mdyActiveSMDStatus5" name="mdyActiveSMDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSMDStatus5" onclick="return isOp('确定执行此操作?');" />
 				</s:if>
@@ -466,7 +480,27 @@ color: #008000;
 					<s:if test="active.smd_status==5"><font class="message_error">审核退回</font>(${active.smd_user_name} ${it:formatDate(active.smd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 					<s:if test="active.smd_status==10"><font class="message_warning">已签收</font></s:if>
 					<s:if test="active.smd_status==30"><font class="message_pass">销管经理已审</font>(${active.smd_user_name} ${it:formatDate(active.smd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+					<s:if test="active.smd_status==40"><font class="message_pass">销管部经理已审</font>(${active.fd_user_name} ${it:formatDate(active.fd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 					<s:if test="active.smd_status==50"><font class="message_pass">销管副总已审</font>(${active.smd_user_name} ${it:formatDate(active.smd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+				</div>
+        	</div>
+        </div>
+        </div>
+        
+        <div class="label_main">
+        <div class="label_hang">
+            <div class="label_ltit">财务审核:</div>
+            <div class="label_rwbenx">
+				<!-- 财务 -->
+				<s:if test="(50==active.sd_status || 60==active.sd_status ) && 10!=active.fd_status && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_FDSTATUS10')">
+				<s:submit id="mdyActiveFDSTATUS10" name="mdyActiveFDSTATUS10" cssClass="input-green" value="财务-审核通过" action="mdyActiveFDSTATUS10" onclick="return isOp('确定执行此操作?');" />
+				<s:submit id="mdyActiveFDStatus5" name="mdyActiveFDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveFDStatus" onclick="return isOp('确定执行此操作?');" />
+				</s:if>
+				<div class="statusInline">
+					财务部审核状态:
+					<s:if test="active.fd_status==0">未确认</s:if>
+					<s:if test="active.fd_status==5"><font class="message_error">审核退回</font>(${active.fd_user_name} ${it:formatDate(active.fd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+					<s:if test="active.fd_status==10"><font class="message_pass">财务已审</font>(${active.fd_user_name} ${it:formatDate(active.fd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 				</div>
         	</div>
         </div>

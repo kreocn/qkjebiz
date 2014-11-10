@@ -125,85 +125,72 @@ color: #008000;
         <div class="label_hang">
             <div class="label_ltit">签字:</div>
             <div class="label_rwbenx">
+            <s:iterator value="activeSing" status="sta">
             	<div class="zhuangtai bgcw">
-					<s:if test="active.sd_status==40">
-						<s:if test="active.sd_user_sign==null">	(${active.sd_user_name})</s:if>
-						<s:else><span class="user_sign"><img src="${active.sd_user_sign}" /></span></s:else>
-						<span class="vab">${it:formatDate(active.sd_time,'yyyy-MM-dd HH:mm:ss')}</span>
+					<s:if test="active.sd_status==40 && puser_sign!=null">
+						<s:if test="puser_sign==null">	(${puser_name})</s:if>
+						<s:else><span class="user_sign"><img src="${puser_sign}" /></span></s:else>
+						<span class="vab">${it:formatDate(biz_time,'yyyy-MM-dd HH:mm:ss')}</span>
 					</s:if>
 				</div>
+			</s:iterator>
 				
-				<div class="zhuangtai bgcw">
+				<%-- <div class="zhuangtai bgcw">
 					<s:if test="active.smd_status==30">
 						<s:if test="active.smd_user_sign==null">(${active.smd_user_name})</s:if>
 						<s:else><span class="user_sign"><img src="${active.smd_user_sign}" /></span></s:else>
 						<span class="vab">${it:formatDate(active.smd_time,'yyyy-MM-dd HH:mm:ss')}</span>
 					</s:if>
-				</div>
+				</div> --%>
             </div>
 		</div>
 		</div>
 		
+		<div class="label_main label_main_sep"></div>
+		 <div class="label_main">
+		 <div class="label_hang label_hang_sign">
+		     <div class="label_ltit">财务部:</div>
+		     <div class="label_rwbenx label_rwb_sign">(签字/日期)</div>
+		 </div>
+		 </div>
+		
+		 <div class="label_main label_main_sep"></div>
+		 <div class="label_main">
+		 <div class="label_hang label_hang_sign">
+		     <div class="label_ltit">销管部经理:</div>
+		     <div class="label_rwbenx label_rwb_sign">(签字/日期)
+		     <s:if test="guanActive!=null">
+		     <span class="user_sign"><img src="${guanActive.puser_sign}" /></span>
+		     
+		     </s:if>
+		     </div>
+		 </div>
+		 </div>
+		
+		<div class="label_main label_main_sep"></div>
+		 <div class="label_main">
+		 <div class="label_hang label_hang_sign">
+		     <div class="label_ltit">销管副总:</div>
+		     <div class="label_rwbenx label_rwb_sign">(签字/日期)
+		     <s:if test="fActive!=null">
+		     <span class="user_sign"><img src="${fActive.puser_sign}" /></span>
+		     </s:if>
+		     </div>
+		 </div>
+		 </div>
+		
 		<div class="label_main">
-        <div class="label_hang">
-            <div class="label_ltit">财务部:</div>
-		</div>
-		</div>
-		<div class="label_main">
-        <div class="label_hang">
-            <div class="label_rwbenx">
-            	<div class="zhuangtai bgcw">
-					(签字/日期)
-				</div>
-				
-            </div>
-		</div>
-		</div>
-		<div class="label_main">
-        <div class="label_hang">
-            <div class="label_ltit">销售管理部经理:</div>
-		</div>
-		</div>
-		<div class="label_main">
-        <div class="label_hang">
-            <div class="label_rwbenx">
-            	<div class="zhuangtai bgcw">
-					(签字/日期)
-				</div>
-				
-            </div>
-		</div>
-		</div>
-		<div class="label_main">
-        <div class="label_hang">
-            <div class="label_ltit">销售管理副总经理:</div>
-		</div>
-		</div>
-		<div class="label_main">
-        <div class="label_hang">
-            <div class="label_rwbenx">
-            	<div class="zhuangtai bgcw">
-					(签字/日期)
-				</div>
-				
-            </div>
-		</div>
-		</div>
-		<div class="label_main">
-        <div class="label_hang">
-            <div class="label_ltit">总经理:</div>
-		</div>
-		</div>
-		<div class="label_main">
-        <div class="label_hang">
-            <div class="label_rwbenx">
-            	<div class="zhuangtai bgcw">
-					(签字/日期)
-				</div>
-				
-            </div>
-		</div>
-		</div>
+       <div class="label_main label_main_sep"></div>
+		 <div class="label_main">
+		 <div class="label_hang label_hang_sign">
+		     <div class="label_ltit">总经理:</div>
+		     <div class="label_rwbenx label_rwb_sign">(签字/日期)
+		     <s:if test="zongActive!=null">
+		     <span class="user_sign"><img src="${zongActive.puser_sign}" /></span>
+		     </s:if>
+		     </div>
+		 </div>
+		 </div>
         
         <div class="label_main">
         <div class="label_hang">

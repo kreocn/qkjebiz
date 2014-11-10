@@ -5,18 +5,23 @@
 	<typeAlias alias="active" type="com.qkj.manage.domain.Active" />
 	<select id="qkjmanage_getActives" resultClass="active" parameterClass="java.util.Map">
 		<![CDATA[ 
-			Select a.*,d.dept_cname apply_dept_name,au.user_name apply_user_name,
+			SELECT a.*,d.dept_cname apply_dept_name,au.user_name apply_user_name,
 			su.USER_NAME sd_user_name,smu.USER_NAME smd_user_name,
 			csu.USER_NAME close_sd_user_name,csmu.USER_NAME close_smd_user_name,
 			su.user_sign sd_user_sign,smu.user_sign smd_user_sign,
-			csu.user_sign close_sd_user_sign,csmu.user_sign close_smd_user_sign
-			From qkjm_r_active a
+			csu.user_sign close_sd_user_sign,csmu.user_sign close_smd_user_sign,fdu.`USER_NAME` fd_user_name,fdcu.`USER_NAME` close_fd_name,
+			ndcu.`USER_NAME` close_nd_name
+			FROM qkjm_r_active a
 			LEFT JOIN s_sys_department d ON (a.apply_dept = d.dept_code)
 			LEFT JOIN s_sys_user au ON (a.apply_user = au.uuid)
-			left join s_sys_user su on (a.sd_user = su.UUID)
-			left join s_sys_user smu on (a.smd_user = smu.UUID)
-			left join s_sys_user csu on (a.close_sd_user = csu.UUID)
-			left join s_sys_user csmu on (a.close_smd_user = csmu.UUID)
+			LEFT JOIN s_sys_user su ON (a.sd_user = su.UUID)
+			LEFT JOIN s_sys_user smu ON (a.smd_user = smu.UUID)
+			LEFT JOIN s_sys_user csu ON (a.close_sd_user = csu.UUID)
+			LEFT JOIN s_sys_user csmu ON (a.close_smd_user = csmu.UUID)
+			LEFT JOIN s_sys_user fdu ON (a.`fd_user`=fdu.`UUID`)
+			LEFT JOIN s_sys_user fdcu ON (a.`close_fd_user`=fdcu.`UUID`)
+			LEFT JOIN s_sys_user ndcu ON (a.`close_nd_user`=ndcu.`UUID`)
+			
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ a.uuid=#uuid# ]]></isNotEmpty>
@@ -30,6 +35,11 @@
 			<isNotEmpty prepend="AND" property="address"><![CDATA[ a.address=#address# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="sd_status"><![CDATA[ a.sd_status=#sd_status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="smd_status"><![CDATA[ a.smd_status=#smd_status# ]]></isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="fd_status"><![CDATA[ a.fd_status=#fd_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="close_fd_status"><![CDATA[ a.close_fd_status=#close_fd_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="close_nd_status"><![CDATA[ a.close_nd_status=#close_nd_status# ]]></isNotEmpty>
+			
 			<isNotEmpty prepend="AND" property="apply_depts">
 				<![CDATA[ a.apply_dept In ]]>
 				<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
@@ -65,6 +75,11 @@
 			<isNotEmpty prepend="AND" property="sd_status"><![CDATA[ sd_status=#sd_status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="smd_status"><![CDATA[ smd_status=#smd_status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="apply_user"><![CDATA[ apply_user=#apply_user# ]]></isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="fd_status"><![CDATA[ fd_status=#fd_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="close_fd_status"><![CDATA[ close_fd_status=#close_fd_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="close_nd_status"><![CDATA[ close_nd_status=#close_nd_status# ]]></isNotEmpty>
+			
 			<isNotEmpty prepend="AND" property="apply_depts">
 				<![CDATA[ apply_dept In ]]>
 				<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
@@ -83,6 +98,29 @@
 		</dynamic>
 		<![CDATA[ LIMIT 1000 ]]>
 	</select>
+	
+	<select id="qkjmanage_getsign" resultClass="active" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT s.`biz_user` biz_user, u.`USER_NAME` puser_name,u.`user_sign` puser_sign,s.`biz_time` biz_time FROM qkjm_h_process s  
+			LEFT JOIN qkjm_r_active a ON (a.`uuid`=s.`biz_id`)
+			LEFT JOIN s_sys_user u ON (s.`biz_user`=u.`UUID`)
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="ja"><![CDATA[ s.`biz_status01`>=4 AND s.`biz_status01`<6 AND s.`process_id`=1 ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="sq"><![CDATA[ s.`biz_status01`>=1 AND s.`biz_status01`<=2 AND s.`process_id`=1 ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="sd60"><![CDATA[ s.`biz_status02`=60 and s.`biz_status03`=50]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="smd40"><![CDATA[ s.`biz_status02`=40 and s.`biz_status03`=40 ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="smd50"><![CDATA[ s.`biz_status02`=50 and s.`biz_status03`=50 ]]></isNotEmpty>
+			<!-- 结案 -->
+			<isNotEmpty prepend="AND" property="csd60"><![CDATA[ s.`biz_status04`=60 and  s.`biz_status05`=50 ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="csmd40"><![CDATA[ s.`biz_status04`=40 and s.`biz_status05`=40 ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="csmd50"><![CDATA[ s.`biz_status04`=50 and s.`biz_status05`=50 ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="biz_id"><![CDATA[ s.`biz_id`=#biz_id# ]]></isNotEmpty>
+		</dynamic>
+		<![CDATA[ GROUP BY s.`biz_user` ]]>
+		
+	</select>
+	
 	<insert id="qkjmanage_addActive" parameterClass="active">
 		<![CDATA[ 
 			Insert Into qkjm_r_active(uid,apply_dept,apply_user,theme,purpose,plan_start,plan_end,address,person,note,expect,add_user,add_time,remark)
@@ -134,6 +172,39 @@
 			Set smd_status=#smd_status#,
 				smd_user=#smd_user#,
 				smd_time=#smd_time#,
+				remark=#remark#,
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<update id="qkjmanage_mdyActiveFDStatus" parameterClass="active">
+		<![CDATA[
+			Update qkjm_r_active
+			Set fd_status=#fd_status#,
+				fd_user=#fd_user#,
+				fd_time=#fd_time#,
+				remark=#remark#,
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<update id="qkjmanage_mdyActiveFDCStatus" parameterClass="active">
+		<![CDATA[
+			Update qkjm_r_active
+			Set close_fd_status=#close_fd_status#,
+				close_fd_user=#close_fd_user#,
+				close_fd_time=#close_fd_time#,
+				remark=#remark#,
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<update id="qkjmanage_mdyActiveNDCStatus" parameterClass="active">
+		<![CDATA[
+			Update qkjm_r_active
+			Set close_nd_status=#close_nd_status#,
+				close_nd_user=#close_nd_user#,
+				close_nd_time=#close_nd_time#,
 				remark=#remark#,
 				lm_user=#lm_user#
 			Where uuid = #uuid#
