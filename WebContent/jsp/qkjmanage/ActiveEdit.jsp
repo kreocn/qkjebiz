@@ -480,7 +480,7 @@ color: #008000;
 					<s:if test="active.smd_status==5"><font class="message_error">审核退回</font>(${active.smd_user_name} ${it:formatDate(active.smd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 					<s:if test="active.smd_status==10"><font class="message_warning">已签收</font></s:if>
 					<s:if test="active.smd_status==30"><font class="message_pass">销管经理已审</font>(${active.smd_user_name} ${it:formatDate(active.smd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
-					<s:if test="active.smd_status==40"><font class="message_pass">销管部经理已审</font>(${active.fd_user_name} ${it:formatDate(active.fd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+					<s:if test="active.smd_status==40"><font class="message_pass">销管部经理已审</font>(${active.smd_user_name} ${it:formatDate(active.smd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 					<s:if test="active.smd_status==50"><font class="message_pass">销管副总已审</font>(${active.smd_user_name} ${it:formatDate(active.smd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 				</div>
         	</div>
