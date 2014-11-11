@@ -728,7 +728,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	 * @date 2014-4-26 上午10:29:40
 	 */
 	public String mdyActiveFDStatus() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_FDSTATUS5");
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_FDSTATUS10");
 		try {
 			mdyActiveFDStatus(1,5);
 			mdyStatus(0);
@@ -747,7 +747,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	 * @date 2014-4-26 上午10:29:40
 	 */
 	public String mdyActiveFDCSTATUS10() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_FDCSTATUS10");
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_FDCSTATUS10");
 		try {
 			mdyActiveFDStatus(2,10);
 		} catch (Exception e) {
@@ -765,7 +765,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	 * @date 2014-4-26 上午10:29:40
 	 */
 	public String mdyActiveFDCSTATUS() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_FDCSTATUS5");
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_FDCSTATUS10");
 		try {
 			mdyActiveFDStatus(2,5);
 			mdyStatus(3);
@@ -784,7 +784,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	 * @date 2014-4-26 上午10:29:40
 	 */
 	public String mdyActiveNDCSTATUS10() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_NDCSTATUS10");
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_NDCSTATUS10");
 		try {
 			mdyActiveFDStatus(3,10);
 		} catch (Exception e) {
@@ -802,7 +802,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	 * @date 2014-4-26 上午10:29:40
 	 */
 	public String mdyActiveNDCSTATUS5() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_NDCSTATUS5");
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_NDCSTATUS10");
 		try {
 			mdyActiveFDStatus(3,5);
 			mdyStatus(3);
