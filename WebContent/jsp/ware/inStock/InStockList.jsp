@@ -110,15 +110,9 @@
 			    <s:if test="%{reason==0}">正常入库</s:if>
 				<s:if test="%{reason==1}">正常退货</s:if>
 				<s:if test="%{reason==2 }">损坏退货</s:if>
-				<s:if test="%{reason==3 }">其它</s:if>
-				(<s:if test="confirm==null">未确认</s:if>
-				<s:if test="confirm!=null">已确认</s:if>
-				)
-				(<s:if test="send==0">正常订单</s:if>
-				<s:if test="send==1">已取消订单</s:if>
-				)
+				<s:if test="%{reason==3 }">其它</s:if>(<s:if test="confirm==null">未确认</s:if><s:if test="confirm!=null">已确认</s:if>)
+				(<s:if test="send==0">正常订单</s:if><s:if test="send==1">已取消订单</s:if>)
 			    </td>
-				
 				<td class="td4 op-area">
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_MDY') && @com.qkj.ware.action.warepower@checkPermit(store_id,'add')">
 					<a class="input-blue" href="<s:url namespace="/inStock" action="inStock_load"><s:param name="viewFlag">mdy</s:param><s:param name="inStock.uuid" value="uuid"></s:param></s:url>">修改</a>

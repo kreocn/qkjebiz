@@ -103,7 +103,7 @@ font-weight: bold;
 }
 
 .tab_warp {
-	
+	clear:both;
 }
 
 .tab_warp table {
@@ -175,7 +175,7 @@ font-weight: bold;
 }
 
 .label_rwbenx {
-	float: left; position: relative;
+	float: left; position: relative; min-width:100px; text-align:left;
 }
 
 .label_rwb {
@@ -839,4 +839,11 @@ input[type="button"].input-blue,input[type="submit"].input-blue,input[type="rese
 
 .sva .formErrorContent {
 	background-color: #FFF !important; color: #ee0101 !important; padding: 0 !important;
+}
+.label_tiaoj{
+	float:left;
+	margin-right:5px;
+}
+.label_lckname {
+	float: left; min-width:280px; line-height:34px; padding-left:25px;
 }

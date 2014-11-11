@@ -37,7 +37,7 @@
 	       		</div>
 				<div class="label_hang">
 		            <div class="label_ltit">单据号:</div>
-		            <div class="label_rwben2">
+		            <div class="label_rwben2" style="width:auto;">
 		            <div class="label_rwb"><s:textfield name="allot.ordernum" title="单据号" rows="4"></s:textfield></div>
 		            </div>
 	       		</div>
@@ -52,8 +52,8 @@
 	       		<div class="label_hang">
 		            <div class="label_ltit">单据性质:</div>
 		            <div class="label_rwben">
+		            <span class="label_rwb iselect">
 		            <select id="allot.reason" name="allot.reason" title="单据性质" >
-				
 					<option value="0" 
 					<s:if test="allot.reason==0">selected="selected"</s:if>
 					>调库</option>
@@ -64,12 +64,13 @@
 					<s:if test="allot.reason==2">selected="selected"</s:if>
 					>还货</option>
 				</select>
+				</span>
 		            </div>
 	       		</div>
 	       		
 		        <div class="label_hang">
 		            <div class="label_ltit">调入仓库:</div>
-		            <div class="label_rwben2">
+		            <div class="label_rwben2" style="width:auto;">
 				       <span class="label_rwb iselect">
 					       <select id="membermanagerid" name="allot.goldid" title="调入仓库" >
 								<s:iterator value="wares" status="sta" var="x">
@@ -85,7 +86,7 @@
 		        </div>
 		        <div class="label_hang">
 		            <div class="label_ltit">调出仓库:</div>
-		            <div class="label_rwben2">
+		            <div class="label_rwben2" style="width:auto;">
 				       <span class="label_rwb iselect">
 					       <select id="membermanagerid" name="allot.sourceid" title="调出仓库" >
 								<s:iterator value="warepowers" status="sta" var="x">
@@ -110,7 +111,7 @@
 	       		
 	       		<div class="label_hang">
 				<div class="label_ltit">添加时间:</div>
-				<div class="label_rwben2"><s:date name="allot.add_timer" format="yyyy-MM-dd HH:mm:ss" /></div>
+				<div class="label_rwbenx"><s:date name="allot.add_timer" format="yyyy-MM-dd HH:mm:ss" /></div>
 				</div>
 	       		<div class="label_hang">
 		            <div class="label_ltit">最后修改人:</div>
@@ -120,7 +121,7 @@
 	       		</div>
 	       		<div class="label_hang">
 		            <div class="label_ltit">最后修改时间:</div>
-		            <div class="label_rwben2">
+		            <div class="label_rwbenx">
 		            <s:date name="allot.lm_timer" format="yyyy-MM-dd HH:mm:ss" />
 		            </div>
 	       		</div>
@@ -133,7 +134,7 @@
 	       		</div>
 	       		<div class="label_hang">
 		            <div class="label_ltit">确认时间:</div>
-		            <div class="label_rwben2">
+		            <div class="label_rwbenx">
 		            <s:date name="allot.sureDate" format="yyyy-MM-dd HH:mm:ss" />
 		            </div>
 	       		</div>
@@ -317,7 +318,7 @@
 				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_CENCLE') && @com.qkj.ware.action.warepower@checkPermit(inStock.store_id,'add')  && inStock.confirm!=null && inStock.send!=1">
 					<s:submit cssClass="input-red" id="cencle" name="cencle" value="取消订单" action="inStock_cencle" onclick="return isOp('确认取消?');" />
 					</s:if>
-				<input type="button" value="返回" class="input-gray" onclick="linkurl('<s:url action="allot_relist" namespace="/allot" />');" />
+				<input type="button" value="返回" class="input-gray" onclick="linkurl('<s:url action="allot_relist" namespace="/allot" />');" />&nbsp;
             </div>
 		</div>
 		</div>

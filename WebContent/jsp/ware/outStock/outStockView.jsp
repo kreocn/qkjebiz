@@ -24,7 +24,7 @@
 				<div class="label_main">
 					<div class="label_hang">
 						<div class="label_ltit">单据号:</div>
-						<div class="label_rwben2">
+						<div class="label_rwben">
 							<div class="label_rwb">
 								<s:property value="outStock.ordernum" />
 							</div>
@@ -76,7 +76,7 @@
 
 					<div class="label_hang">
 						<div class="label_ltit">出库仓库:</div>
-						<div class="label_rwben2">
+						<div class="label_rwben2" style="width:auto;">
 							<span class="label_rwb iselect"> <select
 								id="membermanagerid" cssClass="selectKick"
 								name="outStock.store_id" title="出库仓库">
@@ -101,7 +101,7 @@
 
 					<div class="label_hang">
 						<div class="label_ltit">添加时间:</div>
-						<div class="label_rwben2">
+						<div class="label_rwbenx">
 							<s:date name="outStock.add_timer" format="yyyy-MM-dd HH:mm:ss" />
 						</div>
 					</div>
@@ -113,7 +113,7 @@
 					</div>
 					<div class="label_hang">
 						<div class="label_ltit">最后修改时间:</div>
-						<div class="label_rwben2">
+						<div class="label_rwbenx">
 							<s:date name="outStock.lm_timer" format="yyyy-MM-dd HH:mm:ss" />
 						</div>
 					</div>
@@ -126,7 +126,7 @@
 						</div>
 						<div class="label_hang">
 							<div class="label_ltit">确认时间:</div>
-							<div class="label_rwben2">
+							<div class="label_rwbenx">
 								<s:date name="outStock.manager_check_time"
 									format="yyyy-MM-dd HH:mm:ss" />
 							</div>
@@ -272,7 +272,7 @@
 					<div class="label_hang">
 						<div class="label_ltit">相关操作:</div>
 						<div class="label_rwbenx">
-							<input type="button" onclick="window.print();" value="打印本页"/>
+							<input type="button" onclick="window.print();" value="打印本页"/>&nbsp;
 						</div>
 					</div>
 				</div>
