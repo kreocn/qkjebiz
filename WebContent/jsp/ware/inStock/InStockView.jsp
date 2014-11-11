@@ -36,7 +36,7 @@
 					</div>
 					<div class="label_hang">
 						<div class="label_ltit">入库单号:</div>
-						<div class="label_rwben2">
+						<div class="label_rwben">
 							<div class="label_rwb">
 								<s:property value="inStock.ordernum" />
 							</div>
@@ -44,7 +44,7 @@
 					</div>
 					<div class="label_hang">
 						<div class="label_ltit">经手人:</div>
-						<div class="label_rwben2">
+						<div class="label_rwben">
 							<div class="label_rwb">
 								<s:property value="inStock.operator_name" />
 							</div>
@@ -52,7 +52,7 @@
 					</div>
 					<div class="label_hang">
 						<div class="label_ltit">保管员:</div>
-						<div class="label_rwben2">
+						<div class="label_rwben">
 							<div class="label_rwb">
 								<s:property value="inStock.take_name" />
 							</div>
@@ -82,7 +82,7 @@
 
 					<div class="label_hang">
 						<div class="label_ltit">添加时间:</div>
-						<div class="label_rwben2">
+						<div class="label_rwbenx">
 							<s:date name="inStock.add_timer" format="yyyy-MM-dd HH:mm:ss" />
 						</div>
 					</div>
@@ -94,7 +94,7 @@
 					</div>
 					<div class="label_hang">
 						<div class="label_ltit">最后修改时间:</div>
-						<div class="label_rwben2">
+						<div class="label_rwbenx">
 							<s:date name="inStock.lm_timer" format="yyyy-MM-dd HH:mm:ss" />
 						</div>
 					</div>
@@ -107,7 +107,7 @@
 						</div>
 						<div class="label_hang">
 							<div class="label_ltit">确认时间:</div>
-							<div class="label_rwben2">
+							<div class="label_rwbenx">
 								<s:date name="inStock.contime" format="yyyy-MM-dd HH:mm:ss" />
 							</div>
 						</div>
@@ -183,7 +183,7 @@
 					<div class="label_hang">
 						<div class="label_ltit">相关操作:</div>
 						<div class="label_rwbenx">
-							<input type="button" onclick="window.print();" value="打印本页"/>
+							<input type="button" onclick="window.print();" value="打印本页"/>&nbsp;
 						</div>
 					</div>
 				</div>

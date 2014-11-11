@@ -41,36 +41,30 @@
 	            	</div>
 	            </div>
 			 </div>
-			 <div class="label_hang">
-	            <div class="label_rwben2">
+			 <div class="label_lckname">
 	            	<input type="checkbox" name="warepower.son"  value="1"  checked="checked" >是否包含子部门
-	            </div>
 			 </div>
 	     </div>
 	     <div class="label_main">
 			<div class="label_hang">
-            <div class="label_rwben2">
+            <div class="label_lckname">
             	<s:property value="warepower.ware_name" />(<s:property value="warepower.address" />)
 			<s:hidden name="warepower.uuid" />
             </div>
-	        </div>
-	        <div class="label_hang">
-				<div class="label_rwbenx">
-					<div class="label_main">
-						  	<div class="label_hang">
+				<div class="label_lckname">
+						  	<div class="label_tiaoj">
 				            <input type="checkbox" name="warepower.prvg"  value="1"  <s:if test="%{warepower.prvg.indexOf('1')>=0}">checked="checked"</s:if> >入库
 				            </div>
-				            <div class="label_hang">
+				            <div class="label_tiaoj">
 				            <input type="checkbox" name="warepower.prvg"  value="2"  <s:if test="%{warepower.prvg.indexOf('2')>=0}">checked="checked"</s:if> > 出库
 				            </div>
-				            <div class="label_hang">
+				            <div class="label_tiaoj">
 				            <input type="checkbox" name="warepower.prvg"  value="3"  <s:if test="%{warepower.prvg.indexOf('3')>=0}">checked="checked"</s:if> > 调库
 				            </div>
-				            <div class="label_hang">
+				            <div class="label_tiaoj">
 				            <input type="checkbox" name="warepower.prvg"  value="4"  <s:if test="%{warepower.prvg.indexOf('4')>=0}">checked="checked"</s:if> > 查询
 				            </div>
 					</div>
-				</div>
 			</div>
 	     </div>
 		</s:if>
@@ -94,40 +88,22 @@
 	            	</div>
 	            </div>
 			 </div>
-			 <div class="label_hang">
-	            <div class="label_rwben2">
+	            <div class="label_lckname">
 	            	<input type="checkbox" name="warepower.son"  value="1"  checked="checked" >是否包含子部门
 	            </div>
-			 </div>
 		     </div>
 				<s:iterator value="wares" status="sta">
 					<div class="label_main">
 						<div class="label_hang">
-				            <div class="label_rwben2">
+				            <div class="label_lckname">
 				            	<s:property value="ware_name" />(<s:property value="address" />)
 								<s:hidden name="warepowers[%{#sta.index}].ware_id" value="%{uuid}" />
 				            </div>
-						 </div>
-						 <div class="label_hang">
-						 <div class="label_rwbenx">
-						 <div class="label_main">
-						  	<div class="label_hang">
-				            <s:checkbox name="warepowers[%{#sta.index}].prvg" 
-								  fieldValue="1"  /> 入库
-				            </div>
-				            <div class="label_hang">
-				            <s:checkbox name="warepowers[%{#sta.index}].prvg"
-								  fieldValue="2"/> 出库
-				            </div>
-				            <div class="label_hang">
-				            <s:checkbox name="warepowers[%{#sta.index}].prvg" 
-								 fieldValue="3"/> 调库
-				            </div>
-				            <div class="label_hang">
-				            <s:checkbox name="warepowers[%{#sta.index}].prvg"  
-								fieldValue="4"/> 查询
-				            </div>
-						 </div>
+						 <div class="label_lckname">
+						  	<div class="label_tiaoj"><s:checkbox name="warepowers[%{#sta.index}].prvg"  fieldValue="1"  /> 入库</div>
+				            <div class="label_tiaoj"><s:checkbox name="warepowers[%{#sta.index}].prvg" fieldValue="2"/> 出库</div>
+				            <div class="label_tiaoj"><s:checkbox name="warepowers[%{#sta.index}].prvg"  fieldValue="3"/> 调库</div>
+				            <div class="label_tiaoj"><s:checkbox name="warepowers[%{#sta.index}].prvg"  fieldValue="4"/> 查询</div>
 						 </div>
 						 </div>
 					</div>

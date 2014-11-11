@@ -61,7 +61,6 @@
 			       <span class="label_rwb iselect">
 			       <select cssClass="selectKick" id="out" name="outStock.reason" title="状态" onchange="borrow();">
 									<option value="0">销售出库</option>
-									
 									<option value="3">报损</option>
 									<option value="1">招待用酒</option>
 									<option value="4">赠酒</option>

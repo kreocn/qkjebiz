@@ -35,7 +35,7 @@ font-size: 14px;
         	<div class="label_main">
 	        	<div class="label_hang">
 		            <div class="label_ltit">入库单号:</div>
-		            <div class="label_rwben2">
+		            <div class="label_rwben2" style="width:auto;">
 		            <div class="label_rwb"><s:textfield name="inStock.ordernum" title="单据号" ></s:textfield></div>
 		            </div>
 	       		</div>
@@ -63,7 +63,7 @@ font-size: 14px;
 	       		
 	       		<div class="label_hang">
 				<div class="label_ltit">添加时间:</div>
-				<div class="label_rwben2"><s:date name="inStock.add_timer" format="yyyy-MM-dd HH:mm:ss" /></div>
+				<div class="label_rwbenx"><s:date name="inStock.add_timer" format="yyyy-MM-dd HH:mm:ss" /></div>
 				</div>
 	       		<div class="label_hang">
 		            <div class="label_ltit">最后修改人:</div>
@@ -73,9 +73,7 @@ font-size: 14px;
 	       		</div>
 	       		<div class="label_hang">
 		            <div class="label_ltit">最后修改时间:</div>
-		            <div class="label_rwben2">
-		            <s:date name="inStock.lm_timer" format="yyyy-MM-dd HH:mm:ss" />
-		            </div>
+		            <div class="label_rwbenx"><s:date name="inStock.lm_timer" format="yyyy-MM-dd HH:mm:ss" /></div>
 	       		</div>
 	       		<s:if test="%{inStock.conname!=null}">
 	       		<div class="label_hang">
@@ -86,7 +84,7 @@ font-size: 14px;
 	       		</div>
 	       		<div class="label_hang">
 		            <div class="label_ltit">确认时间:</div>
-		            <div class="label_rwben2">
+		            <div class="label_rwben2" style="width:auto;">
 		            <s:date name="inStock.contime" format="yyyy-MM-dd HH:mm:ss" />
 		            </div>
 	       		</div>

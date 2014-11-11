@@ -30,7 +30,7 @@
         	<div class="label_main">
 	        	<div class="label_hang">
 		            <div class="label_ltit">单据号:</div>
-		            <div class="label_rwben2">
+		            <div class="label_rwben2" style="width:auto;">
 		            <div class="label_rwb"><s:textfield name="outStock.ordernum" title="单据号"  rows="4"/></div>
 		            </div>
 	       		</div>
@@ -58,7 +58,7 @@
 	       		</div>
 	       		<div class="label_hang">
 	            <div class="label_ltit">状态:</div>
-	            <div class="label_rwben2">
+	            <div class="label_rwben2" style="width:auto;">
 			       <span class="label_rwb iselect">
 	            	<s:if test='0==outStock.send'>借出未还</s:if>
 					<s:if test='1==outStock.send'>借出已还</s:if>
@@ -74,7 +74,7 @@
 	            
 	            <div class="label_hang">
 	            <div class="label_ltit">出库仓库:</div>
-	            <div class="label_rwben2">
+	            <div class="label_rwben2" style="width:auto;">
 			       <span class="label_rwb iselect">
 			       <select id="membermanagerid" cssClass="selectKick" name="outStock.store_id" title="出库仓库" >
 							
@@ -98,7 +98,7 @@
 	       		
 	       		<div class="label_hang">
 				<div class="label_ltit">添加时间:</div>
-				<div class="label_rwben2"><s:date name="outStock.add_timer" format="yyyy-MM-dd HH:mm:ss" /></div>
+				<div class="label_rwbenx"><s:date name="outStock.add_timer" format="yyyy-MM-dd HH:mm:ss" /></div>
 				</div>
 	       		<div class="label_hang">
 		            <div class="label_ltit">最后修改人:</div>
@@ -108,7 +108,7 @@
 	       		</div>
 	       		<div class="label_hang">
 		            <div class="label_ltit">最后修改时间:</div>
-		            <div class="label_rwben2">
+		            <div class="label_rwbenx">
 		            <s:date name="outStock.lm_timer" format="yyyy-MM-dd HH:mm:ss" />
 		            </div>
 	       		</div>
@@ -121,7 +121,7 @@
 	       		</div>
 	       		<div class="label_hang">
 		            <div class="label_ltit">确认时间:</div>
-		            <div class="label_rwben2">
+		            <div class="label_rwbenx">
 		            <s:date name="outStock.manager_check_time" format="yyyy-MM-dd HH:mm:ss" />
 		            </div>
 	       		</div>

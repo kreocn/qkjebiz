@@ -117,13 +117,14 @@ function showDetail(trid){
 		$s.find("td").each(function(i, n){
 			if (i == ths.length - 1) { return; }
 			if (!$(this).hasClass("nsd")) {
-				var cc = "label_rwben";
-				if ($(this).hasClass("longnote") || $(this).hasClass("op-area")) {
-					cc = "label_rwbenx";
-				}
+				//var cc = "label_rwben";
+				//if ($(this).hasClass("longnote") || $(this).hasClass("op-area")) {
+					//cc = "label_rwbenx";
+				//}
 				_h += '<div class="label_hang">';
 				_h += '<div class="label_ltit">' + ths[i].innerHTML + ':</div>';
-				_h += '<div class="' + cc + '">' + n.innerHTML + '</div>';
+				//_h += '<div class="' + cc + '">' + n.innerHTML + '</div>';
+				_h += '<div class="label_rwbenx">' + n.innerHTML + '</div>';
 				_h += '</div>';
 			}
 		});
