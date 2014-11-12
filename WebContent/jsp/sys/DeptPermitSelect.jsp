@@ -27,6 +27,11 @@ function setCheckValue() {
 	closeDialog();
 }
 
+function setNullValue() {
+	parentobj.selfAction(null,null);
+	closeDialog();
+}
+
 function closeDialog() {
 	parentobj.close();
 }
@@ -71,6 +76,7 @@ border: none !important;
 	</div>
 	<div style="text-align: center;">
 		<input type="button" value="确定" onclick="setCheckValue();" /> <input type="button" value="返回" onclick="closeDialog();" />
+		<input type="button" value="清空" onclick="setNullValue();" />
 	</div>
 </body>
 </html>
