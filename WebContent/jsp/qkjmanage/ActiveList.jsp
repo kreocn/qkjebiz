@@ -252,9 +252,9 @@ cursor: pointer;
 				<s:if test="status < 2">
 		    	<a class="input-blue" href="<s:url namespace="/qkjmanage" action="active_load"><s:param name="viewFlag">mdy</s:param><s:param name="active.uuid" value="uuid"></s:param></s:url>">申请修改</a>
 		    	</s:if>
-		    	<s:else>
+		    	<s:if test="sd_status>=40">
 		    	<a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_view"><s:param name="active.uuid" value="uuid" /></s:url>">申请查看</a>
-		    	</s:else>
+		    	</s:if>
 		    	</s:if>
 		    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE')">
 		    	<s:if test="status == 2">

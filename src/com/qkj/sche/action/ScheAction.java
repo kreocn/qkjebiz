@@ -45,8 +45,18 @@ public class ScheAction extends ActionSupport {
 	private Schedule schenn;
 	private List<Schedule> schen;
 	private Schedule sname;
+	private static String sctype;
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;公告管理";
 	
+
+	public static String getSctype() {
+		return sctype;
+	}
+
+	public static void setSctype(String sctype) {
+		ScheAction.sctype = sctype;
+	}
+
 	public Schedule getSname() {
 		return sname;
 	}
@@ -197,13 +207,30 @@ public class ScheAction extends ActionSupport {
 	}
 	
 	public String leftList() throws Exception {
-		ContextHelper.isPermit("QKJ_SCHE");
+		if(sche != null && sche.getType().equals("0")){
+			ContextHelper.isPermit("QKJ_SCHE_MANU");
+		}
+		if(sche != null && sche.getType().equals("1")){
+			ContextHelper.isPermit("QKJ_SCHE_COMP");
+		}
+		if(sche != null && sche.getType().equals("2")){
+			ContextHelper.isPermit("QKJ_SCHE_FILE");
+		}
+		if(sche != null && sche.getType().equals("3")){
+			ContextHelper.isPermit("QKJ_SCHE_UPSC");
+		}
+		
 		String u = ContextHelper.getUserLoginUuid();
 		String code = ContextHelper.getUserLoginDept();
 		try {
 			map.clear();
 			if (sche != null)
 				map.putAll(ToolsUtil.getMapByBean(sche));
+			if(sche != null && sche.getType()!=null){
+				this.setSctype(sche.getType());
+			}else{
+				this.setSctype(this.getSctype());
+			}
 			map.putAll(ContextHelper.getDefaultRequestMap4Page());
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 			if (ContextHelper.isAdmin()) {// 管理员
@@ -232,8 +259,19 @@ public class ScheAction extends ActionSupport {
 				setMessage("你没有选择任何操作!");
 			} else if ("add".equals(viewFlag)) {
 				System.out.println("load                                       add");
-				this.setSche(null);
-				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/sche/schedule_leftList'>公告列表</a>&nbsp;&gt;&nbsp;增加公告";
+				if(sche.getType().equals("0")){
+					path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/sche/schedule_leftList?sche.type=0'>公告列表</a>&nbsp;&gt;&nbsp;增加公告";
+				}
+				if(sche.getType().equals("1")){
+					path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/sche/schedule_leftList?sche.type=1'>公告列表</a>&nbsp;&gt;&nbsp;增加公告";
+				}
+				if(sche.getType().equals("2")){
+					path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/sche/schedule_leftList?sche.type=2'>公告列表</a>&nbsp;&gt;&nbsp;增加公告";
+				}
+				if(sche.getType().equals("3")){
+					path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/sche/schedule_leftList?sche.type=3'>公告列表</a>&nbsp;&gt;&nbsp;增加公告";
+				}
+				
 			} else if ("mdy".equals(viewFlag)) {
 				map.clear();
 				map.put("uuid", sche.getUuid());
@@ -296,7 +334,21 @@ public class ScheAction extends ActionSupport {
 					}
 				}
 				
-				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/sche/schedule_leftList'>公告列表</a>&nbsp;&gt;&nbsp;公告详情";
+				String type=null;
+				if(sche.getType().equals("0")){
+					type="0";
+				}
+				if(sche.getType().equals("1")){
+					type="1";
+				}
+				if(sche.getType().equals("2")){
+					type="2";
+				}
+				if(sche.getType().equals("3")){
+					type="3";
+				}
+				
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/sche/schedule_leftList?sche.type="+type+"'>公告列表</a>&nbsp;&gt;&nbsp;公告详情";
 			}else if ("view".equals(viewFlag)) {//点击详情后，把信息修改为谁已读
 				map.clear();
 				map.put("uuid", sche.getUuid());
@@ -368,7 +420,20 @@ public class ScheAction extends ActionSupport {
 					
 					
 				}
-				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/sche/schedule_leftList'>公告列表</a>&nbsp;&gt;&nbsp;公告详情";
+				String type=null;
+				if(sche.getType().equals("0")){
+					type="0";
+				}
+				if(sche.getType().equals("1")){
+					type="1";
+				}
+				if(sche.getType().equals("2")){
+					type="2";
+				}
+				if(sche.getType().equals("3")){
+					type="3";
+				}
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/sche/schedule_leftList?sche.type="+type+"'>公告列表</a>&nbsp;&gt;&nbsp;公告详情";
 			} 
 			else {
 				this.setSche(null);
@@ -389,7 +454,18 @@ public class ScheAction extends ActionSupport {
 		dao.saveflag(sche);
 	}
 	public String add() throws Exception {
-		ContextHelper.isPermit("QKJ_SCHE_ADDSCHE");
+		if(sche != null && sche.getType().equals("0")){
+			ContextHelper.isPermit("QKJ_SCHE_MANU_ADD");
+		}
+		if(sche != null && sche.getType().equals("1")){
+			ContextHelper.isPermit("QKJ_SCHE_COMP_ADD");
+		}
+		if(sche != null && sche.getType().equals("2")){
+			ContextHelper.isPermit("QKJ_SCHE_FILE_ADD");
+		}
+		if(sche != null && sche.getType().equals("3")){
+			ContextHelper.isPermit("QKJ_SCHE_UPSC_ADD");
+		}
 		String u = ContextHelper.getUserLoginUuid();
 		try {
 			if(sche!=null&&sche.getR_uuid()!=null&&!sche.getR_uuid().equals("")){
@@ -425,7 +501,18 @@ public class ScheAction extends ActionSupport {
 	}
 
 	public String save() throws Exception {
-		ContextHelper.isPermit("QKJ_SCHE_LIST_UPDATE");
+		if(sche != null && sche.getType().equals("0")){
+			ContextHelper.isPermit("QKJ_SCHE_MANU_SAVE");
+		}
+		if(sche != null && sche.getType().equals("1")){
+			ContextHelper.isPermit("QKJ_SCHE_COMP_SAVE");
+		}
+		if(sche != null && sche.getType().equals("2")){
+			ContextHelper.isPermit("QKJ_SCHE_FILE_SAVE");
+		}
+		if(sche != null && sche.getType().equals("3")){
+			ContextHelper.isPermit("QKJ_SCHE_UPSC_SAVE");
+		}
 		String u = ContextHelper.getUserLoginUuid();
 		try {
 	/*		ware.setLm_user(ContextHelper.getUserLoginUuid());
@@ -482,7 +569,7 @@ public class ScheAction extends ActionSupport {
 	}
 
 	public String del() throws Exception {
-		ContextHelper.isPermit("QKJ_SCHE_LIST_DEL");
+		
 		String u = ContextHelper.getUserLoginUuid();
 		try {
 			//查询当前用户发布的信息
@@ -494,6 +581,19 @@ public class ScheAction extends ActionSupport {
 			map.clear();
 			map.put("uuid", sche.getUuid());
 			this.setSche((Schedule)dao.list(map).get(0));
+			this.setSctype(sche.getType());
+			if(sche != null && sche.getType().equals("0")){
+				ContextHelper.isPermit("QKJ_SCHE_MANU_DEL");
+			}
+			if(sche != null && sche.getType().equals("1")){
+				ContextHelper.isPermit("QKJ_SCHE_COMP_DEL");
+			}
+			if(sche != null && sche.getType().equals("2")){
+				ContextHelper.isPermit("QKJ_SCHE_FILE_DEL");
+			}
+			if(sche != null && sche.getType().equals("3")){
+				ContextHelper.isPermit("QKJ_SCHE_UPSC_DEL");
+			}
 			if(shcedusers.size()>0){//信息是当前用户发布的删除信息及中间表数据
 				for(int i=0;i<shcedusers.size();i++){
 					this.setShceduser(shcedusers.get(i));
@@ -528,6 +628,7 @@ public class ScheAction extends ActionSupport {
 				}
 				
 			}
+			sche.setType(this.sctype);
 			setMessage("删除成功!ID=" + sche.getUuid());
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!del 数据删除失败:", e);

@@ -127,7 +127,7 @@ float: right;
 	            </s:iterator>
 		    </div>
 		    <div class="ht_right">
-		    <a href='/sche/schedule_leftList'>>>更多公告信息</a>
+		    <a href='/sche/schedule_leftList?sche.type=0'>>>更多公告信息</a>
 		    </div>
 		</div>
 		<div>

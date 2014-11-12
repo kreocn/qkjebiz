@@ -63,7 +63,7 @@
 		<dynamic prepend="WHERE">
 			<isNotNull prepend="AND" property="uuid"><![CDATA[ a.uuid=#uuid# ]]></isNotNull>
 			<isNotNull prepend="AND" property="title"><![CDATA[ a.title=#title# ]]></isNotNull>
-			<isNotNull prepend="AND" property="type"><![CDATA[ g.type=#type# ]]></isNotNull>
+			<isNotNull prepend="AND" property="type"><![CDATA[ a.type=#type# ]]></isNotNull>
 			<isNotNull prepend="AND" property="p_uuid"><![CDATA[ d.p_uuid=#p_uuid# ]]></isNotNull>
 		</dynamic>
 		<![CDATA[ group by a.uuid ]]>
@@ -91,7 +91,7 @@
 		<dynamic prepend="WHERE">
 			<isNotNull prepend="AND" property="uuid"><![CDATA[ a.uuid=#uuid# ]]></isNotNull>
 			<isNotNull prepend="AND" property="title"><![CDATA[ a.title=#title# ]]></isNotNull>
-			<isNotNull prepend="AND" property="type"><![CDATA[ g.type=#type# ]]></isNotNull>
+			<isNotNull prepend="AND" property="type"><![CDATA[ a.type=#type# ]]></isNotNull>
 			<isNotNull prepend="AND" property="p_uuid"><![CDATA[ d.p_uuid=#p_uuid# ]]></isNotNull>
 		</dynamic>
 		<![CDATA[ group by a.uuid LIMIT 5]]>

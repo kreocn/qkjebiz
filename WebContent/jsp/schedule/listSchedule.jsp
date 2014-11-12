@@ -14,7 +14,22 @@
 	<div class="dq_step">
 		${path}
 			<span class="opb lb op-area">
-			<a href="<s:url namespace="/sche" action="schedule_load"><s:param name="viewFlag">add</s:param></s:url>" >添加公告</a>
+					<s:if test="sctype==0">
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SCHE_MANU_ADD')">
+					<a href="<s:url namespace="/sche" action="schedule_load"><s:param name="viewFlag">add</s:param><s:param name="sche.type">0</s:param></s:url>" >添加部门手册</a>
+					</s:if>
+					</s:if>
+					<s:if test="sctype==1">
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SCHE_COMP_ADD')">
+					<a href="<s:url namespace="/sche" action="schedule_load"><s:param name="viewFlag">add</s:param><s:param name="sche.type">1</s:param></s:url>" >添加公司制度</a>
+					</s:if>
+					</s:if>
+					<s:if test="sctype==2">
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SCHE_FILE_ADD')">
+					<a href="<s:url namespace="/sche" action="schedule_load"><s:param name="viewFlag">add</s:param><s:param name="sche.type">2</s:param></s:url>" >添加公司文件</a></s:if></s:if>
+					<s:if test="sctype==3">
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SCHE_UPSC_ADD')">
+					<a href="<s:url namespace="/sche" action="schedule_load"><s:param name="viewFlag">add</s:param><s:param name="sche.type">3</s:param></s:url>" >添加系统公告</a></s:if></s:if>
 			</span>
 	</div>
 	<!-- 条件查询 -->
@@ -23,7 +38,9 @@
 		<div class="label_main">
 			<div class="label_hang">
             <div class="label_ltit">主题:</div>
-            <div class="label_rwben"><s:textfield title="标题" name="sche.title" /></div>
+            <div class="label_rwben"><s:textfield title="标题" name="sche.title" />
+            <s:hidden name="sche.type" value="%{sctype }"/>
+            </div>
        		</div>
         	
         	
@@ -83,9 +100,8 @@
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SCHE_LIST_DEL')">
 					<a class="input-red" href="<s:url namespace="/sche" action="schedule_del"><s:param name="sche.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
 					</s:if>
-			    	
-			    	
 			    </s:if>
+			    
 			    <s:else>
 			    <a class="input-blue" href="<s:url namespace="/sche" action="schedule_load"><s:param name="viewFlag">view</s:param><s:param name="sche.uuid" value="uuid"></s:param></s:url>">详情</a>
 			    </s:else>	
