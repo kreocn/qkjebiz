@@ -587,7 +587,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyActiveSDStatus50() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_SDSTATUS50");
 		try {
-			mdyActiveSDStatus(60);
+			mdyActiveSMDStatus(60);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyActiveSDStatus50 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyActiveSDStatus50 数据更新失败:", e);
@@ -1169,7 +1169,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyCloseActiveSDStatus50() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS50");
 		try {
-			mdyCloseActiveSDStatus(60);
+			mdyCloseActiveSMDStatus(60);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyCloseActiveSDStatus50 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyCloseActiveSDStatus50 数据更新失败:", e);

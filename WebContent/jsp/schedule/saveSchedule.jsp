@@ -22,6 +22,7 @@
 		<s:form id="editForm" name="editForm" cssClass="validForm"
 			action="sche_add" namespace="/sche" method="post" theme="simple">
 			<div class="label_con">
+			<s:hidden id="sche.type" name="sche.type" value="%{sche.type}"/>
 				<s:if test="null != sche && sche.uuid!=null">
 					<div class="label_main">
 						<div class="label_hang">
@@ -29,7 +30,7 @@
 							<div class="label_rwb">
 								<s:property value="sche.uuid" />
 								<s:hidden id="sche.uuid" name="sche.uuid" value="%{sche.uuid}"/>
-								<s:hidden id="sche.type" name="sche.type" value="%{sche.type}"/>
+								
 							</div>
 						</div>
 					</div>
@@ -136,7 +137,6 @@
 					</div>
 					
 				</s:else>
-				<s:hidden id="sche.type" name="sche.type" value="%{sche.type}"/>
 					<div class="label_main">
 				        <div class="label_hang">
 				            <div class="label_ltit">公告类別:</div>
