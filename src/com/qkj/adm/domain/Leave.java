@@ -27,6 +27,7 @@ public class Leave {
 	private String lm_user;// (varchar)最后修改人
 	private Integer allowance_status;// (int)已补贴
 	private Date allowance_date;// (date)补贴时间
+	private String peer;
 
 	// 以下为非数据库字段
 	private String check_user_name;// 审核人
@@ -38,6 +39,14 @@ public class Leave {
 
 	// 以下为查询专用字段
 	private Date serach_date;
+	
+	public String getPeer() {
+		return peer;
+	}
+
+	public void setPeer(String peer) {
+		this.peer = peer;
+	}
 
 	public String getCheck_user_sign() {
 		return check_user_sign;

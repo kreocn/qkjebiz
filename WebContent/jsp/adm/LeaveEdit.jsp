@@ -132,6 +132,10 @@
             	<s:textfield name="leave.leave_mold" class="validate[required]" />
             </div>
 		</div>
+		<div class="label_hang">
+            <div class="label_ltit">同行人员:</div>
+            <div class="label_rwbenx"><s:textfield name="leave.peer" title="同行人员" cssClass="label_hang_linput validate[required,maxSize[255]]" /></div>
+        </div>
 		</s:elseif>
         </div>
         <div class="label_main">

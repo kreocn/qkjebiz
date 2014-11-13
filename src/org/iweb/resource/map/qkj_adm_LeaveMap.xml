@@ -56,8 +56,8 @@
 	</select>
 	<insert id="adm_addLeave" parameterClass="leave">
 		<![CDATA[ 
-			Insert Into qkja_r_leave(leave_type,leave_mold,leave_dept,leave_user,leave_start,leave_start_time,leave_end,leave_end_time,totle,cause,lm_time,lm_user,leave_time)
-			Values (#leave_type#,#leave_mold#,#leave_dept#,#leave_user#,#leave_start#,#leave_start_time#,#leave_end#,#leave_end_time#,#totle#,#cause#,#lm_time#,#lm_user#,NOW())
+			Insert Into qkja_r_leave(leave_type,leave_mold,leave_dept,leave_user,leave_start,leave_start_time,leave_end,leave_end_time,totle,cause,lm_time,lm_user,leave_time,peer)
+			Values (#leave_type#,#leave_mold#,#leave_dept#,#leave_user#,#leave_start#,#leave_start_time#,#leave_end#,#leave_end_time#,#totle#,#cause#,#lm_time#,#lm_user#,NOW(),#peer#)
 		]]>
 		<selectKey resultClass="int" keyProperty="uuid">
 		<![CDATA[ 
@@ -79,7 +79,8 @@
 				totle=#totle#,
 				cause=#cause#,
 				lm_time=#lm_time#,
-				lm_user=#lm_user#
+				lm_user=#lm_user#,
+				peer=#peer#
 			Where uuid = #uuid#
 		]]>
 	</update>
