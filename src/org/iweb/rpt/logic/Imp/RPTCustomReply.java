@@ -1,12 +1,15 @@
 package org.iweb.rpt.logic.Imp;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.iweb.rpt.domain.Column;
 import org.iweb.rpt.domain.ListObject;
 import org.iweb.rpt.logic.SimpleReport;
+import org.iweb.sys.DateUtil;
 
 public class RPTCustomReply extends SimpleReport {
 
@@ -46,7 +49,11 @@ public class RPTCustomReply extends SimpleReport {
 
 	@Override
 	public String getMiddleSqlText() {
-		return "From v_rpt_r_customer_monthly t ";
+		Calendar cal = Calendar.getInstance();
+		int month = cal.get(Calendar.MONTH) + 1;
+		int year = cal.get(Calendar.YEAR);
+		String ds=year+"-"+month;
+		return "From rpt_m_customer t where t.sdate like '"+ds+"%'";
 	}
 
 	@Override
