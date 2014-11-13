@@ -89,6 +89,8 @@ padding-left: 5px;padding-right: 5px;
 		<th>方案修改时间</th>
 		<th>大区审核时间</th>
 		<th>销管审核时间</th>
+		<th>销管部经理审核时间</th>
+		<th>销管副总审核时间</th>
 		<th>总监审核时间</th>
 		<th>申请通过时间</th>
 	  </tr>
