@@ -9,6 +9,8 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.iweb.common.dao.CommonDAO;
+import org.iweb.rpt.domain.ActiveNum;
+import org.iweb.rpt.domain.ActiveTime;
 import org.iweb.rpt.domain.ListObject;
 import org.iweb.sys.ContextHelper;
 import org.iweb.sys.DateUtil;
@@ -23,13 +25,21 @@ public class CheckEffMonthlyStatAction extends ActionSupport {
 
 	private CommonDAO dao = new CommonDAO();
 
-	private Map activeAvgTime;
-	private Map activeCloseAvgTime;
-	private Map applyAvgTime;
-
-	private List<Map> activePasses;
-	private List<Map> activeClosePasses;
-	private List<Map> applyPasses;
+	//private Map activeAvgTime;
+	//private Map activeCloseAvgTime;
+	//private Map applyAvgTime;
+	private ActiveTime activetime;
+	private ActiveNum activenum;
+	private List<ActiveTime> activeAvgTime;
+	private List<ActiveTime> activeCloseAvgTime;
+	private List<ActiveTime> applyAvgTime;
+	private List<ActiveNum> activePasses;
+	private List<ActiveNum> activeClosePasses;
+	private List<ActiveNum> applyPasses;
+	
+	//private List<Map> activePasses;
+	//private List<Map> activeClosePasses;
+	//private List<Map> applyPasses;
 
 	private String yearMonth;// 参数 年-月
 	private List<ListObject> yearMonths;
@@ -39,51 +49,67 @@ public class CheckEffMonthlyStatAction extends ActionSupport {
 
 	private String message;
 
-	public Map getActiveAvgTime() {
+	public ActiveTime getActivetime() {
+		return activetime;
+	}
+
+	public void setActivetime(ActiveTime activetime) {
+		this.activetime = activetime;
+	}
+
+	public ActiveNum getActivenum() {
+		return activenum;
+	}
+
+	public void setActivenum(ActiveNum activenum) {
+		this.activenum = activenum;
+	}
+
+	public List<ActiveTime> getActiveAvgTime() {
 		return activeAvgTime;
 	}
 
-	public void setActiveAvgTime(Map activeAvgTime) {
+	public void setActiveAvgTime(List<ActiveTime> activeAvgTime) {
 		this.activeAvgTime = activeAvgTime;
 	}
 
-	public Map getActiveCloseAvgTime() {
+	public List<ActiveTime> getActiveCloseAvgTime() {
 		return activeCloseAvgTime;
 	}
 
-	public void setActiveCloseAvgTime(Map activeCloseAvgTime) {
+	public void setActiveCloseAvgTime(List<ActiveTime> activeCloseAvgTime) {
 		this.activeCloseAvgTime = activeCloseAvgTime;
 	}
 
-	public Map getApplyAvgTime() {
+	public List<ActiveTime> getApplyAvgTime() {
 		return applyAvgTime;
 	}
 
-	public void setApplyAvgTime(Map applyAvgTime) {
+	public void setApplyAvgTime(List<ActiveTime> applyAvgTime) {
 		this.applyAvgTime = applyAvgTime;
 	}
 
-	public List<Map> getActivePasses() {
+	public List<ActiveNum> getActivePasses() {
 		return activePasses;
 	}
 
-	public void setActivePasses(List<Map> activePasses) {
+	public void setActivePasses(List<ActiveNum> activePasses) {
 		this.activePasses = activePasses;
 	}
 
-	public List<Map> getActiveClosePasses() {
+	public List<ActiveNum> getActiveClosePasses() {
 		return activeClosePasses;
 	}
 
-	public void setActiveClosePasses(List<Map> activeClosePasses) {
+	public void setActiveClosePasses(List<ActiveNum> activeClosePasses) {
 		this.activeClosePasses = activeClosePasses;
 	}
 
-	public List<Map> getApplyPasses() {
+	public List<ActiveNum> getApplyPasses() {
 		return applyPasses;
 	}
 
-	public void setApplyPasses(List<Map> applyPasses) {
+	public void setApplyPasses(List<ActiveNum> applyPasses) {
 		this.applyPasses = applyPasses;
 	}
 
@@ -103,12 +129,38 @@ public class CheckEffMonthlyStatAction extends ActionSupport {
 			setDeptGroups();
 
 			if (!ToolsUtil.isEmpty(yearMonth)) {
-				this.setActiveAvgTime(dao.commonSelectMap(initSQL(0)));
+				/*this.setActiveAvgTime(dao.commonSelectMap(initSQL(0)));
 				this.setActiveCloseAvgTime(dao.commonSelectMap(initSQL(1)));
 				this.setApplyAvgTime(dao.commonSelectMap(initSQL(2)));
 				this.setActivePasses(dao.commonSelectMapList(initSQL(3)));
 				this.setActiveClosePasses(dao.commonSelectMapList(initSQL(4)));
 				this.setApplyPasses(dao.commonSelectMapList(initSQL(5)));
+				*/
+				map.clear();
+				map.put("atype", 1);
+				map.put("adate", yearMonth);
+				this.setActiveAvgTime(dao.listbytime(map));
+				map.clear();
+				map.put("atype", 2);
+				map.put("adate", yearMonth);
+				this.setActiveCloseAvgTime(dao.listbytime(map));
+				map.clear();
+				map.put("atype", 3);
+				map.put("adate", yearMonth);
+				this.setApplyAvgTime(dao.listbytime(map));
+				
+				map.clear();
+				map.put("atype", 1);
+				map.put("adate", yearMonth);
+				this.setActivePasses(dao.listbynum(map));
+				map.clear();
+				map.put("atype", 2);
+				map.put("adate", yearMonth);
+				this.setActiveClosePasses(dao.listbynum(map));
+				map.clear();
+				map.put("atype", 3);
+				map.put("adate", yearMonth);
+				this.setApplyPasses(dao.listbynum(map));
 				this.setMessage("报表生成成功!");
 			} else {
 				this.setMessage("请选择报表统计时间");
@@ -172,7 +224,7 @@ public class CheckEffMonthlyStatAction extends ActionSupport {
 	 *            0:活动申请平均时间 1:活动结案平均时间 2:至事由平均时间 3:活动申请通过数量 4:活动结案通过数量 5:至事由通过数量
 	 * @return
 	 */
-	private String initSQL(int n) {
+	String initSQL(int n) {
 		// ").append("'").append(yearMonth).append("'").append("
 		// ").append(deptGroup).append("
 		StringBuffer sql = new StringBuffer();
