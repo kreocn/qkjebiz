@@ -114,3 +114,10 @@ span.nowrap {
 		padding-top: 55px; background: url("../images/print/pageheader02.png") transparent no-repeat 0 0;
 	}
 }
+table{
+	border-collapse:collapse;
+}
+.apply_n table td,.note_area table td{
+	border:1px solid #000;
+	padding:2px 5px;
+}
