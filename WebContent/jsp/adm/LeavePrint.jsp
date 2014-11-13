@@ -36,6 +36,10 @@
 		<td class="firstRow">出差地点</td>
 		<td colspan="3">${leave.leave_mold}</td>
 	</tr>
+	<tr height="30">
+		<td class="firstRow">同行人员</td>
+		<td colspan="3">${leave.peer}</td>
+	</tr>
 	<tr height="130">
 		<td class="firstRow">出差事由</td>
 		<td colspan="3" style="text-align: left;">${leave.cause}</td>
