@@ -294,6 +294,14 @@
 			Where uuid = #uuid#
 		]]>
 	</update>
+	<update id="qkjmanage_mdyCloseActiveSPE" parameterClass="active">
+		<![CDATA[
+			Update qkjm_r_active
+			Set
+				spe_remark=#spe_remark#
+			Where uuid = #uuid#
+		]]>
+	</update>
 	<update id="qkjmanage_mdyCloseActiveSDStatus" parameterClass="active">
 		<![CDATA[
 			Update qkjm_r_active

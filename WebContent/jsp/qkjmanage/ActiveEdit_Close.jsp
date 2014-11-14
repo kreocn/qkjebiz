@@ -458,6 +458,34 @@ color: #008000;
             </div>
         </div>
         </div>
+        <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_MDYSPE') && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_SELSPE') && active.uuid!=null">
+        <div class="label_main">
+	        <div class="label_hang">
+	            <div class="label_ltit">特殊备注:
+	            </div>
+	            <div class="label_rwbenx label_hang_linput">
+	            <span class="message_prompt">此字段，不能直接保存，请点击"保存特殊备注"保存</span>
+	            <s:textarea id="spe_remark" name="active.spe_remark" title="活动备注"  cssClass="label_hang_linput inputNote validate[maxSize[65535]]" />
+	            </div>
+	        </div>
+	        <div class="label_hang">
+	        <s:submit cssClass="input-blue"  name="mdyStatus2" value="保存特殊备注" action="mdyCloseSPE" onclick="return isOp('确定执行此操作?');" />
+	        </div>
+	        </div>
+        </s:if>
+        <s:elseif test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_SELSPE')">
+        <div class="label_main">
+	        <div class="label_hang">
+	            <div class="label_ltit">特殊备注:
+	            </div>
+	            <div class="label_rwbenx label_hang_linput">
+	            ${active.spe_remark }
+	            </div>
+	        </div>
+	        </div>
+        </s:elseif>
+        
+        
         <s:if test="active.status>=3">
         <div class="label_main">
         <div class="label_hang">

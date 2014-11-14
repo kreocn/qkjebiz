@@ -60,6 +60,7 @@ public class Active {
 	private Integer close_nd_status;
 	private String close_nd_user;
 	private Date close_nd_time;
+	private String spe_remark;
 
 	// 非数据库字段
 	private String apply_dept_name;
@@ -91,6 +92,14 @@ public class Active {
 	
 	
 	
+	public String getSpe_remark() {
+		return spe_remark;
+	}
+
+	public void setSpe_remark(String spe_remark) {
+		this.spe_remark = spe_remark;
+	}
+
 	public Date getBiz_time() {
 		return biz_time;
 	}

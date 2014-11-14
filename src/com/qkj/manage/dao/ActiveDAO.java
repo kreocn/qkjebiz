@@ -77,9 +77,13 @@ public class ActiveDAO extends AbstractDAO {
 	public int startActiveCloseFlow(Object parameters) {
 		return super.save("qkjmanage_startActiveCloseFlow", parameters);
 	}
-
+	
 	public int mdyCloseActive(Object parameters) {
 		return super.save("qkjmanage_mdyCloseActive", parameters);
+	}
+	
+	public int mdyCloseActiveSPE(Object parameters) {
+		return super.save("qkjmanage_mdyCloseActiveSPE", parameters);
 	}
 
 	public int mdyCloseActiveSDStatus(Object parameters) {

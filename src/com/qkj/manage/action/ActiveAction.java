@@ -406,7 +406,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
-
+	
 	public String del() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_DEL");
 		try {
@@ -1017,7 +1017,19 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
-
+	
+	public String saveCloseSpe() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_MDYSPE");
+		try {
+			dao.mdyCloseActiveSPE(active);
+			//addProcess("ACTIVE_CLOSE_MDYSPE", "活动结案特殊备注信息修改");
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!saveCloseSpe 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!saveCloseSpe 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+	
 	/**
 	 * 开始结案
 	 * 

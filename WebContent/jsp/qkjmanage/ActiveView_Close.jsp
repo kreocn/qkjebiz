@@ -301,6 +301,19 @@ font-size: 14px;
  	<div class="note_area">${active.close_note}</div>
 </div>
 
+
+        <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_SELSPE')">
+        <div class="label_main noprint">
+	        <div class="label_hang">
+	            <div class="label_ltit">特殊备注:
+	            </div>
+	            <div class="label_rwbenx label_hang_linput">
+	            ${active.spe_remark }
+	            </div>
+	        </div>
+	        </div>
+        </s:if>
+
 <div class="label_main noprint">
      <div class="label_hang">
          <div class="label_ltit">相关操作:</div>
