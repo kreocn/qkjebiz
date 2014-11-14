@@ -193,6 +193,15 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
+		<!-- 结案单特殊字段修改 -->
+		<action name="mdyCloseSPE" class="com.qkj.manage.action.ActiveAction" method="saveCloseSpe">
+			<result type="redirectAction">
+				<param name="actionName">active_closeLoad</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
 		<!-- 开始结案 -->
 		<action name="mdyStatus2" class="com.qkj.manage.action.ActiveAction" method="mdyStatus2">
 			<result type="redirectAction">
