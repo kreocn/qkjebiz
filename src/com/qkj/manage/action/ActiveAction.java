@@ -522,6 +522,25 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
+	
+	/**
+	 * 一次退回
+	 * 
+	 * @return
+	 * @throws Exception
+	 * @date 2014-4-26 上午10:21:02
+	 */
+	public String mdyActiveSDStatusTH() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_TH");
+		try {
+			mdyActiveSDStatus(5);
+			mdyStatus(0);
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!mdyActiveSDStatus5 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!mdyActiveSDStatus5 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
 
 	/**
 	 * 大区经理审核通过

@@ -58,6 +58,14 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
+		
+		<action name="apply_spt" class="com.qkj.manage.action.ApplyAction" method="spt">
+			<result type="redirectAction">
+				<param name="actionName">apply_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
 		<action name="apply_check10" class="com.qkj.manage.action.ApplyAction" method="check10">
 			<result type="redirectAction">
 				<param name="actionName">apply_list</param>

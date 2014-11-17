@@ -416,7 +416,7 @@ color: #008000;
 				</s:if>
 				<input type="button" value="返回"  class="input-gray" onclick="linkurl('<s:url action="active_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');" />
 				<s:if test="(active.status==1 || active.status==2) && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_TH')">
-					<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="退回" action="mdyActiveSDStatus5" onclick="return isOp('确定执行此操作?将退回到未审核状态');" />
+					<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="退回" action="mdyActiveSDStatusT" onclick="return isOp('确定执行此操作?将退回到未审核状态');" />
 				</s:if>
 				<s:if test="40<=active.sd_status">
 					<input type="button" onclick="linkurl('<s:url namespace="/qkjmanage" action="active_view"><s:param name="active.uuid" value="active.uuid" /></s:url>');" value="转到打印页面"/>

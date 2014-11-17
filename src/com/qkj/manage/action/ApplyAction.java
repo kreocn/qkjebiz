@@ -297,6 +297,25 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 	}
 
 	/**
+	 * 退回
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String spt() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_SPT");
+		try {
+			check(5);
+			spcheck(0);
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!check5 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!check5 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+
+	
+	/**
 	 * 大区经理审核通过
 	 * 
 	 * @return

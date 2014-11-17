@@ -80,6 +80,16 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
+		
+		<action name="mdyActiveSDStatusT" class="com.qkj.manage.action.ActiveAction" method="mdyActiveSDStatusTH">
+			<result type="redirectAction">
+				<param name="actionName">active_load</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
 		<!-- 大区经理审核通过 -->
 		<action name="mdyActiveSDStatus10" class="com.qkj.manage.action.ActiveAction" method="mdyActiveSDStatus10">
 			<result type="redirectAction">

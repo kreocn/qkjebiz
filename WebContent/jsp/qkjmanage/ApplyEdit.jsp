@@ -200,6 +200,9 @@ color: #008000;
 					<s:if test="apply.status>=10 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_APPROVE')">
 					<input type="button" value="审阅"  onclick="openApprove();" />
 					</s:if>
+					<s:if test="apply.status>=10 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_SPT')">
+					<s:submit id="delete" name="delete" value="退回" action="apply_spt" cssClass="input-red" onclick="return isOp('确定执行此操作?将退回到未审核状态');"/>
+					</s:if>
 					<s:if test="apply.status==30">
 					<input type="button" onclick="linkurl('<s:url namespace="/qkjmanage" action="apply_print"><s:param name="apply.uuid" value="apply.uuid" /></s:url>');" value="转到打印页面"/>
 					</s:if>

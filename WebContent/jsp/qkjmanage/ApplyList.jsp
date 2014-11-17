@@ -173,9 +173,9 @@ display: none;
 					<s:if test="status==30">
 					<a class="input-gray" href="<s:url namespace="/qkjmanage" action="apply_print"><s:param name="apply.uuid" value="uuid"></s:param></s:url>">打印</a>
 					</s:if>
-					<s:elseif test="status<=20">
+					
 			    	<a class="input-blue" href="<s:url namespace="/qkjmanage" action="apply_load"><s:param name="viewFlag">mdy</s:param><s:param name="apply.uuid" value="uuid"></s:param></s:url>">修改</a>
-			    	</s:elseif>
+			    	
 			    	</s:if>
 			    	<s:if test="(status==0||status==5)&&@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_DEL')">
 			    	<a class="input-red" href="<s:url namespace="/qkjmanage" action="apply_del"><s:param name="apply.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
