@@ -111,11 +111,14 @@
 			<isNotEmpty prepend="AND" property="sd60"><![CDATA[ s.`biz_status02`=60 and s.`biz_status03`=50]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="smd40"><![CDATA[ s.`biz_status02`=40 and s.`biz_status03`=40 ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="smd50"><![CDATA[  s.`biz_status03`=50 ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="cai"><![CDATA[  a.`fd_status`=10 and s.biz_sign='ACTIVE_MDY_FDSTATUS' ]]></isNotEmpty>
 			<!-- 结案 -->
 			<isNotEmpty prepend="AND" property="csd60"><![CDATA[ s.`biz_status04`=60 and  s.`biz_status05`=50 ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="csmd40"><![CDATA[ s.`biz_status04`=30 and s.`biz_status05`=40 ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="csmd50"><![CDATA[  s.`biz_status04`=50 and s.`biz_status05`=50 ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="biz_id"><![CDATA[ s.`biz_id`=#biz_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="caiClo"><![CDATA[  a.`close_fd_status`=10 and s.biz_sign='ACTIVE_MDY_FDCSTATUS']]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="shuClo"><![CDATA[  a.`close_nd_status`=10 and s.biz_sign='ACTIVE_MDY_NDCSTATUS' ]]></isNotEmpty>
 		</dynamic>
 		<![CDATA[ GROUP BY s.`biz_user`  ]]>
 		

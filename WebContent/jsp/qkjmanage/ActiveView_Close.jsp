@@ -101,6 +101,18 @@ font-size: 14px;
 <s:if test="active.close_smd_status==40"><font class="message_pass">销管部经理已审</font>(${active.close_smd_user_name})</s:if>
 <s:if test="active.close_smd_status==50"><font class="message_pass">销管副总已审</font>(${active.close_smd_user_name})</s:if>
 </div>
+<div class="zhuangtai" title="${it:formatDate(active.close_smd_time,'yyyy-MM-dd HH:mm:ss')}">
+					财务部审核状态:
+					<s:if test="active.close_fd_status==0 || active.fd_status==null">未确认</s:if>
+					<s:if test="active.close_fd_status==5"><font class="message_error">审核退回</font>(${active.close_fd_name}})</s:if>
+					<s:if test="active.close_fd_status==10"><font class="message_pass">财务已审</font>(${active.close_fd_name}})</s:if>
+				</div>
+				<div class="zhuangtai" title="${it:formatDate(active.close_smd_time,'yyyy-MM-dd HH:mm:ss')}">
+					数据中心审核状态:
+					<s:if test="active.close_nd_status==0 || active.close_nd_status==null">未确认</s:if>
+					<s:if test="active.close_nd_status==5"><font class="message_error">审核退回</font>(${active.close_nd_name})</s:if>
+					<s:if test="active.close_nd_status==10"><font class="message_pass">数据中心已审</font>(${active.close_nd_name})</s:if>
+				</div>
 <s:hidden name="active.status" /><s:hidden name="active.close_sd_status" /><s:hidden name="active.close_smd_status" />
      </div>
  </div>
@@ -142,14 +154,24 @@ font-size: 14px;
  <div class="label_main">
  <div class="label_hang label_hang_sign">
      <div class="label_ltit">财务部:</div>
-     <div class="label_rwbenx label_rwb_sign">(签字/日期)</div>
+     <div class="label_rwbenx label_rwb_sign">(签字/日期)
+     <s:if test="caiActive!=null">
+     <span class="user_sign"><img src="${caiActive.puser_sign}" /></span>
+     
+     </s:if>
+     </div>
  </div>
  </div>
  <div class="label_main label_main_sep"></div>
  <div class="label_main">
  <div class="label_hang label_hang_sign">
      <div class="label_ltit">数据中心:</div>
-     <div class="label_rwbenx label_rwb_sign">(签字/日期)</div>
+     <div class="label_rwbenx label_rwb_sign">(签字/日期)
+     <s:if test="shuActive!=null">
+     <span class="user_sign"><img src="${shuActive.puser_sign}" /></span>
+     
+     </s:if>
+     </div>
  </div>
  </div>
  <div class="label_main label_main_sep"></div>

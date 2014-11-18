@@ -118,6 +118,12 @@ color: #008000;
 					<s:if test="active.smd_status==40"><font class="message_pass">销管部经理已审</font>(${active.smd_user_name})</s:if>
 					<s:if test="active.smd_status==50"><font class="message_pass">销管副总已审</font>(${active.smd_user_name})</s:if>
 				</div>
+				<div class="zhuangtai" title="${it:formatDate(active.smd_time,'yyyy-MM-dd HH:mm:ss')}">
+					财务审核状态:
+					<s:if test="active.fd_status==0">未确认</s:if>
+					<s:if test="active.fd_status==5"><font class="message_error">审核退回</font>(${active.fd_user_name})</s:if>
+					<s:if test="active.fd_status==10"><font class="message_pass">财务已审</font>(${active.fd_user_name})</s:if>
+				</div>
 				<s:hidden name="active.status" /><s:hidden name="active.sd_status" /><s:hidden name="active.smd_status" />
             </div>
         </div>
@@ -151,7 +157,12 @@ color: #008000;
 		 <div class="label_main">
 		 <div class="label_hang label_hang_sign">
 		     <div class="label_ltit">财务部:</div>
-		     <div class="label_rwbenx label_rwb_sign">(签字/日期)</div>
+		     <div class="label_rwbenx label_rwb_sign">(签字/日期)
+		     <s:if test="caiActive!=null">
+		     <span class="user_sign"><img src="${caiActive.puser_sign}" /></span>
+		     
+		     </s:if>
+		     </div>
 		 </div>
 		 </div>
 		

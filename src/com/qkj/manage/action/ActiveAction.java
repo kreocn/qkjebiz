@@ -49,6 +49,8 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	private Active zongActive;
 	private Active guanActive;
 	private Active fuActive;
+	private Active caiActive;
+	private Active shuActive;
 
 	private Approve approve;
 	private List<Approve> approves;
@@ -61,6 +63,23 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	private int currPage;
 
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;活动管理";
+
+	
+	public Active getCaiActive() {
+		return caiActive;
+	}
+
+	public void setCaiActive(Active caiActive) {
+		this.caiActive = caiActive;
+	}
+
+	public Active getShuActive() {
+		return shuActive;
+	}
+
+	public void setShuActive(Active shuActive) {
+		this.shuActive = shuActive;
+	}
 
 	public Active getZongActive() {
 		return zongActive;
@@ -314,6 +333,16 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				map.put("sq", "sq");
 				map.put("biz_id", active.getUuid());
 				this.setActiveSing(dao.listSing(map));
+				if(active.getFd_status()==10){//财务已审
+					map.clear();
+					map.put("sq", "sq");
+					map.put("biz_id", active.getUuid());
+					map.put("cai", "zong");
+					List<Active> cai=dao.listSing(map);
+					if(cai.size()>0){
+						this.setCaiActive((Active)cai.get(0));
+					}
+				}
 				
 				if(active.getSd_status()==60){//总经理已审
 				map.clear();
@@ -948,6 +977,28 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				map.put("ja", "ja");
 				map.put("biz_id", active.getUuid());
 				this.setActiveSing(dao.listSing(map));
+				
+				if(active.getClose_fd_status()==10){//财务
+					map.clear();
+					map.put("ja", "sq");
+					map.put("biz_id", active.getUuid());
+					map.put("caiClo", "zong");
+					List<Active> caic=dao.listSing(map);
+					if(caic.size()>0){
+						this.setCaiActive((Active)caic.get(0));
+					}
+				}
+				
+				if(active.getClose_nd_status()==10){//数据中心
+					map.clear();
+					map.put("ja", "sq");
+					map.put("biz_id", active.getUuid());
+					map.put("shuClo", "zong");
+					List<Active> shuC=dao.listSing(map);
+					if(shuC.size()>0){
+						this.setShuActive((Active)shuC.get(0));
+					}
+				}
 				
 				if(active.getClose_sd_status()==60){//总经理已审
 					map.clear();
