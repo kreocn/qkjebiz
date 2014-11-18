@@ -338,6 +338,9 @@ color: #008000;
         <div class="label_hang">
             <div class="label_ltit">相关操作:</div>
             <div class="label_rwbenx">
+            	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_TH')">
+					<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="退回" action="mdyActiveSDStatusT" onclick="return isOp('确定执行此操作?将退回到未审核状态');" />
+				</s:if>
 				<input type="button" onclick="window.print();" value="打印本页"/>
             </div>
         </div>

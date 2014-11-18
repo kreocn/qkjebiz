@@ -544,7 +544,7 @@ color: #008000;
 				</s:if>
 				<input type="button" class="input-gray" value="返回" onclick="linkurl('<s:url action="active_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');" />
 				<s:if test="active.status==4 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_TH')">
-				<s:submit cssClass="input-red" name="mdyCloseActiveSDStatus5" value="退回" action="mdyCloseActiveSDStatus5" onclick="return isOp('确定执行此操作?将退回到未审核状态');" />
+				<s:submit cssClass="input-red" name="mdyCloseActiveSDStatus5" value="退回" action="mdycloseTH" onclick="return isOp('确定执行此操作?将退回到未审核状态');" />
 				</s:if>
 				<s:if test="status >= 4">
 					<input type="button" onclick="linkurl('<s:url namespace="/qkjmanage" action="active_closeView"><s:param name="active.uuid" value="active.uuid"></s:param></s:url>');" value="转到打印页面"/>
