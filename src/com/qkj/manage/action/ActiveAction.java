@@ -763,7 +763,11 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyActiveFDSTATUS10() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_FDSTATUS10");
 		try {
+			active.setLm_user(ContextHelper.getUserLoginUuid());
 			mdyActiveFDStatus(1,10);
+			active.setStatus(2);//申请通过执行
+			dao.mdyActivePass(active);
+			addProcess("ACTIVE_APPLY_PASS", "活动申请通过");
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
@@ -801,6 +805,11 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_FDCSTATUS10");
 		try {
 			mdyActiveFDStatus(2,10);
+			active.setLm_user(ContextHelper.getUserLoginUuid());
+			dao.mdyCloseActivePass(active);
+			// 调整随量积分
+			mdyMemberCapital();
+			addProcess("ACTIVE_CLOSE_PASS", "活动结案通过");
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
