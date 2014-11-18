@@ -33,7 +33,7 @@ font-size: 16px;margin: 8px 5px;text-indent: 28px;line-height: 30px;
 font-size: 16px;
 }
 .check_note {
-margin: 8px 5px;border: #666 solid 1px; clear:both;
+margin: 8px 5px;border: #666 solid 1px;clear: both;
 }
 .check_user {
 text-align: right;margin: 8px;border-top: #000 dashed 1px;padding: 10px 30px;font-size: 16px;
