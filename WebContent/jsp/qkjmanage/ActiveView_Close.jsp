@@ -45,7 +45,7 @@ font-size: 14px;
 <div class="dq_step">
 	<span class="pt">活动结案单</span>
 	<span class="opb lb op-area noprint"><a href="<s:url namespace="/qkjmanage" action="active_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a></span>
-	<span class="opb lb op-area noprint"><input type="button" onclick="window.print();" value="打印本页"/></span>
+	<span class="opb lb op-area noprint"><input type="button" onclick="window.print();" value="打印本页"/>&nbsp;</span>
 </div>
 <s:form id="editForm" name="editForm" action="apply_list"  method="get" namespace="/qkjmanage" theme="simple">
 <div class="label_con">
@@ -202,7 +202,7 @@ font-size: 14px;
  <div class="label_main">
  <div class="label_hang">
      <div class="label_ltit">活动时间:</div>
-     <div class="label_rwben2 nw">${it:formatDate(active.plan_start,'yyyy-MM-dd')} - ${it:formatDate(active.plan_end,'yyyy-MM-dd')}</div>
+     <div class="label_rwben2 nw" style="line-height:34px;">${it:formatDate(active.plan_start,'yyyy-MM-dd')} - ${it:formatDate(active.plan_end,'yyyy-MM-dd')}</div>
  </div>
   <div class="label_hang">
   	<div class="label_ltit">活动地点:</div>
@@ -210,7 +210,7 @@ font-size: 14px;
   </div>
   <div class="label_hang">
   	<div class="label_ltit">执行人:</div>
-  	<div class="label_rwben">${active.person}</div>
+  	<div class="label_rwben2 nw" style="line-height:34px;">${active.person}</div>
   </div>
  </div>
  <div class="label_main">

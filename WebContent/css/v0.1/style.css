@@ -850,7 +850,7 @@ input[type="button"].input-blue,input[type="submit"].input-blue,input[type="rese
 table{
 	border-collapse:collapse;
 }
-.apply_n table td,.note_area table td{
-	border:1px solid #000;
-	padding:2px 5px;
+.apply_n table td,.note_area table td,.projs table td{
+	border:1px solid #c5c5c5!important;
+	padding:2px 5px!important;
 }

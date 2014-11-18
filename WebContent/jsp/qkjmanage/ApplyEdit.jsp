@@ -115,7 +115,7 @@ color: #008000;
         </div>
         <div class="label_hang">
             <div class="label_ltit">审核时间:</div>
-            <div class="label_rwben2"><s:date name="apply.check_time" format="yyyy-MM-dd HH:mm:ss" /></div>
+            <div class="label_rwben2" style="line-height:34px;"><s:date name="apply.check_time" format="yyyy-MM-dd HH:mm:ss" /></div>
         </div>
         </div>
         <div class="label_main">
