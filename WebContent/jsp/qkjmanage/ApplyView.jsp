@@ -33,7 +33,7 @@ font-size: 16px;margin: 8px 5px;text-indent: 28px;line-height: 30px;
 font-size: 16px;
 }
 .check_note {
-margin: 8px 5px;border: #666 solid 1px;
+margin: 8px 5px;border: #666 solid 1px; clear:both;
 }
 .check_user {
 text-align: right;margin: 8px;border-top: #000 dashed 1px;padding: 10px 30px;font-size: 16px;
@@ -78,7 +78,7 @@ font-size: 24px;font-weight: bold;
 		$("#apply_check_note_text").html(CommonUtil.rtextarea("apply_check_note", "div"));
 	</script>
 	<div class="noprint tac">
-		<input type="button" onclick="window.print();" value="打印本页"/>
+		<input type="button" onclick="window.print();" value="打印本页"/>&nbsp;
 		<s:form name="form1" action="apply_add" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
 			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_CHECK_1')">
 			<s:hidden name="apply.uuid" /><s:hidden name="apply.status" /><s:hidden name="apply.sp_check_status" />
