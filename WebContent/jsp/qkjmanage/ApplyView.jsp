@@ -48,6 +48,7 @@ font-size: 24px;font-weight: bold;
 	<div class="itablemdy">
 	<div class="noprint tac"><input type="button" onclick="window.print();" value="打印本页"/></div>
 	<div class="apply_print">
+		<div style="float: right;">编号：${apply.uuid }</div>
 		<div class="apply_t apply_z">至：${apply.touser}</div>
 		<div class="apply_t apply_s">事：${apply.title} ${it:formatDate(apply.apply_time,'yyyy-MM-dd')}</div>
 		<s:if test="apply.is_fullcheck==1">
