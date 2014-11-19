@@ -118,7 +118,7 @@ max-width: 650px !important;
 		<td class="td5 nsd">
 			<a href="javascript:;"  class="leave_cause_show" data="${uuid}">[移此查看]</a>
 			<span id="leave_cause${uuid}" style="display:none;" class="leave_cause_shows">
-				<s:if test="leave_type==0">出差地点:${leave_mold}</s:if>
+				<s:if test="leave_type==0">出差地点:${leave_mold}<br/> 同行人员：${peer}</s:if>
 				${cause}
 			</span>
 		</td>
