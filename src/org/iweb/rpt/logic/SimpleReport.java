@@ -376,6 +376,8 @@ public abstract class SimpleReport {
 	private void setResult() throws Exception {
 		String conditionSqlText = "";
 		String searchTypeStr = "";
+		String searchselect="";
+		String searselectright="";
 		for (Iterator<Map.Entry<String, Object>> iterator = searchMap.entrySet().iterator(); iterator.hasNext();) {
 			Map.Entry<String, Object> m = iterator.next();
 			for (Iterator<Column> it = list.iterator(); it.hasNext();) {
@@ -396,12 +398,16 @@ public abstract class SimpleReport {
 						break;
 					case SimpleReport.SearchType_Like_Both:
 						searchTypeStr = " LIKE ";
+						searchselect="%";
+						searselectright="%";
 						break;
 					case SimpleReport.SearchType_Like_Left:
 						searchTypeStr = " LIKE ";
+						searchselect="%";
 						break;
 					case SimpleReport.SearchType_Like_Right:
 						searchTypeStr = " LIKE ";
+						searselectright="%";
 						break;
 					case SimpleReport.SearchType_More:
 						searchTypeStr = " > ";
@@ -418,7 +424,7 @@ public abstract class SimpleReport {
 
 					switch (col.getColumnType()) {
 					case SimpleReport.ColumnType_String:
-						conditionSqlText += " And " + m.getKey() + searchTypeStr + "'" + m.getValue() + "'";
+						conditionSqlText += " And " + m.getKey() + searchTypeStr +searchselect+ "'" + m.getValue() +searselectright+ "'";
 						break;
 					case SimpleReport.ColumnType_Date:
 						conditionSqlText += " And " + m.getKey() + searchTypeStr + "to_date('"
