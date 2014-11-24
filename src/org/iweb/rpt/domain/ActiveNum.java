@@ -9,6 +9,8 @@ public class ActiveNum {
 	private Integer cout;
 	private String atype;
 	private Date adate;
+	private String acode;
+	
 	public Integer getUuid() {
 		return uuid;
 	}
@@ -44,6 +46,12 @@ public class ActiveNum {
 	}
 	public void setAdate(Date adate) {
 		this.adate = adate;
+	}
+	public String getAcode() {
+		return acode;
+	}
+	public void setAcode(String acode) {
+		this.acode = acode;
 	}
 	
 

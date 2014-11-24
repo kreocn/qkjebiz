@@ -136,30 +136,48 @@ public class CheckEffMonthlyStatAction extends ActionSupport {
 				this.setActiveClosePasses(dao.commonSelectMapList(initSQL(4)));
 				this.setApplyPasses(dao.commonSelectMapList(initSQL(5)));
 				*/
+				String dep=null;
+				if(this.getDeptGroup()!=null){
+					if(this.getDeptGroup().equals("21")){
+						dep="2";
+					}else if(this.getDeptGroup().equals("220")){
+						dep="3";
+					}else{
+						dep="1";
+					}
+				}else{
+					dep="1";
+				}
 				map.clear();
 				map.put("atype", 1);
 				map.put("adate", yearMonth);
+				map.put("acode", dep);
 				this.setActiveAvgTime(dao.listbytime(map));
 				map.clear();
 				map.put("atype", 2);
 				map.put("adate", yearMonth);
+				map.put("acode", dep);
 				this.setActiveCloseAvgTime(dao.listbytime(map));
 				map.clear();
 				map.put("atype", 3);
 				map.put("adate", yearMonth);
+				map.put("acode", dep);
 				this.setApplyAvgTime(dao.listbytime(map));
 				
 				map.clear();
 				map.put("atype", 1);
 				map.put("adate", yearMonth);
+				map.put("acode", dep);
 				this.setActivePasses(dao.listbynum(map));
 				map.clear();
 				map.put("atype", 2);
 				map.put("adate", yearMonth);
+				map.put("acode", dep);
 				this.setActiveClosePasses(dao.listbynum(map));
 				map.clear();
 				map.put("atype", 3);
 				map.put("adate", yearMonth);
+				map.put("acode", dep);
 				this.setApplyPasses(dao.listbynum(map));
 				this.setMessage("报表生成成功!");
 			} else {

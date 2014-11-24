@@ -12,6 +12,24 @@
 var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
 var infoeditor01;
 $(function(){
+	$("#addMpriceForm").dialog({
+	    autoOpen: false,
+	    modal: true
+	});
+
+	$("#addFpriceForm").dialog({
+	    autoOpen: false,
+	    modal: true
+	});
+
+	$("#addFprice").click(function(){
+		$("#addFpriceForm").dialog("open");
+	});
+
+	$("#addMprice").click(function(){
+		$("#addMpriceForm").dialog("open");
+	});
+	
 	$("#addProductForm").dialog({
 	      autoOpen: false,
 	      modal: true
@@ -77,6 +95,8 @@ function loadMemberInfo(member_id) {
 	ajax.addParameter("parameters", "privilege_id=QKJ_QKJMANAGER_AJAXLOAD_MEMBER&uuid=" + member_id);
 	ajax.sendAjax();
 }
+
+
 </script>
 <style type="text/css">
 .active_icost {padding: 3px 5px;}
@@ -283,6 +303,24 @@ color: #008000;
 							</tr>
 							</s:iterator>
 	                    </table>
+	                    <p class="lb_gstit">随量费用</p>
+							<div class="active_p_list">
+								<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+	                    	<tr>
+	                        	<th class="nw">上期余额</th>
+	                            <th class="nw">本期费用</th>
+	                            <th class="nw">本期余额</th>
+	                        </tr>
+	                        <s:iterator value="activeMprices" status="sta">
+	                        <tr>
+							<td>${m_upprice}</td>
+							<td>${m_price}</td>
+							<td>${m_bprice}</td>
+							</tr>
+	                        </s:iterator>
+	                        
+	                    </table>
+							</div>
 	                	<p class="lb_gstit">公司预计费用合计</p>
 	                    <p class="lb_jwei">￥${active.it_price}</p>
 	                </div>
@@ -312,6 +350,24 @@ color: #008000;
 							</tr>
 							</s:iterator>
 	                    </table>
+	                    <p class="lb_gstit">市场基金费用</p>
+							<div class="active_p_list">
+								<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+	                    	<tr>
+	                        	<th class="nw">上期余额</th>
+	                            <th class="nw">本期费用</th>
+	                            <th class="nw">本期余额</th>
+	                        </tr>
+	                        <s:iterator value="activeFprices" status="sta">
+	                        <tr>
+							<td>${f_upprice}</td>
+							<td>${f_price}</td>
+							<td>${f_bprice}</td>
+							</tr>
+	                        </s:iterator>
+	                        
+	                    </table>
+							</div>
 	                	<p class="lb_gstit">客户预计费用合计</p>
 	                    <p class="lb_jwei">￥${active.mt_price}</p>
 	                </div>
@@ -332,6 +388,9 @@ color: #008000;
 						</s:if>
 						<s:if test="active.status==3 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEPOSM_ADD')">
 						<input type="button" id="addPosm" value="销售物料" />
+						</s:if>
+						<s:if test="active.status==3 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEM_ADD')">
+						<input type="button" id="addMprice" value="添加随量信息" />
 						</s:if>
 	            	</p>
 	                <div class="lb_yjcon">
@@ -379,6 +438,30 @@ color: #008000;
 							</tr>
 							</s:iterator>
 	                    </table>
+	                    <p class="lb_gstit">随量费用</p>
+							<div class="active_p_list">
+								<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+	                    	<tr>
+	                        	<th class="nw">上期余额</th>
+	                            <th class="nw">本期费用</th>
+	                            <th class="nw">本期余额</th>
+	                            <th class="nw">操作</th>
+	                        </tr>
+	                        <s:iterator value="activeMpricesClose" status="sta">
+	                        <tr>
+							<td>${m_upprice}aaaa</td>
+							<td>${m_price}</td>
+							<td>${m_bprice}</td>
+							<td>
+							<s:if test="active.status==3 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEPRODUCT_DEL')">
+								<a href="<s:url action="activeM_del"><s:param name="activeM.status" value="%{status}" /><s:param name="activeM.uuid" value="%{uuid}" /><s:param name="activeM.active_id" value="%{active.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
+							</s:if>
+							</td>
+							</tr>
+	                        </s:iterator>
+	                        
+	                    </table>
+							</div>
 	                	<p class="lb_gstit">公司预计费用合计</p>
 	                    <p class="lb_jwei">￥${active.close_it_price}</p>
 	                </div>
@@ -388,6 +471,9 @@ color: #008000;
 	            	参与客户费用
 	            	<s:if test="active.status==3 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEMEMCOST_ADD')">
 					<input type="button" id="addMember" value="添加客户" />
+					</s:if>
+					<s:if test="active.status==3 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEMEMF_ADD')">
+					<input type="button" id="addFprice" value="添加市场基金" />
 					</s:if>
 	            	</p>
 	                <div class="lb_yjcon">
@@ -414,6 +500,30 @@ color: #008000;
 							</tr>
 							</s:iterator>
 	                    </table>
+	                    <p class="lb_gstit">市场基金费用</p>
+							<div class="active_p_list">
+								<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+	                    	<tr>
+	                        	<th class="nw">上期余额</th>
+	                            <th class="nw">本期费用</th>
+	                            <th class="nw">本期余额</th>
+	                            <th class="nw">操作</th>
+	                        </tr>
+	                        <s:iterator value="activeFpricesClose" status="sta">
+	                        <tr>
+							<td>${f_upprice}</td>
+							<td>${f_price}</td>
+							<td>${f_bprice}</td>
+							<td>
+							<s:if test="active.status==3 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEPRODUCT_DEL')">
+								<a href="<s:url action="activeF_del"><s:param name="activeF.status" value="%{status}" /><s:param name="activeF.uuid" value="%{uuid}" /><s:param name="activeF.active_id" value="%{active.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
+							</s:if>
+							</td>
+							</tr>
+	                        </s:iterator>
+	                        
+	                    </table>
+							</div>
 	                	<p class="lb_gstit">客户费用合计</p>
 	                    <p class="lb_jwei">￥${active.close_mt_price}</p>
 	                </div>
@@ -627,10 +737,21 @@ color: #008000;
             <div class="label_ltit">财务审核:</div>
             <div class="label_rwbenx">
 				<!-- 财务 -->
-				<s:if test="(50==active.close_smd_status || 60==active.close_smd_status ) && 10!=active.close_fd_status && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_FDCSTATUS10')">
+				<s:if test="%{code.substring(0,2)=='21'}">
+				<s:if test="10!=active.close_fd_status && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_FDCSTATUS10')">
+				<s:if test="active.close_sd_status>=40">
 				<s:submit id="mdyActiveFDCSTATUS10" name="mdyActiveFDCSTATUS10" cssClass="input-green" value="财务-审核通过" action="mdyActiveFDCSTATUS10" onclick="return isOp('确定执行此操作?');" />
 				<s:submit id="mdyActiveFDCStatus5" name="mdyActiveFDCStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveFDCSTATUS" onclick="return isOp('确定执行此操作?');" />
 				</s:if>
+				</s:if>
+				</s:if>
+				
+				<s:else>
+				<s:if test="50==active.close_smd_status || 60==active.close_smd_status">
+				<s:submit id="mdyActiveFDCSTATUS10" name="mdyActiveFDCSTATUS10" cssClass="input-green" value="财务-审核通过" action="mdyActiveFDCSTATUS10" onclick="return isOp('确定执行此操作?');" />
+				<s:submit id="mdyActiveFDCStatus5" name="mdyActiveFDCStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveFDCSTATUS" onclick="return isOp('确定执行此操作?');" />
+				</s:if>
+				</s:else>
 				<div class="statusInline">
 					财务部审核状态:
 					<s:if test="active.close_fd_status==0 || active.fd_status==null">未确认</s:if>
@@ -647,10 +768,20 @@ color: #008000;
             <div class="label_ltit">数据中心审核:</div>
             <div class="label_rwbenx">
 				<!-- 财务 -->
-				<s:if test="(50==active.close_smd_status || 60==active.close_smd_status ) && 10!=active.close_nd_status && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_NDCSTATUS10')">
+				<s:if test="%{code.substring(0,2)=='21'}">
+				<s:if test="10!=active.close_nd_status && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_NDCSTATUS10')">
+				<s:if test="active.close_sd_status>=40">
 				<s:submit id="mdyActiveNDCSTATUS10" name="mdyActiveNDCSTATUS10" cssClass="input-green" value="数据中心-审核通过" action="mdyActiveNDCSTATUS10" onclick="return isOp('确定执行此操作?');" />
 				<s:submit id="mdyActiveNDCSTATUS5" name="mdyActiveNDCSTATUS5" cssClass="input-red" value="审核不通过" action="mdyActiveNDCSTATUS5" onclick="return isOp('确定执行此操作?');" />
 				</s:if>
+				</s:if>
+				</s:if>
+				<s:else>
+				<s:if test="50==active.close_smd_status || 60==active.close_smd_status">
+				<s:submit id="mdyActiveNDCSTATUS10" name="mdyActiveNDCSTATUS10" cssClass="input-green" value="数据中心-审核通过" action="mdyActiveNDCSTATUS10" onclick="return isOp('确定执行此操作?');" />
+				<s:submit id="mdyActiveNDCSTATUS5" name="mdyActiveNDCSTATUS5" cssClass="input-red" value="审核不通过" action="mdyActiveNDCSTATUS5" onclick="return isOp('确定执行此操作?');" />
+				</s:if>
+				</s:else>
 				<div class="statusInline">
 					数据中心审核状态:
 					<s:if test="active.close_nd_status==0 || active.close_nd_status==null">未确认</s:if>
@@ -826,6 +957,75 @@ function setDataCase() {
 </div>
 </s:form>
 </div>
+
+<!-- 添加随量信息 -->
+<div id="addMpriceForm" class="label_con idialog" title="添加随量信息">
+<s:form name="form_addPosmForm" cssClass="validFormDialog" action="active_saveM" namespace="/qkjmanage" method="post" theme="simple">
+<div class="label_main">
+	<div class="label_hang">
+	    <div class="label_ltit">上期余额:</div>
+	    <div class="label_rwben label_rwb"><s:textfield id="upprice" name="activeM.m_upprice" title="上期余额" cssClass="validate[required]" /></div>
+	</div>
+	<div class="label_hang">
+	    <div class="label_ltit">本期费用:</div>
+	    <div class="label_rwben label_rwb"><s:textfield id="price" name="activeM.m_price" title="本期费用" value="%{active.it_price}" cssClass="validate[required]" /></div>
+	</div>
+	<div class="label_hang">
+	    <div class="label_ltit">本期余额:</div>
+	    <div class="label_rwben label_rwb nw"><s:textfield id="bprice" name="activeM.m_bprice" title="本期余额"  cssClass="validate[required]" readonly="true"/>元</div>
+	</div>
+	<div class="label_hang label_button tac">
+	 	<s:hidden name="activeM.active_id" value="%{active.uuid}" />
+	 	<s:hidden name="activeM.status" value="2" />
+		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEM_ADD')">
+		<s:submit id="add" name="add" value="确定" action="active_saveM" />
+	</s:if>
+	 </div>
+</div>
+</s:form>
+</div>
+
+<script type="text/javascript">
+
+$("#upprice").bind("change",function(){
+	$("#bprice").val($("#upprice").val()-$("#price").val());
+	});
+</script>
+
+
+<!-- 添加市场基金信息 -->
+<div id="addFpriceForm" class="label_con idialog" title="添加市场基金信息">
+<s:form name="form_addPosmForm" cssClass="validFormDialog" action="active_saveF" namespace="/qkjmanage" method="post" theme="simple">
+<div class="label_main">
+	<div class="label_hang">
+	    <div class="label_ltit">上期余额:</div>
+	    <div class="label_rwben label_rwb"><s:textfield id="fupprice" name="activeF.f_upprice" title="上期余额" cssClass="validate[required]" /></div>
+	</div>
+	<div class="label_hang">
+	    <div class="label_ltit">本期费用:</div>
+	    <div class="label_rwben label_rwb"><s:textfield id="fprice" name="activeF.f_price" title="本期费用" value="%{active.mt_price}" cssClass="validate[required]" /></div>
+	</div>
+	<div class="label_hang">
+	    <div class="label_ltit">本期余额:</div>
+	    <div class="label_rwben label_rwb nw"><s:textfield id="fbprice" name="activeF.f_bprice" title="本期余额"  cssClass="validate[required]" readonly="true"/>元</div>
+	</div>
+	<div class="label_hang label_button tac">
+	 	<s:hidden name="activeF.active_id" value="%{active.uuid}" />
+	 	<s:hidden name="activeF.status" value="2" />
+		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEMEMF_ADD')">
+		<s:submit id="add" name="add" value="确定" action="active_saveF" />
+	</s:if>
+	 </div>
+</div>
+</s:form>
+</div>
+<script type="text/javascript">
+
+$("#fupprice").bind("change",function(){
+	$("#fbprice").val($("#fupprice").val()-$("#fprice").val());
+	});
+</script>
+
 <div id="viewMember" class="label_con idialog" title="客户实时信息">
 <div class="label_main">
 	<div class="label_hang">

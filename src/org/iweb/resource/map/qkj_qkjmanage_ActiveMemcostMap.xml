@@ -3,6 +3,8 @@
 <sqlMap>
 	<!-- ActiveMemcost Start -->
 	<typeAlias alias="activeMemcost" type="com.qkj.manage.domain.ActiveMemcost" />
+	<typeAlias alias="activeM" type="com.qkj.manage.domain.ActiveM" />
+	<typeAlias alias="activeF" type="com.qkj.manage.domain.ActiveF" />
 	<select id="qkjmanage_getActiveMemcosts" resultClass="activeMemcost" parameterClass="java.util.Map">
 		<![CDATA[ 
 			Select c.*,m.member_name,m.mobile member_mobile,p.with_score member_with_score
@@ -14,6 +16,26 @@
 		<isNotEmpty prepend="AND" property="active_id"><![CDATA[ c.active_id=#active_id# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="member_id"><![CDATA[ c.member_id=#member_id# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="status"><![CDATA[ c.status=#status# ]]></isNotEmpty>
+	</select>
+	<select id="qkjmanage_getActiveM" resultClass="activeM" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT * FROM  qkj_r_active_mprice c
+		]]>
+		<dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ c.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="active_id"><![CDATA[ c.active_id=#active_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="status"><![CDATA[ c.status=#status# ]]></isNotEmpty>
+		</dynamic>
+	</select>
+	<select id="qkjmanage_getActiveF" resultClass="activeF" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT * FROM  qkj_r_active_fprice c
+		]]>
+		<dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ c.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="active_id"><![CDATA[ c.active_id=#active_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="status"><![CDATA[ c.status=#status# ]]></isNotEmpty>
+		</dynamic>
 	</select>
 	<select id="qkjmanage_getActiveMemcostsCounts" resultClass="int" parameterClass="java.util.Map">
 		<![CDATA[ 
@@ -33,6 +55,31 @@
 			Values (#active_id#,#member_id#,#title#,#note#,#total_price#,#with_score#,#status#)
 		]]>
 	</insert>
+	
+	<insert id="qkjmanage_addActiveM" parameterClass="activeM">
+		<![CDATA[ 
+			Insert Into qkj_r_active_mprice(active_id,m_upprice,m_price,m_bprice,status)
+			Values (#active_id#,#m_upprice#,#m_price#,#m_bprice#,#status#)
+		]]>
+	</insert>
+	
+	<insert id="qkjmanage_addActiveF" parameterClass="activeF">
+		<![CDATA[ 
+			Insert Into qkj_r_active_fprice(active_id,f_upprice,f_price,f_bprice,status)
+			Values (#active_id#,#f_upprice#,#f_price#,#f_bprice#,#status#)
+		]]>
+	</insert>
+	<delete id="qkjmanage_delActiveM" parameterClass="activeM">
+	<![CDATA[
+		Delete From qkj_r_active_mprice Where uuid=#uuid#
+	]]>
+	</delete>
+	<delete id="qkjmanage_delActiveF" parameterClass="activeF">
+	<![CDATA[
+		Delete From qkj_r_active_fprice Where uuid=#uuid#
+	]]>
+	</delete>
+	
 	<delete id="qkjmanage_delActiveMemcost" parameterClass="activeMemcost">
 	<![CDATA[
 		Delete From qkjm_r_active_memcost Where uuid=#uuid#

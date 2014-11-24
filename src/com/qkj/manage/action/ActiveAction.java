@@ -22,6 +22,8 @@ import com.qkj.manage.dao.ApproveDAO;
 import com.qkj.manage.dao.ProcessDAO;
 import com.qkj.manage.dao.ProductDAO;
 import com.qkj.manage.domain.Active;
+import com.qkj.manage.domain.ActiveF;
+import com.qkj.manage.domain.ActiveM;
 import com.qkj.manage.domain.ActiveMemcost;
 import com.qkj.manage.domain.ActivePosm;
 import com.qkj.manage.domain.ActiveProduct;
@@ -61,8 +63,64 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	private int recCount;
 	private int pageSize;
 	private int currPage;
+	private String code;
+	private List<ActiveM> activeMprices;
+	private List<ActiveF> activeFprices;
+	private List<ActiveM> activeMpricesClose;
+	private List<ActiveF> activeFpricesClose;
+	private ActiveM activeM;
+	private ActiveF activeF;
 
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;活动管理";
+
+	
+	public List<ActiveM> getActiveMprices() {
+		return activeMprices;
+	}
+
+	public void setActiveMprices(List<ActiveM> activeMprices) {
+		this.activeMprices = activeMprices;
+	}
+
+	public List<ActiveF> getActiveFprices() {
+		return activeFprices;
+	}
+
+	public void setActiveFprices(List<ActiveF> activeFprices) {
+		this.activeFprices = activeFprices;
+	}
+
+	public List<ActiveM> getActiveMpricesClose() {
+		return activeMpricesClose;
+	}
+
+	public void setActiveMpricesClose(List<ActiveM> activeMpricesClose) {
+		this.activeMpricesClose = activeMpricesClose;
+	}
+
+	public List<ActiveF> getActiveFpricesClose() {
+		return activeFpricesClose;
+	}
+
+	public void setActiveFpricesClose(List<ActiveF> activeFpricesClose) {
+		this.activeFpricesClose = activeFpricesClose;
+	}
+
+	public ActiveM getActiveM() {
+		return activeM;
+	}
+
+	public void setActiveM(ActiveM activeM) {
+		this.activeM = activeM;
+	}
+
+	public ActiveF getActiveF() {
+		return activeF;
+	}
+
+	public void setActiveF(ActiveF activeF) {
+		this.activeF = activeF;
+	}
 
 	public Active getCaiActive() {
 		return caiActive;
@@ -252,6 +310,14 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		this.pageSize = pageSize;
 	}
 
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
 	public String list() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_LIST");
 		try {
@@ -282,6 +348,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 			} else if ("mdy".equals(viewFlag) || "view".equals(viewFlag)) {
 				if (!(active == null || active.getUuid() == null)) {
 					this.setActive((Active) dao.get(active.getUuid()));
+					code=active.getApply_dept();
 				} else {
 					this.setActive(null);
 				}
@@ -300,7 +367,9 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				this.setActivePosms(podao.list(map));
 				ActiveMemcostDAO amdao = new ActiveMemcostDAO();
 				this.setActiveMemcosts(amdao.list(map));
-
+				this.setActiveMprices(amdao.listM(map));
+				this.setActiveFprices(amdao.listF(map));
+				
 				map.clear();
 				map.put("int_id", active.getUuid());
 				map.put("approve_type", 1);
@@ -396,6 +465,8 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				this.setActivePosms(podao.list(map));
 				ActiveMemcostDAO amdao = new ActiveMemcostDAO();
 				this.setActiveMemcosts(amdao.list(map));
+				this.setActiveMprices(amdao.listM(map));
+				this.setActiveFprices(amdao.listF(map));
 			} else {
 				this.setActive(null);
 				this.setMessage("数据读取错误,请按照正确的方式进入页面!");
@@ -690,7 +761,6 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_SMDSTATUS");
 		try {
 			mdyActiveSMDStatus(5);
-			mdyActiveFDStatus(1, 0);
 			mdyStatus(0);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyActiveSMDStatus5 数据更新失败:", e);
@@ -881,6 +951,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	 * @date 2014-4-26 上午10:25:25
 	 */
 	public int mdyActiveSMDStatus(int smd_status) {
+		active.setFd_status(0);
 		active.setSmd_status(smd_status);
 		active.setSmd_time(new Date());
 		active.setSmd_user(ContextHelper.getUserLoginUuid());
@@ -930,7 +1001,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		try {
 			if (!(active == null || active.getUuid() == null)) {
 				this.setActive((Active) dao.get(active.getUuid()));
-
+				code=active.getApply_dept();
 				ProductDAO pdao = new ProductDAO();
 				this.setProducts(pdao.list(null));
 
@@ -944,6 +1015,10 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				this.setActiveProducts(adao.list(map));
 				this.setActivePosms(podao.list(map));
 				this.setActiveMemcosts(amdao.list(map));
+				
+				this.setActiveMprices(amdao.listM(map));
+				this.setActiveFprices(amdao.listF(map));
+				
 
 				map.clear();
 				map.put("active_id", active.getUuid());
@@ -951,7 +1026,10 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				this.setActiveProductsClose(adao.list(map));
 				this.setActivePosmsClose(podao.list(map));
 				this.setActiveMemcostsClose(amdao.list(map));
-
+				
+				this.setActiveFpricesClose(amdao.listF(map));
+				this.setActiveMpricesClose(amdao.listM(map));
+				
 				map.clear();
 				map.put("int_id", active.getUuid());
 				map.put("approve_type", 1);
@@ -1062,6 +1140,8 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				this.setActiveProducts(adao.list(map));
 				this.setActivePosms(podao.list(map));
 				this.setActiveMemcosts(amdao.list(map));
+				this.setActiveMprices(amdao.listM(map));
+				this.setActiveFprices(amdao.listF(map));
 
 				map.clear();
 				map.put("active_id", active.getUuid());
@@ -1069,6 +1149,9 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				this.setActiveProductsClose(adao.list(map));
 				this.setActivePosmsClose(podao.list(map));
 				this.setActiveMemcostsClose(amdao.list(map));
+				this.setActiveFpricesClose(amdao.listF(map));
+				this.setActiveMpricesClose(amdao.listM(map));
+				
 			} else {
 				this.setActive(null);
 				this.setMessage("数据读取错误,请按照正确的方式进入页面!");
@@ -1190,8 +1273,6 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS5");
 		try {
 			mdyCloseActiveSDStatus(5);
-			mdyActiveFDStatus(2, 0);
-			mdyActiveFDStatus(3, 0);
 			mdyStatus(3);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyCloseActiveSDStatus5 数据更新失败:", e);
@@ -1301,6 +1382,8 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	 * @date 2014-4-26 上午10:25:25
 	 */
 	public int mdyCloseActiveSDStatus(int close_sd_status) {
+		active.setClose_fd_status(0);
+		active.setClose_nd_status(0);
 		active.setClose_sd_status(close_sd_status);
 		active.setClose_sd_time(new Date());
 		active.setClose_sd_user(ContextHelper.getUserLoginUuid());
@@ -1325,8 +1408,6 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_SMDSTATUS5");
 		try {
 			mdyCloseActiveSMDStatus(5);
-			mdyActiveFDStatus(2, 0);
-			mdyActiveFDStatus(3, 0);
 			mdyStatus(3);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyCloseActiveSMDStatus5 数据更新失败:", e);
@@ -1397,6 +1478,8 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	 * @date 2014-4-26 上午10:25:25
 	 */
 	public int mdyCloseActiveSMDStatus(int close_sd_status) {
+		active.setClose_fd_status(0);
+		active.setClose_nd_status(0);
 		active.setClose_smd_status(close_sd_status);
 		active.setClose_smd_time(new Date());
 		active.setClose_smd_user(ContextHelper.getUserLoginUuid());

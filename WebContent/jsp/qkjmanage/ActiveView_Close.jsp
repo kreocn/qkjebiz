@@ -267,18 +267,36 @@ font-size: 14px;
               <p class="lb_gstit">公司销售物料(除酒品之外的其他费用,全部算物料)</p>
               <table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
               	<tr>
-<th>名目</th>
-<th>名目说明</th>
-<th>金额</th>
-</tr>
-<s:iterator value="activePosmsClose" status="sta">
-<tr>
-<td>${title}</td>
-<td>${note}</td>
-<td class="nw">￥${total_price}</td>
-</tr>
-</s:iterator>
+				<th>名目</th>
+				<th>名目说明</th>
+				<th>金额</th>
+				</tr>
+				<s:iterator value="activePosmsClose" status="sta">
+				<tr>
+				<td>${title}</td>
+				<td>${note}</td>
+				<td class="nw">￥${total_price}</td>
+				</tr>
+				</s:iterator>
            </table>
+           <p class="lb_gstit">随量费用</p>
+							<div class="active_p_list">
+								<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+	                    	<tr>
+	                        	<th class="nw">上期余额</th>
+	                            <th class="nw">本期费用</th>
+	                            <th class="nw">本期余额</th>
+	                        </tr>
+	                        <s:iterator value="activeMpricesClose" status="sta">
+	                        <tr>
+							<td>${m_upprice}aaaa</td>
+							<td>${m_price}</td>
+							<td>${m_bprice}</td>
+							</tr>
+	                        </s:iterator>
+	                        
+	                    </table>
+							</div>
        	<p class="lb_gstit">公司预计费用合计</p>
            <p class="lb_jwei">￥${active.close_it_price}</p>
           </div>
@@ -289,20 +307,39 @@ font-size: 14px;
           	<p class="lb_gstit">参与活动客户</p>
               <table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
               	<tr>
-<th>客户</th>
-<th>名目</th>
-<th>名目说明</th>
-<th>金额</th>
-</tr>
-<s:iterator value="activeMemcostsClose" status="sta">
-<tr>
-<td><a href="javascript:;" onclick="loadMemberInfo('${member_id}');">${member_name}</a></td>
-<td>${title}</td>
-<td>${note}</td>
-<td class="nw">￥${total_price}</td>
-</tr>
-</s:iterator>
+				<th>客户</th>
+				<th>名目</th>
+				<th>名目说明</th>
+				<th>金额</th>
+				</tr>
+				<s:iterator value="activeMemcostsClose" status="sta">
+				<tr>
+				<td><a href="javascript:;" onclick="loadMemberInfo('${member_id}');">${member_name}</a></td>
+				<td>${title}</td>
+				<td>${note}</td>
+				<td class="nw">￥${total_price}</td>
+				</tr>
+				</s:iterator>
            </table>
+           <p class="lb_gstit">市场基金费用</p>
+							<div class="active_p_list">
+								<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+	                    	<tr>
+	                        	<th class="nw">上期余额</th>
+	                            <th class="nw">本期费用</th>
+	                            <th class="nw">本期余额</th>
+	                        </tr>
+	                        <s:iterator value="activeFpricesClose" status="sta">
+	                        <tr>
+							<td>${f_upprice}</td>
+							<td>${f_price}</td>
+							<td>${f_bprice}</td>
+							<td>
+							</tr>
+	                        </s:iterator>
+	                        
+	                    </table>
+							</div>
        	<p class="lb_gstit">客户费用合计</p>
            <p class="lb_jwei">￥${active.close_mt_price}</p>
        </div>
