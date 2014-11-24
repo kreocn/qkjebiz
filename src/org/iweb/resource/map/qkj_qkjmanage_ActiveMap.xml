@@ -314,7 +314,9 @@
 				close_sd_user=#close_sd_user#,
 				close_sd_time=#close_sd_time#,
 				remark=#remark#,
-				lm_user=#lm_user#
+				lm_user=#lm_user#,
+				close_fd_status=#close_fd_status#,
+				close_nd_user=#close_nd_user#
 			Where uuid = #uuid#
 		]]>
 	</update>

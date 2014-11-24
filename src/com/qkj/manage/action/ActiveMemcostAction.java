@@ -25,8 +25,6 @@ public class ActiveMemcostAction extends ActionSupport {
 	private String viewFlag;
 	private ActiveM activeM;
 	private ActiveF activeF;
-	private List<ActiveM> activeMs;
-	private List<ActiveF> activeFs;
 	
 	
 	public ActiveM getActiveM() {
@@ -43,22 +41,6 @@ public class ActiveMemcostAction extends ActionSupport {
 
 	public void setActiveF(ActiveF activeF) {
 		this.activeF = activeF;
-	}
-
-	public List<ActiveM> getActiveMs() {
-		return activeMs;
-	}
-
-	public void setActiveMs(List<ActiveM> activeMs) {
-		this.activeMs = activeMs;
-	}
-
-	public List<ActiveF> getActiveFs() {
-		return activeFs;
-	}
-
-	public void setActiveFs(List<ActiveF> activeFs) {
-		this.activeFs = activeFs;
 	}
 
 	public ActiveMemcost getActiveMemcost() {
@@ -120,50 +102,7 @@ public class ActiveMemcostAction extends ActionSupport {
 		return SUCCESS;
 	}
 	
-	public String saveMP() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_MDY");
-		try {
-			dao.saveM(activeM);
-		} catch (Exception e) {
-			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
-			throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
-		}
-		return SUCCESS;
-	}
-	public String saveFP() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_MDY");
-		try {
-			dao.saveF(activeF);
-		} catch (Exception e) {
-			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
-			throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
-		}
-		return SUCCESS;
-	}
 	
-	public String delM() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVEM_DEL");
-		try {
-			dao.deleteM(activeM);
-			setMessage("删除成功!ID=" + activeMemcost.getUuid());
-		} catch (Exception e) {
-			log.error(this.getClass().getName() + "!del 数据删除失败:", e);
-			throw new Exception(this.getClass().getName() + "!del 数据删除失败:", e);
-		}
-		return SUCCESS;
-	}
-	
-	public String delF() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVEF_DEL");
-		try {
-			dao.deleteF(activeF);
-			setMessage("删除成功!ID=" + activeMemcost.getUuid());
-		} catch (Exception e) {
-			log.error(this.getClass().getName() + "!del 数据删除失败:", e);
-			throw new Exception(this.getClass().getName() + "!del 数据删除失败:", e);
-		}
-		return SUCCESS;
-	}
 	public String addClose() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVEMEMCOSTCLOSE_ADD");
 		try {
@@ -189,4 +128,75 @@ public class ActiveMemcostAction extends ActionSupport {
 		}
 		return SUCCESS;
 	}
+	
+	public String saveMP() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_MDY");
+		int state=0;
+		try {
+			state=activeM.getStatus();
+			dao.saveM(activeM);
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
+		}
+		if(state==1){
+			return "SUCCESS";
+		}else{
+			return "CLOSESUCCESS";
+		}
+		
+	}
+	public String saveFP() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_MDY");
+		int state=0;
+		try {
+			state=activeF.getStatus();
+			dao.saveF(activeF);
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
+		}
+		if(state==1){
+			return "SUCCESS";
+		}else{
+			return "CLOSESUCCESS";
+		}
+	}
+	
+	public String delM() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVEM_DEL");
+		int state=0;
+		try {
+			state=activeM.getStatus();
+			dao.deleteM(activeM);
+			setMessage("删除成功!ID=" + activeM.getUuid());
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!del 数据删除失败:", e);
+			throw new Exception(this.getClass().getName() + "!del 数据删除失败:", e);
+		}
+		if(state==1){
+			return "SUCCESS";
+		}else{
+			return "CLOSESUCCESS";
+		}
+	}
+	
+	public String delF() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVEF_DEL");
+		int state=0;
+		try {
+			state=activeF.getStatus();
+			dao.deleteF(activeF);
+			setMessage("删除成功!ID=" + activeF.getUuid());
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!del 数据删除失败:", e);
+			throw new Exception(this.getClass().getName() + "!del 数据删除失败:", e);
+		}
+		if(state==1){
+			return "SUCCESS";
+		}else{
+			return "CLOSESUCCESS";
+		}
+	}
+	
 }

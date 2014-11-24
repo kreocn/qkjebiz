@@ -283,6 +283,24 @@ color: #008000;
 							</tr>
 							</s:iterator>
 	                    </table>
+	                    <p class="lb_gstit">随量费用</p>
+							<div class="active_p_list">
+								<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+	                    	<tr>
+	                        	<th class="nw">上期余额</th>
+	                            <th class="nw">本期费用</th>
+	                            <th class="nw">本期余额</th>
+	                        </tr>
+	                        <s:iterator value="activeMprices" status="sta">
+	                        <tr>
+							<td>${m_upprice}</td>
+							<td>${m_price}</td>
+							<td>${m_bprice}</td>
+							</tr>
+	                        </s:iterator>
+	                        
+	                    </table>
+							</div>
 	                	<p class="lb_gstit">公司预计费用合计</p>
 	                    <p class="lb_jwei">￥${active.it_price}</p>
 	                </div>
@@ -312,6 +330,24 @@ color: #008000;
 							</tr>
 							</s:iterator>
 	                    </table>
+	                    <p class="lb_gstit">市场基金费用</p>
+							<div class="active_p_list">
+								<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+	                    	<tr>
+	                        	<th class="nw">上期余额</th>
+	                            <th class="nw">本期费用</th>
+	                            <th class="nw">本期余额</th>
+	                        </tr>
+	                        <s:iterator value="activeFprices" status="sta">
+	                        <tr>
+							<td>${f_upprice}</td>
+							<td>${f_price}</td>
+							<td>${f_bprice}</td>
+							</tr>
+	                        </s:iterator>
+	                        
+	                    </table>
+							</div>
 	                	<p class="lb_gstit">客户预计费用合计</p>
 	                    <p class="lb_jwei">￥${active.mt_price}</p>
 	                </div>

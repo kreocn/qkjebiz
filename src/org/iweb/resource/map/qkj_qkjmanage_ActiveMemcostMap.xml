@@ -17,6 +17,26 @@
 		<isNotEmpty prepend="AND" property="member_id"><![CDATA[ c.member_id=#member_id# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="status"><![CDATA[ c.status=#status# ]]></isNotEmpty>
 	</select>
+	<select id="qkjmanage_getActiveM" resultClass="activeM" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT * FROM  qkj_r_active_mprice c
+		]]>
+		<dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ c.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="active_id"><![CDATA[ c.active_id=#active_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="status"><![CDATA[ c.status=#status# ]]></isNotEmpty>
+		</dynamic>
+	</select>
+	<select id="qkjmanage_getActiveF" resultClass="activeF" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT * FROM  qkj_r_active_fprice c
+		]]>
+		<dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ c.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="active_id"><![CDATA[ c.active_id=#active_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="status"><![CDATA[ c.status=#status# ]]></isNotEmpty>
+		</dynamic>
+	</select>
 	<select id="qkjmanage_getActiveMemcostsCounts" resultClass="int" parameterClass="java.util.Map">
 		<![CDATA[ 
 			Select Count(*) 

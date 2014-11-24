@@ -7,10 +7,17 @@ import java.util.Map;
 import org.iweb.sys.AbstractDAO;
 
 public class ActiveMemcostDAO extends AbstractDAO {
-
 	public List list(Map<String, Object> map) {
 		setCountMapid("qkjmanage_getActiveMemcostsCounts");
 		return super.list("qkjmanage_getActiveMemcosts", map);
+	}
+	
+	public List listM(Map<String, Object> map) {
+		return super.list("qkjmanage_getActiveM", map);
+	}
+	
+	public List listF(Map<String, Object> map) {
+		return super.list("qkjmanage_getActiveF", map);
 	}
 
 	public Object get(Object uuid) {
@@ -28,11 +35,11 @@ public class ActiveMemcostDAO extends AbstractDAO {
 	}
 	
 	public int deleteM(Object parameters) {
-		return super.delete("qkjmanage_addActiveM", parameters);
+		return super.delete("qkjmanage_delActiveM", parameters);
 	}
 	
 	public int deleteF(Object parameters) {
-		return super.delete("qkjmanage_addActiveF", parameters);
+		return super.delete("qkjmanage_delActiveF", parameters);
 	}
 	
 	public int saveM(Object parameters) {
