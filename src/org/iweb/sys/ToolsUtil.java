@@ -694,6 +694,21 @@ public class ToolsUtil {
 	}
 
 	/**
+	 * JAVA判断字符串数组中是否包含某字符串元素
+	 * 
+	 * @param substring
+	 *            某字符串
+	 * @param source
+	 *            源字符串
+	 * @return 包含则返回true，否则返回false
+	 */
+	public static boolean isIn(String substring, String source, String split) {
+		if (source == null) { return false; }
+		split = isEmpty(split) ? "," : split;
+		return isIn(substring, source.split(split));
+	}
+
+	/**
 	 * 传入2个参数,输出一个非空字符串,如2个都为null,则输出null,优先级 str1>str2
 	 * 
 	 * @param str1

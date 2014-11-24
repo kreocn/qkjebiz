@@ -99,10 +99,13 @@
 <td class='firstRow'>协议价3:</td>
 <td class='secRow'><s:textfield name="product.agree_price_3" title="协议价3" dataType="number" controlName="协议价3" /></td>
 </tr>
-
+<tr>
+<td class='firstRow'><span style="color:red;">*</span> 是否启用:</td>
+<td class='secRow'>
+	<s:select name="product.status" title="产品系列" require="required"  controlName="产品统一编码" list="#{0:'启用',1:'禁用'}" /></td>
+</tr>
 		<tr>
 		    <td colspan="20" class="buttonarea">
-		    	
 		    	<span id="message"><s:property value="message" /></span>
 				<s:if test="null == product && 'add' == viewFlag">
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_PRODUCT_ADD')">

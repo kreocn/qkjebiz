@@ -8,6 +8,7 @@ import java.io.InputStream;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.iweb.sys.ContextHelper;
+import org.iweb.sys.IWebConfig;
 import org.iweb.sys.OSSUtil_IMG;
 import org.iweb.sys.ToolsUtil;
 
@@ -117,13 +118,18 @@ public class UploadAction extends ActionSupport {
 		if (contentLength > 0) {
 			// 生成随机文件名
 			String extensionName = filedataFileName.substring(filedataFileName.lastIndexOf(".") + 1);
-			String filename = "qkjebiz/" + ToolsUtil.getTimeTimeMillis() + "_" + ToolsUtil.getRandomCode(10) + '.' + extensionName;
-			// 上传到阿里云存储
-			OSSUtil_IMG.uploadFile(filename, in, contentLength);
-			// 返回图片地址
-			msg = "!http://images.qkjchina.com/" + filename;
-
-			log.info("上传文件成功:" + msg);
+			// 限制图片大小为500K
+			if (ToolsUtil.isIn(extensionName, IWebConfig.getConfigMap().get("permitExtImage"), ",")
+					&& contentLength > Integer.parseInt(IWebConfig.getConfigMap().get("permitImageLength"))) {
+				err = "图片超过最大限制,不能超过500K";
+			} else {
+				String filename = "qkjebiz/" + ToolsUtil.getTimeTimeMillis() + "_" + ToolsUtil.getRandomCode(10) + '.' + extensionName;
+				// 上传到阿里云存储
+				OSSUtil_IMG.uploadFile(filename, in, contentLength);
+				// 返回图片地址
+				msg = "!http://images.qkjchina.com/" + filename;
+				log.info("上传文件成功:" + msg);
+			}
 		} else {
 			err = "未接收到图片!";
 			log.info("上传文件失败:" + err);
