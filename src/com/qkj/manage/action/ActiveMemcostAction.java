@@ -9,6 +9,8 @@ import org.iweb.sys.ContextHelper;
 import com.opensymphony.xwork2.ActionSupport;
 import com.qkj.manage.dao.ActiveDAO;
 import com.qkj.manage.dao.ActiveMemcostDAO;
+import com.qkj.manage.domain.ActiveF;
+import com.qkj.manage.domain.ActiveM;
 import com.qkj.manage.domain.ActiveMemcost;
 
 public class ActiveMemcostAction extends ActionSupport {
@@ -21,6 +23,43 @@ public class ActiveMemcostAction extends ActionSupport {
 	private List<ActiveMemcost> activeMemcosts;
 	private String message;
 	private String viewFlag;
+	private ActiveM activeM;
+	private ActiveF activeF;
+	private List<ActiveM> activeMs;
+	private List<ActiveF> activeFs;
+	
+	
+	public ActiveM getActiveM() {
+		return activeM;
+	}
+
+	public void setActiveM(ActiveM activeM) {
+		this.activeM = activeM;
+	}
+
+	public ActiveF getActiveF() {
+		return activeF;
+	}
+
+	public void setActiveF(ActiveF activeF) {
+		this.activeF = activeF;
+	}
+
+	public List<ActiveM> getActiveMs() {
+		return activeMs;
+	}
+
+	public void setActiveMs(List<ActiveM> activeMs) {
+		this.activeMs = activeMs;
+	}
+
+	public List<ActiveF> getActiveFs() {
+		return activeFs;
+	}
+
+	public void setActiveFs(List<ActiveF> activeFs) {
+		this.activeFs = activeFs;
+	}
 
 	public ActiveMemcost getActiveMemcost() {
 		return activeMemcost;
@@ -80,7 +119,51 @@ public class ActiveMemcostAction extends ActionSupport {
 		}
 		return SUCCESS;
 	}
-
+	
+	public String saveMP() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_MDY");
+		try {
+			dao.saveM(activeM);
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+	public String saveFP() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_MDY");
+		try {
+			dao.saveF(activeF);
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+	
+	public String delM() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVEM_DEL");
+		try {
+			dao.deleteM(activeM);
+			setMessage("删除成功!ID=" + activeMemcost.getUuid());
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!del 数据删除失败:", e);
+			throw new Exception(this.getClass().getName() + "!del 数据删除失败:", e);
+		}
+		return SUCCESS;
+	}
+	
+	public String delF() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVEF_DEL");
+		try {
+			dao.deleteF(activeF);
+			setMessage("删除成功!ID=" + activeMemcost.getUuid());
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!del 数据删除失败:", e);
+			throw new Exception(this.getClass().getName() + "!del 数据删除失败:", e);
+		}
+		return SUCCESS;
+	}
 	public String addClose() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVEMEMCOSTCLOSE_ADD");
 		try {

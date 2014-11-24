@@ -61,6 +61,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	private int recCount;
 	private int pageSize;
 	private int currPage;
+	private String code;
 
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;活动管理";
 
@@ -255,6 +256,14 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		this.pageSize = pageSize;
 	}
 
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
 	public String list() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_LIST");
 		try {
@@ -285,6 +294,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 			} else if ("mdy".equals(viewFlag) || "view".equals(viewFlag)) {
 				if (!(active == null || active.getUuid() == null)) {
 					this.setActive((Active) dao.get(active.getUuid()));
+					code=active.getApply_dept();
 				} else {
 					this.setActive(null);
 				}
@@ -690,7 +700,6 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_SMDSTATUS");
 		try {
 			mdyActiveSMDStatus(5);
-			mdyActiveFDStatus(1,0);
 			mdyStatus(0);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyActiveSMDStatus5 数据更新失败:", e);
@@ -881,6 +890,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	 * @date 2014-4-26 上午10:25:25
 	 */
 	public int mdyActiveSMDStatus(int smd_status) {
+		active.setFd_status(0);
 		active.setSmd_status(smd_status);
 		active.setSmd_time(new Date());
 		active.setSmd_user(ContextHelper.getUserLoginUuid());
@@ -932,7 +942,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		try {
 			if (!(active == null || active.getUuid() == null)) {
 				this.setActive((Active) dao.get(active.getUuid()));
-
+				code=active.getApply_dept();
 				ProductDAO pdao = new ProductDAO();
 				this.setProducts(pdao.list(null));
 
@@ -1328,8 +1338,6 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_SMDSTATUS5");
 		try {
 			mdyCloseActiveSMDStatus(5);
-			mdyActiveFDStatus(2,0);
-			mdyActiveFDStatus(3,0);
 			mdyStatus(3);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyCloseActiveSMDStatus5 数据更新失败:", e);
@@ -1400,6 +1408,8 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	 * @date 2014-4-26 上午10:25:25
 	 */
 	public int mdyCloseActiveSMDStatus(int close_sd_status) {
+		active.setClose_fd_status(0);
+		active.setClose_nd_status(0);
 		active.setClose_smd_status(close_sd_status);
 		active.setClose_smd_time(new Date());
 		active.setClose_smd_user(ContextHelper.getUserLoginUuid());

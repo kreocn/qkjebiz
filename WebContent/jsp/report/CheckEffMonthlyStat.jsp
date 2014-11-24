@@ -82,16 +82,16 @@ padding-left: 5px;padding-right: 5px;
 	<div id="activeAvgTimeArea" class="tx">
 	<table class="ilisttable ilisttablex" id="table_activeAvgTime" border="1" cellspacing="0" cellpadding="0" bordercolor="#8B8B8B">
 	  <tr>
-		<th colspan="6">活动申请审核平均时间(天)</th>
+		<th colspan="8">活动申请审核平均时间(天)</th>
 	  </tr>
 	  <tr>
 		<th>总时间</th>
 		<th>方案修改时间</th>
 		<th>大区审核时间</th>
 		<th>销管审核时间</th>
+		<th>总监审核时间</th>
 		<th>销管部经理审核时间</th>
 		<th>销管副总审核时间</th>
-		<th>总监审核时间</th>
 		<th>申请通过时间</th>
 	  </tr>
 	  <s:iterator value="activeAvgTime" status="sta">
@@ -101,6 +101,8 @@ padding-left: 5px;padding-right: 5px;
 		<td>${mct}</td>
 		<td>${xct}</td>
 	    <td>${zct}</td>
+	    <td>${xgt}</td>
+	    <td>${xgft}</td>
 		<td>${pct}</td>
 	  </tr>
 	  </s:iterator>
@@ -132,7 +134,7 @@ padding-left: 5px;padding-right: 5px;
 	<div id="activeCloseAvgTimeArea" class="tx">
 	<table class="ilisttable ilisttablex" id="table_activeCloseAvgTime" border="1" cellspacing="0" cellpadding="0" bordercolor="#8B8B8B">
 	  <tr>
-		<th colspan="6">活动结案审核平均时间(天)</th>
+		<th colspan="10">活动结案审核平均时间(天)</th>
 	  </tr>
 	  <tr>
 		<th>总时间</th>
@@ -140,6 +142,8 @@ padding-left: 5px;padding-right: 5px;
 		<th>大区审核时间</th>
 		<th>销管审核时间</th>
 		<th>总监审核时间</th>
+		<th>销管部经理审核时间</th>
+		<th>销管副总审核时间</th>
 		<th>申请通过时间</th>
 	  </tr>
 	  <s:iterator value="activeCloseAvgTime" status="sta">
@@ -149,6 +153,8 @@ padding-left: 5px;padding-right: 5px;
 		<td>${mct}</td>
 		<td>${xct}</td>
 	    <td>${zct}</td>
+	    <td>${xgt}</td>
+	    <td>${xgft}</td>
 		<td>${pct}</td>
 	  </tr>
 	  </s:iterator>
@@ -160,7 +166,7 @@ padding-left: 5px;padding-right: 5px;
 	<div id="applyPassesArea" class="tx">
 	<table class="ilisttable ilisttablex" id="table_applyPasses" border="1" cellspacing="0" cellpadding="0" bordercolor="#8B8B8B">
 	 <tr>
-		<th colspan="6">至事由通过数量</th>
+		<th colspan="8">至事由通过数量</th>
 	  </tr>
 	  <tr>
 		<th>部门代码</th>

@@ -61,6 +61,12 @@ public class Active {
 	private String close_nd_user;
 	private Date close_nd_time;
 	private String spe_remark;
+	private Double m_upprice;
+	private Double m_price;
+	private Double m_bprice;
+	private Double f_upprice;
+	private Double f_price;
+	private Double f_bprice;
 
 	// 非数据库字段
 	private String apply_dept_name;
@@ -714,6 +720,54 @@ public class Active {
 
 	public void setPuser_name(String puser_name) {
 		this.puser_name = puser_name;
+	}
+
+	public Double getM_upprice() {
+		return m_upprice;
+	}
+
+	public void setM_upprice(Double m_upprice) {
+		this.m_upprice = m_upprice;
+	}
+
+	public Double getM_price() {
+		return m_price;
+	}
+
+	public void setM_price(Double m_price) {
+		this.m_price = m_price;
+	}
+
+	public Double getM_bprice() {
+		return m_bprice;
+	}
+
+	public void setM_bprice(Double m_bprice) {
+		this.m_bprice = m_bprice;
+	}
+
+	public Double getF_upprice() {
+		return f_upprice;
+	}
+
+	public void setF_upprice(Double f_upprice) {
+		this.f_upprice = f_upprice;
+	}
+
+	public Double getF_price() {
+		return f_price;
+	}
+
+	public void setF_price(Double f_price) {
+		this.f_price = f_price;
+	}
+
+	public Double getF_bprice() {
+		return f_bprice;
+	}
+
+	public void setF_bprice(Double f_bprice) {
+		this.f_bprice = f_bprice;
 	}
 	
 	

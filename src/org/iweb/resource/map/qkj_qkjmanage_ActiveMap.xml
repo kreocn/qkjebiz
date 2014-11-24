@@ -149,6 +149,7 @@
 			Where uuid = #uuid#
 		]]>
 	</update>
+	
 	<update id="qkjmanage_mdyActiveStatus" parameterClass="active">
 		<![CDATA[
 			Update qkjm_r_active
@@ -176,7 +177,8 @@
 				smd_user=#smd_user#,
 				smd_time=#smd_time#,
 				remark=#remark#,
-				lm_user=#lm_user#
+				lm_user=#lm_user#,
+				fd_status=#fd_status#
 			Where uuid = #uuid#
 		]]>
 	</update>
@@ -323,7 +325,9 @@
 				close_smd_user=#close_smd_user#,
 				close_smd_time=#close_smd_time#,
 				remark=#remark#,
-				lm_user=#lm_user#
+				lm_user=#lm_user#,
+				close_fd_status=#close_fd_status#,
+				close_nd_status=#close_nd_status#
 			Where uuid = #uuid#
 		]]>
 	</update>

@@ -326,7 +326,8 @@
 		<dynamic prepend="WHERE">
 			<isNotNull prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotNull>
 			<isNotNull prepend="AND" property="atype"><![CDATA[ atype=#atype# ]]></isNotNull>
-			<isNotNull prepend="AND" property="uuid"><![CDATA[ adate LIKE CONCAT(#adate#,'%')]]></isNotNull>
+			<isNotNull prepend="AND" property="acode"><![CDATA[ acode=#acode# ]]></isNotNull>
+			<isNotNull prepend="AND" property="adate"><![CDATA[ adate LIKE CONCAT(#adate#,'%')]]></isNotNull>
 		</dynamic>
 	</select>
 	<select id="find_activenum" resultClass="ativeNum" parameterClass="java.util.Map">
@@ -336,7 +337,8 @@
 		<dynamic prepend="WHERE">
 			<isNotNull prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotNull>
 			<isNotNull prepend="AND" property="atype"><![CDATA[ atype=#atype# ]]></isNotNull>
-			<isNotNull prepend="AND" property="uuid"><![CDATA[ adate LIKE CONCAT(#adate#,'%') ]]></isNotNull>
+			<isNotNull prepend="AND" property="acode"><![CDATA[ acode=#acode# ]]></isNotNull>
+			<isNotNull prepend="AND" property="adate"><![CDATA[ adate LIKE CONCAT(#adate#,'%') ]]></isNotNull>
 		</dynamic>
 	</select>
 </sqlMap>

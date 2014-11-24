@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
@@ -22,9 +23,19 @@ $(function(){
 	      autoOpen: false,
 	      modal: true
 	});
+	$("#addMpriceForm").dialog({
+	      autoOpen: false,
+	      modal: true
+	});
 	$("#addPosm").click(function(){
 		$("#addPosmForm").dialog("open");
 	});
+	
+	$("#addMprice").click(function(){
+		$("#addMpriceForm").dialog("open");
+	});
+	
+	
 	$("#addMemberForm").dialog({
 	      autoOpen: false,
 	      modal: true
@@ -241,6 +252,9 @@ color: #008000;
 						<s:if test="active.status==0 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEPOSM_ADD')">
 						<input type="button" id="addPosm" value="添加物料" />
 						</s:if>
+						<s:if test="active.status==0 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEM_ADD')">
+						<input type="button" id="addMprice" value="添加随量信息" />
+						</s:if>
 	            	</p>
 	                <div class="lb_yjcon">
 	                	<p class="lb_gstit">公司提供酒品</p>
@@ -296,6 +310,9 @@ color: #008000;
 	            	参与客户&预计费用
 	            	<s:if test="active.status==0 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEMEMCOST_ADD')">
 					<input type="button" id="addMember" value="添加客户" />
+					</s:if>
+					<s:if test="active.status==0 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEMEMF_ADD')">
+					<input type="button" id="addFprice" value="添加市场基金" />
 					</s:if>
 	            	</p>
 	                <div class="lb_yjcon">
@@ -498,10 +515,18 @@ color: #008000;
             <div class="label_ltit">财务审核:</div>
             <div class="label_rwbenx">
 				<!-- 财务 -->
+				<s:if test="%{code.substring(0,2)=='21'}">
+				<s:if test="active.sd_status>=40 && 10!=active.fd_status && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_FDSTATUS10')">
+				<s:submit id="mdyActiveFDSTATUS10" name="mdyActiveFDSTATUS10" cssClass="input-green" value="财务-审核通过" action="mdyActiveFDSTATUS10" onclick="return isOp('确定执行此操作?');" />
+				<s:submit id="mdyActiveFDStatus5" name="mdyActiveFDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveFDStatus" onclick="return isOp('确定执行此操作?');" />
+				</s:if>
+				</s:if>
+				<s:else>
 				<s:if test="(50==active.smd_status || 60==active.smd_status) && 10!=active.fd_status && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_FDSTATUS10')">
 				<s:submit id="mdyActiveFDSTATUS10" name="mdyActiveFDSTATUS10" cssClass="input-green" value="财务-审核通过" action="mdyActiveFDSTATUS10" onclick="return isOp('确定执行此操作?');" />
 				<s:submit id="mdyActiveFDStatus5" name="mdyActiveFDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveFDStatus" onclick="return isOp('确定执行此操作?');" />
 				</s:if>
+				</s:else>
 				<div class="statusInline">
 					财务部审核状态:
 					<s:if test="active.fd_status==0">未确认</s:if>
@@ -671,6 +696,34 @@ function setDataCase() {
 </div>
 </s:form>
 </div>
+
+<!-- 添加随量信息 -->
+<div id="addMpriceForm" class="label_con idialog" title="添加随量信息">
+<s:form name="form_addPosmForm" cssClass="validFormDialog" action="active_saveM" namespace="/qkjmanage" method="post" theme="simple">
+<div class="label_main">
+	<div class="label_hang">
+	    <div class="label_ltit">上期余额:</div>
+	    <div class="label_rwben label_rwb"><s:textfield name="activeM.m_upprice" title="上期余额" cssClass="validate[required]" /></div>
+	</div>
+	<div class="label_hang">
+	    <div class="label_ltit">本期费用:</div>
+	    <div class="label_rwben label_rwb"><s:textfield name="activeM.m_price" title="本期费用" value="%{active.it_price}" cssClass="validate[required]" /></div>
+	</div>
+	<div class="label_hang">
+	    <div class="label_ltit">本期余额:</div>
+	    <div class="label_rwben label_rwb nw"><s:textfield name="activeM.m_bprice" title="本期余额" cssClass="validate[required]" />元</div>
+	</div>
+	<div class="label_hang label_button tac">
+	 	<s:hidden name="activeM.active_id" value="%{active.uuid}" />
+	 	<s:hidden name="activeM.status" value="1" />
+		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEM_ADD')">
+		<s:submit id="add" name="add" value="确定" action="active_saveM" />
+	</s:if>
+	 </div>
+</div>
+</s:form>
+</div>
+
 <div id="viewMember" class="label_con idialog" title="客户实时信息">
 <div class="label_main">
 	<div class="label_hang">

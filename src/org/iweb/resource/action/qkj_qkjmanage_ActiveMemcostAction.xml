@@ -37,6 +37,42 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
+		
+		<action name="active_saveM" class="com.qkj.manage.action.ActiveMemcostAction" method="saveMP">
+			<result type="redirectAction">
+				<param name="actionName">active_load</param>
+				<param name="active.uuid">${activeM.active_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+	
+		<action name="active_saveF" class="com.qkj.manage.action.ActiveMemcostAction" method="saveFP">
+			<result type="redirectAction">
+				<param name="actionName">active_load</param>
+				<param name="active.uuid">${activeF.active_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="activeM_del" class="com.qkj.manage.action.ActiveMemcostAction" method="delM">
+			<result type="redirectAction">
+				<param name="actionName">active_load</param>
+				<param name="active.uuid">${activeM.active_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="activeF_del" class="com.qkj.manage.action.ActiveMemcostAction" method="delF">
+			<result type="redirectAction">
+				<param name="actionName">active_load</param>
+				<param name="active.uuid">${activeF.active_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
 		<!-- ActiveMemcost End -->
 	</package>
 </struts>

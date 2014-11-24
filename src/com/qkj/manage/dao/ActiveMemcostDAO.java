@@ -26,6 +26,22 @@ public class ActiveMemcostDAO extends AbstractDAO {
 	public int delete(Object parameters) {
 		return super.delete("qkjmanage_delActiveMemcost", parameters);
 	}
+	
+	public int deleteM(Object parameters) {
+		return super.delete("qkjmanage_addActiveM", parameters);
+	}
+	
+	public int deleteF(Object parameters) {
+		return super.delete("qkjmanage_addActiveF", parameters);
+	}
+	
+	public int saveM(Object parameters) {
+		return super.save("qkjmanage_addActiveM", parameters);
+	}
+	
+	public int saveF(Object parameters) {
+		return super.save("qkjmanage_addActiveF", parameters);
+	}
 
 	public int getResultCount() {
 		return super.getResultCount();
