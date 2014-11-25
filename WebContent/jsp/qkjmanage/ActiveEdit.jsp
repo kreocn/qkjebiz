@@ -59,7 +59,6 @@ function loadMemberInfo(member_id) {
 	ajax.addParameter("parameters", "privilege_id=QKJ_QKJMANAGER_AJAXLOAD_MEMBER&uuid=" + member_id);
 	ajax.sendAjax();
 }
-
 </script>
 <style type="text/css">
 .active_icost {padding: 3px 5px;}
@@ -523,12 +522,22 @@ color: #008000;
 <div class="label_main">
 	<div class="label_hang">
 	    <div class="label_ltit">产品:</div>
-	    <div class="label_rwben label_rwb">
+	    <!-- <div class="label_rwben label_rwb">
 	    	<div class="iselect">
-	    	<select name="activeProduct.product_id" title="产品"><s:iterator value="products" status="sta">
-				<option data='<s:property value="market_price" />#<s:property value="group_price" />#<s:property value="dealer_price" />#<s:property value="agree_price_1" />#<s:property value="agree_price_2" />#<s:property value="agree_price_3" />' data_case='<s:property value="case_spec" />' value='<s:property value="uuid" />'><s:property value="title" /></option>
-			</s:iterator></select>
+	    	<select name="activeProduct.product_id" title="产品">
+		    	<s:iterator value="products" status="sta">
+					<option data='<s:property value="market_price" />#<s:property value="group_price" />#<s:property value="dealer_price" />#<s:property value="agree_price_1" />#<s:property value="agree_price_2" />#<s:property value="agree_price_3" />' data_case='<s:property value="case_spec" />' value='<s:property value="uuid" />'>
+					<s:property value="title" />
+					</option>
+				</s:iterator>
+			</select>
 			</div>
+	    </div> -->
+	    <div class="label_rwben">
+	    	<s:textfield name="activeProduct.product_id"   id="citySel" onclick="showMenu(); return false;"  />
+	    	<div id="menuContent" class="menuContent">
+		        <ul id="treeDemo" class="ztree"></ul>
+		    </div>
 	    </div>
 	</div>
 	<div class="label_hang">
