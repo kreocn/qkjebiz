@@ -10,7 +10,14 @@ public class ActiveNum {
 	private String atype;
 	private Date adate;
 	private String acode;
+	private String merger;
 	
+	public String getMerger() {
+		return merger;
+	}
+	public void setMerger(String merger) {
+		this.merger = merger;
+	}
 	public Integer getUuid() {
 		return uuid;
 	}

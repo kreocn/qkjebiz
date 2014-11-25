@@ -93,10 +93,11 @@
 					<s:if test="type==3">更新公告</s:if>
 				</td>
 				<td class="td4 op-area">
-				<s:if test="@com.qkj.ware.action.warepower@checkSche(uuid)">
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SCHE_LIST_UPDATE')">
 					<a class="input-blue" href="<s:url namespace="/sche" action="schedule_load"><s:param name="viewFlag">mdy</s:param><s:param name="sche.uuid" value="uuid"></s:param></s:url>">修改</a>
 					</s:if>
+				<s:if test="@com.qkj.ware.action.warepower@checkSche(uuid)">
+					
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SCHE_LIST_DEL')">
 					<a class="input-red" href="<s:url namespace="/sche" action="schedule_del"><s:param name="sche.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
 					</s:if>

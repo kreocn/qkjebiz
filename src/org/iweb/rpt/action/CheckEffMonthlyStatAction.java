@@ -37,6 +37,10 @@ public class CheckEffMonthlyStatAction extends ActionSupport {
 	private List<ActiveNum> activeClosePasses;
 	private List<ActiveNum> applyPasses;
 	
+	private List<ActiveNum> totelActivePasses;
+	private List<ActiveNum> totelActiveClosePasses;
+	private List<ActiveNum> totelApplyPasses;
+	
 	//private List<Map> activePasses;
 	//private List<Map> activeClosePasses;
 	//private List<Map> applyPasses;
@@ -48,6 +52,30 @@ public class CheckEffMonthlyStatAction extends ActionSupport {
 	private List<ListObject> deptGroups;
 
 	private String message;
+	
+	public List<ActiveNum> getTotelActivePasses() {
+		return totelActivePasses;
+	}
+
+	public void setTotelActivePasses(List<ActiveNum> totelActivePasses) {
+		this.totelActivePasses = totelActivePasses;
+	}
+
+	public List<ActiveNum> getTotelActiveClosePasses() {
+		return totelActiveClosePasses;
+	}
+
+	public void setTotelActiveClosePasses(List<ActiveNum> totelActiveClosePasses) {
+		this.totelActiveClosePasses = totelActiveClosePasses;
+	}
+
+	public List<ActiveNum> getTotelApplyPasses() {
+		return totelApplyPasses;
+	}
+
+	public void setTotelApplyPasses(List<ActiveNum> totelApplyPasses) {
+		this.totelApplyPasses = totelApplyPasses;
+	}
 
 	public ActiveTime getActivetime() {
 		return activetime;
@@ -168,17 +196,41 @@ public class CheckEffMonthlyStatAction extends ActionSupport {
 				map.put("atype", 1);
 				map.put("adate", yearMonth);
 				map.put("acode", dep);
+				map.put("merger", 1);
 				this.setActivePasses(dao.listbynum(map));
+				map.clear();
+				map.put("atype", 1);
+				map.put("adate", yearMonth);
+				map.put("acode", dep);
+				map.put("merger", 2);
+				this.setTotelActivePasses(dao.listbynum(map));
+				
 				map.clear();
 				map.put("atype", 2);
 				map.put("adate", yearMonth);
 				map.put("acode", dep);
+				map.put("merger", 1);
 				this.setActiveClosePasses(dao.listbynum(map));
+				map.clear();
+				map.put("atype", 2);
+				map.put("adate", yearMonth);
+				map.put("acode", dep);
+				map.put("merger", 2);
+				this.setTotelActiveClosePasses(dao.listbynum(map));
+				
 				map.clear();
 				map.put("atype", 3);
 				map.put("adate", yearMonth);
 				map.put("acode", dep);
+				map.put("merger", 1);
 				this.setApplyPasses(dao.listbynum(map));
+				
+				map.clear();
+				map.put("atype", 3);
+				map.put("adate", yearMonth);
+				map.put("acode", dep);
+				map.put("merger", 2);
+				this.setTotelApplyPasses(dao.listbynum(map));
 				this.setMessage("报表生成成功!");
 			} else {
 				this.setMessage("请选择报表统计时间");

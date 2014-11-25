@@ -175,6 +175,7 @@ cursor: pointer;
 		<th class="td1">活动状态</th>
 		<th class="td3">销售审核状态</th>
 		<th class="td3">销管审核状态</th>
+		<th class="td3">标识</th>
 		<th class="td4">操作</th>
 		<th class="td0">查看</th>
 	  	</tr>
@@ -248,6 +249,14 @@ cursor: pointer;
 					<s:if test="close_smd_status==60"><font class="message_pass" title="${close_smd_user_name} ${it:formatDate(close_smd_time,'yyyy-MM-dd HH:mm:ss')}">总经理已审</font></s:if>
 				</span>
 				</s:if>
+			</td>
+			<td class="td3">
+			<s:if test="%{spe_remark!=null}">
+			<a  class="nonull" href=""></a>
+			</s:if>
+			<s:else>
+			<a  class="yesnull" href=""></a>
+			</s:else>
 			</td>
 			<td class="td4 op-area">
 				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_APPLY')">

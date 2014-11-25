@@ -69,13 +69,26 @@ padding-left: 5px;padding-right: 5px;
 		<th>部门名称</th>
 		<th>数量(个)</th>
 	  </tr>
-<s:iterator value="activePasses" status="sta">
-	  <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>">
-	    <td>${apply_dept}</td>
-	    <td>${dept_cname}</td>
-		<td>${cout}</td>
-	  </tr>
-</s:iterator>
+	<s:iterator value="activePasses" status="sta">
+		  <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>">
+		    <td>${apply_dept}</td>
+		    <td>${dept_cname}</td>
+			<td>${cout}</td>
+		  </tr>
+	</s:iterator>
+	<s:if test="%{totelActivePasses.size()>0}">
+	<tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>">
+	<td>总计：</td>
+	</tr>
+	</s:if>
+	<s:iterator value="totelActivePasses" status="sta">
+		  <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>">
+		    <td>${apply_dept}</td>
+		    <td>${dept_cname}</td>
+			<td>${cout}</td>
+		  </tr>
+	</s:iterator>
+
 	</table>
 	</div>
 
@@ -121,13 +134,25 @@ padding-left: 5px;padding-right: 5px;
 		<th>部门名称</th>
 		<th>数量(个)</th>
 	  </tr>
-<s:iterator value="activeClosePasses" status="sta">
-	  <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>">
-	    <td>${apply_dept}</td>
-	    <td>${dept_cname}</td>
-		<td>${cout}</td>
-	  </tr>
-</s:iterator>
+	<s:iterator value="activeClosePasses" status="sta">
+		  <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>">
+		    <td>${apply_dept}</td>
+		    <td>${dept_cname}</td>
+			<td>${cout}</td>
+		  </tr>
+	</s:iterator>
+	<s:if test="%{totelActiveClosePasses.size()>0}">
+	<tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>">
+	<td>总计：</td>
+	</tr>
+	</s:if>
+		<s:iterator value="totelActiveClosePasses" status="sta">
+		  <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>">
+		    <td>${apply_dept}</td>
+		    <td>${dept_cname}</td>
+			<td>${cout}</td>
+		  </tr>
+	</s:iterator>
 	</table>
 	</div>
 	
@@ -173,13 +198,25 @@ padding-left: 5px;padding-right: 5px;
 		<th>部门名称</th>
 		<th>数量(个)</th>
 	  </tr>
-<s:iterator value="applyPasses" status="sta">
-	  <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>">
-	    <td>${apply_dept}</td>
-	    <td>${dept_cname}</td>
-		<td>${cout}</td>
-	  </tr>
-</s:iterator>
+	<s:iterator value="applyPasses" status="sta">
+		  <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>">
+		    <td>${apply_dept}</td>
+		    <td>${dept_cname}</td>
+			<td>${cout}</td>
+		  </tr>
+	</s:iterator>
+	<s:if test="%{totelApplyPasses.size()>0}">
+	<tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>">
+	<td>总计：</td>
+	</tr>
+	</s:if>
+	<s:iterator value="totelApplyPasses" status="sta">
+		  <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>">
+		    <td>${apply_dept}</td>
+		    <td>${dept_cname}</td>
+			<td>${cout}</td>
+		  </tr>
+	</s:iterator>
 	</table>
 	</div>
 	

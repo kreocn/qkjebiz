@@ -50,7 +50,7 @@
 			<isNotEmpty prepend="AND" property="ship_status"><![CDATA[ a.ship_status=#ship_status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="theme"><![CDATA[ a.theme LIKE CONCAT('%',#theme#,'%') ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="plan_start_begin"><![CDATA[ a.plan_start>=#plan_start_begin# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="plan_start_end"><![CDATA[ a.plan_start<=DATE_ADD(#plan_start_end#,INTERVAL 1 day) ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="plan_start_end"><![CDATA[ a.plan_end<=DATE_ADD(#plan_start_end#,INTERVAL 1 day) ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="pass_time_start"><![CDATA[ a.pass_time>=#pass_time_start# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="pass_time_end"><![CDATA[ a.pass_time<=DATE_ADD(#pass_time_end#,INTERVAL 1 day) ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="close_pass_time_start"><![CDATA[ a.close_pass_time>=#close_pass_time_start# ]]></isNotEmpty>

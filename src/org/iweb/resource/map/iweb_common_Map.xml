@@ -339,6 +339,7 @@
 			<isNotNull prepend="AND" property="atype"><![CDATA[ atype=#atype# ]]></isNotNull>
 			<isNotNull prepend="AND" property="acode"><![CDATA[ acode=#acode# ]]></isNotNull>
 			<isNotNull prepend="AND" property="adate"><![CDATA[ adate LIKE CONCAT(#adate#,'%') ]]></isNotNull>
+			<isNotNull prepend="AND" property="merger"><![CDATA[ merger=#merger# ]]></isNotNull>
 		</dynamic>
 	</select>
 </sqlMap>

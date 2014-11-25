@@ -26,7 +26,7 @@ a {
 }
 
 .pt{
-font-size: 18px;
+font-size: 22px;
 font-weight: bold;
 }
 
@@ -629,6 +629,13 @@ input[type="button"].input-blue,input[type="submit"].input-blue,input[type="rese
 
 .dib {
 	display: inline; zoom: 1; *display: inline;
+}
+.yesnull{
+	display: inline-block; width: 16px; height:16px; background: url("../../../images/icon/ico_warn.png") transparent no-repeat 0 -200px;
+	
+}
+.nonull{
+	display: inline-block; width: 16px; height: 16px; background: url("../../../images/icon/ico_warn.png") transparent no-repeat 0 -250px;
 }
 
 /*翻页样式START*/
