@@ -96,5 +96,9 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
+		
+		<action name="actives" class="org.iweb.member.action.MemberInfoAction" method="getActive">
+			<result>/jsp/member/actives.jsp</result>
+		</action>
 	</package>
 </struts>

@@ -220,6 +220,10 @@ public class MemberCapitalDAO extends AbstractDAO {
 		map.put("member_id", member_id);
 		return (MemberCapital) super.get("sysvip_getMemberCapital", map);
 	}
+	
+	public List listCustActives(Map<String, Object> map) {
+		return super.list("sysvip_getCustActives", map);
+	}
 
 	public int getResultCount() {
 		return super.getResultCount();

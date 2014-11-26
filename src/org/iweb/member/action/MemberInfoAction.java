@@ -14,6 +14,7 @@ import org.iweb.sysvip.MemberStatusFactory;
 import org.iweb.sysvip.dao.MemberAddressDAO;
 import org.iweb.sysvip.dao.MemberCapitalDAO;
 import org.iweb.sysvip.dao.MemberDAO;
+import org.iweb.sysvip.domain.CustActives;
 import org.iweb.sysvip.domain.Member;
 import org.iweb.sysvip.domain.MemberAddress;
 import org.iweb.sysvip.domain.MemberCapital;
@@ -32,6 +33,7 @@ public class MemberInfoAction extends ActionSupport {
 
 	private MemberCapital memberCapital;
 	private List<MemberCapitalActn> memberCapitalActns;
+	private List<CustActives> custActives;
 
 	// 以下为修改密码所用对象
 	private String old_passwords;
@@ -47,6 +49,15 @@ public class MemberInfoAction extends ActionSupport {
 	private String viewFlag;
 	private int recCount;
 	private int pageSize;
+
+	
+	public List<CustActives> getCustActives() {
+		return custActives;
+	}
+
+	public void setCustActives(List<CustActives> custActives) {
+		this.custActives = custActives;
+	}
 
 	public MemberAddress getMemberAddress() {
 		return memberAddress;
@@ -280,6 +291,22 @@ public class MemberInfoAction extends ActionSupport {
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!changeDefaultAddress 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!changeDefaultAddress 读取数据错误:", e);
+		}
+		return SUCCESS;
+	}
+	
+	public String getActive() throws Exception {
+		try {
+			MemberCapitalDAO mdao = new MemberCapitalDAO();
+			this.setMemberCapital(mdao.get(MemberStatusFactory.getLoginMemberID()));
+
+			map.clear();
+			map.put("member_id", MemberStatusFactory.getLoginMemberID());
+			//map.put("limit", 30);
+			this.setCustActives(mdao.listCustActives(map));
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!getCapital 读取数据错误:", e);
+			throw new Exception(this.getClass().getName() + "!getCapital 读取数据错误:", e);
 		}
 		return SUCCESS;
 	}
