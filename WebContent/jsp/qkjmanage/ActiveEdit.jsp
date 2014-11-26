@@ -133,7 +133,11 @@ color: #008000;
 <div class="main">
 	<div class="dq_step">
 		${path}
-		<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="active_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a></span>
+		<span class="opb lb op-area">
+		    	<s:if test="40<=active.sd_status">
+		    	<a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_view"><s:param name="active.uuid" value="uuid" /></s:url>">转到打印页面</a>
+		    	</s:if>
+		<a href="<s:url namespace="/qkjmanage" action="active_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a></span>
 	</div>
 	<s:form id="editForm" name="editForm" cssClass="validForm" action="active_load" namespace="/qkjmanage" method="post" theme="simple">
 	<div class="label_con">
@@ -479,11 +483,11 @@ color: #008000;
 					<s:submit id="delete" name="delete" value="删除" action="active_del" onclick="return isDel();" cssClass="input-red" />
 					</s:if>
 				</s:elseif>
-				<s:elseif test="null != active && 'mdy' == viewFlag && (active.status==1&&active.sd_status>=40&&active.smd_status>=30)">
+				<%-- <s:elseif test="null != active && 'mdy' == viewFlag && (active.status==1&&active.sd_status>=40&&active.smd_status>=30)">
 				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_STATUS1')">
 				<s:submit id="mdyStatus1" name="mdyStatus1" value="申请通过-可以执行" action="mdyStatus1" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
 				</s:if>
-				</s:elseif>
+				</s:elseif> --%>
 				<s:if test="(active.status==1 || active.status==2) && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_STATUS_1')">
 					<s:submit id="active_mdyStatus_1" name="active_mdyStatus_1" value="作废" action="active_mdyStatus_1" onclick="return isOp('确定执行此操作?');" cssClass="input-red" />
 				</s:if>
@@ -500,7 +504,7 @@ color: #008000;
             </div>
         </div>
         </div>
-        <s:if test="null != active && (active.status==1||active.status==2)">
+        <s:if test="null != active && (active.status==1||active.status==2) &&　active.fd_status!=10">
         <div class="label_main">
         <div class="label_hang">
             <div class="label_ltit">销售审核:</div>
@@ -569,13 +573,15 @@ color: #008000;
         </div>
         </div>
         
+        
+        </s:if>
         <div class="label_main">
         <div class="label_hang">
             <div class="label_ltit">财务审核:</div>
             <div class="label_rwbenx">
 				<!-- 财务 -->
 				<s:if test="%{code.substring(0,2)=='21'}">
-				<s:if test="active.sd_status>=40 && 10!=active.fd_status && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_FDSTATUS10')">
+				<s:if test="null != active && active.sd_status>=40 && 10!=active.fd_status && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_FDSTATUS10')">
 				<s:submit id="mdyActiveFDSTATUS10" name="mdyActiveFDSTATUS10" cssClass="input-green" value="财务-审核通过" action="mdyActiveFDSTATUS10" onclick="return isOp('确定执行此操作?');" />
 				<s:submit id="mdyActiveFDStatus5" name="mdyActiveFDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveFDStatus" onclick="return isOp('确定执行此操作?');" />
 				</s:if>
@@ -595,7 +601,6 @@ color: #008000;
         	</div>
         </div>
         </div>
-        </s:if>
 	</div>
 	</s:form>
 </div>

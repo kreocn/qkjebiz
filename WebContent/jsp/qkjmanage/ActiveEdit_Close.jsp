@@ -153,7 +153,12 @@ color: #008000;
 <div class="main">
 	<div class="dq_step">
 		${path}
-		<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="active_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a></span>
+		<span class="opb lb op-area">
+		<s:if test="active.status >= 4">
+			<a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_view"><s:param name="active.uuid" value="uuid" /></s:url>">转到打印页面</a>
+		</s:if>
+		<a href="<s:url namespace="/qkjmanage" action="active_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a>
+		</span>
 	</div>
 	<s:form id="editForm" name="editForm" cssClass="validForm" action="active_load" namespace="/qkjmanage" method="post" theme="simple">
 	<div class="label_con">
@@ -642,9 +647,9 @@ color: #008000;
 					<s:submit cssClass="input-yellow" name="mdyStatus3" value="结案报审" action="mdyStatus3" onclick="return isOp('确定执行此操作?');" />
 					</s:if>
 				</s:if>
-				<s:if test="active.status==4&&active.close_sd_status>=40&&active.close_smd_status>=30 &&@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_STATUS4')">
+				<%-- <s:if test="active.status==4&&active.close_sd_status>=40&&active.close_smd_status>=30 &&@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_STATUS4')">
 				<s:submit cssClass="input-green" name="mdyStatus4" value="结案通过" action="mdyStatus4" onclick="return isOp('确定执行此操作?');" />
-				</s:if>
+				</s:if> --%>
 				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_STATUS_1')">
 					<s:submit cssClass="input-red" name="active_mdyStatus_1" value="作废" action="active_mdyStatus_1" onclick="return isOp('确定执行此操作?');" />
 				</s:if>
@@ -656,13 +661,13 @@ color: #008000;
 				<s:if test="active.status==4 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_TH')">
 				<s:submit cssClass="input-red" name="mdyCloseActiveSDStatus5" value="退回" action="mdycloseTH" onclick="return isOp('确定执行此操作?将退回到未审核状态');" />
 				</s:if>
-				<s:if test="status >= 4">
+				<s:if test="active.status >= 4">
 					<input type="button" onclick="linkurl('<s:url namespace="/qkjmanage" action="active_closeView"><s:param name="active.uuid" value="active.uuid"></s:param></s:url>');" value="转到打印页面"/>
 				</s:if>
             </div>
         </div>
         </div>
-        <s:if test="null != active && active.status>=4">
+        <s:if test="null != active && active.status>=4 && active.status!=5">
         <div class="label_main noprint">
         <div class="label_hang">
             <div class="label_ltit">销售部审核:</div>
@@ -731,7 +736,7 @@ color: #008000;
             </div>
         </div>
         </div>
-        
+        </s:if>
         <div class="label_main">
         <div class="label_hang">
             <div class="label_ltit">财务审核:</div>
@@ -760,7 +765,6 @@ color: #008000;
 				</div>
         	</div>
         </div>
-        
         </div>
         
         <div class="label_main">
@@ -792,7 +796,6 @@ color: #008000;
         </div>
         
         </div>
-        </s:if>
 	</div>
 	</s:form>
 </div>

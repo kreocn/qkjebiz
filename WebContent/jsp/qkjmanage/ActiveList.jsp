@@ -260,22 +260,14 @@ cursor: pointer;
 			</td>
 			<td class="td4 op-area">
 				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_APPLY')">
-				<s:if test="status < 2">
 		    	<a class="input-blue" href="<s:url namespace="/qkjmanage" action="active_load"><s:param name="viewFlag">mdy</s:param><s:param name="active.uuid" value="uuid"></s:param></s:url>">申请修改</a>
-		    	</s:if>
-		    	<s:if test="sd_status>=40">
-		    	<a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_view"><s:param name="active.uuid" value="uuid" /></s:url>">申请查看</a>
-		    	</s:if>
 		    	</s:if>
 		    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE')">
 		    	<s:if test="status == 2">
 		    	<a class="input-blue" href="<s:url namespace="/qkjmanage" action="active_closeLoad"><s:param name="active.uuid" value="uuid"></s:param></s:url>">开始结案</a>
 		    	</s:if>
-		    	<s:if test="status > 2 && status < 5">
+		    	<s:if test="status > 2">
 		    	<a class="input-blue" href="<s:url namespace="/qkjmanage" action="active_closeLoad"><s:param name="active.uuid" value="uuid"></s:param></s:url>">结案修改</a>
-		    	</s:if>
-		    	<s:if test="status >= 4">
-		    	<a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_closeView"><s:param name="active.uuid" value="uuid"></s:param></s:url>">结案查看</a>
 		    	</s:if>
 		    	</s:if>
 		    	<s:if test="status==0 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_DEL')">
