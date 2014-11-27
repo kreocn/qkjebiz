@@ -26,6 +26,15 @@ public class ProductAction extends ActionSupport {
 	private String viewFlag;
 	private int recCount;
 	private int pageSize;
+	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;产品列表";
+	
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
 
 	public Product getProduct() {
 		return product;
@@ -85,6 +94,7 @@ public class ProductAction extends ActionSupport {
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 			this.setProducts(dao.list(map));
 			this.setRecCount(dao.getResultCount());
+			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;产品列表";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);

@@ -36,6 +36,7 @@
 <script type="text/javascript" src="<c:url value="/js/func/select_member.js" />"></script>
 <script type="text/javascript" src="<c:url value="/js/zTreeJs/jquery.ztree.core-3.5.js" />"></script>
 <script type="text/javascript" src="<c:url value="/js/zTreeJs/product.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/common_listtable.js" />"></script>
 <!--[if lt IE 9]>
 <script type="text/javascript">
 window.onload=function(){
