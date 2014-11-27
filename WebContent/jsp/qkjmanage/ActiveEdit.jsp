@@ -465,7 +465,7 @@ color: #008000;
 		</s:if>
 		<div class="label_main">
         <div class="label_hang">
-            <div class="label_ltit">相关操作:</div>
+            <div class="label_ltit">相关操作${active.fd_status }:</div>
             <div class="label_rwbenx">
             	<s:if test="null == active && 'add' == viewFlag">
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_ADD')">
@@ -504,7 +504,7 @@ color: #008000;
             </div>
         </div>
         </div>
-        <s:if test="null != active && (active.status==1||active.status==2) &&　active.fd_status!=10">
+        <s:if test="null != active && (active.status==1||active.status==2) && active.fd_status!=10">
         <div class="label_main">
         <div class="label_hang">
             <div class="label_ltit">销售审核:</div>
@@ -537,7 +537,7 @@ color: #008000;
         	</div>
         </div>
         </div>
-        
+       
         <div class="label_main">
         <div class="label_hang">
             <div class="label_ltit">销管审核:</div>
@@ -575,6 +575,8 @@ color: #008000;
         
         
         </s:if>
+      	<s:if test="null != active && (active.status==1||active.status==2)">
+        
         <div class="label_main">
         <div class="label_hang">
             <div class="label_ltit">财务审核:</div>
@@ -601,6 +603,7 @@ color: #008000;
         	</div>
         </div>
         </div>
+        </s:if>
 	</div>
 	</s:form>
 </div>

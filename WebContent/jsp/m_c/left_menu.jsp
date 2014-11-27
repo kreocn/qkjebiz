@@ -19,6 +19,11 @@
 		<a href="javascript:;" class="header">交流中心</a>
 		<a href="<s:url value="/member/message" />" ${param.at=='message'?'class="active"':''}>我的留言<b></b></a>
 	</div>
+	<%-- <div style="height: 10px;"></div>
+	<div class="lmenu_list">
+		<a href="javascript:;" class="header">会员活动</a>
+		<a href="<s:url value="/member/actives" />" ${param.at=='actives'?'class="active"':''}>我的活动<b></b></a>
+	</div> --%>
 	<div style="height: 10px;"></div>
 	<div class="lmenu_list">
 		<a href="javascript:;" class="header">即将开放</a>

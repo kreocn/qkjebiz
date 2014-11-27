@@ -222,6 +222,7 @@ public class MemberCapitalDAO extends AbstractDAO {
 	}
 	
 	public List listCustActives(Map<String, Object> map) {
+		setCountMapid("sysvip_getCustActivesCounts");
 		return super.list("sysvip_getCustActives", map);
 	}
 
