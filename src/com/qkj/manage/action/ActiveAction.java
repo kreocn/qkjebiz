@@ -64,63 +64,10 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	private int pageSize;
 	private int currPage;
 	private String code;
-	private List<ActiveM> activeMprices;
-	private List<ActiveF> activeFprices;
-	private List<ActiveM> activeMpricesClose;
-	private List<ActiveF> activeFpricesClose;
-	private ActiveM activeM;
-	private ActiveF activeF;
 
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;活动管理";
 
 	
-	public List<ActiveM> getActiveMprices() {
-		return activeMprices;
-	}
-
-	public void setActiveMprices(List<ActiveM> activeMprices) {
-		this.activeMprices = activeMprices;
-	}
-
-	public List<ActiveF> getActiveFprices() {
-		return activeFprices;
-	}
-
-	public void setActiveFprices(List<ActiveF> activeFprices) {
-		this.activeFprices = activeFprices;
-	}
-
-	public List<ActiveM> getActiveMpricesClose() {
-		return activeMpricesClose;
-	}
-
-	public void setActiveMpricesClose(List<ActiveM> activeMpricesClose) {
-		this.activeMpricesClose = activeMpricesClose;
-	}
-
-	public List<ActiveF> getActiveFpricesClose() {
-		return activeFpricesClose;
-	}
-
-	public void setActiveFpricesClose(List<ActiveF> activeFpricesClose) {
-		this.activeFpricesClose = activeFpricesClose;
-	}
-
-	public ActiveM getActiveM() {
-		return activeM;
-	}
-
-	public void setActiveM(ActiveM activeM) {
-		this.activeM = activeM;
-	}
-
-	public ActiveF getActiveF() {
-		return activeF;
-	}
-
-	public void setActiveF(ActiveF activeF) {
-		this.activeF = activeF;
-	}
 
 	public Active getCaiActive() {
 		return caiActive;
@@ -367,8 +314,6 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				this.setActivePosms(podao.list(map));
 				ActiveMemcostDAO amdao = new ActiveMemcostDAO();
 				this.setActiveMemcosts(amdao.list(map));
-				this.setActiveMprices(amdao.listM(map));
-				this.setActiveFprices(amdao.listF(map));
 				
 				map.clear();
 				map.put("int_id", active.getUuid());
@@ -465,8 +410,6 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				this.setActivePosms(podao.list(map));
 				ActiveMemcostDAO amdao = new ActiveMemcostDAO();
 				this.setActiveMemcosts(amdao.list(map));
-				this.setActiveMprices(amdao.listM(map));
-				this.setActiveFprices(amdao.listF(map));
 			} else {
 				this.setActive(null);
 				this.setMessage("数据读取错误,请按照正确的方式进入页面!");
@@ -1016,9 +959,6 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				this.setActivePosms(podao.list(map));
 				this.setActiveMemcosts(amdao.list(map));
 				
-				this.setActiveMprices(amdao.listM(map));
-				this.setActiveFprices(amdao.listF(map));
-				
 
 				map.clear();
 				map.put("active_id", active.getUuid());
@@ -1026,9 +966,6 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				this.setActiveProductsClose(adao.list(map));
 				this.setActivePosmsClose(podao.list(map));
 				this.setActiveMemcostsClose(amdao.list(map));
-				
-				this.setActiveFpricesClose(amdao.listF(map));
-				this.setActiveMpricesClose(amdao.listM(map));
 				
 				map.clear();
 				map.put("int_id", active.getUuid());
@@ -1140,8 +1077,6 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				this.setActiveProducts(adao.list(map));
 				this.setActivePosms(podao.list(map));
 				this.setActiveMemcosts(amdao.list(map));
-				this.setActiveMprices(amdao.listM(map));
-				this.setActiveFprices(amdao.listF(map));
 
 				map.clear();
 				map.put("active_id", active.getUuid());
@@ -1149,9 +1084,6 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				this.setActiveProductsClose(adao.list(map));
 				this.setActivePosmsClose(podao.list(map));
 				this.setActiveMemcostsClose(amdao.list(map));
-				this.setActiveFpricesClose(amdao.listF(map));
-				this.setActiveMpricesClose(amdao.listM(map));
-				
 			} else {
 				this.setActive(null);
 				this.setMessage("数据读取错误,请按照正确的方式进入页面!");

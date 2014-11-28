@@ -513,6 +513,7 @@ color: #008000;
 				<div class="label_hang">
 					<div class="label_ltit" style="font-weight: normal;">上期结余:</div>
 					<div class="label_rwben label_rwb">
+					
 					<s:textfield id="upprice" name="active.close_m_upprice" cssClass="validate[required]" />
 					</div>
 				</div>
