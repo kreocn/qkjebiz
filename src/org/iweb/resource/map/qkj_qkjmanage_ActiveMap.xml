@@ -126,8 +126,8 @@
 	
 	<insert id="qkjmanage_addActive" parameterClass="active">
 		<![CDATA[ 
-			Insert Into qkjm_r_active(uid,apply_dept,apply_user,theme,purpose,plan_start,plan_end,address,person,note,expect,add_user,add_time,remark)
-			Values (#uid#,#apply_dept#,#apply_user#,#theme#,#purpose#,#plan_start#,#plan_end#,#address#,#person#,#note#,#expect#,#add_user#,now(),#remark#)
+			Insert Into qkjm_r_active(uid,apply_dept,apply_user,theme,purpose,plan_start,plan_end,address,person,note,expect,add_user,add_time,remark,m_upprice,m_price,m_bprice,f_upprice,f_price,f_bprice)
+			Values (#uid#,#apply_dept#,#apply_user#,#theme#,#purpose#,#plan_start#,#plan_end#,#address#,#person#,#note#,#expect#,#add_user#,now(),#remark#,#m_upprice#,#m_price#,#m_bprice#,#f_upprice#,#f_price#,#f_bprice#)
 		]]>
 		<selectKey resultClass="int" keyProperty="uuid">
 		<![CDATA[ Select LAST_INSERT_ID() ]]>
@@ -145,7 +145,13 @@
 				note=#note#,
 				expect=#expect#,
 				lm_user=#lm_user#,
-				remark=#remark#
+				remark=#remark#,
+				m_upprice=#m_upprice#,
+				m_price=#m_price#,
+				m_bprice=#m_bprice#,
+				f_upprice=#f_upprice#,
+				f_price=#f_price#,
+				f_bprice=#f_bprice#
 			Where uuid = #uuid#
 		]]>
 	</update>
@@ -295,7 +301,13 @@
 			Update qkjm_r_active
 			Set close_note=#close_note#,
 				remark=#remark#,
-				lm_user=#lm_user#
+				lm_user=#lm_user#,
+				close_m_upprice=#close_m_upprice#,
+				close_m_price=#close_m_price#,
+				close_m_bprice=#close_m_bprice#,
+				close_f_upprice=#close_f_upprice#,
+				close_f_price=#close_f_price#,
+				close_f_bprice=#close_f_bprice#
 			Where uuid = #uuid#
 		]]>
 	</update>

@@ -67,6 +67,13 @@ public class Active {
 	private Double f_upprice;
 	private Double f_price;
 	private Double f_bprice;
+	
+	private Double close_m_upprice;
+	private Double close_m_price;
+	private Double close_m_bprice;
+	private Double close_f_upprice;
+	private Double close_f_price;
+	private Double close_f_bprice;
 
 	// 非数据库字段
 	private String apply_dept_name;
@@ -98,6 +105,54 @@ public class Active {
 	
 	
 	
+	public Double getClose_m_upprice() {
+		return close_m_upprice;
+	}
+
+	public void setClose_m_upprice(Double close_m_upprice) {
+		this.close_m_upprice = close_m_upprice;
+	}
+
+	public Double getClose_m_price() {
+		return close_m_price;
+	}
+
+	public void setClose_m_price(Double close_m_price) {
+		this.close_m_price = close_m_price;
+	}
+
+	public Double getClose_m_bprice() {
+		return close_m_bprice;
+	}
+
+	public void setClose_m_bprice(Double close_m_bprice) {
+		this.close_m_bprice = close_m_bprice;
+	}
+
+	public Double getClose_f_upprice() {
+		return close_f_upprice;
+	}
+
+	public void setClose_f_upprice(Double close_f_upprice) {
+		this.close_f_upprice = close_f_upprice;
+	}
+
+	public Double getClose_f_price() {
+		return close_f_price;
+	}
+
+	public void setClose_f_price(Double close_f_price) {
+		this.close_f_price = close_f_price;
+	}
+
+	public Double getClose_f_bprice() {
+		return close_f_bprice;
+	}
+
+	public void setClose_f_bprice(Double close_f_bprice) {
+		this.close_f_bprice = close_f_bprice;
+	}
+
 	public String getSpe_remark() {
 		return spe_remark;
 	}

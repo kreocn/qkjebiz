@@ -283,24 +283,6 @@ color: #008000;
 							</tr>
 							</s:iterator>
 	                    </table>
-	                    <p class="lb_gstit">随量费用</p>
-							<div class="active_p_list">
-								<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
-	                    	<tr>
-	                        	<th class="nw">上期余额</th>
-	                            <th class="nw">本期费用</th>
-	                            <th class="nw">本期余额</th>
-	                        </tr>
-	                        <s:iterator value="activeMprices" status="sta">
-	                        <tr>
-							<td>${m_upprice}</td>
-							<td>${m_price}</td>
-							<td>${m_bprice}</td>
-							</tr>
-	                        </s:iterator>
-	                        
-	                    </table>
-							</div>
 	                	<p class="lb_gstit">公司预计费用合计</p>
 	                    <p class="lb_jwei">￥${active.it_price}</p>
 	                </div>
@@ -356,6 +338,61 @@ color: #008000;
 	            <p class="lb_yjbot">方案预计费用总计: ${active.it_price} + ${active.mt_price} = ￥${active.it_price+active.mt_price}</p>
 	        </div>
         </div>
+        <fieldset>
+			<legend>预计费用信息</legend>
+			<div class="label_main">
+				<div class="label_hang">
+					<div class="label_ltit">随量费用:</div>
+				</div>
+				<div class="label_hang">
+					<div class="label_ltit" style="font-weight: normal;">上期结余:</div>
+					<div class="label_rwben label_rwb">
+					<s:if test="%{active.m_upprice==null}">&nbsp;(未填写)</s:if>
+					<s:else>&nbsp;${active.m_upprice}</s:else>
+					</div>
+				</div>
+				<div class="label_hang">
+					<div class="label_ltit" style="font-weight: normal;">本期费用:</div>
+					<div class="label_rwben label_rwb">
+					<s:if test="%{active.m_price==null}">&nbsp;(未填写)</s:if>
+					<s:else>&nbsp;${active.m_price }</s:else>
+					</div>
+				</div>
+				<div class="label_hang">
+					<div class="label_ltit" style="font-weight: normal;">本期结余:</div>
+					<div class="label_rwben label_rwb">
+					<s:if test="%{active.m_bprice==null}">&nbsp;(未填写)</s:if>
+					<s:else>&nbsp;${active.m_bprice }</s:else>
+					</div>
+				</div>
+			</div>
+			<div class="label_main">
+				<div class="label_hang">
+					<div class="label_ltit">市场基金:</div>
+				</div>
+				<div class="label_hang">
+					<div class="label_ltit" style="font-weight: normal;">上期结余:</div>
+					<div class="label_rwben label_rwb">
+					<s:if test="%{active.f_upprice==null}">&nbsp;(未填写)</s:if>
+					<s:else>&nbsp;${active.f_upprice }</s:else>
+					</div>
+				</div>
+				<div class="label_hang">
+					<div class="label_ltit" style="font-weight: normal;">本期费用:</div>
+					<div class="label_rwben label_rwb">
+					<s:if test="%{active.f_price==null}">&nbsp;(未填写)</s:if>
+					<s:else>&nbsp;${active.f_price }</s:else>
+					</div>
+				</div>
+				<div class="label_hang">
+					<div class="label_ltit" style="font-weight: normal;">本期结余:</div>
+					<div class="label_rwben label_rwb">
+					<s:if test="%{active.f_bprice==null}">&nbsp;(未填写)</s:if>
+					<s:else>&nbsp;${active.f_bprice }</s:else>
+					</div>
+				</div>
+			</div>
+			</fieldset>
         <div class="label_main">
         <div class="label_hang">
             <div class="label_ltit">方案说明:</div>
