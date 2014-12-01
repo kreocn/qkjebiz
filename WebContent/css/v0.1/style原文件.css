@@ -143,11 +143,11 @@ font-weight: bold;
 }
 
 .label_main {
-	float: left; width: 100%; padding-bottom:5px;
+	float: left; width: 100%;
 }
 
 .label_hang {
-	float: left; line-height:26px; margin: 3px 0;
+	float: left; line-height: 34px; margin: 3px 0;
 }
 
 .label_hang_sign {
@@ -163,7 +163,7 @@ font-weight: bold;
 }
 
 .label_ltit {
-	float: left; line-height: 28px; width: 95px; text-align: right; padding-right: 2px; font-weight: bold; white-space: nowrap; word-break: break-all;
+	float: left; line-height: 34px; width: 95px; text-align: right; padding-right: 2px; font-weight: bold; white-space: nowrap; word-break: break-all;
 }
 
 .label_rwben {
@@ -435,12 +435,8 @@ font-weight: bold;
 }
 /*form style start*/
 .input-a input[type="text"],.input-a input[type="password"] {
-	width: 100%; height: 26px; line-height: 26px; font-size: 12px; border-radius: 5px; border: none; border: 1px solid #ccc; text-indent: 8px;
-	margin: 0; outline: none;
-}
-
-.input-a select{
-	width:100%; height: 28px; line-height: 28px; font-size: 12px; border-radius: 5px; border: none; border:1px solid #ccc;font-family: "微软雅黑";margin:0;outline: none;
+	width: 100%; height: 26px; line-height: 26px; font-size: 14px; border-radius: 5px; border: none; border: 1px solid #fefefe; text-indent: 8px;
+	margin: 0; outline: none; box-shadow: 0px 0px 5px 0px #909090 inset;
 }
 
 .input-a textarea {
@@ -598,15 +594,15 @@ input[type="button"].input-blue,input[type="submit"].input-blue,input[type="rese
 }
 
 .iI-s {
-	background-position: 95% 4px;
+	background-position: 95% 7px;
 }
 
 .iI-f {
-	background-position: 3px -27px; text-indent: 20px !important;
+	background-position: 3px -25px; text-indent: 20px !important;
 }
 
 .iI-t {
-	background-position: 3px -59px; text-indent: 20px !important;
+	background-position: 3px -57px; text-indent: 20px !important;
 }
 
 .iI-a {
