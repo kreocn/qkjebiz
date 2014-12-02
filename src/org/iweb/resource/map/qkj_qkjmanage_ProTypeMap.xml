@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
+<sqlMap>
+	<!-- ProType Start -->
+	<typeAlias alias="proType" type="com.qkj.manage.domain.ProType" />
+	<select id="qkjmanage_getProTypes" resultClass="proType" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT t.*,u.`USER_NAME` lm_user_name FROM qkj_t_protype t LEFT JOIN s_sys_user u ON t.`lm_user`=u.`UUID`
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ t.uuid=#uuid# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="name"><![CDATA[ t.name=#name# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="lm_user"><![CDATA[ t.lm_user=#lm_user# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="lm_time"><![CDATA[ t.lm_time=#lm_time# ]]></isNotEmpty>
+
+		</dynamic>
+		<![CDATA[ LIMIT 1000 ]]>
+	</select>
+	<select id="qkjmanage_getProTypesCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) From qkj_t_protype
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="name"><![CDATA[ name=#name# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="lm_user"><![CDATA[ lm_user=#lm_user# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="lm_time"><![CDATA[ lm_time=#lm_time# ]]></isNotEmpty>
+
+		</dynamic>
+		<![CDATA[ LIMIT 1000 ]]>
+	</select>
+	<insert id="qkjmanage_addProType" parameterClass="proType">
+		<![CDATA[ 
+			Insert Into qkj_t_protype(name,lm_user,lm_time)
+			Values (#name#,#lm_user#,#lm_time#)
+		]]>
+		<selectKey resultClass="int" keyProperty="uuid">
+		<![CDATA[ Select LAST_INSERT_ID() ]]>
+		</selectKey>
+	</insert>
+	<update id="qkjmanage_mdyProType" parameterClass="proType">
+		<![CDATA[
+			Update qkj_t_protype
+			Set name=#name#,
+lm_user=#lm_user#,
+lm_time=#lm_time#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="qkjmanage_delProType" parameterClass="proType">
+	<![CDATA[
+		Delete From qkj_t_protype Where uuid=#uuid#
+	]]>
+	</delete>
+	<!-- ProType End -->
+</sqlMap>
