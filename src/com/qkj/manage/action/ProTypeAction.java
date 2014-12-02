@@ -1,43 +1,27 @@
 package com.qkj.manage.action;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.iweb.sys.ContextHelper;
-import org.iweb.sys.Parameters;
-import org.iweb.sys.ToolsUtil;
-
+import java.util.*;
+import org.apache.commons.logging.*;
+import org.iweb.sys.*;
 import com.opensymphony.xwork2.ActionSupport;
-import com.qkj.manage.dao.ProTypeDAO;
-import com.qkj.manage.dao.ProductDAO;
 import com.qkj.manage.domain.ProType;
-import com.qkj.manage.domain.Product;
+import com.qkj.manage.dao.ProTypeDAO;
 
-public class ProductAction extends ActionSupport {
+public class ProTypeAction extends ActionSupport implements ActionAttr {
 	private static final long serialVersionUID = 1L;
-	private static Log log = LogFactory.getLog(ProductAction.class);
+	private static Log log = LogFactory.getLog(ProTypeAction.class);
 	private Map<String, Object> map = new HashMap<String, Object>();
-	private ProductDAO dao = new ProductDAO();
+	private ProTypeDAO dao = new ProTypeDAO();
 
-	private Product product;
-	private List<Product> products;
-	private List<ProType> proTypes;
 	private ProType proType;
+	private List<ProType> proTypes;
 	private String message;
 	private String viewFlag;
 	private int recCount;
 	private int pageSize;
-
-	
-	public List<ProType> getProTypes() {
-		return proTypes;
-	}
-
-	public void setProTypes(List<ProType> proTypes) {
-		this.proTypes = proTypes;
+	private int currPage;
+	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;产品类型";
+	public String getPath() {
+		return path;
 	}
 
 	public ProType getProType() {
@@ -48,20 +32,12 @@ public class ProductAction extends ActionSupport {
 		this.proType = proType;
 	}
 
-	public Product getProduct() {
-		return product;
+	public List<ProType> getProTypes() {
+		return proTypes;
 	}
 
-	public void setProduct(Product product) {
-		this.product = product;
-	}
-
-	public List<Product> getProducts() {
-		return products;
-	}
-
-	public void setProducts(List<Product> products) {
-		this.products = products;
+	public void setProTypes(List<ProType> proTypes) {
+		this.proTypes = proTypes;
 	}
 
 	public String getMessage() {
@@ -95,43 +71,55 @@ public class ProductAction extends ActionSupport {
 	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
 	}
+	
+	public int getCurrPage() {
+		return currPage;
+	}
+
+	public void setCurrPage(int currPage) {
+		this.currPage = currPage;
+	}
 
 	public String list() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_PRODUCT_LIST");
+		ContextHelper.isPermit("QKJ_QKJMANAGE_PROTYPE_LIST");
 		try {
 			map.clear();
-			if (product != null)
-				map.putAll(ToolsUtil.getMapByBean(product));
+			if (proType != null)
+				map.putAll(ToolsUtil.getMapByBean(proType));
 			map.putAll(ContextHelper.getDefaultRequestMap4Page());
-			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
-			this.setProducts(dao.list(map));
+			this.setPageSize(ContextHelper.getPageSize(map));
+			this.setCurrPage(ContextHelper.getCurrPage(map));		
+			this.setProTypes(dao.list(map));
 			this.setRecCount(dao.getResultCount());
+			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;产品类型列表";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
 		}
 		return SUCCESS;
 	}
+	
+	public String relist() throws Exception {
+		return SUCCESS;
+	}
 
 	public String load() throws Exception {
 		try {
-			ProTypeDAO ptd=new ProTypeDAO();
 			if (null == viewFlag) {
-				this.setProduct(null);
+				this.setProType(null);
 				setMessage("你没有选择任何操作!");
 			} else if ("add".equals(viewFlag)) {
-				this.setProduct(null);
-				this.setProTypes(ptd.list(null));
+				this.setProType(null);
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/proType_relist'>产品类型列表</a>&nbsp;&gt;&nbsp;增加产品类型";
 			} else if ("mdy".equals(viewFlag)) {
-				map.clear();
-				map.put("uuid", product.getUuid());
-				if (null == map.get("uuid"))
-					this.setProduct(null);
-				else
-					this.setProduct((Product) dao.list(map).get(0));
-				this.setProTypes(ptd.list(null));
+				if (!(proType == null || proType.getUuid() == null)) {
+					this.setProType((ProType) dao.get(proType.getUuid()));
+				} else {
+					this.setProType(null);
+				}
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/proType_relist'>产品类型列表</a>&nbsp;&gt;&nbsp;增加产品类型";
 			} else {
-				this.setProduct(null);
+				this.setProType(null);
 				setMessage("无操作类型!");
 			}
 		} catch (Exception e) {
@@ -142,10 +130,11 @@ public class ProductAction extends ActionSupport {
 	}
 
 	public String add() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_PRODUCT_ADD");
+		ContextHelper.isPermit("QKJ_QKJMANAGE_PROTYPE_ADD");
 		try {
-			product.setLm_user(ContextHelper.getUserLoginUuid());
-			dao.add(product);
+			proType.setLm_user(ContextHelper.getUserLoginUuid());
+			proType.setLm_time(new Date());
+			dao.add(proType);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!add 数据添加失败:", e);
 			throw new Exception(this.getClass().getName() + "!add 数据添加失败:", e);
@@ -154,10 +143,11 @@ public class ProductAction extends ActionSupport {
 	}
 
 	public String save() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_PRODUCT_MDY");
+		ContextHelper.isPermit("QKJ_QKJMANAGE_PROTYPE_MDY");
 		try {
-			product.setLm_user(ContextHelper.getUserLoginUuid());
-			dao.save(product);
+			proType.setLm_user(ContextHelper.getUserLoginUuid());
+			proType.setLm_time(new Date());
+			dao.save(proType);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
@@ -166,10 +156,10 @@ public class ProductAction extends ActionSupport {
 	}
 
 	public String del() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_PRODUCT_DEL");
+		ContextHelper.isPermit("QKJ_QKJMANAGE_PROTYPE_DEL");
 		try {
-			dao.delete(product);
-			setMessage("删除成功!ID=" + product.getUuid());
+			dao.delete(proType);
+			setMessage("删除成功!ID=" + proType.getUuid());
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!del 数据删除失败:", e);
 			throw new Exception(this.getClass().getName() + "!del 数据删除失败:", e);

@@ -24,6 +24,8 @@ public class Product {
 	private Integer status;// 是否启用
 	private String lm_user;// (varchar)
 	private Date lm_time;// (timestamp)
+	
+	private String brand_name;
 
 	public Integer getStatus() {
 		return status;
@@ -191,6 +193,14 @@ public class Product {
 
 	public void setLm_time(Date lm_time) {
 		this.lm_time = lm_time;
+	}
+
+	public String getBrand_name() {
+		return brand_name;
+	}
+
+	public void setBrand_name(String brand_name) {
+		this.brand_name = brand_name;
 	}
 
 }

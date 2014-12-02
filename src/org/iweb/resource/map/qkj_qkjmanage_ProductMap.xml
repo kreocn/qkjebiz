@@ -5,14 +5,14 @@
 	<typeAlias alias="product" type="com.qkj.manage.domain.Product" />
 	<select id="qkjmanage_getProducts" resultClass="product" parameterClass="java.util.Map">
 		<![CDATA[ 
-			Select * From qkj_t_product
+			SELECT p.*,t.`name` brand_name FROM qkj_t_product p LEFT JOIN qkj_t_protype t ON (p.`brand`=t.`uuid`)
 		]]>
 		<dynamic prepend="WHERE">
-			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="brand"><![CDATA[ brand=#brand# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="title"><![CDATA[ title=#title# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="grade"><![CDATA[ grade=#grade# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="status"><![CDATA[ status=#status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ p.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="brand"><![CDATA[ p.brand=#brand# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="title"><![CDATA[ p.title=#title# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="grade"><![CDATA[ p.grade=#grade# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="status"><![CDATA[ p.status=#status# ]]></isNotEmpty>
 		</dynamic>
 	</select>
 	<select id="qkjmanage_getProductsCounts" resultClass="int" parameterClass="java.util.Map">

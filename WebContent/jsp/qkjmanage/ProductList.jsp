@@ -71,7 +71,7 @@ $(function(){
 	  <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>" type="pickrow">
 	    <td align="center"><input name="uuid" type="checkbox" value="<s:property value="uuid" />" /></td>
 	    <td align="center"><s:property value="prod_code" /></td>
-	    <td align="center"><s:property value="brand" /></td>
+	    <td align="center"><s:property value="brand_name" /></td>
 	    <td><s:property value="title" /></td>
 		<td align="center"><s:property value="spec" /></td>
 		<td align="center"><s:property value="case_spec" />/件</td>
