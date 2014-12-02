@@ -58,8 +58,8 @@
 	       		</div>
 	       		<div class="label_hang">
 	            <div class="label_ltit">状态:</div>
-	            <div class="label_rwben2" style="width:auto;">
-			       <span class="label_rwb iselect">
+	            <div class="label_rwben">
+			       <span class="label_rwb">
 	            	<s:if test='0==outStock.send'>借出未还</s:if>
 					<s:if test='1==outStock.send'>借出已还</s:if>
 					<s:if test='2==outStock.send'>新单</s:if>
@@ -75,7 +75,7 @@
 	            <div class="label_hang">
 	            <div class="label_ltit">出库仓库:</div>
 	            <div class="label_rwben2" style="width:auto;">
-			       <span class="label_rwb iselect">
+			       <span class="label_rwb">
 			       <select id="membermanagerid" cssClass="selectKick" name="outStock.store_id" title="出库仓库" >
 							
 							<s:iterator value="wares" status="sta" var="x">
@@ -143,7 +143,6 @@
 	        <div class="label_hang">
 	            <div class="label_ltit">单据性质:</div>
 	            <div class="label_rwben label_rwb">
-	            	<div class="iselect">
 	            	<select id="membermanagerid" cssClass="selectKick" name="outStock.reason" title="状态">
 							<option value="0"
 							<s:if test="%{outStock.reason==0}">
@@ -172,7 +171,6 @@
 							</s:if>
 							>其它</option>
 					</select>
-	            	</div>
 	            </div>
 	        </div>
 	     </div>
@@ -180,7 +178,7 @@
 	     	<div class="label_hang">
 	            <div class="label_ltit">出库仓库:</div>
 	            <div class="label_rwben2">
-			       <span class="label_rwb iselect">
+			       <span class="label_rwb">
 			       <select id="membermanagerid" cssClass="selectKick" name="outStock.store_id" title="出库仓库" >
 							
 							<s:iterator value="wares" status="sta" var="x">
@@ -337,7 +335,7 @@
 					<s:hidden id="member_price" name="mprice"></s:hidden>
 			            <div class="label_ltit">商品:</div>
 			            <div class="label_rwben2">
-			            	<span class="label_rwb iselect">
+			            	<span class="label_rwb">
 			            	<select id="membermanagerid" name="outDetail.product_id" title="产品">
 								<option>--请选择--</option>
 								<s:iterator value="stocks" status="sta">

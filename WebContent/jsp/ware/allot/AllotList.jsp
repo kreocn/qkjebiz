@@ -45,24 +45,19 @@
         	<div class="label_hang">
             <div class="label_ltit">调出仓库:</div>
             <div class="label_rwben label_rwb">
-            	<div class="iselect">
             	<s:select id="membermanagerid" cssClass="selectKick" name="allot.sourceid" title="调出仓库" headerKey="" headerValue="--请选择--" list="wares" listKey="uuid" listValue="ware_name" />
-            	</div>
             </div>
         	</div>
         	<div class="label_hang">
             <div class="label_ltit">调入仓库:</div>
             <div class="label_rwben label_rwb">
-            	<div class="iselect">
             	<s:select id="membermanagerid" cssClass="selectKick" name="allot.goldid" title="调入仓库" headerKey="" headerValue="--请选择--" list="wares" listKey="uuid" listValue="ware_name" />
-            	</div>
             </div>
         	</div>
         	
         	<div class="label_hang">
             <div class="label_ltit">状态:</div>
             <div class="label_rwben label_rwb">
-            	<div class="iselect">
             	<select id="membermanagerid" cssClass="selectKick" name="allot.state" title="状态">
 					<option value="-1">---请选择---</option>
 					<option value="0">未发货</option>
@@ -71,7 +66,6 @@
 					<option value="3">已收货</option>
 					<option value="4">确认发货</option>
 				</select>
-            	</div>
             </div>
         	</div>
         	

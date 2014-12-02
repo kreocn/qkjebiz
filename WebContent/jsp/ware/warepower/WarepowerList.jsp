@@ -36,17 +36,13 @@
 	        <div class="label_hang">
 	            <div class="label_ltit">申请人:</div>
 	            <div class="label_rwben label_rwb">
-	            	<div class="iselect">
 	            	<s:select id="membermanagerid" cssClass="selectKick" name="warepower.username" list="#{}" headerKey="" headerValue="--请选择--" />
-	            	</div>
 	            </div>
 			</div>
         	<div class="label_hang">
             <div class="label_ltit">仓库:</div>
             <div class="label_rwben label_rwb">
-            	<div class="iselect">
             	<s:select id="membermanagerid" cssClass="selectKick" name="allot.sourceid" title="调出仓库" headerKey="" headerValue="--请选择--" list="wares" listKey="uuid" listValue="ware_name" />
-            	</div>
             </div>
         	</div>
         	

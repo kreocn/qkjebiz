@@ -36,9 +36,7 @@
 		        <div class="label_hang">
 	            <div class="label_ltit">申请人:</div>
 	            <div class="label_rwben label_rwb">
-	            	<div class="iselect">
 	            	<s:select id="membermanagerid" cssClass="selectKick" name="warepower.username" list="#{}" headerKey="" headerValue="--请选择--"  controlName="申请人"/>
-	            	</div>
 	            </div>
 			 </div>
 			 <div class="label_lckname">
@@ -83,9 +81,7 @@
 		        <div class="label_hang">
 	            <div class="label_ltit">申请人:</div>
 	            <div class="label_rwben label_rwb">
-	            	<div class="iselect">
 	            	<s:select id="membermanagerid" cssClass="selectKick" name="warepower.username" list="#{}" headerKey="" headerValue="--请选择--" />
-	            	</div>
 	            </div>
 			 </div>
 	            <div class="label_lckname">

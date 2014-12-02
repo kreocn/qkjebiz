@@ -83,7 +83,7 @@
         <div class="label_hang">
             <div class="label_ltit">申请人:</div>
             <div class="label_rwben label_rwb">
-            	<div class="iselect"><s:select id="membermanagerid" cssClass="selectKick" name="leave.leave_user" list="#{}" headerKey="" headerValue="--请选择--" /></div>
+            	<s:select id="membermanagerid" cssClass="selectKick" name="leave.leave_user" list="#{}" headerKey="" headerValue="--请选择--" />
             </div>
 		</div>
 		</div>
@@ -121,7 +121,7 @@
 		<div class="label_hang">
             <div class="label_ltit">请假类型:</div>
             <div class="label_rwben">
-            	<div class="label_rwb iselect"><s:select name="leave.leave_mold" list="#{'0':'年假','1':'病假','2':'事假','3':'婚假','4':'产假','5':'丧假','6':'陪产假','7':'其他' }" /></div>
+            	<div class="label_rwb"><s:select name="leave.leave_mold" list="#{'0':'年假','1':'病假','2':'事假','3':'婚假','4':'产假','5':'丧假','6':'陪产假','7':'其他' }" /></div>
             </div>
 		</div>
 		</s:if>

@@ -33,11 +33,11 @@ max-width: 650px !important;
         <div class="label_hang">
             <div class="label_ltit">类型:</div>
             <div class="label_rwben2">
-            	<span class="label_rwb iselect">
+            	<span class="label_rwb">
             	<s:select id="searchLeaveType" name="leave.leave_type" title="类型"
 						list="#{0:'出差',1:'请假',2:'加班',3:'换休',4:'补签' }" headerKey="" headerValue="--请选择--" />
 				</span>
-				<span class="label_rwb iselect">
+				<span class="label_rwb">
 				<s:select  id="searchLeaveMold" name="leave.leave_mold" list="#{'0':'年假','1':'病假','2':'事假','3':'婚假','4':'产假','5':'丧假','6':'陪产假','7':'其他' }"
 					headerKey="" headerValue="--请选择--" />
 				</span>
@@ -60,20 +60,20 @@ max-width: 650px !important;
         <div class="label_hang">
             <div class="label_ltit">申请人:</div>
             <div class="label_rwben label_rwb">
-            	<div class="iselect"><s:select id="membermanagerid" cssClass="selectKick" name="leave.leave_user" list="#{}" headerKey="" headerValue="--请选择--" /></div>
+            	<s:select id="membermanagerid" cssClass="selectKick" name="leave.leave_user" list="#{}" headerKey="" headerValue="--请选择--" />
             </div>
 		</div>
         <div class="label_hang">
             <div class="label_ltit">补贴状态:</div>
-            <div class="label_rwben label_rwb"><div class="iselect"><s:select name="leave.allowance_status" list="#{0:'未补贴',1:'已补贴',2:'其他'}" headerKey="" headerValue="--请选择--" /></div></div>
+            <div class="label_rwben label_rwb"><s:select name="leave.allowance_status" list="#{0:'未补贴',1:'已补贴',2:'其他'}" headerKey="" headerValue="--请选择--" /></div>
         </div>
         <div class="label_hang">
             <div class="label_ltit">业务审核状态:</div>
-            <div class="label_rwben label_rwb"><div class="iselect"><s:select name="leave.check_status" list="#{0:'新申请',5:'已退回',10:'待审核',20:'经理/大区已审',30:'运营总监已审',40:'业务副总已审' }" headerKey="" headerValue="--请选择--"  /></div></div>
+            <div class="label_rwben label_rwb"><s:select name="leave.check_status" list="#{0:'新申请',5:'已退回',10:'待审核',20:'经理/大区已审',30:'运营总监已审',40:'业务副总已审' }" headerKey="" headerValue="--请选择--"  /></div>
         </div>
         <div class="label_hang">
             <div class="label_ltit">人事审核状态:</div>
-            <div class="label_rwben label_rwb"><div class="iselect"><s:select name="leave.acheck_status" list="#{0:'未审核/已退回',10:'人事经理已审',20:'行政副总已审',30:'总经理已审' }" headerKey="" headerValue="--请选择--"  /></div></div>
+            <div class="label_rwben label_rwb"><s:select name="leave.acheck_status" list="#{0:'未审核/已退回',10:'人事经理已审',20:'行政副总已审',30:'总经理已审' }" headerKey="" headerValue="--请选择--"  /></div>
         </div>
         <div class="label_hang label_button tac">
         	<s:checkbox id="search_mcondition" name="search_mcondition" fieldValue="true" value="true" cssClass="regular-checkbox" />
@@ -182,7 +182,7 @@ max-width: 650px !important;
 <div class="label_main">
 	<div class="label_hang">
 	    <div class="label_ltit">补贴状态:</div>
-	    <div class="label_rwben"><div class="iselect"><s:select id="allowance_status_allowance" name="leave.allowance_status" list="#{0:'未补贴',1:'已补贴',2:'其他'}" headerKey="" headerValue="--请选择--" /></div></div>
+	    <div class="label_rwben"><s:select id="allowance_status_allowance" name="leave.allowance_status" list="#{0:'未补贴',1:'已补贴',2:'其他'}" headerKey="" headerValue="--请选择--" /></div>
 	</div>
 	<div class="label_hang">
 	    <div class="label_ltit">补贴时间:</div>

@@ -39,7 +39,7 @@ function checkManager() {
 	<div class="label_main">
 	<div class="label_hang">
 		<div class="label_ltit">会员号:</div>
-		<div class="label_rwben2">${member.uuid}<s:hidden name="member.uuid" title="会员号" /></div>
+		<div class="label_rwben">${member.uuid}<s:hidden name="member.uuid" title="会员号" /></div>
 	</div>
 	<div class="label_hang">
 		<div class="label_ltit">登录密码:</div>
@@ -70,7 +70,7 @@ function checkManager() {
 	<div class="label_hang">
 		<div class="label_ltit">会员分组:</div>
 		<div class="label_rwben">
-			<div class="label_rwb iselect">	<s:select name="member.user_type" title="会员级别"  list="roles" listKey="uuid" listValue="role_name" /></div></div>
+			<div class="label_rwb"><s:select name="member.user_type" title="会员级别"  list="roles" listKey="uuid" listValue="role_name" /></div></div>
 	</div>
 	<div class="label_hang">
 		<div class="label_ltit">会员EMAIL:</div>
@@ -105,7 +105,7 @@ function checkManager() {
 	<div class="label_hang">
 	<div class="label_ltit">所属人:</div>
 	<div class="label_rwben">
-		<div class="label_rwb iselect">
+		<div class="label_rwb">
 			<s:select id="membermanagerid" name="member.manager" list="#{}"	headerKey="" headerValue="--请选择--" />
 		</div>
 	</div>
@@ -124,24 +124,24 @@ function checkManager() {
 	</div>
 	<div class="label_hang">
 		<div class="label_ltit">注册时间:</div>
-		<div class="label_rwben2"><s:date name="member.reg_time" format="yyyy-MM-dd HH:mm:ss" /></div>
+		<div class="label_rwben" style="width:auto;"><s:date name="member.reg_time" format="yyyy-MM-dd HH:mm:ss" /></div>
 	</div>
 	<div class="label_hang">
 		<div class="label_ltit">最后登录时间:</div>
-		<div class="label_rwben2"><s:date name="member.last_login_time" format="yyyy-MM-dd HH:mm:ss" /></div>
+		<div class="label_rwben" style="width:auto;"><s:date name="member.last_login_time" format="yyyy-MM-dd HH:mm:ss" /></div>
 	</div>
 	</div>
 	</s:if>
 	<fieldset>
-	<legend>收货地址</legend>
+	<span class="shaddress">--------------------收货地址--------------------</span>
 	<s:if test="'add' == viewFlag">
 	<div class="label_main">
 		<div class="label_hang">
 			<div class="label_ltit">所在地区:</div>
 			<div class="label_rwbenx">
-				<div class="label_rwb iselect"><s:select id="memberAddress.province" name="memberAddress.province" title="省" list="#{}" cssClass="validate[required]" /></div>
-				<div class="label_rwb iselect"><s:select id="memberAddress.city" name="memberAddress.city" title="市" list="#{}" cssClass="validate[required]" data-prompt-position="inline" data-prompt-target="rm_x" /></div>
-				<div class="label_rwb iselect"><s:select id="memberAddress.area" name="memberAddress.area" title="县" list="#{}" /></div>
+				<div class="label_rwb"><s:select id="memberAddress.province" name="memberAddress.province" title="省" list="#{}" cssClass="validate[required]" /></div>
+				<div class="label_rwb"><s:select id="memberAddress.city" name="memberAddress.city" title="市" list="#{}" cssClass="validate[required]" data-prompt-position="inline" data-prompt-target="rm_x" /></div>
+				<div class="label_rwb"><s:select id="memberAddress.area" name="memberAddress.area" title="县" list="#{}" /></div>
 				<script type="text/javascript">
 					var sa = new SArea($("#memberAddress\\.province") ,$("#memberAddress\\.city"),$("#memberAddress\\.area"));
 					sa.ajax_url = ajax_url;

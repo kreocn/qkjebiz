@@ -118,7 +118,7 @@
 					<div class="label_hang">
 						<div class="label_ltit">入库仓库:</div>
 						<div class="label_rwben2">
-							<span class="label_rwb iselect"> <select
+							<span class="label_rwb"> <select
 								id="membermanagerid" cssClass="selectKick"
 								name="inStock.store_id" title="入库仓库">
 									<s:iterator value="wares" status="sta" var="x">
@@ -205,7 +205,7 @@
 								<div class="label_hang">
 									<div class="label_ltit">商品:</div>
 									<div class="label_rwben2">
-										<span class="label_rwb iselect"> <select
+										<span class="label_rwb"> <select
 											id="membermanagerid" name="inDetail.product_id" title="产品">
 												<option>--请选择--</option>
 												<s:iterator value="products" status="sta">

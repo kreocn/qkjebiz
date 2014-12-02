@@ -116,7 +116,6 @@ font-size: 14px;
 	        <div class="label_hang">
 	            <div class="label_ltit">单据性质:</div>
 	            <div class="label_rwben label_rwb">
-	            	<div class="iselect">
 	            	<select id="membermanagerid" cssClass="selectKick" name="inStock.reason" title="状态">
 								<option value="0"
 								<s:if test="%{inStock.reason==0}">
@@ -139,7 +138,6 @@ font-size: 14px;
 								</s:if>
 								>其它</option>
 						</select>
-	            	</div>
 	            </div>
 	        </div>
 	     </div>
@@ -149,7 +147,7 @@ font-size: 14px;
 	        <div class="label_hang">
 	            <div class="label_ltit">入库仓库:</div>
 	            <div class="label_rwben2">
-			       <span class="label_rwb iselect">
+			       <span class="label_rwb">
 	            	<select id="membermanagerid" cssClass="selectKick" name="inStock.store_id" title="入库仓库" >
 						<s:iterator value="wares" status="sta" var="x">
 						<option value="<s:property value="uuid" />" 
@@ -260,7 +258,7 @@ font-size: 14px;
 					<div class="label_hang">
 			            <div class="label_ltit">商品:</div>
 			            <div class="label_rwben2">
-			            	<span class="label_rwb iselect">
+			            	<span class="label_rwb">
 			            	<select id="membermanagerid" name="inDetail.product_id" title="产品">
 								<option>--请选择--</option>
 								<s:iterator value="products" status="sta">

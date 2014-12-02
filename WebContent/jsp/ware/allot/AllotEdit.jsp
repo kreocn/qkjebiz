@@ -52,7 +52,7 @@
 	       		<div class="label_hang">
 		            <div class="label_ltit">单据性质:</div>
 		            <div class="label_rwben">
-		            <span class="label_rwb iselect">
+		            <span class="label_rwb">
 		            <select id="allot.reason" name="allot.reason" title="单据性质" >
 					<option value="0" 
 					<s:if test="allot.reason==0">selected="selected"</s:if>
@@ -71,7 +71,7 @@
 		        <div class="label_hang">
 		            <div class="label_ltit">调入仓库:</div>
 		            <div class="label_rwben2" style="width:auto;">
-				       <span class="label_rwb iselect">
+				       <span class="label_rwb">
 					       <select id="membermanagerid" name="allot.goldid" title="调入仓库" >
 								<s:iterator value="wares" status="sta" var="x">
 								<option value="<s:property value="uuid" />" 
@@ -87,7 +87,7 @@
 		        <div class="label_hang">
 		            <div class="label_ltit">调出仓库:</div>
 		            <div class="label_rwben2" style="width:auto;">
-				       <span class="label_rwb iselect">
+				       <span class="label_rwb">
 					       <select id="membermanagerid" name="allot.sourceid" title="调出仓库" >
 								<s:iterator value="warepowers" status="sta" var="x">
 								<option value="<s:property value="uuid" />" 
@@ -185,7 +185,7 @@
 	        <div class="label_hang">
 	            <div class="label_ltit">调入仓库:</div>
 	            <div class="label_rwben2">
-			       <span class="label_rwb iselect">
+			       <span class="label_rwb">
 				       <select id="membermanagerid" name="allot.goldid" title="调入仓库" >
 							<s:iterator value="wares" status="sta" var="x">
 							<option value="<s:property value="uuid" />" 
@@ -203,7 +203,7 @@
 	        <div class="label_hang">
 	            <div class="label_ltit">调出仓库:</div>
 	            <div class="label_rwben2">
-			       <span class="label_rwb iselect">
+			       <span class="label_rwb">
 				       <select id="membermanagerid" name="allot.sourceid" title="调出仓库" >
 							<s:iterator value="warepowers" status="sta" var="x">
 							<option value="<s:property value="uuid" />" 
@@ -337,7 +337,7 @@
 					<div class="label_hang">
 			            <div class="label_ltit">商品:</div>
 			            <div class="label_rwben2">
-			            	<span class="label_rwb iselect">
+			            	<span class="label_rwb">
 			            	<select id="membermanagerid" name="allotDetail.stock_id" title="产品">
 								<option>--请选择--</option>
 								<s:iterator value="stocks" status="sta">

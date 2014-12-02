@@ -26,7 +26,7 @@ a {
 }
 
 .pt{
-font-size: 22px;
+font-size: 18px;
 font-weight: bold;
 }
 
@@ -143,11 +143,11 @@ font-weight: bold;
 }
 
 .label_main {
-	float: left; width: 100%; padding-bottom:5px;
+	float: left; width: 100%;
 }
 
 .label_hang {
-	float: left; line-height:28px; margin: 3px 0;
+	float: left; line-height: 34px; margin: 3px 0;
 }
 
 .label_hang_sign {
@@ -163,7 +163,7 @@ font-weight: bold;
 }
 
 .label_ltit {
-	float: left; width: 95px; text-align: right; padding-right: 2px; font-weight: bold; white-space: nowrap; word-break: break-all;
+	float: left; line-height: 34px; width: 95px; text-align: right; padding-right: 2px; font-weight: bold; white-space: nowrap; word-break: break-all;
 }
 
 .label_rwben {
@@ -183,7 +183,7 @@ font-weight: bold;
 }
 
 .label_rwb_s {
-	width: 55px; display: inline-block;
+	width: 55px; display: inline-block; vertical-align: middle;
 }
 
 .label_rwben2 .label_rwb,.label_rwbenx .label_rwb {
@@ -432,20 +432,16 @@ font-weight: bold;
 
 .message_prompt {
 	color: #AAA;
-	line-height:26px!important;
 }
 /*form style start*/
 .input-a input[type="text"],.input-a input[type="password"] {
-	width: 100%; height: 26px; line-height: 26px; font-size: 14px; border-radius: 5px; border: none; border: 1px solid #ccc; text-indent: 5px;
-	margin: 0; outline: none;font-family: "微软雅黑";
-}
-
-.input-a select{
-	width:100%; height: 28px; line-height: 28px; font-size: 14px; border-radius: 5px; border: none; border:1px solid #ccc;font-family: "微软雅黑";margin:0;outline: none;
+	width: 100%; height: 26px; line-height: 26px; font-size: 14px; border-radius: 5px; border: none; border: 1px solid #fefefe; text-indent: 8px;
+	margin: 0; outline: none; box-shadow: 0px 0px 5px 0px #909090 inset;
 }
 
 .input-a textarea {
-	width: 100%; font-size: 14px; border-radius: 5px; border: none; border: 1px solid #ddd; padding: 5px 0; text-indent: 5px; margin: 0; outline: none; overflow-y: auto; overflow-x: hidden;font-family: "微软雅黑";
+	width: 100%; font-size: 14px; border-radius: 5px; border: none; border: 1px solid #fefefe; padding: 5px 0px; margin: 0; outline: none;
+	box-shadow: 0px 0px 5px 0px #909090 inset; overflow-y: auto; overflow-x: hidden;
 }
 
 .input-a input[type="button"],.input-a input[type="submit"],.input-a input[type="reset"],.op-area a {
@@ -493,7 +489,7 @@ input[type="button"].input-blue,input[type="submit"].input-blue,input[type="rese
 
 .regular-checkbox+label {
 	background-color: #fafafa; border: 1px solid #cacece; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
-	padding: 8px; border-radius: 3px; display: inline-block; position: relative; top: 5px; margin-right: 5px; left: 2px; line-height: 16px;
+	padding: 9px; border-radius: 3px; display: inline-block; position: relative; top: 5px; margin-right: 5px; left: 2px; line-height: 16px;
 }
 
 .regular-checkbox+label:active,.regular-checkbox:checked+label:active {
@@ -506,7 +502,7 @@ input[type="button"].input-blue,input[type="submit"].input-blue,input[type="rese
 }
 
 .regular-checkbox:checked+label:after {
-	content: '\2714'; font-size: 14px; position: absolute; top: 0px; left: 2px; color: #99a1a7;
+	content: '\2714'; font-size: 14px; position: absolute; top: 0px; left: 3px; color: #99a1a7;
 }
 /*radio*/
 .regular-radio {
@@ -515,12 +511,12 @@ input[type="button"].input-blue,input[type="submit"].input-blue,input[type="rese
 
 .regular-radio+label {
 	-webkit-appearance: none; background-color: #fafafa; border: 1px solid #cacece;
-	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05); padding: 8px; border-radius: 50px; display: inline-block;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05); padding: 9px; border-radius: 50px; display: inline-block;
 	position: relative; top: 5px; margin-right: 5px; left: 2px;
 }
 
 .regular-radio:checked+label:after {
-	content: ' '; width: 10px; height: 10px; border-radius: 50px; position: absolute; top: 3px; background: #99a1a7;
+	content: ' '; width: 12px; height: 12px; border-radius: 50px; position: absolute; top: 3px; background: #99a1a7;
 	box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.3); text-shadow: 0px; left: 3px; font-size: 32px;
 }
 
@@ -598,15 +594,15 @@ input[type="button"].input-blue,input[type="submit"].input-blue,input[type="rese
 }
 
 .iI-s {
-	background-position: 95% 4px;
+	background-position: 95% 7px;
 }
 
 .iI-f {
-	background-position: 3px -27px; text-indent: 20px !important;
+	background-position: 3px -25px; text-indent: 20px !important;
 }
 
 .iI-t {
-	background-position: 3px -59px; text-indent: 20px !important;
+	background-position: 3px -57px; text-indent: 20px !important;
 }
 
 .iI-a {
@@ -633,13 +629,6 @@ input[type="button"].input-blue,input[type="submit"].input-blue,input[type="rese
 
 .dib {
 	display: inline; zoom: 1; *display: inline;
-}
-.yesnull{
-	display: inline-block; width: 16px; height:16px; background: url("../../../images/icon/ico_warn.png") transparent no-repeat 0 -200px;
-	
-}
-.nonull{
-	display: inline-block; width: 16px; height: 16px; background: url("../../../images/icon/ico_warn.png") transparent no-repeat 0 -250px;
 }
 
 /*翻页样式START*/
@@ -845,7 +834,7 @@ input[type="button"].input-blue,input[type="submit"].input-blue,input[type="rese
 }
 
 .sva {
-	/*vertical-align: text-bottom;*/
+	vertical-align: text-bottom;
 }
 
 .sva .formErrorContent {
@@ -864,7 +853,4 @@ table{
 .apply_n table td,.note_area table td,.projs table td{
 	border:1px solid #c5c5c5!important;
 	padding:2px 5px!important;
-}
-.shaddress{
-	font-size:14px; color:#999; line-height:35px;
 }

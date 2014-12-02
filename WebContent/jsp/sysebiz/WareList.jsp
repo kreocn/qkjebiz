@@ -25,9 +25,7 @@
 	        <div class="label_hang">
 	            <div class="label_ltit">仓库分类:</div>
 	            <div class="label_rwben label_rwb">
-	            	<div class="iselect">
 	            	<s:select name="ware.ware_class" list="#{0:'普通库', 1:'藏酒库'}" headerKey="" headerValue="--请选择--" />
-	            	</div>
 	            </div>
 			</div>
         	<div class="label_hang">

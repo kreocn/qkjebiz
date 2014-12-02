@@ -30,9 +30,7 @@
 	       <div class="label_hang">
 		         <div class="label_ltit">仓库类型:</div>
 		         <div class="label_rwben label_rwb">
-	            	<div class="iselect">
 	            	<s:select cssClass="selectKick" title="仓库类型" id="ware.ware_class" name="ware.ware_class" list="#{0:'普通库', 1:'藏酒库'}" value="1" require="required" controlName="仓库类型" />
-	            	</div>
 	            </div>
 	       	</div>
 	 </div>
@@ -83,7 +81,7 @@
 	       		</div>
 	       		<div class="label_hang">
 		            <div class="label_ltit">修改时间:</div>
-		            <div class="label_rwben2">
+		            <div class="label_rwben" style="width:auto;">
 		            <s:date name="ware.lm_time" format="yyyy-MM-dd HH:mm:ss" />
 		            </div>
 	       		</div>
