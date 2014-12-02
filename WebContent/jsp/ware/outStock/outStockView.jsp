@@ -54,8 +54,8 @@
 					</div>
 					<div class="label_hang">
 						<div class="label_ltit">状态:</div>
-						<div class="label_rwben2">
-							<span class="label_rwb iselect"> <s:if
+						<div class="label_rwben">
+							<span class="label_rwb"> <s:if
 									test='0==outStock.send'>借出未还</s:if> <s:if
 									test='1==outStock.send'>借出已还</s:if> <s:if
 									test='2==outStock.send'>新单</s:if> <s:if test='3==outStock.send'>待审核</s:if>
@@ -77,7 +77,7 @@
 					<div class="label_hang">
 						<div class="label_ltit">出库仓库:</div>
 						<div class="label_rwben2" style="width:auto;">
-							<span class="label_rwb iselect"> <select
+							<span class="label_rwb"> <select
 								id="membermanagerid" cssClass="selectKick"
 								name="outStock.store_id" title="出库仓库">
 

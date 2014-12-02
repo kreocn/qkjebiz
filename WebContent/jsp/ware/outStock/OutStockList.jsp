@@ -45,15 +45,12 @@
         	<div class="label_hang">
             <div class="label_ltit">出库仓库:</div>
             <div class="label_rwben label_rwb">
-            	<div class="iselect">
             	<s:select id="membermanagerid" cssClass="selectKick" name="outStock.store_id" title="出库仓库" headerKey="" headerValue="--请选择--" list="wares" listKey="uuid" listValue="ware_name" />
-            	</div>
             </div>
         	</div>
         	<div class="label_hang">
             <div class="label_ltit">单据性质:</div>
             <div class="label_rwben label_rwb">
-            	<div class="iselect">
             	<select id="membermanagerid" cssClass="selectKick" name="outStock.reason" title="状态">
 							<option value="-1">---请选择---</option>
 							<option value="0"
@@ -83,19 +80,16 @@
 							</s:if>
 							>其它</option>
 				</select>
-            	</div>
             </div>
         	</div>
         	<div class="label_hang">
             <div class="label_ltit">状态:</div>
             <div class="label_rwben label_rwb">
-            	<div class="iselect">
             	<select id="membermanagerid" cssClass="selectKick" name="outStock.send" title="状态">
 					<option value="-1">---请选择---</option>
 					<option value="-2">正常订单</option>
 					<option value="5">取消订单</option>
 				</select>
-            	</div>
             </div>
         	</div>
         	

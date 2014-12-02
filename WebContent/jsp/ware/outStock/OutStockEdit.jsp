@@ -41,7 +41,7 @@
 	        <div class="label_hang">
 	            <div class="label_ltit">出库仓库:</div>
 	            <div class="label_rwben2">
-			       <span class="label_rwb iselect">
+			       <span class="label_rwb">
 			       <select id="membermanagerid" cssClass="selectKick" name="outStock.store_id"
 								title="出库仓库">
 									<s:iterator value="wares" status="sta" var="x">
@@ -58,7 +58,7 @@
 	        <div class="label_hang">
 	            <div class="label_ltit">状态:</div>
 	            <div class="label_rwben2">
-			       <span class="label_rwb iselect">
+			       <span class="label_rwb">
 			       <select cssClass="selectKick" id="out" name="outStock.reason" title="状态" onchange="borrow();">
 									<option value="0">销售出库</option>
 									<option value="3">报损</option>

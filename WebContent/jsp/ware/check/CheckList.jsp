@@ -29,30 +29,23 @@
 			<div class="label_hang">
             <div class="label_ltit">商品:</div>
             <div class="label_rwben label_rwb">
-            	<div class="iselect">
             	<s:select id="membermanagerid" cssClass="selectKick" name="check.product_id" title="商品" headerKey="" headerValue="--请选择--" list="products" listKey="uuid" listValue="title" />
-            	</div>
             	</div>
        		</div>
         	<div class="label_hang">
             <div class="label_ltit">盘点仓库:</div>
             <div class="label_rwben label_rwb">
-            	<div class="iselect">
             	<s:select id="membermanagerid" cssClass="selectKick" name="check.store_id" title="仓库" headerKey="" headerValue="--请选择--" list="wares" listKey="uuid" listValue="ware_name" />
-            	</div>
             </div>
         	</div>
         	<div class="label_hang">
             <div class="label_ltit">盘点日期:</div>
             <div class="label_rwben label_rwb">
-            	<div class="iselect">
             	<select id="membermanagerid" cssClass="selectKick" name="check.date" title="盘点日期" >
-							<s:iterator value="checkDates" status="sta" var="x">
-							<option value="<s:property value="date" />" 
-							/><s:date name="date" format="yyyy-MM-dd" />
-							</s:iterator>
+						<s:iterator value="checkDates" status="sta" var="x">
+						<option value="<s:property value="date" />" /><s:date name="date" format="yyyy-MM-dd" />
+						</s:iterator>
 				</select>
-            	</div>
             </div>
         	</div>
         	
@@ -123,23 +116,21 @@
  	<!--盘点仓库 -->
 <div id="addItemForm" title="选择盘点仓库">
 <s:form id="form_addItem" name="form_addItem" action="check_load" namespace="/check" onsubmit="return validator(this);" method="post" theme="simple">
-	<table>
+	<table class="input-a">
 		  <tr>
 		   	<td>
 				<div id="addItemForm" class="label_con" title="请选择盘点仓库">																			
 					<div class="label_hang">																		
 			            <div class="label_ltit">盘点仓库:</div>																				
-			            <div class="label_rwben label_rwb">																				
-			            	<div class="iselect">																			
-			            	<s:select id="membermanagerid" cssClass="selectKick" name="check.store_id" title="仓库" headerKey="" headerValue="--请选择--" list="wares" listKey="uuid" listValue="ware_name" />																			
-			            	</div>																			
+			            <div class="label_rwben label_rwb">													
+			            	<s:select id="membermanagerid" cssClass="selectKick" name="check.store_id" title="仓库" headerKey="" headerValue="--请选择--" list="wares" listKey="uuid" listValue="ware_name" />																
 			            </div>																				
 			        </div>																				
 			        <div class="label_hang label_button tac">																				
 			           <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_CHECK_ADD')">																				
-							<s:submit id="add" name="add" value="确定"  />																
+							<s:submit id="add" name="add" value="确定" class="input-blue"  />																
 							</s:if>																
-							<input type="button" value="关闭" onclick="closeAddForm();" />																
+							<input type="button" value="关闭" onclick="closeAddForm();" class="input-gray" />																
 			        </div>																				
 				</div>
 			</td>
