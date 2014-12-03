@@ -60,7 +60,7 @@ function setSearchStatus(flag) {
 		<tr>
 			<td colspan="8">
 					<span class="order_id">
-						编号:
+						<font color="red">*</font>&nbsp;编号:
 						<span class="order_no">${uuid}</span>
 					</span>
 					<span class="add_time">
