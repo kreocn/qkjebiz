@@ -21,8 +21,19 @@ public class Product {
 	private Double agree_price_1;// (decimal)协议价1
 	private Double agree_price_2;// (decimal)协议价2
 	private Double agree_price_3;// (decimal)协议价3
+	private Integer status;// 是否启用
 	private String lm_user;// (varchar)
 	private Date lm_time;// (timestamp)
+	
+	private String brand_name;
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 
 	public String getProd_code() {
 		return prod_code;
@@ -182,6 +193,14 @@ public class Product {
 
 	public void setLm_time(Date lm_time) {
 		this.lm_time = lm_time;
+	}
+
+	public String getBrand_name() {
+		return brand_name;
+	}
+
+	public void setBrand_name(String brand_name) {
+		this.brand_name = brand_name;
 	}
 
 }

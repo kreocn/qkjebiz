@@ -16,17 +16,9 @@
 			<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="product_load"><s:param name="viewFlag">add</s:param></s:url>" >添加产品</a></span>
 		</s:if>
 	</div>
-	<s:form name="form_serach" id="serach_table"  action="product_list"  method="get" namespace="/qkjmanage" theme="simple">
+	<s:form name="form_serach" action="product_list"  method="get" namespace="/qkjmanage" theme="simple">
 		<div class="label_con">
  			<div class="label_main">
-				<div class="label_hang">
-				       <div class="label_ltit">品名:</div>
-				       <div class="label_rwben"><s:textfield name="product.title" title="品名" dataLength="0,85" controlName="品名" /></div>
-				</div>
-				<div class="label_hang">
-				       <div class="label_ltit">品名:</div>
-				       <div class="label_rwben"><s:textfield name="product.title" title="品名" dataLength="0,85" controlName="品名" /></div>
-				</div>
 				<div class="label_hang">
 				       <div class="label_ltit">品名:</div>
 				       <div class="label_rwben"><s:textfield name="product.title" title="品名" dataLength="0,85" controlName="品名" /></div>
@@ -66,11 +58,11 @@
 			  		<tr id="showtr${uuid}">
 					    <td class="td1">${uuid}</td>
 						<td class="td2">${prod_code}</td>
-						<td class="td1">${brand}</td>
+						<td class="td1">${brand_name}</td>
 						<td class="td2">${title}</td>
 						<td class="td5">${spec}</td>
 						<td class="td1">${case_spec}</td>
-						<td class="td3">档次</td>
+						<td class="td3"><s:if test='1==grade'>低端</s:if><s:if test='2==grade'>中端</s:if><s:if test='3==grade'>中高端</s:if><s:if test='4==grade'>高端</s:if></td>
 						<td class="td3">${market_price}</td>
 						<td class="td3">${group_price}</td>
 						<td class="td3">${dealer_price}</td>
