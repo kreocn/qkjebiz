@@ -18,8 +18,6 @@ var setting = {
 };
 var zNodes =[
       {id:1, pId:0, name:"天佑德", open:false},
-      {id:2, pId:0, name:"八大作坊", open:false},
-      {id:3, pId:0, name:"高原海拔", open:false},
       {id:31, pId:3, name:"海拔2600天佑德"},
       {id:32, pId:3, name:"海拔2800天佑德"},
       {id:33, pId:3, name:"海拔3000天佑德"},
