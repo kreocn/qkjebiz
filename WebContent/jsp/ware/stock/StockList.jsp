@@ -21,23 +21,19 @@
 			<div class="label_hang">
             <div class="label_ltit">商品名称:</div>
             <div class="label_rwben label_rwb">
-            	<div class="iselect">
             	<s:select id="membermanagerid" cssClass="selectKick" name="stock.product_id" title="状态" headerKey="" headerValue="--请选择--" list="products" listKey="uuid" listValue="title" />
-            	</div>
             </div>
        		</div>
         	<div class="label_hang">
             <div class="label_ltit">所在仓库:</div>
             <div class="label_rwben label_rwb">
-            	<div class="iselect">
             	<s:select id="membermanagerid" cssClass="selectKick" name="stock.store_id" title="状态" headerKey="" headerValue="--请选择--" list="wares" listKey="uuid" listValue="ware_name" />
-            	</div>
             </div>
         	</div>
         	<div class="label_hang">
             <div class="label_ltit">商品名称:</div>
             <div class="label_rwben label_rwb" style="width:auto;">
-            	<div class="iselect" style="float:left;">
+            	<div  style="float:left;">
             	<s:select id="membermanagerid" cssClass="selectKick" name="stock.groupQ" title="状态" headerKey="0" headerValue="--请选择--" list="inproducts" listKey="product_id" listValue="product_name" />
             	</div>
             	<span style="float:left;">&nbsp;(统计查询)</span>

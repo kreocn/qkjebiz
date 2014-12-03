@@ -120,7 +120,7 @@
 			<isNotEmpty prepend="AND" property="caiClo"><![CDATA[  a.`close_fd_status`=10 and s.biz_sign='ACTIVE_MDY_FDCSTATUS']]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="shuClo"><![CDATA[  a.`close_nd_status`=10 and s.biz_sign='ACTIVE_MDY_NDCSTATUS' ]]></isNotEmpty>
 		</dynamic>
-		<![CDATA[ GROUP BY s.`biz_user`  ]]>
+		<![CDATA[ GROUP BY s.`biz_user` ORDER BY s.`biz_time` DESC  ]]>
 		
 	</select>
 	
