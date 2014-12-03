@@ -56,7 +56,7 @@ var DialogIFrame = function(config){
 };
 
 var sobj01;
-var selectDept = function(dcode_id, dname_id, isLoad, p_m){
+var selectDept = function(dcode_id, dname_id, isLoad, p_m,b_m){
 	sobj01 = new DialogIFrame({ src : '/sys/dept_permit_select?objname=sobj01',
 	title : "选择部门",
 	width : 200,
@@ -65,14 +65,19 @@ var selectDept = function(dcode_id, dname_id, isLoad, p_m){
 		$("#" + dcode_id).val(val1);
 		$("#" + dname_id).val(val2);
 		if (isLoad) {
-			loadManagers(val1, p_m);
+			if(b_m==1){
+				loadManagers(val1, p_m,'1');
+			}else{
+				loadManagers(val1, p_m);
+			}
+			
 		}
 	};
 	sobj01.create();
 	sobj01.open();
 };
 
-var loadManagers = function(dept_code, curr_apply_user){
+var loadManagers = function(dept_code, curr_apply_user,b_m){
 	var ajax = new Common_Ajax('ajax_member_message');
 	ajax.config.action_url = ajax_url;
 	ajax.config._success = function(data, textStatus){
@@ -83,7 +88,11 @@ var loadManagers = function(dept_code, curr_apply_user){
 			var l = $(data).length;
 			if (l == 1) { // 如果只有一个结果,那么直接选中
 				uc.addOption($(data)[0].user_name, $(data)[0].uuid);
-				uc.setSelectedValue($(data)[0].uuid);
+				if(b_m==1 && dept_code==211){
+				}else{
+					uc.setSelectedValue($(data)[0].uuid);
+				}
+				
 			} else if (l > 1) {
 				$.each(data, function(i, n){
 					uc.addOption(n.user_name, n.uuid);
