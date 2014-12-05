@@ -57,7 +57,6 @@
 	       		</div>
 	       		<div class="label_hang">
 	            <div class="label_ltit">状态:</div>
-	            <div class="label_rwben2">
 			       <span class="label_rwb">
 	            	<s:if test='0==outStock.send'>借出未还</s:if>
 					<s:if test='1==outStock.send'>借出已还</s:if>
@@ -68,7 +67,6 @@
 					<s:if test='6==outStock.send'><span class="message_error">未返利</span></s:if><s:if test='1==lading.rebates_flag'><span class="message_pass">返利中</span></s:if><s:if test='2==lading.rebates_flag'>已返利</s:if>
 				
 	            	</span>
-	            </div>
 	            </div>
 	            
 	            <div class="label_hang">
@@ -97,7 +95,7 @@
 	       		
 	       		<div class="label_hang">
 				<div class="label_ltit">添加时间:</div>
-				<div class="label_rwben2"><s:date name="outStock.add_timer" format="yyyy-MM-dd HH:mm:ss" /></div>
+				<div class="label_rwben" style="width:auto;"><s:date name="outStock.add_timer" format="yyyy-MM-dd HH:mm:ss" /></div>
 				</div>
 	       		<div class="label_hang">
 		            <div class="label_ltit">最后修改人:</div>
@@ -107,7 +105,7 @@
 	       		</div>
 	       		<div class="label_hang">
 		            <div class="label_ltit">最后修改时间:</div>
-		            <div class="label_rwben2">
+		            <div class="label_rwben" style="width:auto;">
 		            <s:date name="outStock.lm_timer" format="yyyy-MM-dd HH:mm:ss" />
 		            </div>
 	       		</div>
@@ -120,7 +118,7 @@
 	       		</div>
 	       		<div class="label_hang">
 		            <div class="label_ltit">确认时间:</div>
-		            <div class="label_rwben2">
+		            <div class="label_rwbenx">
 		            <s:date name="outStock.manager_check_time" format="yyyy-MM-dd HH:mm:ss" />
 		            </div>
 	       		</div>
@@ -335,57 +333,56 @@
 	<table>
 		  <tr>
 		   	<td>
-		   	<div class="label_main">
+		   	<div class="label_main input-a">
 				<div id="addItemForm" class="label_con" title="请选择出库商品">	
 					<div class="label_hang">
-					<s:hidden id="member_id" name="mid"></s:hidden>
-					<s:hidden id="member_mebile" name="mmebile"></s:hidden>
-					<s:hidden id="member_name" name="mname"></s:hidden>
-					<s:hidden id="member_adress" name="madress"></s:hidden>
-					<s:hidden id="member_price" name="mprice"></s:hidden>
-			            <div class="label_ltit">商品:</div>
+						<s:hidden id="member_id" name="mid"></s:hidden>
+						<s:hidden id="member_mebile" name="mmebile"></s:hidden>
+						<s:hidden id="member_name" name="mname"></s:hidden>
+						<s:hidden id="member_adress" name="madress"></s:hidden>
+						<s:hidden id="member_price" name="mprice"></s:hidden>
+						<div class="label_ltit">商品:</div>
 			            <div class="label_rwben2">
-			            	<span class="label_rwb">
-			            	<select id="membermanagerid" name="outDetail.product_id" title="产品">
-								<option>--请选择--</option>
-								<s:iterator value="stocks" status="sta">
-								<option data='<s:property value="market_price" />#<s:property value="group_price" />#<s:property value="dealer_price" />#<s:property value="agree_price_1" />#<s:property value="agree_price_2" />#<s:property value="agree_price_3" />' data_case='<s:property value="case_spec" />' value='<s:property value="uuid" />'><s:property value="product_name" /></option>
-								</s:iterator>
-							</select>
-							</span>
-			            </div>
-			        </div>																		
-					
+							<div class="label_rwb">
+								<select id="membermanagerid" name="outDetail.product_id" title="产品">
+									<option>--请选择--</option>
+									<s:iterator value="stocks" status="sta">
+									<option data='<s:property value="market_price" />#<s:property value="group_price" />#<s:property value="dealer_price" />#<s:property value="agree_price_1" />#<s:property value="agree_price_2" />#<s:property value="agree_price_3" />' data_case='<s:property value="case_spec" />' value='<s:property value="uuid" />'><s:property value="product_name" /></option>
+									</s:iterator>
+								</select>
+							</div>
+						</div>
+			        </div>			
 			        <div class="label_hang">
 		            <div class="label_ltit">单价:</div>
-		            <div class="label_rwben2">
-		            <div class="label_rwb">
-		            <s:textfield id="pri" name="outDetail.price" title="单价" dataType="number" cssClass="validate[required]" />
-					<span id="per_price_select_area"><select id="per_price_select"></select></span>
-					</div>
-		            </div>
+			            <div class="label_rwben2">
+				            <div class="label_rwb">
+					            <s:textfield id="pri" name="outDetail.price" title="单价" dataType="number" cssClass="validate[required]" />
+								<span id="per_price_select_area"><select id="per_price_select"></select></span>
+							</div>
+			            </div>
 	       		</div>
 	       		<div class="label_hang">
 		            <div class="label_ltit">数量:</div>
-		            <div class="label_rwben2">
-		            <div class="label_rwb">
-			            <s:textfield id="num" name="outDetail.num" title="数量" dataType="integer" cssClass="validate[required]" />
-						<span id="ladingItemnumCase"></span>
-					</div>
-		            </div>
+			            <div class="label_rwben2">
+				            <div class="label_rwb">
+					            <s:textfield id="num" name="outDetail.num" title="数量" dataType="integer" cssClass="validate[required]" />
+								<span id="ladingItemnumCase"></span>
+							</div>
+			            </div>
 	       		</div>	
 	       		<div class="label_hang">
 		            <div class="label_ltit">合计:</div>
-		            <div class="label_rwben2">
-		            <div class="label_rwb"><s:textfield name="outDetail.totel" title="合计"/></div>
-		            </div>
+			            <div class="label_rwben2">
+		            		<div class="label_rwb"><s:textfield name="outDetail.totel" title="合计"/></div>
+		            	</div>
 	       		</div>																				
 			        <div class="label_hang label_button tac">
 			        <s:hidden name="outDetail.lading_id" title="提货单ID" value="%{outStock.uuid}" />
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_ADD')">
 					<s:submit id="add" name="add" value="确定" action="outDetail_add" onclick="return flag();"/>
 					</s:if>
-					<input type="button" value="关闭" onclick="closeAddForm();" />	
+					<input type="button" value="关闭" onclick="closeAddForm();" class="input-gray" />	
 			        </div>
 			       </div>																				
 				</div>

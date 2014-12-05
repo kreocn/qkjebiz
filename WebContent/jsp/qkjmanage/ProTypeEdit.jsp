@@ -45,7 +45,7 @@
 	       		</div>
 	       		<div class="label_hang">
 		            <div class="label_ltit">修改时间:</div>
-		            <div class="label_rwben2">
+		            <div class="label_rwbenx">
 		            <s:date name="proType.lm_time" format="yyyy-MM-dd HH:mm:ss" />
 		            </div>
 	       		</div>

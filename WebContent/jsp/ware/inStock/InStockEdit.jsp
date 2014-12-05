@@ -84,7 +84,7 @@ font-size: 14px;
 	       		</div>
 	       		<div class="label_hang">
 		            <div class="label_ltit">确认时间:</div>
-		            <div class="label_rwben2" style="width:auto;">
+		            <div class="label_rwbenx">
 		            <s:date name="inStock.contime" format="yyyy-MM-dd HH:mm:ss" />
 		            </div>
 	       		</div>
@@ -253,7 +253,7 @@ font-size: 14px;
 	<table>
 		  <tr>
 		   	<td>
-		   	<div class="label_main">
+		   	<div class="label_main input-a">
 				<div id="addItemForm" class="label_con" title="请选择入库商品">	
 					<div class="label_hang">
 			            <div class="label_ltit">商品:</div>
@@ -295,7 +295,7 @@ font-size: 14px;
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_ADD')">
 					<s:submit id="add" name="add" value="确定" action="inDetail_add" onclick="return flag();" />
 					</s:if>
-					<input type="button" value="关闭" onclick="closeAddForm();" />															
+					<input type="button" value="关闭" onclick="closeAddForm();" class="input-gray" />															
 			        </div>
 			       </div>																				
 				</div>

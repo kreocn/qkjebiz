@@ -21,20 +21,16 @@
 		<div class="label_main">
 	        	<div class="label_hang">
 		            <div class="label_ltit">单据号:</div>
-		            <div class="label_rwben2">
 		            <div class="label_rwb"><s:textfield name="outStock.ordernum" title="单据号"  rows="4"></s:textfield></div>
-		            </div>
 	       		</div>
 	     </div>
 	     
 	     <div class="label_main">
 	        <div class="label_hang">
 	            <div class="label_ltit">出库时间:</div>
-	            <div class="label_rwben2">
 	            	<span class="label_rwb nw">
 					<input class="datepicker iI-t validate[required,custom[date]]" type="text"  name="outStock.date" title="从" value="${it:formatDate(outStock.date,'yyyy-MM-dd')}" />
 					</span>
-	            </div>
 	        </div>
 	     </div>
 	     <div class="label_main">
