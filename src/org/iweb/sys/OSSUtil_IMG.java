@@ -22,9 +22,12 @@ import com.aliyun.openservices.oss.model.PutObjectResult;
  */
 public class OSSUtil_IMG {
 	private static Log log = LogFactory.getLog(OSSUtil_IMG.class);
-	private final static String key = "otx1ZFIBfPBRgPEv";
-	private final static String secret = "A1PwcIcvavGUhjZ7amtIEJkI4Xg4QO";
-	private final static String endpoint = "http://images.qkjchina.com/";
+	// old key:otx1ZFIBfPBRgPEv
+	private final static String key = "MSbILYuT0tRTYXVm";
+	// old secret A1PwcIcvavGUhjZ7amtIEJkI4Xg4QO
+	private final static String secret = "gZThZaap86ETlUeLvQh9AOnQue1GfL";
+	// old endpoint:http://images.qkjchina.com/
+	private final static String endpoint = "http://images01.qkjchina.com/";
 	private static OSSClient client;
 
 	static {
@@ -155,10 +158,10 @@ public class OSSUtil_IMG {
 	public static void main(String[] args) {
 		try {
 			ObjectMetadata meta = new ObjectMetadata();
-			File f = new File("D://bcd.jpg");
+			File f = new File("D://x2.jpg");
 			// InputStream in = new FileInputStream(f);
 			meta.setContentLength(f.length());
-			OSSUtil_IMG.uploadFile("qkjebiz-images", "123456.jpg", f, meta);
+			OSSUtil_IMG.uploadFile("qkjbj01", "x123.jpg", f, meta);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
