@@ -28,6 +28,7 @@ public class OSSUtil_IMG {
 	private final static String secret = "gZThZaap86ETlUeLvQh9AOnQue1GfL";
 	// old endpoint:http://images.qkjchina.com/
 	private final static String endpoint = "http://images01.qkjchina.com/";
+	private final static String default_bucket = "qkjbj01";
 	private static OSSClient client;
 
 	static {
@@ -145,7 +146,7 @@ public class OSSUtil_IMG {
 		try {
 			ObjectMetadata meta = new ObjectMetadata();
 			meta.setContentLength(content_length);
-			return uploadFile("qkjebiz-images", file_name, in, meta);
+			return uploadFile(default_bucket, file_name, in, meta);
 		} catch (Exception e) {
 			return false;
 		}
