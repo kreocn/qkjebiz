@@ -12,6 +12,9 @@
 <div class="main" >
 	<div class="dq_step">
 		${path}
+		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_PRODUCT_SELECT')">
+			<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="proType_lista"></s:url>" >更新产品树</a></span>
+		</s:if>
 		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_PRODUCT_ADD')">
 			<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="product_load"><s:param name="viewFlag">add</s:param></s:url>" >添加产品</a></span>
 		</s:if>

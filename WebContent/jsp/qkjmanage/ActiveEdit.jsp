@@ -178,9 +178,9 @@ color: #008000;
 					<s:if test="active.sd_status==0">新单</s:if>
 					<s:if test="active.sd_status==5"><font class="message_error">审核退回</font>(${active.sd_user_name})</s:if>
 					<s:if test="active.sd_status==10"><font class="message_warning">待审核</font></s:if>
-					<s:if test="active.sd_status==30"><font class="message_pass">经理/大区已审</font>(${active.sd_user_name})</s:if>
-					<s:if test="active.sd_status==40"><font class="message_pass">运营总监已审</font>(${active.sd_user_name})</s:if>
-					<s:if test="active.sd_status==50"><font class="message_pass">业务副总已审</font>(${active.sd_user_name})</s:if>
+					<s:if test="active.sd_status==30"><font class="message_pass">大区已审</font>(${active.sd_user_name})</s:if>
+					<s:if test="active.sd_status==40"><font class="message_pass">总监已审</font>(${active.sd_user_name})</s:if>
+					<s:if test="active.sd_status==50"><font class="message_pass">副总已审</font>(${active.sd_user_name})</s:if>
 					<s:if test="active.sd_status==60"><font class="message_pass">总经理已审</font>(${active.sd_user_name})</s:if>
 				</div>
 				<div class="zhuangtai" title="${it:formatDate(active.smd_time,'yyyy-MM-dd HH:mm:ss')}">
@@ -535,9 +535,9 @@ color: #008000;
 					<s:if test="active.sd_status==0">初始状态</s:if>
 					<s:if test="active.sd_status==5"><font class="message_error">审核退回</font>(${active.sd_user_name} ${it:formatDate(active.sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 					<s:if test="active.sd_status==10"><font class="message_warning">待审核</font></s:if>
-					<s:if test="active.sd_status==30"><font class="message_pass">经理/大区已审</font>(${active.sd_user_name} ${it:formatDate(active.sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
-					<s:if test="active.sd_status==40"><font class="message_pass">运营总监已审</font>(${active.sd_user_name} ${it:formatDate(active.sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
-					<s:if test="active.sd_status==50"><font class="message_pass">业务副总已审</font>(${active.sd_user_name} ${it:formatDate(active.sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+					<s:if test="active.sd_status==30"><font class="message_pass">大区已审</font>(${active.sd_user_name} ${it:formatDate(active.sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+					<s:if test="active.sd_status==40"><font class="message_pass">总监已审</font>(${active.sd_user_name} ${it:formatDate(active.sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+					<s:if test="active.sd_status==50"><font class="message_pass">副总已审</font>(${active.sd_user_name} ${it:formatDate(active.sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 					
 				</div>
         	</div>
@@ -581,7 +581,7 @@ color: #008000;
         
         
         </s:if>
-      	<s:if test="null != active && (active.status==1||active.status==2)">
+      	<s:if test="null != active&&(active.status>=1)">
         
         <div class="label_main">
         <div class="label_hang">
@@ -621,7 +621,7 @@ color: #008000;
 <div class="label_main">
 	<div class="label_hang">
 	    <div class="label_ltit">产品:</div>
-	    <!-- <div class="label_rwben label_rwb">
+	   <div class="label_rwben label_rwb">
 	    	<div class="iselect">
 	    	<select name="activeProduct.product_id" title="产品">
 		    	<s:iterator value="products" status="sta">
@@ -631,13 +631,13 @@ color: #008000;
 				</s:iterator>
 			</select>
 			</div>
-	    </div> -->
-	    <div class="label_rwben">
+	    </div>
+	    <!-- <div class="label_rwben">
 	    	<s:textfield name="activeProduct.product_id"   id="citySel" onclick="showMenu(); return false;"  />
 	    	<div id="menuContent" class="menuContent">
 		        <ul id="treeDemo" class="ztree"></ul>
 		    </div>
-	    </div>
+	    </div> -->
 	</div>
 	<div class="label_hang">
 	    <div class="label_ltit">单价:</div>

@@ -1,10 +1,30 @@
 package com.qkj.manage.action;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
 import java.util.*;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.logging.*;
+import org.apache.http.HttpRequest;
 import org.iweb.sys.*;
+
+import sun.misc.Request;
+
 import com.opensymphony.xwork2.ActionSupport;
 import com.qkj.manage.domain.ProType;
+import com.qkj.manage.domain.Product;
 import com.qkj.manage.dao.ProTypeDAO;
+import com.qkj.manage.dao.ProductDAO;
 
 public class ProTypeAction extends ActionSupport implements ActionAttr {
 	private static final long serialVersionUID = 1L;
@@ -19,7 +39,10 @@ public class ProTypeAction extends ActionSupport implements ActionAttr {
 	private int recCount;
 	private int pageSize;
 	private int currPage;
+	private static List<Product> products;
+	private static Product product;
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;产品类型";
+	String wpath=System.getProperty("user.dir");
 	public String getPath() {
 		return path;
 	}
@@ -78,6 +101,67 @@ public class ProTypeAction extends ActionSupport implements ActionAttr {
 
 	public void setCurrPage(int currPage) {
 		this.currPage = currPage;
+	}
+	
+	public String lista() throws Exception{
+		String p=IWebConfig.getConfigMap().get("WebAbsolutePath");
+
+		OutputStreamWriter out =new OutputStreamWriter(new FileOutputStream(p+"/js/zTreeJs/Result.js"),"UTF-8");
+	
+        ProTypeDAO ptdao=new ProTypeDAO();
+        proTypes=ptdao.list(null);
+        ProductDAO pdao=new ProductDAO();
+        products=pdao.list(null);
+        String info=null;
+        info="var zNodes =[";
+        out.write(info);
+        for (int i = 0; i < proTypes.size(); i++) {
+    	    proType=proTypes.get(i);
+    	    info="{id:"+proType.getUuid()+""+","+" pId:0, name:"+"'"+proType.getName()+"'"+", open:false},"+'\n';
+    	    out.write(info);
+    	    for(int j=0;j<products.size();j++){
+    	    	product=products.get(j);
+    	    	String uuid=proType.getUuid()+"";
+    	    	if(uuid.equals(product.getBrand())){
+    	    		int ps=proTypes.size()-1;
+    	    		int pr=products.size()-1;
+    	    		System.out.println(ps+"ababab"+pr);
+    	    		if(i==ps && j==pr){
+    	    			System.out.println("aaaa");
+    	    			info="{id:"+uuid+product.getUuid()+","+" pId:"+uuid+", name:"+"'"+product.getTitle()+"'"+"}"+'\n';
+    	    		}else{
+    	    			info="{id:"+uuid+product.getUuid()+","+" pId:"+uuid+", name:"+"'"+product.getTitle()+"'"+"},"+'\n';
+    	    		}
+    	    		
+    	    		out.write(info);
+    	    	}
+    	    }
+    	  }
+        info=" ];";
+        out.write(info);
+    	   out.flush();
+    	   out.close();
+    	   return "success";
+	}
+	
+	public String listr() throws Exception{
+		BufferedReader bufferredReader=null;
+        try {
+            System.out.println("以字符为单位读取文件内容，一次读一个字节：");
+            // 一次读一个字符
+            bufferredReader = new BufferedReader(new FileReader("D:\\Result.txt"));
+            String tempchar;
+            while ((tempchar = bufferredReader.readLine()) != null) {
+                // 对于windows下，\r\n这两个字符在一起时，表示一个换行。
+                // 但如果这两个字符分开显示时，会换两次行。
+                // 因此，屏蔽掉\r，或者屏蔽\n。否则，将会多出很多空行。
+                    System.out.print(tempchar);
+            }
+            bufferredReader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    	   return "success";
 	}
 
 	public String list() throws Exception {
@@ -166,4 +250,20 @@ public class ProTypeAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
+	
+	  public static void main(String[] args) throws Exception {  
+	        System.out.println(Thread.currentThread().getContextClassLoader().getResource(""));
+	        System.out.println(ProTypeAction.class.getClassLoader().getResource(""));  
+	        
+	        System.out.println(ClassLoader.getSystemResource(""));  
+	        System.out.println(ProTypeAction.class.getResource(""));  
+	        System.out.println(ProTypeAction.class.getResource("/"));
+	        //Class文件所在路径
+	        System.out.println(new File("/").getAbsolutePath());  
+	        System.out.println(System.getProperty("user.dir"));  
+	        File file = new File(System.getProperty("user.dir")); 
+	        File directory = new File("");// 参数为空
+	        String courseFile = directory.getCanonicalPath();
+	        System.out.println(courseFile);
+	  }
 }
