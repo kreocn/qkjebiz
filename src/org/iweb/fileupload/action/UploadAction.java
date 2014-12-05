@@ -123,11 +123,11 @@ public class UploadAction extends ActionSupport {
 					&& contentLength > Integer.parseInt(IWebConfig.getConfigMap().get("permitImageLength"))) {
 				err = "图片超过最大限制,不能超过500K";
 			} else {
-				String filename = "qkjebiz/" + ToolsUtil.getTimeTimeMillis() + "_" + ToolsUtil.getRandomCode(10) + '.' + extensionName;
+				String filename = "qkjebiz01/" + ToolsUtil.getTimeTimeMillis() + "_" + ToolsUtil.getRandomCode(10) + '.' + extensionName;
 				// 上传到阿里云存储
 				OSSUtil_IMG.uploadFile(filename, in, contentLength);
 				// 返回图片地址
-				msg = "!http://images.qkjchina.com/" + filename;
+				msg = "!http://images01.qkjchina.com/" + filename;
 				log.info("上传文件成功:" + msg);
 			}
 		} else {
