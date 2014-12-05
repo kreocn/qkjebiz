@@ -170,8 +170,8 @@ cursor: pointer;
 		<th class="td1">活动状态</th>
 		<th class="td3">销售审核状态</th>
 		<th class="td3">销管审核状态</th>
-		<th class="td5">财务(审)</th>
-		<th class="td5">财务(结)</th>
+		<th class="td5">财务申</th>
+		<th class="td5">财务结</th>
 		<th class="td3">标识</th>
 		<th class="td4">操作</th>
 		<th class="td0">查看</th>
@@ -181,7 +181,7 @@ cursor: pointer;
 		    <td class="td1 nw">${uuid}</td>
 			<td class="td2 nw">${apply_dept_name}</td>
 			<td class="td1 nw">${apply_user_name}</td>
-			<td class="td5 longnote" title="${theme}">${it:subString(theme,22)}</td>
+			<td class="td5 longnote" title="${theme}">${it:subString(theme,18)}</td>
 			<td class="td5 nw" title="${address}">${it:subString(address,6)}</td>
 			<td  class="td1">
 				<s:if test="status==-1"><font class="message_error">已作废</font></s:if>
