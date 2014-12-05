@@ -8,7 +8,9 @@
 <title>出库--<s:text name="APP_NAME" /></title>
 <s:action name="ref" namespace="/manager" executeResult="true" />
 </head>
-
+<style>
+body{font-size:14px;}
+</style>
 <body>
 <div class="main">
 	<div class="dq_step">
@@ -21,22 +23,16 @@
 	<div class="label_main">
 	        	<div class="label_hang">
 		            <div class="label_ltit">单据号:</div>
-		            <div class="label_rwben2">
-		            <div class="label_rwb"><s:property value="outStock.ordernum" />
-			<s:hidden name="outStock.uuid"></s:hidden></div>
-		            </div>
+		            <div class="label_rwb"><s:property value="outStock.ordernum" /><s:hidden name="outStock.uuid"></s:hidden></div>
 	       		</div>
 	 </div>
 	 <div class="label_main">
 	        	<div class="label_hang">
 		            <div class="label_ltit">出库时间:</div>
-		            <div class="label_rwben2">
 		            <div class="label_rwb"><s:date name="outStock.date" format="yyyy-MM-dd" /><s:hidden name="outStock.date" title="出库时间" /></div>
-		            </div>
 	       		</div>
 	       		<div class="label_hang">
 		            <div class="label_ltit">状态:</div>
-		            <div class="label_rwben2">
 		            <div class="label_rwb">
 		            <s:if test='0==outStock.send'>借出未还</s:if>
 					<s:if test='1==outStock.send'>借出已还</s:if>
@@ -44,7 +40,6 @@
 					<s:if test='3==outStock.send'>待审核</s:if>
 					<s:if test='4==outStock.send'>结案-<s:date name="lading.close_time" format="yyyy-MM-dd HH:mm:ss" /></s:if>
 					</div>
-		            </div>
 	       		</div>
 	 </div>
 	 <s:if test="%{outStock.reason==0}"><!-- 销售出库，填加会员信息，要审核 -->

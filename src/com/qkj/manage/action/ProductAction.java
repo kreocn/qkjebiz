@@ -132,14 +132,16 @@ public class ProductAction extends ActionSupport {
 			} else if ("add".equals(viewFlag)) {
 				this.setProduct(null);
 				this.setProTypes(ptd.list(null));
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/product_list?viewFlag=relist'>产品列表</a>&nbsp;&gt;&nbsp;增加产品";
 			} else if ("mdy".equals(viewFlag)) {
 				map.clear();
 				map.put("uuid", product.getUuid());
 				if (null == map.get("uuid"))
 					this.setProduct(null);
 				else
-					this.setProduct((Product) dao.list(map).get(0));
+				this.setProduct((Product) dao.list(map).get(0));
 				this.setProTypes(ptd.list(null));
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/product_list?viewFlag=relist'>产品列表</a>&nbsp;&gt;&nbsp;修改产品";
 			} else {
 				this.setProduct(null);
 				setMessage("无操作类型!");

@@ -332,7 +332,7 @@
 	<table>
 		  <tr>
 		   	<td>
-		   	<div class="label_main">
+		   	<div class="label_main input-a">
 				<div id="addItemForm" class="label_con" title="请选择调库商品">	
 					<div class="label_hang">
 			            <div class="label_ltit">商品:</div>
@@ -364,7 +364,7 @@
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_ALLOT_ADD')">
 					<s:submit id="add" name="add" value="确定" action="allotDetail_add" />
 					</s:if>
-					<input type="button" value="关闭" onclick="closeAddForm();" />
+					<input type="button" value="关闭" onclick="closeAddForm();" class="input-gray" />
 			        </div>
 			       </div>																				
 				</div>
