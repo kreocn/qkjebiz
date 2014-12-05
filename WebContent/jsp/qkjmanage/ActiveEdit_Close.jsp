@@ -199,9 +199,9 @@ color: #008000;
 					<s:if test="active.close_sd_status==0">新单</s:if>
 					<s:if test="active.close_sd_status==5"><font class="message_error">审核退回</font>(${active.close_sd_user_name})</s:if>
 					<s:if test="active.close_sd_status==10"><font class="message_warning">待审核</font></s:if>
-					<s:if test="active.close_sd_status==30"><font class="message_pass">经理/大区已审</font>(${active.close_sd_user_name})</s:if>
-					<s:if test="active.close_sd_status==40"><font class="message_pass">运营总监已审</font>(${active.close_sd_user_name})</s:if>
-					<s:if test="active.close_sd_status==50"><font class="message_pass">业务副总已审</font>(${active.close_sd_user_name})</s:if>
+					<s:if test="active.close_sd_status==30"><font class="message_pass">大区已审</font>(${active.close_sd_user_name})</s:if>
+					<s:if test="active.close_sd_status==40"><font class="message_pass">总监已审</font>(${active.close_sd_user_name})</s:if>
+					<s:if test="active.close_sd_status==50"><font class="message_pass">副总已审</font>(${active.close_sd_user_name})</s:if>
 					<s:if test="active.close_sd_status==60"><font class="message_pass">总经理已审</font>(${active.close_sd_user_name})</s:if>
 				</div>
 				<div class="zhuangtai" title="${it:formatDate(active.close_smd_time,'yyyy-MM-dd HH:mm:ss')}">
@@ -216,8 +216,8 @@ color: #008000;
 				<div class="zhuangtai" title="${it:formatDate(active.close_smd_time,'yyyy-MM-dd HH:mm:ss')}">
 					财务部审核状态:
 					<s:if test="active.close_fd_status==0 || active.fd_status==null">未确认</s:if>
-					<s:if test="active.close_fd_status==5"><font class="message_error">审核退回</font>(${active.close_fd_name}})</s:if>
-					<s:if test="active.close_fd_status==10"><font class="message_pass">财务已审</font>(${active.close_fd_name}})</s:if>
+					<s:if test="active.close_fd_status==5"><font class="message_error">审核退回</font>(${active.close_fd_name})</s:if>
+					<s:if test="active.close_fd_status==10"><font class="message_pass">财务已审</font>(${active.close_fd_name})</s:if>
 				</div>
 				<div class="zhuangtai" title="${it:formatDate(active.close_smd_time,'yyyy-MM-dd HH:mm:ss')}">
 					数据中心审核状态:
@@ -718,9 +718,9 @@ color: #008000;
 					<s:if test="active.close_sd_status==0">新单</s:if>
 					<s:if test="active.close_sd_status==5"><font class="message_error">审核退回</font>(${active.close_sd_user_name} ${it:formatDate(active.close_sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 					<s:if test="active.close_sd_status==10"><font class="message_warning">待审核</font></s:if>
-					<s:if test="active.close_sd_status==30"><font class="message_pass">经理/大区已审</font>(${active.close_sd_user_name} ${it:formatDate(active.close_sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
-					<s:if test="active.close_sd_status==40"><font class="message_pass">运营总监已审</font>(${active.close_sd_user_name} ${it:formatDate(active.close_sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
-					<s:if test="active.close_sd_status==50"><font class="message_pass">业务副总已审</font>(${active.close_sd_user_name} ${it:formatDate(active.close_sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+					<s:if test="active.close_sd_status==30"><font class="message_pass">大区已审</font>(${active.close_sd_user_name} ${it:formatDate(active.close_sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+					<s:if test="active.close_sd_status==40"><font class="message_pass">总监已审</font>(${active.close_sd_user_name} ${it:formatDate(active.close_sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+					<s:if test="active.close_sd_status==50"><font class="message_pass">副总已审</font>(${active.close_sd_user_name} ${it:formatDate(active.close_sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 					
 				</div>
 				</s:if>

@@ -104,9 +104,9 @@ color: #008000;
 					<s:if test="active.sd_status==0">新单</s:if>
 					<s:if test="active.sd_status==5"><font class="message_error">审核退回</font>(${active.sd_user_name})</s:if>
 					<s:if test="active.sd_status==10"><font class="message_warning">待审核</font></s:if>
-					<s:if test="active.sd_status==30"><font class="message_pass">经理/大区已审</font>(${active.sd_user_name})</s:if>
-					<s:if test="active.sd_status==40">	<font class="message_pass">运营总监已审</font>(${active.sd_user_name})</s:if>
-					<s:if test="active.sd_status==50"><font class="message_pass">业务副总已审</font>(${active.sd_user_name})</s:if>
+					<s:if test="active.sd_status==30"><font class="message_pass">大区已审</font>(${active.sd_user_name})</s:if>
+					<s:if test="active.sd_status==40">	<font class="message_pass">总监已审</font>(${active.sd_user_name})</s:if>
+					<s:if test="active.sd_status==50"><font class="message_pass">副总已审</font>(${active.sd_user_name})</s:if>
 					<s:if test="active.sd_status==60"><font class="message_pass">总经理已审</font>(${active.sd_user_name})</s:if>
 				</div>
 				<div class="zhuangtai" title="${it:formatDate(active.smd_time,'yyyy-MM-dd HH:mm:ss')}">

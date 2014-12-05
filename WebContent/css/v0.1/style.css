@@ -642,6 +642,18 @@ input[type="button"].input-blue,input[type="submit"].input-blue,input[type="rese
 	display: inline-block; width: 16px; height: 16px; background: url("../../../images/icon/ico_warn.png") transparent no-repeat 0 -250px;
 }
 
+.success{
+	display: inline-block; width: 16px; height: 16px; background: url("../../../images/icon/ico_warn.png") transparent no-repeat 0 0px;
+}
+
+.nosuc{
+	display: inline-block; width: 16px; height: 16px; background: url("../../../images/icon/ico_warn.png") transparent no-repeat 0 -50px;
+}
+
+.daisuc{
+	display: inline-block; width: 16px; height: 16px; background: url("../../../images/icon/ico_warn.png") transparent no-repeat 0 -250px;
+}
+
 /*翻页样式START*/
 .pagination {
 	text-align: center; padding: 3px 0; background-color: #EFEFEF; margin: 1px 0; color: #059c77;
