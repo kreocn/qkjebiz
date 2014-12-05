@@ -147,7 +147,7 @@ font-weight: bold;
 }
 
 .label_hang {
-	float: left; line-height:28px; margin: 3px 0;
+	float: left; line-height:28px; margin: 3px 0; min-heigth:28px;
 }
 
 .label_hang_sign {
