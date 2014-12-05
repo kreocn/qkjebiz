@@ -168,11 +168,11 @@ cursor: pointer;
 		<th class="td5">主题</th>
 		<th class="td5">活动地点</th>
 		<th class="td1">活动状态</th>
-		<th class="td3">销售审核状态</th>
-		<th class="td3">销管审核状态</th>
-		<th class="td5">财务申</th>
-		<th class="td5">财务结</th>
-		<th class="td3">标识</th>
+		<th class="td3">销售状态</th>
+		<th class="td3">销管状态</th>
+		<th class="td5">FA</th>
+		<th class="td5">FC</th>
+		<th class="td3">SP</th>
 		<th class="td4">操作</th>
 		<th class="td0">查看</th>
 	  	</tr>
@@ -274,7 +274,7 @@ cursor: pointer;
 			<a  class="yesnull" href=""></a>
 			</s:else>
 			</td>
-			<td class="td4 op-area">
+			<td class="td4 op-area nw">
 				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_APPLY')">
 		    	<a class="input-blue" href="<s:url namespace="/qkjmanage" action="active_load"><s:param name="viewFlag">mdy</s:param><s:param name="active.uuid" value="uuid"></s:param></s:url>">申请修改</a>
 		    	</s:if>
