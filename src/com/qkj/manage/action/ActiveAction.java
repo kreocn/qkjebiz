@@ -64,10 +64,19 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	private int pageSize;
 	private int currPage;
 	private String code;
+	private String flag;
 
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;活动管理";
 
 	
+
+	public String getFlag() {
+		return flag;
+	}
+
+	public void setFlag(String flag) {
+		this.flag = flag;
+	}
 
 	public Active getCaiActive() {
 		return caiActive;
@@ -272,6 +281,11 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 			if (active == null) active = new Active();
 			ContextHelper.setSearchDeptPermit4Search(map, "apply_depts", "apply_user");
 			ContextHelper.SimpleSearchMap4Page("QKJ_QKJMANAGE_ACTIVE_LIST", map, active, viewFlag);
+			if(flag!=null && flag.equals("0")){
+				map.put("flag", "有");
+			}else if(flag!=null && flag.equals("10")){
+				map.put("spere", "无");
+			}
 			this.setPageSize(ContextHelper.getPageSize(map));
 			this.setCurrPage(ContextHelper.getCurrPage(map));
 			this.setActives(dao.list(map));

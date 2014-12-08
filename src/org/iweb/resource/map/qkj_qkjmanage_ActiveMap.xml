@@ -55,6 +55,8 @@
 			<isNotEmpty prepend="AND" property="pass_time_end"><![CDATA[ a.pass_time<=DATE_ADD(#pass_time_end#,INTERVAL 1 day) ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="close_pass_time_start"><![CDATA[ a.close_pass_time>=#close_pass_time_start# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="close_pass_time_end"><![CDATA[ a.close_pass_time<=DATE_ADD(#close_pass_time_end#,INTERVAL 1 day) ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="flag"><![CDATA[ NOT ISNULL(a.`spe_remark`) AND a.`spe_remark`!="" ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="spere"><![CDATA[ ISNULL(a.`spe_remark`) ]]></isNotEmpty>
 		</dynamic>
 		<![CDATA[ ORDER BY a.add_time DESC LIMIT 1000 ]]>
 	</select>
@@ -95,6 +97,8 @@
 			<isNotEmpty prepend="AND" property="pass_time_end"><![CDATA[ pass_time<=DATE_ADD(#pass_time_end#,INTERVAL 1 day) ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="close_pass_time_start"><![CDATA[ close_pass_time>=#close_pass_time_start# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="close_pass_time_end"><![CDATA[ close_pass_time<=DATE_ADD(#close_pass_time_end#,INTERVAL 1 day) ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="flag"><![CDATA[ NOT ISNULL(spe_remark) AND `spe_remark`!="" ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="spere"><![CDATA[ ISNULL(spe_remark) ]]></isNotEmpty>
 		</dynamic>
 		<![CDATA[ LIMIT 1000 ]]>
 	</select>

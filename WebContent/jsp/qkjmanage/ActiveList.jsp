@@ -151,6 +151,12 @@ cursor: pointer;
             	</span>
             </div>
         </div>
+        <div class="label_hang">
+            <div class="label_ltit">sp:</div>
+            <div class="label_rwben label_rwb">
+            	<s:select name="flag"  cssClass="selectKick" headerKey="" headerValue="--请选择--" list="#{0:'有',10:'无'}" />
+            </div>
+        </div>
         <div class="label_hang label_button tac">
         	<s:checkbox id="search_mcondition" name="search_mcondition" fieldValue="true" value="true" cssClass="regular-checkbox" />
 			<label for="search_mcondition"></label>更多条件
@@ -249,29 +255,43 @@ cursor: pointer;
 			</td>
 			<td class="td5">
 			<s:if test="%{fd_status==10}"><!-- 已审 -->
-			<a  class="success" href=""></a>
+			<a href="javascript:;"  data="${uuid}" class="success"></a>
+			<span id="leave_cause${uuid}" style="display:none;" class="leave_cause_shows">
+				操作人:${fd_user_name}<br/> 操作时间：${it:formatDate(fd_time,'yyyy-MM-dd hh:mm:ss')}
+			</span>
+			
 			</s:if>
-			<s:elseif test="%{fd_status==5}"><a  class="nosuc" href=""></a></s:elseif>
+			<s:elseif test="%{fd_status==5}"><a href="javascript:;"  data="${uuid}"  class="nosuc"></a>
+			<span id="leave_cause${uuid}" style="display:none;" class="leave_cause_shows">
+				操作人:${fd_user_name}<br/> 操作时间：${it:formatDate(fd_time,'yyyy-MM-dd hh:mm:ss')}
+			</span>
+			</s:elseif>
 			<s:else>
-			<a  class="daisuc" href=""></a>
+			<a  class="daisuc"></a>
 			</s:else>
 			</td>
 			<td class="td3">
 			<s:if test="%{close_fd_status==10}"><!-- 已审 -->
-			<a  class="success" href=""></a>
+			<a href="javascript:;"  data="${uuid}" class="success"></a>
+			<span id="leave_cause${uuid}" style="display:none;" class="leave_cause_shows">
+				操作人:${close_fd_name}<br/> 操作时间：${it:formatDate(close_fd_time,'yyyy-MM-dd hh:mm:ss')}
+			</span>
 			</s:if>
-			<s:elseif test="%{close_fd_status==5}"><a  class="nosuc" href=""></a></s:elseif>
+			<s:elseif test="%{close_fd_status==5}"><a  class="nosuc"></a></s:elseif>
 			<s:else>
-			<a  class="daisuc" href=""></a>
+			<a href="javascript:;"  data="${uuid}" class="daisuc"></a>
+			<span id="leave_cause${uuid}" style="display:none;" class="leave_cause_shows">
+				操作人:${close_fd_name}<br/> 操作时间：${it:formatDate(close_fd_time,'yyyy-MM-dd hh:mm:ss')}
+			</span>
 			</s:else>
 			</td>
 			
 			<td class="td5">
-			<s:if test="%{spe_remark!=null}">
-			<a  class="nonull" href=""></a>
+			<s:if test="%{spe_remark!=null && spe_remark!=''}">
+			<a  class="nonull"></a>
 			</s:if>
 			<s:else>
-			<a  class="yesnull" href=""></a>
+			<a  class="yesnull"></a>
 			</s:else>
 			</td>
 			<td class="td4 op-area nw">
@@ -341,6 +361,19 @@ cursor: pointer;
 </div>
 <!-- HIDDEN AREA END -->
 <script type="text/javascript">
+$(".success").tooltip({
+	items: "[data]",
+	content: function() {
+		return "<div class='show_dialog'>" + $("#leave_cause" + $(this).attr("data")).html() + "</div>";
+  }
+});
+
+$(".nosuc").tooltip({
+	items: "[data]",
+	content: function() {
+		return "<div class='show_dialog'>" + $("#leave_cause" + $(this).attr("data")).html() + "</div>";
+  }
+});
 //var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
 var curr_apply_dept = '${active.apply_dept}';
 //var curr_apply_user = '${active.apply_user}';

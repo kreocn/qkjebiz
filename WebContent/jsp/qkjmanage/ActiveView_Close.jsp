@@ -101,7 +101,7 @@ font-size: 14px;
 <s:if test="active.close_smd_status==40"><font class="message_pass">销管部经理已审</font>(${active.close_smd_user_name})</s:if>
 <s:if test="active.close_smd_status==50"><font class="message_pass">销管副总已审</font>(${active.close_smd_user_name})</s:if>
 </div>
-<div class="zhuangtai" title="${it:formatDate(active.close_smd_time,'yyyy-MM-dd HH:mm:ss')}">
+<div class="zhuangtai" title="${it:formatDate(active.close_fd_time,'yyyy-MM-dd HH:mm:ss')}">
 					财务部审核状态:
 					<s:if test="active.close_fd_status==0 || active.fd_status==null">未确认</s:if>
 					<s:if test="active.close_fd_status==5"><font class="message_error">审核退回</font>(${active.close_fd_name}})</s:if>
