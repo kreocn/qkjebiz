@@ -268,7 +268,7 @@
 	<update id="qkjmanage_mdyActivePass" parameterClass="active">
 		<![CDATA[
 			Update qkjm_r_active
-			Set status=2,
+			Set status=#status#,
 				pass_time=now(),
 				remark=#remark#,
 				lm_user=#lm_user#

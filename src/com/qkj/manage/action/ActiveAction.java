@@ -790,9 +790,13 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyActiveFDSTATUS10() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_FDSTATUS10");
 		try {
+			Active ac=new Active();
 			active.setLm_user(ContextHelper.getUserLoginUuid());
 			mdyActiveFDStatus(1, 10);
-			active.setStatus(2);// 申请通过执行
+			ac=(Active) dao.get(active.getUuid());
+			if(ac.getStatus()<=2){
+				active.setStatus(2);// 申请通过执行
+			}
 			dao.mdyActivePass(active);
 			addProcess("ACTIVE_APPLY_PASS", "活动申请通过");
 		} catch (Exception e) {
