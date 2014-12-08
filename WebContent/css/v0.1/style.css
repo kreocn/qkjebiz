@@ -147,7 +147,7 @@ font-weight: bold;
 }
 
 .label_hang {
-	float: left; line-height:28px; margin: 3px 0; min-heigth:28px;
+	float: left; line-height:28px; margin: 3px 0;
 }
 
 .label_hang_sign {
@@ -437,11 +437,11 @@ font-weight: bold;
 /*form style start*/
 .input-a input[type="text"],.input-a input[type="password"] {
 	width: 100%; height: 26px; line-height: 26px; font-size: 14px; border-radius: 5px; border: none; border: 1px solid #ccc; text-indent: 5px;
-	margin: 0; outline: none;font-family: "微软雅黑";
+	margin: 0; padding:0; outline: none;font-family: "微软雅黑";
 }
 
 .input-a select{
-	width:100%; height: 28px; line-height: 28px; font-size: 14px; border-radius: 5px; border: none; border:1px solid #ccc;font-family: "微软雅黑";margin:0;outline: none;
+	width:100%;  padding:0; height: 28px; line-height: 28px; font-size: 14px; border-radius: 5px; border: none; border:1px solid #ccc;font-family: "微软雅黑";margin:0;outline: none;
 }
 
 .input-a textarea {
