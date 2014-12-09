@@ -9,6 +9,9 @@
 		<action name="index" class="org.iweb.root.action.IWEBRoot" method="index">
 			<result>/jsp/fore/index.jsp</result>
 		</action>
+		<action name="login" class="org.iweb.root.action.IWEBRoot" method="index">
+			<result>/jsp/manager/login.jsp</result>
+		</action>
 	</package>
 
 	<package name="iweb_html" extends="default" namespace="/html">
