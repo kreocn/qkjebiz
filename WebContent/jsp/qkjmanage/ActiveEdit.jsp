@@ -382,7 +382,7 @@ color: #008000;
 				<div class="label_hang">
 					<div class="label_ltit" style="font-weight: normal;">本期结余:</div>
 					<div class="label_rwben label_rwb">
-					<s:textfield id="bprice" name="active.m_bprice" readonly="true" />
+					<s:textfield id="bprice" name="active.m_bprice" readonly="true" cssClass="validate[required]"/>
 					</div>
 				</div>
 			</div>
@@ -410,7 +410,7 @@ color: #008000;
 				<div class="label_hang">
 					<div class="label_ltit" style="font-weight: normal;">本期结余:</div>
 					<div class="label_rwben label_rwb">
-					<s:textfield id="fbprice" name="active.f_bprice" readonly="true"></s:textfield>
+					<s:textfield id="fbprice" name="active.f_bprice" readonly="true" cssClass="validate[required]"></s:textfield>
 					</div>
 				</div>
 			</div>
@@ -473,6 +473,7 @@ color: #008000;
         <div class="label_hang">
             <div class="label_ltit">相关操作:</div>
             <div class="label_rwbenx">
+            	<font color="red"><span id="messages"></span></font>
             	<s:if test="null == active && 'add' == viewFlag">
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_ADD')">
 					<s:submit id="add" name="add" value="下一步&填写费用明细" action="active_add"  cssClass="input-blue" />
@@ -481,6 +482,19 @@ color: #008000;
 				<s:elseif test="null != active && 'mdy' == viewFlag && active.status==0">
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_MDY')">
 					<s:submit name="save" value="保存" action="active_save" cssClass="input-blue" />
+					<script type="text/javascript">
+						$(function(){
+							$("#editForm :input").change(function(){
+								//if()cellarOrder_check0 10 15 20
+								//$("#rebates_mdyRebatesStatus0").attr("disabled","disabled");
+								if($("#mdyStatus0").length>0) {
+									$("#mdyStatus0").attr("disabled","disabled");
+								}
+								
+								$("#messages").text("请先保存后才能做其他操作!");
+							});
+						});
+						</script>
 					</s:if>
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_STATUS0')">
 					<s:submit id="mdyStatus0" name="mdyStatus0" value="报审" action="mdyStatus0" onclick="return isOp('确定执行此操作?');" cssClass="input-yellow" />

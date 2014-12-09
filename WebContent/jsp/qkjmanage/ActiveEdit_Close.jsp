@@ -531,7 +531,7 @@ color: #008000;
 				<div class="label_hang">
 					<div class="label_ltit" style="font-weight: normal;">本期结余:</div>
 					<div class="label_rwben label_rwb">
-					<s:textfield id="bprice" name="active.close_m_bprice" readonly="true" />
+					<s:textfield id="bprice" name="active.close_m_bprice" readonly="true" cssClass="validate[required]"/>
 					</div>
 				</div>
 			</div>
@@ -559,7 +559,7 @@ color: #008000;
 				<div class="label_hang">
 					<div class="label_ltit" style="font-weight: normal;">本期结余:</div>
 					<div class="label_rwben label_rwb">
-					<s:textfield id="fbprice" name="active.close_f_bprice" readonly="true" />
+					<s:textfield id="fbprice" name="active.close_f_bprice" readonly="true" cssClass="validate[required]"/>
 					</div>
 				</div>
 			</div>
@@ -662,6 +662,7 @@ color: #008000;
         <div class="label_hang">
             <div class="label_ltit">相关操作:</div>
             <div class="label_rwbenx">
+            	<font color="red"><span id="messages"></span></font>
 				<s:if test="null != active">
 				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_STATUS2') && active.status==2">
 					<s:submit cssClass="input-blue"  name="mdyStatus2" value="结案&填写实际费用明细" action="mdyStatus2" onclick="return isOp('确定执行此操作?');" />
@@ -669,9 +670,22 @@ color: #008000;
 				<s:if test="active.status==3">
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_MDY')">
 					<s:submit cssClass="input-blue" name="mdyCloseActive" value="保存活动概况" action="mdyCloseActive" />
+					<script type="text/javascript">
+						$(function(){
+							$("#editForm :input").change(function(){
+								//if()cellarOrder_check0 10 15 20
+								//$("#rebates_mdyRebatesStatus0").attr("disabled","disabled");
+								if($("#mdyStatus0").length>0) {
+									$("#mdyStatus0").attr("disabled","disabled");
+								}
+								
+								$("#messages").text("请先保存后才能做其他操作!");
+							});
+						});
+						</script>
 					</s:if>
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_STATUS3')">
-					<s:submit cssClass="input-yellow" name="mdyStatus3" value="结案报审" action="mdyStatus3" onclick="return isOp('确定执行此操作?');" />
+					<s:submit id="mdyStatus0" cssClass="input-yellow" name="mdyStatus3" value="结案报审" action="mdyStatus3" onclick="return isOp('确定执行此操作?');" />
 					</s:if>
 				</s:if>
 				<%-- <s:if test="active.status==4&&active.close_sd_status>=40&&active.close_smd_status>=30 &&@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_STATUS4')">
