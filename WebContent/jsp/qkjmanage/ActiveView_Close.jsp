@@ -104,8 +104,8 @@ font-size: 14px;
 <div class="zhuangtai" title="${it:formatDate(active.close_fd_time,'yyyy-MM-dd HH:mm:ss')}">
 					财务部审核状态:
 					<s:if test="active.close_fd_status==0 || active.fd_status==null">未确认</s:if>
-					<s:if test="active.close_fd_status==5"><font class="message_error">审核退回</font>(${active.close_fd_name}})</s:if>
-					<s:if test="active.close_fd_status==10"><font class="message_pass">财务已审</font>(${active.close_fd_name}})</s:if>
+					<s:if test="active.close_fd_status==5"><font class="message_error">审核退回</font>(${active.close_fd_name})</s:if>
+					<s:if test="active.close_fd_status==10"><font class="message_pass">财务已审</font>(${active.close_fd_name})</s:if>
 				</div>
 				<div class="zhuangtai" title="${it:formatDate(active.close_smd_time,'yyyy-MM-dd HH:mm:ss')}">
 					数据中心审核状态:
