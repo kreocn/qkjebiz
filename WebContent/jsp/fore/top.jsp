@@ -23,7 +23,7 @@
 	<div class="menu_list">
 		<div class="icon_img logo inlineblock"><a href="/" class="inlineblock"></a></div>
 		<ul class="inlineblock">
-			<li><a href="/index" class="inlineblock">首页</a></li>
+			<li><a href="/" class="inlineblock">首页</a></li>
 			<li><a href="/html/cellar" class="inlineblock">藏酒介绍</a></li>
 			<li><a href="/jsp/fore/ware.jsp" class="inlineblock">岩窖洞藏</a></li>
 			<li><a href="/html/news" class="inlineblock">藏酒动态</a></li>
