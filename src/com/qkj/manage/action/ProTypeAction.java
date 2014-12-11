@@ -104,9 +104,8 @@ public class ProTypeAction extends ActionSupport implements ActionAttr {
 	}
 	
 	public String lista() throws Exception{
-		//String p=IWebConfig.getConfigMap().get("WebAbsolutePath");
-		String p="d://js/zTreeJs/Result.js";
-		OutputStreamWriter out =new OutputStreamWriter(new FileOutputStream("d:/Result.js"),"UTF-8");
+		String p=IWebConfig.getConfigMap().get("WebAbsolutePath");
+		OutputStreamWriter out =new OutputStreamWriter(new FileOutputStream(p+"/js/zTreeJs/Result.js"),"UTF-8");
 	
         ProTypeDAO ptdao=new ProTypeDAO();
         proTypes=ptdao.list(null);
