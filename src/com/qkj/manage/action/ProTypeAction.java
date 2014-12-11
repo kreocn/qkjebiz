@@ -104,9 +104,9 @@ public class ProTypeAction extends ActionSupport implements ActionAttr {
 	}
 	
 	public String lista() throws Exception{
-		String p=IWebConfig.getConfigMap().get("WebAbsolutePath");
-
-		OutputStreamWriter out =new OutputStreamWriter(new FileOutputStream(p+"/js/zTreeJs/Result.js"),"UTF-8");
+		//String p=IWebConfig.getConfigMap().get("WebAbsolutePath");
+		String p="d://js/zTreeJs/Result.js";
+		OutputStreamWriter out =new OutputStreamWriter(new FileOutputStream("d:/Result.js"),"UTF-8");
 	
         ProTypeDAO ptdao=new ProTypeDAO();
         proTypes=ptdao.list(null);
@@ -128,9 +128,9 @@ public class ProTypeAction extends ActionSupport implements ActionAttr {
     	    		System.out.println(ps+"ababab"+pr);
     	    		if(i==ps && j==pr){
     	    			System.out.println("aaaa");
-    	    			info="{id:"+uuid+product.getUuid()+","+" pId:"+uuid+", name:"+"'"+product.getTitle()+"'"+"}"+'\n';
+    	    			info="{id:"+uuid+product.getUuid()+","+" pId:"+uuid+", name:"+"'"+product.getTitle()+"',puuid:"+product.getUuid()+",mp:"+product.getMarket_price()+",gp:"+product.getGroup_price()+",dp:"+product.getDealer_price()+",a1"+product.getAgree_price_1()+",a2"+product.getAgree_price_2()+",a3"+product.getAgree_price_3()+",case_spec:"+product.getCase_spec()+"}"+'\n';
     	    		}else{
-    	    			info="{id:"+uuid+product.getUuid()+","+" pId:"+uuid+", name:"+"'"+product.getTitle()+"'"+"},"+'\n';
+    	    			info="{id:"+uuid+product.getUuid()+","+" pId:"+uuid+", name:"+"'"+product.getTitle()+"',puuid:"+product.getUuid()+",mp:'"+product.getMarket_price()+"',gp:'"+product.getGroup_price()+"',dp:'"+product.getDealer_price()+"',a1:'"+product.getAgree_price_1()+"',a2:'"+product.getAgree_price_2()+"',a3:'"+product.getAgree_price_3()+"',case_spec:"+product.getCase_spec()+"},"+'\n';
     	    		}
     	    		
     	    		out.write(info);

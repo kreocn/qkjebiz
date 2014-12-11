@@ -65,10 +65,19 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	private int currPage;
 	private String code;
 	private String flag;
+	private String state;
 
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;活动管理";
 
 	
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
 
 	public String getFlag() {
 		return flag;
@@ -272,6 +281,23 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 
 	public void setCode(String code) {
 		this.code = code;
+	}
+	
+	public String addPro() throws Exception {
+		try {
+			if(state!=null && state.equals("2")){//结案
+				this.setState("2");
+			}else{
+				this.setState("1");
+			}
+			active.setUuid(active.getUuid());
+			this.setActive(active);
+			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/active_list?viewFlag=relist'>活动列表</a>&nbsp;&gt;&nbsp;修改活动单&nbsp;&gt;&nbsp;增加产品";
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!load 读取数据错误:", e);
+			throw new Exception(this.getClass().getName() + "!load 读取数据错误:", e);
+		}
+		return SUCCESS;
 	}
 
 	public String list() throws Exception {
