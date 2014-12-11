@@ -6,6 +6,9 @@
 	<package name="qkjmanage_active" extends="default" namespace="/qkjmanage">
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- Active Start -->
+		<action name="active_addProduct" class="com.qkj.manage.action.ActiveAction" method="addPro">
+			<result>/jsp/qkjmanage/AddPro.jsp</result>
+		</action>
 		<action name="active_list" class="com.qkj.manage.action.ActiveAction" method="list">
 			<result>/jsp/qkjmanage/ActiveList.jsp</result>
 		</action>

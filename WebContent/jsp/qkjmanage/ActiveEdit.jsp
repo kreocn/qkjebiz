@@ -258,7 +258,7 @@ color: #008000;
 	            	<p class="lb_yjtit">
 	            		公司预计费用
 	            		<s:if test="active.status==0 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEPRODUCT_ADD')">
-						<input type="button" id="product" value="添加酒品" />
+						<input type="button" id="product" onclick="noedit();" value="添加酒品" />
 						<script type="text/javascript">
 						$(function(){
 							$("#editForm :input").change(function(){
@@ -266,15 +266,18 @@ color: #008000;
 								//$("#rebates_mdyRebatesStatus0").attr("disabled","disabled");
 								if($("#product").length>0) {
 									if(confirm("您有未保存的信息,确认填加吗?确认后将丢失一部分信息。")){
-										location.href="/jsp/qkjmanage/AddPro.jsp?active.uuid="+${active.uuid}
+										location.href="/qkjmanage/active_addProduct?active.uuid="+${active.uuid};
 										}else{
 										 return false;
 										}
 								}
 								
-								$("#messages").text("请先保存后才能做其他操作!");
 							});
 						});
+						
+						function noedit(){
+							location.href="/qkjmanage/active_addProduct?active.uuid="+${active.uuid};
+						}
 						</script>
 						</s:if>
 						<s:if test="active.status==0 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEPOSM_ADD')">
