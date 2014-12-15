@@ -523,7 +523,7 @@ color: #008000;
 	            <p class="lb_yjbot cr"> 方案实际费用总计: ${active.close_it_price} + ${active.close_mt_price} = ￥${active.close_it_price+active.close_mt_price}</p>
 	        </div>
         </div>
-        <s:if test="%{active.status>=3}">
+        <s:if test="%{active.status==3}">
         <fieldset>
 			<legend>费用信息</legend>
 			<div class="label_main">
@@ -585,6 +585,57 @@ color: #008000;
 			</div>
 			</fieldset>
         </s:if>
+        <s:if test="%{active.status>3}">
+        <fieldset>
+			<legend>费用信息</legend>
+			<div class="label_main">
+				<div class="label_hang">
+					<div class="label_ltit">随量费用:</div>
+				</div>
+				<div class="label_hang">
+					<div class="label_ltit" style="font-weight: normal;">上期结余:</div>
+					<div class="label_rwben label_rwb">
+					${ active.close_m_upprice}
+					</div>
+				</div>
+				<div class="label_hang">
+					<div class="label_ltit" style="font-weight: normal;">本期费用:</div>
+					<div class="label_rwben label_rwb">
+					${active.close_m_price }
+					</div>
+				</div>
+				<div class="label_hang">
+					<div class="label_ltit" style="font-weight: normal;">本期结余:</div>
+					<div class="label_rwben label_rwb">
+					${active.close_m_bprice }
+					</div>
+				</div>
+			</div>
+			<div class="label_main">
+				<div class="label_hang">
+					<div class="label_ltit">市场基金:</div>
+				</div>
+				<div class="label_hang">
+					<div class="label_ltit" style="font-weight: normal;">上期结余:</div>
+					<div class="label_rwben label_rwb">
+					${active.close_f_upprice }
+					</div>
+				</div>
+				<div class="label_hang">
+					<div class="label_ltit" style="font-weight: normal;">本期费用:</div>
+					<div class="label_rwben label_rwb">
+					${active.close_f_price }
+					</div>
+				</div>
+				<div class="label_hang">
+					<div class="label_ltit" style="font-weight: normal;">本期结余:</div>
+					<div class="label_rwben label_rwb">
+					${active.close_f_bprice }
+					</div>
+				</div>
+			</div>
+			</fieldset>
+        </s:if>
         <div class="label_main">
         <div class="label_hang">
             <div class="label_ltit">方案说明:</div>
@@ -615,8 +666,14 @@ color: #008000;
         <div class="label_hang">
             <div class="label_ltit">备注:</div>
             <div class="label_rwbenx label_hang_linput">
+            <s:if test="%{active.status>3}">
+            ${active.remark }
+            </s:if>
+            <s:else>
             <span class="message_prompt">任何保存/报审/审核操作都会同时保存备注</span>
             <s:textarea id="active_remark" name="active.remark" title="活动备注"  cssClass="label_hang_linput inputNote validate[maxSize[65535]]" />
+            </s:else>
+            
             </div>
         </div>
         </div>

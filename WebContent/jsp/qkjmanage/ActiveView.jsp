@@ -58,12 +58,23 @@ color: #008000;
 }
 
 </style>
+<script type="text/javascript">
+function nopri(){
+	$("#mprice").addClass("noprint"); //添加样式
+	$("#fprice").addClass("noprint"); //添加样式
+}
+function ypri(){
+	$("#mprice").removeClass("noprint"); //添加样式
+	$("#fprice").removeClass("noprint"); //添加样式
+}
+</script>
 <body>
 <div class="main">
 	<div class="dq_step">
 		<span class="pt">活动申请单</span>
 		<span class="opb lb op-area noprint"><a href="<s:url namespace="/qkjmanage" action="active_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a></span>
-		<span class="opb lb op-area noprint"><input type="button" onclick="window.print();" value="打印本页"/>&nbsp;</span>
+		<span class="opb lb op-area noprint"><input type="button" onclick="ypri();window.print();" value="打印本页"/>&nbsp;</span>
+		<span class="opb lb op-area noprint"><input type="button" onclick="nopri();window.print();" value="申请通知单"/>&nbsp;</span>
 	</div>
 	<s:form id="editForm" name="editForm" cssClass="validForm" action="apply_list"  method="get" namespace="/qkjmanage" theme="simple">
 	<div class="label_con">
@@ -312,24 +323,6 @@ color: #008000;
 							</tr>
 							</s:iterator>
 	                    </table>
-	                    <p class="lb_gstit">市场基金费用</p>
-							<div class="active_p_list">
-								<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
-	                    	<tr>
-	                        	<th class="nw">上期余额</th>
-	                            <th class="nw">本期费用</th>
-	                            <th class="nw">本期余额</th>
-	                        </tr>
-	                        <s:iterator value="activeFprices" status="sta">
-	                        <tr>
-							<td>${f_upprice}</td>
-							<td>${f_price}</td>
-							<td>${f_bprice}</td>
-							</tr>
-	                        </s:iterator>
-	                        
-	                    </table>
-							</div>
 	                	<p class="lb_gstit">客户预计费用合计</p>
 	                    <p class="lb_jwei">￥${active.mt_price}</p>
 	                </div>
@@ -340,7 +333,7 @@ color: #008000;
         </div>
         <fieldset>
 			<legend>预计费用信息</legend>
-			<div class="label_main">
+			<div id="mprice" class="label_main">
 				<div class="label_hang">
 					<div class="label_ltit">随量费用:</div>
 				</div>
@@ -366,7 +359,7 @@ color: #008000;
 					</div>
 				</div>
 			</div>
-			<div class="label_main">
+			<div id="fprice" class="label_main">
 				<div class="label_hang">
 					<div class="label_ltit">市场基金:</div>
 				</div>

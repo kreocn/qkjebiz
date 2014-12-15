@@ -8,6 +8,59 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>网络营销--<s:text name="APP_NAME" /></title>
 <s:action name="ref" namespace="/manager" executeResult="true" />
+<script type="text/javascript" src="<s:url value="/js/form_validator.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/common_cptb.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/common_prototype.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/div.js" />"></script>
+<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-1.8.3.min.js" />"></script>
+<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-ui-1.10.3.custom.min.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/xheditor/xheditor-1.2.1.min.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/xheditor/xheditor_lang/zh-cn.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/func/create_editor.js" />"></script>
+<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.xhupload.js" />"></script>
+<script type="text/javascript">
+var md;
+var ___select_infoclass_html_value;
+
+var infoeditor01;
+var wb_smallimg;
+var wb_bigimg;
+$(function(){
+	createHtmlEditor("#newscontentedit1");
+	$.fn.xhuploadinit();
+	___select_infoclass_html_value = $('#selectInfoClass').html();
+	$('#selectInfoClass').empty();
+	$("#newssmallimgid").xhupload();
+	$("#newsbigimgid").xhupload();
+});
+
+function selectClass() {	
+	md = new modelDiv();
+	md.setTitle_HTML("");
+	md.setBottom_HTML("");
+	md.createModelDivByContent(220,300,___select_infoclass_html_value);	
+}
+function closemDiv() {
+	md.dropModelDiv();
+}
+
+function showImgInput(obj) {
+	//alert(getRadio("news.isimgnews"));
+	if(getRadio("news.isimgnews")==1) {	
+		document.getElementById("checkimgnews").style.display = "";
+	} else {
+		document.getElementById("checkimgnews").style.display = "none";
+	}
+}
+
+function view(obj) {
+	var str = "";
+	for(var i in obj) {
+		str += i+"\t";
+	}
+	$('#message').html(str);
+}
+</script>
 </head>
 <body>
 <div class="main">
@@ -74,6 +127,14 @@
 		         <div class="label_rwb"><s:textfield id="market.phone" name="market.phone" title="仓库地点" cssClass="label_hang_linput validate[maxSize[100]]" /></div>
 		         </div>
 	       	</div>
+	 </div>
+	 <div class="label_main">
+	 <div class="label_hang">
+		<div class="label_ltit">图片:</div>
+		<div class="label_rwben2">
+	 		<s:textfield id="newssmallimgid" title="图片链接" name="market.img" />
+	 	</div>
+	 </div>
 	 </div>
         <s:if test="null != market">
         	<div class="label_main">

@@ -205,6 +205,55 @@ color: #008000;
         </div>
         </div>
         </s:if>
+        
+        <s:if test="%{active.status>=1 }">
+        <div class="label_main">
+        <div class="label_hang">
+            <div class="label_ltit">主题:</div>
+            <div class="label_rwbenx">${active.theme }</div>
+        </div>
+        </div>
+        <div class="label_main">
+        <div class="label_hang">
+            <div class="label_ltit">目的:</div>
+            <div class="label_rwbenx">${active.purpose}</div>
+        </div>
+        </div>
+        <div class="label_main">
+        <div class="label_hang">
+            <div class="label_ltit">活动时间:</div>
+            <div class="label_rwben2">
+            	<span class="label_rwb nw">
+				${it:formatDate(active.plan_start,'yyyy-MM-dd')}
+				</span>
+				<span class="label_rwb nw">
+				${it:formatDate(active.plan_end,'yyyy-MM-dd')}
+            	</span>
+            </div>
+        </div>
+         <div class="label_hang">
+         	<div class="label_ltit">活动地点:</div>
+         	<div class="label_rwben">
+         		${active.address }         	</div>
+         </div>
+         <div class="label_hang">
+         	<div class="label_ltit">执行人:</div>
+         	<div class="label_rwben">
+         		${active.person }
+         	</div>
+         </div>
+        </div>
+        <div class="label_main">
+        <div class="label_hang">
+            <div class="label_ltit">活动预期:</div>
+            <div class="label_rwbenx">
+            	${active.expect }
+            </div>
+        </div>
+        </div>
+        
+        </s:if>
+        <s:else>
         <div class="label_main">
         <div class="label_hang">
             <div class="label_ltit">主题:</div>
@@ -250,6 +299,8 @@ color: #008000;
             </div>
         </div>
         </div>
+        </s:else>
+        
         <s:if test="'mdy' == viewFlag">
         <div class="label_main">
         	<div class="lb_xxsm">
@@ -376,6 +427,59 @@ color: #008000;
 	            <p class="lb_yjbot">方案预计费用总计: ${active.it_price} + ${active.mt_price} = ￥${active.it_price+active.mt_price}</p>
 	        </div>
         </div>
+        
+        <s:if test="%{active.status>=1 }">
+        <fieldset>
+			<legend>费用信息</legend>
+			<div class="label_main">
+				<div class="label_hang">
+					<div class="label_ltit">随量费用:</div>
+				</div>
+				<div class="label_hang">
+					<div class="label_ltit" style="font-weight: normal;">上期结余:</div>
+					<div class="label_rwben label_rwb">
+					${active.m_upprice}
+					</div>
+				</div>
+				<div class="label_hang">
+					<div class="label_ltit" style="font-weight: normal;">本期费用:</div>
+					<div class="label_rwben label_rwb">
+					${active.m_price}
+					</div>
+				</div>
+				<div class="label_hang">
+					<div class="label_ltit" style="font-weight: normal;">本期结余:</div>
+					<div class="label_rwben label_rwb">
+					${active.m_bprice}
+					</div>
+				</div>
+			</div>
+			<div class="label_main">
+				<div class="label_hang">
+					<div class="label_ltit">市场基金:</div>
+				</div>
+				<div class="label_hang">
+					<div class="label_ltit" style="font-weight: normal;">上期结余:</div>
+					<div class="label_rwben label_rwb">
+					${active.f_upprice }
+					</div>
+				</div>
+				<div class="label_hang">
+					<div class="label_ltit" style="font-weight: normal;">本期费用:</div>
+					<div class="label_rwben label_rwb">
+					${active.f_price }
+					</div>
+				</div>
+				<div class="label_hang">
+					<div class="label_ltit" style="font-weight: normal;">本期结余:</div>
+					<div class="label_rwben label_rwb">
+					${active.f_bprice }
+					</div>
+				</div>
+			</div>
+			</fieldset>
+        </s:if>
+        <s:else>
         <fieldset>
 			<legend>费用信息</legend>
 			<div class="label_main">
@@ -435,8 +539,34 @@ color: #008000;
 				</div>
 			</div>
 			</fieldset>
+        </s:else>
         
         </s:if>
+        
+        <s:if test="%{active.status>=1 }">
+        <div class="label_main">
+        <div class="label_hang">
+            <div class="label_ltit">方案说明:</div>
+            <div class="label_rwbenx">
+            </div>
+        </div>
+        </div>
+        <div class="label_main">
+        	<div class="note_area">
+			${active.note}
+        	</div>
+        </div>
+        <div class="label_main">
+        <div class="label_hang">
+            <div class="label_ltit">备注:</div>
+            <div class="label_rwbenx">
+            	${active.remark}
+            </div>
+        </div>
+        </div>
+        </s:if>
+        <s:else>
+        
         <div class="label_main">
         <div class="label_hang">
             <div class="label_ltit">方案说明:</div>
@@ -459,6 +589,9 @@ color: #008000;
             </div>
         </div>
         </div>
+        
+        </s:else>
+        
         <s:if test="'mdy' == viewFlag">
         <div class="label_main">
         <div class="label_hang">
