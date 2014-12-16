@@ -109,11 +109,11 @@ public class MarketAction extends ActionSupport implements ActionAttr {
         if(markets.size()>0){
         	for(int i=0;i<markets.size();i++){
         		market=markets.get(i);
-        		info="bmap.put('qkj"+market.getUuid()+"', { x : "+market.getAbs()+", y : "+market.getYaxis()+", name : '"+market.getName()+"', area : '"+market.getArea()+"', lead : '"+market.getLead()+"', msg : '"+market.getAddress()+"<br />联系人："+market.getPeople()+"<br />联系电话："+market.getPhone()+"',img : ";
+        		info="bmap.put('qkj"+market.getUuid()+"', { x : "+market.getAbs()+", y : "+market.getYaxis()+", name : '"+market.getName()+"', area : '"+market.getArea()+"', lead : '"+market.getLead()+"', msg : '"+market.getAddress()+"<br />联系人："+market.getPeople()+"<br />联系电话："+market.getPhone()+"',img : '";
         		if(market.getImg()!=null && !market.getImg().equals("")){
-        			info+=market.getImg()+" });"+'\n';
+        			info+=market.getImg()+"' });"+'\n';
         		}else{
-        			info+="''"+" });"+'\n';
+        			info+="'"+" });"+'\n';
         		}
         		out.write(info);
         	}
