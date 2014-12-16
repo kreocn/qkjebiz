@@ -57,24 +57,32 @@ color: #FF0000;
 color: #008000;
 }
 
+.kss{
+display: none;
+}
 </style>
 <script type="text/javascript">
 function nopri(){
 	$("#mprice").addClass("noprint"); //添加样式
 	$("#fprice").addClass("noprint"); //添加样式
+	$("#ks").removeClass("kss"); //添加样式
+	$("#hs").addClass("kss"); //添加样式
 }
 function ypri(){
 	$("#mprice").removeClass("noprint"); //添加样式
 	$("#fprice").removeClass("noprint"); //添加样式
+	$("#hs").removeClass("kss"); //添加样式
+	$("#ks").addClass("kss"); //添加样式
 }
 </script>
 <body>
 <div class="main">
 	<div class="dq_step">
-		<span class="pt">活动申请单</span>
+		<span id="hs" class="pt">活动申请单</span>
+		<span id="ks" class="pt kss">活动执行通知单</span>
 		<span class="opb lb op-area noprint"><a href="<s:url namespace="/qkjmanage" action="active_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a></span>
 		<span class="opb lb op-area noprint"><input type="button" onclick="ypri();window.print();" value="打印本页"/>&nbsp;</span>
-		<span class="opb lb op-area noprint"><input type="button" onclick="nopri();window.print();" value="申请通知单"/>&nbsp;</span>
+		<span class="opb lb op-area noprint"><input type="button" onclick="nopri();window.print();" value="活动执行通知单"/>&nbsp;</span>
 	</div>
 	<s:form id="editForm" name="editForm" cssClass="validForm" action="apply_list"  method="get" namespace="/qkjmanage" theme="simple">
 	<div class="label_con">
@@ -406,6 +414,7 @@ function ypri(){
 					<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="退回" action="mdyActiveSDStatusT" onclick="return isOp('确定执行此操作?将退回到未审核状态');" />
 				</s:if>
 				<input type="button" onclick="window.print();" value="打印本页"/>&nbsp;
+				<input type="button" onclick="nopri();window.print();" value="打印活动执行通知单"/>&nbsp;
             </div>
         </div>
         </div>

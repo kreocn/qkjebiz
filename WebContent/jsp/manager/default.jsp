@@ -118,17 +118,17 @@ float: right;
 	             
 	            <p>
 	            <a class="input-blue" href="<s:url namespace="/sche" action="schedule_load"><s:param name="viewFlag">view</s:param><s:param name="sche.uuid" value="uuid"></s:param></s:url>">
-	            [<s:if test="type==0">部门手册</s:if>
+	            [<s:if test="type==0"> 部门手册</s:if>
 				<s:if test="type==1">公司制度</s:if>
 				<s:if test="type==2">公司文件</s:if>
-				<s:if test="type==3">更新公告</s:if>]&nbsp;
+				<s:if test="type==3"> 更新公告 </s:if>]&nbsp;
 				${title}&nbsp;(${sdate})</a></p>
 				
 	            </s:iterator>
 		    </div>
-		    <div class="ht_right">
+		    <!-- <div class="ht_right">
 		    <a href='/sche/schedule_leftList?sche.type=0'>>>更多公告信息</a>
-		    </div>
+		    </div> -->
 		</div>
 		<div>
 		</div>

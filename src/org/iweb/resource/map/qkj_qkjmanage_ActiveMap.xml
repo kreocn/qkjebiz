@@ -62,7 +62,9 @@
 	</select>
 	<select id="qkjmanage_getActivesCounts" resultClass="int" parameterClass="java.util.Map">
 		<![CDATA[ 
-			Select Count(*) From qkjm_r_active
+			Select Count(*) From 
+			select 1 from(
+			qkjm_r_active
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
@@ -100,7 +102,7 @@
 			<isNotEmpty prepend="AND" property="flag"><![CDATA[ NOT ISNULL(spe_remark) AND `spe_remark`!="" ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="spere"><![CDATA[ ISNULL(spe_remark) ]]></isNotEmpty>
 		</dynamic>
-		<![CDATA[ LIMIT 1000 ]]>
+		<![CDATA[ LIMIT 1000) ]]>
 	</select>
 	
 	<select id="qkjmanage_getsign" resultClass="active" parameterClass="java.util.Map">

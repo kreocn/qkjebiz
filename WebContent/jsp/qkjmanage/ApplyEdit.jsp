@@ -180,11 +180,14 @@ color: #008000;
 					<s:submit id="apply_check_1" name="apply_check_1" value="作废" action="apply_check_1"  cssClass="input-red" onclick="return isOp('确定进行此操作?');" />
 					</s:if>
 					<s:if test="apply.status==10 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_CHECK10')">
+					<s:if test="%{apply.apply_dept==1 || apply.apply_dept.substring(0,3)!='210'}">
 					<s:submit id="apply_check10" name="apply_check10" value="经理/大区审核通过" cssClass="input-green" action="apply_check10" onclick="return isOp('确定进行此操作?');" />
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_CHECK5')">
 					<s:submit id="apply_check5" name="apply_check5" value="审核不通过"  cssClass="input-red" action="apply_check5" onclick="return isOp('确定进行此操作?');" />
 					</s:if>
 					</s:if>
+					</s:if>
+					<s:if test="%{apply.apply_dept==1 || apply.apply_dept.substring(0,3)!='210' || apply.status>=20}">
 					<s:if test="apply.status==20 && apply.sp_check_status<=5 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_SPCHECK10')">
 					<s:submit id="apply_spcheck10" name="apply_spcheck10" value="销管经理审核通过" cssClass="input-green" action="apply_spcheck10" onclick="return isOp('确定进行此操作?');" />
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_SPCHECK5')">
@@ -197,6 +200,22 @@ color: #008000;
 					<s:submit id="apply_check5" name="apply_check5" value="审核不通过"  cssClass="input-red" action="apply_check5" onclick="return isOp('确定进行此操作?');" />
 					</s:if>
 					</s:if>
+					</s:if>
+					<s:else>
+					${apply.status }aa${ apply.sp_check_status}
+					<s:if test="apply.status==10 && apply.sp_check_status<=5 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_SPCHECK10')">
+					<s:submit id="apply_spcheck10" name="apply_spcheck10" value="销管经理审核通过" cssClass="input-green" action="apply_spcheck10" onclick="return isOp('确定进行此操作?');" />
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_SPCHECK5')">
+					<s:submit id="apply_spcheck5" name="apply_spcheck5" value="审核不通过"  cssClass="input-red" action="apply_spcheck5" onclick="return isOp('确定进行此操作?');" />
+					</s:if>
+					</s:if>
+					<s:if test="apply.status==10 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_CHECK20')">
+					<s:submit id="apply_check20" name="apply_check20" value="运营总监审核通过" cssClass="input-green" action="apply_check20" onclick="return isOp('确定进行此操作?');" />
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_CHECK5')">
+					<s:submit id="apply_check5" name="apply_check5" value="审核不通过"  cssClass="input-red" action="apply_check5" onclick="return isOp('确定进行此操作?');" />
+					</s:if>
+					</s:if>
+					</s:else>
 					<s:if test="apply.status>=10 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_APPROVE')">
 					<input type="button" value="审阅"  onclick="openApprove();" />
 					</s:if>

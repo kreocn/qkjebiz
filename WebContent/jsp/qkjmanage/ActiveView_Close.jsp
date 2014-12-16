@@ -39,24 +39,32 @@ display: block;float: left;
 #active_remark,#active_remark textarea {
 font-size: 14px;
 }
+.kss{
+display: none;
+}
 </style>
 <script type="text/javascript">
 function nopri(){
 	$("#mprice").addClass("noprint"); //添加样式
 	$("#fprice").addClass("noprint"); //添加样式
+	$("#ks").removeClass("kss"); //添加样式
+	$("#hs").addClass("kss"); //添加样式
 }
 function ypri(){
 	$("#mprice").removeClass("noprint"); //添加样式
 	$("#fprice").removeClass("noprint"); //添加样式
+	$("#hs").removeClass("kss"); //添加样式
+	$("#ks").addClass("kss"); //添加样式
 }
 </script>
 <body>
 <div class="main">
 <div class="dq_step">
-	<span class="pt">活动结案单</span>
+	<span id="hs" class="pt">活动结案单</span>
+	<span id="ks" class="pt kss">活动客户结案通知单</span>
 	<span class="opb lb op-area noprint"><a href="<s:url namespace="/qkjmanage" action="active_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a></span>
 	<span class="opb lb op-area noprint"><input type="button" onclick="ypri();window.print();" value="打印本页"/>&nbsp;</span>
-	<span class="opb lb op-area noprint"><input type="button" onclick="nopri();window.print();" value="结案通知单"/>&nbsp;</span>
+	<span class="opb lb op-area noprint"><input type="button" onclick="nopri();window.print();" value="打印结案通知单"/>&nbsp;</span>
 </div>
 <s:form id="editForm" name="editForm" action="apply_list"  method="get" namespace="/qkjmanage" theme="simple">
 <div class="label_con">
@@ -413,6 +421,7 @@ function ypri(){
 			</s:if>
 			<input type="button" value="返回" onclick="linkurl('<s:url action="active_relist" namespace="/qkjmanage" />');" />
 			<input type="button" onclick="window.print();" value="打印本页"/>
+			<input type="button" onclick="nopri();window.print();" value="打印结案通知单"/>&nbsp;
 			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_MDYSHIPINFO')">	(发货信息功能已移动到列表页)</s:if>
         </div>
        </div>

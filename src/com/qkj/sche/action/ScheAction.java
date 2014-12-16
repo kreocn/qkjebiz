@@ -257,6 +257,7 @@ public class ScheAction extends ActionSupport {
 			if (null == viewFlag) {
 				this.setSche(null);
 				setMessage("你没有选择任何操作!");
+				return "SUCCESS";
 			} else if ("add".equals(viewFlag)) {
 				System.out.println("load                                       add");
 				if(sche.getType().equals("0")){
@@ -271,6 +272,7 @@ public class ScheAction extends ActionSupport {
 				if(sche.getType().equals("3")){
 					path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/sche/schedule_leftList?sche.type=3'>公告列表</a>&nbsp;&gt;&nbsp;增加公告";
 				}
+				return "SUCCESS";
 				
 			} else if ("mdy".equals(viewFlag)) {
 				map.clear();
@@ -349,6 +351,7 @@ public class ScheAction extends ActionSupport {
 				}
 				
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/sche/schedule_leftList?sche.type="+type+"'>公告列表</a>&nbsp;&gt;&nbsp;公告详情";
+				return "SUCCESS";
 			}else if ("view".equals(viewFlag)) {//点击详情后，把信息修改为谁已读
 				map.clear();
 				map.put("uuid", sche.getUuid());
@@ -434,16 +437,18 @@ public class ScheAction extends ActionSupport {
 					type="3";
 				}
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/sche/schedule_leftList?sche.type="+type+"'>公告列表</a>&nbsp;&gt;&nbsp;公告详情";
+				return "VIEWSUCCESS";
 			} 
 			else {
 				this.setSche(null);
 				setMessage("无操作类型!");
+				return "SUCCESS";
 			}
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!load 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!load 读取数据错误:", e);
 		}
-		return SUCCESS;
+		
 	}
 	
 
