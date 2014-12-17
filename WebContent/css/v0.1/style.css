@@ -439,6 +439,10 @@ font-weight: bold;
 	margin: 0; padding:0; outline: none;font-family: "微软雅黑";
 }
 
+.label_rwbenx input[type="text"],.label_rwbenx input[type="password"] {
+	width: inherit;
+}
+
 .input-a select{
 	width:100%;  padding:0; height: 28px; line-height: 28px; font-size: 14px; border-radius: 5px; border: none; border:1px solid #ccc;font-family: "微软雅黑";margin:0;outline: none;
 }
@@ -450,6 +454,7 @@ font-weight: bold;
 .input-a input[type="button"],.input-a input[type="submit"],.input-a input[type="reset"],.op-area a {
 	font-size: 14px; color: #fffff0; background: #363636; border-radius: 5px; line-height: 22px; height: 22px; border: 1px solid #363636;
 	font-weight: bold; padding: 0 10px; cursor: pointer;
+	width: initial;
 }
 
 .op-area a {

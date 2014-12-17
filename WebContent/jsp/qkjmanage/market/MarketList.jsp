@@ -53,12 +53,11 @@
 	 		<tr id="coltr">
 			<th class="td1">编号</th>
 			<th class="td1">公司名称</th>
-			<th class="td1">横坐标</th>
-			<th class="td1">纵坐标</th>
 			<th class="td2">区域</th>
 			<th class="td3">性质</th>
 			<th class="td3">联系地址</th>
 			<th class="td3">联系信息</th>
+			<th class="td1">位置信息</th>
 			<th class="td4">操作</th>
 			<th class="td0">查看</th>
 	
@@ -67,14 +66,20 @@
 		  		<tr id="showtr${uuid}">
 		  			<td class="td1 nw"><s:property value="uuid" /></td>
 		  			 <td class="td1 nw">${name }</td>
-				   <td class="td1 nw">
-				    	${abs }
-				    </td>
-				    <td class="td1 nw">${yaxis }</td>
+				   
 				    <td class="td2 nw">${area }</td>
 				    <td class="td3 nw">${lead }</td>
 				    <td class="td3 longnote" title="${address}">${it:subString(address,18)}</td>
 				    <td class="td3 nw">联系人:${people }&nbsp;联系电话：${phone }</td>
+				    <td class="td1 nw">
+				    <s:if test="%{abs!=null || yaxis!=null}">
+				    	[${abs },${yaxis }]
+				    </s:if>
+				    <s:else>
+				    <font color="red">没有位置信息</font>
+				    </s:else>
+				    </td>
+				    
 					<td class="td4 op-area">
 				    	<a class="input-blue" href="<s:url namespace="/qkjmanage" action="market_load"><s:param name="viewFlag">mdy</s:param><s:param name="market.uuid" value="uuid"></s:param></s:url>">修改</a>
 				    	<a class="input-red" href="<s:url namespace="/qkjmanage" action="market_del"><s:param name="market.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>

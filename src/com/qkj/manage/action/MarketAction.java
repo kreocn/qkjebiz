@@ -109,7 +109,12 @@ public class MarketAction extends ActionSupport implements ActionAttr {
         if(markets.size()>0){
         	for(int i=0;i<markets.size();i++){
         		market=markets.get(i);
-        		info="bmap.put('qkj"+market.getUuid()+"', { x : "+market.getAbs()+", y : "+market.getYaxis()+", name : '"+market.getName()+"', area : '"+market.getArea()+"', lead : '"+market.getLead()+"', msg : '"+market.getAddress()+"<br />联系人："+market.getPeople()+"<br />联系电话："+market.getPhone()+"',img : '";
+        		info="bmap.put('qkj"+market.getUuid()+"', { x : "+market.getAbs()+", y : "+market.getYaxis()+", name : '"+market.getName()+"', area : '"+market.getArea()+"', lead : '"+market.getLead()+"', msg : '"+market.getAddress()+"<br />";
+        		if(market.getPeople()!=null && !market.getPeople().equals("")){
+        			info+="联系人："+market.getPeople()+"<br />联系电话："+market.getPhone()+"',img : '";
+        		}else{
+        			info+="联系电话："+market.getPhone()+"',img : '";
+        		}
         		if(market.getImg()!=null && !market.getImg().equals("")){
         			info+=market.getImg()+"' });"+'\n';
         		}else{
@@ -202,6 +207,11 @@ public class MarketAction extends ActionSupport implements ActionAttr {
 			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
 		}
+		return SUCCESS;
+	}
+	
+	public String saveab()throws Exception {
+		market.setUuid(market.getUuid());
 		return SUCCESS;
 	}
 	

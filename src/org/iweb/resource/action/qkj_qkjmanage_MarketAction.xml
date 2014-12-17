@@ -34,9 +34,12 @@
 				<param name="actionName">market_load</param>
 				<param name="market.uuid">${market.uuid}</param>
 				<param name="viewFlag">mdy</param>
-				<param name="flag">1</param>
 				<param name="message">${message}</param>
 			</result>
+		</action>
+		
+		<action name="market_saveab" class="com.qkj.manage.action.MarketAction" method="saveab">
+			<result>/jsp/qkjmanage/market/net2.jsp</result>
 		</action>
 		
 		<action name="market_saveay" class="com.qkj.manage.action.MarketAction" method="saveay">
@@ -49,7 +52,6 @@
 		<action name="market_del" class="com.qkj.manage.action.MarketAction" method="del">
 			<result type="redirectAction">
 				<param name="actionName">market_list</param>
-				<param name="market.uuid">${market.uuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
