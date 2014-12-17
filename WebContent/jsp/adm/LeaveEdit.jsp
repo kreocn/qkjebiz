@@ -42,6 +42,7 @@
 				人事:
 				<s:if test="leave.check_status==5"><span class="message_error">已退回</span></s:if>
 				<s:elseif test="leave.acheck_status==0">未审核</s:elseif>
+				<s:if test="leave.acheck_status==8"><span class="message_pass">已受理(${leave.acheck_user_name})</span></s:if>
 				<s:if test="leave.acheck_status==10"><span class="message_pass">人事经理已审(${leave.acheck_user_name})</span></s:if>
 				<s:if test="leave.acheck_status==20"><span class="message_pass">行政副总已审(${leave.acheck_user_name})</span></s:if>
 				<s:if test="leave.acheck_status==30"><span class="message_pass">总经理已审(${leave.acheck_user_name})</span></s:if>
@@ -200,7 +201,11 @@
 				</s:if>
 				<!-- {0:'未审核',10:'人事经理已审',20:'人事副总已审',30:'总经理已审' } -->
 				<s:if test="leave.check_status>=20">
-					<s:if test="leave.acheck_status==0&&@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_ACHECK0')">
+					<s:if test="leave.acheck_status==0&&@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_ACHECK8')">
+						<s:submit name="leave_acheck8" cssClass="input-green" value="已受理" action="leave_acheck8" onclick="return isOp('确定执行此操作?');" />
+					</s:if>
+					
+					<s:if test="(leave.acheck_status==0 || leave.acheck_status==8)&&@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_ACHECK0')">
 						<s:submit name="leave_acheck0" cssClass="input-green" value="人事经理-审核通过" action="leave_acheck0" onclick="return isOp('确定执行此操作?');" />
 						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_CHECK5')">
 							<s:submit name="leave_check5" value="人事经理-审核不通过" action="leave_check5" cssClass="input-red" onclick="return isOp('确定执行此操作?');" />

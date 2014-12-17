@@ -212,6 +212,23 @@ public class LeaveAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
+	
+	/**
+	 * 已受理
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String acheck8() throws Exception {
+		ContextHelper.isPermit("QKJ_ADM_LEAVE_ACHECK8");
+		try {
+			acheck(8);
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!acheck8 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!acheck0 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
 
 	/**
 	 * 大区经理审核

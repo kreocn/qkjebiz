@@ -73,7 +73,7 @@ max-width: 650px !important;
         </div>
         <div class="label_hang">
             <div class="label_ltit">人事审核状态:</div>
-            <div class="label_rwben label_rwb"><s:select name="leave.acheck_status" list="#{0:'未审核/已退回',10:'人事经理已审',20:'行政副总已审',30:'总经理已审' }" headerKey="" headerValue="--请选择--"  /></div>
+            <div class="label_rwben label_rwb"><s:select name="leave.acheck_status" list="#{0:'未审核/已退回',8:'已受理',10:'人事经理已审',20:'行政副总已审',30:'总经理已审' }" headerKey="" headerValue="--请选择--"  /></div>
         </div>
         <div class="label_hang label_button tac">
         	<s:checkbox id="search_mcondition" name="search_mcondition" fieldValue="true" value="true" cssClass="regular-checkbox" />
@@ -133,6 +133,7 @@ max-width: 650px !important;
 		<td class="td3">
 			<s:if test="check_status==5"><span class="message_error">已退回</span></s:if>
 			<s:elseif test="acheck_status==0">未审核</s:elseif>
+			<s:if test="acheck_status==8"><span class="message_pass">已受理</span></s:if>
 			<s:if test="acheck_status==10"><span class="message_pass">人事经理已审</span></s:if>
 			<s:if test="acheck_status==20"><span class="message_pass">行政副总已审</span></s:if>
 			<s:if test="acheck_status==30"><span class="message_pass">总经理已审</span></s:if>
