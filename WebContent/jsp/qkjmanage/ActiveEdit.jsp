@@ -311,23 +311,25 @@ color: #008000;
 	            		<s:if test="active.status==0 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEPRODUCT_ADD')">
 						<input type="button" id="product" onclick="noedit();" value="添加酒品" />
 						<script type="text/javascript">
+						var edit = false;
 						$(function(){
 							$("#editForm :input").change(function(){
-								//if()cellarOrder_check0 10 15 20
-								//$("#rebates_mdyRebatesStatus0").attr("disabled","disabled");
-								if($("#product").length>0) {
-									if(confirm("您有未保存的信息,确认填加吗?确认后将丢失一部分信息。")){
-										location.href="/qkjmanage/active_addProduct?active.uuid="+${active.uuid};
-										}else{
-										 return false;
-										}
-								}
-								
+								edit = true;
 							});
 						});
 						
 						function noedit(){
-							location.href="/qkjmanage/active_addProduct?active.uuid="+${active.uuid};
+							//.var
+							if(edit==false){
+								location.href="/qkjmanage/active_addProduct?active.uuid="+${active.uuid};
+							}else{
+								if(confirm("您有未保存的信息,确认填加吗?确认后将丢失一部分信息。")){
+									location.href="/qkjmanage/active_addProduct?active.uuid="+${active.uuid};
+									}else{
+									 return false;
+									}
+							}
+							
 						}
 						</script>
 						</s:if>
