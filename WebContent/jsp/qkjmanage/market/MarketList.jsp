@@ -70,7 +70,9 @@
 				    <td class="td2 nw">${area }</td>
 				    <td class="td3 nw">${lead }</td>
 				    <td class="td3 longnote" title="${address}">${it:subString(address,18)}</td>
-				    <td class="td3 nw">联系人:${people }&nbsp;联系电话：${phone }</td>
+				    <td class="td3 nw">
+				    <s:if test="%{people!=null && people!=''}">联系人:${people }&nbsp;</s:if>
+				    联系电话：${phone }</td>
 				    <td class="td1 nw">
 				    <s:if test="%{abs!=null || yaxis!=null}">
 				    	[${abs },${yaxis }]
