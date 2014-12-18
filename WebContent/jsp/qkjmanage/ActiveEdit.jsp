@@ -133,6 +133,9 @@ color: #008000;
 	<div class="dq_step">
 		${path}
 		<span class="opb lb op-area">
+			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_HISTORY')">
+				<a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_history"><s:param name="active.uuid" value="active.uuid" /></s:url>">单据操作记录</a>
+			</s:if>
 		    	<s:if test="40<=active.sd_status">
 		    	<a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_view"><s:param name="active.uuid" value="active.uuid" /></s:url>">转到打印页面</a>
 		    	</s:if>
@@ -163,7 +166,27 @@ color: #008000;
         <div class="label_hang">
             <div class="label_ltit">状态:</div>
             <div class="label_rwbenx">
-                <div class="zhuangtai">
+                <div class="zhuangtai" 
+                <s:if test="%{active.status==0}">
+                title="${it:formatDate(activeTime.stars,'yyyy-MM-dd HH:mm:ss')}"
+                </s:if>
+                <s:if test="%{active.status==1}">
+                 title="${it:formatDate(activeTime.sing,'yyyy-MM-dd HH:mm:ss')}"
+                </s:if>
+                <s:if test="%{active.status==2}">
+                 title="${it:formatDate(activeTime.spass,'yyyy-MM-dd HH:mm:ss')}"
+                </s:if>
+                <s:if test="%{active.status==3}">
+                 title="${it:formatDate(activeTime.starj,'yyyy-MM-dd HH:mm:ss')}"
+                </s:if>
+                <s:if test="%{active.status==4}">
+                 title="${it:formatDate(activeTime.jing,'yyyy-MM-dd HH:mm:ss')}"
+                </s:if>
+                <s:if test="%{active.status==5}">
+                 title="${it:formatDate(activeTime.jpass,'yyyy-MM-dd HH:mm:ss')}"
+                </s:if>
+               
+                >
 					申请单状态:
 					<s:if test="active.status==-1"><font class="message_error">已作废</font></s:if>
 					<s:if test="active.status==0">新申请</s:if>
@@ -192,7 +215,9 @@ color: #008000;
 					<s:if test="active.smd_status==40"><font class="message_pass">销管部经理已审</font>(${active.smd_user_name})</s:if>
 					<s:if test="active.smd_status==50"><font class="message_pass">销管副总已审</font>(${active.smd_user_name})</s:if>
 				</div>
-				<div class="zhuangtai" title="${it:formatDate(active.smd_time,'yyyy-MM-dd HH:mm:ss')}">
+				<div class="zhuangtai" 
+				<s:if test="%{active.fd_status!=0}">title="${it:formatDate(active.smd_time,'yyyy-MM-dd HH:mm:ss')}"</s:if>
+				>
 					财务审核状态:
 					<s:if test="active.fd_status==0">未确认</s:if>
 					<s:if test="active.fd_status==5"><font class="message_error">审核退回</font>(${active.fd_user_name})</s:if>
@@ -508,7 +533,7 @@ color: #008000;
 				<div class="label_hang">
 					<div class="label_ltit" style="font-weight: normal;">本期结余:</div>
 					<div class="label_rwben label_rwb">
-					<s:textfield id="bprice" name="active.m_bprice" readonly="true" cssClass="validate[required]"/>
+					<s:textfield id="bprice" name="active.m_bprice" readonly="true"/>
 					</div>
 				</div>
 			</div>
@@ -529,7 +554,7 @@ color: #008000;
 					<s:textfield id="fprice" name="active.f_price" cssClass="validate[required]"></s:textfield>
 					</s:if>
 					<s:else>
-					<s:textfield id="fprice" name="active.f_price" value="%{active.mt_price}" cssClass="validate[required]"></s:textfield>
+					<s:textfield id="fprice" name="active.f_price" value="%{active.mt_price}"></s:textfield>
 					</s:else>
 					</div>
 				</div>
@@ -558,14 +583,7 @@ color: #008000;
 			${active.note}
         	</div>
         </div>
-        <div class="label_main">
-        <div class="label_hang">
-            <div class="label_ltit">备注:</div>
-            <div class="label_rwbenx">
-            	${active.remark}
-            </div>
-        </div>
-        </div>
+        
         </s:if>
         <s:else>
         
@@ -582,6 +600,8 @@ color: #008000;
 			<s:else>${active.note}</s:else>
         	</div>
         </div>
+        </s:else>
+        
         <div class="label_main">
         <div class="label_hang">
             <div class="label_ltit">备注:</div>
@@ -592,7 +612,23 @@ color: #008000;
         </div>
         </div>
         
-        </s:else>
+        <div class="label_main">
+        <div class="label_hang">
+            <div class="label_ltit">填加时间:</div>
+            <div class="label_rwbenx">
+            	${it:formatDate(active.add_time,'yyyy-MM-dd hh:mm:ss')}
+            </div>
+        </div>
+        <s:if test="%{active.status!=0}">
+        <div class="label_hang">
+            <div class="label_ltit">报审时间:</div>
+            <div class="label_rwbenx">
+            	${it:formatDate(activeTime.baotime,'yyyy-MM-dd hh:mm:ss')}
+            </div>
+        </div>
+        </s:if>
+        
+        </div>
         
         <s:if test="'mdy' == viewFlag">
         <div class="label_main">

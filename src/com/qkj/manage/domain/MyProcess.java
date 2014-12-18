@@ -17,6 +17,16 @@ public class MyProcess {
 	private String biz_sign;// (varchar)业务标记
 
 	// 以下为非数据库字段
+	private String uname;
+	
+
+	public String getUname() {
+		return uname;
+	}
+
+	public void setUname(String uname) {
+		this.uname = uname;
+	}
 
 	public Integer getUuid() {
 		return uuid;

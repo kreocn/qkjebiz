@@ -9,6 +9,9 @@
 		<action name="active_addProduct" class="com.qkj.manage.action.ActiveAction" method="addPro">
 			<result>/jsp/qkjmanage/AddPro.jsp</result>
 		</action>
+		<action name="active_history" class="com.qkj.manage.action.ActiveAction" method="history">
+			<result>/jsp/qkjmanage/ActiveHistory.jsp</result>
+		</action>
 		<action name="active_list" class="com.qkj.manage.action.ActiveAction" method="list">
 			<result>/jsp/qkjmanage/ActiveList.jsp</result>
 		</action>

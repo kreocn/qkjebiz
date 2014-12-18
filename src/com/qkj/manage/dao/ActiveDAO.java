@@ -13,8 +13,16 @@ public class ActiveDAO extends AbstractDAO {
 		return super.list("qkjmanage_getActives", map);
 	}
 	
+	public List listHis(Map<String, Object> map) {
+		return super.list("qkjmanage_getActivesHistory", map);
+	}
+	
 	public List listSing(Map<String, Object> map) {
 		return super.list("qkjmanage_getsign", map);
+	}
+	
+	public List getbaotime(Map<String, Object> map) {
+		return super.list("qkjmanage_gettime", map);
 	}
 
 	public Object get(Object uuid) {

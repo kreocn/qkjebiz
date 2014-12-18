@@ -184,7 +184,27 @@ color: #008000;
         <div class="label_hang">
             <div class="label_ltit">状态:</div>
             <div class="label_rwbenx">
-                <div class="zhuangtai">
+                <div class="zhuangtai"
+                  <s:if test="%{active.status==0}">
+                title="${it:formatDate(activeTime.stars,'yyyy-MM-dd HH:mm:ss')}"
+                </s:if>
+                <s:if test="%{active.status==1}">
+                 title="${it:formatDate(activeTime.sing,'yyyy-MM-dd HH:mm:ss')}"
+                </s:if>
+                <s:if test="%{active.status==2}">
+                 title="${it:formatDate(activeTime.spass,'yyyy-MM-dd HH:mm:ss')}"
+                </s:if>
+                <s:if test="%{active.status==3}">
+                 title="${it:formatDate(activeTime.starj,'yyyy-MM-dd HH:mm:ss')}"
+                </s:if>
+                <s:if test="%{active.status==4}">
+                 title="${it:formatDate(activeTime.jing,'yyyy-MM-dd HH:mm:ss')}"
+                </s:if>
+                <s:if test="%{active.status==5}">
+                 title="${it:formatDate(activeTime.jpass,'yyyy-MM-dd HH:mm:ss')}"
+                </s:if>
+                
+                >
 					申请单状态:
 					<s:if test="active.status==-1"><font class="message_error">已作废</font></s:if>
 					<s:if test="active.status==0">新申请</s:if>
@@ -213,13 +233,17 @@ color: #008000;
 					<s:if test="active.close_smd_status==40"><font class="message_pass">销管部经理已审</font>(${active.close_smd_user_name})</s:if>
 					<s:if test="active.close_smd_status==50"><font class="message_pass">销管副总已审</font>(${active.close_smd_user_name})</s:if>
 				</div>
-				<div class="zhuangtai" title="${it:formatDate(active.close_fd_time,'yyyy-MM-dd HH:mm:ss')}">
+				<div class="zhuangtai" 
+				<s:if test="%{active.close_fd_status!=0}">title="${it:formatDate(active.close_fd_time,'yyyy-MM-dd HH:mm:ss')}"</s:if>
+				>
 					财务部审核状态:
 					<s:if test="active.close_fd_status==0 || active.fd_status==null">未确认</s:if>
 					<s:if test="active.close_fd_status==5"><font class="message_error">审核退回</font>(${active.close_fd_name})</s:if>
 					<s:if test="active.close_fd_status==10"><font class="message_pass">财务已审</font>(${active.close_fd_name})</s:if>
 				</div>
-				<div class="zhuangtai" title="${it:formatDate(active.close_nd_time,'yyyy-MM-dd HH:mm:ss')}">
+				<div class="zhuangtai"
+				<s:if test="%{active.close_nd_status!=0}">title="${it:formatDate(active.close_nd_time,'yyyy-MM-dd HH:mm:ss')}"</s:if>
+				 >
 					数据中心审核状态:
 					<s:if test="active.close_nd_status==0 || active.close_nd_status==null">未确认</s:if>
 					<s:if test="active.close_nd_status==5"><font class="message_error">审核退回</font>(${active.close_nd_name})</s:if>
@@ -411,25 +435,28 @@ color: #008000;
 	            		<s:if test="active.status==3 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEPRODUCT_ADD')">
 						<input type="button" id="product" onclick="noedit();" value="添加酒品" />
 						<script type="text/javascript">
+						var edit = false;
 						$(function(){
 							$("#editForm :input").change(function(){
-								//if()cellarOrder_check0 10 15 20
-								//$("#rebates_mdyRebatesStatus0").attr("disabled","disabled");
-								if($("#product").length>0) {
-									if(confirm("您有未保存的信息,确认填加吗?确认后将丢失一部分信息。")){
-										location.href="/qkjmanage/active_addProduct?state=2&active.uuid="+${active.uuid};
-										}else{
-										 return false;
-										}
-								}
-								
+								edit = true;
 							});
 						});
 						
 						function noedit(){
-							location.href="/qkjmanage/active_addProduct?state=2&active.uuid="+${active.uuid};
+							//.var
+							if(edit==false){
+								location.href="/qkjmanage/active_addProduct?state=2&active.uuid="+${active.uuid};
+							}else{
+								if(confirm("您有未保存的信息,确认填加吗?确认后将丢失一部分信息。")){
+									location.href="/qkjmanage/active_addProduct?state=2&active.uuid="+${active.uuid};
+									}else{
+									 return false;
+									}
+							}
+							
 						}
 						</script>
+						
 						</s:if>
 						<s:if test="active.status==3 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEPOSM_ADD')">
 						<input type="button" id="addPosm" value="销售物料" />
@@ -551,7 +578,7 @@ color: #008000;
 				<div class="label_hang">
 					<div class="label_ltit" style="font-weight: normal;">本期结余:</div>
 					<div class="label_rwben label_rwb">
-					<s:textfield id="bprice" name="active.close_m_bprice" readonly="true" cssClass="validate[required]"/>
+					<s:textfield id="bprice" name="active.close_m_bprice" readonly="true"/>
 					</div>
 				</div>
 			</div>
@@ -579,7 +606,7 @@ color: #008000;
 				<div class="label_hang">
 					<div class="label_ltit" style="font-weight: normal;">本期结余:</div>
 					<div class="label_rwben label_rwb">
-					<s:textfield id="fbprice" name="active.close_f_bprice" readonly="true" cssClass="validate[required]"/>
+					<s:textfield id="fbprice" name="active.close_f_bprice" readonly="true"/>
 					</div>
 				</div>
 			</div>
@@ -666,16 +693,28 @@ color: #008000;
         <div class="label_hang">
             <div class="label_ltit">备注:</div>
             <div class="label_rwbenx label_hang_linput">
-            <s:if test="%{active.status>3}">
-            ${active.remark }
-            </s:if>
-            <s:else>
             <span class="message_prompt">任何保存/报审/审核操作都会同时保存备注</span>
             <s:textarea id="active_remark" name="active.remark" title="活动备注"  cssClass="label_hang_linput inputNote validate[maxSize[65535]]" />
-            </s:else>
-            
             </div>
         </div>
+        </div>
+        
+        <div class="label_main">
+        <div class="label_hang">
+            <div class="label_ltit">填加时间:</div>
+            <div class="label_rwbenx">
+            	${it:formatDate(active.add_time,'yyyy-MM-dd hh:mm:ss')}
+            </div>
+        </div>
+        <s:if test="%{active.status!=0}">
+        <div class="label_hang">
+            <div class="label_ltit">报审时间:</div>
+            <div class="label_rwbenx">
+            	${it:formatDate(activeTime.baotime,'yyyy-MM-dd hh:mm:ss')}
+            </div>
+        </div>
+        </s:if>
+        
         </div>
         <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_MDYSPE') && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_SELSPE') && active.uuid!=null">
         <div class="label_main">

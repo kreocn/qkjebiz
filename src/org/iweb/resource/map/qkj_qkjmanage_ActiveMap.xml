@@ -3,6 +3,7 @@
 <sqlMap>
 	<!-- Active Start -->
 	<typeAlias alias="active" type="com.qkj.manage.domain.Active" />
+	<typeAlias alias="process" type="com.qkj.manage.domain.MyProcess"/>
 	<select id="qkjmanage_getActives" resultClass="active" parameterClass="java.util.Map">
 		<![CDATA[ 
 			SELECT a.*,d.dept_cname apply_dept_name,au.user_name apply_user_name,
@@ -127,6 +128,67 @@
 			<isNotEmpty prepend="AND" property="shuClo"><![CDATA[  a.`close_nd_status`=10 and s.biz_sign='ACTIVE_MDY_NDCSTATUS' ]]></isNotEmpty>
 		</dynamic>
 		<![CDATA[ GROUP BY s.`biz_user` ORDER BY s.`biz_time` DESC  ]]>
+		
+	</select>
+	
+	<select id="qkjmanage_getActivesHistory" resultClass="process" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT p.*,u.`USER_NAME` uname FROM qkjm_h_process p LEFT JOIN s_sys_user u ON (p.`biz_user`=u.`UUID`)
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="biz_id"><![CDATA[ p.`process_id`=1 and  biz_id=#biz_id# ]]></isNotEmpty>
+		</dynamic>
+		
+	</select>
+	
+	<select id="qkjmanage_gettime" resultClass="active" parameterClass="java.util.Map">
+		<![CDATA[ 
+SELECT MAX(a.baotime) baotime,MAX(a.stars) stars,MAX(a.sing) sing,MAX(a.spass) spass,MAX(a.starj) starj,MAX(a.jing) jing,MAX(a.jpass) jpass FROM (
+				SELECT MAX(s.`biz_time`) baotime,NULL stars,NULL sing,NULL spass,NULL starj,NULL jing,NULL jpass FROM qkjm_h_process s  
+							LEFT JOIN qkjm_r_active a ON (a.`uuid`=s.`biz_id`)
+							LEFT JOIN s_sys_user u ON (s.`biz_user`=u.`UUID`) WHERE
+							s.`process_id`=1  AND  s.`biz_status01`=1 AND s.`biz_sign`='ACTIVE_MDY_STATUS'
+							AND s.`biz_id`=#biz_id#
+				UNION ALL 
+				SELECT NULL baotime,MAX(s.`biz_time`) stars,NULL sing,NULL spass,NULL starj,NULL jing,NULL jpass FROM qkjm_h_process s  
+							LEFT JOIN qkjm_r_active a ON (a.`uuid`=s.`biz_id`)
+							LEFT JOIN s_sys_user u ON (s.`biz_user`=u.`UUID`) WHERE
+							s.`process_id`=1  AND  s.`biz_status01`=0
+							AND s.`biz_id`=#biz_id#
+				UNION ALL 
+				SELECT NULL baotime,NULL stars,MAX(s.`biz_time`) sing,NULL spass,NULL starj,NULL jing,NULL jpass FROM qkjm_h_process s  
+							LEFT JOIN qkjm_r_active a ON (a.`uuid`=s.`biz_id`)
+							LEFT JOIN s_sys_user u ON (s.`biz_user`=u.`UUID`) WHERE
+							s.`process_id`=1  AND  s.`biz_status01`=1 AND (s.`biz_sign`='ACTIVE_MDY_SMDSTATUS' OR s.`biz_sign`='ACTIVE_MDY_SDSTATUS')
+							AND s.`biz_id`=#biz_id#
+				UNION ALL 
+				SELECT NULL baotime,NULL stars,NULL sing,MAX(s.`biz_time`) spass,NULL starj,NULL jing,NULL jpass FROM qkjm_h_process s  
+							LEFT JOIN qkjm_r_active a ON (a.`uuid`=s.`biz_id`)
+							LEFT JOIN s_sys_user u ON (s.`biz_user`=u.`UUID`) WHERE
+							s.`process_id`=1  AND  s.`biz_status01`=2
+							AND s.`biz_id`=#biz_id#
+				UNION ALL 
+				SELECT NULL baotime,NULL stars,NULL sing,NULL spass,MAX(s.`biz_time`) starj,NULL jing,NULL jpass FROM qkjm_h_process s  
+							LEFT JOIN qkjm_r_active a ON (a.`uuid`=s.`biz_id`)
+							LEFT JOIN s_sys_user u ON (s.`biz_user`=u.`UUID`) WHERE
+							s.`process_id`=1  AND  s.`biz_status01`=3
+							AND s.`biz_id`=#biz_id#
+				UNION ALL 
+				SELECT NULL baotime,NULL stars,NULL sing,NULL spass,NULL starj,MAX(s.`biz_time`) jing,NULL jpass FROM qkjm_h_process s  
+							LEFT JOIN qkjm_r_active a ON (a.`uuid`=s.`biz_id`)
+							LEFT JOIN s_sys_user u ON (s.`biz_user`=u.`UUID`) WHERE
+							s.`process_id`=1  AND  s.`biz_status01`=4 AND (s.`biz_sign`='ACTIVE_CLOSE_SDSTATUS' OR s.`biz_sign`='ACTIVE_CLOSE_SMDSTATUS')
+							AND s.`biz_id`=#biz_id#
+				UNION ALL 
+				SELECT NULL baotime,NULL stars,NULL sing,NULL spass,NULL starj,NULL jing,MAX(s.`biz_time`) jpass FROM qkjm_h_process s  
+							LEFT JOIN qkjm_r_active a ON (a.`uuid`=s.`biz_id`)
+							LEFT JOIN s_sys_user u ON (s.`biz_user`=u.`UUID`) WHERE
+							s.`process_id`=1  AND  s.`biz_status01`=5
+							AND s.`biz_id`=#biz_id#
+				)a
+			
+		]]>
+		
 		
 	</select>
 	

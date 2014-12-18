@@ -90,7 +90,13 @@ public class Active {
 	private String puser_sign;
 	private String puser_name;
 	private Date biz_time;
-
+	private Date baotime;
+	private Date stars;
+	private Date sing;
+	private Date spass;
+	private Date starj;
+	private Date jing;
+	private Date jpass;
 	// 查询使用字段
 	private String is_sub_dept;
 	private Date plan_start_begin;
@@ -105,6 +111,62 @@ public class Active {
 	
 	
 	
+	public Date getStars() {
+		return stars;
+	}
+
+	public void setStars(Date stars) {
+		this.stars = stars;
+	}
+
+	public Date getSing() {
+		return sing;
+	}
+
+	public void setSing(Date sing) {
+		this.sing = sing;
+	}
+
+	public Date getSpass() {
+		return spass;
+	}
+
+	public void setSpass(Date spass) {
+		this.spass = spass;
+	}
+
+	public Date getStarj() {
+		return starj;
+	}
+
+	public void setStarj(Date starj) {
+		this.starj = starj;
+	}
+
+	public Date getJing() {
+		return jing;
+	}
+
+	public void setJing(Date jing) {
+		this.jing = jing;
+	}
+
+	public Date getJpass() {
+		return jpass;
+	}
+
+	public void setJpass(Date jpass) {
+		this.jpass = jpass;
+	}
+
+	public Date getBaotime() {
+		return baotime;
+	}
+
+	public void setBaotime(Date baotime) {
+		this.baotime = baotime;
+	}
+
 	public Double getClose_m_upprice() {
 		return close_m_upprice;
 	}
