@@ -908,18 +908,22 @@ color: #008000;
             <div class="label_rwbenx">
 				<!-- 财务 -->
 				<s:if test="%{code.substring(0,2)=='21'}">
-				<s:if test="10!=active.close_fd_status && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_FDCSTATUS10')">
+				<s:if test="%{10!=active.close_fd_status}">
+				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_FDCSTATUS10')">
 				<s:if test="active.close_sd_status>=40">
 				<s:submit id="mdyActiveFDCSTATUS10" name="mdyActiveFDCSTATUS10" cssClass="input-green" value="财务-审核通过" action="mdyActiveFDCSTATUS10" onclick="return isOp('确定执行此操作?');" />
 				<s:submit id="mdyActiveFDCStatus5" name="mdyActiveFDCStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveFDCSTATUS" onclick="return isOp('确定执行此操作?');" />
 				</s:if>
 				</s:if>
 				</s:if>
+				</s:if>
 				
 				<s:else>
+				<s:if test="%{10!=active.close_fd_status}">
 				<s:if test="50==active.close_smd_status || 60==active.close_smd_status">
 				<s:submit id="mdyActiveFDCSTATUS10" name="mdyActiveFDCSTATUS10" cssClass="input-green" value="财务-审核通过" action="mdyActiveFDCSTATUS10" onclick="return isOp('确定执行此操作?');" />
 				<s:submit id="mdyActiveFDCStatus5" name="mdyActiveFDCStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveFDCSTATUS" onclick="return isOp('确定执行此操作?');" />
+				</s:if>
 				</s:if>
 				</s:else>
 				<div class="statusInline">
@@ -946,9 +950,11 @@ color: #008000;
 				</s:if>
 				</s:if>
 				<s:else>
+				<s:if test="%{10!=active.close_nd_status}">
 				<s:if test="50==active.close_smd_status || 60==active.close_smd_status">
 				<s:submit id="mdyActiveNDCSTATUS10" name="mdyActiveNDCSTATUS10" cssClass="input-green" value="数据中心-审核通过" action="mdyActiveNDCSTATUS10" onclick="return isOp('确定执行此操作?');" />
 				<s:submit id="mdyActiveNDCSTATUS5" name="mdyActiveNDCSTATUS5" cssClass="input-red" value="审核不通过" action="mdyActiveNDCSTATUS5" onclick="return isOp('确定执行此操作?');" />
+				</s:if>
 				</s:if>
 				</s:else>
 				<div class="statusInline">
