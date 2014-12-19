@@ -180,7 +180,8 @@
 					<div class="label_hang">
 						<div class="label_ltit">已阅人:</div>
 						<div class="label_rwben">
-						<s:property value="sche.user_name" />
+						<s:textfield name="sche.user_name" 
+								cssClass="label_hang_linput validate[required,maxSize[255]]" />
 						</div>
 					</div>
 				</div>

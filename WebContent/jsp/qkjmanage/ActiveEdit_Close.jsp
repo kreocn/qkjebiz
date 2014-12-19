@@ -154,6 +154,9 @@ color: #008000;
 	<div class="dq_step">
 		${path}
 		<span class="opb lb op-area">
+		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_HISTORY')">
+				<a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_history"><s:param name="active.uuid" value="active.uuid" /></s:url>">查看操作记录</a>
+			</s:if>
 		<s:if test="active.status >= 4">
 			<a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_closeView"><s:param name="active.uuid" value="active.uuid"></s:param></s:url>">转到打印页面</a>
 		</s:if>
@@ -371,7 +374,7 @@ color: #008000;
         </div>
         
         <fieldset>
-			<legend>预计费用信息</legend>
+			<span class="shaddress">--------------------预计费用信息--------------------</span>
 			<div class="label_main">
 				<div class="label_hang">
 					<div class="label_ltit">随量费用:</div>
@@ -552,7 +555,7 @@ color: #008000;
         </div>
         <s:if test="%{active.status==3}">
         <fieldset>
-			<legend>费用信息</legend>
+			<span class="shaddress">--------------------费用信息--------------------</span>
 			<div class="label_main">
 				<div class="label_hang">
 					<div class="label_ltit">随量费用:</div>
@@ -813,6 +816,9 @@ color: #008000;
 				<s:if test="active.status==4 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_APPROVE')">
 					<input type="button" value="审阅"  onclick="openApprove();" />
 				</s:if>
+				</s:if>
+				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_HISTORY')">
+				<input type="button" value="查看操作记录"  class="input-gray" onclick="linkurl('<s:url action="active_history" namespace="/qkjmanage"><s:param name="active.uuid" value="active.uuid" /></s:url>');" />
 				</s:if>
 				<input type="button" class="input-gray" value="返回" onclick="linkurl('<s:url action="active_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');" />
 				<s:if test="active.status==4 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_TH')">

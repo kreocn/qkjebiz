@@ -6,8 +6,9 @@
 	<typeAlias alias="scheduser" type="com.qkj.sche.domain.Scheduser" />
 	<select id="sche_getSche_ss" resultClass="schedule" parameterClass="java.util.Map">
 		<![CDATA[ 
-		SELECT DISTINCT g.`uuid` uuid, d.uuid guuid,g.`TITLE` title,g.`SDATE` sdate,g.`flag` flag,g.`CONTENT` content,g.type type,d.`p_uuid` p_uuid,pu.`USER_NAME` p_name FROM qkj_t_schedule g LEFT JOIN qkj_t_scheduser d ON (g.`uuid`=d.`infor_uuid`)
+		SELECT DISTINCT g.`uuid` UUID, d.uuid guuid,d.`p_uuid` p_uuid,pu.`USER_NAME` p_name,ps.`USER_NAME` lm_user_name,g.* FROM qkj_t_schedule g LEFT JOIN qkj_t_scheduser d ON (g.`uuid`=d.`infor_uuid`)
 		LEFT JOIN s_sys_user pu ON (d.`p_uuid`=pu.`UUID`) 
+		LEFT JOIN s_sys_user ps ON (g.`lm_user`=ps.`UUID`) 
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotNull prepend="AND" property="uuid"><![CDATA[ g.uuid=#uuid# ]]></isNotNull>
@@ -20,8 +21,9 @@
 	
 	<select id="sche_getSche_page" resultClass="schedule" parameterClass="java.util.Map">
 		<![CDATA[ 
-		SELECT DISTINCT g.`uuid` uuid, d.uuid guuid,g.`TITLE` title,g.`SDATE` sdate,g.`flag` flag,g.`CONTENT` content,g.type type,d.`p_uuid` p_uuid,pu.`USER_NAME` p_name FROM qkj_t_schedule g LEFT JOIN qkj_t_scheduser d ON (g.`uuid`=d.`infor_uuid`)
+		SELECT DISTINCT g.`uuid` UUID, d.uuid guuid,g.*,d.`p_uuid` p_uuid,pu.`USER_NAME` p_name,ps.`USER_NAME` lm_user_name FROM qkj_t_schedule g LEFT JOIN qkj_t_scheduser d ON (g.`uuid`=d.`infor_uuid`)
 		LEFT JOIN s_sys_user pu ON (d.`p_uuid`=pu.`UUID`) 
+		LEFT JOIN s_sys_user ps ON (g.`lm_user`=ps.`UUID`)
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotNull prepend="AND" property="uuid"><![CDATA[ g.uuid=#uuid# ]]></isNotNull>
@@ -43,19 +45,22 @@
 	</select>
 	<select id="sche_getSche_byr" resultClass="schedule" parameterClass="java.util.Map">
 		<![CDATA[ 
-		SELECT a.uuid UUID,a.title title,a.sdate sdate,a.content content,a.flag flag,a.type type,a.r_uuid r_uuid,a.puuid puuid, a.r_name r_name,a.p_name p_name FROM (
-		SELECT g.`uuid` UUID,g.`TITLE` title,g.`SDATE` sdate,g.`CONTENT` content,g.`flag` flag,g.type type,d.`r_uuid` r_uuid,d.`p_uuid` puuid,ru.`USER_NAME` r_name,pu.`USER_NAME` p_name FROM qkj_t_schedule g LEFT JOIN qkj_t_scheduser d ON (g.`uuid`=d.`infor_uuid`)
+		SELECT a.uuid UUID,a.title title,a.sdate sdate,a.content content,a.flag flag,a.type type,a.r_uuid r_uuid,a.puuid puuid, a.r_name r_name,a.p_name p_name,a.lm_time lm_time,a.lm_user_name lm_user_name FROM (
+		SELECT g.`uuid` UUID,g.`TITLE` title,g.`SDATE` sdate,g.`CONTENT` content,g.`flag` flag,g.type type,d.`r_uuid` r_uuid,d.`p_uuid` puuid,ru.`USER_NAME` r_name,pu.`USER_NAME` p_name,g.`lm_time` lm_time,ps.`USER_NAME` lm_user_name FROM qkj_t_schedule g LEFT JOIN qkj_t_scheduser d ON (g.`uuid`=d.`infor_uuid`)
 		LEFT JOIN s_sys_user ru ON (d.`r_uuid`=ru.`UUID`)
 		LEFT JOIN s_sys_user pu ON (d.`p_uuid`=pu.`UUID`)
+		LEFT JOIN s_sys_user ps ON (ps.`UUID`=g.`lm_user`)
 		WHERE ru.`UUID`=#ruuid# OR pu.`UUID`=#puuid#
 		UNION ALL 
-		SELECT g.`uuid` UUID,g.`TITLE` title,g.`SDATE` sdate,g.`CONTENT` content,g.`flag` flag,g.type type,d.`r_uuid` r_uuid,d.`p_uuid` puuid,rd.`dept_cname` r_name,pu.`USER_NAME` p_name FROM qkj_t_schedule g LEFT JOIN qkj_t_scheduser d ON (g.`uuid`=d.`infor_uuid`)
+		SELECT g.`uuid` UUID,g.`TITLE` title,g.`SDATE` sdate,g.`CONTENT` content,g.`flag` flag,g.type type,d.`r_uuid` r_uuid,d.`p_uuid` puuid,rd.`dept_cname` r_name,pu.`USER_NAME` p_name,g.`lm_time` lm_time,ps.`USER_NAME` lm_user_name FROM qkj_t_schedule g LEFT JOIN qkj_t_scheduser d ON (g.`uuid`=d.`infor_uuid`)
 		LEFT JOIN s_sys_department rd ON (d.`r_uuid`=rd.`DEPT_CODE`)
 		LEFT JOIN s_sys_user pu ON (d.`p_uuid`=pu.`UUID`)
+		LEFT JOIN s_sys_user ps ON (ps.`UUID`=g.`lm_user`)
 		WHERE rd.`DEPT_CODE` LIKE CONCAT(#dept_code#,'%')
 		UNION ALL
-		SELECT g.`uuid` UUID,g.`TITLE` title,g.`SDATE` sdate,g.`CONTENT` content,g.`flag` flag,g.type type,d.`r_uuid` r_uuid,d.`p_uuid` puuid,0 r_name,pu.`USER_NAME` p_name FROM qkj_t_schedule g LEFT JOIN qkj_t_scheduser d ON (g.`uuid`=d.`infor_uuid`)
+		SELECT g.`uuid` UUID,g.`TITLE` title,g.`SDATE` sdate,g.`CONTENT` content,g.`flag` flag,g.type type,d.`r_uuid` r_uuid,d.`p_uuid` puuid,0 r_name,pu.`USER_NAME` p_name,g.`lm_time` lm_time,ps.`USER_NAME` lm_user_name FROM qkj_t_schedule g LEFT JOIN qkj_t_scheduser d ON (g.`uuid`=d.`infor_uuid`)
 		LEFT JOIN s_sys_user pu ON (d.`p_uuid`=pu.`UUID`)
+		LEFT JOIN s_sys_user ps ON (ps.`UUID`=g.`lm_user`)
 		WHERE d.`r_uuid`=0 OR pu.`UUID`=#puuid#
 		) a 
 
@@ -110,8 +115,8 @@
 	</select>
 	<insert id="sche_addSche_ss" parameterClass="schedule">
 		<![CDATA[ 
-			Insert Into qkj_t_schedule(title,content,sdate,type)
-			Values (#title#,#content#,#sdate#,#type#)
+			Insert Into qkj_t_schedule(title,content,sdate,type,lm_user,lm_time)
+			Values (#title#,#content#,#sdate#,#type#,#lm_user#,#lm_time#)
 		]]>
 		<selectKey resultClass="int" keyProperty="uuid">
 		<![CDATA[ 
@@ -126,7 +131,9 @@
 			Set title=#title#,
 				content=#content#,
 				sdate=#sdate#,
-				type=#type#
+				type=#type#,
+				lm_user=#lm_user#,
+				lm_time=#lm_time#
 			Where uuid=#uuid#
 		]]>
 	</update>

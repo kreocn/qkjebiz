@@ -60,10 +60,12 @@
  		<tr id="coltr">
 		<th class="td1">编号</th>
 		<th class="td1">主题</th>
-		<th class="td1">日期</th>
-		<th class="td3">内容</th>
+		<th class="td1">更新日期</th>
+		
 		<th class="td2">发布人</th>
 		<th class="td2">公告类别</th>
+		<th class="td3">最后修改人</th>
+		<th class="td3">最后修改时间</th>
 		<th class="td4">操作</th>
 		<th class="td0">查看</th>
 	  	</tr>
@@ -74,15 +76,7 @@
 			    	${title }
 			    </td>
 	    		<td class="td1 nw">${sdate } </td>
-				<td class="td3 nw">
-				<s:if test="content.length()>18">
-				<s:property value="%{content.toString().substring(0,18)+'......'}"/>
-				</s:if>
-				<s:else>
-				${content}
-				</s:else>
 				
-				</td>
 				<td class="td2 nw">
 				<s:property value="%{p_name}"/>
 				</td>
@@ -91,6 +85,12 @@
 					<s:if test="type==1">公司制度和章程</s:if>
 					<s:if test="type==2">公司文件</s:if>
 					<s:if test="type==3">更新公告</s:if>
+				</td>
+				<td class="td3 nw">
+				 		${lm_user_name }
+				</td>
+				<td class="td3 nw">
+				 	${it:formatDate(lm_time,'yyyy-MM-dd dd:mm:ss')}
 				</td>
 				<td class="td4 op-area">
 			    <s:if test="type==0">

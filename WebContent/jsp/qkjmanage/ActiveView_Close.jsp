@@ -331,7 +331,7 @@ function ypri(){
  </div>
 </div>
  	<fieldset>
-			<legend>实际费用信息</legend>
+			<span class="shaddress">--------------------实际费用信息--------------------</span>
 			<div class="label_main" id="mprice">
 				<div class="label_hang">
 					<div class="label_ltit">随量费用:</div>

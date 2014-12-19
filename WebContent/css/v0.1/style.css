@@ -374,6 +374,10 @@ font-weight: bold;
 	margin-top: 10px; margin-bottom: 10px;
 }
 
+.tal,.tab_warp .tal {
+	text-align: left;
+}
+
 .tac {
 	text-align: center;
 }
