@@ -1,5 +1,7 @@
 package com.qkj.sche.domain;
 
+import java.util.Date;
+
 
 public class Schedule {
 	private Integer uuid;// (int)
@@ -15,10 +17,33 @@ public class Schedule {
 	private String usename;
 	private String user_name;
 	
+	private String lm_user;
+	private Date lm_time;
+	
 	private String flag;//是否已读
 	private String r_dept;
+	private String lm_user_name;
 	
 	
+	public String getLm_user_name() {
+		return lm_user_name;
+	}
+	public void setLm_user_name(String lm_user_name) {
+		this.lm_user_name = lm_user_name;
+	}
+	public String getLm_user() {
+		return lm_user;
+	}
+	public void setLm_user(String lm_user) {
+		this.lm_user = lm_user;
+	}
+	
+	public Date getLm_time() {
+		return lm_time;
+	}
+	public void setLm_time(Date lm_time) {
+		this.lm_time = lm_time;
+	}
 	public String getType() {
 		return type;
 	}

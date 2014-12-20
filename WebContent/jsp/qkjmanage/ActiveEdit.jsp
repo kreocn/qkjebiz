@@ -134,7 +134,7 @@ color: #008000;
 		${path}
 		<span class="opb lb op-area">
 			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_HISTORY')">
-				<a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_history"><s:param name="active.uuid" value="active.uuid" /></s:url>">单据操作记录</a>
+				<a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_history"><s:param name="active.uuid" value="active.uuid" /></s:url>">查看操作记录</a>
 			</s:if>
 		    	<s:if test="40<=active.sd_status">
 		    	<a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_view"><s:param name="active.uuid" value="active.uuid" /></s:url>">转到打印页面</a>
@@ -704,6 +704,9 @@ color: #008000;
 				</s:if>
 				<s:if test="active.status==1 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_APPROVE')">
 					<input type="button" value="审阅"  onclick="openApprove();" />
+				</s:if>
+				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_HISTORY')">
+				<input type="button" value="查看操作记录"  class="input-gray" onclick="linkurl('<s:url action="active_history" namespace="/qkjmanage"><s:param name="active.uuid" value="active.uuid" /></s:url>');" />
 				</s:if>
 				<input type="button" value="返回"  class="input-gray" onclick="linkurl('<s:url action="active_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');" />
 				<s:if test="(active.status==1 || active.status==2) && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_TH')">

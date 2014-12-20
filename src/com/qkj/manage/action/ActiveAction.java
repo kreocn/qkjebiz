@@ -969,6 +969,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 			dao.mdyCloseActivePass(active);
 			// 调整随量积分
 			mdyMemberCapital();
+			active.setStatus(5);
 			addProcess("ACTIVE_CLOSE_PASS", "活动结案通过");
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
@@ -1113,8 +1114,8 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 			active.setClose_nd_user(ContextHelper.getUserLoginUuid());
 			active.setClose_nd_time(new Date());
 			active.setLm_user(ContextHelper.getUserLoginUuid());
-			String note = "结案--数据中心状态变更-" + noteflag;
-			addProcess("ACTIVE_MDY_NDCSTATUS", "结案--数据中心状态变更");
+			String note="结案--数据中心状态变更-"+noteflag;
+			addProcess("ACTIVE_MDY_NDCSTATUS", note);
 			return dao.mdyActiveNDCStatus(active);
 		}
 

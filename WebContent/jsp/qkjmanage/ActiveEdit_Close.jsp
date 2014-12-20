@@ -154,6 +154,9 @@ color: #008000;
 	<div class="dq_step">
 		${path}
 		<span class="opb lb op-area">
+		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_HISTORY')">
+				<a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_history"><s:param name="active.uuid" value="active.uuid" /></s:url>">查看操作记录</a>
+			</s:if>
 		<s:if test="active.status >= 4">
 			<a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_closeView"><s:param name="active.uuid" value="active.uuid"></s:param></s:url>">转到打印页面</a>
 		</s:if>
@@ -814,6 +817,9 @@ color: #008000;
 					<input type="button" value="审阅"  onclick="openApprove();" />
 				</s:if>
 				</s:if>
+				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_HISTORY')">
+				<input type="button" value="查看操作记录"  class="input-gray" onclick="linkurl('<s:url action="active_history" namespace="/qkjmanage"><s:param name="active.uuid" value="active.uuid" /></s:url>');" />
+				</s:if>
 				<input type="button" class="input-gray" value="返回" onclick="linkurl('<s:url action="active_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');" />
 				<s:if test="active.status==4 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_TH')">
 				<s:submit cssClass="input-red" name="mdyCloseActiveSDStatus5" value="退回" action="mdycloseTH" onclick="return isOp('确定执行此操作?将退回到未审核状态');" />
@@ -902,18 +908,22 @@ color: #008000;
             <div class="label_rwbenx">
 				<!-- 财务 -->
 				<s:if test="%{code.substring(0,2)=='21'}">
-				<s:if test="10!=active.close_fd_status && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_FDCSTATUS10')">
+				<s:if test="%{10!=active.close_fd_status}">
+				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_FDCSTATUS10')">
 				<s:if test="active.close_sd_status>=40">
 				<s:submit id="mdyActiveFDCSTATUS10" name="mdyActiveFDCSTATUS10" cssClass="input-green" value="财务-审核通过" action="mdyActiveFDCSTATUS10" onclick="return isOp('确定执行此操作?');" />
 				<s:submit id="mdyActiveFDCStatus5" name="mdyActiveFDCStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveFDCSTATUS" onclick="return isOp('确定执行此操作?');" />
 				</s:if>
 				</s:if>
 				</s:if>
+				</s:if>
 				
 				<s:else>
+				<s:if test="%{10!=active.close_fd_status}">
 				<s:if test="50==active.close_smd_status || 60==active.close_smd_status">
 				<s:submit id="mdyActiveFDCSTATUS10" name="mdyActiveFDCSTATUS10" cssClass="input-green" value="财务-审核通过" action="mdyActiveFDCSTATUS10" onclick="return isOp('确定执行此操作?');" />
 				<s:submit id="mdyActiveFDCStatus5" name="mdyActiveFDCStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveFDCSTATUS" onclick="return isOp('确定执行此操作?');" />
+				</s:if>
 				</s:if>
 				</s:else>
 				<div class="statusInline">
@@ -940,9 +950,11 @@ color: #008000;
 				</s:if>
 				</s:if>
 				<s:else>
+				<s:if test="%{10!=active.close_nd_status}">
 				<s:if test="50==active.close_smd_status || 60==active.close_smd_status">
 				<s:submit id="mdyActiveNDCSTATUS10" name="mdyActiveNDCSTATUS10" cssClass="input-green" value="数据中心-审核通过" action="mdyActiveNDCSTATUS10" onclick="return isOp('确定执行此操作?');" />
 				<s:submit id="mdyActiveNDCSTATUS5" name="mdyActiveNDCSTATUS5" cssClass="input-red" value="审核不通过" action="mdyActiveNDCSTATUS5" onclick="return isOp('确定执行此操作?');" />
+				</s:if>
 				</s:if>
 				</s:else>
 				<div class="statusInline">

@@ -369,7 +369,11 @@ public class ScheAction extends ActionSupport {
 						this.setShceduser(shcedusers.get(i));
 						map.clear();
 						map.put("uuid", shceduser.getR_uuid());
-						this.setSname((Schedule)dao.listy(map).get(0));
+						List<Schedule> scs=dao.listy(map);
+						if(scs.size()>0){
+							this.setSname((Schedule)scs.get(0));
+						}
+						
 						if(ruuid!=null){
 							ruuid=ruuid+sname.getUsename()+" "+shceduser.getR_uuid()+";";
 						}else{
@@ -391,6 +395,7 @@ public class ScheAction extends ActionSupport {
 					//修改为已读
 					if(sche.getFlag()!=null&&!sche.getFlag().equals("")){//查询已阅人如何此人已读过则不再填加
 						String result =sche.getFlag();
+						String readed=sche.getFlag();
 						result = result.trim().substring(0, result.length()-1);
 						String[] results = result.split(";"); 
 						for(int j=0;j<results.length;j++){
@@ -401,7 +406,7 @@ public class ScheAction extends ActionSupport {
 								if(result==null||result.equals("")){
 									ud=u+";";
 								}else{
-									ud=result+u+";";
+									ud=readed+u+";";
 								}
 								sche.setFlag(ud);
 								sche.setUuid(scuuid);
@@ -477,6 +482,8 @@ public class ScheAction extends ActionSupport {
 				String result =sche.getR_uuid();
 				result = result.trim().substring(0, result.length()-1);
 				String[] results = result.split(";"); 
+				sche.setLm_time(new Date());
+				sche.setLm_user(u);
 				dao.add(sche);
 				for(int i=0;i<results.length;i++){
 					String c=results[i];
@@ -526,6 +533,8 @@ public class ScheAction extends ActionSupport {
 			if(result!=null&&!result.equals("0")){
 				result = result.trim().substring(0, result.length()-1);
 				String[] results = result.split(";"); 
+				sche.setLm_time(new Date());
+				sche.setLm_user(u);
 				dao.save(sche);
 				map.clear();
 				map.put("p_uuid", u);

@@ -23,21 +23,18 @@ cursor: pointer;
  	<div class="tab_warp">
  		<table>
  		<tr id="coltr">
-	    <th class="td1">编号</th>
-		<th class="td1">活动编号</th>
-		<th class="td2">操作人</th>
+		<th class="td3">活动编号</th>
 		<th class="td2">操作时间</th>
-		<th class="td3">操作内容</th>
+		<th class="td3">操作人</th>		
+		<th class="td1">操作内容</th>
 		<th class="td0">查看</th>
 	  	</tr>
 	  	<s:iterator value="myPros" status="sta">
 	  	<tr id="showtr${uuid}">
-		    <td class="td1 nw">${uuid}</td>
-			<td class="td1 nw">${biz_id}</td>
-			<td class="td2 nw">${uname}</td>
-			<td class="td2 nw">${it:formatDate(biz_time,'yyyy-MM-dd')}</td>
-			<td class="td3 nw">${biz_note}</td>
-			
+			<td class="td3 nw">${biz_id}</td>
+			<td class="td2 nw">${it:formatDate(biz_time,'yyyy-MM-dd dd:mm:ss')}</td>
+			<td class="td3 nw">${uname}</td>			
+			<td class="td1 nw tal">${biz_note}</td>			
 		    <td class="td0 op-area"><a onclick="showDetail('showtr${uuid}');" href="javascript:;" class="input-nostyle">查看</a></td>
 	  	</tr>
 	  	</s:iterator>

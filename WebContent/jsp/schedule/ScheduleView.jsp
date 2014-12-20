@@ -58,15 +58,7 @@
 				</div>
 				
 			</div>
-					<div class="label_main">
-					<div class="label_hang">
-			            <div class="label_ltit">接收人:</div>
-			            <div class="label_rwbenx">
-			            	<%-- <span class="message_prompt">不填写，则对所有人公开！</span> --%>
-			            	${ sche.r_uuid}
-			            </div>
-			        </div>
-					</div>
+					
 				<s:if test="'view' == viewFlag">
 			      <div class="label_main">
 					<div class="label_hang">
@@ -97,8 +89,7 @@
 				</div>
 				<div class="label_main">
 					<div class="note_area">
-						<s:textarea name="sche.content" title="公告内容"
-							cssClass="xheditorArea validate[maxSize[65535]]" />
+					${sche.content }
 					</div>
 				</div>
 				
