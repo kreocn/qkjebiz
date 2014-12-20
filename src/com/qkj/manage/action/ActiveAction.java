@@ -22,8 +22,6 @@ import com.qkj.manage.dao.ApproveDAO;
 import com.qkj.manage.dao.ProcessDAO;
 import com.qkj.manage.dao.ProductDAO;
 import com.qkj.manage.domain.Active;
-import com.qkj.manage.domain.ActiveF;
-import com.qkj.manage.domain.ActiveM;
 import com.qkj.manage.domain.ActiveMemcost;
 import com.qkj.manage.domain.ActivePosm;
 import com.qkj.manage.domain.ActiveProduct;
@@ -70,11 +68,10 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	private String code;
 	private String flag;
 	private String state;
-	private String noteflag=null;
+	private String noteflag = null;
 
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;活动管理";
-	
-	
+
 	public MyProcess getMyPro() {
 		return myPro;
 	}
@@ -318,12 +315,12 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public void setCode(String code) {
 		this.code = code;
 	}
-	
+
 	public String addPro() throws Exception {
 		try {
-			if(state!=null && state.equals("2")){//结案
+			if (state != null && state.equals("2")) {// 结案
 				this.setState("2");
-			}else{
+			} else {
 				this.setState("1");
 			}
 			active.setUuid(active.getUuid());
@@ -336,21 +333,20 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		return SUCCESS;
 	}
 
-	public String history() throws Exception{
+	public String history() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_HISTORY");
 		map.clear();
 		map.put("biz_id", active.getUuid());
-		if (myPro != null)
-			map.putAll(ToolsUtil.getMapByBean(myPro));
-		//map.putAll(ContextHelper.getDefaultRequestMap4Page());
-		//this.setPageSize(ContextHelper.getPageSize(map));
-		//this.setCurrPage(ContextHelper.getCurrPage(map));	
+		if (myPro != null) map.putAll(ToolsUtil.getMapByBean(myPro));
+		// map.putAll(ContextHelper.getDefaultRequestMap4Page());
+		// this.setPageSize(ContextHelper.getPageSize(map));
+		// this.setCurrPage(ContextHelper.getCurrPage(map));
 		this.setMyPros(dao.listHis(map));
-		//this.setRecCount(dao.getResultCount());
+		// this.setRecCount(dao.getResultCount());
 		path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/active_list?viewFlag=relist'>活动列表</a>&nbsp;&gt;&nbsp;操作历史";
 		return SUCCESS;
 	}
-	
+
 	public String list() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_LIST");
 		try {
@@ -358,9 +354,9 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 			if (active == null) active = new Active();
 			ContextHelper.setSearchDeptPermit4Search(map, "apply_depts", "apply_user");
 			ContextHelper.SimpleSearchMap4Page("QKJ_QKJMANAGE_ACTIVE_LIST", map, active, viewFlag);
-			if(flag!=null && flag.equals("0")){
+			if (flag != null && flag.equals("0")) {
 				map.put("flag", "有");
-			}else if(flag!=null && flag.equals("10")){
+			} else if (flag != null && flag.equals("10")) {
 				map.put("spere", "无");
 			}
 			this.setPageSize(ContextHelper.getPageSize(map));
@@ -386,7 +382,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 			} else if ("mdy".equals(viewFlag) || "view".equals(viewFlag)) {
 				if (!(active == null || active.getUuid() == null)) {
 					this.setActive((Active) dao.get(active.getUuid()));
-					code=active.getApply_dept();
+					code = active.getApply_dept();
 				} else {
 					this.setActive(null);
 				}
@@ -405,7 +401,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				this.setActivePosms(podao.list(map));
 				ActiveMemcostDAO amdao = new ActiveMemcostDAO();
 				this.setActiveMemcosts(amdao.list(map));
-				
+
 				map.clear();
 				map.put("int_id", active.getUuid());
 				map.put("approve_type", 1);
@@ -414,12 +410,12 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				this.setActiveSing(dao.listSing(null));
 				map.clear();
 				map.put("biz_id", active.getUuid());
-				List<Active> activets=dao.getbaotime(map);
+				List<Active> activets = dao.getbaotime(map);
 				System.out.println(activets.size());
-				if(activets.size()>0){
-					this.setActiveTime((Active)activets.get(0));
+				if (activets.size() > 0) {
+					this.setActiveTime((Active) activets.get(0));
 				}
-				
+
 				/* 检查当前用户是否已经审阅 */
 				if (apdao.userIsIn(approves, ContextHelper.getUserLoginUuid())) this.setIsApprover("true");
 				else this.setIsApprover("false");
@@ -509,12 +505,12 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				this.setActivePosms(podao.list(map));
 				ActiveMemcostDAO amdao = new ActiveMemcostDAO();
 				this.setActiveMemcosts(amdao.list(map));
-				
+
 				map.clear();
 				map.put("biz_id", active.getUuid());
-				List<Active> activets=dao.getbaotime(map);
-				if(activets.size()>0){
-					this.setActiveTime((Active)activets.get(0));
+				List<Active> activets = dao.getbaotime(map);
+				if (activets.size() > 0) {
+					this.setActiveTime((Active) activets.get(0));
 				}
 			} else {
 				this.setActive(null);
@@ -647,30 +643,30 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	 * @date 2014-4-26 上午10:15:02
 	 */
 	private int mdyStatus(int status) {
-		if(status==-1){
-			noteflag="作废";
+		if (status == -1) {
+			noteflag = "作废";
 		}
-		if(status==0){
-			noteflag="新申请";
+		if (status == 0) {
+			noteflag = "新申请";
 		}
-		if(status==1){
-			noteflag="申请审批中";
+		if (status == 1) {
+			noteflag = "申请审批中";
 		}
-		if(status==2){
-			noteflag="申请通过-可以执行";
+		if (status == 2) {
+			noteflag = "申请通过-可以执行";
 		}
-		if(status==3){
-			noteflag="开始结案";
+		if (status == 3) {
+			noteflag = "开始结案";
 		}
-		if(status==4){
-			noteflag="结案审批中";
+		if (status == 4) {
+			noteflag = "结案审批中";
 		}
-		if(status==5){
-			noteflag="结案通过";
+		if (status == 5) {
+			noteflag = "结案通过";
 		}
 		active.setStatus(status);
 		active.setLm_user(ContextHelper.getUserLoginUuid());
-		String note="活动状态变更-"+noteflag;
+		String note = "活动状态变更-" + noteflag;
 		addProcess("ACTIVE_MDY_STATUS", note);
 		return dao.mdyActiveStatus(active);
 	}
@@ -795,29 +791,29 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	 * @date 2014-4-26 上午10:20:39
 	 */
 	public int mdyActiveSDStatus(int sd_status) {
-		if(sd_status==5){
-			noteflag="退回";
+		if (sd_status == 5) {
+			noteflag = "退回";
 		}
-		if(sd_status==10){
-			noteflag="待审核";
+		if (sd_status == 10) {
+			noteflag = "待审核";
 		}
-		if(sd_status==30){
-			noteflag="大区审核通过";
+		if (sd_status == 30) {
+			noteflag = "大区审核通过";
 		}
-		if(sd_status==40){
-			noteflag="总监审核通过";
+		if (sd_status == 40) {
+			noteflag = "总监审核通过";
 		}
-		if(sd_status==50){
-			noteflag="副总审核通过";
+		if (sd_status == 50) {
+			noteflag = "副总审核通过";
 		}
-		if(sd_status==50){
-			noteflag="总经理审核通过";
+		if (sd_status == 50) {
+			noteflag = "总经理审核通过";
 		}
 		active.setSd_status(sd_status);
 		active.setSd_time(new Date());
 		active.setSd_user(ContextHelper.getUserLoginUuid());
 		active.setLm_user(ContextHelper.getUserLoginUuid());
-		String note="活动申请-销售审核状态变更-"+noteflag;
+		String note = "活动申请-销售审核状态变更-" + noteflag;
 		addProcess("ACTIVE_MDY_SDSTATUS", note);
 		return dao.mdyActiveSDStatus(active);
 	}
@@ -923,11 +919,11 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyActiveFDSTATUS10() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_FDSTATUS10");
 		try {
-			Active ac=new Active();
+			Active ac = new Active();
 			active.setLm_user(ContextHelper.getUserLoginUuid());
 			mdyActiveFDStatus(1, 10);
-			ac=(Active) dao.get(active.getUuid());
-			if(ac.getStatus()<=2){
+			ac = (Active) dao.get(active.getUuid());
+			if (ac.getStatus() <= 2) {
 				active.setStatus(2);// 申请通过执行
 			}
 			dao.mdyActivePass(active);
@@ -1045,27 +1041,27 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	 * @date 2014-4-26 上午10:25:25
 	 */
 	public int mdyActiveSMDStatus(int smd_status) {
-		if(smd_status==5){
-			noteflag="退回";
+		if (smd_status == 5) {
+			noteflag = "退回";
 		}
-		if(smd_status==10){
-			noteflag="已签收";
+		if (smd_status == 10) {
+			noteflag = "已签收";
 		}
-		if(smd_status==30){
-			noteflag="销管经理审核通过";
+		if (smd_status == 30) {
+			noteflag = "销管经理审核通过";
 		}
-		if(smd_status==40){
-			noteflag="销管部经理审核通过";
+		if (smd_status == 40) {
+			noteflag = "销管部经理审核通过";
 		}
-		if(smd_status==50){
-			noteflag="销管副总审核通过";
+		if (smd_status == 50) {
+			noteflag = "销管副总审核通过";
 		}
 		active.setFd_status(0);
 		active.setSmd_status(smd_status);
 		active.setSmd_time(new Date());
 		active.setSmd_user(ContextHelper.getUserLoginUuid());
 		active.setLm_user(ContextHelper.getUserLoginUuid());
-		String note="活动申请-销管审核状态变更-"+noteflag;
+		String note = "活动申请-销管审核状态变更-" + noteflag;
 		addProcess("ACTIVE_MDY_SMDSTATUS", note);
 		return dao.mdyActiveSMDStatus(active);
 	}
@@ -1079,45 +1075,45 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	 */
 	public int mdyActiveFDStatus(int flag, int smd_status) {
 		if (flag == 1) {// 申请
-			if(smd_status==5){
-				noteflag="退回";
+			if (smd_status == 5) {
+				noteflag = "退回";
 			}
-			if(smd_status==10){
-				noteflag="通过";
+			if (smd_status == 10) {
+				noteflag = "通过";
 			}
 			active.setFd_status(smd_status);
 			active.setFd_user(ContextHelper.getUserLoginUuid());
 			active.setFd_time(new Date());
 			active.setLm_user(ContextHelper.getUserLoginUuid());
-			String note="申请--财务状态变更-"+noteflag;
+			String note = "申请--财务状态变更-" + noteflag;
 			addProcess("ACTIVE_MDY_FDSTATUS", note);
 			return dao.mdyActiveFDStatus(active);
 		} else if (flag == 2) {// 结案
-			if(smd_status==5){
-				noteflag=ContextHelper.getUserLoginName()+"退回";
+			if (smd_status == 5) {
+				noteflag = ContextHelper.getUserLoginName() + "退回";
 			}
-			if(smd_status==10){
-				noteflag=ContextHelper.getUserLoginName()+"通过";
+			if (smd_status == 10) {
+				noteflag = ContextHelper.getUserLoginName() + "通过";
 			}
 			active.setClose_fd_status(smd_status);
 			active.setClose_fd_user(ContextHelper.getUserLoginUuid());
 			active.setClose_fd_time(new Date());
 			active.setLm_user(ContextHelper.getUserLoginUuid());
-			String note="结案--财务状态变更-"+noteflag;
+			String note = "结案--财务状态变更-" + noteflag;
 			addProcess("ACTIVE_MDY_FDCSTATUS", note);
 			return dao.mdyActiveFDCStatus(active);
 		} else {// 数据中心
-			if(smd_status==5){
-				noteflag="退回";
+			if (smd_status == 5) {
+				noteflag = "退回";
 			}
-			if(smd_status==10){
-				noteflag="通过";
+			if (smd_status == 10) {
+				noteflag = "通过";
 			}
 			active.setClose_nd_status(smd_status);
 			active.setClose_nd_user(ContextHelper.getUserLoginUuid());
 			active.setClose_nd_time(new Date());
 			active.setLm_user(ContextHelper.getUserLoginUuid());
-			String note="结案--数据中心状态变更-"+noteflag;
+			String note = "结案--数据中心状态变更-" + noteflag;
 			addProcess("ACTIVE_MDY_NDCSTATUS", "结案--数据中心状态变更");
 			return dao.mdyActiveNDCStatus(active);
 		}
@@ -1132,7 +1128,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		try {
 			if (!(active == null || active.getUuid() == null)) {
 				this.setActive((Active) dao.get(active.getUuid()));
-				code=active.getApply_dept();
+				code = active.getApply_dept();
 				ProductDAO pdao = new ProductDAO();
 				this.setProducts(pdao.list(null));
 
@@ -1146,7 +1142,6 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				this.setActiveProducts(adao.list(map));
 				this.setActivePosms(podao.list(map));
 				this.setActiveMemcosts(amdao.list(map));
-				
 
 				map.clear();
 				map.put("active_id", active.getUuid());
@@ -1154,7 +1149,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				this.setActiveProductsClose(adao.list(map));
 				this.setActivePosmsClose(podao.list(map));
 				this.setActiveMemcostsClose(amdao.list(map));
-				
+
 				map.clear();
 				map.put("int_id", active.getUuid());
 				map.put("approve_type", 1);
@@ -1162,14 +1157,14 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				this.setApproves(apdao.list(map));
 				map.clear();
 				map.put("biz_id", active.getUuid());
-				List<Active> activets=dao.getbaotime(map);
-				if(activets.size()>0){
-					this.setActiveTime((Active)activets.get(0));
+				List<Active> activets = dao.getbaotime(map);
+				if (activets.size() > 0) {
+					this.setActiveTime((Active) activets.get(0));
 				}
 				/* 检查当前用户是否已经审阅 */
 				if (apdao.userIsIn(approves, ContextHelper.getUserLoginUuid())) this.setIsApprover("true");
 				else this.setIsApprover("false");
-				
+
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/active_list?viewFlag=relist'>活动列表</a>&nbsp;&gt;&nbsp;活动结案";
 
 			} else {
@@ -1280,9 +1275,9 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				this.setActiveMemcostsClose(amdao.list(map));
 				map.clear();
 				map.put("biz_id", active.getUuid());
-				List<Active> activets=dao.getbaotime(map);
-				if(activets.size()>0){
-					this.setActiveTime((Active)activets.get(0));
+				List<Active> activets = dao.getbaotime(map);
+				if (activets.size() > 0) {
+					this.setActiveTime((Active) activets.get(0));
 				}
 			} else {
 				this.setActive(null);
@@ -1514,23 +1509,23 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	 * @date 2014-4-26 上午10:25:25
 	 */
 	public int mdyCloseActiveSDStatus(int close_sd_status) {
-		if(close_sd_status==5){
-			noteflag="退回";
+		if (close_sd_status == 5) {
+			noteflag = "退回";
 		}
-		if(close_sd_status==10){
-			noteflag="待审核";
+		if (close_sd_status == 10) {
+			noteflag = "待审核";
 		}
-		if(close_sd_status==30){
-			noteflag="大区审核通过";
+		if (close_sd_status == 30) {
+			noteflag = "大区审核通过";
 		}
-		if(close_sd_status==40){
-			noteflag="总监审核通过";
+		if (close_sd_status == 40) {
+			noteflag = "总监审核通过";
 		}
-		if(close_sd_status==50){
-			noteflag="副总审核通过";
+		if (close_sd_status == 50) {
+			noteflag = "副总审核通过";
 		}
-		if(close_sd_status==50){
-			noteflag="总经理审核通过";
+		if (close_sd_status == 50) {
+			noteflag = "总经理审核通过";
 		}
 		active.setClose_fd_status(0);
 		active.setClose_nd_status(0);
@@ -1538,7 +1533,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		active.setClose_sd_time(new Date());
 		active.setClose_sd_user(ContextHelper.getUserLoginUuid());
 		active.setLm_user(ContextHelper.getUserLoginUuid());
-		String note="活动结案-销售审核状态变更-"+noteflag;
+		String note = "活动结案-销售审核状态变更-" + noteflag;
 		addProcess("ACTIVE_CLOSE_SDSTATUS", note);
 
 		return dao.mdyCloseActiveSDStatus(active);
@@ -1628,20 +1623,20 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	 * @date 2014-4-26 上午10:25:25
 	 */
 	public int mdyCloseActiveSMDStatus(int close_sd_status) {
-		if(close_sd_status==5){
-			noteflag="退回";
+		if (close_sd_status == 5) {
+			noteflag = "退回";
 		}
-		if(close_sd_status==10){
-			noteflag="已签收";
+		if (close_sd_status == 10) {
+			noteflag = "已签收";
 		}
-		if(close_sd_status==30){
-			noteflag="销管经理审核通过";
+		if (close_sd_status == 30) {
+			noteflag = "销管经理审核通过";
 		}
-		if(close_sd_status==40){
-			noteflag="销管部经理审核通过";
+		if (close_sd_status == 40) {
+			noteflag = "销管部经理审核通过";
 		}
-		if(close_sd_status==50){
-			noteflag="销管副总审核通过";
+		if (close_sd_status == 50) {
+			noteflag = "销管副总审核通过";
 		}
 		active.setClose_fd_status(0);
 		active.setClose_nd_status(0);
@@ -1649,7 +1644,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		active.setClose_smd_time(new Date());
 		active.setClose_smd_user(ContextHelper.getUserLoginUuid());
 		active.setLm_user(ContextHelper.getUserLoginUuid());
-		String note="活动结案-销管审核状态变更"+noteflag;
+		String note = "活动结案-销管审核状态变更" + noteflag;
 		addProcess("ACTIVE_CLOSE_SMDSTATUS", note);
 		return dao.mdyCloseActiveSMDStatus(active);
 	}

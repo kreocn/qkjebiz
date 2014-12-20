@@ -132,8 +132,9 @@ function checkManager() {
 	</div>
 	</div>
 	</s:if>
-	<fieldset>
-	<span class="shaddress">--------------------收货地址--------------------</span>
+	<fieldset class="clear">
+	<legend>收货地址</legend>
+	<!--<span class="shaddress">--------------------收货地址--------------------</span>-->
 	<s:if test="'add' == viewFlag">
 	<div class="label_main">
 		<div class="label_hang">

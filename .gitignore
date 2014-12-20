@@ -43,8 +43,6 @@ Icon
 /.externalToolBuilders/
 /.settings/
 /build/
-META-INF/
-/.g*
 /.project
 /.classpath
 /bin/

@@ -38,6 +38,9 @@ public class IWebConfig extends HttpServlet implements javax.servlet.Servlet {
 		try {
 			super.init(config);
 			String appDir = config.getServletContext().getRealPath("/");
+			if (!appDir.endsWith(File.separator)) {
+				appDir += File.separator;
+			}
 			String abstractDir = config.getServletContext().getContextPath();
 			this.appendConfig("WebAbsolutePath", appDir);
 			this.appendConfig("WebRelativePath", abstractDir);
@@ -65,8 +68,7 @@ public class IWebConfig extends HttpServlet implements javax.servlet.Servlet {
 				log.warn("系统参数配置文件不存在,加载失败!");
 			}
 		} catch (Exception e) {
-			log.fatal("Init Config Error! Please Container or web.xml is Corrent ! \n"
-					+ ToolsUtil.getStackTrace(e));
+			log.fatal("Init Config Error! Please Container or web.xml is Corrent ! \n" + ToolsUtil.getStackTrace(e));
 			throw new RuntimeException("Init Config Error!");
 		}
 	}

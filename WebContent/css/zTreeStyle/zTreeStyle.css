@@ -1,6 +1,5 @@
-*{margin:0; padding:0; border:0;outline:0;}
-body{ font-size:12px; color:#333;}
-li{list-style:none;}
+.ztree *{margin:0; padding:0; border:0;outline:0;font-size:12px; color:#333;}
+.ztree li{list-style:none;}
 .ztree{border: 1px solid #aaaaaa;background: #ffffff;min-width:94px;min-height:50px; padding:5px; border-radius:5px;}
 .ztree li{line-height:14px; text-align:left; white-space:nowrap;}
 .ztree li ul{padding:0 0 0 18px}

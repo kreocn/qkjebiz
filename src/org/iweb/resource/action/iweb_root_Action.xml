@@ -9,7 +9,7 @@
 		<action name="index" class="org.iweb.root.action.IWEBRoot" method="index">
 			<result>/jsp/fore/index.jsp</result>
 		</action>
-		<action name="login" class="org.iweb.root.action.IWEBRoot" method="index">
+		<action name="login" class="com.opensymphony.xwork2.ActionSupport">
 			<result>/jsp/manager/login.jsp</result>
 		</action>
 	</package>

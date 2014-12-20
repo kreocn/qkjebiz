@@ -27,6 +27,9 @@ public class OSSUtil_IMG {
 	// old secret A1PwcIcvavGUhjZ7amtIEJkI4Xg4QO
 	private final static String secret = "gZThZaap86ETlUeLvQh9AOnQue1GfL";
 	// old endpoint:http://images.qkjchina.com/
+	// 内网地址: http://qkjbj01.oss-cn-beijing-internal.aliyuncs.com/
+	// 外网地址1: http://images01.qkjchina.com/
+	// 外网地址2: http://images.qkjchina.com/
 	private final static String endpoint = "http://images01.qkjchina.com/";
 	private final static String default_bucket = "qkjbj01";
 	private static OSSClient client;

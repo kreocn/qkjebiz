@@ -456,7 +456,7 @@ color: #008000;
         </div>
         
         <s:if test="%{active.status>=1 }">
-        <fieldset>
+        <fieldset class="clear">
 			<legend>费用信息</legend>
 			<div class="label_main">
 				<div class="label_hang">
@@ -507,7 +507,7 @@ color: #008000;
 			</fieldset>
         </s:if>
         <s:else>
-        <fieldset>
+        <fieldset class="clear">
 			<legend>费用信息</legend>
 			<div class="label_main">
 				<div class="label_hang">

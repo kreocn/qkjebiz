@@ -370,7 +370,7 @@ color: #008000;
 	        </div>
         </div>
         
-        <fieldset>
+        <fieldset  class="clear">
 			<legend>预计费用信息</legend>
 			<div class="label_main">
 				<div class="label_hang">
@@ -551,7 +551,7 @@ color: #008000;
 	        </div>
         </div>
         <s:if test="%{active.status==3}">
-        <fieldset>
+        <fieldset class="clear">
 			<legend>费用信息</legend>
 			<div class="label_main">
 				<div class="label_hang">
@@ -613,7 +613,7 @@ color: #008000;
 			</fieldset>
         </s:if>
         <s:if test="%{active.status>3}">
-        <fieldset>
+        <fieldset class="clear">
 			<legend>费用信息</legend>
 			<div class="label_main">
 				<div class="label_hang">
