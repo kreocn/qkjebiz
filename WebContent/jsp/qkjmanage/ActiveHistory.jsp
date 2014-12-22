@@ -20,10 +20,15 @@ cursor: pointer;
 			<span class="opb lb op-area"><a onclick="location.href='javascript:history.go(-1);'">返回上一页面</a></span>
 	</div>
 	<s:hidden name="active.uuid" value="%{active.uuid}"></s:hidden>
+	<div class="label_main">
+        <div class="label_hang">
+            <div class="label_ltit">活动编号:</div>
+            <div class="label_rwben">${active.uuid}<s:hidden name="active.uuid" /></div>
+        </div>
+        </div>
  	<div class="tab_warp">
  		<table>
  		<tr id="coltr">
-		<th class="td3">活动编号</th>
 		<th class="td2">操作时间</th>
 		<th class="td3">操作人</th>		
 		<th class="td1">操作内容</th>
@@ -31,7 +36,6 @@ cursor: pointer;
 	  	</tr>
 	  	<s:iterator value="myPros" status="sta">
 	  	<tr id="showtr${uuid}">
-			<td class="td3 nw">${biz_id}</td>
 			<td class="td2 nw">${it:formatDate(biz_time,'yyyy-MM-dd dd:mm:ss')}</td>
 			<td class="td3 nw">${uname}</td>			
 			<td class="td1 nw tal">${biz_note}</td>			
