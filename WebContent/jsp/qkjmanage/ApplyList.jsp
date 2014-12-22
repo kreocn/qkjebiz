@@ -83,7 +83,7 @@ display: none;
 				<s:hidden title="部门代码" id="userdept_codeid" name="apply.apply_dept" readonly="true" />
 				</span>
 				<span class="lb nw">
-				<img class="detail vam" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid');" />
+				<img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid');" />
 				<s:checkbox id="apply_is_sub_dept" name="apply.is_sub_dept" cssClass="regular-checkbox" />
 				<label for="apply_is_sub_dept"></label>包含子部门
 				<span id="ajax_member_message"></span>
