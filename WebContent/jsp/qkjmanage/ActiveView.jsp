@@ -339,8 +339,8 @@ function ypri(){
 	            <p class="lb_yjbot">方案预计费用总计: ${active.it_price} + ${active.mt_price} = ￥${active.it_price+active.mt_price}</p>
 	        </div>
         </div>
-        <fieldset>
-			<span class="shaddress">--------------------预计费用信息--------------------</span>
+        <fieldset class="clear">
+			<legend>费用信息</legend>
 			<div id="mprice" class="label_main">
 				<div class="label_hang">
 					<div class="label_ltit">随量费用:</div>

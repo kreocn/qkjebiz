@@ -330,8 +330,8 @@ function ypri(){
    <p class="lb_yjbot cr"> 方案实际费用总计: ${active.close_it_price} + ${active.close_mt_price} = ￥${active.close_it_price+active.close_mt_price}</p>
  </div>
 </div>
- 	<fieldset>
-			<span class="shaddress">--------------------实际费用信息--------------------</span>
+ 	<fieldset class="clear">
+			<legend>实际费用信息</legend>
 			<div class="label_main" id="mprice">
 				<div class="label_hang">
 					<div class="label_ltit">随量费用:</div>
