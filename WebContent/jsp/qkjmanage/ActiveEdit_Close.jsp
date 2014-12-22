@@ -564,17 +564,17 @@ color: #008000;
 					<div class="label_ltit" style="font-weight: normal;">上期结余:</div>
 					<div class="label_rwben label_rwb">
 					
-					<s:textfield id="upprice" name="active.close_m_upprice" cssClass="validate[required]" />
+					<s:textfield id="upprice" name="active.close_m_upprice" cssClass="validate[required,custom[number]]" />
 					</div>
 				</div>
 				<div class="label_hang">
 					<div class="label_ltit" style="font-weight: normal;">本期费用:</div>
 					<div class="label_rwben label_rwb">
 					<s:if test="%{active.close_m_price!=null}">
-					<s:textfield id="price" name="active.close_m_price" cssClass="validate[required]" />
+					<s:textfield id="price" name="active.close_m_price" cssClass="validate[required,custom[number]]" />
 					</s:if>
 					<s:else>
-					<s:textfield id="price" name="active.close_m_price" value="%{active.close_it_price}" cssClass="validate[required]" />
+					<s:textfield id="price" name="active.close_m_price" value="%{active.close_it_price}" cssClass="validate[required,custom[number]]" />
 					</s:else>
 					</div>
 				</div>
@@ -592,17 +592,17 @@ color: #008000;
 				<div class="label_hang">
 					<div class="label_ltit" style="font-weight: normal;">上期结余:</div>
 					<div class="label_rwben label_rwb">
-					<s:textfield id="fupprice" name="active.close_f_upprice" cssClass="validate[required]"></s:textfield>
+					<s:textfield id="fupprice" name="active.close_f_upprice" cssClass="validate[required,custom[number]]"></s:textfield>
 					</div>
 				</div>
 				<div class="label_hang">
 					<div class="label_ltit" style="font-weight: normal;">本期费用:</div>
 					<div class="label_rwben label_rwb">
 					<s:if test="%{active.close_f_price!=null}">
-					<s:textfield id="fprice" name="active.close_f_price" cssClass="validate[required]"></s:textfield>
+					<s:textfield id="fprice" name="active.close_f_price" cssClass="validate[required,custom[number]]"></s:textfield>
 					</s:if>
 					<s:else>
-					<s:textfield id="fprice" name="active.close_f_price" value="%{active.close_mt_price}" cssClass="validate[required]"></s:textfield>
+					<s:textfield id="fprice" name="active.close_f_price" value="%{active.close_mt_price}" cssClass="validate[required,custom[number]]"></s:textfield>
 					</s:else>
 					</div>
 				</div>

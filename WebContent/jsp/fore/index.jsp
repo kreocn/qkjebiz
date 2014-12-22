@@ -24,9 +24,9 @@ $(function(){
 	<div class="sep25"></div>
 	<div class="index_nav slider-wrapper theme-default">
 		<div id="index-ad-show">
-			<a href="/html/cellar"><img src="http://qkjchina.com/ckframe/userfiles/images/cangjiu/slider/slider_01.jpg" /></a>
-			<a href="/html/cellar"><img src="http://qkjchina.com/ckframe/userfiles/images/cangjiu/slider/slider_02.jpg" /></a>
-			<a href="/html/help?refid=1397282986266001"><img src="http://qkjchina.com/ckframe/userfiles/images/cangjiu/slider/slider_03.jpg" /></a>
+			<a href="/html/cellar"><img src="http://images.qkjchina.com/ckframe/images/cangjiu/slider/slider_01.jpg" /></a>
+			<a href="/html/cellar"><img src="http://images.qkjchina.com/ckframe/images/cangjiu/slider/slider_02.jpg" /></a>
+			<a href="/html/help?refid=1397282986266001"><img src="http://images.qkjchina.com/ckframe/images/cangjiu/slider/slider_03.jpg" /></a>
 		</div>
 	</div>
 	<div class="sep15"></div>

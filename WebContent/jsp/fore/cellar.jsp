@@ -42,7 +42,7 @@ function activePage(s) {
 		</div>
 		<div class="mpanel">
 			<ul id="tab_title">
-				<li si="http://qkjchina.com/ckframe/userfiles/images/cangjiu/product_main.jpg"><a href="#cellar_info">藏酒介绍</a></li>
+				<li si="http://images.qkjchina.com/ckframe/images/cangjiu/product_main.jpg"><a href="#cellar_info">藏酒介绍</a></li>
 			</ul>
 			<div id="cellar_info">
 				<div class="cellar_info_text">
