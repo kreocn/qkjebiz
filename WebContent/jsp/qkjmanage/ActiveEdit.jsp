@@ -561,7 +561,7 @@ color: #008000;
 				<div class="label_hang">
 					<div class="label_ltit" style="font-weight: normal;">本期结余:</div>
 					<div class="label_rwben label_rwb">
-					<s:textfield id="fbprice" name="active.f_bprice" readonly="true" cssClass="validate[required,custom[number]]"></s:textfield>
+					<s:textfield id="fbprice" name="active.f_bprice" readonly="true"></s:textfield>
 					</div>
 				</div>
 			</div>
