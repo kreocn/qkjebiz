@@ -617,7 +617,7 @@ color: #008000;
         </s:if>
         <s:if test="%{active.status>3}">
         <fieldset>
-			<legend>费用信息</legend>
+			<span class="shaddress">--------------------费用信息--------------------</span>
 			<div class="label_main">
 				<div class="label_hang">
 					<div class="label_ltit">随量费用:</div>

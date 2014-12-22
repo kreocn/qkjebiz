@@ -15,10 +15,17 @@ public class Market {
 	private String img;
 	private String lm_user;
 	private Date lm_time;
+	private String deptcode;
 	//非数据库字段
 	private String lm_user_name;
 	
 	
+	public String getDeptcode() {
+		return deptcode;
+	}
+	public void setDeptcode(String deptcode) {
+		this.deptcode = deptcode;
+	}
 	public String getLm_user() {
 		return lm_user;
 	}
