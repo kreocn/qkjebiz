@@ -50,12 +50,10 @@ max-width: 650px !important;
         <div class="label_hang">
             <div class="label_ltit">申请部门:</div>
             <div class="label_rwben nw">
-            	<span class="label_rwb">
             	<s:textfield title="部门名称" id="userdept_nameid" name="leave.leave_dept_name" readonly="true" />
 				<s:hidden title="部门代码" id="userdept_codeid" name="leave.leave_dept" readonly="true" />
-				</span>
-				<img class="detail vam" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true);" />
             </div>
+			<img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true);" />
         </div>
         <div class="label_hang">
             <div class="label_ltit">申请人:</div>
