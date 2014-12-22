@@ -73,7 +73,9 @@
 	  		<tr id="showtr${uuid}">
 	  			<td class="td1 nw">${uuid }</td>
 	  			<td class="td1 nw">
+			    	<a class="leave_cause_show" href="<s:url namespace="/sche" action="schedule_load"><s:param name="viewFlag">view</s:param><s:param name="sche.uuid" value="uuid"></s:param></s:url>">
 			    	${title }
+			    	</a>
 			    </td>
 	    		<td class="td1 nw">${sdate } </td>
 				
