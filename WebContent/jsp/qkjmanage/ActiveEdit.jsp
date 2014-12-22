@@ -516,17 +516,17 @@ color: #008000;
 				<div class="label_hang">
 					<div class="label_ltit" style="font-weight: normal;">上期结余:</div>
 					<div class="label_rwben label_rwb">
-					<s:textfield id="upprice" name="active.m_upprice" cssClass="validate[required]" />
+					<s:textfield id="upprice" name="active.m_upprice" cssClass="validate[required,custom[number]]" />
 					</div>
 				</div>
 				<div class="label_hang">
 					<div class="label_ltit" style="font-weight: normal;">本期费用:</div>
 					<div class="label_rwben label_rwb">
 					<s:if test="%{active.m_price!=null}">
-					<s:textfield id="price" name="active.m_price" cssClass="validate[required]" />
+					<s:textfield id="price" name="active.m_price" cssClass="validate[required,custom[number]]" />
 					</s:if>
 					<s:else>
-					<s:textfield id="price" name="active.m_price" value="%{active.it_price}" cssClass="validate[required]" />
+					<s:textfield id="price" name="active.m_price" value="%{active.it_price}" cssClass="validate[required,custom[number]]" />
 					</s:else>
 					</div>
 				</div>
@@ -544,14 +544,14 @@ color: #008000;
 				<div class="label_hang">
 					<div class="label_ltit" style="font-weight: normal;">上期结余:</div>
 					<div class="label_rwben label_rwb">
-					<s:textfield id="fupprice" name="active.f_upprice" cssClass="validate[required]"></s:textfield>
+					<s:textfield id="fupprice" name="active.f_upprice" cssClass="validate[required,custom[number]]"></s:textfield>
 					</div>
 				</div>
 				<div class="label_hang">
 					<div class="label_ltit" style="font-weight: normal;">本期费用:</div>
 					<div class="label_rwben label_rwb">
 					<s:if test="%{active.f_price!=null}">
-					<s:textfield id="fprice" name="active.f_price" cssClass="validate[required]"></s:textfield>
+					<s:textfield id="fprice" name="active.f_price" cssClass="validate[required,custom[number]]"></s:textfield>
 					</s:if>
 					<s:else>
 					<s:textfield id="fprice" name="active.f_price" value="%{active.mt_price}"></s:textfield>
@@ -561,7 +561,7 @@ color: #008000;
 				<div class="label_hang">
 					<div class="label_ltit" style="font-weight: normal;">本期结余:</div>
 					<div class="label_rwben label_rwb">
-					<s:textfield id="fbprice" name="active.f_bprice" readonly="true" cssClass="validate[required]"></s:textfield>
+					<s:textfield id="fbprice" name="active.f_bprice" readonly="true" cssClass="validate[required,custom[number]]"></s:textfield>
 					</div>
 				</div>
 			</div>

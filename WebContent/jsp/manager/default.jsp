@@ -306,7 +306,7 @@ float: right;
 				<dt>	一.活动管理流程调整</dt>
 				<dd>1.大区经理->销管经理->运营总监 将实现严格审核流程,即大区经理未审核时,销管经理将不能审核;同理,销管经理未审核时,运营总监将不能审核
 				<br />具体流程看下面流程图:
-				<br /><img width="780" src="http://qkjchina.com/ckframe/userfiles/images/WebImages/qkjmanager/update_20140519_01.jpg" alt="" />
+				<br /><img width="780" src="http://images.qkjchina.com/ckframe/images/WebImages/qkjmanager/update_20140519_01.jpg" alt="" />
 				</dd>
 			</dl>
 			<dl>
@@ -328,7 +328,7 @@ float: right;
 				1.活动申请单/结案单都需要<font style="color: #FF0000;">大区经理审核</font>
 				<br />2.活动申请单/结案单最后都需要<font style="color: #FF0000;">运营总监</font>做<font style="color: #FF0000;">最后确认</font>才能通过
 				<br />具体流程看下面流程图:
-				<br /><img width="780" src="http://qkjchina.com/ckframe/userfiles/images/WebImages/qkjmanager/update_20140511_01.jpg" alt="" />
+				<br /><img width="780" src="http://images.qkjchina.com/ckframe/images/WebImages/qkjmanager/update_20140511_01.jpg" alt="" />
 				</dd>
 			</dl>
 			<dl>
