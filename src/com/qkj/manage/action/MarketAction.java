@@ -132,12 +132,19 @@ public class MarketAction extends ActionSupport implements ActionAttr {
 	
 	public String list() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_MARKET");
+		String code=ContextHelper.getUserLoginDept();
 		try {
 				map.clear();
 				if (market != null)
 					map.putAll(ToolsUtil.getMapByBean(market));
 				map.putAll(ContextHelper.getDefaultRequestMap4Page());
 				this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
+				if (ContextHelper.isAdmin()) {// 管理员
+					
+				}else{
+					map.put("deptcode", code);
+				}
+				
 				this.setMarkets(dao.list(map));
 				this.setRecCount(dao.getResultCount());
 			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;网络营销管理";
@@ -162,7 +169,6 @@ public class MarketAction extends ActionSupport implements ActionAttr {
 			} else if ("mdy".equals(viewFlag) || "view".equals(viewFlag)) {
 				if (!(market == null || market.getUuid() == null)) {
 					this.setMarket((Market) dao.get(market.getUuid()));
-					System.out.println(market.getLm_time()+"aaaaaaaaaaaa");
 				} else {
 					this.setMarket(null);
 				}
@@ -189,6 +195,7 @@ public class MarketAction extends ActionSupport implements ActionAttr {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_MARKET_ADD");
 		try {
 			market.setLm_user(ContextHelper.getUserLoginUuid());
+			market.setDeptcode(ContextHelper.getUserLoginDept());
 			market.setUuid((Integer) dao.add(market));
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!add 数据添加失败:", e);
