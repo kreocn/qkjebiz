@@ -99,12 +99,13 @@ color: #008000;
         </div>
         <div class="label_main">
         	<div class="note_area">
-        	<s:if test="apply.status>=10">
-			${apply.note}
-			</s:if>
-			<s:else>
-			<s:textarea name="apply.note" title="详细说明" cssClass="xheditorArea validate[maxSize[65535]]" />
-			</s:else>
+	        	<s:if test="apply.status>=10">
+				${apply.note}
+				</s:if>
+				<s:else>
+				<s:textarea name="apply.note" title="详细说明" cssClass="xheditorArea validate[maxSize[65535]]" />
+				</s:else>
+				<div class="clear"></div>
         	</div>
         </div>
         <s:if test="'mdy' == viewFlag">

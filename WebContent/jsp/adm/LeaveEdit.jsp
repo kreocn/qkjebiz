@@ -142,8 +142,9 @@
             <div class="label_ltit">事由:</div>
             <div class="label_rwbenx label_hang_linput">
             <div class="note_area">
-            <s:if test="leave.check_status>=10">${leave.cause}</s:if>
-			<s:else><s:textarea name="leave.cause" title="详细说明" cssClass="xheditorArea validate[maxSize[65535]]" /></s:else>
+	            <s:if test="leave.check_status>=10">${leave.cause}</s:if>
+				<s:else><s:textarea name="leave.cause" title="详细说明" cssClass="xheditorArea validate[maxSize[65535]]" /></s:else>
+				<div class="clear"></div>
 			</div>
             </div>
         </div>

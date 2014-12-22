@@ -580,7 +580,8 @@ color: #008000;
         </div>
         <div class="label_main">
         	<div class="note_area">
-			${active.note}
+				${active.note}
+				<div class="clear"></div>
         	</div>
         </div>
         
@@ -596,8 +597,9 @@ color: #008000;
         </div>
         <div class="label_main">
         	<div class="note_area">
-        	<s:if test="'add' == viewFlag || active.status==0"><s:textarea name="active.note" title="详细说明" cssClass="xheditorArea validate[maxSize[65535]]" /></s:if>
-			<s:else>${active.note}</s:else>
+        		<s:if test="'add' == viewFlag || active.status==0"><s:textarea name="active.note" title="详细说明" cssClass="xheditorArea validate[maxSize[65535]]" /></s:if>
+				<s:else>${active.note}</s:else>
+				<div class="clear"></div>
         	</div>
         </div>
         </s:else>

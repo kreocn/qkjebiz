@@ -393,10 +393,11 @@ function ypri(){
  </div>
  </div>
  <div class="label_main">
- 	<div class="note_area">${active.close_note}</div>
+ 	<div class="note_area">
+ 		${active.close_note}
+ 		<div class="clear"></div> 	
+ 	</div>
 </div>
-
-
         <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_SELSPE')">
         <div class="label_main noprint">
 	        <div class="label_hang">

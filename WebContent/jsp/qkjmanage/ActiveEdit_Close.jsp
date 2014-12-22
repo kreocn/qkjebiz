@@ -673,8 +673,12 @@ color: #008000;
             </div>
         </div>
         </div>
-        <div class="label_main"><div class="note_area">${active.note}</div></div>
-        
+        <div class="label_main">
+        	<div class="note_area">
+        		${active.note}
+        		<div class="clear"></div>
+        	</div>
+        </div>
         <div class="label_main">
         <div class="label_hang">
             <div class="label_ltit">活动概况:</div>
@@ -684,12 +688,13 @@ color: #008000;
         </div>
         <div class="label_main">
         	<div class="note_area">
-        	<s:if test="active.status==3">
-			<s:textarea name="active.close_note" title="详细说明" cssClass="xheditorArea validate[maxSize[65535]]" />
-			</s:if>
-			<s:elseif test="active.status>3">
-			${active.close_note}
-			</s:elseif>
+	        	<s:if test="active.status==3">
+				<s:textarea name="active.close_note" title="详细说明" cssClass="xheditorArea validate[maxSize[65535]]" />
+				</s:if>
+				<s:elseif test="active.status>3">
+				${active.close_note}
+				</s:elseif>
+				<div class="clear"></div>
 			</div>
         </div>
         <div class="label_main">
