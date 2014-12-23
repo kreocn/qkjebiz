@@ -647,22 +647,22 @@ input[type="button"].input-blue,input[type="submit"].input-blue,input[type="rese
 .dib {
 	display: inline; zoom: 1; *display: inline;
 }
-.tab_warp .yesnull{
+.yesnull,.tab_warp .yesnull{
 	border:0; display: inline-block; width: 16px; height:16px; background: url("../../../images/icon/ico_warn.png") transparent no-repeat 0 -200px;
 }
-.tab_warp .nonull{
+.nonull,.tab_warp .nonull{
 	border:0; display: inline-block; width: 16px; height: 16px; background: url("../../../images/icon/ico_warn.png") transparent no-repeat 0 -250px;
 }
 
-.tab_warp .success{
+.success,.tab_warp .success{
 	border:0; display: inline-block; width: 16px; height: 16px; background: url("../../../images/icon/ico_warn.png") transparent no-repeat 0 0px;
 }
 
-.tab_warp .nosuc{
+.nosuc,.tab_warp .nosuc{
 	border:0; display: inline-block; width: 16px; height: 16px; background: url("../../../images/icon/ico_warn.png") transparent no-repeat 0 -50px;
 }
 
-.tab_warp .daisuc{
+.daisuc,.tab_warp .daisuc{
 	border:0; display: inline-block; width: 16px; height: 16px; background: url("../../../images/icon/ico_warn.png") transparent no-repeat 0 -250px;
 }
 
