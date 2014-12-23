@@ -7,6 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>活动申请单列表--<s:text name="APP_NAME" /></title>
 <s:action name="ref" namespace="/manager" executeResult="true" />
+
 </head>
 <style type="text/css">
 .ship_info {
@@ -25,12 +26,23 @@ cursor: pointer;
  	<div class="label_con">
  	<div class="label_main">
  		<div class="label_hang">
+            <div class="label_ltit">快速查询:</div>
+           <div class="label_rwben2" style="size: 30%">
+            	<s:select id="sselect" onchange="kselect();" name="sselect"  cssClass="selectKick" headerKey="" headerValue="-----请选择-----" list="#{0:'(申)大区经理待审',1:'(申)销管经理待审',2:'(申)运营总监待审',
+            	3:'(申)西北-销管部经理待审',4:'(申)西北-业务副总待审',5:'(申)西北-销管副总待审',
+            	8:'(申)总经理待审',9:'(申)西北-财务待审',10:'(申)省外-财务待审',11:'(申)北京-财务待审',
+            	
+            	21:'(结)大区经理待审',22:'(结)销管经理待审',23:'(结)运营总监待审',
+            	24:'(结)西北-销管部经理待审',25:'(结)西北-业务副总待审',26:'(结)西北-销管副总待审',
+            	29:'(结)总经理待审',30:'(结)西北-财务待审',31:'(结)省外-财务待审',32:'(结)北京-财务待审'
+            	
+            	}" />
+            </div>
+        </div>
+        
+ 		<div class="label_hang">
             <div class="label_ltit">数字编号:</div>
             <div class="label_rwben"><s:textfield name="active.uuid" title="数字编号" /></div>
-        </div>
-        <div class="label_hang">
-            <div class="label_ltit">原编号(S):</div>
-            <div class="label_rwben"><s:textfield name="active.uid" title="编号" /></div>
         </div>
         <div class="label_hang">
             <div class="label_ltit">主题(%):</div>
@@ -58,25 +70,25 @@ cursor: pointer;
 		</div>
 		<div class="label_hang">
             <div class="label_ltit">活动状态:</div>
-            <div class="label_rwben label_rwb"><s:select name="active.status" cssClass="selectKick" headerKey="" headerValue="-活动状态-" list="#{0:'新申请',1:'申请审批中',2:'申请通过',3:'开始结案',4:'结案审批中',5:'结案通过'}" /></div>
+            <div class="label_rwben label_rwb"><s:select id="status" name="active.status" cssClass="selectKick" headerKey="" headerValue="-活动状态-" list="#{0:'新申请',1:'申请审批中',2:'申请通过',3:'开始结案',4:'结案审批中',5:'结案通过'}" /></div>
         </div>
         <div class="label_hang">
             <div class="label_ltit">(申)销售状态:</div>
             <div class="label_rwben label_rwb">
-            	<s:select name="active.sd_status" cssClass="selectKick" list="#{0:'新单',5:'退回',10:'待审核',30:'大区已审',40:'总监已审',50:'副总已审',60:'总经理已审'}"
+            	<s:select id="sd_status" name="active.sd_status" cssClass="selectKick" list="#{0:'新单',5:'退回',10:'待审核',30:'大区已审',40:'总监已审',50:'副总已审',60:'总经理已审'}"
 				 headerKey="" headerValue="--请选择--" />
             </div>
         </div>
         <div class="label_hang">
             <div class="label_ltit">(申)销管状态:</div>
-            <div class="label_rwben label_rwb"><s:select name="active.smd_status" cssClass="selectKick"
+            <div class="label_rwben label_rwb"><s:select id="smd_sta" name="active.smd_status" cssClass="selectKick"
 				 list="#{0:'新单/未签收',5:'退回',10:'已签收',30:'销管经理已审',40:'销管部经理已审',50:'销管副总已审'}"
 				 headerKey="" headerValue="--请选择--" />
             </div>
         </div>
         <div class="label_hang">
             <div class="label_ltit">(申)财务状态:</div>
-            <div class="label_rwben label_rwb"><s:select name="active.fd_status" cssClass="selectKick"
+            <div class="label_rwben label_rwb"><s:select id="fdsta" name="active.fd_status" cssClass="selectKick"
 				 list="#{0:'未确认',5:'退回',10:'已通过'}"
 				 headerKey="" headerValue="--请选择--" />
             </div>
@@ -84,7 +96,7 @@ cursor: pointer;
         <div class="label_hang">
             <div class="label_ltit">(结)销售状态:</div>
             <div class="label_rwben label_rwb">
-            	<s:select name="active.close_sd_status" cssClass="selectKick"
+            	<s:select id="clsdsta" name="active.close_sd_status" cssClass="selectKick"
 				 list="#{0:'新单',5:'退回',10:'待审核',30:'大区已审',40:'总监已审',50:'副总已审',60:'总经理已审'}"
 				 headerKey="" headerValue="--请选择--" />
             </div>
@@ -92,14 +104,14 @@ cursor: pointer;
         <div class="label_hang">
             <div class="label_ltit">(结)销管状态:</div>
             <div class="label_rwben label_rwb">
-            	<s:select name="active.close_smd_status" cssClass="selectKick"
+            	<s:select id="clsmdsta" name="active.close_smd_status" cssClass="selectKick"
 				 list="#{0:'新单/未签收',5:'退回',10:'已签收',30:'销管经理已审',40:'销管部经理已审',50:'销管副总已审'}"
 				 headerKey="" headerValue="--请选择--" />
             </div>
         </div>
         <div class="label_hang">
             <div class="label_ltit">(结)财务状态:</div>
-            <div class="label_rwben label_rwb"><s:select name="active.close_fd_status" cssClass="selectKick"
+            <div class="label_rwben label_rwb"><s:select id="clfd" name="active.close_fd_status" cssClass="selectKick"
 				 list="#{0:'未确认',5:'退回',10:'已通过'}"
 				 headerKey="" headerValue="--请选择--" />
             </div>
@@ -157,6 +169,7 @@ cursor: pointer;
             	<s:select name="flag"  cssClass="selectKick" headerKey="" headerValue="--请选择--" list="#{0:'有',10:'无'}" />
             </div>
         </div>
+        
         <div class="label_hang label_button tac">
         	<s:checkbox id="search_mcondition" name="search_mcondition" fieldValue="true" value="true" cssClass="regular-checkbox" />
 			<label for="search_mcondition"></label>更多条件
@@ -401,6 +414,209 @@ function setShipVal(p_uuid) {
 	$("#e_active_ship_date").val($("#ship_date_"+p_uuid).text());
 	$("#e_active_ship_status").val($("#ship_status_"+p_uuid).text());
 	$("#e_active_remark").text($("#active_remark_"+p_uuid).text());
+}
+</script>
+
+<script type="text/javascript">
+function jnull(){
+	document.getElementById("clsmdsta").options[0].selected = true; 
+	document.getElementById("clsdsta").options[0].selected = true;
+	document.getElementById("clfd").options[0].selected = true;
+	document.getElementById("membermanagerid").options[0].selected = true;
+	$("#userdept_codeid").val("");
+	$("#userdept_nameid").val("");
+	document.getElementById("apply_is_sub_dept").checked=false;
+	document.getElementById("status").options[2].selected = true;
+}
+function snull(){
+	document.getElementById("sd_status").options[0].selected = true; 
+	document.getElementById("smd_sta").options[0].selected = true;
+	document.getElementById("fdsta").options[0].selected = true;
+	document.getElementById("membermanagerid").options[0].selected = true;
+	$("#userdept_codeid").val("");
+	$("#userdept_nameid").val("");
+	document.getElementById("apply_is_sub_dept").checked=false;
+	document.getElementById("status").options[5].selected = true;
+}
+function kselect(){
+	var num=$("#sselect").val();
+	if(parseInt(num)==0){//(申)大区经理待审
+		jnull();
+		document.getElementById("sd_status").options[3].selected = true; 
+		document.getElementById("smd_sta").options[0].selected = true;
+		$("#userdept_codeid").val("");
+		$("#userdept_nameid").val("");
+		document.getElementById("apply_is_sub_dept").checked=false;
+	}
+	if(parseInt(num)==1){//(申)销管经理待审
+		jnull();
+		document.getElementById("smd_sta").options[3].selected = true; 
+		document.getElementById("sd_status").options[4].selected = true;
+		$("#userdept_codeid").val("");
+		$("#userdept_nameid").val("");
+		document.getElementById("apply_is_sub_dept").checked=false;
+	}
+	if(parseInt(num)==2){//总监
+		jnull();
+		document.getElementById("sd_status").options[4].selected = true; 
+		document.getElementById("smd_sta").options[4].selected = true;
+		$("#userdept_codeid").val("");
+		$("#userdept_nameid").val("");
+		document.getElementById("apply_is_sub_dept").checked=false;
+	}
+	if(parseInt(num)==3){//销管部经理待审西北
+		jnull();
+		document.getElementById("smd_sta").options[4].selected = true; 
+		document.getElementById("sd_status").options[5].selected = true;
+		$("#userdept_codeid").val("220");
+		$("#userdept_nameid").val("西北运营中心");
+		document.getElementById("apply_is_sub_dept").checked=true;
+		
+	}
+	if(parseInt(num)==4){//西北业务副总
+		jnull();
+		document.getElementById("sd_status").options[5].selected = true; 
+		document.getElementById("smd_sta").options[0].selected = true;
+		$("#userdept_codeid").val("220");
+		$("#userdept_nameid").val("西北运营中心");
+		document.getElementById("apply_is_sub_dept").checked=true;
+	}
+	if(parseInt(num)==5){//西北销管副总
+		jnull();
+		document.getElementById("smd_sta").options[5].selected = true; 
+		document.getElementById("sd_status").options[0].selected = true; 
+		$("#userdept_codeid").val("220");
+		$("#userdept_nameid").val("西北运营中心");
+		document.getElementById("apply_is_sub_dept").checked=true;
+	}
+	
+	if(parseInt(num)==8){//总经理
+		jnull();
+		document.getElementById("sd_status").options[0].selected = true; 
+		document.getElementById("smd_sta").options[6].selected = true; 
+		$("#userdept_codeid").val("");
+		$("#userdept_nameid").val("");
+		document.getElementById("apply_is_sub_dept").checked=false;
+	}
+	if(parseInt(num)==9){//西北财
+		jnull();
+		document.getElementById("sd_status").options[0].selected = true; 
+		document.getElementById("smd_sta").options[6].selected = true; 
+		document.getElementById("fdsta").options[1].selected = true;
+		$("#userdept_codeid").val("220");
+		$("#userdept_nameid").val("西北运营中心");
+		document.getElementById("apply_is_sub_dept").checked=true;
+	}
+	if(parseInt(num)==10){//省外财
+		jnull();
+		document.getElementById("sd_status").options[5].selected = true; 
+		document.getElementById("smd_sta").options[0].selected = true; 
+		document.getElementById("fdsta").options[1].selected = true;
+		$("#userdept_codeid").val("211");
+		$("#userdept_nameid").val("省外运营中心");
+		document.getElementById("apply_is_sub_dept").checked=true;
+	}
+	if(parseInt(num)==11){//北京财
+		jnull();
+		document.getElementById("sd_status").options[5].selected = true; 
+		document.getElementById("smd_sta").options[0].selected = true; 
+		document.getElementById("fdsta").options[1].selected = true; 
+		$("#userdept_codeid").val("210");
+		$("#userdept_nameid").val("北京销售公司");
+		document.getElementById("apply_is_sub_dept").checked=true;
+	}
+	
+	
+	
+	if(parseInt(num)==21){//(结)大区经理待审
+		snull();
+		document.getElementById("clsdsta").options[3].selected = true; 
+		document.getElementById("clsmdsta").options[0].selected = true;
+		$("#userdept_codeid").val("");
+		$("#userdept_nameid").val("");
+		document.getElementById("apply_is_sub_dept").checked=false;
+	}
+	if(parseInt(num)==22){//(申)销管经理待审
+		snull();
+		document.getElementById("clsmdsta").options[3].selected = true; 
+		document.getElementById("clsdsta").options[4].selected = true;
+		$("#userdept_codeid").val("");
+		$("#userdept_nameid").val("");
+		document.getElementById("apply_is_sub_dept").checked=false;
+	}
+	if(parseInt(num)==23){//
+		snull();
+		document.getElementById("clsdsta").options[4].selected = true; 
+		document.getElementById("clsmdsta").options[4].selected = true;
+		$("#userdept_codeid").val("");
+		$("#userdept_nameid").val("");
+		document.getElementById("apply_is_sub_dept").checked=false;
+	}
+	if(parseInt(num)==24){//销管部经理待审西北
+		snull();
+		document.getElementById("clsmdsta").options[4].selected = true; 
+		document.getElementById("clsdsta").options[5].selected = true;
+		$("#userdept_codeid").val("220");
+		$("#userdept_nameid").val("西北运营中心");
+		document.getElementById("apply_is_sub_dept").checked=true;
+		
+	}
+	if(parseInt(num)==25){//西北业务副总
+		snull();
+		document.getElementById("clsdsta").options[5].selected = true; 
+		document.getElementById("clsmdsta").options[0].selected = true;
+		$("#userdept_codeid").val("220");
+		$("#userdept_nameid").val("西北运营中心");
+		document.getElementById("apply_is_sub_dept").checked=true;
+	}
+	if(parseInt(num)==26){//西北销管副总
+		snull();
+		document.getElementById("clsmdsta").options[5].selected = true; 
+		document.getElementById("clsdsta").options[0].selected = true; 
+		$("#userdept_codeid").val("220");
+		$("#userdept_nameid").val("西北运营中心");
+		document.getElementById("apply_is_sub_dept").checked=true;
+	}
+	
+	if(parseInt(num)==29){//总经理
+		snull();
+		document.getElementById("clsdsta").options[0].selected = true; 
+		document.getElementById("clsmdsta").options[6].selected = true; 
+		$("#userdept_codeid").val("");
+		$("#userdept_nameid").val("");
+		document.getElementById("apply_is_sub_dept").checked=false;
+	}
+	if(parseInt(num)==30){//西北财
+		snull();
+		document.getElementById("clsdsta").options[0].selected = true; 
+		document.getElementById("clsmdsta").options[6].selected = true; 
+		document.getElementById("clfd").options[1].selected = true;
+		$("#userdept_codeid").val("220");
+		$("#userdept_nameid").val("西北运营中心");
+		document.getElementById("apply_is_sub_dept").checked=true;
+	}
+	if(parseInt(num)==31){//省外财
+		snull();
+		document.getElementById("clsdsta").options[5].selected = true; 
+		document.getElementById("clsmdsta").options[0].selected = true; 
+		document.getElementById("clfd").options[1].selected = true;
+		$("#userdept_codeid").val("211");
+		$("#userdept_nameid").val("省外运营中心");
+		document.getElementById("apply_is_sub_dept").checked=true;
+	}
+	if(parseInt(num)==32){//北京财
+		snull();
+		document.getElementById("clsdsta").options[5].selected = true; 
+		document.getElementById("clsmdsta").options[0].selected = true; 
+		document.getElementById("clfd").options[1].selected = true; 
+		$("#userdept_codeid").val("210");
+		$("#userdept_nameid").val("北京销售公司");
+		document.getElementById("apply_is_sub_dept").checked=true;
+	}
+	
+	 document.getElementById("serachForm").action="/qkjmanage/active_list";
+	 document.getElementById("serachForm").submit();
+	
 }
 </script>
 </body>
