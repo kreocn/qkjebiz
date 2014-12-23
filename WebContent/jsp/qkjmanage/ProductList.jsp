@@ -29,7 +29,7 @@
 				<div class="label_hang">
 				       <div class="label_ltit">档次:</div>
 				       <div class="label_rwben">
-				       			<s:select name="product.grade" title="档次 1低端 2中端 3中高端 4高端" headerKey="" headerValue="--请选择--" list="#{1:'低端',2:'中端',3:'中高端',4:'高端'}" />
+				       			<s:select name="product.grade" title="档次" headerKey="" headerValue="--请选择--"  list="#{1:'低端',2:'中端',3:'中高端',4:'高端'}" />
 				       </div>
 				</div>
 				<div class="label_hang label_button tac">
