@@ -35,7 +35,7 @@ public class LadingPayDAO extends AbstractDAO {
 		return super.delete("qkjmanager_delLadingPay", parameters);
 	}
 
-	public Double getLadingPaysMoneys(String lading_id) {
+	public Double getLadingPaysMoneys(Integer lading_id) {
 		return (Double) super.get("qkjmanager_getLadingPaysMoneys", lading_id);
 	}
 

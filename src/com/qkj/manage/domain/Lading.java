@@ -3,7 +3,7 @@ package com.qkj.manage.domain;
 import java.util.Date;
 
 public class Lading {
-	private String uuid;// (varchar)申请编号
+	private Integer uuid;// (int)申请编号
 	private String member_id;// (varchar)客户ID
 	private String content;// (text)内容
 	private String address;// (varchar)配送地点
@@ -221,11 +221,11 @@ public class Lading {
 		this.member_name = member_name;
 	}
 
-	public String getUuid() {
+	public Integer getUuid() {
 		return uuid;
 	}
 
-	public void setUuid(String uuid) {
+	public void setUuid(Integer uuid) {
 		this.uuid = uuid;
 	}
 

@@ -59,8 +59,8 @@
 	</select>
 	<insert id="qkjmanage_addLading" parameterClass="lading">
 		<![CDATA[ 
-			Insert Into qkjm_r_lading(uuid,member_id,content,address,note,manager_check,sd_check,md_check,fd_check,coo_check,status,applicant,apply_time,add_user,add_time,lm_user)
-			Values (#uuid#,#member_id#,#content#,#address#,#note#,#manager_check#,#sd_check#,#md_check#,#fd_check#,#coo_check#,#status#,#applicant#,#apply_time#,#add_user#,#add_time#,#lm_user#)
+			Insert Into qkjm_r_lading(member_id,content,address,note,manager_check,sd_check,md_check,fd_check,coo_check,status,applicant,apply_time,add_user,add_time,lm_user)
+			Values (#member_id#,#content#,#address#,#note#,#manager_check#,#sd_check#,#md_check#,#fd_check#,#coo_check#,#status#,#applicant#,#apply_time#,#add_user#,#add_time#,#lm_user#)
 		]]>
 	</insert>
 	<update id="qkjmanage_mdyLading" parameterClass="lading">

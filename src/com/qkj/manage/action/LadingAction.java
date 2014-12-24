@@ -148,8 +148,7 @@ public class LadingAction extends ActionSupport {
 			} else if ("mdy".equals(viewFlag) || "view".equals(viewFlag) || "print".equals(viewFlag)) {
 				map.clear();
 				map.put("uuid", lading.getUuid());
-				if (null == map.get("uuid"))
-					this.setLading(null);
+				if (null == map.get("uuid")) this.setLading(null);
 				else {
 					if ("view".equals(viewFlag)) {
 						map.put("status", 2);
@@ -188,7 +187,7 @@ public class LadingAction extends ActionSupport {
 		try {
 			Date d = new Date();
 			String u = ContextHelper.getUserLoginUuid();
-			lading.setUuid(ToolsUtil.getCommonUUID("T"));
+			// lading.setUuid(ToolsUtil.getCommonUUID("T"));
 			lading.setApplicant(u);
 			lading.setApply_time(d);
 			lading.setManager_check(0);
@@ -324,8 +323,7 @@ public class LadingAction extends ActionSupport {
 		try {
 			lading.setFd_check_user(ContextHelper.getUserLoginUuid());
 			lading.setLm_user(ContextHelper.getUserLoginUuid());
-			lading.setFd_type(ToolsUtil.Array2String(
-					lading.getFd_types() == null ? new String[] {} : lading.getFd_types(), ","));
+			lading.setFd_type(ToolsUtil.Array2String(lading.getFd_types() == null ? new String[] {} : lading.getFd_types(), ","));
 			dao.mdyLadingFDCheck(lading);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyLadingFDCheck 数据更新失败:", e);
