@@ -27,6 +27,11 @@ public class CustomerRecodeAction extends ActionSupport {
 	private String viewFlag;
 	private int recCount;
 	private int pageSize;
+	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;客户回访记录列表";
+	
+	public String getPath() {
+		return path;
+	}
 
 	public CustomerRecode getCustomerRecode() {
 		return customerRecode;
@@ -87,6 +92,7 @@ public class CustomerRecodeAction extends ActionSupport {
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 			this.setCustomerRecodes(dao.list(map));
 			this.setRecCount(dao.getResultCount());
+			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;客户回访记录列表";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
