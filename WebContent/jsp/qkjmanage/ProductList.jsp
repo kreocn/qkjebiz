@@ -19,7 +19,7 @@
 			<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="product_load"><s:param name="viewFlag">add</s:param></s:url>" >添加产品</a></span>
 		</s:if>
 	</div>
-	<s:form name="form_serach" action="product_list"  method="get" namespace="/qkjmanage" theme="simple">
+	<s:form id="serachForm" name="serachForm" action="product_list"  method="get" namespace="/qkjmanage" theme="simple">
 		<div class="label_con">
  			<div class="label_main">
 				<div class="label_hang">
