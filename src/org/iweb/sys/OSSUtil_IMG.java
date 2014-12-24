@@ -163,10 +163,10 @@ public class OSSUtil_IMG {
 	public static void main(String[] args) {
 		try {
 			ObjectMetadata meta = new ObjectMetadata();
-			File f = new File("D://aa.jpg");
+			File f = new File("D://aa.png");
 			// InputStream in = new FileInputStream(f);
 			meta.setContentLength(f.length());
-			OSSUtil_IMG.uploadFile("qkjbj01", "x123.jpg", f, meta);
+			OSSUtil_IMG.uploadFile("qkjbj01", "bb.png", f, meta);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

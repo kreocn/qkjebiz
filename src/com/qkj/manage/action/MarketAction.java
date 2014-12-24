@@ -1,5 +1,6 @@
 package com.qkj.manage.action;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.util.Date;
@@ -12,9 +13,11 @@ import org.apache.commons.logging.LogFactory;
 import org.iweb.sys.ActionAttr;
 import org.iweb.sys.ContextHelper;
 import org.iweb.sys.IWebConfig;
+import org.iweb.sys.OSSUtil_IMG;
 import org.iweb.sys.Parameters;
 import org.iweb.sys.ToolsUtil;
 
+import com.aliyun.openservices.oss.model.ObjectMetadata;
 import com.opensymphony.xwork2.ActionSupport;
 import com.qkj.manage.dao.MarketDAO;
 import com.qkj.manage.domain.Market;
@@ -127,6 +130,13 @@ public class MarketAction extends ActionSupport implements ActionAttr {
         out.write(info);
         out.flush();
  	    out.close();
+ 	    
+ 	    ObjectMetadata meta = new ObjectMetadata();
+		File f = new File(p+"/js/Info.js");
+		// InputStream in = new FileInputStream(f);
+		meta.setContentLength(f.length());
+		OSSUtil_IMG.uploadFile("qkjbj01", "qkjebiz01/Marketing_network_map_info.js", f, meta);
+		
 		return SUCCESS;
 	}
 	
