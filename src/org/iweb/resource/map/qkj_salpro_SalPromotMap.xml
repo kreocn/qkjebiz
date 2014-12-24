@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
+<sqlMap>
+	<!-- SalPromot Start -->
+	<typeAlias alias="salPromot" type="com.qkj.salpro.domain.SalPromot" />
+	<select id="salpro_getSalPromots" resultClass="salPromot" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select * From qkjm_r_salpromotion
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="sal_title"><![CDATA[ sal_title=#sal_title# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="startime"><![CDATA[ startime=#startime# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="endtime"><![CDATA[ endtime=#endtime# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="sal_scop"><![CDATA[ sal_scop=#sal_scop# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="add_user"><![CDATA[ add_user=#add_user# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="add_time"><![CDATA[ add_time=#add_time# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="lm_user"><![CDATA[ lm_user=#lm_user# ]]></isNotEmpty>
+
+		</dynamic>
+		<![CDATA[ LIMIT 1000 ]]>
+	</select>
+	<select id="salpro_getSalPromotsCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) From qkjm_r_salpromotion
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="sal_title"><![CDATA[ sal_title=#sal_title# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="startime"><![CDATA[ startime=#startime# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="endtime"><![CDATA[ endtime=#endtime# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="sal_scop"><![CDATA[ sal_scop=#sal_scop# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="add_user"><![CDATA[ add_user=#add_user# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="add_time"><![CDATA[ add_time=#add_time# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="lm_user"><![CDATA[ lm_user=#lm_user# ]]></isNotEmpty>
+
+		</dynamic>
+		<![CDATA[ LIMIT 1000 ]]>
+	</select>
+	<insert id="salpro_addSalPromot" parameterClass="salPromot">
+		<![CDATA[ 
+			Insert Into qkjm_r_salpromotion(sal_title,startime,endtime,sal_scop,sal_plan,add_user,add_time,lm_user,lm_time)
+			Values (#sal_title#,#startime#,#endtime#,#sal_scop#,#sal_plan#,#add_user#,#add_time#,#lm_user#,#lm_time#)
+		]]>
+		<selectKey resultClass="int" keyProperty="uuid">
+		<![CDATA[ Select LAST_INSERT_ID() ]]>
+		</selectKey>
+	</insert>
+	<update id="salpro_mdySalPromot" parameterClass="salPromot">
+		<![CDATA[
+			Update qkjm_r_salpromotion
+			Set sal_title=#sal_title#,
+			startime=#startime#,
+			endtime=#endtime#,
+			sal_scop=#sal_scop#,
+			sal_plan=#sal_plan#,
+			lm_user=#lm_user#,
+			lm_time=#lm_time#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<update id="salpro_mdyStatus1" parameterClass="salPromot">
+		<![CDATA[
+			Update qkjm_r_salpromotion
+			Set 
+			status=#status#,
+			lm_user=#lm_user#,
+			lm_time=#lm_time#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<update id="salpro_mdySmdStatus" parameterClass="salPromot">
+		<![CDATA[
+			Update qkjm_r_salpromotion
+			Set 
+			status=#status#,
+			smd_status=#smd_status#,
+			smd_user=#smd_user#,
+			smd_time=#smd_time#,
+			lm_user=#lm_user#,
+			lm_time=#lm_time#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<update id="salpro_mdySdStatus" parameterClass="salPromot">
+		<![CDATA[
+			Update qkjm_r_salpromotion
+			Set 
+			status=#status#,
+			sd_status=#sd_status#,
+			sd_user=#sd_user#,
+			sd_time=#sd_time#,
+			lm_user=#lm_user#,
+			lm_time=#lm_time#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	
+	<delete id="salpro_delSalPromot" parameterClass="salPromot">
+	<![CDATA[
+		Delete From qkjm_r_salpromotion Where uuid=#uuid#
+	]]>
+	</delete>
+	<!-- SalPromot End -->
+</sqlMap>

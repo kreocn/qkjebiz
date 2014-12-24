@@ -85,4 +85,6 @@
 	<sqlMap resource="org/iweb/resource/map/qkj_ware_OutDetailHMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_ware_OutStockHMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_bordetail_BordetailMap.xml" />
+	<!-- 促销活动 -->
+	<sqlMap resource="org/iweb/resource/map/qkj_salpro_SalPromotMap.xml"/>
 </sqlMapConfig>

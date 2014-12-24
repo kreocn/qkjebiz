@@ -5,8 +5,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<s:action name="ref" namespace="/manager" executeResult="true" />
+
+
 <title>活动申请单管理--<s:text name="APP_NAME" /></title>
+<s:action name="ref" namespace="/manager" executeResult="true" />
+<link rel="stylesheet" href="<s:url value="/css/zTreeStyle/zTreeStyle.css" />" />
+<script type="text/javascript" src="<s:url value="/js/zTreeJs/jquery.ztree.core-3.5.js" />"></script>
+<script type="text/javascript" src="<s:url value="http://images01.qkjchina.com/qkjebiz01/zTree_result.js?v0=1" />"></script>
+<script type="text/javascript" src="<s:url value="/js/zTreeJs/product.js" />"></script>
 </head>
 <body>
 <div class="main">
