@@ -20,6 +20,7 @@ import org.iweb.sys.*;
 
 import sun.misc.Request;
 
+import com.aliyun.openservices.oss.model.ObjectMetadata;
 import com.opensymphony.xwork2.ActionSupport;
 import com.qkj.manage.domain.ProType;
 import com.qkj.manage.domain.Product;
@@ -122,24 +123,24 @@ public class ProTypeAction extends ActionSupport implements ActionAttr {
     	    	product=products.get(j);
     	    	String uuid=proType.getUuid()+"";
     	    	if(uuid.equals(product.getBrand())){
-    	    		int ps=proTypes.size()-1;
-    	    		int pr=products.size()-1;
-    	    		System.out.println(ps+"ababab"+pr);
-    	    		if(i==ps && j==pr){
-    	    			System.out.println("aaaa");
-    	    			info="{id:"+uuid+product.getUuid()+","+" pId:"+uuid+", name:"+"'"+product.getTitle()+"',puuid:"+product.getUuid()+",mp:"+product.getMarket_price()+",gp:"+product.getGroup_price()+",dp:"+product.getDealer_price()+",a1"+product.getAgree_price_1()+",a2"+product.getAgree_price_2()+",a3"+product.getAgree_price_3()+",case_spec:"+product.getCase_spec()+"}"+'\n';
-    	    		}else{
-    	    			info="{id:"+uuid+product.getUuid()+","+" pId:"+uuid+", name:"+"'"+product.getTitle()+"',puuid:"+product.getUuid()+",mp:'"+product.getMarket_price()+"',gp:'"+product.getGroup_price()+"',dp:'"+product.getDealer_price()+"',a1:'"+product.getAgree_price_1()+"',a2:'"+product.getAgree_price_2()+"',a3:'"+product.getAgree_price_3()+"',case_spec:"+product.getCase_spec()+"},"+'\n';
-    	    		}
     	    		
+    	    		info="{id:"+uuid+product.getUuid()+","+" pId:"+uuid+", name:"+"'"+product.getTitle()+"',puuid:"+product.getUuid()+",mp:'"+ToolsUtil.getEmpty(product.getMarket_price())+"',gp:'"+ToolsUtil.getEmpty(product.getGroup_price())+"',dp:'"+ToolsUtil.getEmpty(product.getDealer_price())+"',a1:'"+ToolsUtil.getEmpty(product.getAgree_price_1())+"',a2:'"+ToolsUtil.getEmpty(product.getAgree_price_2())+"',a3:'"+ToolsUtil.getEmpty(product.getAgree_price_3())+"',case_spec:"+ToolsUtil.getEmpty(product.getCase_spec())+"},"+'\n';
     	    		out.write(info);
     	    	}
     	    }
     	  }
         info=" ];";
-        out.write(info);
+           out.write(info);
     	   out.flush();
     	   out.close();
+    	   
+    	   ObjectMetadata meta = new ObjectMetadata();
+	   	   File f = new File(p+"/js/zTreeJs/Result.js");
+	   		// InputStream in = new FileInputStream(f);
+	   		meta.setContentLength(f.length());
+	   		OSSUtil_IMG.uploadFile("qkjbj01", "qkjebiz01/zTree_result.js", f, meta);
+	   		
+   		
     	   return "success";
 	}
 	
