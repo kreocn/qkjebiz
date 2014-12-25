@@ -101,7 +101,7 @@ function checkManager() {
 				<s:textfield title="部门名称" id="userdept_nameid" name="member.dept_name" readonly="true" /></div>
 				<s:hidden id="userdept_codeid" name="member.dept_code" />
 			</div>
-			<img class="imglink vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true);" />
+			<img class="imglink vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true,null,1);" />
 	</div>
 	<div class="label_hang">
 	<div class="label_ltit">所属人:</div>

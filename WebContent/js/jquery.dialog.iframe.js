@@ -88,9 +88,9 @@ var loadManagers = function(dept_code, curr_apply_user,b_m){
 			var l = $(data).length;
 			if (l == 1) { // 如果只有一个结果,那么直接选中
 				uc.addOption($(data)[0].user_name, $(data)[0].uuid);
-				if(b_m==1 && dept_code==211){
-				}else{
+				if(b_m==1){
 					uc.setSelectedValue($(data)[0].uuid);
+				}else{
 				}
 				
 			} else if (l > 1) {
