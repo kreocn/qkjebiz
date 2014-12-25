@@ -38,6 +38,8 @@
 <script type="text/javascript" src="<c:url value="/js/zTreeJs/Result.js" />"></script>
 <script type="text/javascript" src="<c:url value="/js/zTreeJs/product.js" />"></script>
 <script type="text/javascript" src="<c:url value="/js/common_listtable.js" />"></script>
+<script type="text/javascript" src="<c:url value="/js/common_cptb.js" />"></script>
+<script type="text/javascript" src="<c:url value="/js/form_validator.js" />"></script>
 <!--[if lt IE 9]>
 <script type="text/javascript">
 window.onload=function(){

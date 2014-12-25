@@ -893,3 +893,7 @@ table{
 .shaddress{
 	font-size:14px; color:#999; line-height:35px;
 }
+.showladings li{
+	list-style: none;
+	line-height: 25px;
+}
