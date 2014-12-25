@@ -16,7 +16,7 @@
 			<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="lading_load"><s:param name="viewFlag">add</s:param></s:url>">添加订单</a></span>
 		</s:if>
 	</div>
-	<s:form id="serachForm" name="serachForm" action="apply_list"  method="get" namespace="/qkjmanage" theme="simple">
+	<s:form id="serachForm" name="serachForm" action="lading_list"  method="get" namespace="/qkjmanage" theme="simple">
  	<div class="label_con"><div class="label_main">
  		<div class="label_hang">
             <div class="label_ltit">编号:</div>
@@ -36,6 +36,11 @@
             	<span class="label_rwb nw"><s:select name="lading.status" title="状态" headerKey="" headerValue="--请选择--" list="#{0:'新单',1:'待审核',2:'结案'}" /></span>
 				<span class="label_rwb nw"><s:select name="lading.out_flag" title="状态" headerKey="" headerValue="--请选择--" list="#{0:'未出货',1:'已出货'}" /></span>
             </div>
+        </div>
+        <div class="label_hang label_button tac">
+        	<s:checkbox id="search_mcondition" name="search_mcondition" fieldValue="true" value="true" cssClass="regular-checkbox" />
+			<label for="search_mcondition"></label>更多条件
+            <s:submit value="搜索" /> <s:reset value="重置" />
         </div>
  	</div></div>
  	</s:form>

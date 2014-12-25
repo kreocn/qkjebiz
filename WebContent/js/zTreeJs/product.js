@@ -59,12 +59,12 @@ function onClick(e, treeId, treeNode) {
   			/* var ps = $(this).getSelectedAttr("data").split("#"); */
   			if(ps.length>=3) {
   				$("#per_price_select").addOption("自定义","");
-  				$("#per_price_select").addOption("市场价("+ps[0]+")",ps[0]);
-  				$("#per_price_select").addOption("团购价("+ps[1]+")",ps[1]);
-  				$("#per_price_select").addOption("出厂价("+ps[2]+")",ps[2]);
-  				if(ps[3]!='' && ps[3]!=null && ps[3]!='null')$("#per_price_select").addOption("协议价1("+ps[3]+")",ps[3]);
-  				if(ps[4]!='' && ps[4]!=null && ps[3]!='null')$("#per_price_select").addOption("协议价2("+ps[4]+")",ps[4]);
-  				if(ps[5]!='' && ps[5]!=null && ps[3]!='null')$("#per_price_select").addOption("协议价3("+ps[5]+")",ps[5]);
+  				$("#per_price_select").addOption("参考价1("+ps[0]+")",ps[0]);
+  				$("#per_price_select").addOption("参考价2("+ps[1]+")",ps[1]);
+  				$("#per_price_select").addOption("参考价3("+ps[2]+")",ps[2]);
+  				if(ps[3]!='' && ps[3]!=null && ps[3]!='null')$("#per_price_select").addOption("参考价4("+ps[3]+")",ps[3]);
+  				if(ps[4]!='' && ps[4]!=null && ps[3]!='null')$("#per_price_select").addOption("参考价5("+ps[4]+")",ps[4]);
+  				if(ps[5]!='' && ps[5]!=null && ps[3]!='null')$("#per_price_select").addOption("参考价6("+ps[5]+")",ps[5]);
   				$("#per_price_select_area").fadeIn(1000);
   			}
   			hideMenu();

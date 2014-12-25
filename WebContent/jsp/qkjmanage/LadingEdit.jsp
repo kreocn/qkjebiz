@@ -151,7 +151,6 @@ function closeAddForm() {
 		    <div class="label_rwben label_rwb">${lading.member_name}</div>
 		</div>
 	</div>
-	</s:elseif>
 	<div class="label_main">
         <div class="label_hang">
             <div class="label_ltit">配送地址:</div>
@@ -164,7 +163,21 @@ function closeAddForm() {
     </div>
     <div class="label_main">
         <div class="lb_xxsm">
-	        	<p class="lb_yjtit fy_hide">订单明细</p>
+	        	<p class="lb_yjtit fy_hide">
+	        		订单明细
+	        		<s:url id="ladingAddProductsUrl" action="qkjm_addProducts" namespace="qkjmanage">
+	        			<s:param name="uuidKey">lading.uuid</s:param>
+	        			<s:param name="uuidValue" value="lading.uuid" />
+	        			<s:param name="backUrl">/qkjmanage/lading_load?viewFlag=mdy&</s:param>
+	        			<s:param name="actionUrl">/qkjmanage/ladingItem_add</s:param>
+	        			<s:param name="keyName">ladingItem.lading_id</s:param>
+	        			<s:param name="prodName">ladingItem.product_id</s:param>
+	        			<s:param name="perName">ladingItem.per_price</s:param>
+	        			<s:param name="numName">ladingItem.num</s:param>
+	        			<s:param name="totalName">ladingItem.total_price</s:param>
+	        		</s:url>
+					<input type="button" id="product" onclick="window.location.href='${ladingAddProductsUrl}';" value="添加酒品" />
+	        	</p>
                 <div class="lb_yjcon">
                     <table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
                     	<tr>
@@ -174,22 +187,22 @@ function closeAddForm() {
                             <th>合计</th>
                             <th>操作</th>
                         </tr>
-                        <s:iterator value="activeProducts" status="sta">
+                        <s:iterator value="ladingItems" status="sta">
 						<tr>
 						<td class="nw">${product_name}</td>
 						<td class="nw">￥${per_price}</td>
 						<td class="nw">${num}</td>
 						<td class="nw">￥${total_price}</td>
 						<td>
-						<s:if test="active.status==0 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEPRODUCT_DEL')">
+						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEPRODUCT_DEL')">
 							<a href="<s:url action="activeProduct_del"><s:param name="activeProduct.uuid" value="%{uuid}" /><s:param name="activeProduct.active_id" value="%{active.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
 						</s:if>
 						</td>
 						</tr>
 						</s:iterator>
                     </table>
-                	<p class="lb_gstit">公司预计费用合计</p>
-                    <p class="lb_jwei">￥${active.it_price}</p>
+                	<p class="lb_gstit"></p>
+                    <p class="lb_jwei">金额合计:￥${lading.total_price}</p>
                 </div>
 	            <div class="clear"></div>
 	        </div>
@@ -232,6 +245,7 @@ function closeAddForm() {
             <div class="clear"></div>
         </div>
     </div>
+    </s:elseif>
 	<div class="label_main">
         <div class="label_hang">
             <div class="label_ltit">备注:</div>

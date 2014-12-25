@@ -207,6 +207,10 @@ public class LadingAction extends ActionSupport {
 		return SUCCESS;
 	}
 
+	public String addProd() throws Exception {
+		return SUCCESS;
+	}
+
 	public String save() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_LADING_MDY");
 		try {
