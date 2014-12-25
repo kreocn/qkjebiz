@@ -41,16 +41,16 @@
 		    </div>
 		</div>
 	</div>
-	<div class="label_main">
-		<div class="label_hang">
-		    <div class="label_ltit">单价:</div>
-		    <div class="label_rwben15"><input type="text" name="${perName}" class="validate[required,custom[number],maxSize[11]]" /></div>
-		</div>
-	</div>
 	<div id="per_price_select_area" class="label_main">
 		<div class="label_hang">
 		    <div class="label_ltit">参考价:</div>
 		    <div class="label_rwben15"><div class="iselect"><select id="per_price_select"></select></div></div>
+		</div>
+	</div>
+	<div class="label_main">
+		<div class="label_hang">
+		    <div class="label_ltit">单价:</div>
+		    <div class="label_rwben15"><input type="text" name="${perName}" class="validate[required,custom[number],maxSize[11]]" /></div>
 		</div>
 	</div>
 	<div class="label_main">

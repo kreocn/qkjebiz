@@ -9,6 +9,7 @@ public class Lading {
 	private String address;// (varchar)配送地点
 	private String note;// (text)其他说明
 	private Double total_price; // 总价
+	private Double curr_price;// 实际打款金额
 	private Integer manager_check;// (int)渠道/运营经理确认
 	private String manager_check_user;
 	private Date manager_check_time;// (datetime)确认时间
@@ -52,6 +53,14 @@ public class Lading {
 
 	// 特殊字段
 	private String[] fd_types; // 专门为赋值checkbox而设定
+
+	public Double getCurr_price() {
+		return curr_price;
+	}
+
+	public void setCurr_price(Double curr_price) {
+		this.curr_price = curr_price;
+	}
 
 	public Integer getOut_flag() {
 		return out_flag;

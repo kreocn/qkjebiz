@@ -199,7 +199,7 @@ public class LadingAction extends ActionSupport {
 			lading.setAdd_time(d);
 			lading.setAdd_user(u);
 			lading.setLm_user(u);
-			dao.add(lading);
+			lading.setUuid((Integer) dao.add(lading));
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!add 数据添加失败:", e);
 			throw new Exception(this.getClass().getName() + "!add 数据添加失败:", e);
