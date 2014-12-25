@@ -28,27 +28,23 @@ max-width: 650px !important;
  	<div class="label_main">
         <div class="label_hang">
             <div class="label_ltit">编号:</div>
-            <div class="label_rwben"><s:textfield name="leave.uuid" /></div>
+            <div class="label_rwben"><s:textfield name="salPromot.uuid" /></div>
         </div>
         
         <div class="label_hang">
-            <div class="label_ltit">查询日期:</div>
-            <div class="label_rwben"><input type="text" name="leave.serach_date" class="datepicker" value="${it:formatDate(leave.serach_date,'yyyy-MM-dd')}" /></div>
+            <div class="label_ltit">主题:</div>
+            <div class="label_rwben"><s:textfield name="salPromot.sal_title" /></div>
         </div>
         <div class="label_hang">
-            <div class="label_ltit">申请部门:</div>
-            <div class="label_rwben nw">
-            	<s:textfield title="部门名称" id="userdept_nameid" name="leave.leave_dept_name" readonly="true" />
-				<s:hidden title="部门代码" id="userdept_codeid" name="leave.leave_dept" readonly="true" />
-            </div>
-			<img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true);" />
+            <div class="label_ltit">活动状态:</div>
+            <div class="label_rwben label_rwb"><s:select id="status" name="salPromot.status" cssClass="selectKick" headerKey="" headerValue="-活动状态-" list="#{0:'新申请',1:'申请审批中',2:'申请通过'}" /></div>
         </div>
+        
         <div class="label_hang">
-            <div class="label_ltit">申请人:</div>
-            <div class="label_rwben label_rwb">
-            	<s:select id="membermanagerid" cssClass="selectKick" name="leave.leave_user" list="#{}" headerKey="" headerValue="--请选择--" />
-            </div>
-		</div>
+            <div class="label_ltit">审核状态:</div>
+            <div class="label_rwben label_rwb"><s:select id="status" name="checkstatus" cssClass="selectKick" headerKey="" headerValue="-活动状态-" list="#{0:'待审核',1:'销管经理已审',2:'销管经理退回',3:'运营总监已审',4:'运营总监退回'}" /></div>
+        </div>
+        
         <div class="label_hang label_button tac">
         	<s:checkbox id="search_mcondition" name="search_mcondition" fieldValue="true" value="true" cssClass="regular-checkbox" />
 			<label for="search_mcondition"></label>更多条件
@@ -88,8 +84,8 @@ max-width: 650px !important;
 			<s:if test="smd_status==0 && sd_status==0">待审核</s:if>
 			<s:if test="smd_status==5"><span class="message_error">销管已退回</span></s:if>
 			<s:if test="smd_status==20"><span class="message_pass">销管经理已审</span></s:if>
-			<s:if test="sd_status==5"><span class="message_error">总监已退回</span></s:if>
-			<s:if test="sd_status==30"><span class="message_pass">总监已审</span></s:if>
+			<s:if test="sd_status==5"><span class="message_error">运营总监已退回</span></s:if>
+			<s:if test="sd_status==30"><span class="message_pass">运营总监已审</span></s:if>
 		</td>
 		<td  class="td4 op-area">
 			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SALPRO_SALPROMOT_MDY')">

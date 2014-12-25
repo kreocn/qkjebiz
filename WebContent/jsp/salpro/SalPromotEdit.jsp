@@ -23,7 +23,6 @@
 		<s:form id="editForm" name="editForm" cssClass="validForm"
 			action="salPromot_add" namespace="/salpro" method="post" theme="simple">
 			<div class="label_con">
-			<s:hidden id="salPromot.type" name="salPromot.type" value="%{salPromot.type}"/>
 				<s:if test="null != salPromot">
 					<div class="label_main">
 						<div class="label_hang">
@@ -89,13 +88,12 @@
 						<div class="label_rwbenx">
 							<span id="message"><s:property value="message" /></span>
 							<s:if test="null == salPromot  && 'add' == viewFlag && @org.iweb.sys.ContextHelper@checkPermit('QKJ_SALPRO_SALPROMOT_ADD')">
-							
 								<s:submit id="add" name="add" value="确定" action="salPromot_add"
 									cssClass="input-blue" />
 							</s:if>
 							<s:elseif test="null != salPromot && salPromot.status==0 && 'mdy' == viewFlag">
 								<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SALPRO_SALPROMOT_MDY')">
-								<s:submit id="save" name="save" value="保存" action="salPromotdule_save" cssClass="input-blue" />
+								<s:submit id="save" name="save" value="保存" action="salPromot_save" cssClass="input-blue" />
 								</s:if>
 								<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SALPRO_SALPROMOT_SDSTATUS1')">
 								<s:submit id="mdyStatus0" name="mdyStatus0" value="报审" action="salPromot_status1" onclick="return isOp('确定执行此操作?');" cssClass="input-yellow" />

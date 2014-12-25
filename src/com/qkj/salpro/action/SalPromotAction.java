@@ -19,6 +19,7 @@ public class SalPromotAction extends ActionSupport implements ActionAttr {
 	private int recCount;
 	private int pageSize;
 	private int currPage;
+	private String checkstatus;
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;促销活动";
 	public String getPath() {
 		return path;
@@ -79,6 +80,16 @@ public class SalPromotAction extends ActionSupport implements ActionAttr {
 	public void setCurrPage(int currPage) {
 		this.currPage = currPage;
 	}
+	
+	
+
+	public String getCheckstatus() {
+		return checkstatus;
+	}
+
+	public void setCheckstatus(String checkstatus) {
+		this.checkstatus = checkstatus;
+	}
 
 	public String list() throws Exception {
 		ContextHelper.isPermit("QKJ_SALPRO_SALPROMOT_LIST");
@@ -88,7 +99,30 @@ public class SalPromotAction extends ActionSupport implements ActionAttr {
 				map.putAll(ToolsUtil.getMapByBean(salPromot));
 			map.putAll(ContextHelper.getDefaultRequestMap4Page());
 			this.setPageSize(ContextHelper.getPageSize(map));
-			this.setCurrPage(ContextHelper.getCurrPage(map));		
+			this.setCurrPage(ContextHelper.getCurrPage(map));	
+			if(checkstatus!=null){
+				if(checkstatus.equals("0")){
+					salPromot.setSmd_status(0);
+					map.put("smd_status", salPromot.getSmd_status());
+				}
+				if(checkstatus.equals("1")){
+					salPromot.setSmd_status(20);
+					map.put("smd_status", salPromot.getSmd_status());
+				}
+				if(checkstatus.equals("2")){
+					salPromot.setSmd_status(5);
+					map.put("smd_status", salPromot.getSmd_status());
+				}
+				if(checkstatus.equals("3")){
+					salPromot.setSd_status(30);
+					map.put("sd_status", salPromot.getSd_status());
+				}
+				if(checkstatus.equals("4")){
+					salPromot.setSd_status(5);
+					map.put("sd_status", salPromot.getSd_status());
+					
+				}
+			}
 			this.setSalPromots(dao.list(map));
 			this.setRecCount(dao.getResultCount());
 			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;促销活动列表";
@@ -172,6 +206,8 @@ public class SalPromotAction extends ActionSupport implements ActionAttr {
 	public String status1() throws Exception{
 		try {
 			salPromot.setStatus(1);
+			salPromot.setSd_status(0);//未审
+			salPromot.setSmd_status(0);//未审
 			salPromot.setLm_user(ContextHelper.getUserLoginUuid());
 			salPromot.setLm_time(new Date());
 			dao.saveStatus1(salPromot);
@@ -223,7 +259,7 @@ public class SalPromotAction extends ActionSupport implements ActionAttr {
 				salPromot.setSd_user(ContextHelper.getUserLoginUuid());
 				salPromot.setLm_user(ContextHelper.getUserLoginUuid());
 				salPromot.setLm_time(new Date());
-				dao.saveSmdsta(salPromot);
+				dao.saveSdsta(salPromot);
 			} catch (Exception e) {
 				log.error(this.getClass().getName() + "!status1 修改成功:", e);
 				throw new Exception(this.getClass().getName() + "!status1 修改失败:", e);

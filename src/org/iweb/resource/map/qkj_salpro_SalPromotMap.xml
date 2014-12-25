@@ -9,13 +9,17 @@
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="sal_title"><![CDATA[ sal_title=#sal_title# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="startime"><![CDATA[ startime=#startime# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="endtime"><![CDATA[ endtime=#endtime# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="sal_scop"><![CDATA[ sal_scop=#sal_scop# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="add_user"><![CDATA[ add_user=#add_user# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="add_time"><![CDATA[ add_time=#add_time# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="lm_user"><![CDATA[ lm_user=#lm_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="sal_title"><![CDATA[ sal_title=#sal_title# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="startime"><![CDATA[ startime=#startime# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="endtime"><![CDATA[ endtime=#endtime# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="sal_scop"><![CDATA[ sal_scop=#sal_scop# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="add_user"><![CDATA[ add_user=#add_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="add_time"><![CDATA[ add_time=#add_time# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="lm_user"><![CDATA[ lm_user=#lm_user# ]]></isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="status"><![CDATA[ status=#status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="smd_status"><![CDATA[ smd_status=#smd_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="sd_status"><![CDATA[ sd_status=#sd_status# ]]></isNotEmpty>
 
 		</dynamic>
 		<![CDATA[ LIMIT 1000 ]]>
@@ -26,13 +30,17 @@
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="sal_title"><![CDATA[ sal_title=#sal_title# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="startime"><![CDATA[ startime=#startime# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="endtime"><![CDATA[ endtime=#endtime# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="sal_scop"><![CDATA[ sal_scop=#sal_scop# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="add_user"><![CDATA[ add_user=#add_user# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="add_time"><![CDATA[ add_time=#add_time# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="lm_user"><![CDATA[ lm_user=#lm_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="sal_title"><![CDATA[ sal_title=#sal_title# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="startime"><![CDATA[ startime=#startime# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="endtime"><![CDATA[ endtime=#endtime# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="sal_scop"><![CDATA[ sal_scop=#sal_scop# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="add_user"><![CDATA[ add_user=#add_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="add_time"><![CDATA[ add_time=#add_time# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="lm_user"><![CDATA[ lm_user=#lm_user# ]]></isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="status"><![CDATA[ status=#status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="smd_status"><![CDATA[ smd_status=#smd_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="sd_status"><![CDATA[ sd_status=#sd_status# ]]></isNotEmpty>
 
 		</dynamic>
 		<![CDATA[ LIMIT 1000 ]]>
@@ -64,6 +72,8 @@
 			Update qkjm_r_salpromotion
 			Set 
 			status=#status#,
+			smd_status=#smd_status#,
+			sd_status=#sd_status#,
 			lm_user=#lm_user#,
 			lm_time=#lm_time#
 			Where uuid = #uuid#
