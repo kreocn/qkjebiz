@@ -69,6 +69,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	private String flag;
 	private String state;
 	private String noteflag = null;
+	private String sselect;
 
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;活动管理";
 
@@ -314,6 +315,14 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 
 	public void setCode(String code) {
 		this.code = code;
+	}
+
+	public String getSselect() {
+		return sselect;
+	}
+
+	public void setSselect(String sselect) {
+		this.sselect = sselect;
 	}
 
 	public String addPro() throws Exception {
