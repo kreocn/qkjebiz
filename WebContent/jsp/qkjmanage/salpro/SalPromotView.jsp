@@ -77,7 +77,7 @@
 			            </div>
 			        </div>
 			        <div class="label_hang">
-						<div class="label_ltit">返利息数:</div>
+						<div class="label_ltit">返利系数:</div>
 						<div class="label_rwben">
 						${salPromot.rebate }	
 						</div>

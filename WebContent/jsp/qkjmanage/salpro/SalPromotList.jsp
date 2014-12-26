@@ -63,7 +63,7 @@ max-width: 650px !important;
 	<th class="td2">范围</th>
 	<th class="td2">单据状态</th>
 	<th class="td2">审核状态</th>
-	<th class="td3">返利息数</th>
+	<th class="td3">返利系数</th>
 	<th class="td4">操作</th>
 	<th class="td0">查看</th>
 </tr>

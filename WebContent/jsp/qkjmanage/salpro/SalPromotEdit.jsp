@@ -88,17 +88,12 @@
 			            </div>
 			        </div>
 			        <div class="label_hang">
-						<div class="label_ltit">返利息数:</div>
+						<div class="label_ltit">返利系数:</div>
 						<div class="label_rwben">
 						<s:textfield  name="salPromot.rebate" cssClass="validate[required,custom[number]]" />
 						</div>
 					</div>
-					<div class="label_hang">
-						<div class="label_ltit">优先级:</div>
-						<div class="label_rwben">
-							<s:textfield  name="salPromot.priority" cssClass="validate[custom[number]]" />
-						</div>
-					</div>
+					
 			      </div>
 
 			    <div class="label_main">
@@ -163,6 +158,14 @@
 		            </div>
 		        </div>
 		        </div>
+		        <div class="label_main">
+		        <div class="label_hang">
+						<div class="label_ltit">优先级:</div>
+						<div class="label_rwben">
+							<s:textfield  name="salPromot.priority" cssClass="validate[custom[number]]" />
+						</div>
+				</div>
+				</div>
 		        
 				<div class="label_main">
 					<div class="label_hang">
