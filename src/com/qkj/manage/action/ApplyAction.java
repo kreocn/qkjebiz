@@ -461,11 +461,12 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 		apply.setSp_check_status(p_sp_check_status);
 		apply.setSp_check_user(ContextHelper.getUserLoginUuid());
 		apply.setSp_check_time(new Date());
-		apply.setStatus(20);
-		apply.setCheck_user(ContextHelper.getUserLoginUuid());
-		apply.setCheck_time(new Date());
-		apply.setLm_user(ContextHelper.getUserLoginUuid());
-		
+		if(p_sp_check_status==10){
+			apply.setStatus(20);
+			apply.setCheck_user(ContextHelper.getUserLoginUuid());
+			apply.setCheck_time(new Date());
+			apply.setLm_user(ContextHelper.getUserLoginUuid());
+		}
 		dao.spcheck(apply);
 		addProcess("APPLY_CHANGE_SPSTATUS", "至事由-特别状态更改");
 	}
