@@ -881,4 +881,8 @@ public class ToolsUtil {
 			return s.substring(0, n) + "...";
 		}
 	}
+
+	public static String formatNum(Double d, Integer digit) {
+		return String.format("%." + digit + "f", d);
+	}
 }
