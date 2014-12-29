@@ -5,16 +5,19 @@
 	<typeAlias alias="memberStock" type="org.iweb.sysvip.domain.MemberStock" />
 	<select id="sysvip_getMemberStocks" resultClass="memberStock" parameterClass="java.util.Map">
 		<![CDATA[ 
-			Select * From qkjm_t_member
+			SELECT m.*,ad.`USER_NAME` add_user_name,lm.`USER_NAME` lm_user_name,p.`title` product_name FROM qkjm_t_member m 
+			LEFT JOIN s_sys_user ad ON(m.`add_user`=ad.`UUID`)
+			LEFT JOIN s_sys_user lm ON(m.`lm_user`=lm.`UUID`)
+			LEFT JOIN qkj_t_product p ON(p.`uuid`=m.`product`)
 		]]>
 		<dynamic prepend="WHERE">
-			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="dealer"><![CDATA[ dealer=#dealer# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="product"><![CDATA[ product=#product# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="stock"><![CDATA[ stock=#stock# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="check_date"><![CDATA[ check_date=#check_date# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="add_time"><![CDATA[ add_time=#add_time# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="lm_user"><![CDATA[ lm_user=#lm_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ m.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="dealer"><![CDATA[ m.dealer=#dealer# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="product"><![CDATA[ m.product=#product# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="stock"><![CDATA[ m.stock=#stock# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="check_date"><![CDATA[ m.check_date=#check_date# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="add_time"><![CDATA[ m.add_time=#add_time# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="lm_user"><![CDATA[ m.lm_user=#lm_user# ]]></isNotEmpty>
 
 		</dynamic>
 		<![CDATA[ LIMIT 1000 ]]>
@@ -25,12 +28,12 @@
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="dealer"><![CDATA[ dealer=#dealer# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="product"><![CDATA[ product=#product# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="stock"><![CDATA[ stock=#stock# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="check_date"><![CDATA[ check_date=#check_date# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="add_time"><![CDATA[ add_time=#add_time# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="lm_user"><![CDATA[ lm_user=#lm_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="dealer"><![CDATA[ dealer=#dealer# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="product"><![CDATA[ product=#product# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="stock"><![CDATA[ stock=#stock# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="check_date"><![CDATA[ check_date=#check_date# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="add_time"><![CDATA[ add_time=#add_time# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="lm_user"><![CDATA[ lm_user=#lm_user# ]]></isNotEmpty>
 
 		</dynamic>
 		<![CDATA[ LIMIT 1000 ]]>

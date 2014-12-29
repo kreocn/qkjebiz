@@ -7,6 +7,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>会员库存--<s:text name="APP_NAME" /></title>
 <s:action name="ref" namespace="/manager" executeResult="true" />
+<link rel="stylesheet" href="<s:url value="/css/zTreeStyle/zTreeStyle.css" />" />
+<script type="text/javascript" src="<s:url value="/js/zTreeJs/jquery.ztree.core-3.5.js" />"></script>
+<script type="text/javascript" src="<s:url value="http://images01.qkjchina.com/qkjebiz01/zTree_result.js?v0=1" />"></script>
+<script type="text/javascript" src="<s:url value="/js/zTreeJs/product.js" />"></script>
 <body>
 <div class="main">
 <div class="dq_step">
@@ -18,98 +22,84 @@
 	<s:if test="'mdy' == viewFlag">
 	<div class="label_main">
 	<div class="label_hang">
-		<div class="label_ltit">会员号:</div>
-		<div class="label_rwben">${memberStock.uuid}<s:hidden name="memberStock.uuid" title="会员号" /></div>
-	</div>
-	<div class="label_hang">
-		<div class="label_ltit">登录密码:</div>
-		<div class="label_rwben label_rwb"><s:password id="passwords" name="memberStock.passwords" cssClass="validate[required]" /></div>
-	</div>
-	<div class="label_hang">
-		<div class="label_ltit">再次输入:</div>
-		<div class="label_rwben label_rwb"><s:password id="passwords2" name="passwords2" cssClass="validate[required,equals[passwords]]" /></div>
+		<div class="label_ltit">编号:</div>
+		<div class="label_rwben label_rwb">${memberStock.uuid}<s:hidden name="memberStock.uuid" title="会员号" /></div>
 	</div>
 	</div>
 	</s:if>
 	<div class="label_main">
 	<div class="label_hang">
-		<div class="label_ltit">会员手机:</div>
-		<div class="label_rwben2">
-			<span class="label_rwb label_rwbx"><s:textfield name="memberStock.mobile" title="会员手机" cssClass="validate[required,custom[mobile]]" /></span>
-			<span class="label_rwb nw"><s:radio name="memberStock.is_mobile_check" title="手机验证"  list="#{0:'未验证',1:'已验证'}" value="1" cssClass="regular-radio" /></span>
+		<div class="label_ltit">经销商帐号:</div>
+	    <div class="label_rwben label_rwb">
+	    <s:textfield  name="memberStock.dealer" cssClass="validate[required,maxSize[85]]" />
+	    </div>
+	</div>
+	</div>
+	<div class="label_main">
+	<div class="label_hang">
+		    <div class="label_ltit">产品:</div>
+		    <div class="label_rwben label_rwb" style="width: 140px;">
+		    	<s:textfield  id="citySel"/>
+		    	<s:hidden name="memberStock.product" id="cityUid"></s:hidden>
+		    	<s:hidden id="datacase"></s:hidden>
+		    </div>
 		</div>
-	</div>
 	<div class="label_hang">
-		<div class="label_ltit">会员名称:</div>
-		<div class="label_rwben label_rwb"><s:textfield name="memberStock.memberStock_name" cssClass="validate[required,maxSize[85]]" /></div>
-	</div>
-	<div class="label_hang">
-		<div class="label_ltit">联系人姓名:</div>
-		<div class="label_rwben label_rwb"><span class="message_prompt">企业联系人</span><s:textfield name="memberStock.contact" title="联系人" cssClass="inputNote" /></div>
-	</div>
-	<div class="label_hang">
-		<div class="label_ltit">会员分组:</div>
 		<div class="label_rwben">
-			<div class="label_rwb"><s:select name="memberStock.user_type" title="会员级别"  list="roles" listKey="uuid" listValue="role_name" /></div></div>
+		    	&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" id="addProduct" value="选择商品" onclick="showMenu();"/>
+		    	<div id="menuContent" class="menuContent">
+			        <ul id="treeDemo" class="ztree"></ul>
+			    </div>
+		    </div>
 	</div>
+	</div>
+	
+	<div class="label_main">
 	<div class="label_hang">
-		<div class="label_ltit">会员EMAIL:</div>
-		<div class="label_rwben2">
-			<span class="label_rwb label_rwbx"><s:textfield name="memberStock.email" cssClass="validate[maxSize[85]]" /></span>
-			<span class="label_rwb nw"><s:radio name="memberStock.is_email_check" title="EMAIL验证"  list="#{0:'未验证',1:'已验证'}" value="0" cssClass="regular-radio" /></span>
-		</div>
+		<div class="label_ltit">数量:</div>
+	    <div class="label_rwben label_rwb">
+	    <s:textfield name="memberStock.stock" cssClass="validate[required,maxSize[85]]" />
+	    </div>
 	</div>
+	</div>
+	
+	<div class="label_main">
 	<div class="label_hang">
-		<div class="label_ltit">登录别名:</div>
-		<div class="label_rwben label_rwb"><s:textfield name="memberStock.title" cssClass="validate[maxSize[85]]" /></div>
-	</div>
-	<s:if test="'mdy'==viewFlag">
-	<div class="label_hang">
-		<div class="label_ltit">所属办事处:</div>
-		<div class="label_rwben">${memberStock.dept_name}</div>
-	</div>
-	<div class="label_hang">
-	<div class="label_ltit">所属人:</div>
-	<div class="label_rwben">${memberStock.manager_name}</div>
-	</div>
-	</s:if>
-	<s:if test="'add'==viewFlag">
-	<div class="label_hang">
-		<div class="label_ltit">所属办事处:</div>
-		<div class="label_rwben nw">
-			<div class="label_rwb">
-				<s:textfield title="部门名称" id="userdept_nameid" name="memberStock.dept_name" readonly="true" /></div>
-				<s:hidden id="userdept_codeid" name="memberStock.dept_code" />
-			</div>
-			<img class="imglink vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true,null,1);" />
-	</div>
-	<div class="label_hang">
-	<div class="label_ltit">所属人:</div>
-	<div class="label_rwben">
-		<div class="label_rwb">
-			<s:select id="membermanagerid" name="memberStock.manager" list="#{}"	headerKey="" headerValue="--请选择--" />
-		</div>
+		<div class="label_ltit">核对日期:</div>
+		<div class="label_rwben">
+	    <div class="label_rwbenx">
+            	<span class="message_prompt">日期仅填写年月即可，例（2014-12）</span>
+            	<s:textfield id="active_remark" name="memberStock.check_date" title="活动备注" size="40%"  cssClass="inputNote" />
+            </div>
+         </div>
 	</div>
 	</div>
-	</s:if>
-	</div>
+	
 	<s:if test="'mdy'==viewFlag">
 	<div class="label_main">
 	<div class="label_hang">
-		<div class="label_ltit">注册来源:</div>
-		<div class="label_rwben label_rwb">
-			<s:if test="0==memberStock.reg_type">自行注册</s:if>
-			<s:if test="1==memberStock.reg_type">管理员添加</s:if>
-			<s:if test="2==memberStock.reg_type">批量导入</s:if>
-		</div>
+		<div class="label_ltit">填加人:</div>
+	    <div class="label_rwben label_rwb">
+	    ${memberStock.add_user_name }
+	    </div>
 	</div>
 	<div class="label_hang">
-		<div class="label_ltit">注册时间:</div>
-		<div class="label_rwben" style="width:auto;"><s:date name="memberStock.reg_time" format="yyyy-MM-dd HH:mm:ss" /></div>
+		<div class="label_ltit">填加时间:</div>
+	    <div class="label_rwben label_rwb">
+	     ${it:formatDate(memberStock.add_time,'yyyy-MM-dd hh:mm:ss')}
+	    </div>
 	</div>
 	<div class="label_hang">
-		<div class="label_ltit">最后登录时间:</div>
-		<div class="label_rwben" style="width:auto;"><s:date name="memberStock.last_login_time" format="yyyy-MM-dd HH:mm:ss" /></div>
+		<div class="label_ltit">修改人:</div>
+	    <div class="label_rwben label_rwb">
+	    ${memberStock.lm_user_name }
+	    </div>
+	</div>
+	<div class="label_hang">
+		<div class="label_ltit">修改时间:</div>
+	    <div class="label_rwben label_rwb">
+	     ${it:formatDate(memberStock.lm_time,'yyyy-MM-dd hh:mm:ss')}
+	    </div>
 	</div>
 	</div>
 	</s:if>
@@ -133,4 +123,36 @@
 </s:form>
 </div>
 </body>
+<script type="text/javascript">
+var add_per_price_input = $("#form_addProductForm :input[name='activeProduct.per_price']");
+var add_num_input = $("#form_addProductForm :input[name='activeProduct.num']");
+var add_total_price_input = $("#form_addProductForm :input[name='activeProduct.total_price']");
+var add_product_id = $("#form_addProductForm :input[name='activeProduct.product_id']");
+
+$(function(){
+	add_per_price_input.bind("keyup",function(){
+		add_total_price_input.val($(this).val()*add_num_input.val());
+		
+	});
+	add_num_input.bind("keyup",function(){
+		add_total_price_input.val($(this).val()*add_per_price_input.val());
+		setDataCase();
+	});
+	
+	$("#per_price_select").bind("change",function(){
+		add_per_price_input.val($(this).val());
+		add_total_price_input.val($(this).val()*add_num_input.val());
+		setDataCase();
+	});
+});
+$("#per_price_select_area").hide();
+function setDataCase() {
+	var data_case =document.getElementById("datacase").value;
+	var num_value = add_num_input.val();
+	if(!(data_case==null || data_case=='' || num_value==null || num_value=='')) {
+		var num=num_value/data_case;
+		$("#ladingItemnumCase").html('瓶/'+num+'件');
+	}
+}
+</script>
 </html>
