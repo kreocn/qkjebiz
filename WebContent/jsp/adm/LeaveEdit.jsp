@@ -82,7 +82,7 @@
         <div class="label_hang">
             <div class="label_ltit">申请人:</div>
             <div class="label_rwben label_rwb">
-            	<s:select id="membermanagerid" cssClass="selectKick" name="leave.leave_user" list="#{}" headerKey="" headerValue="--请选择--" />
+            	<s:select id="membermanagerid" cssClass="selectKick validate[required]" name="leave.leave_user" list="#{}" headerKey="" headerValue="--请选择--" />
             </div>
 		</div>
 		</div>
