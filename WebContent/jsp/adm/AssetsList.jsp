@@ -45,6 +45,11 @@ $(function(){
 			<a href="<s:url namespace="/adm" action="assets_load"><s:param name="viewFlag">add</s:param></s:url>" >添加资产</a>
 			</s:if>
 		</span>
+		<span class="extra1">
+			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_ASSETITEM_PRINT')">
+			<a href="<s:url namespace="/adm" action="assetItem_print"></s:url>" >打印资产物品</a>
+			</s:if>
+		</span>
 	</div>	
 	<div class="ilistsearch">
 <s:form name="form_serach" action="assets_list"  method="get" onsubmit="return validator(this);" namespace="/adm" theme="simple">

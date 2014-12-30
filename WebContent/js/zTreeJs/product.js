@@ -67,9 +67,9 @@ function onClick(e, treeId, treeNode) {
   				if(ps[5]!='' && ps[5]!=null && ps[3]!='null')$("#per_price_select").addOption("协议价3("+ps[5]+")",ps[5]);
   				$("#per_price_select_area").fadeIn(1000);
   			}
-  			hideMenu();
+  			
   		}
-	  
+  		hideMenu();
 }
 function showMenu() {
       var cityObj = $("#citySel");
