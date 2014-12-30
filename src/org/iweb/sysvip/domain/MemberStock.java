@@ -17,6 +17,16 @@ public class MemberStock {
 	private String lm_user_name;
 	private String add_user_name;
 	private String product_name;
+	private Integer case_spec;
+	
+
+	public Integer getCase_spec() {
+		return case_spec;
+	}
+
+	public void setCase_spec(Integer case_spec) {
+		this.case_spec = case_spec;
+	}
 
 	public Integer getUuid() {
 		return uuid;

@@ -39,6 +39,14 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
-		<!-- MemberStock End -->
+		
+		<action name="memberStock_leading" class="org.iweb.sysvip.action.MemberStockAction" method="leading">
+			<result type="redirectAction">
+				<param name="actionName">memberStock_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- MemberStock End leading-->
 	</package>
 </struts>

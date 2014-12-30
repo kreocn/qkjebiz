@@ -8,14 +8,26 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>会员库存--<s:text name="APP_NAME" /></title>
 <s:action name="ref" namespace="/manager" executeResult="true" />
+<link rel="stylesheet" href="<s:url value="/css/zTreeStyle/zTreeStyle.css" />" />
+<script type="text/javascript" src="<s:url value="/js/zTreeJs/jquery.ztree.core-3.5.js" />"></script>
+<script type="text/javascript" src="<s:url value="http://images01.qkjchina.com/qkjebiz01/zTree_result.js?v0=1" />"></script>
+<script type="text/javascript" src="<s:url value="/js/zTreeJs/product.js" />"></script>
 </head>
-<script type="text/javascript"></script>
+<script type="text/javascript">
+function checkstock(){
+	var c =document.getElementById("citySel").value;
+	if(c==""){
+		document.getElementById("cityUid").value=null;
+	}
+}
+</script>
 <body>
 <div class="main" >
 <div class="dq_step">
 ${path}
 <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJM_SYSVIP_MEMBERSTOCK_ADD')">
-	<span class="opb lb op-area"><a href="<s:url namespace="/sysvip" action="memberStock_load"><s:param name="viewFlag">add</s:param></s:url>">添加会员</a></span>
+	<span class="opb lb op-area"><a href="<s:url namespace="/sysvip" action="memberStock_load"><s:param name="viewFlag">add</s:param></s:url>">添加库存信息</a></span>
+	<span class="opb lb op-area"><a href="<s:url namespace="/sysvip" action="memberStock_load"><s:param name="viewFlag">add</s:param></s:url>">导入库存信息</a></span>
 </s:if>
 </div>
 	<s:form id="serachForm" name="serachForm"  method="get" namespace="/sysvip" theme="simple">
@@ -27,16 +39,24 @@ ${path}
       </div>
       <div class="label_hang">
           <div class="label_ltit">经销商编号:</div>
-          <div class="label_rwben"><s:textfield name="memberStock.dealer" cssClass="iI iI-s" /></div>
+          <div class="label_rwben"><s:textfield name="memberStock.dealer"/></div>
       </div>
       <div class="label_hang">
-          <div class="label_ltit">产品:</div>
-          <div class="label_rwben"><s:textfield name="memberStock.product" /></div>
-      </div>
+		    <div class="label_ltit">产品:</div>
+		    <div class="label_rwben label_rwb" style="width: 140px;">
+		    <s:textfield  id="citySel" name="memberStock.product_name" onclick="showMenu(); return false;"/>
+		    	<s:hidden name="memberStock.product" id="cityUid"></s:hidden>
+		    	<s:hidden id="datacase"></s:hidden>
+		    	<div id="menuContent" class="menuContent">
+			        <ul id="treeDemo" class="ztree"></ul>
+			    </div>
+		    </div>
+		</div>
+		
 	  <div class="label_hang label_button tac">
         	<s:checkbox id="search_mcondition" name="search_mcondition" fieldValue="true" value="true" cssClass="regular-checkbox" />
 			<label for="search_mcondition"></label>更多条件
-            <s:submit value="搜索" /> <s:reset value="重置" />
+            <s:submit value="搜索" onclick="checkstock();" /> <s:reset value="重置" />
         </div>
 </div>
 </div>
@@ -56,8 +76,11 @@ ${path}
 	  <tr id="showtr${uuid}">
 	  	 <td class="td1">${uuid}</td>
 	    <td class="td1">${dealer}</td>
-		<td class="td1">${product}</td>
-		<td class="td2">${stock}</td>
+		<td class="td1">${product}(${product_name})</td>
+		<td class="td2">
+		${stock}&nbsp;瓶
+				(${case_spec }件)
+		</td>
 		<td class="td2">${check_date}</td>
 		<td class="td4 op-area">
 			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJM_SYSVIP_MEMBERSTOCK_MDY')">

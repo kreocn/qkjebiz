@@ -5,7 +5,9 @@
 	<typeAlias alias="memberStock" type="org.iweb.sysvip.domain.MemberStock" />
 	<select id="sysvip_getMemberStocks" resultClass="memberStock" parameterClass="java.util.Map">
 		<![CDATA[ 
-			SELECT m.*,ad.`USER_NAME` add_user_name,lm.`USER_NAME` lm_user_name,p.`title` product_name FROM qkjm_t_member m 
+			SELECT m.*,ad.`USER_NAME` add_user_name,lm.`USER_NAME` lm_user_name,p.`title` product_name,
+			ROUND(m.`stock`/(p.`case_spec`*1.0)) case_spec 
+			FROM qkjm_t_member m 
 			LEFT JOIN s_sys_user ad ON(m.`add_user`=ad.`UUID`)
 			LEFT JOIN s_sys_user lm ON(m.`lm_user`=lm.`UUID`)
 			LEFT JOIN qkj_t_product p ON(p.`uuid`=m.`product`)
@@ -51,13 +53,11 @@
 		<![CDATA[
 			Update qkjm_t_member
 			Set dealer=#dealer#,
-product=#product#,
-stock=#stock#,
-check_date=#check_date#,
-add_user=#add_user#,
-add_time=#add_time#,
-lm_user=#lm_user#,
-lm_time=#lm_time#
+			product=#product#,
+			stock=#stock#,
+			check_date=#check_date#,
+			lm_user=#lm_user#,
+			lm_time=#lm_time#
 			Where uuid = #uuid#
 		]]>
 	</update>

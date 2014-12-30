@@ -11,6 +11,7 @@
 <script type="text/javascript" src="<s:url value="/js/zTreeJs/jquery.ztree.core-3.5.js" />"></script>
 <script type="text/javascript" src="<s:url value="http://images01.qkjchina.com/qkjebiz01/zTree_result.js?v0=1" />"></script>
 <script type="text/javascript" src="<s:url value="/js/zTreeJs/product.js" />"></script>
+</head>
 <body>
 <div class="main">
 <div class="dq_step">
@@ -28,25 +29,34 @@
 	</div>
 	</s:if>
 	<div class="label_main">
+	
 	<div class="label_hang">
 		<div class="label_ltit">经销商帐号:</div>
-	    <div class="label_rwben label_rwb">
-	    <s:textfield  name="memberStock.dealer" cssClass="validate[required,maxSize[85]]" />
-	    </div>
+	    <div class="label_rwb">
+		     <s:textfield id="order_user_id" name="memberStock.dealer" title="会员号" cssClass="validate[required]" />
+		 </div>
 	</div>
 	</div>
 	<div class="label_main">
 	<div class="label_hang">
 		    <div class="label_ltit">产品:</div>
 		    <div class="label_rwben label_rwb" style="width: 140px;">
-		    	<s:textfield  id="citySel"/>
+		    <s:if test="%{memberStock.product!=null}">
+		    	<s:textfield  id="citySel" cssClass="validate[required]" value="%{memberStock.product_name}"/>
+		    	<s:hidden name="memberStock.product" id="cityUid" value="%{memberStock.product}"></s:hidden>
+		    	<s:hidden id="datacase"></s:hidden>
+		    </s:if>
+		    <s:else>
+		    <s:textfield  id="citySel" cssClass="validate[required]"/>
 		    	<s:hidden name="memberStock.product" id="cityUid"></s:hidden>
 		    	<s:hidden id="datacase"></s:hidden>
+		    </s:else>
+		    	
 		    </div>
 		</div>
 	<div class="label_hang">
 		<div class="label_rwben">
-		    	&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" id="addProduct" value="选择商品" onclick="showMenu();"/>
+		    	&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" id="addProduct" value="选择商品" onclick="showMenu(); return false;"/>
 		    	<div id="menuContent" class="menuContent">
 			        <ul id="treeDemo" class="ztree"></ul>
 			    </div>
@@ -54,13 +64,21 @@
 	</div>
 	</div>
 	
+	
 	<div class="label_main">
 	<div class="label_hang">
-		<div class="label_ltit">数量:</div>
-	    <div class="label_rwben label_rwb">
-	    <s:textfield name="memberStock.stock" cssClass="validate[required,maxSize[85]]" />
-	    </div>
-	</div>
+		    <div class="label_ltit">数量:</div>
+		    <div class="label_rwben" style="width: 140px;">
+	    		<div class="nw"><s:textfield id="stockId" onblur="num();" name="memberStock.stock" cssClass="validate[required,custom[integer],maxSize[11]]" /></div>
+		    </div>
+		</div>
+		<div class="label_hang">
+		    <div class="label_rwben">
+	    		<span id="ladingItemnumCase">
+	    		<s:if test="%{memberStock.case_spec!=null}">瓶/${memberStock.case_spec }件</s:if>
+	    		</span>
+		    </div>
+		</div>
 	</div>
 	
 	<div class="label_main">
@@ -69,7 +87,7 @@
 		<div class="label_rwben">
 	    <div class="label_rwbenx">
             	<span class="message_prompt">日期仅填写年月即可，例（2014-12）</span>
-            	<s:textfield id="active_remark" name="memberStock.check_date" title="活动备注" size="40%"  cssClass="inputNote" />
+            	<s:textfield id="active_remark" name="memberStock.check_date" title="活动备注" size="40%"  cssClass="validate[required] inputNote" />
             </div>
          </div>
 	</div>
@@ -85,7 +103,7 @@
 	</div>
 	<div class="label_hang">
 		<div class="label_ltit">填加时间:</div>
-	    <div class="label_rwben label_rwb">
+	    <div class="label_rwbenx">
 	     ${it:formatDate(memberStock.add_time,'yyyy-MM-dd hh:mm:ss')}
 	    </div>
 	</div>
@@ -97,7 +115,7 @@
 	</div>
 	<div class="label_hang">
 		<div class="label_ltit">修改时间:</div>
-	    <div class="label_rwben label_rwb">
+	    <div class="label_rwbenx">
 	     ${it:formatDate(memberStock.lm_time,'yyyy-MM-dd hh:mm:ss')}
 	    </div>
 	</div>
@@ -109,13 +127,13 @@
             <div class="label_ltit">相关操作:</div>
             <div class="label_rwbenx">
             	<s:if test="'add' == viewFlag">
-					<s:submit id="add" name="add" value="确定" action="member_add" />
+					<s:submit id="add" name="add" value="确定" action="memberStock_add" />
 				</s:if>
 				<s:elseif test="'mdy' == viewFlag">
-					<s:submit id="save" name="save" value="保存" action="member_save" cssClass="input-blue" />
-					<s:submit id="delete" name="delete" value="删除" action="member_del" cssClass="input-red" onclick="return isDel();" />
+					<s:submit id="save" name="save" value="保存" action="memberStock_save" cssClass="input-blue" />
+					<s:submit id="delete" name="delete" value="删除" action="memberStock_del" cssClass="input-red" onclick="return isDel();" />
 				</s:elseif>
-				<input type="button" value="返回" onclick="linkurl('<s:url action="member_list" namespace="/sysvip" />');"  class="input-gray" />
+				<input type="button" value="返回" onclick="linkurl('<s:url action="memberStock_list" namespace="/sysvip" />');"  class="input-gray" />
         	</div>
     	</div>
 	</div>
@@ -124,35 +142,31 @@
 </div>
 </body>
 <script type="text/javascript">
-var add_per_price_input = $("#form_addProductForm :input[name='activeProduct.per_price']");
-var add_num_input = $("#form_addProductForm :input[name='activeProduct.num']");
-var add_total_price_input = $("#form_addProductForm :input[name='activeProduct.total_price']");
-var add_product_id = $("#form_addProductForm :input[name='activeProduct.product_id']");
-
-$(function(){
-	add_per_price_input.bind("keyup",function(){
-		add_total_price_input.val($(this).val()*add_num_input.val());
-		
-	});
-	add_num_input.bind("keyup",function(){
-		add_total_price_input.val($(this).val()*add_per_price_input.val());
-		setDataCase();
-	});
-	
-	$("#per_price_select").bind("change",function(){
-		add_per_price_input.val($(this).val());
-		add_total_price_input.val($(this).val()*add_num_input.val());
-		setDataCase();
-	});
+var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
+var c_mid = '<s:property value="outStock.member_id" />';
+$(function() {
+	SimpleLoadMember(ajax_url_action,function(event, ui) {loadAddress(ui.item.order_user_id);});
+	CommonUtil.pickrow('fd_list_table');
 });
-$("#per_price_select_area").hide();
+
+function loadAddress(memberid) {
+	var ajax = new Common_Ajax();
+	ajax.config.action_url = ajax_url_action;
+	ajax.sendAjax();
+}
+
+
+function num(){
+	 setDataCase();
+}
 function setDataCase() {
 	var data_case =document.getElementById("datacase").value;
-	var num_value = add_num_input.val();
+	var num_value = document.getElementById("stockId").value;
 	if(!(data_case==null || data_case=='' || num_value==null || num_value=='')) {
-		var num=num_value/data_case;
+		var num=(num_value/data_case).toFixed(4);
 		$("#ladingItemnumCase").html('瓶/'+num+'件');
 	}
 }
+
 </script>
 </html>

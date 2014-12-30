@@ -84,8 +84,12 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 		ContextHelper.isPermit("QKJM_SYSVIP_MEMBERSTOCK_LIST");
 		try {
 			map.clear();
-			if (memberStock != null)
+			if (memberStock != null){
+				if(memberStock.getDealer().equals("")){
+					memberStock.setDealer(null);
+				}
 				map.putAll(ToolsUtil.getMapByBean(memberStock));
+			}
 			map.putAll(ContextHelper.getDefaultRequestMap4Page());
 			this.setPageSize(ContextHelper.getPageSize(map));
 			this.setCurrPage(ContextHelper.getCurrPage(map));		
@@ -132,8 +136,10 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 	public String add() throws Exception {
 		ContextHelper.isPermit("QKJM_SYSVIP_MEMBERSTOCK_ADD");
 		try {
-			//memberStock.setLm_user(ContextHelper.getUserLoginUuid());
-			//memberStock.setLm_time(new Date());
+			memberStock.setAdd_user(ContextHelper.getUserLoginUuid());
+			memberStock.setAdd_time(new Date());
+			memberStock.setLm_user(ContextHelper.getUserLoginUuid());
+			memberStock.setLm_time(new Date());
 			dao.add(memberStock);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!add 数据添加失败:", e);
@@ -145,8 +151,8 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 	public String save() throws Exception {
 		ContextHelper.isPermit("QKJM_SYSVIP_MEMBERSTOCK_MDY");
 		try {
-			//memberStock.setLm_user(ContextHelper.getUserLoginUuid());
-			//memberStock.setLm_time(new Date());
+			memberStock.setLm_user(ContextHelper.getUserLoginUuid());
+			memberStock.setLm_time(new Date());
 			dao.save(memberStock);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
@@ -163,6 +169,21 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!del 数据删除失败:", e);
 			throw new Exception(this.getClass().getName() + "!del 数据删除失败:", e);
+		}
+		return SUCCESS;
+	}
+	
+	public String leading() throws Exception {
+		ContextHelper.isPermit("QKJM_SYSVIP_MEMBERSTOCK_ADD");
+		try {
+			memberStock.setAdd_user(ContextHelper.getUserLoginUuid());
+			memberStock.setAdd_time(new Date());
+			memberStock.setLm_user(ContextHelper.getUserLoginUuid());
+			memberStock.setLm_time(new Date());
+			dao.add(memberStock);
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
 		}
 		return SUCCESS;
 	}
