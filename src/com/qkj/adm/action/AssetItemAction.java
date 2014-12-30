@@ -210,7 +210,6 @@ public class AssetItemAction extends ActionSupport {
 	}
 	
 	public String print() throws Exception {
-		ContextHelper.isPermit("QKJ_ADM_ASSETITEM_PRINT");
 		try {
 			this.setAssetItems(dao.getPrint(null));
 		} catch (Exception e) {

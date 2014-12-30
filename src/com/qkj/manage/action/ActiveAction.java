@@ -336,8 +336,8 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 			this.setActive(active);
 			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/active_list?viewFlag=relist'>活动列表</a>&nbsp;&gt;&nbsp;修改活动单&nbsp;&gt;&nbsp;增加产品";
 		} catch (Exception e) {
-			log.error(this.getClass().getName() + "!load 读取数据错误:", e);
-			throw new Exception(this.getClass().getName() + "!load 读取数据错误:", e);
+			log.error(this.getClass().getName() + "!addPro 读取数据错误:", e);
+			throw new Exception(this.getClass().getName() + "!addPro 读取数据错误:", e);
 		}
 		return SUCCESS;
 	}

@@ -33,7 +33,7 @@ page-break-after:always;clear: both;
 	    </div>
 	    <ul class="bqlb">
 	    	<li>资产名称：<span class="bqline">&nbsp;${ tname}</span></li>
-	        <li>产品类型：<span class="bqline">A:${atype }&nbsp;&nbsp; B:${btype } &nbsp;&nbsp;　　C:${ctype } </span></li>
+	        <li>产品类型：<span class="bqline"> B:${btype } &nbsp;&nbsp;　　C:${ctype } </span></li>
 	        <li>所在位置：<span class="bqline">&nbsp;${adresss }</span></li>
 	        <li>所&nbsp;有&nbsp;人：<span class="bqline">&nbsp;${allpeo }</span></li>
 	        <li>编　　号：<span class="bqline">&nbsp;${nuuid }</span></li>

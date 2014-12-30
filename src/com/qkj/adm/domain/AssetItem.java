@@ -21,7 +21,7 @@ public class AssetItem {
 
 	// 非数据库字段
 	private String own_user_name;
-	private Integer nuuid;
+	private String nuuid;
 	private String atype;
 	private String btype;
 	private String ctype;
@@ -223,12 +223,14 @@ public class AssetItem {
 		this.allpeo = allpeo;
 	}
 
-	public Integer getNuuid() {
+	public String getNuuid() {
 		return nuuid;
 	}
 
-	public void setNuuid(Integer nuuid) {
+	public void setNuuid(String nuuid) {
 		this.nuuid = nuuid;
 	}
+
+	
 
 }
