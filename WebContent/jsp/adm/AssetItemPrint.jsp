@@ -61,22 +61,18 @@ page-break-after:always;clear: both;
        		</div>
         	<div class="label_hang">
             <div class="label_ltit">最后修改时间:</div>
-            <div class="label_rwben2">
-				<span class="label_rwb nw">
+            <div class="label_rwben">
 				<input  class="datepicker" type="text" name="assetItem.lm_time_item"  value="${it:formatDate(assetItem.lm_time_item,'yyyy-MM-dd')}" />
-            	</span>
             </div>
         	</div>
+       		
        		<div class="label_hang">
             <div class="label_ltit">所属公司:</div>
             <div class="label_rwben">
             <s:select name="assetItem.company" title="所属公司" headerKey="" headerValue="--请选择--" list="#{0:'北京互助天佑德青稞酒销售有限公司',1:'华实集团',2:'华奥地产',3:'青海互助青稞酒股份有限公司',4:'青海互助青稞酒销售有限公司',5:'北京互助天佑德青稞酒销售有限公司第二分公司'}" />
             </div>
        		</div>
-        
-		</div>
-		<div class="label_main">
-        	<div class="label_hang">
+       		<div class="label_hang">
             <div class="label_ltit">资产分类:</div>
             <div id="mmtype" class="label_rwbenx">
             	<select name="assetItem.typea" title="资产种类" class="prov" style="float:left; width:auto;" disabled="disabled"></select> 
@@ -84,8 +80,8 @@ page-break-after:always;clear: both;
             	<select name="assetItem.ctype" title="子类别" class="dist" style="float:left; width:auto;" disabled="disabled"></select>
             </div>
        		</div>
-        	
-        	<div class="label_hang label_button tac">
+       		
+       		<div class="label_hang label_button tac">
         	<s:checkbox id="search_mcondition" name="search_mcondition" fieldValue="true" value="true" cssClass="regular-checkbox" />
 			<label for="search_mcondition"></label>更多条件
             <s:submit value="搜索" /> <s:reset value="重置" />
