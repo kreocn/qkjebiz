@@ -30,6 +30,8 @@ public class AssetItem {
 	private String norms;
 	private String adresss;
 	private String allpeo;
+	private String company;
+	private Date lm_time_item;
 
 	public Double getPrice() {
 		return price;
@@ -229,6 +231,22 @@ public class AssetItem {
 
 	public void setNuuid(String nuuid) {
 		this.nuuid = nuuid;
+	}
+
+	public String getCompany() {
+		return company;
+	}
+
+	public void setCompany(String company) {
+		this.company = company;
+	}
+
+	public Date getLm_time_item() {
+		return lm_time_item;
+	}
+
+	public void setLm_time_item(Date lm_time_item) {
+		this.lm_time_item = lm_time_item;
 	}
 
 	

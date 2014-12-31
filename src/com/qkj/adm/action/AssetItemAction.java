@@ -211,7 +211,15 @@ public class AssetItemAction extends ActionSupport {
 	
 	public String print() throws Exception {
 		try {
-			this.setAssetItems(dao.getPrint(null));
+			if(assetItem!=null){
+			map.clear();
+			map.put("nuuid", assetItem.getNuuid());
+			map.put("lm_time_item", assetItem.getLm_time_item());
+			map.put("company", assetItem.getCompany());
+			map.put("btype", assetItem.getBtype());
+			map.put("ctype", assetItem.getCtype());
+			}
+			this.setAssetItems(dao.getPrint(map));
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!load 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!load 读取数据错误:", e);

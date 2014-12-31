@@ -79,12 +79,19 @@
 			SELECT i.`uuid` nuuid,
 			a.`typea` atype,a.`typeb` btype,a.`typec` ctype,a.`title` tname,
 			CONCAT(IFNULL(a.`model`,''),' | ' ,IFNULL(i.`model`,'')) stype,
-			CONCAT(IFNULL(a.`spec`,''),' | ' ,IFNULL(i.`spec`,'')) norms,i.`position` adresss,u.`USER_NAME` allpeo
+			CONCAT(IFNULL(a.`spec`,''),' | ' ,IFNULL(i.`spec`,'')) norms,i.`position` adresss,u.`USER_NAME` allpeo,a.`company` company,
+			i.`lm_time` lm_time_item
 			FROM qkja_r_assets a, qkja_r_asset_item i LEFT JOIN s_sys_user u ON (u.`UUID` = i.`own_user`)
 			WHERE a.`uuid` = i.`asset_id`
 			AND a.`typea` = '固定资产'
-			ORDER BY i.`position`,a.`typeb`,a.`typec`
 		]]>
+		<isNotEmpty prepend="AND" property="nuuid"><![CDATA[ i.uuid=#nuuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="company"><![CDATA[ a.company=#company# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="lm_time_item"><![CDATA[ i.lm_time>=#lm_time_item# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="btype"><![CDATA[ a.`typeb`=#btype# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="ctype"><![CDATA[ a.`typec`=#ctype# ]]></isNotEmpty>
+		<![CDATA[ORDER BY i.`position`,a.`typeb`,a.`typec`
+	]]>
 	</select>
 	<!-- AssetItem End -->
 </sqlMap>
