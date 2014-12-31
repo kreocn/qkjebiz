@@ -21,6 +21,15 @@ public class AssetItem {
 
 	// 非数据库字段
 	private String own_user_name;
+	private String nuuid;
+	private String atype;
+	private String btype;
+	private String ctype;
+	private String tname;
+	private String stype;
+	private String norms;
+	private String adresss;
+	private String allpeo;
 
 	public Double getPrice() {
 		return price;
@@ -149,5 +158,79 @@ public class AssetItem {
 	public void setLm_time(Date lm_time) {
 		this.lm_time = lm_time;
 	}
+
+	public String getAtype() {
+		return atype;
+	}
+
+	public void setAtype(String atype) {
+		this.atype = atype;
+	}
+
+	public String getBtype() {
+		return btype;
+	}
+
+	public void setBtype(String btype) {
+		this.btype = btype;
+	}
+
+	public String getCtype() {
+		return ctype;
+	}
+
+	public void setCtype(String ctype) {
+		this.ctype = ctype;
+	}
+
+	public String getTname() {
+		return tname;
+	}
+
+	public void setTname(String tname) {
+		this.tname = tname;
+	}
+
+	public String getStype() {
+		return stype;
+	}
+
+	public void setStype(String stype) {
+		this.stype = stype;
+	}
+
+	public String getNorms() {
+		return norms;
+	}
+
+	public void setNorms(String norms) {
+		this.norms = norms;
+	}
+
+	public String getAdresss() {
+		return adresss;
+	}
+
+	public void setAdresss(String adresss) {
+		this.adresss = adresss;
+	}
+
+	public String getAllpeo() {
+		return allpeo;
+	}
+
+	public void setAllpeo(String allpeo) {
+		this.allpeo = allpeo;
+	}
+
+	public String getNuuid() {
+		return nuuid;
+	}
+
+	public void setNuuid(String nuuid) {
+		this.nuuid = nuuid;
+	}
+
+	
 
 }

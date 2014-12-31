@@ -208,4 +208,14 @@ public class AssetItemAction extends ActionSupport {
 		}
 		return SUCCESS;
 	}
+	
+	public String print() throws Exception {
+		try {
+			this.setAssetItems(dao.getPrint(null));
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!load 读取数据错误:", e);
+			throw new Exception(this.getClass().getName() + "!load 读取数据错误:", e);
+		}
+		return SUCCESS;
+	}
 }
