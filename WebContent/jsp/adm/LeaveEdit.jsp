@@ -77,7 +77,7 @@
             	<s:textfield id="userdept_nameid" name="leave.leave_dept_name" readonly="true" cssClass="validate[required]" />
 				<s:hidden id="userdept_codeid" name="leave.leave_dept" />
             </div>
-			<img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true);" />
+			<img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true,null,1);" />
         </div>
         <div class="label_hang">
             <div class="label_ltit">申请人:</div>
