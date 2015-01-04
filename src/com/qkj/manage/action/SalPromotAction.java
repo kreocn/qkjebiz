@@ -1,10 +1,10 @@
-package com.qkj.salpro.action;
+package com.qkj.manage.action;
 import java.util.*;
 import org.apache.commons.logging.*;
 import org.iweb.sys.*;
 import com.opensymphony.xwork2.ActionSupport;
-import com.qkj.salpro.domain.SalPromot;
-import com.qkj.salpro.dao.SalPromotDAO;
+import com.qkj.manage.domain.SalPromot;
+import com.qkj.manage.dao.SalPromotDAO;
 
 public class SalPromotAction extends ActionSupport implements ActionAttr {
 	private static final long serialVersionUID = 1L;
@@ -19,6 +19,7 @@ public class SalPromotAction extends ActionSupport implements ActionAttr {
 	private int recCount;
 	private int pageSize;
 	private int currPage;
+	private String checkstatus;
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;促销活动";
 	public String getPath() {
 		return path;
@@ -79,16 +80,49 @@ public class SalPromotAction extends ActionSupport implements ActionAttr {
 	public void setCurrPage(int currPage) {
 		this.currPage = currPage;
 	}
+	
+	
+
+	public String getCheckstatus() {
+		return checkstatus;
+	}
+
+	public void setCheckstatus(String checkstatus) {
+		this.checkstatus = checkstatus;
+	}
 
 	public String list() throws Exception {
-		ContextHelper.isPermit("QKJ_SALPRO_SALPROMOT_LIST");
+		ContextHelper.isPermit("QKJ_SALPRO_SALPROMOT");
 		try {
 			map.clear();
 			if (salPromot != null)
 				map.putAll(ToolsUtil.getMapByBean(salPromot));
 			map.putAll(ContextHelper.getDefaultRequestMap4Page());
 			this.setPageSize(ContextHelper.getPageSize(map));
-			this.setCurrPage(ContextHelper.getCurrPage(map));		
+			this.setCurrPage(ContextHelper.getCurrPage(map));	
+			if(checkstatus!=null){
+				if(checkstatus.equals("0")){
+					salPromot.setSmd_status(0);
+					map.put("smd_status", salPromot.getSmd_status());
+				}
+				if(checkstatus.equals("1")){
+					salPromot.setSmd_status(20);
+					map.put("smd_status", salPromot.getSmd_status());
+				}
+				if(checkstatus.equals("2")){
+					salPromot.setSmd_status(5);
+					map.put("smd_status", salPromot.getSmd_status());
+				}
+				if(checkstatus.equals("3")){
+					salPromot.setSd_status(30);
+					map.put("sd_status", salPromot.getSd_status());
+				}
+				if(checkstatus.equals("4")){
+					salPromot.setSd_status(5);
+					map.put("sd_status", salPromot.getSd_status());
+					
+				}
+			}
 			this.setSalPromots(dao.list(map));
 			this.setRecCount(dao.getResultCount());
 			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;促销活动列表";
@@ -108,9 +142,11 @@ public class SalPromotAction extends ActionSupport implements ActionAttr {
 			if (null == viewFlag) {
 				this.setSalPromot(null);
 				setMessage("你没有选择任何操作!");
+				return "SUCCESS";
 			} else if ("add".equals(viewFlag)) {
 				this.setSalPromot(null);
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/salpro/salPromot_relist'>促销活动列表</a>&nbsp;&gt;&nbsp;增加促销活动";
+				return "SUCCESS";
 			} else if ("mdy".equals(viewFlag)) {
 				if (!(salPromot == null || salPromot.getUuid() == null)) {
 					this.setSalPromot((SalPromot) dao.get(salPromot.getUuid()));
@@ -118,15 +154,25 @@ public class SalPromotAction extends ActionSupport implements ActionAttr {
 					this.setSalPromot(null);
 				}
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/salpro/salPromot_relist'>促销活动列表</a>&nbsp;&gt;&nbsp;增加促销活动";
-			} else {
+				return "SUCCESS";
+			} else if("view".equals(viewFlag)){
+				if (!(salPromot == null || salPromot.getUuid() == null)) {
+					this.setSalPromot((SalPromot) dao.get(salPromot.getUuid()));
+				} else {
+					this.setSalPromot(null);
+				}
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/salpro/salPromot_relist'>促销活动列表</a>&nbsp;&gt;&nbsp;促销活动详情";
+				return "VIEWSUCCESS";
+			}else {
 				this.setSalPromot(null);
 				setMessage("无操作类型!");
+				return "SUCCESS";
 			}
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!load 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!load 读取数据错误:", e);
 		}
-		return SUCCESS;
+		
 	}
 
 	public String add() throws Exception {
@@ -136,6 +182,12 @@ public class SalPromotAction extends ActionSupport implements ActionAttr {
 			salPromot.setAdd_time(new Date());
 			salPromot.setLm_user(ContextHelper.getUserLoginUuid());
 			salPromot.setLm_time(new Date());
+			if(salPromot.getPriority()==null){
+				salPromot.setPriority(0);
+			}
+			if(salPromot.getRebate()==null){
+				salPromot.setRebate(0.00);
+			}
 			dao.add(salPromot);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!add 数据添加失败:", e);
@@ -172,6 +224,8 @@ public class SalPromotAction extends ActionSupport implements ActionAttr {
 	public String status1() throws Exception{
 		try {
 			salPromot.setStatus(1);
+			salPromot.setSd_status(0);//未审
+			salPromot.setSmd_status(0);//未审
 			salPromot.setLm_user(ContextHelper.getUserLoginUuid());
 			salPromot.setLm_time(new Date());
 			dao.saveStatus1(salPromot);
@@ -223,7 +277,7 @@ public class SalPromotAction extends ActionSupport implements ActionAttr {
 				salPromot.setSd_user(ContextHelper.getUserLoginUuid());
 				salPromot.setLm_user(ContextHelper.getUserLoginUuid());
 				salPromot.setLm_time(new Date());
-				dao.saveSmdsta(salPromot);
+				dao.saveSdsta(salPromot);
 			} catch (Exception e) {
 				log.error(this.getClass().getName() + "!status1 修改成功:", e);
 				throw new Exception(this.getClass().getName() + "!status1 修改失败:", e);

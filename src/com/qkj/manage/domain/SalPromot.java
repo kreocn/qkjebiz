@@ -1,4 +1,4 @@
-package com.qkj.salpro.domain;
+package com.qkj.manage.domain;
 
 import java.util.Date;
 
@@ -21,9 +21,15 @@ public class SalPromot {
 	private String lm_user;// (varchar)修改人
 	private Date lm_time;// (datetime)修改时间
 	private Double rebate;
+	private Integer priority;
+	private String note;
 
 	// 以下为非数据库字段
-
+	private String sd_name;
+	private String smd_name;
+	private String add_user_name;
+	private String lm_user_name;
+	
 	public Integer getUuid() {
 		return uuid;
 	}
@@ -167,7 +173,54 @@ public class SalPromot {
 	public void setRebate(Double rebate) {
 		this.rebate = rebate;
 	}
-	
+
+	public Integer getPriority() {
+		return priority;
+	}
+
+	public void setPriority(Integer priority) {
+		this.priority = priority;
+	}
+
+	public String getSd_name() {
+		return sd_name;
+	}
+
+	public void setSd_name(String sd_name) {
+		this.sd_name = sd_name;
+	}
+
+	public String getSmd_name() {
+		return smd_name;
+	}
+
+	public void setSmd_name(String smd_name) {
+		this.smd_name = smd_name;
+	}
+
+	public String getAdd_user_name() {
+		return add_user_name;
+	}
+
+	public void setAdd_user_name(String add_user_name) {
+		this.add_user_name = add_user_name;
+	}
+
+	public String getLm_user_name() {
+		return lm_user_name;
+	}
+
+	public void setLm_user_name(String lm_user_name) {
+		this.lm_user_name = lm_user_name;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
 	
 
 }

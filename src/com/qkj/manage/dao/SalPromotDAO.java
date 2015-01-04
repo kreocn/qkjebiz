@@ -1,4 +1,4 @@
-package com.qkj.salpro.dao;
+package com.qkj.manage.dao;
 import java.util.*;
 import org.iweb.sys.AbstractDAO;
 public class SalPromotDAO extends AbstractDAO {

@@ -38,7 +38,11 @@ public class AssetItemDAO extends AbstractDAO {
 	public int delete(Object parameters) {
 		return super.delete("adm_delAssetItem", parameters);
 	}
-
+	
+	public List getPrint(Map<String, Object> map) {
+		return super.list("adm_getAssetItemsPrint", map);
+	}
+	
 	public int getResultCount() {
 		return super.getResultCount();
 	}

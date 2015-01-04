@@ -15,7 +15,7 @@
 	<div class="main">
 		<div class="dq_step">
 			${path} 
-			<span class="opb lb op-area"> <s:if test="'view' != viewFlag && @org.iweb.sys.ContextHelper@checkPermit('QKJ_SALPRO_SALPROMOT_LIST')"><a
+			<span class="opb lb op-area"> <s:if test="'view' != viewFlag && @org.iweb.sys.ContextHelper@checkPermit('QKJ_SALPRO_SALPROMOT')"><a
 				href="<s:url action="salPromot_list" namespace="/salpro"></s:url>">促销活动列表</a></s:if>
 			</span>
 		</div>
@@ -23,7 +23,6 @@
 		<s:form id="editForm" name="editForm" cssClass="validForm"
 			action="salPromot_add" namespace="/salpro" method="post" theme="simple">
 			<div class="label_con">
-			<s:hidden id="salPromot.type" name="salPromot.type" value="%{salPromot.type}"/>
 				<s:if test="null != salPromot">
 					<div class="label_main">
 						<div class="label_hang">
@@ -32,6 +31,36 @@
 								<s:property value="salPromot.uuid" />
 								<s:hidden id="salPromot.uuid" name="salPromot.uuid" value="%{salPromot.uuid}"/>
 								
+							</div>
+						</div>
+						<div class="label_hang">
+							<div class="label_ltit">活动状态:</div>
+							<div class="label_rwb">
+								<s:if test="%{salPromot.status==0}">新申请</s:if>	
+								<s:if test="%{salPromot.status==1}">审核中</s:if>	
+								<s:if test="%{salPromot.status==2}">审核通过</s:if>								
+							</div>
+						</div>
+						<div class="label_hang">
+							<div class="label_ltit">审核状态:</div>
+							<div class="label_rwbenx">
+								<div class="zhuangtai">
+									<s:if test="salPromot.smd_status==0 && salPromot.sd_status==0">待审核</s:if>
+								<s:if test="salPromot.smd_status==5">
+								<span class="message_error" title="${it:formatDate(salPromot.smd_time,'yyyy-MM-dd HH:mm:ss')}">销管已退回(${salPromot.smd_name })
+								</span>
+								</s:if>
+								<s:if test="salPromot.smd_status==20">
+								<span class="message_pass" title="${it:formatDate(salPromot.smd_time,'yyyy-MM-dd HH:mm:ss')}">销管经理已审(${salPromot.smd_name })</span>
+								</s:if>
+								<s:if test="salPromot.sd_status==5">
+								<span class="message_error" title="${it:formatDate(salPromot.sd_time,'yyyy-MM-dd HH:mm:ss')}">运营总监已退回(${salPromot.sd_name })</span>
+								</s:if>
+								<s:if test="salPromot.sd_status==30">
+								<span class="message_pass" title="${it:formatDate(salPromot.sd_time,'yyyy-MM-dd HH:mm:ss')}">运营总监已审(${salPromot.sd_name })</span>
+								</s:if>	
+								</div>
+															
 							</div>
 						</div>
 					</div>
@@ -58,6 +87,13 @@
 			            	</span>
 			            </div>
 			        </div>
+			        <div class="label_hang">
+						<div class="label_ltit">返利系数:</div>
+						<div class="label_rwben">
+						<s:textfield  name="salPromot.rebate" cssClass="validate[required,custom[number]]" />
+						</div>
+					</div>
+					
 			      </div>
 
 			    <div class="label_main">
@@ -69,6 +105,36 @@
 						</div>
 					</div>
 				</div>
+				<s:if test="%{salPromot!=null}">
+				<div class="label_main">
+					<div class="label_hang">
+						<div class="label_ltit">填加人:</div>
+						<div class="label_rwben">
+						${salPromot.add_user_name }	
+						</div>
+					</div>
+					<div class="label_hang">
+			            <div class="label_ltit">填加时间:</div>
+			            <div class="label_rwbenx">
+			            	${it:formatDate(salPromot.add_time,'yyyy-MM-dd hh:mm:ss')}
+			            </div>
+			        </div>
+			        <div class="label_hang">
+						<div class="label_ltit">最后修改人:</div>
+						<div class="label_rwben">
+						${salPromot.lm_user_name }	
+						</div>
+					</div>
+					
+					<div class="label_hang">
+						<div class="label_ltit">最后修改时间:</div>
+						<div class="label_rwbenx">
+						${it:formatDate(salPromot.lm_time,'yyyy-MM-dd hh:mm:ss')}
+						</div>
+					</div>
+				</div>
+				
+				</s:if>
 				<div class="label_main">
 		        <div class="label_hang">
 		            <div class="label_ltit">促销方案:</div>
@@ -84,18 +150,35 @@
 				</div>
 				
 				<div class="label_main">
+		        <div class="label_hang">
+		            <div class="label_ltit">备注:</div>
+		            <div class="label_rwbenx">
+		            	<span class="message_prompt">任何保存/报审/审核操作都会同时保存备注</span>
+		            	<s:textarea id="salPromot_remark" name="salPromot.note" title="活动备注"  cssClass="label_hang_linput inputNote validate[maxSize[65535]]" />
+		            </div>
+		        </div>
+		        </div>
+		        <div class="label_main">
+		        <div class="label_hang">
+						<div class="label_ltit">优先级:</div>
+						<div class="label_rwben">
+							<s:textfield  name="salPromot.priority" cssClass="validate[custom[number]]" />
+						</div>
+				</div>
+				</div>
+		        
+				<div class="label_main">
 					<div class="label_hang">
 						<div class="label_ltit">相关操作:</div>
 						<div class="label_rwbenx">
 							<span id="message"><s:property value="message" /></span>
 							<s:if test="null == salPromot  && 'add' == viewFlag && @org.iweb.sys.ContextHelper@checkPermit('QKJ_SALPRO_SALPROMOT_ADD')">
-							
 								<s:submit id="add" name="add" value="确定" action="salPromot_add"
 									cssClass="input-blue" />
 							</s:if>
 							<s:elseif test="null != salPromot && salPromot.status==0 && 'mdy' == viewFlag">
 								<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SALPRO_SALPROMOT_MDY')">
-								<s:submit id="save" name="save" value="保存" action="salPromotdule_save" cssClass="input-blue" />
+								<s:submit id="save" name="save" value="保存" action="salPromot_save" cssClass="input-blue" />
 								</s:if>
 								<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SALPRO_SALPROMOT_SDSTATUS1')">
 								<s:submit id="mdyStatus0" name="mdyStatus0" value="报审" action="salPromot_status1" onclick="return isOp('确定执行此操作?');" cssClass="input-yellow" />

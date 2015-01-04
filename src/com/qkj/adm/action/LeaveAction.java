@@ -122,6 +122,7 @@ public class LeaveAction extends ActionSupport implements ActionAttr {
 				leave.setLeave_dept(ContextHelper.getUserLoginDept());
 				leave.setLeave_dept_name(ContextHelper.getUserLoginDeptName());
 				leave.setLeave_user(ContextHelper.getUserLoginUuid());
+				leave.setLeave_user_name(ContextHelper.getUserLoginName());
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/adm/leave_list?viewFlag=relist'>工时列表</a>&nbsp;&gt;&nbsp;添加申请单";
 			} else if ("mdy".equals(viewFlag)) {
 				if (!(leave == null || leave.getUuid() == null)) {

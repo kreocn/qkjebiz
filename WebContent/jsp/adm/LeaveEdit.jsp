@@ -77,12 +77,14 @@
             	<s:textfield id="userdept_nameid" name="leave.leave_dept_name" readonly="true" cssClass="validate[required]" />
 				<s:hidden id="userdept_codeid" name="leave.leave_dept" />
             </div>
-			<img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true);" />
+			<!-- <img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true,null,1);" /> -->
         </div>
         <div class="label_hang">
             <div class="label_ltit">申请人:</div>
             <div class="label_rwben label_rwb">
-            	<s:select id="membermanagerid" cssClass="selectKick" name="leave.leave_user" list="#{}" headerKey="" headerValue="--请选择--" />
+            	<s:textfield name="leave.leave_user_name" readonly="true" cssClass="validate[required]" />
+            	<s:hidden id="leave_user" name="leave.leave_user" />
+            	<!--<s:select id="membermanagerid" cssClass="selectKick validate[required]" name="leave.leave_user" list="#{}" headerKey="" headerValue="--请选择--" />-->
             </div>
 		</div>
 		</div>

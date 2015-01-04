@@ -107,6 +107,10 @@
 				sp_check_user=#sp_check_user#,
 				sp_check_time=#sp_check_time#,
 				check_note=#check_note#,
+				status=#status#,
+				check_user=#check_user#,
+				check_time=#check_time#,
+				check_note=#check_note#,
 				lm_user=#lm_user#
 			Where uuid = #uuid#
 		]]>

@@ -56,7 +56,7 @@ cursor: pointer;
 				<s:hidden title="部门代码" id="userdept_codeid" name="active.apply_dept" readonly="true" />
 				</span>
 				<span class="lb nw">
-				<img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true,null,1);" />
+				<img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true);" />
 				<s:checkbox id="apply_is_sub_dept" name="active.is_sub_dept" cssClass="regular-checkbox" />
 				<label for="apply_is_sub_dept"></label>包含子部门<span id="ajax_member_message"></span>
 				</span>
@@ -261,6 +261,7 @@ cursor: pointer;
 					<s:if test="close_smd_status==5"><font class="message_error" title="${close_smd_user_name} ${it:formatDate(close_smd_time,'yyyy-MM-dd HH:mm:ss')}">审核退回</font></s:if>
 					<s:if test="close_smd_status==10"><font class="message_warning">已签收</font></s:if>
 					<s:if test="close_smd_status==30"><font class="message_pass" title="${close_smd_user_name} ${it:formatDate(close_smd_time,'yyyy-MM-dd HH:mm:ss')}">销管经理已审</font></s:if>
+					<s:if test="close_smd_status==40"><font class="message_pass" title="${close_smd_user_name} ${it:formatDate(close_smd_time,'yyyy-MM-dd HH:mm:ss')}">销管部经理已审</font></s:if>
 					<s:if test="close_smd_status==50"><font class="message_pass" title="${close_smd_user_name} ${it:formatDate(close_smd_time,'yyyy-MM-dd HH:mm:ss')}">销管副总已审</font></s:if>
 					<s:if test="close_smd_status==60"><font class="message_pass" title="${close_smd_user_name} ${it:formatDate(close_smd_time,'yyyy-MM-dd HH:mm:ss')}">总经理已审</font></s:if>
 				</span>

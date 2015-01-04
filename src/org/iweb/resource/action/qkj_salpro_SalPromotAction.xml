@@ -6,19 +6,20 @@
 	<package name="salpro_salPromot" extends="default" namespace="/salpro">
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- SalPromot Start -->
-		<action name="salPromot_list" class="com.qkj.salpro.action.SalPromotAction" method="list">
-			<result>/jsp/salpro/SalPromotList.jsp</result>
+		<action name="salPromot_list" class="com.qkj.manage.action.SalPromotAction" method="list">
+			<result>/jsp/qkjmanage/salpro/SalPromotList.jsp</result>
 		</action>
-		<action name="salPromot_relist" class="com.qkj.salpro.action.SalPromotAction" method="relist">
+		<action name="salPromot_relist" class="com.qkj.manage.action.SalPromotAction" method="relist">
 			<result type="redirectAction">
 				<param name="actionName">salPromot_list</param>
 				<param name="viewFlag">relist</param>
 			</result>
 		</action>
-		<action name="salPromot_load" class="com.qkj.salpro.action.SalPromotAction" method="load">
-			<result>/jsp/salpro/SalPromotEdit.jsp</result>
+		<action name="salPromot_load" class="com.qkj.manage.action.SalPromotAction" method="load">
+			<result name="SUCCESS">/jsp/qkjmanage/salpro/SalPromotEdit.jsp</result>
+			<result name="VIEWSUCCESS">/jsp/qkjmanage/salpro/SalPromotView.jsp</result>
 		</action>
-		<action name="salPromot_add" class="com.qkj.salpro.action.SalPromotAction" method="add">
+		<action name="salPromot_add" class="com.qkj.manage.action.SalPromotAction" method="add">
 			<result type="redirectAction">
 				<param name="actionName">salPromot_load</param>
 				<param name="salPromot.uuid">${salPromot.uuid}</param>
@@ -26,14 +27,14 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
-		<action name="salPromot_save" class="com.qkj.salpro.action.SalPromotAction" method="save">
+		<action name="salPromot_save" class="com.qkj.manage.action.SalPromotAction" method="save">
 			<result type="redirectAction">
 				<param name="actionName">salPromot_list</param>
 				<param name="viewFlag">relist</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
-		<action name="salPromot_del" class="com.qkj.salpro.action.SalPromotAction" method="del">
+		<action name="salPromot_del" class="com.qkj.manage.action.SalPromotAction" method="del">
 			<result type="redirectAction">
 				<param name="actionName">salPromot_list</param>
 				<param name="viewFlag">relist</param>
@@ -41,7 +42,7 @@
 			</result>
 		</action>
 		<!-- 报审 -->
-		<action name="salPromot_status1" class="com.qkj.salpro.action.SalPromotAction" method="status1">
+		<action name="salPromot_status1" class="com.qkj.manage.action.SalPromotAction" method="status1">
 			<result type="redirectAction">
 				<param name="actionName">salPromot_load</param>
 				<param name="salPromot.uuid">${salPromot.uuid}</param>
@@ -50,7 +51,7 @@
 			</result>
 		</action>
 		<!-- 审核中 -->
-		<action name="salPromot_smdstatus20" class="com.qkj.salpro.action.SalPromotAction" method="smdstatus20">
+		<action name="salPromot_smdstatus20" class="com.qkj.manage.action.SalPromotAction" method="smdstatus20">
 			<result type="redirectAction">
 				<param name="actionName">salPromot_load</param>
 				<param name="salPromot.uuid">${salPromot.uuid}</param>
@@ -58,7 +59,7 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
-		<action name="salPromot_smdstatus5" class="com.qkj.salpro.action.SalPromotAction" method="smdstatus5">
+		<action name="salPromot_smdstatus5" class="com.qkj.manage.action.SalPromotAction" method="smdstatus5">
 			<result type="redirectAction">
 				<param name="actionName">salPromot_load</param>
 				<param name="salPromot.uuid">${salPromot.uuid}</param>
@@ -66,7 +67,7 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
-		<action name="salPromot_sdstatus30" class="com.qkj.salpro.action.SalPromotAction" method="sdstatus30">
+		<action name="salPromot_sdstatus30" class="com.qkj.manage.action.SalPromotAction" method="sdstatus30">
 			<result type="redirectAction">
 				<param name="actionName">salPromot_load</param>
 				<param name="salPromot.uuid">${salPromot.uuid}</param>
@@ -74,7 +75,7 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
-		<action name="salPromot_sdstatus5" class="com.qkj.salpro.action.SalPromotAction" method="sdstatus5">
+		<action name="salPromot_sdstatus5" class="com.qkj.manage.action.SalPromotAction" method="sdstatus5">
 			<result type="redirectAction">
 				<param name="actionName">salPromot_load</param>
 				<param name="salPromot.uuid">${salPromot.uuid}</param>
