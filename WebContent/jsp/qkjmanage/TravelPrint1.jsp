@@ -9,9 +9,9 @@
 </head>
 <link rel="stylesheet" href="<s:url value="/css/print.css" />" />
 <body>
-<div class="noprint" style="text-align: center;">
+<div class="noprint input-a" style="text-align: center;">
   <input type="button" value="打印本页" onclick="window.print();" />
-  <input type="button" value="返回" onclick="location.href='<s:url action="travel_relist" namespace="/qkjmanage" />';" />
+  <input type="button" value="返回" class="input-gray" onclick="location.href='<s:url action="travel_relist" namespace="/qkjmanage" />';" />
 </div>
  <div class="danz_warp printmain">
   	<h2 class="danz_tit">接待(餐饮、住宿)申请单</h2>
@@ -149,6 +149,9 @@
         </tr>
     </table>
 </div>
-<div class="noprint" style="text-align: center;"><input type="button" value="打印本页" onclick="window.print();" /> <input type="button" value="返回" onclick="location.href='<s:url action="travel_relist" namespace="/qkjmanage" />';" /></div>
+<div class="noprint input-a" style="text-align: center;">
+	<input type="button" value="打印本页" onclick="window.print();" />
+	<input type="button" value="返回" class="input-gray" onclick="location.href='<s:url action="travel_relist" namespace="/qkjmanage" />';" />
+</div>
 </body>
 </html>
