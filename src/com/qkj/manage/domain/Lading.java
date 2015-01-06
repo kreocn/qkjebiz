@@ -3,12 +3,13 @@ package com.qkj.manage.domain;
 import java.util.Date;
 
 public class Lading {
-	private String uuid;// (varchar)申请编号
+	private Integer uuid;// (int)申请编号
 	private String member_id;// (varchar)客户ID
 	private String content;// (text)内容
 	private String address;// (varchar)配送地点
 	private String note;// (text)其他说明
 	private Double total_price; // 总价
+	private Double curr_price;// 实际打款金额
 	private Integer manager_check;// (int)渠道/运营经理确认
 	private String manager_check_user;
 	private Date manager_check_time;// (datetime)确认时间
@@ -52,6 +53,14 @@ public class Lading {
 
 	// 特殊字段
 	private String[] fd_types; // 专门为赋值checkbox而设定
+
+	public Double getCurr_price() {
+		return curr_price;
+	}
+
+	public void setCurr_price(Double curr_price) {
+		this.curr_price = curr_price;
+	}
 
 	public Integer getOut_flag() {
 		return out_flag;
@@ -221,11 +230,11 @@ public class Lading {
 		this.member_name = member_name;
 	}
 
-	public String getUuid() {
+	public Integer getUuid() {
 		return uuid;
 	}
 
-	public void setUuid(String uuid) {
+	public void setUuid(Integer uuid) {
 		this.uuid = uuid;
 	}
 
