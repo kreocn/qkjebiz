@@ -110,7 +110,7 @@
 				      	    	<a class="input-red" href="<s:url namespace="/qkjmanage" action="travel_del"><s:param name="travel.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
 				      	    	</s:if>
 	            		</td>
-	            		<td  class="td0"></td>
+	            		<td  class="td0 op-area"><a onclick="showDetail('showtr${uuid}');" href="javascript:;" class="input-nostyle">查看</a></td>
 	            	</tr>
 	            </s:iterator>
 	 		</table>
