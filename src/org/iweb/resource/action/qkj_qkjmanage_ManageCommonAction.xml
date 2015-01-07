@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="qkjmanage_common" extends="default" namespace="/qkjmanage">
+		<default-interceptor-ref name="myStackIndex" />
+		<action name="qkjm_addProducts" class="com.qkj.manage.action.ManageCommonAction" method="products">
+			<result>/jsp/qkjmanage/AddProducts.jsp</result>
+		</action>
+	</package>
+</struts>

@@ -170,6 +170,10 @@ font-weight: bold;
 	float: left; width: 106px; position: relative;
 }
 
+.label_rwben15 {
+	float: left; width: 150px; position: relative;
+}
+
 .label_rwben2 {
 	float: left; width: 309px; position: relative; line-height: normal;
 }
@@ -299,11 +303,11 @@ font-weight: bold;
 }
 
 .lb_gstit {
-	border-bottom: 1px dashed #666; padding-bottom: 4px; font-weight: bold;
+	border-bottom: 1px dashed #666; padding-bottom: 4px; font-weight: bold;text-align: right;
 }
 
 .lb_jwei {
-	padding-top: 5px;
+	padding-top: 5px;text-align: right;
 }
 
 .lb_jpin {

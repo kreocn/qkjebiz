@@ -5,7 +5,6 @@
 	<transactionManager type="JDBC">
 		<dataSource type="JNDI">
 			<!-- 正式环境 DataSource Proxool -->
-			<!-- <property name="DataSource" value="java:/comp/env/qkj/mysql203huzhu_proxool" /> -->
 			<!-- <property name="DataSource" value="java:/comp/env/qkj/mysql_druid_BJ01" /> -->
 			<!-- 测试环境 DataSource Proxool -->
 			<!-- <property name="DataSource" value="java:/comp/env/qkj/mysql204huzhu_proxool" /> -->

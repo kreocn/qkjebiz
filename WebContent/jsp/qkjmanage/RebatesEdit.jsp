@@ -102,7 +102,7 @@ fieldset{margin-bottom:5px;}
 		${path}
 		<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="rebates_list"><s:param name="viewFlag">relist</s:param></s:url>">返利列表</a></span>
 	</div>
-	<s:form id="formEdit" name="form1" action="rebates_add" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
+	<s:form id="formEdit" name="form1" cssClass="validForm" action="rebates_add" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
 		<div class="label_con">
  			<div class="label_main">
  				<s:if test="null != rebates">
@@ -257,16 +257,16 @@ fieldset{margin-bottom:5px;}
 				<div class="label_main">
 					<div class="label_hang">
 					       <div class="label_ltit">可用操作:</div>
-					       <div class="label_rwbenx">
+					       <div class="label_rwbenx input-a">
 					       		<s:if test="null == rebates && 'add' == viewFlag">
 									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATES_ADD')">
-									<s:submit id="add" name="add" value="确定" action="rebates_add" />
+									<s:submit id="add" name="add" value="确定" cssClass="input-blue" action="rebates_add" />
 									</s:if>
 								</s:if>
 								<s:elseif test="null != rebates && 'mdy' == viewFlag">
 									<s:if test="0==rebates.status">
 										<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATES_MDY')">
-										<s:submit id="save" name="save" value="保存信息" action="rebates_save" />
+										<s:submit id="save" name="save" cssClass="input-blue" value="保存信息" action="rebates_save" />
 										<script type="text/javascript">
 										$(function(){
 											$("#formEdit :input").change(function(){
@@ -277,49 +277,49 @@ fieldset{margin-bottom:5px;}
 										</script>
 										</s:if>
 										<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATES_DEL')">
-										<s:submit id="delete" name="delete" value="删除申请单(业务)" action="rebates_del" onclick="return isDel();" />
+										<s:submit id="delete" name="delete" cssClass="input-red" value="删除申请单(业务)" action="rebates_del" onclick="return isDel();" />
 										</s:if>
 										<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATES_STATUS0')">
-										<s:submit id="rebates_mdyRebatesStatus0" name="rebates_mdyRebatesStatus0" value="送审" action="rebates_mdyRebatesStatus0" onclick="return isOp('是否送审?\n送审后将不能更改!');" />
+										<s:submit id="rebates_mdyRebatesStatus0" cssClass="input-yellow" name="rebates_mdyRebatesStatus0" value="送审" action="rebates_mdyRebatesStatus0" onclick="return isOp('是否送审?\n送审后将不能更改!');" />
 										</s:if>
 									</s:if>
 									<s:if test="10==rebates.status">
 									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATES_STATUS10')">
-									<s:submit id="rebates_mdyRebatesStatus10" name="rebates_mdyRebatesStatus10" value="主管-审核通过" action="rebates_mdyRebatesStatus10" onclick="return isOp('是否审核通过?\n审核通过后将不能更改!');" />
+									<s:submit id="rebates_mdyRebatesStatus10" cssClass="input-green" name="rebates_mdyRebatesStatus10" value="主管-审核通过" action="rebates_mdyRebatesStatus10" onclick="return isOp('是否审核通过?\n审核通过后将不能更改!');" />
 									</s:if>
 									</s:if>
 									
 									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATES_STATUS10') && 10==rebates.status && rebates.status<=50">
 									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATES_DEL')">
-									<s:submit id="delete" name="delete" value="删除申请单(主管)" action="rebates_del" onclick="return isDel();" />
+									<s:submit id="delete" name="delete" cssClass="input-red" value="删除申请单(主管)" action="rebates_del" onclick="return isDel();" />
 									</s:if>
 									</s:if>
 									
 									<s:if test="20==rebates.status">
 									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATES_STATUS20')">
-									<s:submit id="rebates_mdyRebatesStatus20" name="rebates_mdyRebatesStatus20" value="经理-审核通过" action="rebates_mdyRebatesStatus20" onclick="return isOp('是否审核通过?\n审核通过后将不能更改!');" />
+									<s:submit id="rebates_mdyRebatesStatus20" cssClass="input-green" name="rebates_mdyRebatesStatus20" value="经理-审核通过" action="rebates_mdyRebatesStatus20" onclick="return isOp('是否审核通过?\n审核通过后将不能更改!');" />
 									</s:if>
 									</s:if>
 									<s:if test="30==rebates.status">
 									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATES_STATUS30')">
-									<s:submit id="rebates_mdyRebatesStatus30" name="rebates_mdyRebatesStatus30" value="财务-审核通过" action="rebates_mdyRebatesStatus30" onclick="return isOp('是否审核通过?\n审核通过后将不能更改!');" />
+									<s:submit id="rebates_mdyRebatesStatus30" cssClass="input-green" name="rebates_mdyRebatesStatus30" value="财务-审核通过" action="rebates_mdyRebatesStatus30" onclick="return isOp('是否审核通过?\n审核通过后将不能更改!');" />
 									</s:if>
 									</s:if>
 									<s:if test="40==rebates.status">
 									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATES_STATUS40')">
-									<s:submit id="rebates_mdyRebatesStatus40" name="rebates_mdyRebatesStatus40" value="运营总监-审核通过" action="rebates_mdyRebatesStatus40" onclick="return isOp('是否审核通过?\n审核通过后将不能更改!');" />
+									<s:submit id="rebates_mdyRebatesStatus40" cssClass="input-green" name="rebates_mdyRebatesStatus40" value="运营总监-审核通过" action="rebates_mdyRebatesStatus40" onclick="return isOp('是否审核通过?\n审核通过后将不能更改!');" />
 									</s:if>
 									</s:if>
 									<s:if test="50==rebates.status">
 									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATES_STATUS50')">
-									<s:submit id="rebates_mdyRebatesStatus50" name="rebates_mdyRebatesStatus50" value="总经理-审核通过" action="rebates_mdyRebatesStatus50" onclick="return isOp('是否审核通过?\n审核通过后将不能更改!');" />
+									<s:submit id="rebates_mdyRebatesStatus50" cssClass="input-green" name="rebates_mdyRebatesStatus50" value="总经理-审核通过" action="rebates_mdyRebatesStatus50" onclick="return isOp('是否审核通过?\n审核通过后将不能更改!');" />
 									</s:if>
 									</s:if>
 									<s:if test="50<=rebates.status && rebates.fd_check==0 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATES_FDCHECK')">
-									<s:submit id="rebates_mdyFDCheck" name="rebates_mdyFDCheck" value="财务最终确定" action="rebates_mdyFDCheck"  onclick="return isOp('是否最终确定?\n最终确定后,赠送的积分将直接到账?\n最终确定操作不能更改!');" />
+									<s:submit id="rebates_mdyFDCheck" cssClass="input-green" name="rebates_mdyFDCheck" value="财务最终确定" action="rebates_mdyFDCheck"  onclick="return isOp('是否最终确定?\n最终确定后,赠送的积分将直接到账?\n最终确定操作不能更改!');" />
 									</s:if>
 								</s:elseif>
-								<input type="button" value="返回" onclick="linkurl('<s:url action="rebates_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');" />
+								<input type="button" class="input-gray" value="返回" onclick="linkurl('<s:url action="rebates_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');" />
 								<span id="message"><s:property value="message" /></span>
 					       </div>
 					</div>
