@@ -27,6 +27,7 @@
 	<sqlMap resource="org/iweb/resource/map/sysvip_MemberCapitalRescoreMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/sysvip_InfoMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/sysvip_DepositMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_sysvip_MemberStockMap.xml" />
 	<!-- 商品/仓库后台管理 -->
 	<sqlMap resource="org/iweb/resource/map/qkjcj_ebiz_Map.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkjcj_sysebiz_GoodsInfoMap.xml" />

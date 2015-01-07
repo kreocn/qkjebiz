@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
+<sqlMap>
+	<!-- MemberStock Start -->
+	<typeAlias alias="memberStock" type="org.iweb.sysvip.domain.MemberStock" />
+	<select id="sysvip_getMemberStocks" resultClass="memberStock" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT m.*,ad.`USER_NAME` add_user_name,lm.`USER_NAME` lm_user_name,p.`title` product_name,
+			ROUND(m.`stock`/(p.`case_spec`*1.0)) case_spec 
+			FROM qkjm_t_member m 
+			LEFT JOIN s_sys_user ad ON(m.`add_user`=ad.`UUID`)
+			LEFT JOIN s_sys_user lm ON(m.`lm_user`=lm.`UUID`)
+			LEFT JOIN qkj_t_product p ON(p.`uuid`=m.`product`)
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ m.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="dealer"><![CDATA[ m.dealer=#dealer# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="product"><![CDATA[ m.product=#product# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="stock"><![CDATA[ m.stock=#stock# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="check_date"><![CDATA[ m.check_date=#check_date# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="add_time"><![CDATA[ m.add_time=#add_time# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="lm_user"><![CDATA[ m.lm_user=#lm_user# ]]></isNotEmpty>
+
+		</dynamic>
+		<![CDATA[ LIMIT 1000 ]]>
+	</select>
+	<select id="sysvip_getMemberStocksCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) From qkjm_t_member
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="dealer"><![CDATA[ dealer=#dealer# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="product"><![CDATA[ product=#product# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="stock"><![CDATA[ stock=#stock# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="check_date"><![CDATA[ check_date=#check_date# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="add_time"><![CDATA[ add_time=#add_time# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="lm_user"><![CDATA[ lm_user=#lm_user# ]]></isNotEmpty>
+
+		</dynamic>
+		<![CDATA[ LIMIT 1000 ]]>
+	</select>
+	<insert id="sysvip_addMemberStock" parameterClass="memberStock">
+		<![CDATA[ 
+			Insert Into qkjm_t_member(dealer,product,stock,check_date,add_user,add_time,lm_user,lm_time)
+			Values (#dealer#,#product#,#stock#,#check_date#,#add_user#,#add_time#,#lm_user#,#lm_time#)
+		]]>
+		<selectKey resultClass="int" keyProperty="uuid">
+		<![CDATA[ Select LAST_INSERT_ID() ]]>
+		</selectKey>
+	</insert>
+	<update id="sysvip_mdyMemberStock" parameterClass="memberStock">
+		<![CDATA[
+			Update qkjm_t_member
+			Set dealer=#dealer#,
+			product=#product#,
+			stock=#stock#,
+			check_date=#check_date#,
+			lm_user=#lm_user#,
+			lm_time=#lm_time#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="sysvip_delMemberStock" parameterClass="memberStock">
+	<![CDATA[
+		Delete From qkjm_t_member Where uuid=#uuid#
+	]]>
+	</delete>
+	<!-- MemberStock End -->
+</sqlMap>
