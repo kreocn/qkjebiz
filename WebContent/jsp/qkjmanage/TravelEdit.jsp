@@ -10,9 +10,6 @@
 <style type="text/css">
 .lb_jiup th,.lb_jiup td{border:1px solid #ccc; text-align:center; line-height:22px; font-size:12px;}
 .lb_jiup th{background: #f1f1f1;}
-.ilisttable{font-family: "微软雅黑"; font-size:14px;}
-.ilisttable input,.ilisttable select{border-radius:5px; border:1px solid #ccc; line-height:20px;font-family: "微软雅黑";}
-.buttonarea input{cursor: pointer; }
 </style>
 </head>
 <body>

@@ -904,3 +904,9 @@ table{
 	margin:3px 15px;
 	float:left;
 }
+.label_hline{float:left; width:100%;}
+.ilisttable{font-family: "微软雅黑"; font-size:14px;}
+.ilisttable input,.ilisttable select{border-radius:5px; border:1px solid #ccc; line-height:20px; font-family: "微软雅黑"; margin:2px;}
+.buttonarea input{cursor: pointer; }
+.ilisttable textarea{border-radius:5px; border:1px solid #ccc; font-family: "微软雅黑"; margin:2px;}
+#message{color:#f00;}
