@@ -49,7 +49,7 @@ function onClick(e, treeId, treeNode) {
       puuid.attr("value",puid); /*uuid*/
       prices.attr("value",price);/*三种价格*/
       dac.attr("value",dc);/*单位*/
-      
+
       if($("#per_price_select_area").length>0) {
     	$("#per_price_select_area").hide();
 		$("#per_price_select").clearAllOption();
@@ -70,7 +70,9 @@ function onClick(e, treeId, treeNode) {
 			}
 		}
       }
+      
       hideMenu();
+
 }
 function showMenu() {
       var cityObj = $("#citySel");
