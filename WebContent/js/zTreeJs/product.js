@@ -49,7 +49,6 @@ function onClick(e, treeId, treeNode) {
       puuid.attr("value",puid); /*uuid*/
       prices.attr("value",price);/*三种价格*/
       dac.attr("value",dc);/*单位*/
-<<<<<<< HEAD
       
       if($("#per_price_select_area").length>0) {
     	$("#per_price_select_area").hide();
@@ -71,31 +70,7 @@ function onClick(e, treeId, treeNode) {
 			}
 		}
       }
-      
       hideMenu();
-=======
-      $("#per_price_select_area").hide();
-
-  		$("#per_price_select").clearAllOption();
-  		if(price==null || price=='') {
-  			$("#per_price_select_area").hide();
-  		} else {
-  			var ps =price.split("#");
-  			/* var ps = $(this).getSelectedAttr("data").split("#"); */
-  			if(ps.length>=3) {
-  				$("#per_price_select").addOption("自定义","");
-  				$("#per_price_select").addOption("参考价1("+ps[0]+")",ps[0]);
-  				$("#per_price_select").addOption("参考价2("+ps[1]+")",ps[1]);
-  				$("#per_price_select").addOption("参考价3("+ps[2]+")",ps[2]);
-  				if(ps[3]!='' && ps[3]!=null && ps[3]!='null')$("#per_price_select").addOption("参考价4("+ps[3]+")",ps[3]);
-  				if(ps[4]!='' && ps[4]!=null && ps[3]!='null')$("#per_price_select").addOption("参考价5("+ps[4]+")",ps[4]);
-  				if(ps[5]!='' && ps[5]!=null && ps[3]!='null')$("#per_price_select").addOption("参考价6("+ps[5]+")",ps[5]);
-  				$("#per_price_select_area").fadeIn(1000);
-  			}
-  			
-  		}
-  		hideMenu();
->>>>>>> dev
 }
 function showMenu() {
       var cityObj = $("#citySel");
