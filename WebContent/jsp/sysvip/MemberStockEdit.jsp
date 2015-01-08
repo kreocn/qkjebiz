@@ -16,7 +16,9 @@
 <div class="main">
 <div class="dq_step">
 	${path}
+	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJM_SYSVIP_MEMBERSTOCK_LIST')">
 	<span class="opb lb op-area"><a href="<s:url action="memberStock_list" namespace="/sysvip"></s:url>">返回列表</a></span>
+	</s:if>
 </div>
 <s:form id="editForm" name="editForm" cssClass="validForm" namespace="/sysvip" method="post" theme="simple">
 <div class="label_con">
