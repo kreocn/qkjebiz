@@ -49,7 +49,11 @@ function onClick(e, treeId, treeNode) {
       puuid.attr("value",puid); /*uuid*/
       prices.attr("value",price);/*三种价格*/
       dac.attr("value",dc);/*单位*/
+<<<<<<< HEAD
       
+=======
+
+>>>>>>> dev
       if($("#per_price_select_area").length>0) {
     	$("#per_price_select_area").hide();
 		$("#per_price_select").clearAllOption();

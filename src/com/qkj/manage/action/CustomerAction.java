@@ -32,6 +32,11 @@ public class CustomerAction extends ActionSupport {
 	private int recCount;
 	private int pageSize;
 	private int currPage;
+	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;客户列表";
+	
+	public String getPath() {
+		return path;
+	}
 
 	public int getCurrPage() {
 		return currPage;
@@ -120,6 +125,7 @@ public class CustomerAction extends ActionSupport {
 					.get(Parameters.Current_Page_Str)).toString()));
 			this.setCustomers(dao.list(map));
 			this.setRecCount(dao.getResultCount());
+			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;客户列表";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
@@ -139,6 +145,7 @@ public class CustomerAction extends ActionSupport {
 				customer.setDept_name(ContextHelper.getUserLoginDeptName());
 				customer.setManager(ContextHelper.getUserLoginUuid());
 				customer.setStage(0);
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/customer_list?viewFlag=relist'>客户列表</a>&nbsp;&gt;&nbsp;增加客户信息";
 			} else if ("mdy".equals(viewFlag)) {
 				map.clear();
 				map.put("uuid", customer.getUuid());
@@ -157,6 +164,7 @@ public class CustomerAction extends ActionSupport {
 				map.put("customer_id", customer.getUuid());
 				map.put("order_type", "uuidAsc");
 				customerRecodes = cdao.list(map);
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/customer_list?viewFlag=relist'>客户列表</a>&nbsp;&gt;&nbsp;修改客户信息";
 			} else {
 				this.setCustomer(null);
 				setMessage("无操作类型!");
