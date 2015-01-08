@@ -258,6 +258,7 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 		        		   }
 		        		   if(i>1 && j==2){
 		        			   if(content==null || content.equals("")){
+		        				   content=null;
 		        				   continue;
 		        			   }else{
 		        				   stock=content;
