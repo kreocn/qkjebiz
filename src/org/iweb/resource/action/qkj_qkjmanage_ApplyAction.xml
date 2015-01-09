@@ -80,6 +80,22 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
+		
+		<action name="apply_check30" class="com.qkj.manage.action.ApplyAction" method="check30">
+			<result type="redirectAction">
+				<param name="actionName">apply_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="apply_check40" class="com.qkj.manage.action.ApplyAction" method="check40">
+			<result type="redirectAction">
+				<param name="actionName">apply_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
 		<action name="apply_approve" class="com.qkj.manage.action.ApplyAction" method="approve">
 			<result type="redirectAction">
 				<param name="actionName">apply_load</param>
