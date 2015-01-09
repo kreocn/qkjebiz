@@ -21,7 +21,10 @@
 		<isNotNull prepend="AND" property="email"><![CDATA[ m.email Like #email# ]]></isNotNull>
 		<isNotNull prepend="AND" property="member_name"><![CDATA[ m.member_name Like #member_name# ]]></isNotNull>
 		<isNotNull prepend="AND" property="manager"><![CDATA[ m.manager=#manager# ]]></isNotNull>
-		<isNotNull prepend="AND" property="dept_code"><![CDATA[ m.dept_code=#dept_code# ]]></isNotNull>
+		<isNotEmpty prepend="AND" property="dept_code">
+				<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ m.dept_code=#dept_code# ]]></isNotEqual>
+				<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ m.dept_code LIKE CONCAT(#dept_code#,'%') ]]></isEqual>
+		</isNotEmpty>
 		<isNotNull prepend="AND" property="dept_codes">
 			<![CDATA[ m.dept_code In ]]>
 			<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
@@ -54,7 +57,10 @@
 		<isNotNull prepend="AND" property="email"><![CDATA[ m.email Like #email# ]]></isNotNull>
 		<isNotNull prepend="AND" property="member_name"><![CDATA[ m.member_name Like #member_name# ]]></isNotNull>
 		<isNotNull prepend="AND" property="manager"><![CDATA[ m.manager=#manager# ]]></isNotNull>
-		<isNotNull prepend="AND" property="dept_code"><![CDATA[ m.dept_code=#dept_code# ]]></isNotNull>
+		<isNotEmpty prepend="AND" property="dept_code">
+				<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ m.dept_code=#dept_code# ]]></isNotEqual>
+				<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ m.dept_code LIKE CONCAT(#dept_code#,'%') ]]></isEqual>
+		</isNotEmpty>
 		<isNotNull prepend="AND" property="dept_codes">
 			<![CDATA[ m.dept_code In ]]>
 			<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>

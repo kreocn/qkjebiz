@@ -249,7 +249,7 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 	
 	public String lead() throws Exception {
 		ContextHelper.isPermit("QKJM_SYSVIP_MEMBERSTOCK_ADD");
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		try {
 			JFileChooser chooser = new JFileChooser();
 			FileNameExtensionFilter filter = new FileNameExtensionFilter(
@@ -309,16 +309,26 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 		        	   }
 		        	   if(i>1){
 		        		   if((stock!=null && !stock.equals("")) && (peo!=null && !peo.equals("")) && (checkdate!=null && !checkdate.equals(""))){
-		        			   memberStock=new MemberStock();
-		        			   memberStock.setDealer(peo);
-		        			   memberStock.setCheck_date(checkdate);
-		        			   memberStock.setProduct(Integer.parseInt(produ));
-		        			   memberStock.setStock(Integer.parseInt(stock));
-		        			   memberStock.setAdd_user(ContextHelper.getUserLoginUuid());
-			       			   memberStock.setAdd_time(new Date());
-			       			   memberStock.setLm_user(ContextHelper.getUserLoginUuid());
-			       			   memberStock.setLm_time(new Date());
-			       			   dao.add(memberStock);
+		        			   //同一会员同一盘点时间不保存
+		        			   map.clear();
+		        			   map.put("dealer", peo);
+		        			   map.put("check_date", checkdate);
+		        			   this.setMembers(dao.list(map));
+		        			   if(members.size()>0){
+		        				   message="时间："+checkdate+"会员："+peo+"库存信息重复请确认";
+		        			   }else{
+		        				   memberStock=new MemberStock();
+			        			   memberStock.setDealer(peo);
+			        			   Date date=sdf.parse(checkdate);
+			        			   memberStock.setCheck_date(date);
+			        			   memberStock.setProduct(Integer.parseInt(produ));
+			        			   memberStock.setStock(Integer.parseInt(stock));
+			        			   memberStock.setAdd_user(ContextHelper.getUserLoginUuid());
+				       			   memberStock.setAdd_time(new Date());
+				       			   memberStock.setLm_user(ContextHelper.getUserLoginUuid());
+				       			   memberStock.setLm_time(new Date());
+				       			   dao.add(memberStock);
+		        			   }
 			       			   stock=null;
 		        		   }
 		        		   
@@ -336,7 +346,7 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 	}
 	
 	public String out() throws Exception {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		ProductDAO prodao=new ProductDAO();
 		HttpServletResponse response =ServletActionContext.getResponse();  
 		//OutputStream os = null;
@@ -350,11 +360,11 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 			      //创建输出流
 			      OutputStream os = response.getOutputStream();
             // 创建可写入的Excel工作簿
-            String fileName = "D://memberStock模板.xls";
+            /*String fileName = "D://memberStock模板.xls";
             File file=new File(fileName);
             if (!file.exists()) {
                 file.createNewFile();
-            }
+            }*/
             //以fileName为文件名来创建一个Workbook
             wwb = Workbook.createWorkbook(os);
 

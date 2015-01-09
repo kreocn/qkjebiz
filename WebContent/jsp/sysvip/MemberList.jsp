@@ -37,11 +37,32 @@ ${path}
           <div class="label_ltit">会员EMAIL:</div>
           <div class="label_rwben"><s:textfield name="member.email" cssClass="iI iI-s" /></div>
 		</div>
+		<div class="label_hang">
+            <div class="label_ltit">所属部门:</div>
+            <div class="label_rwben2">
+            	<span class="label_rwb">
+				<s:textfield title="部门名称" id="userdept_nameid" name="member.dept_name" readonly="true" />
+				<s:hidden title="部门代码" id="userdept_codeid" name="member.DEPT_CODE" readonly="true" />
+				</span>
+				<span class="lb nw">
+				<img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true);" />
+				<s:checkbox id="apply_is_sub_dept" name="member.is_sub_dept" cssClass="regular-checkbox" />
+				<label for="apply_is_sub_dept"></label>包含子部门<span id="ajax_member_message"></span>
+				</span>
+            </div>
+        </div>
+        
+        <div class="label_hang">
+            <div class="label_ltit">客户经理:</div>
+            <div class="label_rwben label_rwb">
+            	<s:select id="membermanagerid" cssClass="selectKick" name="member.manager" list="#{}" headerKey="" headerValue="--请选择--" />
+            </div>
+		</div>
 	  <div class="label_hang label_button tac">
         	<s:checkbox id="search_mcondition" name="search_mcondition" fieldValue="true" value="true" cssClass="regular-checkbox" />
 			<label for="search_mcondition"></label>更多条件
             <s:submit value="搜索" /> <s:reset value="重置" />
-        </div>
+      </div>
 </div>
 </div>
 </s:form>

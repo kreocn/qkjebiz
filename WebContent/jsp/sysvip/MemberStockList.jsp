@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
+<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -13,6 +14,13 @@
 <script type="text/javascript" src="<s:url value="http://images01.qkjchina.com/qkjebiz01/zTree_result.js?v0=1" />"></script>
 <script type="text/javascript" src="<s:url value="/js/zTreeJs/product.js" />"></script>
 </head>
+<script type="text/javascript">
+function checkstock(){
+	if ($("#citySel").val() == '') {
+		$("#cityUid").val(null);
+}
+}
+</script>
 
 <body>
 <div class="main" >
@@ -47,6 +55,13 @@ ${path}
 		    </div>
 		</div>
 		
+		<div class="label_hang">
+		<div class="label_ltit">核对日期:</div>
+	    <div class="label_rwben">
+            	<input  class="datepicker validate[required,custom[date]]" type="text" name="memberStock.check_date" value="${it:formatDate(memberStock.check_date,'yyyy-MM-dd')}" />
+         </div>
+		</div>
+		
 	  <div class="label_hang label_button tac">
         	<s:checkbox id="search_mcondition" name="search_mcondition" fieldValue="true" value="true" cssClass="regular-checkbox" />
 			<label for="search_mcondition"></label>更多条件
@@ -75,7 +90,7 @@ ${path}
 		${stock}&nbsp;瓶
 				(${case_spec }件)
 		</td>
-		<td class="td2">${check_date}</td>
+		<td class="td2">${it:formatDate(check_date,'yyyy-MM-dd')}</td>
 		<td class="td4 op-area">
 			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJM_SYSVIP_MEMBERSTOCK_MDY')">
 	    	<a class="input-blue" href="<s:url namespace="/sysvip" action="memberStock_load"><s:param name="viewFlag">mdy</s:param><s:param name="memberStock.uuid" value="uuid"></s:param></s:url>">修改</a>

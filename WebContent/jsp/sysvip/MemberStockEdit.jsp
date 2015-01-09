@@ -88,8 +88,7 @@
 		<div class="label_ltit">核对日期:</div>
 		<div class="label_rwben">
 	    <div class="label_rwbenx">
-            	<span class="message_prompt">日期仅填写年月即可，例（2014-12）</span>
-            	<s:textfield id="active_remark" name="memberStock.check_date" title="活动备注" size="40%"  cssClass="validate[required] inputNote" />
+            	<input  class="datepicker iI-f validate[required,custom[date]]" type="text" name="memberStock.check_date" value="${it:formatDate(memberStock.check_date,'yyyy-MM-dd')}" />
             </div>
          </div>
 	</div>

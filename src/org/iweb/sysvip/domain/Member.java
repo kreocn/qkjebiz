@@ -32,6 +32,7 @@ public class Member {
 	// 查询专用字段
 	// 客户经理查询方式 0 默认 1 查询客户经理为空的情况
 	private Integer manager_search_type;
+	private String is_sub_dept;
 
 	public Integer getWith_score() {
 		return with_score;
@@ -225,4 +226,12 @@ public class Member {
 		this.last_login_time = last_login_time;
 	}
 
+	public String getIs_sub_dept() {
+		return is_sub_dept;
+	}
+
+	public void setIs_sub_dept(String is_sub_dept) {
+		this.is_sub_dept = is_sub_dept;
+	}
+	
 }
