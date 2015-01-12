@@ -7,8 +7,9 @@ import java.io.InputStream;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.iweb.fileupload.logic.UploadConfig;
 import org.iweb.sys.ContextHelper;
-import org.iweb.sys.IWebConfig;
+import org.iweb.sys.NumberUtil;
 import org.iweb.sys.OSSUtil_IMG;
 import org.iweb.sys.ToolsUtil;
 
@@ -24,6 +25,12 @@ public class UploadAction extends ActionSupport {
 	private String err;
 	private String msg;
 	private String message;
+
+	private UploadConfig config;
+
+	public void setConfig(UploadConfig config) {
+		this.config = config;
+	}
 
 	public String getErr() {
 		return err;
@@ -73,6 +80,11 @@ public class UploadAction extends ActionSupport {
 		this.filedata = filedata;
 	}
 
+	@Override
+	public void validate() {
+		this.setConfig(new UploadConfig());
+	}
+
 	public String put() throws Exception {
 		// {"err":"","msg":{"url":"200906030521128703.jpg","localfile":"test.jpg","id":"1"}}
 		// {"err":"","msg":"200906030521128703.gif"}
@@ -80,6 +92,7 @@ public class UploadAction extends ActionSupport {
 		msg = "";
 		InputStream in = new ByteArrayInputStream(new byte[0]);
 		Long contentLength = 0l;
+		String filename = "";
 
 		// 获得上传文件的文件流InputStream
 		if (filedata == null && "application/octet-stream".equals(ContextHelper.getRequest().getContentType())) {
@@ -119,16 +132,26 @@ public class UploadAction extends ActionSupport {
 			// 生成随机文件名
 			String extensionName = filedataFileName.substring(filedataFileName.lastIndexOf(".") + 1);
 			// 限制图片大小为500K
-			if (ToolsUtil.isIn(extensionName, IWebConfig.getConfigMap().get("permitExtImage"), ",")
-					&& contentLength > Integer.parseInt(IWebConfig.getConfigMap().get("permitImageLength"))) {
-				err = "图片超过最大限制,不能超过500K";
+			if (!ToolsUtil.isIn(extensionName, config.getPermitExtImages(), ",") || !ToolsUtil.isIn(extensionName, config.getPermitExtFiles(), ",")) {
+				err = "此文件类型不允许上传.";
+			} else if (ToolsUtil.isIn(extensionName, config.getPermitExtImages(), ",") && contentLength > config.getPermitImageLength()) {
+				err = "图片超过最大限制,不能超过" + NumberUtil.convertSize(config.getPermitImageLength());
+			} else if (ToolsUtil.isIn(extensionName, config.getPermitExtFiles(), ",") && contentLength > config.getPermitFileLength()) {
+				err = "文件超过最大限制,不能超过" + NumberUtil.convertSize(config.getPermitFileLength());
 			} else {
-				String filename = "qkjebiz01/" + ToolsUtil.getTimeTimeMillis() + "_" + ToolsUtil.getRandomCode(10) + '.' + extensionName;
-				// 上传到阿里云存储
-				OSSUtil_IMG.uploadFile(filename, in, contentLength);
-				// 返回图片地址
-				msg = "!http://images01.qkjchina.com/" + filename;
-				log.info("上传文件成功:" + msg);
+				config.fileActionBefore(in);
+				filename = filedataFileName;
+				if (config.isAutoRename()) {
+					filename = config.getReNameRule(filedataFileName, extensionName);
+				}
+				if (config.isUploadOss()) {
+					// 上传到阿里云存储
+					OSSUtil_IMG.uploadFile(filename, in, contentLength);
+					// 返回图片地址
+					msg = "!http://images01.qkjchina.com/" + filename;
+					log.info("上传文件成功:" + msg);
+				}
+				config.fileActionBefore(in);
 			}
 		} else {
 			err = "未接收到图片!";
@@ -142,7 +165,7 @@ public class UploadAction extends ActionSupport {
 		} catch (Exception e) {
 		}
 
-		this.setMessage("{\"err\":\"" + err + "\",\"msg\":\"" + msg + "\"}");
+		this.setMessage(config.getMessage(filename, err));
 		return SUCCESS;
 	}
 }
