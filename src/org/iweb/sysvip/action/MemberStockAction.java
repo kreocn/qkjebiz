@@ -1,6 +1,4 @@
 package org.iweb.sysvip.action;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
@@ -10,15 +8,12 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 import jxl.Cell;
 import jxl.CellType;
 import jxl.DateCell;
 import jxl.Sheet;
 import jxl.Workbook;
-import jxl.format.UnderlineStyle;
 import jxl.write.Alignment;
 import jxl.write.Border;
 import jxl.write.BorderLineStyle;
