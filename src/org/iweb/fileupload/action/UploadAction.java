@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -11,6 +12,7 @@ import org.iweb.sys.ContextHelper;
 import org.iweb.sys.IWebConfig;
 import org.iweb.sys.OSSUtil_IMG;
 import org.iweb.sys.ToolsUtil;
+import org.iweb.sysvip.action.MemberStockAction;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -24,7 +26,8 @@ public class UploadAction extends ActionSupport {
 	private String err;
 	private String msg;
 	private String message;
-
+	
+	
 	public String getErr() {
 		return err;
 	}
@@ -143,6 +146,88 @@ public class UploadAction extends ActionSupport {
 		}
 
 		this.setMessage("{\"err\":\"" + err + "\",\"msg\":\"" + msg + "\"}");
+		return SUCCESS;
+	}
+	
+	
+	public String lead() throws Exception {
+		// {"err":"","msg":{"url":"200906030521128703.jpg","localfile":"test.jpg","id":"1"}}
+		// {"err":"","msg":"200906030521128703.gif"}
+		err = "";
+		msg = "";
+		InputStream in = new ByteArrayInputStream(new byte[0]);
+		Long contentLength = 0l;
+		// 获得上传文件的文件流InputStream
+		if (filedata == null && "application/octet-stream".equals(ContextHelper.getRequest().getContentType())) {
+			// HTML5上传方式判断处理
+			String dispoString = ContextHelper.getRequest().getHeader("Content-Disposition");
+			int iFindStart = dispoString.indexOf("filename=") + 10;
+			int iFindEnd = dispoString.indexOf("\"", iFindStart);
+			this.setFiledataFileName(dispoString.substring(iFindStart, iFindEnd));
+
+			int i = ContextHelper.getRequest().getContentLength();
+			byte buffer[] = new byte[i];
+			int j = 0;
+			while (j < i) {
+				int k = ContextHelper.getRequest().getInputStream().read(buffer, j, i - j);
+				j += k;
+			}
+			if (buffer.length > 0) {
+				contentLength = (long) buffer.length;
+				in = new ByteArrayInputStream(buffer);
+				// FileUtil.writeFileBinary("D:/aa.jpg", buffer);
+				// msg = "file:///D:/aa.jpg";
+			}
+		} else if (filedata != null) {
+			/*
+			 * System.out.println("服务器接收成功!");
+			 * System.out.println(filedata.getName());
+			 * System.out.println(filedata.length());
+			 * System.out.println(filedata.lastModified());
+			 * System.out.println("filedataFileName:" + filedataFileName);
+			 * System.out.println("filedataContentType:" + filedataContentType);
+			 */
+			// msg = filedata.getName();
+			contentLength = filedata.length();
+			in = new FileInputStream(filedata);
+		}
+		if (contentLength > 0) {
+			// 生成随机文件名
+			String filen=filedataFileName.substring(0,filedataFileName.indexOf("."));
+			String extensionName = filedataFileName.substring(filedataFileName.lastIndexOf(".") + 1);
+			// 限制图片大小为500K
+			if (ToolsUtil.isIn(extensionName, IWebConfig.getConfigMap().get("permitExtImage"), ",")
+					&& contentLength > Integer.parseInt(IWebConfig.getConfigMap().get("permitImageLength"))) {
+				err = "超过最大限制,不能超过500K";
+			} else {
+				String filename = "qkjebizleadin/" + filen+'_'+ ToolsUtil.getTimeTimeMillis() + "_" + ToolsUtil.getRandomCode(10) + '.' + extensionName;
+				MemberStockAction msa=new MemberStockAction();
+				err=msa.lead(filedata);
+				// 上传到阿里云存储
+				//OSSUtil_IMG.uploadFile(filename, in, contentLength);
+				// 返回图片地址
+				msg = "http://images01.qkjchina.com/" + filename;
+				msa.history(msg);
+				log.info("上传文件成功:" + msg);
+			}
+		} else {
+			err = "未接收到文件!";
+			log.info("上传文件失败:" + err);
+		}
+
+		// 关闭文件流
+		try {
+			in.close();
+			in = null;
+		} catch (Exception e) {
+		}
+		if(err==null){
+			this.setMessage("{\"err\":\"" + null + "\",\"msg\":\"" + msg + "\"}");
+		}else{
+			this.setMessage("{\"err\":\"" + err + "\",\"msg\":\"" + msg + "\"}");
+		}
+		
+		
 		return SUCCESS;
 	}
 }

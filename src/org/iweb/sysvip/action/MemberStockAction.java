@@ -38,8 +38,8 @@ import org.iweb.sys.ToolsUtil;
 import org.iweb.sysvip.dao.MemberStockDAO;
 import org.iweb.sysvip.domain.Member;
 import org.iweb.sysvip.domain.MemberStock;
+import org.iweb.sysvip.domain.MemberStockHistory;
 
-import com.aliyun.openservices.ots.model.Row;
 import com.opensymphony.xwork2.ActionSupport;
 import com.qkj.manage.dao.ProductDAO;
 import com.qkj.manage.domain.Product;
@@ -61,8 +61,25 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 	private int pageSize;
 	private int currPage;
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;会员库存";
+	private MemberStockHistory mehistory;
+	private List<MemberStockHistory> mehistorys;
 	
-	
+	public MemberStockHistory getMehistory() {
+		return mehistory;
+	}
+
+	public void setMehistory(MemberStockHistory mehistory) {
+		this.mehistory = mehistory;
+	}
+
+	public List<MemberStockHistory> getMehistorys() {
+		return mehistorys;
+	}
+
+	public void setMehistorys(List<MemberStockHistory> mehistorys) {
+		this.mehistorys = mehistorys;
+	}
+
 	public Member getMember() {
 		return member;
 	}
@@ -247,22 +264,23 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 		return SUCCESS;
 	}
 	
-	public String lead() throws Exception {
+	public String lead(File filedata) throws Exception {
 		ContextHelper.isPermit("QKJM_SYSVIP_MEMBERSTOCK_ADD");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		try {
-			JFileChooser chooser = new JFileChooser();
+			/*JFileChooser chooser = new JFileChooser();
 			FileNameExtensionFilter filter = new FileNameExtensionFilter(
 			        "xlsx & xls", "xlsx", "xls");
 			    chooser.setFileFilter(filter);
 			    chooser.setDialogTitle("选择导入文件");//设置标题
 			    chooser.setApproveButtonText("确定");//设置确定按钮上的文字
+			    chooser.setFileFilter(chooser.getAcceptAllFileFilter()); 
 			    int returnVal=chooser.showOpenDialog(null);//打开打开窗口,并将此窗口赋给原窗口
 			    if(returnVal == JFileChooser.APPROVE_OPTION) {
 			       System.out.println("You chose to open this file: " +
 			            chooser.getSelectedFile().getName()+chooser.getSelectedFile().getAbsolutePath()+"a"+chooser.getSelectedFile().getCanonicalPath());
-			       String file=chooser.getSelectedFile().getCanonicalPath();
-			       FileInputStream in = new FileInputStream(file);
+			       String file=chooser.getSelectedFile().getPath();  */
+			       FileInputStream in = new FileInputStream(filedata);
 			       Workbook rwb=Workbook.getWorkbook(in);
 			       Sheet st=rwb.getSheet(0);
 			       int rs=st.getColumns();  //列数
@@ -271,6 +289,7 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 		           String peo=null;
 		           String produ = null;
 		           String stock=null;
+		           
 		           for(int i=0;i<rows;i++){
 		        	   for(int j=0;j<rs;j++){
 		        		   Cell co= st.getCell(j,i); 
@@ -278,6 +297,7 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 		        		   if(content==null || content.equals("")){
 		        			   continue;
 		        		   }
+		        		  
 		        		   if(i==0 && j==1){//经销商编号
 		        			   peo=content;
 		        		   }
@@ -333,16 +353,37 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 		        		   }
 		        		   
 	        		   }
-		        	   if(peo==null || peo.equals("") || checkdate==null || checkdate.equals("") ){
+		        	   if((peo==null || peo.equals("") || checkdate==null || checkdate.equals("")) && message==null ){
 		        		   message="模板中会员账号或核对日期不能为空";
 		        	   }
+		        	   Cell co= st.getCell(0,0); 
+		        	   String content=co.getContents();
+		        	   if(!content.equals("经销商账号:")){
+		        			message="模板格式不正确请重新下载";
+		        		}
 		           }
-			    }
+			    
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!lead 数据添加失败:", e);
 			throw new Exception(this.getClass().getName() + "!lead 数据添加失败:", e);
 		}
-		return SUCCESS;
+		return message;
+	}
+	
+	public String history(String path) throws Exception{
+		try {
+			mehistory=new MemberStockHistory();
+			mehistory.setUp_path(path);
+			mehistory.setUp_time(new Date());
+			mehistory.setUp_user(ContextHelper.getUserLoginUuid());
+			mehistory.setUpIp(ContextHelper.getRealIP());
+			dao.savemh(mehistory);
+		} catch (Exception e) {
+			// TODO: handle exception
+			log.error(this.getClass().getName() + "!history 数据添加失败:", e);
+			throw new Exception(this.getClass().getName() + "!history 数据添加失败:", e);
+		}
+		return message;
 	}
 	
 	public String out() throws Exception {

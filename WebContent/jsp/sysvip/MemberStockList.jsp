@@ -13,6 +13,8 @@
 <script type="text/javascript" src="<s:url value="/js/zTreeJs/jquery.ztree.core-3.5.js" />"></script>
 <script type="text/javascript" src="<s:url value="http://images01.qkjchina.com/qkjebiz01/zTree_result.js?v0=1" />"></script>
 <script type="text/javascript" src="<s:url value="/js/zTreeJs/product.js" />"></script>
+<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.xhupload2.js" />"></script>
+
 </head>
 <script type="text/javascript">
 function checkstock(){
@@ -20,16 +22,19 @@ function checkstock(){
 		$("#cityUid").val(null);
 }
 }
-</script>
 
+$(function(){
+	$.fn.xhuploadinit();
+	$("#marketimgid").xhupload();
+});
+</script>
 <body>
 <div class="main" >
 <div class="dq_step">
 ${path}
 <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJM_SYSVIP_MEMBERSTOCK_ADD')">
 	<span class="opb lb op-area"><a href="<s:url namespace="/sysvip" action="memberStock_load"><s:param name="viewFlag">add</s:param></s:url>">添加库存信息</a></span>
-	<span class="opb lb op-area"><a href="<s:url namespace="/sysvip" action="memberStock_lead"></s:url>">导入库存信息</a>
-	</span>
+	<a id="marketimgid" href="###"></a>
 </s:if>
 </div>
 	<s:form id="serachForm" name="serachForm"  method="get" namespace="/sysvip" theme="simple">
@@ -107,4 +112,5 @@ ${path}
 <div class="pagination"><font color="red" style="size: 26px;">${message }</font><script type="text/javascript">var spage = new ShowPage(${currPage});	spage.show2(${recCount},${pageSize},2);</script></div>
 </div>
 </body>
+
 </html>

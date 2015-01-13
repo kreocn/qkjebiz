@@ -3,6 +3,7 @@
 <sqlMap>
 	<!-- MemberStock Start -->
 	<typeAlias alias="memberStock" type="org.iweb.sysvip.domain.MemberStock" />
+	<typeAlias alias="memberStockHistory" type="org.iweb.sysvip.domain.MemberStockHistory" />
 	<select id="sysvip_getMemberStocks" resultClass="memberStock" parameterClass="java.util.Map">
 		<![CDATA[ 
 			SELECT m.*,ad.`USER_NAME` add_user_name,lm.`USER_NAME` lm_user_name,p.`title` product_name,
@@ -49,6 +50,16 @@
 		<![CDATA[ Select LAST_INSERT_ID() ]]>
 		</selectKey>
 	</insert>
+	<insert id="sysvip_addMemberStockHistory" parameterClass="memberStockHistory">
+	<![CDATA[ 
+			Insert Into qkjm_h_member(up_user,up_time,up_path,upIp)
+			Values (#up_user#,#up_time#,#up_path#,#upIp#)
+		]]>
+		<selectKey resultClass="int" keyProperty="uuid">
+		<![CDATA[ Select LAST_INSERT_ID() ]]>
+		</selectKey>
+	</insert>
+	
 	<update id="sysvip_mdyMemberStock" parameterClass="memberStock">
 		<![CDATA[
 			Update qkjm_t_member
