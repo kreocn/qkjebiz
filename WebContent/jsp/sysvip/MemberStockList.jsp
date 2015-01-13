@@ -13,7 +13,6 @@
 <script type="text/javascript" src="<s:url value="/js/zTreeJs/jquery.ztree.core-3.5.js" />"></script>
 <script type="text/javascript" src="<s:url value="http://images01.qkjchina.com/qkjebiz01/zTree_result.js?v0=1" />"></script>
 <script type="text/javascript" src="<s:url value="/js/zTreeJs/product.js" />"></script>
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.xhupload2.js" />"></script>
 
 </head>
 <script type="text/javascript">
@@ -23,10 +22,20 @@ function checkstock(){
 }
 }
 
+function refurbish(){
+	window.location.href="/sysvip/memberStock_list";
+}
+
 $(function(){
-	$.fn.xhuploadinit();
+	$.fn.xhuploadinit("MemberStock",refurbish);
 	$("#marketimgid").xhupload();
 });
+
+$(document).ready(function(){
+	$("#filebtn").removeClass("filearea"); //添加样式marketimgid_filebutton
+	$("#marketimgid_filebutton").val("选择导入文件");
+});
+
 </script>
 <body>
 <div class="main" >
@@ -34,7 +43,10 @@ $(function(){
 ${path}
 <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJM_SYSVIP_MEMBERSTOCK_ADD')">
 	<span class="opb lb op-area"><a href="<s:url namespace="/sysvip" action="memberStock_load"><s:param name="viewFlag">add</s:param></s:url>">添加库存信息</a></span>
-	<a id="marketimgid" href="###"></a>
+	<span class="opb lb op-area">
+	<s:hidden id="marketimgid"></s:hidden>
+	</span>
+
 </s:if>
 </div>
 	<s:form id="serachForm" name="serachForm"  method="get" namespace="/sysvip" theme="simple">

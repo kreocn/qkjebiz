@@ -1,6 +1,7 @@
 package org.iweb.sysvip.action;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -264,7 +265,7 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 		return SUCCESS;
 	}
 	
-	public String lead(File filedata) throws Exception {
+	public String lead(InputStream in2) throws Exception {
 		ContextHelper.isPermit("QKJM_SYSVIP_MEMBERSTOCK_ADD");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		try {
@@ -280,8 +281,8 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 			       System.out.println("You chose to open this file: " +
 			            chooser.getSelectedFile().getName()+chooser.getSelectedFile().getAbsolutePath()+"a"+chooser.getSelectedFile().getCanonicalPath());
 			       String file=chooser.getSelectedFile().getPath();  */
-			       FileInputStream in = new FileInputStream(filedata);
-			       Workbook rwb=Workbook.getWorkbook(in);
+			       //InputStream in = new InputStream(in2);
+			       Workbook rwb=Workbook.getWorkbook(in2);
 			       Sheet st=rwb.getSheet(0);
 			       int rs=st.getColumns();  //列数
 		           int rows=st.getRows();//行数
@@ -333,9 +334,11 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 		        			   map.clear();
 		        			   map.put("dealer", peo);
 		        			   map.put("check_date", checkdate);
+		        			   map.put("product", produ); 
 		        			   this.setMembers(dao.list(map));
 		        			   if(members.size()>0){
 		        				   message="时间："+checkdate+"会员："+peo+"库存信息重复请确认";
+		        				   break;
 		        			   }else{
 		        				   memberStock=new MemberStock();
 			        			   memberStock.setDealer(peo);
@@ -355,11 +358,13 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 	        		   }
 		        	   if((peo==null || peo.equals("") || checkdate==null || checkdate.equals("")) && message==null ){
 		        		   message="模板中会员账号或核对日期不能为空";
+		        		   break;
 		        	   }
 		        	   Cell co= st.getCell(0,0); 
 		        	   String content=co.getContents();
 		        	   if(!content.equals("经销商账号:")){
 		        			message="模板格式不正确请重新下载";
+		        			break;
 		        		}
 		           }
 			    
