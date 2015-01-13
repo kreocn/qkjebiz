@@ -2,7 +2,9 @@
  * jquery上传插件 使用方法 $.fn.xhuploadinit(); $("#uploadTextField").xhupload();
  */
 (function($){
-	$.fn.xhuploadinit = function(){
+	var xhuploadAjaxUrl = "/upload/put";
+	$.fn.xhuploadinit = function(initConfig){
+		if (initConfig) xhuploadAjaxUrl += xhuploadAjaxUrl + "?initConfig=" + initConfig;
 		var immediate = true;
 		$("body").append('<input type="file" id="xhUploadFile" name="filedata" class="fileinput" />');
 		$("body").append('<div id="xhUploadFile_progress" title="文件上传"><div id="xhUploadFile_progressbar"></div></div>');
@@ -41,7 +43,7 @@
 	};
 
 	$.fn.xhupload = function(options){
-		var defaults = { url : "/upload/put",// 上传serve
+		var defaults = { url : xhuploadAjaxUrl,// 上传serve
 		filefield : "filedata",// input.file的表单名称
 		immediate : 1,// 0:普通模式 1:立即模式,选择文件即上传
 		info : 0,// 是否返回文件信息(大小,文件名,类型) 0:不返回 1:返回
@@ -90,7 +92,7 @@
 			formData = null;
 		}
 
-		$.ajax({ url : "/upload/put",
+		$.ajax({ url : xhuploadAjaxUrl,
 		type : "POST",
 		data : formData,
 		processData : false,
@@ -112,7 +114,7 @@
 						$("#" + $("#xhUploadFile").data("recallid")).val(msg);
 					}
 				} else {
-					alert("上传文件错误,文件最大不能超过10M.");
+					alert(evt.target.responseText);
 				}
 			};
 			xhr.upload.onprogress = function(evt){ // 进度条函数

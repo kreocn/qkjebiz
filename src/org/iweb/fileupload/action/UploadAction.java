@@ -27,6 +27,15 @@ public class UploadAction extends ActionSupport {
 	private String message;
 
 	private UploadConfig config;
+	private String initConfig = "";
+
+	public String getInitConfig() {
+		return initConfig;
+	}
+
+	public void setInitConfig(String initConfig) {
+		this.initConfig = initConfig;
+	}
 
 	public void setConfig(UploadConfig config) {
 		this.config = config;
@@ -82,7 +91,18 @@ public class UploadAction extends ActionSupport {
 
 	@Override
 	public void validate() {
-		this.setConfig(new UploadConfig());
+		UploadConfig uc = null;
+		if (!ToolsUtil.isEmpty(initConfig)) {
+			try {
+				uc = (UploadConfig) Class.forName("org.iweb.fileupload.logic." + initConfig + "UploadConfig").newInstance();
+			} catch (Exception e) {
+			}
+		}
+		if (uc == null) {
+			uc = new UploadConfig();
+		}
+		this.setConfig(uc);
+		log.info("初始化UploadConfig成功,初始化类:" + uc.getClass().getName());
 	}
 
 	public String put() throws Exception {
@@ -132,8 +152,8 @@ public class UploadAction extends ActionSupport {
 			// 生成随机文件名
 			String extensionName = filedataFileName.substring(filedataFileName.lastIndexOf(".") + 1);
 			// 限制图片大小为500K
-			if (!ToolsUtil.isIn(extensionName, config.getPermitExtImages(), ",") || !ToolsUtil.isIn(extensionName, config.getPermitExtFiles(), ",")) {
-				err = "此文件类型不允许上传.";
+			if (!ToolsUtil.isIn(extensionName, config.getPermitExtImages(), ",") && !ToolsUtil.isIn(extensionName, config.getPermitExtFiles(), ",")) {
+				err = "此文件类型[" + extensionName + "]不允许上传";
 			} else if (ToolsUtil.isIn(extensionName, config.getPermitExtImages(), ",") && contentLength > config.getPermitImageLength()) {
 				err = "图片超过最大限制,不能超过" + NumberUtil.convertSize(config.getPermitImageLength());
 			} else if (ToolsUtil.isIn(extensionName, config.getPermitExtFiles(), ",") && contentLength > config.getPermitFileLength()) {
@@ -146,12 +166,19 @@ public class UploadAction extends ActionSupport {
 				}
 				if (config.isUploadOss()) {
 					// 上传到阿里云存储
-					OSSUtil_IMG.uploadFile(filename, in, contentLength);
+					if (OSSUtil_IMG.uploadFile(filename, in, contentLength)) {
+						msg = "!http://images01.qkjchina.com/" + filename;
+						log.info("上传文件->OSS成功:" + msg);
+					} else {
+						err = "上传文件失败,无法连接OSS服务器.";
+						log.info(err);
+					}
 					// 返回图片地址
-					msg = "!http://images01.qkjchina.com/" + filename;
-					log.info("上传文件成功:" + msg);
+
+				} else {
+					log.info("文件不上传到OSS");
 				}
-				config.fileActionBefore(in);
+				config.fileActionAfter(in);
 			}
 		} else {
 			err = "未接收到图片!";

@@ -16,6 +16,11 @@ public class MemberStockUploadConfig extends UploadConfig {
 	}
 
 	@Override
+	public boolean isUploadOss() {
+		return false;
+	}
+
+	@Override
 	public void fileActionBefore(InputStream in) {
 		System.out.println("现在要对文件进行操作了!");
 	}
