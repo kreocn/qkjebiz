@@ -31,7 +31,7 @@ public class OSSUtil_IMG {
 	// 外网地址0: http://oss-cn-beijing.aliyuncs.com/
 	// 外网地址1: http://images01.qkjchina.com/
 	// 外网地址2: http://images.qkjchina.com/
-	private final static String endpoint = "http://images01.qkjchina.com/";
+	private final static String endpoint = "http://oss-cn-beijing-internal.aliyuncs.com/";
 	private final static String default_bucket = "qkjbj01";
 	private static OSSClient client;
 
