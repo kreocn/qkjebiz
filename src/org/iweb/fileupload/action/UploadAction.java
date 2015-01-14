@@ -1,6 +1,7 @@
 package org.iweb.fileupload.action;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -161,14 +162,38 @@ public class UploadAction extends ActionSupport {
 			} else if (ToolsUtil.isIn(extensionName, config.getPermitExtFiles(), ",") && contentLength > config.getPermitFileLength()) {
 				err = "文件超过最大限制,不能超过" + NumberUtil.convertSize(config.getPermitFileLength());
 			} else {
-				config.fileActionBefore(in);
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();  
+				byte[] buffer = new byte[1024]; 
+				int len;  
+				while ((len = in.read(buffer)) > -1 ) {  
+				    baos.write(buffer, 0, len);  
+				}  
+				baos.flush(); 
+				try {
+					in.close();
+					in = null;
+				} catch (Exception e) {
+					// TODO: handle exception
+					log.warn("in close error", e);
+				}
+				
+				InputStream inBefore = new ByteArrayInputStream(baos.toByteArray());  
+				config.fileActionBefore(inBefore);
+				try {
+					inBefore.close();
+					inBefore = null;
+				} catch (Exception e) {
+					log.warn("inBefore close error", e);
+				}
+				
 				filename = filedataFileName;
 				if (config.isAutoRename()) {
 					filename = config.getReNameRule(filedataFileName, extensionName);
 				}
 				if (config.isUploadOss()) {
 					// 上传到阿里云存储
-					if (OSSUtil_IMG.uploadFile(filename, in, contentLength)) {
+					InputStream inupload = new ByteArrayInputStream(baos.toByteArray()); 
+					if (OSSUtil_IMG.uploadFile(filename, inupload, contentLength)) {
 						msg = "!http://images01.qkjchina.com/" + filename;
 						log.info("上传文件->OSS成功:" + msg);
 						successflag=true;
@@ -177,7 +202,14 @@ public class UploadAction extends ActionSupport {
 						log.info(err);
 					}
 					// 返回图片地址
-
+					try {
+						inupload.close();
+						inupload = null;
+					} catch (Exception e) {
+						// TODO: handle exception
+						log.warn("inupload close error", e);
+					}
+					
 				} else {
 					log.info("文件不上传到OSS");
 				}
@@ -189,11 +221,11 @@ public class UploadAction extends ActionSupport {
 		}
 
 		// 关闭文件流
-		try {
+		/*try {
 			in.close();
 			in = null;
 		} catch (Exception e) {
-		}
+		}*/
 
 		this.setMessage(config.getMessage(filename, err));
 		return SUCCESS;

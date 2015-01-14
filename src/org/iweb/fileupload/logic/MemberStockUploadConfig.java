@@ -1,6 +1,5 @@
 package org.iweb.fileupload.logic;
 
-import java.io.File;
 import java.io.InputStream;
 
 import org.iweb.sys.ToolsUtil;
