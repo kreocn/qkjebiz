@@ -339,7 +339,7 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 		        			   //map.put("product", produ); 
 		        			   this.setMembers(dao.list(map));
 		        			   if(members.size()>0){
-		        				   message="时间："+checkdate+"会员："+peo+"库存信息重复请确认";
+		        				   message="盘点时间为"+checkdate+"会员号为"+peo+"的库存信息重复请确认,若需重新上传请先删除原数据！";
 		        				   break;
 		        			   }else{
 		        				   memberStock=new MemberStock();
