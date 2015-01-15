@@ -1,6 +1,11 @@
 package org.iweb.sys;
 
 import java.beans.PropertyDescriptor;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -18,14 +23,13 @@ import java.util.Vector;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import net.sf.json.JsonConfig;
-import net.sf.json.processors.JsDateJsonBeanProcessor;
 import net.sf.json.util.JSONUtils;
 
 public class ToolsUtil {
 
-	private final static String[] simpleClass = { "java.lang.String", "java.lang.Double", "java.lang.Integer", "java.lang.Float", "java.lang.Lang", "java.lang.Number",
-			"java.lang.Short" };
+	private final static String[] simpleClass = { "java.lang.String",
+			"java.lang.Double", "java.lang.Integer", "java.lang.Float",
+			"java.lang.Lang", "java.lang.Number", "java.lang.Short" };
 
 	/**
 	 * 创建16位ID
@@ -107,13 +111,16 @@ public class ToolsUtil {
 		try {
 			StringBuffer sb = new StringBuffer();
 			try {
-				sb.append(DateUtil.getDateString(new Date(), patten)).toString();
+				sb.append(DateUtil.getDateString(new Date(), patten))
+						.toString();
 			} catch (Exception e) {
 				patten = "yyyyMMdd";
-				sb.append(DateUtil.getDateString(new Date(), patten)).toString();
+				sb.append(DateUtil.getDateString(new Date(), patten))
+						.toString();
 			}
 			Random r = new Random();
-			sb.append(String.format("%0" + pos + "d", r.nextInt((int) Math.pow(10, pos) - 1)));
+			sb.append(String.format("%0" + pos + "d",
+					r.nextInt((int) Math.pow(10, pos) - 1)));
 			return sb.toString();
 		} catch (Exception e) {
 			return null;
@@ -124,7 +131,8 @@ public class ToolsUtil {
 	 * @return 得到16位的唯一性ID
 	 */
 	public static String getUUIDByTimeMillis() {
-		return ((Long) (System.currentTimeMillis() * 1000 + (long) (Math.random() * 900) + 100)).toString();
+		return ((Long) (System.currentTimeMillis() * 1000
+				+ (long) (Math.random() * 900) + 100)).toString();
 	}
 
 	/**
@@ -139,15 +147,21 @@ public class ToolsUtil {
 	 * @return 20位的UUID,适用于不同要求
 	 */
 	public static String getUUID20() {
-		return new StringBuffer().append(System.currentTimeMillis()).append((long) (Math.random() * 9000) + 1000).append((long) (Math.random() * 900) + 100).toString();
+		return new StringBuffer().append(System.currentTimeMillis())
+				.append((long) (Math.random() * 9000) + 1000)
+				.append((long) (Math.random() * 900) + 100).toString();
 	}
 
 	/**
 	 * @return 32位的UUID,适用于不同要求
 	 */
 	public static String getUUID32() {
-		return new StringBuffer().append(System.currentTimeMillis()).append((long) (Math.random() * 9000) + 1000).append((long) (Math.random() * 9000) + 1000)
-				.append((long) (Math.random() * 9000) + 1000).append((long) (Math.random() * 9000) + 1000).append((long) (Math.random() * 900) + 100).toString();
+		return new StringBuffer().append(System.currentTimeMillis())
+				.append((long) (Math.random() * 9000) + 1000)
+				.append((long) (Math.random() * 9000) + 1000)
+				.append((long) (Math.random() * 9000) + 1000)
+				.append((long) (Math.random() * 9000) + 1000)
+				.append((long) (Math.random() * 900) + 100).toString();
 	}
 
 	/**
@@ -161,7 +175,8 @@ public class ToolsUtil {
 		String s = ((Long) System.currentTimeMillis()).toString();
 		int len = s.length();
 		if (len < pos) {
-			s += String.format("%0" + (pos - len) + "d", getRandomInt(pos - len));
+			s += String.format("%0" + (pos - len) + "d",
+					getRandomInt(pos - len));
 		} else if (len > pos) {
 			s = s.substring(0, pos);
 		}
@@ -180,8 +195,7 @@ public class ToolsUtil {
 	/**
 	 * 生成固定长度整数
 	 * 
-	 * @param int len
-	 *        长度
+	 * @param int len 长度
 	 * @return 固定长度整数
 	 */
 	public static int getRandomInt(int len) {
@@ -201,8 +215,9 @@ public class ToolsUtil {
 		final int maxNum = 36;
 		int i; // 生成的随机数
 		int count = 0; // 生成的密码的长度
-		char[] str = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'L', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4',
-				'5', '6', '7', '8', '9' };
+		char[] str = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
+				'L', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w',
+				'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
 		StringBuffer pwd = new StringBuffer("");
 		Random r = new Random();
 		while (count < pwd_len) {
@@ -239,9 +254,11 @@ public class ToolsUtil {
 	public static Map<String, Object> getMapByBean(Object bean) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			java.beans.BeanInfo info = java.beans.Introspector.getBeanInfo(bean.getClass());
+			java.beans.BeanInfo info = java.beans.Introspector.getBeanInfo(bean
+					.getClass());
 			if (info != null) {
-				java.beans.PropertyDescriptor pds[] = info.getPropertyDescriptors();
+				java.beans.PropertyDescriptor pds[] = info
+						.getPropertyDescriptors();
 				for (java.beans.PropertyDescriptor pd : pds) {
 					String fieldName = pd.getName();
 					if (fieldName != null && !fieldName.equals("class")) {
@@ -259,7 +276,8 @@ public class ToolsUtil {
 								// "=" + value);
 							}
 						} catch (Exception e) {
-							System.out.println("读取[" + pd.getName() + "]参数值异常!");
+							System.out
+									.println("读取[" + pd.getName() + "]参数值异常!");
 							e.printStackTrace();
 						}
 					}
@@ -280,17 +298,22 @@ public class ToolsUtil {
 	 */
 	public static Object getBeanByMap(Object bean, Map<String, Object> map) {
 		try {
-			java.beans.BeanInfo info = java.beans.Introspector.getBeanInfo(bean.getClass());
+			java.beans.BeanInfo info = java.beans.Introspector.getBeanInfo(bean
+					.getClass());
 			if (info != null) {
-				java.beans.PropertyDescriptor pds[] = info.getPropertyDescriptors();
+				java.beans.PropertyDescriptor pds[] = info
+						.getPropertyDescriptors();
 				for (java.beans.PropertyDescriptor pd : pds) {
 					String fieldName = pd.getName();
 					if (fieldName != null && !fieldName.equals("class")) {
 						try {
-							for (Iterator<Map.Entry<String, Object>> iterator = map.entrySet().iterator(); iterator.hasNext();) {
+							for (Iterator<Map.Entry<String, Object>> iterator = map
+									.entrySet().iterator(); iterator.hasNext();) {
 								Map.Entry<String, Object> m = iterator.next();
-								if ((fieldName.toUpperCase()).equals(m.getKey().toString().toUpperCase())) {
-									java.lang.reflect.Method method = pd.getWriteMethod();
+								if ((fieldName.toUpperCase()).equals(m.getKey()
+										.toString().toUpperCase())) {
+									java.lang.reflect.Method method = pd
+											.getWriteMethod();
 									Object[] args = new Object[1];
 									args[0] = m.getValue();
 									method.invoke(bean, args);
@@ -298,7 +321,8 @@ public class ToolsUtil {
 
 							}
 						} catch (Exception e) {
-							System.out.println("写入[" + pd.getName() + "]参数值异常!");
+							System.out
+									.println("写入[" + pd.getName() + "]参数值异常!");
 							e.printStackTrace();
 						}
 					}
@@ -328,7 +352,8 @@ public class ToolsUtil {
 	 * @param _c
 	 *            是否包含节点本身
 	 */
-	public static List getTreeNode(List list, String id_col, String p_id_col, String id, int mode, boolean _c) {
+	public static List getTreeNode(List list, String id_col, String p_id_col,
+			String id, int mode, boolean _c) {
 		try {
 			List p_list = new ArrayList();
 			List c_list = new ArrayList();
@@ -336,7 +361,8 @@ public class ToolsUtil {
 			Map<String, String> m_map = new HashMap<String, String>();
 			Map<String, Object> o_map = new HashMap<String, Object>();
 			String tmp_p = null, tmp_ = null;
-			if (list == null || id_col == null || p_id_col == null || id == null) {
+			if (list == null || id_col == null || p_id_col == null
+					|| id == null) {
 				return null;
 			} else if (!(mode == 0 || mode == 1 || mode == 2 || mode == 3)) {
 				mode = 0;
@@ -344,12 +370,15 @@ public class ToolsUtil {
 			// 循环得到特定的map: map<id,p_id>
 			for (int i = 0, length = list.size(); i < length; i++) {
 				Object obj = list.get(i);
-				java.beans.BeanInfo info = java.beans.Introspector.getBeanInfo(obj.getClass());
+				java.beans.BeanInfo info = java.beans.Introspector
+						.getBeanInfo(obj.getClass());
 				if (info != null) {
-					for (java.beans.PropertyDescriptor pd : info.getPropertyDescriptors()) {
+					for (java.beans.PropertyDescriptor pd : info
+							.getPropertyDescriptors()) {
 						String fieldName = pd.getName();
 						if (fieldName != null && !fieldName.equals("class")) {
-							java.lang.reflect.Method method = pd.getReadMethod();
+							java.lang.reflect.Method method = pd
+									.getReadMethod();
 							if (id_col.equals(fieldName)) {
 								tmp_ = (String) method.invoke(obj);
 							} else if (p_id_col.equals(fieldName)) {
@@ -403,10 +432,12 @@ public class ToolsUtil {
 	 * @param p_id
 	 * @return
 	 */
-	private static boolean checkParent(Map<String, String> map, String id, String p_id) {
+	private static boolean checkParent(Map<String, String> map, String id,
+			String p_id) {
 		while (true) {
 			if (map.containsKey(id)) {
-				return p_id.equals(map.get(id)) || checkParent(map, map.get(id), p_id);
+				return p_id.equals(map.get(id))
+						|| checkParent(map, map.get(id), p_id);
 			} else {
 				break;
 			}
@@ -477,7 +508,9 @@ public class ToolsUtil {
 	 * @return
 	 */
 	public static String List2StringBySep(List<String> list, String sep) {
-		if (list == null || list.size() == 0) { return ""; }
+		if (list == null || list.size() == 0) {
+			return "";
+		}
 		StringBuffer sb = new StringBuffer();
 		for (int i = 0, n = list.size(); i < n; i++) {
 			sb.append(list.get(i)).append(sep);
@@ -498,14 +531,20 @@ public class ToolsUtil {
 			return null;
 		} else {
 			// instanceof
-			if (ToolsUtil.isIn(bean.getClass().getName(), ToolsUtil.simpleClass) || bean instanceof Map || bean instanceof Collections || bean instanceof Collection) {
+			if (ToolsUtil
+					.isIn(bean.getClass().getName(), ToolsUtil.simpleClass)
+					|| bean instanceof Map
+					|| bean instanceof Collections
+					|| bean instanceof Collection) {
 				return bean.toString();
 			} else {
 				StringBuffer sb = new StringBuffer();
-				java.beans.PropertyDescriptor[] descriptors = ToolsUtil.getAvailablePropertyDescriptors(bean);
+				java.beans.PropertyDescriptor[] descriptors = ToolsUtil
+						.getAvailablePropertyDescriptors(bean);
 				sb.append(bean.getClass().getName()).append(":{");
 				for (int i = 0; descriptors != null && i < descriptors.length; i++) {
-					java.lang.reflect.Method readMethod = descriptors[i].getReadMethod();
+					java.lang.reflect.Method readMethod = descriptors[i]
+							.getReadMethod();
 
 					try {
 						Object value = readMethod.invoke(bean, null);
@@ -513,7 +552,9 @@ public class ToolsUtil {
 						// "]." + descriptors[i].getName()+ "("+
 						// descriptors[i].getPropertyType().getName() + ") = " +
 						// value);
-						if (value != null) sb.append(descriptors[i].getName()).append(":").append(value).append(",");
+						if (value != null)
+							sb.append(descriptors[i].getName()).append(":")
+									.append(value).append(",");
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -525,11 +566,14 @@ public class ToolsUtil {
 	}
 
 	// JavaBean 中遍历解析属性信息并查找相关的read/write 方法
-	private static java.beans.PropertyDescriptor[] getAvailablePropertyDescriptors(Object bean) {
+	private static java.beans.PropertyDescriptor[] getAvailablePropertyDescriptors(
+			Object bean) {
 		try {
-			java.beans.BeanInfo info = java.beans.Introspector.getBeanInfo(bean.getClass());
+			java.beans.BeanInfo info = java.beans.Introspector.getBeanInfo(bean
+					.getClass());
 			if (info != null) {
-				java.beans.PropertyDescriptor pd[] = info.getPropertyDescriptors();
+				java.beans.PropertyDescriptor pd[] = info
+						.getPropertyDescriptors();
 				Vector columns = new Vector();
 
 				for (int i = 0; i < pd.length; i++) {
@@ -539,7 +583,8 @@ public class ToolsUtil {
 					}
 				}
 
-				java.beans.PropertyDescriptor[] arrays = new java.beans.PropertyDescriptor[columns.size()];
+				java.beans.PropertyDescriptor[] arrays = new java.beans.PropertyDescriptor[columns
+						.size()];
 
 				for (int j = 0; j < columns.size(); j++) {
 					arrays[j] = (PropertyDescriptor) columns.get(j);
@@ -571,7 +616,9 @@ public class ToolsUtil {
 	 *            竖转横的key(竖列需变成横列的key列)
 	 * @return
 	 */
-	public static List<Map<String, Object>> conventTable(List<Map<String, Object>> oTable, String[] p_key, String[] v_key, String[] v_key_name, String v_key_title, String value_key) {
+	public static List<Map<String, Object>> conventTable(
+			List<Map<String, Object>> oTable, String[] p_key, String[] v_key,
+			String[] v_key_name, String v_key_title, String value_key) {
 		// 定义返回的变量
 		Map<String, HashMap<String, Object>> nTable1 = new HashMap<String, HashMap<String, Object>>();
 		Map<String, HashMap<String, Object>> nTable2 = new HashMap<String, HashMap<String, Object>>();
@@ -582,7 +629,8 @@ public class ToolsUtil {
 		HashSet<String> value_key_set = new HashSet<String>();
 
 		// 第一次遍历oTable,得到新的Map Key和提取的value_key列表
-		for (Iterator<Map<String, Object>> iterator = oTable.iterator(); iterator.hasNext();) {
+		for (Iterator<Map<String, Object>> iterator = oTable.iterator(); iterator
+				.hasNext();) {
 			Map<String, Object> oMap = iterator.next();
 			tmpKey = "";
 			nMap = new HashMap<String, Object>();
@@ -604,30 +652,36 @@ public class ToolsUtil {
 		boolean tmp_flag = true;
 
 		// 第二次循环,开始填入数据
-		for (Iterator<Map.Entry<String, HashMap<String, Object>>> iterator = nTable1.entrySet().iterator(); iterator.hasNext();) {
+		for (Iterator<Map.Entry<String, HashMap<String, Object>>> iterator = nTable1
+				.entrySet().iterator(); iterator.hasNext();) {
 			Map.Entry<String, HashMap<String, Object>> m = iterator.next();
 			String oTableKey = m.getKey();
 			HashMap<String, Object> oTableValue = m.getValue();
 			HashMap<String, Object> tmpValue;
-			for (Iterator<Map<String, Object>> iterator2 = oTable.iterator(); iterator2.hasNext();) {
+			for (Iterator<Map<String, Object>> iterator2 = oTable.iterator(); iterator2
+					.hasNext();) {
 				Map<String, Object> oMap = iterator2.next();
 
 				// System.out.println(oTableValue.toString() + oMap.toString());
 				// 首先检查p_key是否对应
 				tmp_flag = true;
 				for (int i = 0; i < p_key.length; i++) {
-					tmp_flag = tmp_flag && oTableValue.get(p_key[i]).equals(oMap.get(p_key[i]));
+					tmp_flag = tmp_flag
+							&& oTableValue.get(p_key[i]).equals(
+									oMap.get(p_key[i]));
 				}
 				if (tmp_flag) {
 					// 如果p_key对应,则去查value_key的对应情况
-					for (Iterator<String> iterator3 = value_key_set.iterator(); iterator3.hasNext();) {
+					for (Iterator<String> iterator3 = value_key_set.iterator(); iterator3
+							.hasNext();) {
 						String tmp_value_key = iterator3.next();
 
 						if (tmp_value_key.equals(oMap.get(value_key))) {
 							// 找到对应的列,则根据v_key自动填写数据(拆分成多列)
 							for (int i = 0; i < v_key.length; i++) {
 								if (nTable2.containsKey(oTableKey + v_key[i])) {
-									tmpValue = nTable2.get(oTableKey + v_key[i]);
+									tmpValue = nTable2
+											.get(oTableKey + v_key[i]);
 								} else {
 									tmpValue = new HashMap<String, Object>();
 								}
@@ -685,10 +739,14 @@ public class ToolsUtil {
 	 * @return 包含则返回true，否则返回false
 	 */
 	public static boolean isIn(String substring, String[] source) {
-		if (source == null || source.length == 0) { return false; }
+		if (source == null || source.length == 0) {
+			return false;
+		}
 		for (int i = 0; i < source.length; i++) {
 			String aSource = source[i];
-			if (aSource.equals(substring)) { return true; }
+			if (aSource.equals(substring)) {
+				return true;
+			}
 		}
 		return false;
 	}
@@ -703,7 +761,9 @@ public class ToolsUtil {
 	 * @return 包含则返回true，否则返回false
 	 */
 	public static boolean isIn(String substring, String source, String split) {
-		if (source == null) { return false; }
+		if (source == null) {
+			return false;
+		}
 		split = isEmpty(split) ? "," : split;
 		return isIn(substring, source.split(split));
 	}
@@ -817,7 +877,8 @@ public class ToolsUtil {
 	 */
 	public static String UpperFirst(String str) {
 		char[] array = str.toCharArray();
-		if (Character.isLowerCase(array[0])) array[0] -= 32;
+		if (Character.isLowerCase(array[0]))
+			array[0] -= 32;
 		return String.valueOf(array);
 	}
 
@@ -829,7 +890,8 @@ public class ToolsUtil {
 	 */
 	public static String LowerFirst(String str) {
 		char[] array = str.toCharArray();
-		if (Character.isUpperCase(array[0])) array[0] += 32;
+		if (Character.isUpperCase(array[0]))
+			array[0] += 32;
 		return String.valueOf(array);
 	}
 
@@ -844,8 +906,10 @@ public class ToolsUtil {
 		StringBuffer sb = new StringBuffer(s);
 		int n;
 		while ((n = sb.indexOf("_")) >= 0) {
-			if (Character.isLowerCase(sb.charAt(n + 1))) sb.replace(n, n + 2, (char) (sb.charAt(n + 1) - 32) + "");
-			else sb.deleteCharAt(n);
+			if (Character.isLowerCase(sb.charAt(n + 1)))
+				sb.replace(n, n + 2, (char) (sb.charAt(n + 1) - 32) + "");
+			else
+				sb.deleteCharAt(n);
 		}
 		return sb.toString();
 	}
@@ -861,8 +925,10 @@ public class ToolsUtil {
 		StringBuffer sb = new StringBuffer(s);
 		int n;
 		while ((n = sb.indexOf("_")) >= 0) {
-			if (Character.isUpperCase(sb.charAt(n + 1))) sb.replace(n, n + 2, (char) (sb.charAt(n + 1) + 32) + "");
-			else sb.deleteCharAt(n);
+			if (Character.isUpperCase(sb.charAt(n + 1)))
+				sb.replace(n, n + 2, (char) (sb.charAt(n + 1) + 32) + "");
+			else
+				sb.deleteCharAt(n);
 		}
 		return sb.toString();
 	}
@@ -881,4 +947,44 @@ public class ToolsUtil {
 			return s.substring(0, n) + "...";
 		}
 	}
+
+	public static byte[] File2byte(String filePath) {
+		byte[] buffer = null;
+		try {
+			File file = new File(filePath);
+			FileInputStream fis = new FileInputStream(file);
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			byte[] b = new byte[1024];
+			int n;
+			while ((n = fis.read(b)) != -1) {
+				bos.write(b, 0, n);
+			}
+			fis.close();
+			bos.close();
+			buffer = bos.toByteArray();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return buffer;
+	}
+
+	public static byte[] File2byte(File file) {
+		byte[] buffer = null;
+		try {
+			FileInputStream fis = new FileInputStream(file);
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			byte[] b = new byte[1024];
+			int n;
+			while ((n = fis.read(b)) != -1) {
+				bos.write(b, 0, n);
+			}
+			fis.close();
+			bos.close();
+			buffer = bos.toByteArray();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return buffer;
+	}
+
 }

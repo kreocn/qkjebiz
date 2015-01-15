@@ -1,9 +1,7 @@
 package org.iweb.fileupload.action;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 
 import org.apache.commons.logging.Log;
@@ -26,6 +24,8 @@ public class UploadAction extends ActionSupport {
 	private String err;
 	private String msg;
 	private String message;
+	
+	private byte[] buffer;
 	
 
 	private UploadConfig config;
@@ -126,7 +126,8 @@ public class UploadAction extends ActionSupport {
 			this.setFiledataFileName(dispoString.substring(iFindStart, iFindEnd));
 
 			int i = ContextHelper.getRequest().getContentLength();
-			byte buffer[] = new byte[i];
+			//byte buffer[] = new byte[i];
+			buffer = new byte[i];
 			int j = 0;
 			while (j < i) {
 				int k = ContextHelper.getRequest().getInputStream().read(buffer, j, i - j);
@@ -134,7 +135,7 @@ public class UploadAction extends ActionSupport {
 			}
 			if (buffer.length > 0) {
 				contentLength = (long) buffer.length;
-				in = new ByteArrayInputStream(buffer);
+				// in = new ByteArrayInputStream(buffer);
 				// FileUtil.writeFileBinary("D:/aa.jpg", buffer);
 				// msg = "file:///D:/aa.jpg";
 			}
@@ -149,9 +150,10 @@ public class UploadAction extends ActionSupport {
 			 */
 			// msg = filedata.getName();
 			contentLength = filedata.length();
-			in = new FileInputStream(filedata);
+			//in = new FileInputStream(filedata);
+			buffer = ToolsUtil.File2byte(filedata);
 		}
-		if (contentLength > 0) {
+		if (contentLength > 0 && buffer.length>0) {
 			// 生成随机文件名
 			String extensionName = filedataFileName.substring(filedataFileName.lastIndexOf(".") + 1);
 			// 限制图片大小为500K
@@ -162,29 +164,8 @@ public class UploadAction extends ActionSupport {
 			} else if (ToolsUtil.isIn(extensionName, config.getPermitExtFiles(), ",") && contentLength > config.getPermitFileLength()) {
 				err = "文件超过最大限制,不能超过" + NumberUtil.convertSize(config.getPermitFileLength());
 			} else {
-				ByteArrayOutputStream baos = new ByteArrayOutputStream();  
-				byte[] buffer = new byte[1024]; 
-				int len;  
-				while ((len = in.read(buffer)) > -1 ) {  
-				    baos.write(buffer, 0, len);  
-				}  
-				baos.flush(); 
-				try {
-					in.close();
-					in = null;
-				} catch (Exception e) {
-					// TODO: handle exception
-					log.warn("in close error", e);
-				}
 				
-				InputStream inBefore = new ByteArrayInputStream(baos.toByteArray());  
-				config.fileActionBefore(inBefore);
-				try {
-					inBefore.close();
-					inBefore = null;
-				} catch (Exception e) {
-					log.warn("inBefore close error", e);
-				}
+				config.fileActionBefore(buffer);
 				
 				filename = filedataFileName;
 				if (config.isAutoRename()) {
@@ -192,8 +173,9 @@ public class UploadAction extends ActionSupport {
 				}
 				if (config.isUploadOss()) {
 					// 上传到阿里云存储
-					InputStream inupload = new ByteArrayInputStream(baos.toByteArray()); 
-					if (OSSUtil_IMG.uploadFile(filename, inupload, contentLength)) {
+					//ByteArrayInputStream 
+					InputStream bin = new ByteArrayInputStream(buffer);
+					if (OSSUtil_IMG.uploadFile(filename, bin, contentLength)) {
 						msg = "!http://images01.qkjchina.com/" + filename;
 						log.info("上传文件->OSS成功:" + msg);
 						successflag=true;
@@ -203,8 +185,8 @@ public class UploadAction extends ActionSupport {
 					}
 					// 返回图片地址
 					try {
-						inupload.close();
-						inupload = null;
+						bin.close();
+						bin = null;
 					} catch (Exception e) {
 						// TODO: handle exception
 						log.warn("inupload close error", e);
@@ -213,7 +195,7 @@ public class UploadAction extends ActionSupport {
 				} else {
 					log.info("文件不上传到OSS");
 				}
-				config.fileActionAfter(in,filename,successflag);
+				config.fileActionAfter(buffer,filename,successflag);
 			}
 		} else {
 			err = "未接收到图片!";

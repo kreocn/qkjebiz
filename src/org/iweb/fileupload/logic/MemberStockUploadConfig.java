@@ -31,7 +31,7 @@ public class MemberStockUploadConfig extends UploadConfig {
 	}
 
 	@Override
-	public void fileActionBefore(InputStream in) {
+	public void fileActionBefore(byte[] in) {
 		System.out.println("现在要对文件进行操作了!");
 		MemberStockAction msa=new MemberStockAction();
 		try {
@@ -43,7 +43,7 @@ public class MemberStockUploadConfig extends UploadConfig {
 	}
 
 	@Override
-	public void fileActionAfter(InputStream in,String filename,boolean successflag) {
+	public void fileActionAfter(byte[] in,String filename,boolean successflag) {
 		System.out.println("现在又要对文件进行操作了! +10086");
 		MemberStockAction msa=new MemberStockAction();
 		if(successflag==true){

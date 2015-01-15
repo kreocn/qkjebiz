@@ -1,4 +1,5 @@
 package org.iweb.sysvip.action;
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
@@ -260,7 +261,7 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 		return SUCCESS;
 	}
 	
-	public String lead(InputStream in2) throws Exception {
+	public String lead(byte[] in2) throws Exception {
 		ContextHelper.isPermit("QKJM_SYSVIP_MEMBERSTOCK_ADD");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		try {
@@ -277,7 +278,8 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 			            chooser.getSelectedFile().getName()+chooser.getSelectedFile().getAbsolutePath()+"a"+chooser.getSelectedFile().getCanonicalPath());
 			       String file=chooser.getSelectedFile().getPath();  */
 			       //InputStream in = new InputStream(in2);
-			       Workbook rwb=Workbook.getWorkbook(in2);
+				   InputStream in = new ByteArrayInputStream(in2);
+			       Workbook rwb=Workbook.getWorkbook(in);
 			       Sheet st=rwb.getSheet(0);
 			       int rs=st.getColumns();  //列数
 		           int rows=st.getRows();//行数
@@ -362,11 +364,20 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 		        			break;
 		        		}
 		           }
+		           
+		           try {
+						in.close();
+						in = null;
+					} catch (Exception e) {
+						// TODO: handle exception
+						log.warn("inupload close error", e);
+					}
 			    
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!lead 数据添加失败:", e);
 			throw new Exception(this.getClass().getName() + "!lead 数据添加失败:", e);
 		}
+		
 		return message;
 	}
 	
