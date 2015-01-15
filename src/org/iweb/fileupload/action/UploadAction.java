@@ -113,7 +113,6 @@ public class UploadAction extends ActionSupport {
 		// {"err":"","msg":"200906030521128703.gif"}
 		err = "";
 		msg = "";
-		InputStream in = new ByteArrayInputStream(new byte[0]);
 		Long contentLength = 0l;
 		String filename = "";
 

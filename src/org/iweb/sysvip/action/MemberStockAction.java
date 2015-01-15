@@ -432,7 +432,6 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 	}
 	
 	public String out() throws Exception {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		ProductDAO prodao=new ProductDAO();
 		HttpServletResponse response =ServletActionContext.getResponse();  
 		//OutputStream os = null;
