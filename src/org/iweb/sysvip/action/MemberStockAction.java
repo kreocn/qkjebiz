@@ -310,7 +310,8 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 		        	                //strc00 = sdf.format(dc.getDate()); 
 		        				   checkdate=sdf.format(dc.getDate());
 		        			   }else{
-		        				   checkdate=content;
+		        				   //checkdate=content;
+		        				   message="模板中日期格式不正确";
 		        			   }
 		        			  
 		        		   }
@@ -383,7 +384,11 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 		        		}
 		           }
 		           if(message==null || message.equals("")){
-		        	   dao.addList(memberList); 
+		        	   if(memberList.size()>0){
+		        		   dao.addList(memberList); 
+		        	   }else{
+		        		   message="产品数量不能全部为空哟";
+		        	   }
 		           }
 		           try {
 						in.close();
