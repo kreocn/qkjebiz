@@ -53,8 +53,8 @@
 	</insert>
 	<insert id="sysvip_addMemberStockHistory" parameterClass="memberStockHistory">
 	<![CDATA[ 
-			Insert Into qkjm_h_member(up_user,up_time,up_path,upIp)
-			Values (#up_user#,#up_time#,#up_path#,#upIp#)
+			Insert Into qkjm_h_member(memberId,check_date,up_user,up_time,up_path,upIp,state)
+			Values (#memberId#,#check_date#,#up_user#,#up_time#,#up_path#,#upIp#,#state#)
 		]]>
 		<selectKey resultClass="int" keyProperty="uuid">
 		<![CDATA[ Select LAST_INSERT_ID() ]]>

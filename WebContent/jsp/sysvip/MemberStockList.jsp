@@ -54,7 +54,7 @@ ${path}
 <div class="label_main">
       <div class="label_hang">
           <div class="label_ltit">经销商编号:</div>
-          <div class="label_rwben"><s:textfield name="memberStock.dealer"/></div>
+          <div class="label_rwben"><s:textfield id="order_user_id" name="memberStock.dealer"/></div>
       </div>
       <div class="label_hang">
 		    <div class="label_ltit">产品:</div>
@@ -122,5 +122,18 @@ ${path}
 <div class="pagination"><font color="red" style="size: 26px;">${message }</font><script type="text/javascript">var spage = new ShowPage(${currPage});	spage.show2(${recCount},${pageSize},2);</script></div>
 </div>
 </body>
+<script type="text/javascript">
+var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
+var c_mid = '<s:property value="outStock.member_id" />';
+$(function() {
+	SimpleLoadMember(ajax_url_action,function(event, ui) {loadAddress(ui.item.order_user_id);});
+	CommonUtil.pickrow('fd_list_table');
+});
 
+function loadAddress(memberid) {
+	var ajax = new Common_Ajax();
+	ajax.config.action_url = ajax_url_action;
+	ajax.sendAjax();
+}
+</script>
 </html>

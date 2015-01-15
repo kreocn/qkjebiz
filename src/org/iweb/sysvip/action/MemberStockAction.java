@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletResponse;
 
 import jxl.Cell;
@@ -32,6 +33,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.ServletActionContext;
 import org.iweb.sys.ActionAttr;
 import org.iweb.sys.ContextHelper;
+import org.iweb.sys.Parameters;
 import org.iweb.sys.ToolsUtil;
 import org.iweb.sysvip.dao.MemberStockDAO;
 import org.iweb.sysvip.domain.Member;
@@ -266,6 +268,7 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 	public String lead(byte[] in2) throws Exception {
 		ContextHelper.isPermit("QKJM_SYSVIP_MEMBERSTOCK_ADD");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		HttpSession session = ContextHelper.getRequest().getSession();
 		try {
 			/*JFileChooser chooser = new JFileChooser();
 			FileNameExtensionFilter filter = new FileNameExtensionFilter(
@@ -333,7 +336,7 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 		        			   map.clear();
 		        			   map.put("dealer", peo);
 		        			   map.put("check_date", checkdate);
-		        			   map.put("product", produ); 
+		        			   //map.put("product", produ); 
 		        			   this.setMembers(dao.list(map));
 		        			   if(members.size()>0){
 		        				   message="时间："+checkdate+"会员："+peo+"库存信息重复请确认";
@@ -357,7 +360,20 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 	        		   }
 		        	   if((peo==null || peo.equals("") || checkdate==null || checkdate.equals("")) && message==null ){
 		        		   message="模板中会员账号或核对日期不能为空";
+		        		   if(peo==null){
+		        			   session.setAttribute("peo","空" );
+		        		   }else{
+		        			   session.setAttribute("peo",peo );
+		        		   }
+		        		   if(checkdate==null){
+		        			   session.setAttribute("checkdate","" );
+		        		   }else{
+		        			   session.setAttribute("checkdate",checkdate );
+		        		   }
 		        		   break;
+		        	   }else{
+		        		   session.setAttribute("peo",peo );
+		        		   session.setAttribute("checkdate",checkdate );
 		        	   }
 		        	   Cell co= st.getCell(0,0); 
 		        	   String content=co.getContents();
@@ -367,7 +383,6 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 		        		}
 		           }
 		           if(message==null || message.equals("")){
-		        	   System.out.println(memberList.size()+"aaaaaaaaaa");
 		        	   dao.addList(memberList); 
 		           }
 		           try {
@@ -386,14 +401,28 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 		return message;
 	}
 	
-	public String history(String path) throws Exception{
+	public String history(String path,int state) throws Exception{
+		HttpSession session = ContextHelper.getRequest().getSession();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		try {
+			//memberStock=(MemberStock)memberList.get(0);
 			mehistory=new MemberStockHistory();
+			mehistory.setMemberId(session.getAttribute("peo").toString());
+			String cdate=session.getAttribute("checkdate").toString();
+			if(cdate==null || cdate.equals("")){
+				mehistory.setCheck_date(null);
+			}else{
+				Date date=sdf.parse(cdate);
+				mehistory.setCheck_date(date);
+			}
 			mehistory.setUp_path(path);
 			mehistory.setUp_time(new Date());
 			mehistory.setUp_user(ContextHelper.getUserLoginUuid());
 			mehistory.setUpIp(ContextHelper.getRealIP());
+			mehistory.setState(state);
 			dao.savemh(mehistory);
+			session.removeAttribute("peo");
+			session.removeAttribute("checkdate");
 		} catch (Exception e) {
 			// TODO: handle exception
 			log.error(this.getClass().getName() + "!history 数据添加失败:", e);
