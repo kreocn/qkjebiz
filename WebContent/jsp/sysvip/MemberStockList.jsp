@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
+<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -12,16 +13,40 @@
 <script type="text/javascript" src="<s:url value="/js/zTreeJs/jquery.ztree.core-3.5.js" />"></script>
 <script type="text/javascript" src="<s:url value="http://images01.qkjchina.com/qkjebiz01/zTree_result.js?v0=1" />"></script>
 <script type="text/javascript" src="<s:url value="/js/zTreeJs/product.js" />"></script>
-</head>
 
+</head>
+<script type="text/javascript">
+function checkstock(){
+	if ($("#citySel").val() == '') {
+		$("#cityUid").val(null);
+}
+}
+
+function refurbish(){
+	window.location.href="/sysvip/memberStock_list";
+}
+
+$(function(){
+	$.fn.xhuploadinit("MemberStock",refurbish);
+	$("#marketimgid").xhupload();
+});
+
+$(document).ready(function(){
+	$("#filebtn").removeClass("filearea"); //添加样式marketimgid_filebutton
+	$("#marketimgid_filebutton").val("选择导入文件");
+});
+
+</script>
 <body>
 <div class="main" >
 <div class="dq_step">
 ${path}
 <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJM_SYSVIP_MEMBERSTOCK_ADD')">
 	<span class="opb lb op-area"><a href="<s:url namespace="/sysvip" action="memberStock_load"><s:param name="viewFlag">add</s:param></s:url>">添加库存信息</a></span>
-	<span class="opb lb op-area"><a href="<s:url namespace="/sysvip" action="memberStock_lead"></s:url>">导入库存信息</a>
+	<span class="opb lb op-area">
+	<s:hidden id="marketimgid"></s:hidden>
 	</span>
+
 </s:if>
 </div>
 	<s:form id="serachForm" name="serachForm"  method="get" namespace="/sysvip" theme="simple">
@@ -45,6 +70,13 @@ ${path}
 			        <ul id="treeDemo" class="ztree"></ul>
 			    </div>
 		    </div>
+		</div>
+		
+		<div class="label_hang">
+		<div class="label_ltit">核对日期:</div>
+	    <div class="label_rwben">
+            	<input  class="datepicker validate[required,custom[date]]" type="text" name="memberStock.check_date" value="${it:formatDate(memberStock.check_date,'yyyy-MM-dd')}" />
+         </div>
 		</div>
 		
 	  <div class="label_hang label_button tac">
@@ -75,7 +107,7 @@ ${path}
 		${stock}&nbsp;瓶
 				(${case_spec }件)
 		</td>
-		<td class="td2">${check_date}</td>
+		<td class="td2">${it:formatDate(check_date,'yyyy-MM-dd')}</td>
 		<td class="td4 op-area">
 			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJM_SYSVIP_MEMBERSTOCK_MDY')">
 	    	<a class="input-blue" href="<s:url namespace="/sysvip" action="memberStock_load"><s:param name="viewFlag">mdy</s:param><s:param name="memberStock.uuid" value="uuid"></s:param></s:url>">修改</a>
@@ -92,4 +124,5 @@ ${path}
 <div class="pagination"><font color="red" style="size: 26px;">${message }</font><script type="text/javascript">var spage = new ShowPage(${currPage});	spage.show2(${recCount},${pageSize},2);</script></div>
 </div>
 </body>
+
 </html>

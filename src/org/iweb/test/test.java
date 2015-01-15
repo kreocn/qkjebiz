@@ -3,6 +3,9 @@ package org.iweb.test;
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.iweb.fileupload.logic.MemberStockUploadConfig;
+import org.iweb.fileupload.logic.UploadConfig;
+
 public class test {
 
 	private static ConcurrentHashMap<String, ArrayList<Object>> cm = new ConcurrentHashMap<>();
@@ -12,9 +15,18 @@ public class test {
 	private StringBuffer sql = new StringBuffer();
 
 	public test() {
-		String as = "0.1##0.2##0.3";
-		String[] as2 = as.split("##");
-		System.out.println(as2[1]);
+		UploadConfig uc = new MemberStockUploadConfig();
+		System.out.println(uc.getPermitExtFiles());
+		System.out.println(uc.getMessage("", ""));
+		System.out.println("============================");
+		try {
+			UploadConfig uc1 = (UploadConfig) Class.forName("org.iweb.fileupload.logic.MemberStockUploadConfig").newInstance();
+			System.out.println(uc1.getPermitExtFiles());
+			System.out.println(uc1.getMessage("", ""));
+			System.out.println("============================");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**

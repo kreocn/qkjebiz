@@ -7,7 +7,7 @@ public class MemberStock {
 	private String dealer;// (varchar)经销商帐号
 	private Integer product;// (int)商品编号
 	private Integer stock;// (int)库存数量（瓶）
-	private String check_date;// (varchar)核对日期
+	private Date check_date;// (varchar)核对日期
 	private String add_user;// (varchar)填加人
 	private Date add_time;// (datetime)填加时间
 	private String lm_user;// (varchar)修改人
@@ -60,11 +60,11 @@ public class MemberStock {
 		this.stock = stock;
 	}
 
-	public String getCheck_date() {
+	public Date getCheck_date() {
 		return check_date;
 	}
 
-	public void setCheck_date(String check_date) {
+	public void setCheck_date(Date check_date) {
 		this.check_date = check_date;
 	}
 

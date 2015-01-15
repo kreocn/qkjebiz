@@ -9,7 +9,6 @@
 		<action name="put" class="org.iweb.fileupload.action.UploadAction" method="put">
 			<result>/jsp/upload/put.jsp</result>
 		</action>
-
 		<!-- UploadClass Start -->
 		<action name="uclass_list" class="org.iweb.fileupload.action.UploadClassAction" method="list">
 			<result>/jsp/upload/UploadClassList.jsp</result>

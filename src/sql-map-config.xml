@@ -9,7 +9,6 @@
 			<!-- 测试环境 DataSource Proxool -->
 			<!-- <property name="DataSource" value="java:/comp/env/qkj/mysql204huzhu_proxool" /> -->
 			<!-- 本机Tomcat本机测试环境 DataSource(ERP LOCAL TEST)&测试服务器 Proxool -->
-			<!-- <property name="DataSource" value="java:/comp/env/qkj/mysqlLocalCJ_proxool" /> -->
 			<property name="DataSource" value="java:/comp/env/qkj/mysqlLocalCJ_druid" />
 		</dataSource>
 	</transactionManager>

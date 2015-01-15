@@ -52,4 +52,27 @@ public class NumberUtil {
 		Matcher isNum = pattern.matcher(str);
 		return isNum.matches();
 	}
+
+	/**
+	 * 返回大小单位
+	 * 
+	 * @param filesize
+	 * @return
+	 */
+	public static String convertSize(long filesize) {
+		String strUnit = "Bytes";
+		String strAfterComma = "";
+		int intDivisor = 1;
+		if (filesize >= 1024 * 1024) {
+			strUnit = "MB";
+			intDivisor = 1024 * 1024;
+		} else if (filesize >= 1024) {
+			strUnit = "KB";
+			intDivisor = 1024;
+		}
+		if (intDivisor == 1) return filesize + " " + strUnit;
+		strAfterComma = "" + 100 * (filesize % intDivisor) / intDivisor;
+		if (strAfterComma == "") strAfterComma = ".0";
+		return filesize / intDivisor + "." + strAfterComma + " " + strUnit;
+	}
 }
