@@ -911,3 +911,6 @@ table{
 .ilisttable textarea{border-radius:5px; border:1px solid #ccc; font-family: "微软雅黑"; margin:2px;}
 #message{color:#f00;}
 .juese li{line-height:28px; min-width:150px;}
+.dd_zjia{float: right; line-height:28px;}
+.orderconsigneshow{line-height:28px;}
+.dd_nums{line-height:26px;  display: inline-block;}
