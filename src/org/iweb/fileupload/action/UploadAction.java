@@ -175,14 +175,14 @@ public class UploadAction extends ActionSupport {
 					// 上传到阿里云存储
 					//ByteArrayInputStream 
 					InputStream bin = new ByteArrayInputStream(buffer);
-					if (OSSUtil_IMG.uploadFile(filename, bin, contentLength)) {
+					/*if (OSSUtil_IMG.uploadFile(filename, bin, contentLength)) {
 						msg = "!http://images01.qkjchina.com/" + filename;
 						log.info("上传文件->OSS成功:" + msg);
 						successflag=true;
 					} else {
 						err = "上传文件失败,无法连接OSS服务器.";
 						log.info(err);
-					}
+					}*/
 					// 返回图片地址
 					try {
 						bin.close();

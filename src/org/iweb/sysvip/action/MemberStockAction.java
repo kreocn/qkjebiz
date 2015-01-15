@@ -3,6 +3,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -50,6 +51,7 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 
 	private MemberStock memberStock;
 	private List<MemberStock> memberStocks;
+	private List<Object> memberList=new ArrayList<>();
 	private Member member;
 	private List<Member> members;
 	private String message;
@@ -347,7 +349,7 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 				       			   memberStock.setAdd_time(new Date());
 				       			   memberStock.setLm_user(ContextHelper.getUserLoginUuid());
 				       			   memberStock.setLm_time(new Date());
-				       			   dao.add(memberStock);
+				       			   memberList.add(memberStock);
 		        			   }
 			       			   stock=null;
 		        		   }
@@ -364,7 +366,10 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 		        			break;
 		        		}
 		           }
-		           
+		           if(message==null || message.equals("")){
+		        	   System.out.println(memberList.size()+"aaaaaaaaaa");
+		        	   dao.addList(memberList); 
+		           }
 		           try {
 						in.close();
 						in = null;
@@ -424,6 +429,7 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
             WritableSheet ws = wwb.createSheet("经销商库存统计", 0);
             ws.setColumnView(0, 15);
             ws.setColumnView(1, 25);
+            ws.setColumnView(2, 15);
             
             WritableFont font1 = new WritableFont(WritableFont.ARIAL,11);  
             
@@ -433,6 +439,8 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
             //要插入到的Excel表格的行号，默认从0开始
             Label labelId= new Label(0, 0, "经销商账号:",cellFormat1);//表示第1列1个
             Label labelName= new Label(1, 0, member.getUuid(),cellFormat1);//第2列1个
+            Label labelMeName= new Label(2, 0, "经销商姓名:",cellFormat1);//第五列1 行
+            Label labelMeName2= new Label(3, 0, member.getMember_name(),cellFormat1);//第五列1 行
             Label labelDate= new Label(5, 0, "核对日期:",cellFormat1);//第五列1 行
             
             Label title1= new Label(0, 1, "产品编号",getHeadFormat());//表示第
@@ -441,6 +449,8 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
             
             ws.addCell(labelId);
             ws.addCell(labelName);
+            ws.addCell(labelMeName);
+            ws.addCell(labelMeName2);
             ws.addCell(labelDate);
             ws.addCell(title1);
             ws.addCell(title2);
