@@ -273,7 +273,7 @@
 			<div class="label_main">
 				<div class="label_hang">
 				    <div class="label_ltit">其他情况说明:</div>
-				    <div class="label_rwben">
+				    <div class="label_rwbenx">
 				    	<s:if test="travel.check_status<=5 ||  travel.acheck_status<=5">
 		                <s:textarea name="travel.note" title="其他情况说明" cssClass="label_hang_linput inputNote validate[maxSize[65535]]" />
 		                </s:if>
