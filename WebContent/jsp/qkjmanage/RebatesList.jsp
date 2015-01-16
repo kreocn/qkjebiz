@@ -10,10 +10,6 @@
 <script type="text/javascript">
 var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
 $(function(){
-	setStyle("table1");
-	CommonUtil.pickrow('table1');
-	CommonUtil.pickrowAll('table1','uuidcheck');
-	
 	SimpleLoadMember(ajax_url_action,function(event, ui) {
 		//$("#search_form_submit_button").click();
 	});

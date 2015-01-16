@@ -1,7 +1,5 @@
 package org.iweb.fileupload.logic;
 
-import java.io.InputStream;
-
 import org.iweb.sys.ToolsUtil;
 
 public class UploadConfig {
@@ -47,11 +45,11 @@ public class UploadConfig {
 		return "qkjebiz01/" + ToolsUtil.getTimeTimeMillis() + "_" + ToolsUtil.getRandomCode(10) + '.' + ext;
 	}
 
-	public void fileActionBefore(InputStream in) {
+	public void fileActionBefore(byte[] buffer) {
 
 	}
 
-	public void fileActionAfter(InputStream in) {
+	public void fileActionAfter(byte[] buffer,String filename,boolean successFlag) {
 
 	}
 }

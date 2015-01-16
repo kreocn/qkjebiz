@@ -17,6 +17,14 @@ public class MemberStockDAO extends AbstractDAO {
 	public Object add(Object parameters) {
 		return super.add("sysvip_addMemberStock", parameters);
 	}
+	
+	public void addList(List<Object> parameter_list) {
+		super.batchStatment("sysvip_addMemberStock", parameter_list, false);
+	}
+	
+	public Object savemh(Object parameters){
+		return super.add("sysvip_addMemberStockHistory", parameters);
+	}
 
 	public int save(Object parameters) {
 		return super.save("sysvip_mdyMemberStock", parameters);

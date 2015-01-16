@@ -3,8 +3,10 @@
  */
 (function($){
 	var xhuploadAjaxUrl = "/upload/put";
-	$.fn.xhuploadinit = function(initConfig){
+	var successFuntion = $.noop;
+	$.fn.xhuploadinit = function(initConfig,initSuccessFuntion){
 		if (initConfig) xhuploadAjaxUrl += xhuploadAjaxUrl + "?initConfig=" + initConfig;
+		if(initSuccessFuntion && typeof(initSuccessFuntion)=="function" )successFuntion = initSuccessFuntion;
 		var immediate = true;
 		$("body").append('<input type="file" id="xhUploadFile" name="filedata" class="fileinput" />');
 		$("body").append('<div id="xhUploadFile_progress" title="文件上传"><div id="xhUploadFile_progressbar"></div></div>');
@@ -59,7 +61,7 @@
 
 	$.fn.xhcreate = function(o, c){
 		var oid = o.attr("id");
-		o.after('<span class="filearea"><input type="button" id="' + oid + '_filebutton" name="filebutton" value="选择文件" class="filebutton" /></span>');
+		o.after('<span id="filebtn" class="filearea"><input type="button" id="' + oid + '_filebutton" name="filebutton" value="选择文件" class="filebutton" /></span>');
 		$("#" + oid + "_filebutton").on("click", function(){
 			$("#xhUploadFile").data("recallid", oid);
 			$("#xhUploadFile").click();
@@ -135,6 +137,8 @@
 			// 只有当返回时 进度条才算结束
 			$('#xhUploadFile_progress').dialog("close");
 			// alert("afasdf:" + data);
+			if(typeof successFuntion == "function")
+				successFuntion();
 		} });
 	};
 })(jQuery);

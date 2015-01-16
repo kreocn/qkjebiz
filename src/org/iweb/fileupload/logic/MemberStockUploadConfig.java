@@ -3,11 +3,21 @@ package org.iweb.fileupload.logic;
 import java.io.InputStream;
 
 import org.iweb.sys.ToolsUtil;
+import org.iweb.sysvip.action.MemberStockAction;
 
 public class MemberStockUploadConfig extends UploadConfig {
+	private String message;
 	@Override
 	public String getMessage(String filename, String err) {
-		return "上传成功";
+		if(message!=null){
+			err=message;
+		}
+		if(err==null || err.equals("") || err.equals("null")){
+			return "上传成功";
+		}else{
+			return err;
+		}
+		
 	}
 
 	@Override
@@ -17,16 +27,37 @@ public class MemberStockUploadConfig extends UploadConfig {
 
 	@Override
 	public boolean isUploadOss() {
-		return false;
+		return true;
 	}
 
 	@Override
-	public void fileActionBefore(InputStream in) {
+	public void fileActionBefore(byte[] in) {
 		System.out.println("现在要对文件进行操作了!");
+		MemberStockAction msa=new MemberStockAction();
+		try {
+			message=msa.lead(in);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
-	public void fileActionAfter(InputStream in) {
+	public void fileActionAfter(byte[] in,String filename,boolean successflag) {
 		System.out.println("现在又要对文件进行操作了! +10086");
+		MemberStockAction msa=new MemberStockAction();
+		if(successflag==true){
+			try {
+				if(message!=null){
+					msa.history("!http://images01.qkjchina.com/"+filename,1);
+				}else{
+					msa.history("!http://images01.qkjchina.com/"+filename,0);
+				}
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 }
