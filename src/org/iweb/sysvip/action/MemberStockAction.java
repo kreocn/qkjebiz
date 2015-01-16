@@ -64,7 +64,16 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;会员库存";
 	private MemberStockHistory mehistory;
 	private List<MemberStockHistory> mehistorys;
+	private String checkuuid;
 	
+	public String getCheckuuid() {
+		return checkuuid;
+	}
+
+	public void setCheckuuid(String checkuuid) {
+		this.checkuuid = checkuuid;
+	}
+
 	public MemberStockHistory getMehistory() {
 		return mehistory;
 	}
@@ -250,6 +259,27 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 		return SUCCESS;
 	}
 	
+	public String delCheck() throws Exception {
+		ContextHelper.isPermit("QKJM_SYSVIP_MEMBERSTOCK_DEL");
+		try {
+			String ids[]=checkuuid.split(",");
+			List<Object> cuuid=new ArrayList<>();
+			for(int i=0;i<ids.length;i++){
+				if(isNumeric(ids[i])){
+					cuuid.add(Integer.parseInt(ids[i]));
+				}else{
+					continue;
+				}
+			}
+			dao.delCheck(cuuid);
+			setMessage("删除成功!ID=" + checkuuid);
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!del 数据删除失败:", e);
+			throw new Exception(this.getClass().getName() + "!del 数据删除失败:", e);
+		}
+		return SUCCESS;
+	}
+	
 	public String leading() throws Exception {
 		ContextHelper.isPermit("QKJM_SYSVIP_MEMBERSTOCK_ADD");
 		try {
@@ -343,17 +373,27 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 		        				   message="盘点时间为"+checkdate+"会员号为"+peo+"的库存信息重复请确认,若需重新上传请先删除原数据！";
 		        				   break;
 		        			   }else{
-		        				   memberStock=new MemberStock();
-			        			   memberStock.setDealer(peo);
-			        			   Date date=sdf.parse(checkdate);
-			        			   memberStock.setCheck_date(date);
-			        			   memberStock.setProduct(Integer.parseInt(produ));
-			        			   memberStock.setStock(Integer.parseInt(stock));
-			        			   memberStock.setAdd_user(ContextHelper.getUserLoginUuid());
-				       			   memberStock.setAdd_time(new Date());
-				       			   memberStock.setLm_user(ContextHelper.getUserLoginUuid());
-				       			   memberStock.setLm_time(new Date());
-				       			   memberList.add(memberStock);
+		        				   if(isNumeric(stock)){
+		        					   if(stock.equals("0")){
+		        						   continue;
+		        					   }else{
+		        						   memberStock=new MemberStock();
+					        			   memberStock.setDealer(peo);
+					        			   Date date=sdf.parse(checkdate);
+					        			   memberStock.setCheck_date(date);
+					        			   memberStock.setProduct(Integer.parseInt(produ));
+					        			   memberStock.setStock(Integer.parseInt(stock));
+					        			   memberStock.setAdd_user(ContextHelper.getUserLoginUuid());
+						       			   memberStock.setAdd_time(new Date());
+						       			   memberStock.setLm_user(ContextHelper.getUserLoginUuid());
+						       			   memberStock.setLm_time(new Date());
+						       			   memberList.add(memberStock);
+		        					   }
+		        					   
+		        				   }else{
+		        					   message="盘点数量要为数字哟！";
+		        				   }
+		        				   
 		        			   }
 			       			   stock=null;
 		        		   }
@@ -405,6 +445,16 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 		
 		return message;
 	}
+	
+	public static boolean isNumeric(String str){
+		  for (int i = 0; i < str.length(); i++){
+		   System.out.println(str.charAt(i));
+		   if (!Character.isDigit(str.charAt(i))){
+		    return false;
+		   }
+		  }
+		  return true;
+		 }
 	
 	public String history(String path,int state) throws Exception{
 		HttpSession session = ContextHelper.getRequest().getSession();
@@ -463,6 +513,7 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
             ws.setColumnView(0, 15);
             ws.setColumnView(1, 25);
             ws.setColumnView(2, 15);
+            ws.setColumnView(3, 15);
             
             WritableFont font1 = new WritableFont(WritableFont.ARIAL,11);  
             
@@ -479,6 +530,7 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
             Label title1= new Label(0, 1, "产品编号",getHeadFormat());//表示第
             Label title2= new Label(1, 1, "产品名称",getHeadFormat());
             Label title3= new Label(2, 1, "数量",getHeadFormat());
+            Label title4= new Label(3, 1, "单位",getHeadFormat());
             
             ws.addCell(labelId);
             ws.addCell(labelName);
@@ -488,11 +540,14 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
             ws.addCell(title1);
             ws.addCell(title2);
             ws.addCell(title3);
+            ws.addCell(title4);
            for (int i = 0; i < pro.size(); i++) {
                 Label labelId_i= new Label(0, i+2, pro.get(i).getUuid()+"",cellFormat1);
                 Label labelName_i= new Label(1, i+2, pro.get(i).getTitle(),cellFormat1);
+                Label labelcase_i= new Label(3, i+2, "瓶");
                 ws.addCell(labelId_i);
                 ws.addCell(labelName_i);
+                ws.addCell(labelcase_i);
             }
           
            //写进文档

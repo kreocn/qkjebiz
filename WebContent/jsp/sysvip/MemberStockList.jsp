@@ -36,6 +36,36 @@ $(document).ready(function(){
 	$("#marketimgid_filebutton").val("选择导入文件");
 });
 
+function deletestock(msg){
+	alert(1);
+	var checked = false;
+	var qx=document.getElementsByName("memberStock.uuid"); //获取复选框对象 
+    for(var j = 0; j < qx.length; j ++) {      
+    	if (qx[j].checked) {    //如果只要有一个复选框被选中，就可以把checked设为true                
+    		checked = true;        
+    	}          
+    }
+	if (!checked) {//如果没有一个复选框被选中
+		alert('请至少选择一条要删除信息!');
+		return;
+	}
+	if (confirm(msg)) {//如果有选中的，询问消息
+		var s = null;
+        for(var i = 0; i < qx.length; i ++){   //遍历复选框选中，可以拼接别选中的id      
+  		  if(qx[i].type == "checkbox"){              
+			 	if (qx[i].checked){                
+		 		if (s != null){
+					s = s + qx[i].value + ",";
+				} else {//第一次
+					s = qx[i].value + ",";
+				}     
+		 		}             
+		  }          
+		}
+		location.href="/sysvip/memberStock_delCheck?checkuuid="+s;
+	}
+}
+
 </script>
 <body>
 <div class="main" >
@@ -55,6 +85,10 @@ ${path}
       <div class="label_hang">
           <div class="label_ltit">经销商编号:</div>
           <div class="label_rwben"><s:textfield id="order_user_id" name="memberStock.dealer"/></div>
+      </div>
+      <div class="label_hang">
+          <div class="label_ltit">经销商名称:</div>
+          <div class="label_rwben"><s:textfield name="memberStock.member_name"/></div>
       </div>
       <div class="label_hang">
 		    <div class="label_ltit">产品:</div>
@@ -79,6 +113,9 @@ ${path}
         	<s:checkbox id="search_mcondition" name="search_mcondition" fieldValue="true" value="true" cssClass="regular-checkbox" />
 			<label for="search_mcondition"></label>更多条件
             <s:submit value="搜索" onclick="checkstock();" /> <s:reset value="重置" />
+            <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJM_SYSVIP_MEMBERSTOCK_DEL')">
+             <input type="button" value="批量删除" onclick="javascript:deletestock('是否真的要批量删除记录?');">
+             </s:if>
         </div>
 </div>
 </div>
@@ -86,6 +123,7 @@ ${path}
 <div class="tab_warp">
 <table>
 <tr id="coltr">
+	<th class="td1"><input id="uuidcheck" name="uuidcheck" type="checkbox" onclick="checkAll();" /></th>
 	<th class="td1">编号</th>
 	<th class="td1">经销商帐号</th>
 	<th class="td3">经销商姓名</th>
@@ -97,7 +135,8 @@ ${path}
 </tr>
 <s:iterator value="memberStocks" status="sta">
 	  <tr id="showtr${uuid}">
-	  	 <td class="td1">${uuid}</td>
+	  	<td class="td1"><input id="memberStock.uuid" name="memberStock.uuid" type="checkbox" value="<s:property value="uuid" />" /></td>
+	  	<td class="td1">${uuid}</td>
 	    <td class="td1">${dealer}</td>
 	    <td class="td3">${member_name}</td>
 		<td class="td1">${product}(${product_name})</td>
@@ -124,7 +163,6 @@ ${path}
 </body>
 <script type="text/javascript">
 var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
-var c_mid = '<s:property value="outStock.member_id" />';
 $(function() {
 	SimpleLoadMember(ajax_url_action,function(event, ui) {loadAddress(ui.item.order_user_id);});
 	CommonUtil.pickrow('fd_list_table');
@@ -134,6 +172,19 @@ function loadAddress(memberid) {
 	var ajax = new Common_Ajax();
 	ajax.config.action_url = ajax_url_action;
 	ajax.sendAjax();
+}
+function checkAll(){
+	var check=document.getElementsByName("memberStock.uuid");
+	var a=check.length;
+	if(document.getElementById("uuidcheck").checked){
+		for(var i=0;i<a;i++){
+			check[i].checked=true;
+		}
+	}else{
+		for(var i=0;i<a;i++){
+			check[i].checked=false;
+		}
+	}
 }
 </script>
 </html>

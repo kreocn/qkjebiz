@@ -33,6 +33,10 @@ public class MemberStockDAO extends AbstractDAO {
 	public int delete(Object parameters) {
 		return super.delete("sysvip_delMemberStock", parameters);
 	}
+	
+	public void delCheck(List<Object> parameter_list) {
+		super.batchStatment("sysvip_delMemberStock", parameter_list, false);
+	}
 
 	public int getResultCount() {
 		return super.getResultCount();

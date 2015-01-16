@@ -22,22 +22,24 @@
 			<isNotEmpty prepend="AND" property="check_date"><![CDATA[ m.check_date=#check_date# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="add_time"><![CDATA[ m.add_time=#add_time# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="lm_user"><![CDATA[ m.lm_user=#lm_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="member_name"><![CDATA[ vm.member_name LIKE CONCAT(#member_name#,'%') ]]></isNotEmpty>
 
 		</dynamic>
 		<![CDATA[ LIMIT 1000 ]]>
 	</select>
 	<select id="sysvip_getMemberStocksCounts" resultClass="int" parameterClass="java.util.Map">
 		<![CDATA[ 
-			Select Count(*) From qkjm_t_member
+			Select Count(*) From qkjm_t_member m LEFT JOIN s_vip_member vm ON(vm.uuid=m.dealer)
 		]]>
 		<dynamic prepend="WHERE">
-			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="dealer"><![CDATA[ dealer=#dealer# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="product"><![CDATA[ product=#product# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="stock"><![CDATA[ stock=#stock# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="check_date"><![CDATA[ check_date=#check_date# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="add_time"><![CDATA[ add_time=#add_time# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="lm_user"><![CDATA[ lm_user=#lm_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ m.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="dealer"><![CDATA[ m.dealer=#dealer# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="product"><![CDATA[ m.product=#product# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="stock"><![CDATA[ m.stock=#stock# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="check_date"><![CDATA[ m.check_date=#check_date# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="add_time"><![CDATA[ m.add_time=#add_time# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="lm_user"><![CDATA[ m.lm_user=#lm_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="member_name"><![CDATA[ vm.member_name LIKE CONCAT(#member_name#,'%') ]]></isNotEmpty>
 
 		</dynamic>
 		<![CDATA[ LIMIT 1000 ]]>
