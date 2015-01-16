@@ -1,6 +1,5 @@
 package org.iweb.common.action;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,7 +7,6 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.iweb.common.dao.MenuDAO;
-import org.iweb.sys.ContextHelper;
 import org.iweb.sys.ToolsUtil;
 import org.iweb.sys.domain.UserPrivilege;
 
@@ -22,9 +20,8 @@ public class MainAction extends ActionSupport {
 	private static final long serialVersionUID = -7995560530227347448L;
 
 	public String left() throws Exception {
-		Map<String, Object> map = new HashMap<String, Object>();
+		// Map<String, Object> map = new HashMap<String, Object>();
 		try {
-
 			// if (ContextHelper.isAdmin()) {
 			this.setMenus(dao.listSysMenu(null));
 			// } else {
