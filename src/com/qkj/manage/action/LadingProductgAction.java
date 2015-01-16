@@ -12,36 +12,36 @@ import org.iweb.sys.ToolsUtil;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.qkj.manage.dao.LadingDAO;
-import com.qkj.manage.dao.LadingItemDAO;
-import com.qkj.manage.domain.LadingItem;
+import com.qkj.manage.dao.LadingProductgDAO;
+import com.qkj.manage.domain.LadingProductg;
 
-public class LadingItemAction extends ActionSupport {
+public class LadingProductgAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
-	private static Log log = LogFactory.getLog(LadingItemAction.class);
+	private static Log log = LogFactory.getLog(LadingProductgAction.class);
 	private Map<String, Object> map = new HashMap<String, Object>();
-	private LadingItemDAO dao = new LadingItemDAO();
+	private LadingProductgDAO dao = new LadingProductgDAO();
 
-	private LadingItem ladingItem;
-	private List<LadingItem> ladingItems;
+	private LadingProductg ladingProductg;
+	private List<LadingProductg> ladingProductgs;
 	private String message;
 	private String viewFlag;
 	private int recCount;
 	private int pageSize;
 
-	public LadingItem getLadingItem() {
-		return ladingItem;
+	public LadingProductg getLadingProductg() {
+		return ladingProductg;
 	}
 
-	public void setLadingItem(LadingItem ladingItem) {
-		this.ladingItem = ladingItem;
+	public void setLadingProductg(LadingProductg ladingProductg) {
+		this.ladingProductg = ladingProductg;
 	}
 
-	public List<LadingItem> getLadingItems() {
-		return ladingItems;
+	public List<LadingProductg> getLadingProductgs() {
+		return ladingProductgs;
 	}
 
-	public void setLadingItems(List<LadingItem> ladingItems) {
-		this.ladingItems = ladingItems;
+	public void setLadingProductgs(List<LadingProductg> ladingProductgs) {
+		this.ladingProductgs = ladingProductgs;
 	}
 
 	public String getMessage() {
@@ -77,13 +77,13 @@ public class LadingItemAction extends ActionSupport {
 	}
 
 	public String list() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_LADINGITEM_LIST");
+		ContextHelper.isPermit("QKJ_QKJMANAGE_LADINGPRODUCTG_LIST");
 		try {
 			map.clear();
-			if (ladingItem != null) map.putAll(ToolsUtil.getMapByBean(ladingItem));
+			if (ladingProductg != null) map.putAll(ToolsUtil.getMapByBean(ladingProductg));
 			map.putAll(ContextHelper.getDefaultRequestMap4Page());
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
-			this.setLadingItems(dao.list(map));
+			this.setLadingProductgs(dao.list(map));
 			this.setRecCount(dao.getResultCount());
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
@@ -95,17 +95,17 @@ public class LadingItemAction extends ActionSupport {
 	public String load() throws Exception {
 		try {
 			if (null == viewFlag) {
-				this.setLadingItem(null);
+				this.setLadingProductg(null);
 				setMessage("你没有选择任何操作!");
 			} else if ("add".equals(viewFlag)) {
-				this.setLadingItem(null);
+				this.setLadingProductg(null);
 			} else if ("mdy".equals(viewFlag)) {
 				map.clear();
-				map.put("uuid", ladingItem.getUuid());
-				if (null == map.get("uuid")) this.setLadingItem(null);
-				else this.setLadingItem((LadingItem) dao.list(map).get(0));
+				map.put("uuid", ladingProductg.getUuid());
+				if (null == map.get("uuid")) this.setLadingProductg(null);
+				else this.setLadingProductg((LadingProductg) dao.list(map).get(0));
 			} else {
-				this.setLadingItem(null);
+				this.setLadingProductg(null);
 				setMessage("无操作类型!");
 			}
 		} catch (Exception e) {
@@ -116,12 +116,12 @@ public class LadingItemAction extends ActionSupport {
 	}
 
 	public String add() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_LADINGITEM_ADD");
+		ContextHelper.isPermit("QKJ_QKJMANAGE_LADINGPRODUCTG_ADD");
 		try {
-			dao.add(ladingItem);
+			dao.add(ladingProductg);
 
 			LadingDAO ldao = new LadingDAO();
-			ldao.mdyLadingTotalPrice(ladingItem.getLading_id());
+			ldao.mdyLadingTotalPriceg(ladingProductg.getLading_id());
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!add 数据添加失败:", e);
 			throw new Exception(this.getClass().getName() + "!add 数据添加失败:", e);
@@ -130,12 +130,12 @@ public class LadingItemAction extends ActionSupport {
 	}
 
 	public String save() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_LADINGITEM_MDY");
+		ContextHelper.isPermit("QKJ_QKJMANAGE_LADINGPRODUCTG_MDY");
 		try {
-			dao.save(ladingItem);
+			dao.save(ladingProductg);
 
 			LadingDAO ldao = new LadingDAO();
-			ldao.mdyLadingTotalPrice(ladingItem.getLading_id());
+			ldao.mdyLadingTotalPriceg(ladingProductg.getLading_id());
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
@@ -144,13 +144,14 @@ public class LadingItemAction extends ActionSupport {
 	}
 
 	public String del() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_LADINGITEM_DEL");
+		ContextHelper.isPermit("QKJ_QKJMANAGE_LADINGPRODUCTG_DEL");
 		try {
-			Integer lading_id = ladingItem.getLading_id();
-			dao.delete(ladingItem);
+			Integer lading_id = ladingProductg.getLading_id();
+			dao.delete(ladingProductg);
+
 			LadingDAO ldao = new LadingDAO();
-			ldao.mdyLadingTotalPrice(lading_id);
-			setMessage("删除成功!ID=" + ladingItem.getUuid());
+			ldao.mdyLadingTotalPriceg(lading_id);
+			setMessage("删除成功!ID=" + ladingProductg.getUuid());
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!del 数据删除失败:", e);
 			throw new Exception(this.getClass().getName() + "!del 数据删除失败:", e);

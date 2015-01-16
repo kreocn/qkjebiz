@@ -42,6 +42,7 @@
 	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_ProductMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_LadingMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_LadingItemMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_LadingProductgMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_LadingPayMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_RebatesMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_RebatesProductMap.xml" />
@@ -59,6 +60,7 @@
 	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_TravelProductMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_ProTypeMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_MarketActiveMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_salpro_SalPromotMap.xml"/>
 	<!--行政管理 -->
 	<sqlMap resource="org/iweb/resource/map/qkj_adm_AssetsMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_adm_AssetItemMap.xml" />
@@ -84,6 +86,4 @@
 	<sqlMap resource="org/iweb/resource/map/qkj_ware_OutDetailHMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_ware_OutStockHMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_bordetail_BordetailMap.xml" />
-	<!-- 促销活动 -->
-	<sqlMap resource="org/iweb/resource/map/qkj_salpro_SalPromotMap.xml"/>
 </sqlMapConfig>

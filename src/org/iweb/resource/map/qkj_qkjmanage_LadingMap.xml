@@ -73,6 +73,7 @@
 				address=#address#,
 				curr_price=#curr_price#,
 				note=#note#,
+				promotion_id=#promotion_id#,
 				lm_user=#lm_user#
 			Where uuid = #uuid#
 		]]>
@@ -84,12 +85,24 @@
 	</delete>
 
 	<!-- 额外方法 -->
-	<update id="qkjmanage_mdyLadingTotalPrice" parameterClass="string">
+	<update id="qkjmanage_mdyLadingTotalPrice" parameterClass="int">
 		<![CDATA[
 			Update qkjm_r_lading
 			Set total_price=(
 				SELECT SUM(i.total_price)
 				FROM qkjm_r_lading_item i
+				WHERE i.lading_id = #value#
+			)
+			Where uuid = #value#
+		]]>
+	</update>
+	
+	<update id="qkjmanage_mdyLadingTotalPriceg" parameterClass="int">
+		<![CDATA[
+			Update qkjm_r_lading
+			Set total_price_g=(
+				SELECT SUM(i.total_price)
+				FROM qkjm_r_lading_productg i
 				WHERE i.lading_id = #value#
 			)
 			Where uuid = #value#
