@@ -113,10 +113,10 @@ ${path}
         	<s:checkbox id="search_mcondition" name="search_mcondition" fieldValue="true" value="true" cssClass="regular-checkbox" />
 			<label for="search_mcondition"></label>更多条件
             <s:submit value="搜索" onclick="checkstock();" /> <s:reset value="重置" />
-            <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJM_SYSVIP_MEMBERSTOCK_DEL')">
-             <input type="button" value="批量删除" onclick="javascript:deletestock('是否真的要批量删除记录?');">
-             </s:if>
         </div>
+        <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJM_SYSVIP_MEMBERSTOCK_DEL')">
+          		<div style="clear:both;"><input type="button" class="input-red" value="批量删除" onclick="javascript:deletestock('是否真的要批量删除记录?');"></div>
+        </s:if>
 </div>
 </div>
 </s:form>
@@ -158,7 +158,7 @@ ${path}
 </s:iterator>
 </table>
 </div>
-<div class="pagination"><font color="red" style="size: 26px;">${message }</font><script type="text/javascript">var spage = new ShowPage(${currPage});	spage.show2(${recCount},${pageSize},2);</script></div>
+<div class="pagination"><font color="red">${message }</font><script type="text/javascript">var spage = new ShowPage(${currPage});	spage.show2(${recCount},${pageSize},2);</script></div>
 </div>
 </body>
 <script type="text/javascript">

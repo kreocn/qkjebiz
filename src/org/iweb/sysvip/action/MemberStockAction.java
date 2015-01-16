@@ -251,7 +251,7 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 		ContextHelper.isPermit("QKJM_SYSVIP_MEMBERSTOCK_DEL");
 		try {
 			dao.delete(memberStock);
-			setMessage("删除成功!ID=" + memberStock.getUuid());
+			setMessage("批量删除成功!");
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!del 数据删除失败:", e);
 			throw new Exception(this.getClass().getName() + "!del 数据删除失败:", e);
@@ -266,13 +266,15 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 			List<Object> cuuid=new ArrayList<>();
 			for(int i=0;i<ids.length;i++){
 				if(isNumeric(ids[i])){
-					cuuid.add(Integer.parseInt(ids[i]));
+					memberStock=new MemberStock();
+					memberStock.setUuid(Integer.parseInt(ids[i]));
+					cuuid.add(memberStock);
 				}else{
 					continue;
 				}
 			}
 			dao.delCheck(cuuid);
-			setMessage("删除成功!ID=" + checkuuid);
+			setMessage("删除成功!ID=" + checkuuid.split(",")[0]);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!del 数据删除失败:", e);
 			throw new Exception(this.getClass().getName() + "!del 数据删除失败:", e);
