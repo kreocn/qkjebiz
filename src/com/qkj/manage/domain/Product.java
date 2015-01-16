@@ -4,8 +4,9 @@ import java.util.Date;
 
 public class Product {
 	private Integer uuid;// (int)主键ID
+	private Integer mtype; // 物料类型 0:产品 1:促销品
 	private String prod_code;// 产品统一编码
-	private String brand;// (varchar)系列/类型/品牌
+	private Integer brand;// (varchar)系列/类型/品牌
 	private String title;// (varchar)品名
 	private String spec;// (varchar)规格(500ml)
 	private Integer case_spec;// (int)数量(件)
@@ -24,8 +25,16 @@ public class Product {
 	private Integer status;// 是否启用
 	private String lm_user;// (varchar)
 	private Date lm_time;// (timestamp)
-	
+
 	private String brand_name;
+
+	public Integer getMtype() {
+		return mtype;
+	}
+
+	public void setMtype(Integer mtype) {
+		this.mtype = mtype;
+	}
 
 	public Integer getStatus() {
 		return status;
@@ -51,11 +60,11 @@ public class Product {
 		this.uuid = uuid;
 	}
 
-	public String getBrand() {
+	public Integer getBrand() {
 		return brand;
 	}
 
-	public void setBrand(String brand) {
+	public void setBrand(Integer brand) {
 		this.brand = brand;
 	}
 

@@ -29,14 +29,15 @@
 	</select>
 	<insert id="qkjmanage_addProduct" parameterClass="product">
 		<![CDATA[ 
-			Insert Into qkj_t_product(brand,title,spec,case_spec,alcohol,flavor,raw_materials,grade,market_price,group_price,dealer_price,group_rebates,dealer_rebates,agree_price_1,agree_price_2,agree_price_3,lm_user,prod_code,status)
-			Values (#brand#,#title#,#spec#,#case_spec#,#alcohol#,#flavor#,#raw_materials#,#grade#,#market_price#,#group_price#,#dealer_price#,#group_rebates#,#dealer_rebates#,#agree_price_1#,#agree_price_2#,#agree_price_3#,#lm_user#,#prod_code#,#status#)
+			Insert Into qkj_t_product(brand,mtype,title,spec,case_spec,alcohol,flavor,raw_materials,grade,market_price,group_price,dealer_price,group_rebates,dealer_rebates,agree_price_1,agree_price_2,agree_price_3,lm_user,prod_code,status)
+			Values (#brand#,#mtype#,#title#,#spec#,#case_spec#,#alcohol#,#flavor#,#raw_materials#,#grade#,#market_price#,#group_price#,#dealer_price#,#group_rebates#,#dealer_rebates#,#agree_price_1#,#agree_price_2#,#agree_price_3#,#lm_user#,#prod_code#,#status#)
 		]]>
 	</insert>
 	<update id="qkjmanage_mdyProduct" parameterClass="product">
 		<![CDATA[
 			Update qkj_t_product
 			Set brand=#brand#,
+				mtype=#mtype#,
 				title=#title#,
 				spec=#spec#,
 				case_spec=#case_spec#,
