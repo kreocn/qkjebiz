@@ -3,11 +3,13 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletResponse;
 
 import jxl.Cell;
@@ -31,6 +33,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.ServletActionContext;
 import org.iweb.sys.ActionAttr;
 import org.iweb.sys.ContextHelper;
+import org.iweb.sys.Parameters;
 import org.iweb.sys.ToolsUtil;
 import org.iweb.sysvip.dao.MemberStockDAO;
 import org.iweb.sysvip.domain.Member;
@@ -50,6 +53,7 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 
 	private MemberStock memberStock;
 	private List<MemberStock> memberStocks;
+	private List<Object> memberList=new ArrayList<>();
 	private Member member;
 	private List<Member> members;
 	private String message;
@@ -264,6 +268,7 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 	public String lead(byte[] in2) throws Exception {
 		ContextHelper.isPermit("QKJM_SYSVIP_MEMBERSTOCK_ADD");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		HttpSession session = ContextHelper.getRequest().getSession();
 		try {
 			/*JFileChooser chooser = new JFileChooser();
 			FileNameExtensionFilter filter = new FileNameExtensionFilter(
@@ -305,7 +310,8 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 		        	                //strc00 = sdf.format(dc.getDate()); 
 		        				   checkdate=sdf.format(dc.getDate());
 		        			   }else{
-		        				   checkdate=content;
+		        				   //checkdate=content;
+		        				   message="模板中日期格式不正确";
 		        			   }
 		        			  
 		        		   }
@@ -331,10 +337,10 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 		        			   map.clear();
 		        			   map.put("dealer", peo);
 		        			   map.put("check_date", checkdate);
-		        			   map.put("product", produ); 
+		        			   //map.put("product", produ); 
 		        			   this.setMembers(dao.list(map));
 		        			   if(members.size()>0){
-		        				   message="时间："+checkdate+"会员："+peo+"库存信息重复请确认";
+		        				   message="盘点时间为"+checkdate+"会员号为"+peo+"的库存信息重复请确认,若需重新上传请先删除原数据！";
 		        				   break;
 		        			   }else{
 		        				   memberStock=new MemberStock();
@@ -347,7 +353,7 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 				       			   memberStock.setAdd_time(new Date());
 				       			   memberStock.setLm_user(ContextHelper.getUserLoginUuid());
 				       			   memberStock.setLm_time(new Date());
-				       			   dao.add(memberStock);
+				       			   memberList.add(memberStock);
 		        			   }
 			       			   stock=null;
 		        		   }
@@ -355,7 +361,20 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 	        		   }
 		        	   if((peo==null || peo.equals("") || checkdate==null || checkdate.equals("")) && message==null ){
 		        		   message="模板中会员账号或核对日期不能为空";
+		        		   if(peo==null){
+		        			   session.setAttribute("peo","空" );
+		        		   }else{
+		        			   session.setAttribute("peo",peo );
+		        		   }
+		        		   if(checkdate==null){
+		        			   session.setAttribute("checkdate","" );
+		        		   }else{
+		        			   session.setAttribute("checkdate",checkdate );
+		        		   }
 		        		   break;
+		        	   }else{
+		        		   session.setAttribute("peo",peo );
+		        		   session.setAttribute("checkdate",checkdate );
 		        	   }
 		        	   Cell co= st.getCell(0,0); 
 		        	   String content=co.getContents();
@@ -364,7 +383,13 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 		        			break;
 		        		}
 		           }
-		           
+		           if(message==null || message.equals("")){
+		        	   if(memberList.size()>0){
+		        		   dao.addList(memberList); 
+		        	   }else{
+		        		   message="产品数量不能全部为空哟";
+		        	   }
+		           }
 		           try {
 						in.close();
 						in = null;
@@ -381,14 +406,28 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 		return message;
 	}
 	
-	public String history(String path) throws Exception{
+	public String history(String path,int state) throws Exception{
+		HttpSession session = ContextHelper.getRequest().getSession();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		try {
+			//memberStock=(MemberStock)memberList.get(0);
 			mehistory=new MemberStockHistory();
+			mehistory.setMemberId(session.getAttribute("peo").toString());
+			String cdate=session.getAttribute("checkdate").toString();
+			if(cdate==null || cdate.equals("")){
+				mehistory.setCheck_date(null);
+			}else{
+				Date date=sdf.parse(cdate);
+				mehistory.setCheck_date(date);
+			}
 			mehistory.setUp_path(path);
 			mehistory.setUp_time(new Date());
 			mehistory.setUp_user(ContextHelper.getUserLoginUuid());
 			mehistory.setUpIp(ContextHelper.getRealIP());
+			mehistory.setState(state);
 			dao.savemh(mehistory);
+			session.removeAttribute("peo");
+			session.removeAttribute("checkdate");
 		} catch (Exception e) {
 			// TODO: handle exception
 			log.error(this.getClass().getName() + "!history 数据添加失败:", e);
@@ -398,7 +437,6 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 	}
 	
 	public String out() throws Exception {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		ProductDAO prodao=new ProductDAO();
 		HttpServletResponse response =ServletActionContext.getResponse();  
 		//OutputStream os = null;
@@ -424,6 +462,7 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
             WritableSheet ws = wwb.createSheet("经销商库存统计", 0);
             ws.setColumnView(0, 15);
             ws.setColumnView(1, 25);
+            ws.setColumnView(2, 15);
             
             WritableFont font1 = new WritableFont(WritableFont.ARIAL,11);  
             
@@ -433,6 +472,8 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
             //要插入到的Excel表格的行号，默认从0开始
             Label labelId= new Label(0, 0, "经销商账号:",cellFormat1);//表示第1列1个
             Label labelName= new Label(1, 0, member.getUuid(),cellFormat1);//第2列1个
+            Label labelMeName= new Label(2, 0, "经销商姓名:",cellFormat1);//第五列1 行
+            Label labelMeName2= new Label(3, 0, member.getMember_name(),cellFormat1);//第五列1 行
             Label labelDate= new Label(5, 0, "核对日期:",cellFormat1);//第五列1 行
             
             Label title1= new Label(0, 1, "产品编号",getHeadFormat());//表示第
@@ -441,6 +482,8 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
             
             ws.addCell(labelId);
             ws.addCell(labelName);
+            ws.addCell(labelMeName);
+            ws.addCell(labelMeName2);
             ws.addCell(labelDate);
             ws.addCell(title1);
             ws.addCell(title2);

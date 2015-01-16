@@ -53,12 +53,8 @@ ${path}
 <div class="label_con">
 <div class="label_main">
       <div class="label_hang">
-          <div class="label_ltit">编号:</div>
-          <div class="label_rwben"><s:textfield name="memberStock.uuid" /></div>
-      </div>
-      <div class="label_hang">
           <div class="label_ltit">经销商编号:</div>
-          <div class="label_rwben"><s:textfield name="memberStock.dealer"/></div>
+          <div class="label_rwben"><s:textfield id="order_user_id" name="memberStock.dealer"/></div>
       </div>
       <div class="label_hang">
 		    <div class="label_ltit">产品:</div>
@@ -92,6 +88,7 @@ ${path}
 <tr id="coltr">
 	<th class="td1">编号</th>
 	<th class="td1">经销商帐号</th>
+	<th class="td3">经销商姓名</th>
 	<th class="td1">产品</th>
 	<th class="td2">库存数量（瓶）</th>
 	<th class="td2">核对日期</th>
@@ -102,6 +99,7 @@ ${path}
 	  <tr id="showtr${uuid}">
 	  	 <td class="td1">${uuid}</td>
 	    <td class="td1">${dealer}</td>
+	    <td class="td3">${member_name}</td>
 		<td class="td1">${product}(${product_name})</td>
 		<td class="td2">
 		${stock}&nbsp;瓶
@@ -124,5 +122,18 @@ ${path}
 <div class="pagination"><font color="red" style="size: 26px;">${message }</font><script type="text/javascript">var spage = new ShowPage(${currPage});	spage.show2(${recCount},${pageSize},2);</script></div>
 </div>
 </body>
+<script type="text/javascript">
+var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
+var c_mid = '<s:property value="outStock.member_id" />';
+$(function() {
+	SimpleLoadMember(ajax_url_action,function(event, ui) {loadAddress(ui.item.order_user_id);});
+	CommonUtil.pickrow('fd_list_table');
+});
 
+function loadAddress(memberid) {
+	var ajax = new Common_Ajax();
+	ajax.config.action_url = ajax_url_action;
+	ajax.sendAjax();
+}
+</script>
 </html>

@@ -236,7 +236,7 @@ function checkManager() {
 				</s:elseif>
 				<input type="button" value="返回" onclick="linkurl('<s:url action="member_list" namespace="/sysvip" />');"  class="input-gray" />
 				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJM_SYSVIP_MEMBERSTOCK_LIST')">
-				<input type="button" value="生成会员库存盘点模板" onclick="linkurl('<s:url action="memberStock_out" namespace="/sysvip" ><s:param name="member.uuid" value="%{member.uuid}"></s:param></s:url>');"  class="input-blue" />
+				<input type="button" value="生成会员库存盘点模板" onclick="linkurl('<s:url action="memberStock_out" namespace="/sysvip" ><s:param name="member.member_name" value="%{member.member_name}"></s:param><s:param name="member.uuid" value="%{member.uuid}"></s:param></s:url>');"  class="input-blue" />
 				</s:if>
         	</div>
     	</div>

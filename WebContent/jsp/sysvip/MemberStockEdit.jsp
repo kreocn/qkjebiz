@@ -38,6 +38,11 @@
 		     <s:textfield id="order_user_id" name="memberStock.dealer" title="会员号" cssClass="validate[required]" />
 		 </div>
 	</div>
+	
+	<div class="label_hang">
+		<div class="label_ltit">会员名称:</div>
+		<div class="label_rwben label_rwb"><s:textfield id="order_user_name"  name="memberStock.member_name" cssClass="validate[required,maxSize[85]]" /></div>
+	</div>
 	</div>
 	<div class="label_main">
 	<div class="label_hang">

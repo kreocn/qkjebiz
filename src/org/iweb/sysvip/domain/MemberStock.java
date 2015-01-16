@@ -18,6 +18,7 @@ public class MemberStock {
 	private String add_user_name;
 	private String product_name;
 	private Integer case_spec;
+	private String member_name;
 	
 
 	public Integer getCase_spec() {
@@ -122,6 +123,14 @@ public class MemberStock {
 
 	public void setProduct_name(String product_name) {
 		this.product_name = product_name;
+	}
+
+	public String getMember_name() {
+		return member_name;
+	}
+
+	public void setMember_name(String member_name) {
+		this.member_name = member_name;
 	}
 	
 }

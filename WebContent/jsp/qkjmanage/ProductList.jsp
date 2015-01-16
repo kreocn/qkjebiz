@@ -44,7 +44,8 @@
 	 		<table>
 		 		<tr id="coltr">
 				    <th class="td1">编号</th>
-					<th class="td2">统一编码</th>
+				    <th class="td2">类型</th>
+					<th class="td3">统一编码</th>
 					<th class="td1">系列</th>
 					<th class="td2">品名</th>
 					<th class="td5">规格</th>
@@ -60,7 +61,8 @@
 			  	<s:iterator value="products" status="sta">
 			  		<tr id="showtr${uuid}">
 					    <td class="td1">${uuid}</td>
-						<td class="td2">${prod_code}</td>
+					    <td class="td2"><s:if test='0==mtype'>商品酒</s:if><s:if test='1==mtype'>促销物料</s:if></td>
+						<td class="td3">${prod_code}</td>
 						<td class="td1">${brand_name}</td>
 						<td class="td2">${title}</td>
 						<td class="td5">${spec}</td>

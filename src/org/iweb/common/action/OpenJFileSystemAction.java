@@ -60,11 +60,11 @@ public class OpenJFileSystemAction extends ActionSupport {
 	@Override
 	public String execute() throws Exception {
 		ContextHelper.isPermit("SYS_MANAGER_FILESYSTEM_SHOW");
-		DESPassword d = new DESPassword();
-		//DESPlus d = new DESPlus();
+		// DESPassword d = new DESPassword();
+		// DESPlus d = new DESPlus();
 
 		date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-		validata = d.passwordEncrypt(date);
+		validata = DESPassword.passwordEncrypt(date);
 		root = ContextHelper.getUserLoginInfo().getFilesystem_root();
 		if (ToolsUtil.isEmpty(root)) {
 			root = "/";

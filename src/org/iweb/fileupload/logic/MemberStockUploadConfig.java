@@ -48,7 +48,12 @@ public class MemberStockUploadConfig extends UploadConfig {
 		MemberStockAction msa=new MemberStockAction();
 		if(successflag==true){
 			try {
-				msa.history("!http://images01.qkjchina.com/"+filename);
+				if(message!=null){
+					msa.history("!http://images01.qkjchina.com/"+filename,1);
+				}else{
+					msa.history("!http://images01.qkjchina.com/"+filename,0);
+				}
+				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

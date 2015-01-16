@@ -7,11 +7,12 @@
 	<select id="sysvip_getMemberStocks" resultClass="memberStock" parameterClass="java.util.Map">
 		<![CDATA[ 
 			SELECT m.*,ad.`USER_NAME` add_user_name,lm.`USER_NAME` lm_user_name,p.`title` product_name,
-			ROUND(m.`stock`/(p.`case_spec`*1.0)) case_spec 
+			ROUND(m.`stock`/(p.`case_spec`*1.0)) case_spec,vm.member_name member_name
 			FROM qkjm_t_member m 
 			LEFT JOIN s_sys_user ad ON(m.`add_user`=ad.`UUID`)
 			LEFT JOIN s_sys_user lm ON(m.`lm_user`=lm.`UUID`)
 			LEFT JOIN qkj_t_product p ON(p.`uuid`=m.`product`)
+			LEFT JOIN s_vip_member vm ON(vm.uuid=m.dealer)
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ m.uuid=#uuid# ]]></isNotEmpty>
@@ -52,8 +53,8 @@
 	</insert>
 	<insert id="sysvip_addMemberStockHistory" parameterClass="memberStockHistory">
 	<![CDATA[ 
-			Insert Into qkjm_h_member(up_user,up_time,up_path,upIp)
-			Values (#up_user#,#up_time#,#up_path#,#upIp#)
+			Insert Into qkjm_h_member(memberId,check_date,up_user,up_time,up_path,upIp,state)
+			Values (#memberId#,#check_date#,#up_user#,#up_time#,#up_path#,#upIp#,#state#)
 		]]>
 		<selectKey resultClass="int" keyProperty="uuid">
 		<![CDATA[ Select LAST_INSERT_ID() ]]>
