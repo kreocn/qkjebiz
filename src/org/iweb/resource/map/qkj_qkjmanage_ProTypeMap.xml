@@ -9,12 +9,11 @@
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ t.uuid=#uuid# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="name"><![CDATA[ t.name=#name# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="lm_user"><![CDATA[ t.lm_user=#lm_user# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="lm_time"><![CDATA[ t.lm_time=#lm_time# ]]></isNotEmpty>
-
+			<isNotEmpty prepend="AND" property="name"><![CDATA[ t.name=#name# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="lm_user"><![CDATA[ t.lm_user=#lm_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="lm_time"><![CDATA[ t.lm_time=#lm_time# ]]></isNotEmpty>
 		</dynamic>
-		<![CDATA[ LIMIT 1000 ]]>
+		<![CDATA[ Order By t.`type`,t.`uuid` LIMIT 1000 ]]>
 	</select>
 	<select id="qkjmanage_getProTypesCounts" resultClass="int" parameterClass="java.util.Map">
 		<![CDATA[ 
@@ -22,17 +21,16 @@
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="name"><![CDATA[ name=#name# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="lm_user"><![CDATA[ lm_user=#lm_user# ]]></isNotEmpty>
-<isNotEmpty prepend="AND" property="lm_time"><![CDATA[ lm_time=#lm_time# ]]></isNotEmpty>
-
+			<isNotEmpty prepend="AND" property="name"><![CDATA[ name=#name# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="lm_user"><![CDATA[ lm_user=#lm_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="lm_time"><![CDATA[ lm_time=#lm_time# ]]></isNotEmpty>
 		</dynamic>
 		<![CDATA[ LIMIT 1000 ]]>
 	</select>
 	<insert id="qkjmanage_addProType" parameterClass="proType">
 		<![CDATA[ 
-			Insert Into qkj_t_protype(name,lm_user,lm_time)
-			Values (#name#,#lm_user#,#lm_time#)
+			Insert Into qkj_t_protype(name,type,lm_user,lm_time)
+			Values (#name#,#type#,#lm_user#,#lm_time#)
 		]]>
 		<selectKey resultClass="int" keyProperty="uuid">
 		<![CDATA[ Select LAST_INSERT_ID() ]]>
@@ -42,8 +40,9 @@
 		<![CDATA[
 			Update qkj_t_protype
 			Set name=#name#,
-lm_user=#lm_user#,
-lm_time=#lm_time#
+				type=#type#,
+				lm_user=#lm_user#,
+				lm_time=#lm_time#
 			Where uuid = #uuid#
 		]]>
 	</update>

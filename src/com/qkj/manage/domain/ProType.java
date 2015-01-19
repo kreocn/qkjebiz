@@ -4,12 +4,21 @@ import java.util.Date;
 
 public class ProType {
 	private Integer uuid;// (int)
+	private Integer type; // (int)
 	private String name;// (varchar)类型名称
 	private String lm_user;// (varchar)
 	private Date lm_time;// (datetime)
 
 	// 以下为非数据库字段
 	private String lm_user_name;
+
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
+	}
 
 	public Integer getUuid() {
 		return uuid;
@@ -50,6 +59,5 @@ public class ProType {
 	public void setLm_user_name(String lm_user_name) {
 		this.lm_user_name = lm_user_name;
 	}
-	
 
 }
