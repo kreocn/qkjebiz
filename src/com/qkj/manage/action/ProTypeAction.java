@@ -144,7 +144,7 @@ public class ProTypeAction extends ActionSupport implements ActionAttr {
 		File f = new File(p + "/js/zTreeJs/Result.js");
 		// InputStream in = new FileInputStream(f);
 		meta.setContentLength(f.length());
-		// OSSUtil_IMG.uploadFile("qkjbj01", "qkjebiz01/zTree_result.js", f, meta);
+		OSSUtil_IMG.uploadFile("qkjbj01", "qkjebiz01/zTree_result.js", f, meta);
 
 		return "success";
 	}
