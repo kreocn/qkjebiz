@@ -368,7 +368,8 @@ public abstract class AppCreate {
 
 	private String replaceTags(String template) {
 		for (Map.Entry<String, String> entry : this.tags.entrySet()) {
-			template = template.replaceAll("\\$" + entry.getKey() + "\\$", entry.getValue());
+			// System.out.println("===:" + entry.getKey());
+			template = template.replace("$" + entry.getKey() + "$", entry.getValue());
 		}
 		return template;
 	}

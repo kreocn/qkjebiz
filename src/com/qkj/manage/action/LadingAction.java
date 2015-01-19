@@ -16,10 +16,12 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.qkj.manage.dao.LadingDAO;
 import com.qkj.manage.dao.LadingItemDAO;
 import com.qkj.manage.dao.LadingPayDAO;
+import com.qkj.manage.dao.LadingProductgDAO;
 import com.qkj.manage.dao.ProductDAO;
 import com.qkj.manage.domain.Lading;
 import com.qkj.manage.domain.LadingItem;
 import com.qkj.manage.domain.LadingPay;
+import com.qkj.manage.domain.LadingProductg;
 import com.qkj.manage.domain.Product;
 
 public class LadingAction extends ActionSupport {
@@ -33,11 +35,20 @@ public class LadingAction extends ActionSupport {
 	private List<User> users;
 	private List<Product> products;
 	private List<LadingItem> ladingItems;
+	private List<LadingProductg> ladingProductgs;
 	private List<LadingPay> ladingPays;
 	private String message;
 	private String viewFlag;
 	private int recCount;
 	private int pageSize;
+
+	public List<LadingProductg> getLadingProductgs() {
+		return ladingProductgs;
+	}
+
+	public void setLadingProductgs(List<LadingProductg> ladingProductgs) {
+		this.ladingProductgs = ladingProductgs;
+	}
 
 	public List<LadingPay> getLadingPays() {
 		return ladingPays;
@@ -166,10 +177,15 @@ public class LadingAction extends ActionSupport {
 					map.put("lading_id", lading.getUuid());
 					this.setLadingItems(idao.list(map));
 
-					LadingPayDAO lpdao = new LadingPayDAO();
+					LadingProductgDAO gdao = new LadingProductgDAO();
 					map.clear();
 					map.put("lading_id", lading.getUuid());
-					this.setLadingPays(lpdao.list(map));
+					this.setLadingProductgs(gdao.list(map));
+
+					// LadingPayDAO lpdao = new LadingPayDAO();
+					// map.clear();
+					// map.put("lading_id", lading.getUuid());
+					// this.setLadingPays(lpdao.list(map));
 				}
 			} else {
 				this.setLading(null);

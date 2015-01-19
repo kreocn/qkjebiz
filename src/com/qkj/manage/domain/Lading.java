@@ -8,8 +8,9 @@ public class Lading {
 	private String content;// (text)内容
 	private String address;// (varchar)配送地点
 	private String note;// (text)其他说明
-	private Double total_price; // 总价
+	private Double total_price; // 订单总价
 	private Double curr_price;// 实际打款金额
+	private Double total_price_g;// 返利总价
 	private Integer manager_check;// (int)渠道/运营经理确认
 	private String manager_check_user;
 	private Date manager_check_time;// (datetime)确认时间
@@ -37,6 +38,7 @@ public class Lading {
 	private Date lm_time;// (timestamp)最后修改时间
 	private Integer out_flag; // 出货标记(0:未出货 1:已出货)
 	private Integer rebates_flag; // 返利标记 0未返利 1已返利
+	private Integer promotion_id;// 促销ID
 
 	// 以下为非数据库字段
 	private String manager_check_user_name;
@@ -53,6 +55,22 @@ public class Lading {
 
 	// 特殊字段
 	private String[] fd_types; // 专门为赋值checkbox而设定
+
+	public Integer getPromotion_id() {
+		return promotion_id;
+	}
+
+	public void setPromotion_id(Integer promotion_id) {
+		this.promotion_id = promotion_id;
+	}
+
+	public Double getTotal_price_g() {
+		return total_price_g;
+	}
+
+	public void setTotal_price_g(Double total_price_g) {
+		this.total_price_g = total_price_g;
+	}
 
 	public Double getCurr_price() {
 		return curr_price;
