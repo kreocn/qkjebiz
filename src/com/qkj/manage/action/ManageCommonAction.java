@@ -35,15 +35,15 @@ public class ManageCommonAction extends ActionSupport implements ActionAttr {
 	}
 
 	// only for products
-	private String uuidKey;
-	private String uuidValue;
-	private String backUrl;
-	private String actionUrl;
-	private String keyName;
-	private String prodName;
-	private String perName;
-	private String numName;
-	private String totalName;
+	private String uuidKey; // 主键值
+	private String uuidValue; // 主表uuid Form变量名
+	private String backUrl; // 返回的Url
+	private String actionUrl;// 提交的Url
+	private String keyName;// 子表外键 Form变量名
+	private String prodName;// 子表产品ID Form变量名
+	private String perName;// 子表单价 Form变量名
+	private String numName;// 子表数量 Form变量名
+	private String totalName;// 子表总价 Form变量名
 
 	public String getKeyName() {
 		return keyName;

@@ -18,7 +18,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.ServletActionContext;
 import org.iweb.sys.DateUtil;
 import org.iweb.sys.Parameters;
-import org.iweb.sys.ToolHTML;
+import org.iweb.sys.HtmlUtils;
 import org.iweb.sys.ToolsUtil;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -157,7 +157,7 @@ public class NewsRemoteAjaxAction extends ActionSupport {
 		} else if ("class".equals(work)) {
 			list = dao.listClasss(map);
 		} else if ("rhtml".equals(work)) {
-			ToolHTML th = new ToolHTML();
+			HtmlUtils th = new HtmlUtils();
 			this.setAjax_result(th.getOneHtml((String) map.get("openurl")));
 			return SUCCESS;
 		}
