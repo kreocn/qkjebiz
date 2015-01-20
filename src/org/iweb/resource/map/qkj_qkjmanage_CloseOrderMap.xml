@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
+<sqlMap>
+	<!-- CloseOrder Start -->
+	<typeAlias alias="closeOrder" type="com.qkj.manage.domain.CloseOrder" />
+	<select id="qkjmanage_getCloseOrders" resultClass="closeOrder" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select * From qkjm_r_closeorder
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="close_time"><![CDATA[ close_time=#close_time# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="content"><![CDATA[ content=#content# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_dept"><![CDATA[ apply_dept=#apply_dept# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_user"><![CDATA[ apply_user=#apply_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="member_id"><![CDATA[ member_id=#member_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="member_address"><![CDATA[ member_address=#member_address# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="check_user"><![CDATA[ check_user=#check_user# ]]></isNotEmpty>
+
+		</dynamic>
+		<![CDATA[ LIMIT 1000 ]]>
+	</select>
+	<select id="qkjmanage_getCloseOrdersCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) From qkjm_r_closeorder
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="close_time"><![CDATA[ close_time=#close_time# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="content"><![CDATA[ content=#content# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_dept"><![CDATA[ apply_dept=#apply_dept# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_user"><![CDATA[ apply_user=#apply_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="member_id"><![CDATA[ member_id=#member_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="member_address"><![CDATA[ member_address=#member_address# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="check_user"><![CDATA[ check_user=#check_user# ]]></isNotEmpty>
+
+		</dynamic>
+		<![CDATA[ LIMIT 1000 ]]>
+	</select>
+	<insert id="qkjmanage_addCloseOrder" parameterClass="closeOrder">
+		<![CDATA[ 
+			Insert Into qkjm_r_closeorder(close_time,content,apply_dept,apply_user,theme,member_id,member_address,member_phone,totel_price,add_user,add_time,check_state,check_time,check_user,nd_check_state,nd_check_time,nd_check_user,lm_time,lm_user)
+			Values (#close_time#,#content#,#apply_dept#,#apply_user#,#theme#,#member_id#,#member_address#,#member_phone#,#totel_price#,#add_user#,#add_time#,#check_state#,#check_time#,#check_user#,#nd_check_state#,#nd_check_time#,#nd_check_user#,#lm_time#,#lm_user#)
+		]]>
+		<selectKey resultClass="int" keyProperty="uuid">
+		<![CDATA[ Select LAST_INSERT_ID() ]]>
+		</selectKey>
+	</insert>
+	<update id="qkjmanage_mdyCloseOrder" parameterClass="closeOrder">
+		<![CDATA[
+			Update qkjm_r_closeorder
+			Set close_time=#close_time#,
+content=#content#,
+apply_dept=#apply_dept#,
+apply_user=#apply_user#,
+theme=#theme#,
+member_id=#member_id#,
+member_address=#member_address#,
+member_phone=#member_phone#,
+totel_price=#totel_price#,
+add_user=#add_user#,
+add_time=#add_time#,
+check_state=#check_state#,
+check_time=#check_time#,
+check_user=#check_user#,
+nd_check_state=#nd_check_state#,
+nd_check_time=#nd_check_time#,
+nd_check_user=#nd_check_user#,
+lm_time=#lm_time#,
+lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="qkjmanage_delCloseOrder" parameterClass="closeOrder">
+	<![CDATA[
+		Delete From qkjm_r_closeorder Where uuid=#uuid#
+	]]>
+	</delete>
+	<!-- CloseOrder End -->
+</sqlMap>
