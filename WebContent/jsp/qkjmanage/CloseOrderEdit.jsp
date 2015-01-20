@@ -113,6 +113,45 @@
 							</div>
 						</div>
 					</div>
+					<s:if test="'mdy' == viewFlag">
+						<div class="label_main">
+							<div class="lb_xxsm">
+								<p class="lb_yjtit fy_hide">
+									产品费用
+									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEPRODUCT_ADD')">
+										<input type="button" id="product" onclick="noedit();" value="添加酒品" />
+									</s:if>
+								</p>
+								<div class="lb_yjcon">
+									<p class="lb_gstit">公司提供酒品</p>
+									<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+										<tr>
+											<th>品名</th>
+											<th>单价</th>
+											<th>数量(瓶)</th>
+											<th>合计</th>
+											<th>操作</th>
+										</tr>
+										<s:iterator value="otherActiveProducts" status="sta">
+											<tr>
+												<td class="nw">${product_name}</td>
+												<td class="nw">￥${per_price}</td>
+												<td class="nw">${num}</td>
+												<td class="nw">￥${total_price}</td>
+												<td><s:if test="active.status==0 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEPRODUCT_DEL')">
+														<a href="<s:url action="activeProduct_del"><s:param name="activeProduct.uuid" value="%{uuid}" /><s:param name="activeProduct.active_id" value="%{active.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
+													</s:if></td>
+											</tr>
+										</s:iterator>
+									</table>
+									<p class="lb_gstit">公司预计费用合计</p>
+									<p class="lb_jwei">￥${active.it_price}</p>
+								</div>
+								<div class="clear"></div>
+								<p class="lb_yjbot">方案预计费用总计: ${active.it_price} + ${active.mt_price} = ￥${active.it_price+active.mt_price}</p>
+							</div>
+						</div>
+					</s:if>
 
 					<div class="label_main">
 						<div class="label_hang">
@@ -134,7 +173,7 @@
 
 							<s:if test="'add' == viewFlag">
 								<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_CLOSEORDER_ADD')">
-									<s:submit id="add" name="add" value="确定" action="closeOrder_add" />
+									<s:submit id="add" name="add" value="下一步&填写费用明细" action="active_add"  cssClass="input-blue" />
 								</s:if>
 							</s:if>
 							<s:elseif test="'mdy' == viewFlag">

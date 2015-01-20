@@ -25,6 +25,7 @@
 			<isNotEmpty prepend="AND" property="smd_status"><![CDATA[ s.smd_status=#smd_status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="sd_status"><![CDATA[ s.sd_status=#sd_status# ]]></isNotEmpty>
 
+			<isNotEmpty prepend="AND" property="proendtime"><![CDATA[ s.`endtime`>=#proendtime# ]]></isNotEmpty>
 		</dynamic>
 		<![CDATA[ order by priority desc LIMIT 1000 ]]>
 	</select>

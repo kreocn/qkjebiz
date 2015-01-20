@@ -1,10 +1,15 @@
 package com.qkj.manage.action;
+
 import java.util.*;
+
 import org.apache.commons.logging.*;
 import org.iweb.sys.*;
+
 import com.opensymphony.xwork2.ActionSupport;
 import com.qkj.manage.domain.CloseOrder;
+import com.qkj.manage.domain.SalPromot;
 import com.qkj.manage.dao.CloseOrderDAO;
+import com.qkj.manage.dao.SalPromotDAO;
 
 public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	private static final long serialVersionUID = 1L;
@@ -14,12 +19,14 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 
 	private CloseOrder closeOrder;
 	private List<CloseOrder> closeOrders;
+	private List<SalPromot> salPromots;
 	private String message;
 	private String viewFlag;
 	private int recCount;
 	private int pageSize;
 	private int currPage;
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;结案提货单";
+
 	public String getPath() {
 		return path;
 	}
@@ -71,7 +78,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
 	}
-	
+
 	public int getCurrPage() {
 		return currPage;
 	}
@@ -80,15 +87,22 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 		this.currPage = currPage;
 	}
 
+	public List<SalPromot> getSalPromots() {
+		return salPromots;
+	}
+
+	public void setSalPromots(List<SalPromot> salPromots) {
+		this.salPromots = salPromots;
+	}
+
 	public String list() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_LIST");
 		try {
 			map.clear();
-			if (closeOrder != null)
-				map.putAll(ToolsUtil.getMapByBean(closeOrder));
+			if (closeOrder != null) map.putAll(ToolsUtil.getMapByBean(closeOrder));
 			map.putAll(ContextHelper.getDefaultRequestMap4Page());
 			this.setPageSize(ContextHelper.getPageSize(map));
-			this.setCurrPage(ContextHelper.getCurrPage(map));		
+			this.setCurrPage(ContextHelper.getCurrPage(map));
 			this.setCloseOrders(dao.list(map));
 			this.setRecCount(dao.getResultCount());
 			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;结案提货单列表";
@@ -98,7 +112,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
-	
+
 	public String relist() throws Exception {
 		return SUCCESS;
 	}
@@ -109,6 +123,10 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 				this.setCloseOrder(null);
 				setMessage("你没有选择任何操作!");
 			} else if ("add".equals(viewFlag)) {
+				SalPromotDAO saldao=new SalPromotDAO();
+				map.clear();
+				map.put("proendtime", new Date());
+				this.setSalPromots(saldao.list(map));
 				this.setCloseOrder(null);
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/closeOrder_relist'>结案提货单列表</a>&nbsp;&gt;&nbsp;增加结案提货单";
 			} else if ("mdy".equals(viewFlag)) {
@@ -132,8 +150,8 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	public String add() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_ADD");
 		try {
-			//closeOrder.setLm_user(ContextHelper.getUserLoginUuid());
-			//closeOrder.setLm_time(new Date());
+			// closeOrder.setLm_user(ContextHelper.getUserLoginUuid());
+			// closeOrder.setLm_time(new Date());
 			dao.add(closeOrder);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!add 数据添加失败:", e);
@@ -145,8 +163,8 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	public String save() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_MDY");
 		try {
-			//closeOrder.setLm_user(ContextHelper.getUserLoginUuid());
-			//closeOrder.setLm_time(new Date());
+			// closeOrder.setLm_user(ContextHelper.getUserLoginUuid());
+			// closeOrder.setLm_time(new Date());
 			dao.save(closeOrder);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
