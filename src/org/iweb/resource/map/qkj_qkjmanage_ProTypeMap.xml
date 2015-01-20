@@ -27,6 +27,11 @@
 		</dynamic>
 		<![CDATA[ LIMIT 1000 ]]>
 	</select>
+	<select id="qkjmanage_getProTypeCount" resultClass="int">
+		<![CDATA[ 
+			SELECT DISTINCT p.`type` FROM qkj_t_protype p
+		]]>
+	</select>
 	<insert id="qkjmanage_addProType" parameterClass="proType">
 		<![CDATA[ 
 			Insert Into qkj_t_protype(name,type,lm_user,lm_time)

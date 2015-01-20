@@ -1,6 +1,29 @@
 $(document).ready(function(){
-	$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+	getProducts($("#selectType").val());
+	$("#selectType").change(function(){
+		getProducts($(this).val());
+	});
 });
+
+var getProducts = function(nodeId){
+	var ajax = new Common_Ajax();
+	ajax.config.action_url = ajax_url;
+	ajax.addParameter("work", "GetProducts");
+	ajax.addParameter("parameters", "product_type=" + nodeId);
+	ajax.config._success = function(data, textStatus){
+		$.fn.zTree.destroy("treeDemo");
+		$.fn.zTree.init($("#treeDemo"), setting, data.value);
+	};
+	ajax.sendAjax();
+};
+
+var zTreeProductInit = function(nodeId){
+	$.fn.zTree.destroy("treeDemo");
+	var cNodes = [];
+	eval("var cNodes=zNodes" + nodeId);
+	$.fn.zTree.init($("#treeDemo"), setting, cNodes);
+};
+
 /* 添加酒品---分类 */
 var setting = { view : { dblClickExpand : false },
 data : { simpleData : { enable : true } },
@@ -20,9 +43,9 @@ function onClick(e, treeId, treeNode){
 		return a.id - b.id;
 	});
 	for (var i = 0, l = nodes.length; i < l; i++) {
-		v += nodes[i].name + ",";
-		puid += nodes[i].puuid + ",";
-		price += nodes[i].mp + "#" + nodes[i].gp + "#" + nodes[i].dp + ",";
+		v += nodes[i].title + ",";
+		puid += nodes[i].uuid + ",";
+		price += nodes[i].market_price + "#" + nodes[i].group_price + "#" + nodes[i].dealer_price + ",";
 		dc += nodes[i].case_spec + ",";
 	}
 

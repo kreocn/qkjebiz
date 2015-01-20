@@ -5,6 +5,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.iweb.fileupload.logic.MemberStockUploadConfig;
 import org.iweb.fileupload.logic.UploadConfig;
+import org.iweb.sys.HtmlUtils;
+import org.iweb.sys.encrypt.AbstractEncrypt;
+import org.iweb.sys.encrypt.EncryptFactory;
 
 public class test {
 
@@ -15,19 +18,15 @@ public class test {
 	private StringBuffer sql = new StringBuffer();
 
 	public test() {
-		UploadConfig uc = new MemberStockUploadConfig();
-		System.out.println(uc.getPermitExtFiles());
-		System.out.println(uc.getMessage("", ""));
-		System.out.println("============================");
+		HtmlUtils hu = new HtmlUtils();
+		String a = "";
 		try {
-			UploadConfig uc1 = (UploadConfig) Class.forName("org.iweb.fileupload.logic.MemberStockUploadConfig").newInstance();
-			System.out.println(uc1.getPermitExtFiles());
-			System.out.println(uc1.getMessage("", ""));
-			System.out.println("============================");
+			AbstractEncrypt encrypt = EncryptFactory.getEncrypt("AES");
+			a = new String(encrypt.decrypt(hu.getHtml2Byte("http://images.qkjchina.com/CacheFiles/zTree_Products1.js")));
 		} catch (Exception e) {
-			e.printStackTrace();
+			// TODO: handle exception
 		}
-		System.out.println(str.replace("$MAX_LENGTH$", "sdfdsafdsafa${it:uuid}dsfsadfdsaf"));
+		System.out.println(a);
 	}
 
 	/**
