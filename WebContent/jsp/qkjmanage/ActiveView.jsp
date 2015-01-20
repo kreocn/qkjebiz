@@ -106,6 +106,16 @@
 }
 </style>
 <script type="text/javascript">
+	function indprint(){
+		yindpri();
+		window.print();
+		location.reload();
+	}
+	function otherprint(){
+		otherpri();
+		window.print();
+		location.reload();
+	}
 	function nopri(){
 		$("#mprice").addClass("noprint"); //添加样式
 		$("#fprice").addClass("noprint"); //添加样式
@@ -117,13 +127,6 @@
 		$("#fprice").removeClass("noprint"); //添加样式
 		$("#hs").removeClass("kss"); //添加样式
 		$("#ks").addClass("kss"); //添加样式
-		
-		$("#otherprice1").addClass("kss"); //添加样式
-		$("#otherprice2").addClass("kss"); //添加样式
-		$("#indprice").addClass("kss"); //添加样式
-		$("#indprice2").addClass("kss"); //添加样式
-		$("#totel1").removeClass("kss"); //添加样式
-		$("#totel2").removeClass("kss"); //添加样式
 	}
 	
 	function yindpri(){
@@ -178,8 +181,8 @@
 				href="<s:url namespace="/qkjmanage" action="active_load"><s:param name="viewFlag">mdy</s:param><s:param name="active.uuid" value="%{active.uuid}"></s:param></s:url>">返回修改页面</a></span> 
 				<span class="opb lb op-area noprint">
 				<input type="button" onclick="ypri();window.print();" value="打印本页" />&nbsp;</span> 
-				<span class="opb lb op-area noprint"><input type="button" onclick="yindpri();window.print();" value="打印海拔系列" />&nbsp;</span> 
-				<span class="opb lb op-area noprint"><input type="button" onclick="otherpri();window.print();" value="打印非海拔系列" />&nbsp;</span> 
+				<span class="opb lb op-area noprint"><input type="button" onclick="indprint();" value="打印海拔系列" />&nbsp;</span> 
+				<span class="opb lb op-area noprint"><input type="button" onclick="otherprint();" value="打印非海拔系列" />&nbsp;</span> 
 				<span
 				class="opb lb op-area noprint"><input type="button" onclick="nopri();window.print();" value="活动执行通知单" />&nbsp;</span>
 		</div>
