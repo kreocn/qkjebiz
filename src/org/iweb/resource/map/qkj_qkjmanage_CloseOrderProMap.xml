@@ -5,7 +5,7 @@
 	<typeAlias alias="closeOrderPro" type="com.qkj.manage.domain.CloseOrderPro" />
 	<select id="qkjmanage_getCloseOrderPros" resultClass="closeOrderPro" parameterClass="java.util.Map">
 		<![CDATA[ 
-			Select * From qkjm_r_closeorder_product
+			SELECT cp.*,p.`title` product_name FROM qkjm_r_closeorder_product cp LEFT JOIN qkj_t_product p ON (cp.`product_id`=p.`uuid`)
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>

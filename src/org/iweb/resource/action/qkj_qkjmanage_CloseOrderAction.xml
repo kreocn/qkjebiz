@@ -28,12 +28,22 @@
 		</action>
 		<action name="closeOrder_save" class="com.qkj.manage.action.CloseOrderAction" method="save">
 			<result type="redirectAction">
-				<param name="actionName">closeOrder_list</param>
-				<param name="viewFlag">relist</param>
+				<param name="actionName">closeOrder_load</param>
+				<param name="closeOrder.uuid">${closeOrder.uuid}</param>
+				<param name="viewFlag">mdy</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
 		<action name="closeOrder_del" class="com.qkj.manage.action.CloseOrderAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">closeOrder_load</param>
+				<param name="closeOrder.uuid">${closeOrder.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="closeOrder_check*" class="com.qkj.manage.action.CloseOrderAction" method="check{1}">
 			<result type="redirectAction">
 				<param name="actionName">closeOrder_list</param>
 				<param name="viewFlag">relist</param>

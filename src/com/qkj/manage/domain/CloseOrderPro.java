@@ -11,6 +11,7 @@ public class CloseOrderPro {
 	private Double total_price;// (decimal)总价
 
 	// 以下为非数据库字段
+	private String product_name;
 
 	public Integer getUuid() {
 		return uuid;
@@ -58,6 +59,14 @@ public class CloseOrderPro {
 
 	public void setTotal_price(Double total_price) {
 		this.total_price = total_price;
+	}
+
+	public String getProduct_name() {
+		return product_name;
+	}
+
+	public void setProduct_name(String product_name) {
+		this.product_name = product_name;
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.qkj.manage.dao;
 import java.util.*;
+
 import org.iweb.sys.AbstractDAO;
 public class CloseOrderDAO extends AbstractDAO {
 
@@ -21,9 +22,21 @@ public class CloseOrderDAO extends AbstractDAO {
 	public int save(Object parameters) {
 		return super.save("qkjmanage_mdyCloseOrder", parameters);
 	}
+	
+	public int updateTotal(int order_id) {
+		return super.save("qkjmanage_mdyCloseOrdertotelPrice", order_id);
+	}
 
 	public int delete(Object parameters) {
 		return super.delete("qkjmanage_delCloseOrder", parameters);
+	}
+	
+	public int check(Object parameters) {
+		return super.save("qkjmanage_mdyCloseCheck", parameters);
+	}
+	
+	public int checknd(Object parameters) {
+		return super.save("qkjmanage_mdyClosendCheck", parameters);
 	}
 
 	public int getResultCount() {

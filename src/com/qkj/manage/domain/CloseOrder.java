@@ -4,11 +4,9 @@ import java.util.*;
 
 public class CloseOrder {
 	private Integer uuid;// (int)
-	private String salPro_id;//促销方案
+	private String salPro_id;// 促销方案
 	private Date close_time;// (date)结案时间
 	private String content;// (text)内容
-	private String apply_dept;// (varchar)申请部门
-	private String apply_user;// (varchar)制表人
 	private String theme;// (varchar)主题
 	private String member_id;// (varchar)收货人
 	private String member_address;// (varchar)收货地址
@@ -27,6 +25,8 @@ public class CloseOrder {
 
 	// 以下为非数据库字段
 	private String member_name;
+	private String lm_user_name;
+	private String add_user_name;
 
 	public Integer getUuid() {
 		return uuid;
@@ -50,22 +50,6 @@ public class CloseOrder {
 
 	public void setContent(String content) {
 		this.content = content;
-	}
-
-	public String getApply_dept() {
-		return apply_dept;
-	}
-
-	public void setApply_dept(String apply_dept) {
-		this.apply_dept = apply_dept;
-	}
-
-	public String getApply_user() {
-		return apply_user;
-	}
-
-	public void setApply_user(String apply_user) {
-		this.apply_user = apply_user;
 	}
 
 	public String getTheme() {
@@ -202,6 +186,22 @@ public class CloseOrder {
 
 	public void setSalPro_id(String salPro_id) {
 		this.salPro_id = salPro_id;
+	}
+
+	public String getLm_user_name() {
+		return lm_user_name;
+	}
+
+	public void setLm_user_name(String lm_user_name) {
+		this.lm_user_name = lm_user_name;
+	}
+
+	public String getAdd_user_name() {
+		return add_user_name;
+	}
+
+	public void setAdd_user_name(String add_user_name) {
+		this.add_user_name = add_user_name;
 	}
 
 }

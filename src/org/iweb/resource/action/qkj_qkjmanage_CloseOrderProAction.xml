@@ -20,8 +20,9 @@
 		</action>
 		<action name="closeOrderPro_add" class="com.qkj.manage.action.CloseOrderProAction" method="add">
 			<result type="redirectAction">
-				<param name="actionName">closeOrderPro_list</param>
-				<param name="viewFlag">relist</param>
+				<param name="actionName">closeOrder_load</param>
+				<param name="closeOrder.uuid">${closeOrderPro.order_id}</param>
+				<param name="viewFlag">mdy</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -34,8 +35,9 @@
 		</action>
 		<action name="closeOrderPro_del" class="com.qkj.manage.action.CloseOrderProAction" method="del">
 			<result type="redirectAction">
-				<param name="actionName">closeOrderPro_list</param>
-				<param name="viewFlag">relist</param>
+				<param name="actionName">closeOrder_load</param>
+				<param name="closeOrder.uuid">${closeOrderPro.order_id}</param>
+				<param name="viewFlag">mdy</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>

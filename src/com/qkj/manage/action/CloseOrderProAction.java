@@ -1,9 +1,12 @@
 package com.qkj.manage.action;
 import java.util.*;
+
 import org.apache.commons.logging.*;
 import org.iweb.sys.*;
+
 import com.opensymphony.xwork2.ActionSupport;
 import com.qkj.manage.domain.CloseOrderPro;
+import com.qkj.manage.dao.CloseOrderDAO;
 import com.qkj.manage.dao.CloseOrderProDAO;
 
 public class CloseOrderProAction extends ActionSupport implements ActionAttr {
@@ -11,6 +14,7 @@ public class CloseOrderProAction extends ActionSupport implements ActionAttr {
 	private static Log log = LogFactory.getLog(CloseOrderProAction.class);
 	private Map<String, Object> map = new HashMap<String, Object>();
 	private CloseOrderProDAO dao = new CloseOrderProDAO();
+	private CloseOrderDAO cdao=new CloseOrderDAO();
 
 	private CloseOrderPro closeOrderPro;
 	private List<CloseOrderPro> closeOrderPros;
@@ -81,7 +85,7 @@ public class CloseOrderProAction extends ActionSupport implements ActionAttr {
 	}
 
 	public String list() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDERPRO_LIST");
+		//ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDERPRO_LIST");
 		try {
 			map.clear();
 			if (closeOrderPro != null)
@@ -130,11 +134,12 @@ public class CloseOrderProAction extends ActionSupport implements ActionAttr {
 	}
 
 	public String add() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDERPRO_ADD");
+		//ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDERPRO_ADD");
 		try {
 			//closeOrderPro.setLm_user(ContextHelper.getUserLoginUuid());
 			//closeOrderPro.setLm_time(new Date());
 			dao.add(closeOrderPro);
+			cdao.updateTotal(closeOrderPro.getOrder_id());
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!add 数据添加失败:", e);
 			throw new Exception(this.getClass().getName() + "!add 数据添加失败:", e);
@@ -143,7 +148,7 @@ public class CloseOrderProAction extends ActionSupport implements ActionAttr {
 	}
 
 	public String save() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDERPRO_MDY");
+		//ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDERPRO_MDY");
 		try {
 			//closeOrderPro.setLm_user(ContextHelper.getUserLoginUuid());
 			//closeOrderPro.setLm_time(new Date());
@@ -156,9 +161,10 @@ public class CloseOrderProAction extends ActionSupport implements ActionAttr {
 	}
 
 	public String del() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDERPRO_DEL");
+		//ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDERPRO_DEL");
 		try {
 			dao.delete(closeOrderPro);
+			cdao.updateTotal(closeOrderPro.getOrder_id());
 			setMessage("删除成功!ID=" + closeOrderPro.getUuid());
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!del 数据删除失败:", e);
