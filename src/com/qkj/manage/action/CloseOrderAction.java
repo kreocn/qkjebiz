@@ -125,6 +125,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 			} else if ("add".equals(viewFlag)) {
 				SalPromotDAO saldao=new SalPromotDAO();
 				map.clear();
+				map.put("status", 2);
 				map.put("proendtime", new Date());
 				this.setSalPromots(saldao.list(map));
 				this.setCloseOrder(null);
