@@ -35,6 +35,7 @@ public class ManageCommonAction extends ActionSupport implements ActionAttr {
 	}
 
 	// only for products
+	private Integer onlyType;// 有值,则只允许选择一类(产品/促销物料/其他)
 	private String uuidKey; // 主键值
 	private String uuidValue; // 主表uuid Form变量名
 	private String backUrl; // 返回的Url
@@ -44,6 +45,14 @@ public class ManageCommonAction extends ActionSupport implements ActionAttr {
 	private String perName;// 子表单价 Form变量名
 	private String numName;// 子表数量 Form变量名
 	private String totalName;// 子表总价 Form变量名
+
+	public Integer getOnlyType() {
+		return onlyType;
+	}
+
+	public void setOnlyType(Integer onlyType) {
+		this.onlyType = onlyType;
+	}
 
 	public String getKeyName() {
 		return keyName;

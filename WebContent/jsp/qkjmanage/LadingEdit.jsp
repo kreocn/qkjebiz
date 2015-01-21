@@ -173,6 +173,7 @@ function closeAddForm() {
     		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADINGITEM_ADD')">
     		<div>
     			<s:url id="ladingAddProductsUrl" action="qkjm_addProducts" namespace="qkjmanage">
+    				<s:param name="onlyType"></s:param>
         			<s:param name="uuidKey">lading.uuid</s:param>
         			<s:param name="uuidValue" value="lading.uuid" />
         			<s:param name="backUrl">/qkjmanage/lading_load?viewFlag=mdy&</s:param>

@@ -9,7 +9,7 @@
 <s:action name="ref" namespace="/manager" executeResult="true" />
 <link rel="stylesheet" href="<s:url value="/css/zTreeStyle/zTreeStyle.css" />" />
 <script type="text/javascript" src="<s:url value="/js/zTreeJs/jquery.ztree.core-3.5.js" />"></script>
-<script type="text/javascript" src="http://images.qkjchina.com/CacheFiles/zTree_Products.js"></script>
+<!--<script type="text/javascript" src="http://images.qkjchina.com/CacheFiles/zTree_Products.js"></script>-->
 <script type="text/javascript" src="<s:url value="/js/zTreeJs/product_v0.2.js" />"></script>
 </head>
 <body>
@@ -28,12 +28,19 @@
 		    <div class="label_ltit">类型:</div>
 		    <div class="label_rwben15">
 		    	<select id="selectType" name="selectType">
-		    		<option value="0">产品</option>
-		    		<option value="1">促销物料</option>
+		    		<s:if test="onlyType==0 || onlyType==null"><option value="0">产品</option></s:if>
+		    		<s:if test="onlyType==1 || onlyType==null"><option value="1">促销物料</option></s:if>
 		    	</select>
 		    </div>
 		</div>
 	</div>
+	<div class="label_main">
+		<div class="label_ltit">&nbsp;</div>
+		<div class="label_rwben2 cr tal">
+		品鉴酒移到[促销物料]里了
+		</div>
+	</div>
+	
 	<div class="label_main">
 		<div class="label_hang">
 		    <div class="label_ltit">产品:</div>
@@ -52,6 +59,13 @@
 		    </div>
 		</div>
 	</div>
+	<div class="label_main">
+		<div class="label_ltit">&nbsp;</div>
+		<div class="label_rwben2 cr tal">
+		海拔系列产品移到[天佑德海拔系列]里了
+		</div>
+	</div>
+	
 	<div id="per_price_select_area" class="label_main">
 		<div class="label_hang">
 		    <div class="label_ltit">参考价:</div>
