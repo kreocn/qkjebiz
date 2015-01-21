@@ -1,17 +1,25 @@
 package com.qkj.manage.dao;
-import java.util.*;
-import org.iweb.sys.AbstractDAO;
-public class ProTypeDAO extends AbstractDAO {
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.iweb.sys.AbstractDAO;
+
+public class ProTypeDAO extends AbstractDAO {
 	public List list(Map<String, Object> map) {
 		setCountMapid("qkjmanage_getProTypesCounts");
 		return super.list("qkjmanage_getProTypes", map);
 	}
-	
+
 	public Object get(Object uuid) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("uuid", uuid);
 		return super.get("qkjmanage_getProTypes", map);
+	}
+
+	public List<Integer> getTypeCount() {
+		return super.list("qkjmanage_getProTypeCount", null);
 	}
 
 	public Object add(Object parameters) {

@@ -1,32 +1,33 @@
 package com.qkj.manage.action;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
-import java.util.*;
+import java.io.PrintWriter;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
+import net.sf.json.JSONObject;
 
-import org.apache.commons.logging.*;
-import org.apache.http.HttpRequest;
-import org.iweb.sys.*;
-
-import sun.misc.Request;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.iweb.sys.ActionAttr;
+import org.iweb.sys.ContextHelper;
+import org.iweb.sys.OSSUtil_IMG;
+import org.iweb.sys.ToolsUtil;
+import org.iweb.sys.encrypt.AbstractEncrypt;
+import org.iweb.sys.encrypt.EncryptFactory;
 
 import com.aliyun.openservices.oss.model.ObjectMetadata;
 import com.opensymphony.xwork2.ActionSupport;
-import com.qkj.manage.domain.ProType;
-import com.qkj.manage.domain.Product;
 import com.qkj.manage.dao.ProTypeDAO;
 import com.qkj.manage.dao.ProductDAO;
+import com.qkj.manage.domain.ProType;
+import com.qkj.manage.domain.Product;
 
 public class ProTypeAction extends ActionSupport implements ActionAttr {
 	private static final long serialVersionUID = 1L;
@@ -107,46 +108,78 @@ public class ProTypeAction extends ActionSupport implements ActionAttr {
 	}
 
 	public String lista() throws Exception {
-		ProTypeDAO ptdao = new ProTypeDAO();
-		proTypes = ptdao.list(null);
-		ProductDAO pdao = new ProductDAO();
-		products = pdao.list(null);
-		ArrayList<StringBuffer> sbl = new ArrayList<>();
+		try {
 
-		String p = IWebConfig.getConfigMap().get("WebAbsolutePath");
-		OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(p + "/js/zTreeJs/Result.js"), "UTF-8");
-		String info = null;
-		info = "var zNodes =[";
-		out.write(info);
-		for (int i = 0; i < proTypes.size(); i++) {
-			proType = proTypes.get(i);
-			info = "{id:" + proType.getUuid() + "" + "," + " pId:0, name:" + "'" + proType.getName() + "'" + ", open:false}," + '\n';
-			out.write(info);
-			for (int j = 0; j < products.size(); j++) {
-				product = products.get(j);
-				String uuid = proType.getUuid() + "";
-				if (uuid.equals(product.getBrand())) {
-					info = "{id:" + uuid + product.getUuid() + "," + " pId:" + uuid + ", name:" + "'" + product.getTitle() + "',puuid:" + product.getUuid() + ",mp:'"
-							+ ToolsUtil.getEmpty(product.getMarket_price()) + "',gp:'" + ToolsUtil.getEmpty(product.getGroup_price()) + "',dp:'"
-							+ ToolsUtil.getEmpty(product.getDealer_price()) + "',a1:'" + ToolsUtil.getEmpty(product.getAgree_price_1()) + "',a2:'"
-							+ ToolsUtil.getEmpty(product.getAgree_price_2()) + "',a3:'" + ToolsUtil.getEmpty(product.getAgree_price_3()) + "',case_spec:"
-							+ ToolsUtil.getEmpty(product.getCase_spec()) + "}," + '\n';
-					out.write(info);
+			ProTypeDAO ptdao = new ProTypeDAO();
+			proTypes = ptdao.list(null);
+			ProductDAO pdao = new ProductDAO();
+			products = pdao.list(null);
+			List<Integer> types = ptdao.getTypeCount();
+			if (types.size() > 0) {
+				StringBuffer fnode = new StringBuffer();
+				StringBuffer allnode = new StringBuffer();
+				StringBuffer[] typenode = new StringBuffer[types.size()];
+				// 提供映射 数组下标->type_id
+				int[] s_mapping = new int[types.size()];
+				for (int k = 0; k < s_mapping.length; k++) {
+					s_mapping[k] = types.get(k);
+					typenode[k] = new StringBuffer();
+					for (int i = 0; i < proTypes.size(); i++) {
+						proType = proTypes.get(i);
+						if (s_mapping[k] == proType.getType()) {
+							allnode.append("{id:").append(proType.getUuid()).append(",pId:0, name:'").append(proType.getName()).append("',open:false},");
+							typenode[k].append("{id:").append(proType.getUuid()).append(",pId:0, name:'").append(proType.getName()).append("',open:false},");
+							for (int j = 0; j < products.size(); j++) {
+								product = products.get(j);
+								Integer uuid = proType.getUuid();
+								if (uuid.equals(product.getBrand())) {
+									allnode.append("{id:").append(uuid).append(product.getUuid()).append(", pId:").append(uuid).append(", name:'").append(product.getTitle())
+											.append("',puuid:").append(product.getUuid()).append(",mp:'").append(ToolsUtil.getEmpty(product.getMarket_price())).append("',gp:'")
+											.append(ToolsUtil.getEmpty(product.getGroup_price())).append("',dp:'").append(ToolsUtil.getEmpty(product.getDealer_price()))
+											.append("',a1:'").append(ToolsUtil.getEmpty(product.getAgree_price_1())).append("',a2:'")
+											.append(ToolsUtil.getEmpty(product.getAgree_price_2())).append("',a3:'").append(ToolsUtil.getEmpty(product.getAgree_price_3()))
+											.append("',case_spec:").append(ToolsUtil.getEmpty(product.getCase_spec())).append("},");
+									JSONObject json = JSONObject.fromObject(product);
+									json.put("id", uuid + product.getUuid());
+									json.put("pId", uuid);
+									json.put("name", product.getTitle());
+									typenode[k].append(json.toString() + ",");
+								}
+							}
+						}
+					}
 				}
+				allnode.deleteCharAt(allnode.length() - 1).insert(0, "[").insert(allnode.length(), "]");
+				fnode.append("var zNodes=").append(allnode).append(";");
+				// 对产品树进行AES加密
+				AbstractEncrypt encrypt = EncryptFactory.getEncrypt("AES");
+				for (int i = 0; i < s_mapping.length; i++) {
+					typenode[i].deleteCharAt(typenode[i].length() - 1).insert(0, "[").insert(typenode[i].length(), "]");
+					fnode.append("var zNodes").append(s_mapping[i]).append("=").append(typenode[i]).append(";");
+					// 生成独立JSON
+					// byte[] b = typenode[i].toString().getBytes("UTF-8");
+					byte[] b = encrypt.encrypt(typenode[i].toString());
+					ObjectMetadata meta = new ObjectMetadata();
+					meta.setContentLength(b.length);
+					OSSUtil_IMG.uploadFile("qkjbj01", "CacheFiles/zTree_Products" + s_mapping[i] + ".js", new ByteArrayInputStream(b), meta);
+				}
+				// PrintWriter pw = new PrintWriter("D:/tp.js");
+				// pw.print(fnode.toString());
+				// pw.flush();
+				// pw.close();
+				// byte[] b = fnode.toString().getBytes("UTF-8");
+				// ObjectMetadata meta = new ObjectMetadata();
+				// meta.setContentLength(b.length);
+				// OSSUtil_IMG.uploadFile("qkjbj01", "CacheFiles/zTree_Products.js", new ByteArrayInputStream(b), meta);
+				log.info("产品树生成成功.");
+			} else {
+				log.info("还没有产品.");
 			}
+
+		} catch (Exception e) {
+			log.error("生成产品树失败.", e);
 		}
-		info = " ];";
-		out.write(info);
-		out.flush();
-		out.close();
-
-		ObjectMetadata meta = new ObjectMetadata();
-		File f = new File(p + "/js/zTreeJs/Result.js");
-		// InputStream in = new FileInputStream(f);
-		meta.setContentLength(f.length());
-		OSSUtil_IMG.uploadFile("qkjbj01", "qkjebiz01/zTree_result.js", f, meta);
-
-		return "success";
+		return SUCCESS;
 	}
 
 	public String listr() throws Exception {
@@ -166,7 +199,7 @@ public class ProTypeAction extends ActionSupport implements ActionAttr {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "success";
+		return SUCCESS;
 	}
 
 	public String list() throws Exception {
