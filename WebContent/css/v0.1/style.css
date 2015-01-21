@@ -419,10 +419,6 @@ font-weight: bold;
 	display: none;
 }
 
-.cr {
-	color: #FF0000;
-}
-
 .bgcw {
 	background-color: #FFF;
 }
@@ -431,14 +427,14 @@ font-weight: bold;
 	border: 1px solid #ddd; border-radius: 5px;  padding: 5px;
 }
 
-.message_warning {
+.message_warning,.cy {
 	color: #B8860B;
 }
 
-.message_error {
+.message_error,.cr {
 	color: #FF0000;
 }
-.message_pass {
+.message_pass,.cg {
 	color: #008000;
 }
 

@@ -62,7 +62,7 @@
 			    <td>${uuid}</td>
 			    <td class="td1 longnote">${member_name}</td>
 			    <td class="td2 nw">${it:formatDate(apply_time,'yyyy-MM-dd')}</td>
-			    <td class="td1 nw"></td>
+			    <td class="td1 nw">${apply_dept_name}</td>
 				<td class="td3 nw">${applicant_name}</td>
 				<td class="td1 nw">
 						<s:if test="2>fd_check"><span class="noarea"></span></s:if>
