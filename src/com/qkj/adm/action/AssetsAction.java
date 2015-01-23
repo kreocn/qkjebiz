@@ -34,6 +34,11 @@ public class AssetsAction extends ActionSupport {
 	private int recCount;
 	private int pageSize;
 	private int currPage;
+	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;资产列表";
+	
+	public String getPath() {
+		return path;
+	}
 
 	public List<User> getOwnusers() {
 		return ownusers;
@@ -120,6 +125,7 @@ public class AssetsAction extends ActionSupport {
 					.toString()));
 			this.setAssetss(dao.list(map));
 			this.setRecCount(dao.getResultCount());
+			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;资产列表";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
