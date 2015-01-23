@@ -1,8 +1,8 @@
 package com.qkj.manage.domain;
 
-public class LadingItem {
+public class LadingProductg {
 	private Integer uuid;// (int)
-	private Integer lading_id;// (varchar)
+	private Integer lading_id;// (int)
 	private Integer product_id;// (int)
 	private Double per_price;// (decimal)
 	private Integer num;// (int)
@@ -11,16 +11,6 @@ public class LadingItem {
 	// 以下为非数据库字段
 	private String product_name;
 	private Integer case_spec;// (int)数量(件)
-
-	private Double group_rebates; // 团购返利点
-
-	public Double getGroup_rebates() {
-		return group_rebates;
-	}
-
-	public void setGroup_rebates(Double group_rebates) {
-		this.group_rebates = group_rebates;
-	}
 
 	public Integer getCase_spec() {
 		return case_spec;

@@ -4,7 +4,6 @@ import java.util.Date;
 
 public class Product {
 	private Integer uuid;// (int)主键ID
-	private Integer mtype; // 物料类型 0:产品 1:促销品
 	private String prod_code;// 产品统一编码
 	private Integer brand;// (varchar)系列/类型/品牌
 	private String title;// (varchar)品名
@@ -27,14 +26,6 @@ public class Product {
 	private Date lm_time;// (timestamp)
 
 	private String brand_name;
-
-	public Integer getMtype() {
-		return mtype;
-	}
-
-	public void setMtype(Integer mtype) {
-		this.mtype = mtype;
-	}
 
 	public Integer getStatus() {
 		return status;

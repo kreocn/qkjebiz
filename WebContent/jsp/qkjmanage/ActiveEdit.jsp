@@ -364,6 +364,7 @@ color: #008000;
 	            	</p>
 	                <div class="lb_yjcon">
 	                	<p class="lb_gstit">公司提供酒品</p>
+	                	<p class="lb_gstit">非海拔系列</p>
 	                    <table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
 	                    	<tr>
 	                        	<th>品名</th>
@@ -372,7 +373,30 @@ color: #008000;
 	                            <th>合计</th>
 	                            <th>操作</th>
 	                        </tr>
-	                        <s:iterator value="activeProducts" status="sta">
+	                        <s:iterator value="otherActiveProducts" status="sta">
+							<tr>
+							<td class="nw">${product_name}</td>
+							<td class="nw">￥${per_price}</td>
+							<td class="nw">${num}</td>
+							<td class="nw">￥${total_price}</td>
+							<td>
+							<s:if test="active.status==0 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEPRODUCT_DEL')">
+								<a href="<s:url action="activeProduct_del"><s:param name="activeProduct.uuid" value="%{uuid}" /><s:param name="activeProduct.active_id" value="%{active.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
+							</s:if>
+							</td>
+							</tr>
+							</s:iterator>
+	                    </table>
+	                    <p class="lb_gstit">海拔系列</p>
+	                    <table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+	                    	<tr>
+	                        	<th>品名</th>
+	                            <th>单价</th>
+	                            <th>数量(瓶)</th>
+	                            <th>合计</th>
+	                            <th>操作</th>
+	                        </tr>
+	                        <s:iterator value="indActiveProducts" status="sta">
 							<tr>
 							<td class="nw">${product_name}</td>
 							<td class="nw">￥${per_price}</td>
