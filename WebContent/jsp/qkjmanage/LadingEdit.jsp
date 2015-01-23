@@ -18,21 +18,17 @@ $(function() {
 		loadAddress(c_mid);
 	}
 	
-	$("#addLadingPay").dialog({
+	$("#addFDCheckInfo").dialog({
 	      autoOpen: false,
-	      height: 200,
-	      width: 600,
+	      //height: 200,
+	      //width: 600,
 	      modal: true
 	});
-	$("#addLadingPayOpen").click(function() {
-		$("#addLadingPay").dialog("open");
+	$("#FDCheckInfoOpener").click(function() {
+		$("#addFDCheckInfo").dialog("open");
 	});
 	
-	//lading_fd_date
-	if($("#lading_fd_date").length>0) {
-		$("#lading_fd_date").datepicker();
-	}
-	CommonUtil.pickrow('fd_list_table');
+	//CommonUtil.pickrow('fd_list_table');
 });
 
 //此段代码可以防止回车提交
@@ -96,9 +92,9 @@ function createAddreeeSelect(p_data) {
 	    <div class="label_ltit">订单状态:</div>
 	    <div class="label_rwben">
 	    	<s:if test='0==lading.status'>新单</s:if>
-	    	<s:if test='5==lading.status'><span title="${it:formatDate(lading.check_time,'yyyy-MM-dd HH:mm:ss')}" class="cr">已退回()</span></s:if>
-			<s:if test='10==lading.status'><span title="${it:formatDate(lading.check_time,'yyyy-MM-dd HH:mm:ss')}" class="cy">待确认</span></s:if>
-			<s:if test='20==lading.status'><span title="${it:formatDate(lading.check_time,'yyyy-MM-dd HH:mm:ss')}" class="cg">已确认</span></s:if>
+	    	<s:if test='5==lading.status'><span title="${it:formatDate(lading.check_time,'yyyy-MM-dd HH:mm:ss')}" class="cr">已退回(${lading.check_user_name})</span></s:if>
+			<s:if test='10==lading.status'><span title="${it:formatDate(lading.check_time,'yyyy-MM-dd HH:mm:ss')}" class="cy">待确认(${lading.check_user_name})</span></s:if>
+			<s:if test='20==lading.status'><span title="${it:formatDate(lading.check_time,'yyyy-MM-dd HH:mm:ss')}" class="cg">已确认(${lading.check_user_name})</span></s:if>
 			<s:if test='30==lading.status'><span  title="${it:formatDate(lading.check_time,'yyyy-MM-dd HH:mm:ss')}" class="cg">已发货</span></s:if>
 	    </div>
 	</div>
@@ -178,7 +174,9 @@ function createAddreeeSelect(p_data) {
 				<th>数量(瓶)</th>
 				<th>数量(件)</th>
 				<th>合计</th>
+				<s:if test="lading.status<=5 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADINGITEM_DEL')">
 				<th>操作</th>
+				</s:if>
 			</tr>
 			<s:iterator value="ladingItems" status="sta">
 			<tr>
@@ -187,11 +185,9 @@ function createAddreeeSelect(p_data) {
 				<td class="nw">${num}</td>
 				<td class="nw">${it:formatNum(num/case_spec,1)}</td>
 				<td class="nw">￥${total_price}</td>
-				<td>
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADINGITEM_DEL')">
-				<a href="<s:url action="ladingItem_del" namespace="/qkjmanage"><s:param name="ladingItem.uuid" value="%{uuid}" /><s:param name="ladingItem.lading_id" value="%{lading.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
+				<s:if test="lading.status<=5 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADINGITEM_DEL')">
+				<td><a href="<s:url action="ladingItem_del" namespace="/qkjmanage"><s:param name="ladingItem.uuid" value="%{uuid}" /><s:param name="ladingItem.lading_id" value="%{lading.uuid}" /></s:url>" onclick="return isDel();">[删除]</a></td>
 				</s:if>
-				</td>
 			</tr>
 			</s:iterator>
 			</table>
@@ -209,14 +205,35 @@ function createAddreeeSelect(p_data) {
     	</fieldset>
     </div>
     <div class="label_main">
-	    <div class="label_hang">
-		    <div class="label_ltit">?促销活动:</div>
-		    <div class="label_rwben2">
-		    	<s:select name="lading.promotion_id" list="#{0:'不参加活动',1:'新春搭增活动' }"></s:select>
-		    </div>
-		</div>
+    <fieldset class="clear">
+   		<legend>可参与促销活动</legend>
+   		<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+		<tr>
+			<th>参加</th>
+			<th>活动名称</th>
+			<th>开始时间</th>
+			<th>结束时间</th>
+			<th>操作</th>
+		</tr>
+		<!-- lading.promotions -->
+		<s:iterator value="salPromots" status="sta">
+		<tr>
+			<td class="nw">
+				<input type="checkbox" name="lading.promotions" value="${uuid}" />
+			</td>
+			<td class="nw">${sal_title}</td>
+			<td class="nw">${it:formatDate(startime,'yyyy-MM-dd')}</td>
+			<td class="nw">${it:formatDate(endtime,'yyyy-MM-dd')}</td>
+			<td>查看详情</td>
+		</tr>
+		</s:iterator>
+		</table>
+		<script type="text/javascript">
+		setCheckBox("lading.promotions", '${lading.promotions}');
+		</script>
+	</fieldset>
 	</div>
-	<s:if test="lading.promotion_id!=0">
+	<s:if test="lading.promotions!=null">
 	<div class="label_main">
     	<fieldset class="clear">
     		<legend>返利/搭赠明细</legend>
@@ -243,7 +260,9 @@ function createAddreeeSelect(p_data) {
 				<th>数量(瓶)</th>
 				<th>数量(件)</th>
 				<th>合计</th>
+				<s:if test="lading.status<=5 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADINGPRODUCTG_DEL')">
 				<th>操作</th>
+				</s:if>
 			</tr>
 			<s:iterator value="ladingProductgs" status="sta">
 			<tr>
@@ -252,11 +271,9 @@ function createAddreeeSelect(p_data) {
 				<td class="nw">${num}</td>
 				<td class="nw">${it:formatNum(num/case_spec,1)}</td>
 				<td class="nw">￥${total_price}</td>
-				<td>
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADINGPRODUCTG_DEL')">
-				<a href="<s:url action="ladingProductg_del" namespace="/qkjmanage"><s:param name="ladingProductg.uuid" value="%{uuid}" /><s:param name="ladingProductg.lading_id" value="%{lading.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
+				<s:if test="lading.status<=5 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADINGPRODUCTG_DEL')">
+				<td><a href="<s:url action="ladingProductg_del" namespace="/qkjmanage"><s:param name="ladingProductg.uuid" value="%{uuid}" /><s:param name="ladingProductg.lading_id" value="%{lading.uuid}" /></s:url>" onclick="return isDel();">[删除]</a></td>
 				</s:if>
-				</td>
 			</tr>
 			</s:iterator>
 			</table>
@@ -274,6 +291,44 @@ function createAddreeeSelect(p_data) {
     	</fieldset>
     </div>
     </s:if>
+    
+     <div class="label_main">
+    	<fieldset class="clear">
+    		<legend>财务信息</legend>
+    		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADING_FDCHECK')">
+			<div class="op-area"><a id="FDCheckInfoOpener" href="javascript:;">添加/修改财务信息</a></div>
+    		</s:if>
+    		<div class="label_main">
+				<div class="label_hang">
+				    <div class="label_ltit">付款状态:</div>
+				   <div class="label_rwben label_rwb">
+				   		<s:if test="lading.fd_check==0"><span class="cr">未付款</span></s:if>
+				   		<s:if test="lading.fd_check==1"><span class="cy">未付清</span></s:if>
+				   		<s:if test="lading.fd_check==2"><span class="cg">已付款</span></s:if>
+				    </div>
+				</div>
+				<div class="label_hang">
+				    <div class="label_ltit">付款日期:</div>
+				    <div class="label_rwben label_rwb">${it:formatDate(lading.fd_date,'yyyy-MM-dd')}</div>
+				</div>
+			</div>
+			<div class="label_main">
+				<div class="label_hang">
+				    <div class="label_ltit">付款方式:</div>
+				    <div class="label_rwbenx">
+				    	<!--   cssClass="regular-checkbox" -->
+				    	<s:checkboxlist name="lading.fd_typesx" list="#{0:'现金',1:'POS',2:'支票',3:'转账',4:'预付款',5:'其他'}" cssClass="regular-checkbox" />
+				    </div>
+				</div>
+			</div>
+			<div class="label_main">
+				<div class="label_hang">
+				    <div class="label_ltit">付款说明:</div>
+				    <div class="label_rwbenx">${lading.fd_note}</div>
+				</div>
+			</div>
+    	</fieldset>
+    </div>
     </s:if>
 	<div class="label_main">
         <div class="label_hang">
@@ -343,5 +398,48 @@ function createAddreeeSelect(p_data) {
     </div>
 	</s:form>
 </div>
+
+<!-- HIDDEN AREA BEGIN -->
+<div class="dn">
+<!-- 添加财务信息 -->
+<div id="addFDCheckInfo" class="label_con idialog" title="添加酒品">
+<s:form id="form_addFDCheckInfo" name="form_addFDCheckInfo" cssClass="validFormDialog" action="mdyLadingFDCheck" namespace="/qkjmanage" method="post" theme="simple">
+<div class="label_main">
+	<div class="label_hang">
+	    <div class="label_ltit">付款状态:</div>
+	   <div class="label_rwben label_rwb">
+	    	<div class="iselect">
+		    	<s:select name="lading.fd_check" list="#{0:'未付款',2:'未付清',3:'已付款' }" />
+			</div>
+	    </div>
+	</div>
+	<div class="label_hang">
+	    <div class="label_ltit">付款方式:</div>
+	    <div class="label_rwben"></div>
+	</div>
+	<div class="label_hang">
+	  <s:checkboxlist name="lading.fd_typesx" list="#{0:'现金',1:'POS',2:'支票',3:'转账',4:'预付款',5:'其他'}" />
+	</div>
+	<div class="label_hang">
+	    <div class="label_ltit">付款日期:</div>
+	    <div class="label_rwben label_rwb">
+	    	<input  name="lading.fd_date" class="datepicker validate[custom[date]]" value="${it:formatDate(lading.fd_date,'yyyy-MM-dd')}" />
+	    </div>
+	</div>
+	<div class="label_hang">
+	    <div class="label_ltit">付款说明:</div>
+	    <div class="label_rwben nw"><s:textarea name="lading.fd_note" /></div>
+	</div>
+	 <div class="label_hang label_button tac">
+	 	<s:hidden name="lading.uuid" />
+		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADING_FDCHECK')">
+		<s:submit id="mdyLadingFDCheck" name="mdyLadingFDCheck" value="确定" action="mdyLadingFDCheck" />
+		</s:if>
+	 </div>
+</div>
+</s:form>
+</div>
+</div>
+<!-- HIDDEN AREA END -->
 </body>
 </html>

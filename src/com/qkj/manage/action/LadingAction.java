@@ -17,11 +17,13 @@ import com.qkj.manage.dao.LadingDAO;
 import com.qkj.manage.dao.LadingItemDAO;
 import com.qkj.manage.dao.LadingProductgDAO;
 import com.qkj.manage.dao.ProductDAO;
+import com.qkj.manage.dao.SalPromotDAO;
 import com.qkj.manage.domain.Lading;
 import com.qkj.manage.domain.LadingItem;
 import com.qkj.manage.domain.LadingPay;
 import com.qkj.manage.domain.LadingProductg;
 import com.qkj.manage.domain.Product;
+import com.qkj.manage.domain.SalPromot;
 
 public class LadingAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
@@ -36,10 +38,19 @@ public class LadingAction extends ActionSupport {
 	private List<LadingItem> ladingItems;
 	private List<LadingProductg> ladingProductgs;
 	private List<LadingPay> ladingPays;
+	private List<SalPromot> salPromots;
 	private String message;
 	private String viewFlag;
 	private int recCount;
 	private int pageSize;
+
+	public List<SalPromot> getSalPromots() {
+		return salPromots;
+	}
+
+	public void setSalPromots(List<SalPromot> salPromots) {
+		this.salPromots = salPromots;
+	}
 
 	public List<LadingProductg> getLadingProductgs() {
 		return ladingProductgs;
@@ -164,8 +175,9 @@ public class LadingAction extends ActionSupport {
 						map.put("status", 2);
 					}
 					this.setLading((Lading) dao.list(map).get(0));
+
 					if (!ToolsUtil.isEmpty(lading.getFd_type())) {
-						lading.setFd_types(lading.getFd_type().split(","));
+						lading.setFd_typesx(ToolsUtil.split2Integer(lading.getFd_type()));
 					}
 
 					ProductDAO pdao = new ProductDAO();
@@ -180,10 +192,10 @@ public class LadingAction extends ActionSupport {
 					map.clear();
 					map.put("lading_id", lading.getUuid());
 					this.setLadingProductgs(gdao.list(map));
-					// LadingPayDAO lpdao = new LadingPayDAO();
-					// map.clear();
-					// map.put("lading_id", lading.getUuid());
-					// this.setLadingPays(lpdao.list(map));
+
+					SalPromotDAO sdao = new SalPromotDAO();
+					map.clear();
+					this.setSalPromots(sdao.list(map));
 				}
 			} else {
 				this.setLading(null);
@@ -225,6 +237,9 @@ public class LadingAction extends ActionSupport {
 	public String save() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_LADING_MDY");
 		try {
+			if (lading != null && !ToolsUtil.isEmpty(lading.getPromotions())) {
+				lading.setPromotions(lading.getPromotions().replaceAll(" ", ""));
+			}
 			lading.setLm_user(ContextHelper.getUserLoginUuid());
 			dao.save(lading);
 		} catch (Exception e) {
@@ -321,7 +336,7 @@ public class LadingAction extends ActionSupport {
 			lading.setFd_check_user(ContextHelper.getUserLoginUuid());
 			lading.setLm_user(ContextHelper.getUserLoginUuid());
 			lading.setFd_check_time(new Date());
-			lading.setFd_type(ToolsUtil.Array2String(lading.getFd_types() == null ? new String[] {} : lading.getFd_types(), ","));
+			lading.setFd_type(ToolsUtil.Array2String(lading.getFd_typesx() == null ? new Integer[] {} : lading.getFd_typesx(), ","));
 			dao.mdyLadingFDCheck(lading);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyLadingFDCheck 数据更新失败:", e);

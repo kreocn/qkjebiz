@@ -6,6 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.iweb.fileupload.logic.MemberStockUploadConfig;
 import org.iweb.fileupload.logic.UploadConfig;
 import org.iweb.sys.HtmlUtils;
+import org.iweb.sys.ToolsUtil;
 import org.iweb.sys.encrypt.AbstractEncrypt;
 import org.iweb.sys.encrypt.EncryptFactory;
 
@@ -18,15 +19,17 @@ public class test {
 	private StringBuffer sql = new StringBuffer();
 
 	public test() {
-		HtmlUtils hu = new HtmlUtils();
-		String a = "";
-		try {
-			AbstractEncrypt encrypt = EncryptFactory.getEncrypt("AES");
-			a = new String(encrypt.decrypt(hu.getHtml2Byte("http://images.qkjchina.com/CacheFiles/zTree_Products1.js")));
-		} catch (Exception e) {
-			// TODO: handle exception
+		String str = "1 , 2 ,  3,  4,  5";
+		// System.out.println(ToolsUtil.split2Integer(str, ","));
+		// System.out.println(ToolsUtil.spliten(str, ",").length);
+		Integer[] ss = ToolsUtil.split2Integer(str, ",");
+		// String[] ss = ToolsUtil.spliten(str);
+		for (int i = 0; i < ss.length; i++) {
+			System.out.println(ss[i]);
 		}
-		System.out.println(a);
+
+		String s = ToolsUtil.Array2String(ss, ",");
+		System.out.println(s);
 	}
 
 	/**

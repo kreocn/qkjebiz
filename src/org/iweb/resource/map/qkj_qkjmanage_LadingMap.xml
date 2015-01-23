@@ -5,12 +5,13 @@
 	<typeAlias alias="lading" type="com.qkj.manage.domain.Lading" />
 	<select id="qkjmanage_getLadings" resultClass="lading" parameterClass="java.util.Map">
 		<![CDATA[ 
-			Select l.*,m.member_name,m.mobile member_mobile,fdu.USER_NAME fd_check_user_name,
+			Select l.*,m.member_name,m.mobile member_mobile,fdu.USER_NAME fd_check_user_name,cu.USER_NAME check_user_name,
 				appu.USER_NAME applicant_name,addu.USER_NAME add_user_name,lmu.USER_NAME lm_user_name,
 				ad.dept_cname apply_dept_name
 			From qkjm_r_lading l
 				LEFT JOIN s_vip_member m ON (l.member_id = m.UUID)
 				LEFT JOIN s_sys_user fdu ON (l.fd_check_user = fdu.UUID)
+				LEFT JOIN s_sys_user cu ON (l.check_user = cu.UUID)
 				LEFT JOIN s_sys_user appu ON (l.applicant = appu.UUID)
 				LEFT JOIN s_sys_user addu ON (l.add_user = addu.UUID)
 				LEFT JOIN s_sys_user lmu ON (l.lm_user = lmu.UUID)
@@ -68,7 +69,7 @@
 			Set content=#content#,
 				address=#address#,
 				curr_price=#curr_price#,
-				promotion_id=#promotion_id#,
+				promotions=#promotions#,
 				lm_user=#lm_user#
 			Where uuid = #uuid#
 		]]>
@@ -84,6 +85,10 @@
 		<![CDATA[
 			Update qkjm_r_lading
 			Set total_price=(
+				SELECT SUM(i.total_price)
+				FROM qkjm_r_lading_item i
+				WHERE i.lading_id = #value#
+			),curr_price=(
 				SELECT SUM(i.total_price)
 				FROM qkjm_r_lading_item i
 				WHERE i.lading_id = #value#
@@ -124,7 +129,7 @@
 				fd_date=#fd_date#,
 				fd_check_user=#fd_check_user#,
 				fd_check_time=#fd_check_time#,
-				note=#note#,
+				fd_note=#fd_note#,
 				lm_user=#lm_user#
 			Where uuid = #uuid#
 		]]>

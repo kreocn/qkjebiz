@@ -252,7 +252,7 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 				this.setMessage("参数缺失!");
 			} else {
 				map.clear();
-				map.put("uuids", ToolsUtil.getSplitUuids(member.getUuid()));
+				map.put("uuids", ToolsUtil.spliten(member.getUuid()));
 				map.put("dept_code", member.getDept_code());
 				map.put("manager", member.getManager());
 				dao.memberDistribution(map);

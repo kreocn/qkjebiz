@@ -16,6 +16,7 @@ public class Lading {
 	private Date fd_date; // 付款时间
 	private String fd_check_user;
 	private Date fd_check_time;// (datetime)确认时间
+	private String fd_note;// 确认说明
 	private Integer status;// (int)状态 0初始 1报批 2结案
 	private String check_user;// 审核人
 	private Date check_time;// (datetime)结案时间
@@ -28,7 +29,7 @@ public class Lading {
 	private Date lm_time;// (timestamp)最后修改时间
 	private Integer out_flag; // 出货标记(0:未出货 1:已出货)
 	private Integer rebates_flag; // 返利标记 0未返利 1已返利
-	private Integer promotion_id;// 促销ID
+	private String promotions;// 促销ID
 
 	// 以下为非数据库字段
 	private String fd_check_user_name;
@@ -36,12 +37,37 @@ public class Lading {
 	private String add_user_name;
 	private String lm_user_name;
 	private String apply_dept_name;
+	private String check_user_name;
 
 	private String member_name;
 	private String member_mobile;
 
 	// 特殊字段
-	private String[] fd_types; // 专门为赋值checkbox而设定
+	private Integer[] fd_typesx; // 专门为赋值checkbox而设定
+
+	public Integer[] getFd_typesx() {
+		return fd_typesx;
+	}
+
+	public void setFd_typesx(Integer[] fd_typesx) {
+		this.fd_typesx = fd_typesx;
+	}
+
+	public String getFd_note() {
+		return fd_note;
+	}
+
+	public void setFd_note(String fd_note) {
+		this.fd_note = fd_note;
+	}
+
+	public String getCheck_user_name() {
+		return check_user_name;
+	}
+
+	public void setCheck_user_name(String check_user_name) {
+		this.check_user_name = check_user_name;
+	}
 
 	public Integer getUuid() {
 		return uuid;
@@ -243,12 +269,12 @@ public class Lading {
 		this.rebates_flag = rebates_flag;
 	}
 
-	public Integer getPromotion_id() {
-		return promotion_id;
+	public String getPromotions() {
+		return promotions;
 	}
 
-	public void setPromotion_id(Integer promotion_id) {
-		this.promotion_id = promotion_id;
+	public void setPromotions(String promotions) {
+		this.promotions = promotions;
 	}
 
 	public String getFd_check_user_name() {
@@ -305,13 +331,5 @@ public class Lading {
 
 	public void setMember_mobile(String member_mobile) {
 		this.member_mobile = member_mobile;
-	}
-
-	public String[] getFd_types() {
-		return fd_types;
-	}
-
-	public void setFd_types(String[] fd_types) {
-		this.fd_types = fd_types;
 	}
 }

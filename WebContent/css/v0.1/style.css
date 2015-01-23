@@ -143,7 +143,7 @@ font-weight: bold;
 }
 
 .label_main {
-	float: left; width: 100%; padding-bottom:5px;
+	width: 100%; padding-bottom:5px;float: left;
 }
 
 .label_hang {
@@ -315,7 +315,7 @@ font-weight: bold;
 }
 
 .lb_jpin th {
-	background: #f1f1f1; color: #333; padding: 6px 0; font-size: 14px;
+	background: #f1f1f1; color: #333; padding: 6px 0; font-size: 14px;white-space: nowrap; word-break: break-all;
 }
 
 .lb_jpin td {
