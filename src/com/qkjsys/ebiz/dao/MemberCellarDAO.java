@@ -74,7 +74,7 @@ public class MemberCellarDAO extends AbstractDAO {
 
 	public void addBatch(MemberCellar4Add memberCellar, String goods_add_id) {
 		List<Object> parameters = new ArrayList<>();
-		String[] goods_ids = ToolsUtil.getSplitUuids(goods_add_id);
+		String[] goods_ids = ToolsUtil.spliten(goods_add_id);
 		if (goods_ids.length > 0) {
 			OrderCellarDAO odao = new OrderCellarDAO();
 			// 取得最多需要添加的数量

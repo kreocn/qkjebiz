@@ -17,31 +17,18 @@ $(function() {
 	if(c_mid!='') {
 		loadAddress(c_mid);
 	}
-	$("#addItemForm").dialog({
+	
+	$("#addFDCheckInfo").dialog({
 	      autoOpen: false,
-	      height: 200,
-	      width: 600,
+	      //height: 200,
+	      //width: 600,
 	      modal: true
 	});
-	$("#addItem").click(function() {
-		openAddForm();
+	$("#FDCheckInfoOpener").click(function() {
+		$("#addFDCheckInfo").dialog("open");
 	});
 	
-	$("#addLadingPay").dialog({
-	      autoOpen: false,
-	      height: 200,
-	      width: 600,
-	      modal: true
-	});
-	$("#addLadingPayOpen").click(function() {
-		$("#addLadingPay").dialog("open");
-	});
-	
-	//lading_fd_date
-	if($("#lading_fd_date").length>0) {
-		$("#lading_fd_date").datepicker();
-	}
-	CommonUtil.pickrow('fd_list_table');
+	//CommonUtil.pickrow('fd_list_table');
 });
 
 //此段代码可以防止回车提交
@@ -86,14 +73,6 @@ function createAddreeeSelect(p_data) {
 		$(":input[name='lading.address']").val(c_data[$(this).getSelectedValue()]);
 	});
 }
-
-function openAddForm() {
-	$("#addItemForm").dialog("open");
-}
-
-function closeAddForm() {
-	$("#addItemForm").dialog("close");
-}
 </script>
 <body>
 <div class="main">
@@ -113,9 +92,10 @@ function closeAddForm() {
 	    <div class="label_ltit">订单状态:</div>
 	    <div class="label_rwben">
 	    	<s:if test='0==lading.status'>新单</s:if>
-			<s:if test='1==lading.status'>待审核</s:if>
-			<s:if test='2==lading.status'>结案-<s:date name="lading.close_time" format="yyyy-MM-dd HH:mm:ss" /></s:if>
-			<s:if test='0==lading.out_flag'><span class="message_error">未出货</span></s:if><s:if test='1==lading.out_flag'>已出货</s:if>
+	    	<s:if test='5==lading.status'><span title="${it:formatDate(lading.check_time,'yyyy-MM-dd HH:mm:ss')}" class="cr">已退回(${lading.check_user_name})</span></s:if>
+			<s:if test='10==lading.status'><span title="${it:formatDate(lading.check_time,'yyyy-MM-dd HH:mm:ss')}" class="cy">待确认(${lading.check_user_name})</span></s:if>
+			<s:if test='20==lading.status'><span title="${it:formatDate(lading.check_time,'yyyy-MM-dd HH:mm:ss')}" class="cg">已确认(${lading.check_user_name})</span></s:if>
+			<s:if test='30==lading.status'><span  title="${it:formatDate(lading.check_time,'yyyy-MM-dd HH:mm:ss')}" class="cg">已发货</span></s:if>
 	    </div>
 	</div>
 	<div class="label_hang">
@@ -173,7 +153,7 @@ function closeAddForm() {
     		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADINGITEM_ADD')">
     		<div>
     			<s:url id="ladingAddProductsUrl" action="qkjm_addProducts" namespace="qkjmanage">
-    				<s:param name="onlyType"></s:param>
+    				<s:param name="onlyType">0</s:param>
         			<s:param name="uuidKey">lading.uuid</s:param>
         			<s:param name="uuidValue" value="lading.uuid" />
         			<s:param name="backUrl">/qkjmanage/lading_load?viewFlag=mdy&</s:param>
@@ -194,7 +174,9 @@ function closeAddForm() {
 				<th>数量(瓶)</th>
 				<th>数量(件)</th>
 				<th>合计</th>
+				<s:if test="lading.status<=5 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADINGITEM_DEL')">
 				<th>操作</th>
+				</s:if>
 			</tr>
 			<s:iterator value="ladingItems" status="sta">
 			<tr>
@@ -203,11 +185,9 @@ function closeAddForm() {
 				<td class="nw">${num}</td>
 				<td class="nw">${it:formatNum(num/case_spec,1)}</td>
 				<td class="nw">￥${total_price}</td>
-				<td>
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADINGITEM_DEL')">
-				<a href="<s:url action="ladingItem_del" namespace="/qkjmanage"><s:param name="ladingItem.uuid" value="%{uuid}" /><s:param name="ladingItem.lading_id" value="%{lading.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
+				<s:if test="lading.status<=5 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADINGITEM_DEL')">
+				<td><a href="<s:url action="ladingItem_del" namespace="/qkjmanage"><s:param name="ladingItem.uuid" value="%{uuid}" /><s:param name="ladingItem.lading_id" value="%{lading.uuid}" /></s:url>" onclick="return isDel();">[删除]</a></td>
 				</s:if>
-				</td>
 			</tr>
 			</s:iterator>
 			</table>
@@ -225,14 +205,35 @@ function closeAddForm() {
     	</fieldset>
     </div>
     <div class="label_main">
-	    <div class="label_hang">
-		    <div class="label_ltit">?促销活动:</div>
-		    <div class="label_rwben2">
-		    	<s:select name="lading.promotion_id" list="#{0:'不参加活动',1:'新春搭增活动' }"></s:select>
-		    </div>
-		</div>
+    <fieldset class="clear">
+   		<legend>可参与促销活动</legend>
+   		<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+		<tr>
+			<th>参加</th>
+			<th>活动名称</th>
+			<th>开始时间</th>
+			<th>结束时间</th>
+			<th>操作</th>
+		</tr>
+		<!-- lading.promotions -->
+		<s:iterator value="salPromots" status="sta">
+		<tr>
+			<td class="nw">
+				<input type="checkbox" name="lading.promotions" value="${uuid}" />
+			</td>
+			<td class="nw">${sal_title}</td>
+			<td class="nw">${it:formatDate(startime,'yyyy-MM-dd')}</td>
+			<td class="nw">${it:formatDate(endtime,'yyyy-MM-dd')}</td>
+			<td>查看详情</td>
+		</tr>
+		</s:iterator>
+		</table>
+		<script type="text/javascript">
+		setCheckBox("lading.promotions", '${lading.promotions}');
+		</script>
+	</fieldset>
 	</div>
-	<s:if test="lading.promotion_id!=0">
+	<s:if test="lading.promotions!=null">
 	<div class="label_main">
     	<fieldset class="clear">
     		<legend>返利/搭赠明细</legend>
@@ -259,7 +260,9 @@ function closeAddForm() {
 				<th>数量(瓶)</th>
 				<th>数量(件)</th>
 				<th>合计</th>
+				<s:if test="lading.status<=5 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADINGPRODUCTG_DEL')">
 				<th>操作</th>
+				</s:if>
 			</tr>
 			<s:iterator value="ladingProductgs" status="sta">
 			<tr>
@@ -268,11 +271,9 @@ function closeAddForm() {
 				<td class="nw">${num}</td>
 				<td class="nw">${it:formatNum(num/case_spec,1)}</td>
 				<td class="nw">￥${total_price}</td>
-				<td>
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADINGPRODUCTG_DEL')">
-				<a href="<s:url action="ladingProductg_del" namespace="/qkjmanage"><s:param name="ladingProductg.uuid" value="%{uuid}" /><s:param name="ladingProductg.lading_id" value="%{lading.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
+				<s:if test="lading.status<=5 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADINGPRODUCTG_DEL')">
+				<td><a href="<s:url action="ladingProductg_del" namespace="/qkjmanage"><s:param name="ladingProductg.uuid" value="%{uuid}" /><s:param name="ladingProductg.lading_id" value="%{lading.uuid}" /></s:url>" onclick="return isDel();">[删除]</a></td>
 				</s:if>
-				</td>
 			</tr>
 			</s:iterator>
 			</table>
@@ -290,58 +291,155 @@ function closeAddForm() {
     	</fieldset>
     </div>
     </s:if>
+    
+     <div class="label_main">
+    	<fieldset class="clear">
+    		<legend>财务信息</legend>
+    		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADING_FDCHECK')">
+			<div class="op-area"><a id="FDCheckInfoOpener" href="javascript:;">添加/修改财务信息</a></div>
+    		</s:if>
+    		<div class="label_main">
+				<div class="label_hang">
+				    <div class="label_ltit">付款状态:</div>
+				   <div class="label_rwben label_rwb">
+				   		<s:if test="lading.fd_check==0"><span class="cr">未付款</span></s:if>
+				   		<s:if test="lading.fd_check==1"><span class="cy">未付清</span></s:if>
+				   		<s:if test="lading.fd_check==2"><span class="cg">已付款</span></s:if>
+				    </div>
+				</div>
+				<div class="label_hang">
+				    <div class="label_ltit">付款日期:</div>
+				    <div class="label_rwben label_rwb">${it:formatDate(lading.fd_date,'yyyy-MM-dd')}</div>
+				</div>
+			</div>
+			<div class="label_main">
+				<div class="label_hang">
+				    <div class="label_ltit">付款方式:</div>
+				    <div class="label_rwbenx">
+				    	<!--   cssClass="regular-checkbox" -->
+				    	<s:checkboxlist name="lading.fd_typesx" list="#{0:'现金',1:'POS',2:'支票',3:'转账',4:'预付款',5:'其他'}" cssClass="regular-checkbox" />
+				    </div>
+				</div>
+			</div>
+			<div class="label_main">
+				<div class="label_hang">
+				    <div class="label_ltit">付款说明:</div>
+				    <div class="label_rwbenx">${lading.fd_note}</div>
+				</div>
+			</div>
+    	</fieldset>
+    </div>
     </s:if>
 	<div class="label_main">
         <div class="label_hang">
             <div class="label_ltit">备注:</div>
             <div class="label_rwbenx">
+            	<s:textarea id="lading_content" name="lading.content" title="备注"  cssClass="label_hang_linput validate[maxSize[65535]]" />
+            </div>
+        </div>
+    </div>
+    <s:if test="lading.status>5">
+    <div class="label_main">
+        <div class="label_hang">
+            <div class="label_ltit">审核意见:</div>
+            <div class="label_rwbenx">
             	<s:textarea id="lading_note" name="lading.note" title="备注"  cssClass="label_hang_linput validate[maxSize[65535]]" />
             </div>
         </div>
     </div>
+    </s:if>
     <div class="label_main">
         <div class="label_hang">
             <div class="label_ltit">相关操作:</div>
             <div class="label_rwbenx">
-            
             <s:if test="null == lading && 'add' == viewFlag">
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADING_ADD')">
 					<s:submit id="add" name="add" value="下一步&填写出货明细" action="lading_add" />
 					</s:if>
 				</s:if>
 				<s:elseif test="null != lading && 'mdy' == viewFlag">
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADING_MDY')&&(lading.status==0||lading.status==1)">
-					<s:submit id="save" name="save" value="保存" action="lading_save"  cssClass="input-blue" />
-					<script type="text/javascript">
-					$(function(){
-						$("#editForm :input").change(function(){
-							if($("#saveLadingStatus0").length>0)
-								$("#saveLadingStatus0").attr("disabled","disabled");
-							if($("#saveLadingStatus1").length>0)
-								$("#saveLadingStatus1").attr("disabled","disabled");
-							$("#message").text("请先保存后才能进行其他相关操作");
+					<s:if test="lading.status<=5">
+						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADING_MDY')">
+						<s:submit id="save" name="save" value="保存" action="lading_save"  cssClass="input-blue" />
+						<script type="text/javascript">
+						$(function(){
+							$("#editForm :input").change(function(){
+								if($("#saveLadingStatus0").length>0)
+									$("#saveLadingStatus0").attr("disabled","disabled");
+								if($("#saveLadingStatus1").length>0)
+									$("#saveLadingStatus1").attr("disabled","disabled");
+								$("#message").text("请先保存后才能进行其他相关操作");
+							});
 						});
-					});
-					</script>
+						</script>
+						</s:if>
+						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADING_STATUS0')&&lading.status<=5">
+							<s:submit id="saveLadingStatus0" name="saveLadingStatus0" value="送审" action="saveLadingStatus0" onclick="return isOp('确定执行此操作?');" cssClass="input-yellow" />
+						</s:if>
+						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADING_DEL')">
+							<s:submit id="delete" name="delete" value="删除订单" action="lading_del" onclick="return isDel();" cssClass="input-red" />
+						</s:if>
 					</s:if>
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADING_STATUS0')&&lading.status==0">
-					<s:submit id="saveLadingStatus0" name="saveLadingStatus0" value="送审" action="saveLadingStatus0" onclick="return isOp('确定执行此操作?');" cssClass="input-yellow" />
-					</s:if>
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADING_STATUS1')&&lading.status==1">
-					<s:submit id="saveLadingStatus1" name="saveLadingStatus1" value="结案&发货" action="saveLadingStatus1" onclick="return isOp('确定执行此操作?');" />
-					</s:if>
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADING_DEL')">
-						<s:submit id="delete" name="delete" value="删除订单" action="lading_del" onclick="return isDel();" cssClass="input-red" />
+					
+					
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADING_STATUS10')&&lading.status==10">
+						<s:submit id="saveLadingStatus10" name="saveLadingStatus10" value="财务通过" action="saveLadingStatus10" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
+						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADING_STATUS5')">
+						<s:submit id="saveLadingStatus5" name="saveLadingStatus5" value="财务退回" action="saveLadingStatus5" onclick="return isOp('确定执行此操作?');" cssClass="input-red" />
+						</s:if>
 					</s:if>
 				</s:elseif>
 				<input type="button" value="返回" onclick="linkurl('<s:url action="lading_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');"  class="input-gray" />
 				<span id="message"  class="cr"></span>
-				<input type="button" value="打印" onclick="window.print();" />
+				<!-- <input type="button" value="打印" onclick="window.print();" /> -->
             </div>
 		</div>
 	</div>
     </div>
 	</s:form>
 </div>
+
+<!-- HIDDEN AREA BEGIN -->
+<div class="dn">
+<!-- 添加财务信息 -->
+<div id="addFDCheckInfo" class="label_con idialog" title="添加酒品">
+<s:form id="form_addFDCheckInfo" name="form_addFDCheckInfo" cssClass="validFormDialog" action="mdyLadingFDCheck" namespace="/qkjmanage" method="post" theme="simple">
+<div class="label_main">
+	<div class="label_hang">
+	    <div class="label_ltit">付款状态:</div>
+	   <div class="label_rwben label_rwb">
+	    	<div class="iselect">
+		    	<s:select name="lading.fd_check" list="#{0:'未付款',2:'未付清',3:'已付款' }" />
+			</div>
+	    </div>
+	</div>
+	<div class="label_hang">
+	    <div class="label_ltit">付款方式:</div>
+	    <div class="label_rwben"></div>
+	</div>
+	<div class="label_hang">
+	  <s:checkboxlist name="lading.fd_typesx" list="#{0:'现金',1:'POS',2:'支票',3:'转账',4:'预付款',5:'其他'}" />
+	</div>
+	<div class="label_hang">
+	    <div class="label_ltit">付款日期:</div>
+	    <div class="label_rwben label_rwb">
+	    	<input  name="lading.fd_date" class="datepicker validate[custom[date]]" value="${it:formatDate(lading.fd_date,'yyyy-MM-dd')}" />
+	    </div>
+	</div>
+	<div class="label_hang">
+	    <div class="label_ltit">付款说明:</div>
+	    <div class="label_rwben nw"><s:textarea name="lading.fd_note" /></div>
+	</div>
+	 <div class="label_hang label_button tac">
+	 	<s:hidden name="lading.uuid" />
+		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADING_FDCHECK')">
+		<s:submit id="mdyLadingFDCheck" name="mdyLadingFDCheck" value="确定" action="mdyLadingFDCheck" />
+		</s:if>
+	 </div>
+</div>
+</s:form>
+</div>
+</div>
+<!-- HIDDEN AREA END -->
 </body>
 </html>

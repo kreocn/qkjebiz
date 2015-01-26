@@ -5,20 +5,17 @@
 	<typeAlias alias="lading" type="com.qkj.manage.domain.Lading" />
 	<select id="qkjmanage_getLadings" resultClass="lading" parameterClass="java.util.Map">
 		<![CDATA[ 
-			Select l.*,m.member_name,m.mobile member_mobile,mu.USER_NAME manager_check_user_name,
-				sdu.USER_NAME sd_check_user_name,mdu.USER_NAME md_check_user_name,
-				fdu.USER_NAME fd_check_user_name,cdu.USER_NAME coo_check_user_name,
-				appu.USER_NAME applicant_name,addu.USER_NAME add_user_name,lmu.USER_NAME lm_user_name
+			Select l.*,m.member_name,m.mobile member_mobile,fdu.USER_NAME fd_check_user_name,cu.USER_NAME check_user_name,
+				appu.USER_NAME applicant_name,addu.USER_NAME add_user_name,lmu.USER_NAME lm_user_name,
+				ad.dept_cname apply_dept_name
 			From qkjm_r_lading l
 				LEFT JOIN s_vip_member m ON (l.member_id = m.UUID)
-				LEFT JOIN s_sys_user mu ON (l.manager_check_user = mu.UUID)
-				LEFT JOIN s_sys_user sdu ON (l.sd_check_user = sdu.UUID)
-				LEFT JOIN s_sys_user mdu ON (l.md_check_user = mdu.UUID)
 				LEFT JOIN s_sys_user fdu ON (l.fd_check_user = fdu.UUID)
-				LEFT JOIN s_sys_user cdu ON (l.coo_check_user = cdu.UUID)
+				LEFT JOIN s_sys_user cu ON (l.check_user = cu.UUID)
 				LEFT JOIN s_sys_user appu ON (l.applicant = appu.UUID)
 				LEFT JOIN s_sys_user addu ON (l.add_user = addu.UUID)
 				LEFT JOIN s_sys_user lmu ON (l.lm_user = lmu.UUID)
+				left join s_sys_department ad on (l.apply_dept = ad.dept_code)
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ l.uuid=#uuid# ]]></isNotEmpty>
@@ -59,8 +56,8 @@
 	</select>
 	<insert id="qkjmanage_addLading" parameterClass="lading">
 		<![CDATA[ 
-			Insert Into qkjm_r_lading(member_id,content,address,note,manager_check,sd_check,md_check,fd_check,coo_check,status,applicant,apply_time,add_user,add_time,lm_user)
-			Values (#member_id#,#content#,#address#,#note#,#manager_check#,#sd_check#,#md_check#,#fd_check#,#coo_check#,#status#,#applicant#,#apply_time#,#add_user#,#add_time#,#lm_user#)
+			Insert Into qkjm_r_lading(member_id,content,address,note,fd_check,status,applicant,apply_dept,apply_time,add_user,add_time,lm_user)
+			Values (#member_id#,#content#,#address#,#note#,#fd_check#,#status#,#applicant#,#apply_dept#,#apply_time#,#add_user#,#add_time#,#lm_user#)
 		]]>
 		<selectKey resultClass="int" keyProperty="uuid">
 		<![CDATA[ Select LAST_INSERT_ID() ]]>
@@ -72,8 +69,7 @@
 			Set content=#content#,
 				address=#address#,
 				curr_price=#curr_price#,
-				note=#note#,
-				promotion_id=#promotion_id#,
+				promotions=#promotions#,
 				lm_user=#lm_user#
 			Where uuid = #uuid#
 		]]>
@@ -92,11 +88,15 @@
 				SELECT SUM(i.total_price)
 				FROM qkjm_r_lading_item i
 				WHERE i.lading_id = #value#
+			),curr_price=(
+				SELECT SUM(i.total_price)
+				FROM qkjm_r_lading_item i
+				WHERE i.lading_id = #value#
 			)
 			Where uuid = #value#
 		]]>
 	</update>
-	
+
 	<update id="qkjmanage_mdyLadingTotalPriceg" parameterClass="int">
 		<![CDATA[
 			Update qkjm_r_lading
@@ -113,40 +113,9 @@
 		<![CDATA[
 			Update qkjm_r_lading
 			Set `status`=#status#,
-				close_time=#close_time#,
-				lm_user=#lm_user#
-			Where uuid = #uuid#
-		]]>
-	</update>
-
-	<update id="qkjmanage_mdyLadingManagerCheck" parameterClass="lading">
-		<![CDATA[
-			Update qkjm_r_lading
-			Set manager_check=#manager_check#,
-				manager_check_user=#manager_check_user#,
-				manager_check_time=SYSDATE(),
-				lm_user=#lm_user#
-			Where uuid = #uuid#
-		]]>
-	</update>
-
-	<update id="qkjmanage_mdyLadingSDCheck" parameterClass="lading">
-		<![CDATA[
-			Update qkjm_r_lading
-			Set sd_check=#sd_check#,
-				sd_check_user=#sd_check_user#,
-				sd_check_time=SYSDATE(),
-				lm_user=#lm_user#
-			Where uuid = #uuid#
-		]]>
-	</update>
-
-	<update id="qkjmanage_mdyLadingMDCheck" parameterClass="lading">
-		<![CDATA[
-			Update qkjm_r_lading
-			Set md_check=#md_check#,
-				md_check_user=#md_check_user#,
-				md_check_time=SYSDATE(),
+				check_time=#check_time#,
+				check_user=#check_user#,
+				note=#note#,
 				lm_user=#lm_user#
 			Where uuid = #uuid#
 		]]>
@@ -159,18 +128,8 @@
 				fd_type=#fd_type#,
 				fd_date=#fd_date#,
 				fd_check_user=#fd_check_user#,
-				fd_check_time=SYSDATE(),
-				lm_user=#lm_user#
-			Where uuid = #uuid#
-		]]>
-	</update>
-
-	<update id="qkjmanage_mdyLadingCOOCheck" parameterClass="lading">
-		<![CDATA[
-			Update qkjm_r_lading
-			Set coo_check=#coo_check#,
-				coo_check_user=#coo_check_user#,
-				coo_check_time=SYSDATE(),
+				fd_check_time=#fd_check_time#,
+				fd_note=#fd_note#,
 				lm_user=#lm_user#
 			Where uuid = #uuid#
 		]]>

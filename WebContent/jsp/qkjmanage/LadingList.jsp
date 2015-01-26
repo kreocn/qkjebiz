@@ -32,9 +32,8 @@
         </div>
         <div class="label_hang">
             <div class="label_ltit">状态:</div>
-            <div class="label_rwben2">
-            	<span class="label_rwb nw"><s:select name="lading.status" title="状态" headerKey="" headerValue="--请选择--" list="#{0:'新单',1:'待审核',2:'结案'}" /></span>
-				<span class="label_rwb nw"><s:select name="lading.out_flag" title="状态" headerKey="" headerValue="--请选择--" list="#{0:'未出货',1:'已出货'}" /></span>
+            <div class="label_rwben">
+            	<span class="label_rwb nw"><s:select name="lading.status" title="状态" headerKey="" headerValue="--请选择--" list="#{0:'新单',5:'已退回',10:'待确认',20:'已确认',30:'已发货'}" /></span>
             </div>
         </div>
         <div class="label_hang label_button tac">
@@ -47,30 +46,28 @@
  	<div class="tab_warp">
 		<table>
 			<tr id="coltr">
-			    <th>编号</th>
-			    <th class="td2">客户名称</th>
+			    <th class="td3">编号</th>
 			    <th class="td1">提交时间</th>
-				<th class="td3">提交部门</th>
+			    <th class="td3">提交部门</th>
+			    <th class="td2">客户名称</th>
 				<th class="td1">提交人</th>
-				<th class="td4">财务状态</th>
-				<th class="td4">发货状态</th>
+				<th class="td1">状态</th>
 				<th class="td4">操作</th>
 				<th class="td0">查看</th>
 			</tr>
 			<s:iterator value="ladings" status="sta">
 			<tr id="showtr${uuid}">
-			    <td>${uuid}</td>
-			    <td class="td1 longnote">${member_name}</td>
-			    <td class="td2 nw">${it:formatDate(apply_time,'yyyy-MM-dd')}</td>
-			    <td class="td1 nw"></td>
-				<td class="td3 nw">${applicant_name}</td>
+			    <td class="td3">${uuid}</td>
+			    <td class="td1 nw">${it:formatDate(apply_time,'yyyy-MM-dd')}</td>
+			    <td class="td3 nw">${apply_dept_name}</td>
+			    <td class="td2 longnote">${member_name}</td>
+				<td class="td1 nw">${applicant_name}</td>
 				<td class="td1 nw">
-						<s:if test="2>fd_check"><span class="noarea"></span></s:if>
-						<s:elseif test="2==fd_check"><span class="yesarea" title="<s:date name="fd_check_time" format="yyyy-MM-dd HH:mm:ss" />"></span></s:elseif>
-				</td>
-				<td class="td1 nw">
-						<s:if test="2>fd_check"><span class="noarea"></span></s:if>
-						<s:elseif test="2==fd_check"><span class="yesarea" title="<s:date name="fd_check_time" format="yyyy-MM-dd HH:mm:ss" />"></span></s:elseif>
+					<s:if test='0==status'>新单</s:if>
+	    			<s:if test='5==status'><span title="${it:formatDate(check_time,'yyyy-MM-dd HH:mm:ss')}" class="cr">已退回(${check_user_name})</span></s:if>
+					<s:if test='10==status'><span title="${it:formatDate(check_time,'yyyy-MM-dd HH:mm:ss')}" class="cy">待确认(${check_user_name})</span></s:if>
+					<s:if test='20==status'><span title="${it:formatDate(check_time,'yyyy-MM-dd HH:mm:ss')}" class="cg">已确认(${check_user_name})</span></s:if>
+					<s:if test='30==status'><span  title="${it:formatDate(check_time,'yyyy-MM-dd HH:mm:ss')}" class="cg">已发货</span></s:if>
 				</td>
 				<td class="td4 op-area">
 					<a class="input-blue" href="<s:url namespace="/qkjmanage" action="lading_load"><s:param name="viewFlag">mdy</s:param><s:param name="lading.uuid" value="uuid"></s:param></s:url>">修改</a>
