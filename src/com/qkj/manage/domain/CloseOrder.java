@@ -12,6 +12,7 @@ public class CloseOrder {
 	private String member_address;// (varchar)收货地址
 	private String member_phone;// (varchar)手机号
 	private Double totel_price;// (decimal)商品总价格
+	private String apply_dept;
 	private String add_user;// (varchar)填加人
 	private Date add_time;// (datetime)填加时间
 	private Integer check_state;// (int)审核状态0：新单1：待审核，5：退回10：招商主管通过20：招商经理30大区40财务50总监60副总70总经理
@@ -27,6 +28,10 @@ public class CloseOrder {
 	private String member_name;
 	private String lm_user_name;
 	private String add_user_name;
+	private String nd_check_user_name;
+	private String check_user_name;
+	private String is_sub_dept;
+	private String apply_dept_name;
 
 	public Integer getUuid() {
 		return uuid;
@@ -202,6 +207,46 @@ public class CloseOrder {
 
 	public void setAdd_user_name(String add_user_name) {
 		this.add_user_name = add_user_name;
+	}
+
+	public String getNd_check_user_name() {
+		return nd_check_user_name;
+	}
+
+	public void setNd_check_user_name(String nd_check_user_name) {
+		this.nd_check_user_name = nd_check_user_name;
+	}
+
+	public String getCheck_user_name() {
+		return check_user_name;
+	}
+
+	public void setCheck_user_name(String check_user_name) {
+		this.check_user_name = check_user_name;
+	}
+
+	public String getApply_dept() {
+		return apply_dept;
+	}
+
+	public void setApply_dept(String apply_dept) {
+		this.apply_dept = apply_dept;
+	}
+
+	public String getIs_sub_dept() {
+		return is_sub_dept;
+	}
+
+	public void setIs_sub_dept(String is_sub_dept) {
+		this.is_sub_dept = is_sub_dept;
+	}
+
+	public String getApply_dept_name() {
+		return apply_dept_name;
+	}
+
+	public void setApply_dept_name(String apply_dept_name) {
+		this.apply_dept_name = apply_dept_name;
 	}
 
 }

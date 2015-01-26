@@ -18,6 +18,9 @@
 		<action name="closeOrder_load" class="com.qkj.manage.action.CloseOrderAction" method="load">
 			<result>/jsp/qkjmanage/CloseOrderEdit.jsp</result>
 		</action>
+		<action name="closeOrder_view" class="com.qkj.manage.action.CloseOrderAction" method="view">
+			<result>/jsp/qkjmanage/CloseOrderView.jsp</result>
+		</action>
 		<action name="closeOrder_add" class="com.qkj.manage.action.CloseOrderAction" method="add">
 			<result type="redirectAction">
 				<param name="actionName">closeOrder_load</param>
@@ -44,6 +47,14 @@
 		</action>
 		
 		<action name="closeOrder_check*" class="com.qkj.manage.action.CloseOrderAction" method="check{1}">
+			<result type="redirectAction">
+				<param name="actionName">closeOrder_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="closeOrder_checknd*" class="com.qkj.manage.action.CloseOrderAction" method="checknd{1}">
 			<result type="redirectAction">
 				<param name="actionName">closeOrder_list</param>
 				<param name="viewFlag">relist</param>

@@ -5,10 +5,13 @@
 	<typeAlias alias="closeOrder" type="com.qkj.manage.domain.CloseOrder" />
 	<select id="qkjmanage_getCloseOrders" resultClass="closeOrder" parameterClass="java.util.Map">
 		<![CDATA[ 
-			SELECT c.*,m.`MEMBER_NAME` member_name,au.`USER_NAME` add_user_name,lu.`LM_USER` lm_user_name FROM qkjm_r_closeorder c
-LEFT JOIN s_vip_member m ON (c.`member_id`=m.`UUID`)
-LEFT JOIN s_sys_user au ON(c.`add_user`=au.`UUID`)
-LEFT JOIN s_sys_user lu ON(c.`lm_user`=lu.`UUID`)
+			SELECT c.*,m.`MEMBER_NAME` member_name,au.`USER_NAME` add_user_name,lu.`LM_USER` lm_user_name,cu.`USER_NAME` check_user_name,nu.`USER_NAME` nd_check_user_name,d.`dept_cname` apply_dept_name FROM qkjm_r_closeorder c
+			LEFT JOIN s_vip_member m ON (c.`member_id`=m.`UUID`)
+			LEFT JOIN s_sys_user au ON(c.`add_user`=au.`UUID`)
+			LEFT JOIN s_sys_user lu ON(c.`lm_user`=lu.`UUID`)
+			LEFT JOIN s_sys_user cu ON(c.`check_user`=cu.`UUID`)
+			LEFT JOIN s_sys_user nu ON(c.`nd_check_user`=nu.`UUID`)
+			LEFT JOIN s_sys_department d ON (c.apply_dept = d.dept_code)
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ c.uuid=#uuid# ]]></isNotEmpty>
@@ -17,29 +20,55 @@ LEFT JOIN s_sys_user lu ON(c.`lm_user`=lu.`UUID`)
 			<isNotEmpty prepend="AND" property="member_id"><![CDATA[ c.member_id=#member_id# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="member_address"><![CDATA[ c.member_address=#member_address# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="check_user"><![CDATA[ c.check_user=#check_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="check_state"><![CDATA[ c.check_state=#check_state# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="nd_check_state"><![CDATA[ c.nd_check_state=#nd_check_state# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="theme"><![CDATA[ c.theme LIKE CONCAT('%',#theme#,'%') ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_dept">
+				<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ c.apply_dept=#apply_dept# ]]></isNotEqual>
+				<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ c.apply_dept LIKE CONCAT(#apply_dept#,'%') ]]></isEqual>
+		</isNotEmpty>
+		<isNotNull prepend="AND" property="apply_depts">
+			<![CDATA[ c.apply_dept In ]]>
+			<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
+		</isNotNull>
 
 		</dynamic>
 		<![CDATA[ LIMIT 1000 ]]>
 	</select>
 	<select id="qkjmanage_getCloseOrdersCounts" resultClass="int" parameterClass="java.util.Map">
 		<![CDATA[ 
-			Select Count(*) From qkjm_r_closeorder
+			Select Count(*) From qkjm_r_closeorder c
+			LEFT JOIN s_vip_member m ON (c.`member_id`=m.`UUID`)
+			LEFT JOIN s_sys_user au ON(c.`add_user`=au.`UUID`)
+			LEFT JOIN s_sys_user lu ON(c.`lm_user`=lu.`UUID`)
+			LEFT JOIN s_sys_user cu ON(c.`check_user`=cu.`UUID`)
+			LEFT JOIN s_sys_user nu ON(c.`nd_check_user`=nu.`UUID`)
 		]]>
 		<dynamic prepend="WHERE">
-			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="close_time"><![CDATA[ close_time=#close_time# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="content"><![CDATA[ content=#content# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="member_id"><![CDATA[ member_id=#member_id# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="member_address"><![CDATA[ member_address=#member_address# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="check_user"><![CDATA[ check_user=#check_user# ]]></isNotEmpty>
-
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ c.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="close_time"><![CDATA[ c.close_time=#close_time# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="content"><![CDATA[ c.content=#content# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="member_id"><![CDATA[ c.member_id=#member_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="member_address"><![CDATA[ c.member_address=#member_address# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="check_user"><![CDATA[ c.check_user=#check_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="check_state"><![CDATA[ c.check_state=#check_state# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="nd_check_state"><![CDATA[ c.nd_check_state=#nd_check_state# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="theme"><![CDATA[ c.theme LIKE CONCAT('%',#theme#,'%') ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_dept">
+				<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ c.apply_dept=#apply_dept# ]]></isNotEqual>
+				<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ c.apply_dept LIKE CONCAT(#apply_dept#,'%') ]]></isEqual>
+			</isNotEmpty>
+			<isNotNull prepend="AND" property="apply_depts">
+				<![CDATA[ c.apply_dept In ]]>
+				<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
+			</isNotNull>
 		</dynamic>
 		<![CDATA[ LIMIT 1000 ]]>
 	</select>
 	<insert id="qkjmanage_addCloseOrder" parameterClass="closeOrder">
 		<![CDATA[ 
-			Insert Into qkjm_r_closeorder(close_time,content,theme,member_id,member_address,member_phone,add_user,add_time,lm_time,lm_user,salPro_id)
-			Values (#close_time#,#content#,#theme#,#member_id#,#member_address#,#member_phone#,#add_user#,#add_time#,#lm_time#,#lm_user#,#salPro_id#)
+			Insert Into qkjm_r_closeorder(close_time,content,theme,member_id,member_address,member_phone,add_user,add_time,lm_time,lm_user,apply_dept)
+			Values (#close_time#,#content#,#theme#,#member_id#,#member_address#,#member_phone#,#add_user#,#add_time#,#lm_time#,#lm_user#,#apply_dept#)
 		]]>
 		<selectKey resultClass="int" keyProperty="uuid">
 		<![CDATA[ Select LAST_INSERT_ID() ]]>
@@ -60,7 +89,7 @@ LEFT JOIN s_sys_user lu ON(c.`lm_user`=lu.`UUID`)
 			Where uuid = #uuid#
 		]]>
 	</update>
-	
+
 	<update id="qkjmanage_mdyCloseCheck" parameterClass="closeOrder">
 		<![CDATA[
 			Update qkjm_r_closeorder
@@ -73,7 +102,7 @@ LEFT JOIN s_sys_user lu ON(c.`lm_user`=lu.`UUID`)
 			Where uuid = #uuid#
 		]]>
 	</update>
-	
+
 	<update id="qkjmanage_mdyClosendCheck" parameterClass="closeOrder">
 		<![CDATA[
 			Update qkjm_r_closeorder
@@ -86,8 +115,8 @@ LEFT JOIN s_sys_user lu ON(c.`lm_user`=lu.`UUID`)
 			Where uuid = #uuid#
 		]]>
 	</update>
-	
-	
+
+
 	<update id="qkjmanage_mdyCloseOrdertotelPrice" parameterClass="integer">
 		<![CDATA[
 		UPDATE qkjm_r_closeorder c SET c.totel_price=(

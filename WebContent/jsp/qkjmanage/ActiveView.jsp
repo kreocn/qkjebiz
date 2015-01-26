@@ -109,12 +109,23 @@
 	function indprint(){
 		yindpri();
 		window.print();
-		location.reload();
+		
+		$("#totel1").removeClass("kss"); //添加样式
+		$("#totel2").removeClass("kss"); //添加样式
+		$("#otherprice2").addClass("kss"); //添加样式
+		$("#otherprice").addClass("kss"); //添加样式
+		$("#indprice").addClass("kss"); //添加样式
+		$("#indprice2").addClass("kss"); //添加样式
 	}
 	function otherprint(){
 		otherpri();
 		window.print();
-		location.reload();
+		$("#totel1").removeClass("kss"); //添加样式
+		$("#totel2").removeClass("kss"); //添加样式
+		$("#otherprice2").addClass("kss"); //添加样式
+		$("#otherprice").addClass("kss"); //添加样式
+		$("#indprice").addClass("kss"); //添加样式
+		$("#indprice2").addClass("kss"); //添加样式
 	}
 	function nopri(){
 		$("#mprice").addClass("noprint"); //添加样式

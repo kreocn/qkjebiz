@@ -7,19 +7,32 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>结案提货单管理--<s:text name="APP_NAME" /></title>
 <s:action name="ref" namespace="/manager" executeResult="true" />
+<script type="text/javascript">
+	function clicksel(){
+		$(".clicksel option").hide();
+		$(".selmore").show();
+	}
+</script>
+<style>
+.input-a .selmore{display:none;position:absolute;top:27px;left:0;z-index:9999;height:auto; overflow-x:hidden; overflow-y:auto;}
+.clicksel{position:relative;}
+</style>
 </head>
 
 <body>
 	<div class="main">
 		<div class="dq_step">${path}
-			<span class="opb lb op-area"><a href="<s:url action="closeOrder_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a></span>
+			<span class="opb lb op-area"><a href="<s:url action="closeOrder_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a></span> <span class="opb lb op-area"><s:if test="closeOrder.check_state>=1">
+					<a class="input-gray" href="<s:url namespace="/qkjmanage" action="closeOrder_view"><s:param name="closeOrder.uuid" value="closeOrder.uuid" /></s:url>">转到打印页面</a>
+				</s:if> 
+				</span>
 		</div>
 		<s:form id="editForm" name="editForm" cssClass="validForm" action="apply_load" namespace="/qkjmanage" method="post" theme="simple">
 			<div class="label_con">
 				<div class="label_main">
 					<s:if test="'mdy' == viewFlag">
 						<div class='label_hang'>
-							<div class='label_ltit'>主键自增:</div>
+							<div class='label_ltit'>主键:</div>
 							<div class='label_rwben'>${closeOrder.uuid}<s:hidden name="closeOrder.uuid" />
 							</div>
 						</div>
@@ -27,14 +40,42 @@
 							<div class='label_ltit'>制表人:</div>
 							<div class='label_rwben'>${closeOrder.add_user_name}</div>
 						</div>
-						<div class="label_main">
 						<div class="label_hang">
 							<div class="label_ltit">审核状态:</div>
 							<div class="label_rwbenx">
-								<s:textfield name="closeOrder.theme" title="主题" cssClass="label_hang_linput validate[required,maxSize[255]]" />
+								<div class="zhuangtai" <s:if test="%{closeOrder.check_state!=0}">title="${it:formatDate(closeOrder.check_time,'yyyy-MM-dd HH:mm:ss')}"</s:if>>
+									单据审核状态:
+									<s:if test="closeOrder.check_state==0">新单</s:if>
+									<s:if test="closeOrder.check_state==5">
+										<font class="message_error">审核退回</font>(${closeOrder.check_user_name})</s:if>
+									<s:if test="closeOrder.check_state==1">
+										<font class="message_warning">待审核</font>
+									</s:if>
+									<s:if test="closeOrder.check_state==10">
+										<font class="message_pass">主管已审</font>(${closeOrder.check_user_name})</s:if>
+									<s:if test="closeOrder.check_state==20">
+										<font class="message_pass">招商经理已审</font>(${closeOrder.check_user_name})</s:if>
+									<s:if test="closeOrder.check_state==30">
+										<font class="message_pass">大区经理已审</font>(${closeOrder.check_user_name})</s:if>
+									<s:if test="closeOrder.check_state==40">
+										<font class="message_pass">财务已审</font>(${closeOrder.check_user_name})</s:if>
+									<s:if test="closeOrder.check_state==50">
+										<font class="message_pass">总监已审</font>(${closeOrder.check_user_name})</s:if>
+									<s:if test="closeOrder.check_state==60">
+										<font class="message_pass">业务副总已审</font>(${closeOrder.check_user_name})</s:if>
+									<s:if test="closeOrder.check_state==70">
+										<font class="message_pass">总经理已审</font>(${closeOrder.check_user_name})</s:if>
+								</div>
+								<div class="zhuangtai" <s:if test="%{closeOrder.nd_check_state!=0}">title="${it:formatDate(closeOrder.nd_check_time,'yyyy-MM-dd HH:mm:ss')}"</s:if>>
+									数据中心审核状态:
+									<s:if test="closeOrder.nd_check_state==0">未确认</s:if>
+									<s:if test="closeOrder.nd_check_state==5">
+										<font class="message_error">审核退回</font>(${closeOrder.nd_check_user_name})</s:if>
+									<s:if test="closeOrder.nd_check_state==10">
+										<font class="message_pass">已通过审</font>(${closeOrder.nd_check_user_name})</s:if>
+								</div>
 							</div>
 						</div>
-					</div>
 					</s:if>
 
 					<div class="label_main">
@@ -53,31 +94,18 @@
 								</span>
 							</div>
 						</div>
-
+						<s:if test="'mdy' == viewFlag">
 						<div class="label_hang">
 							<div class="label_ltit">促销方案:</div>
 							<div class="label_rwben label_rwb">
-								<span class="label_rwb"> <s:select name="closeOrder.salPro_id" list="salPromots" listKey="uuid" listValue="sal_title" cssClass="validate[required]" headerKey="" headerValue="--请选择--" />
+								<span class="label_rwb">
+									<s:textfield class="clicksel" onclick="clicksel();" value="--请选择--" />
+									<s:select name="closeOrder.salPro_id" list="salPromots" listKey="uuid" listValue="sal_title" cssClass="validate[required] selmore" headerKey="" multiple="true" />
 								</span>
 							</div>
 						</div>
+						</s:if>
 
-						<!--<div class="label_hang">
-							<div class="label_ltit">促销方案:</div>
-							<div class="label_rwben label_rwb">
-								<div class="iselect">
-									<s:select name="closeOrder.salPro_id" list="salPromots" listKey="uuid" listValue="sal_title" cssClass="validate[required]"  headerKey="" headerValue="--请选择--"  />
-									
-									<select name="closeOrder.salPro_id" title="产品">
-										<s:iterator value="salPromots" status="sta">
-											<option value='<s:property value="uuid" />'>
-												<s:property value="sal_title" />
-											</option>
-										</s:iterator>
-									</select>
-								</div>
-							</div>
-						</div>-->
 					</div>
 					<div class="label_main">
 						<div class="label_hang">
@@ -162,13 +190,9 @@
 					<div class="label_main">
 						<div class="label_hang">
 							<div class="label_ltit">说明:</div>
-							<div class="label_rwbenx"></div>
-						</div>
-					</div>
-					<div class="label_main">
-						<div class="note_area">
-							<s:textarea name="closeOrder.content" title="详细说明" cssClass="xheditorArea validate[maxSize[65535]]" />
-							<div class="clear"></div>
+							<div class="label_rwbenx">
+								<s:textarea id="closeOrder.content" name="closeOrder.content" title="活动说明" cssClass="label_hang_linput inputNote validate[maxSize[65535]]" />
+							</div>
 						</div>
 					</div>
 				</div>
@@ -176,7 +200,7 @@
 					<div class="label_hang">
 						<div class="label_ltit">相关操作:</div>
 						<div class="label_rwbenx">
-						<font color="red"><span id="messages"></span></font>
+							<font color="red"><span id="messages"></span></font>
 							<s:if test="'add' == viewFlag">
 								<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_CLOSEORDER_ADD')">
 									<s:submit id="add" name="add" value="下一步&填写费用明细" action="closeOrder_add" cssClass="input-blue" />
@@ -235,7 +259,16 @@
 									<s:submit id="mdyStatus60" name="mdyStatus60" value="总经理审核通过" action="closeOrder_check60" onclick="return isOp('确定执行此操作?');" cssClass="input-yellow" />
 									<s:submit id="mdyStatus5" name="mdyStatus5" cssClass="input-red" value="审核不通过" action="closeOrder_check5" onclick="return isOp('确定执行此操作?');" />
 								</s:if>
+
+								<s:if test="closeOrder.check_state>=30 && closeOrder.nd_check_state<=5  && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_CLOSEORDER_NDSTATUS0')">
+									<s:submit id="mdyndStatus0" name="mdyndStatus0" value="数据中心审核通过" action="closeOrder_checknd0" onclick="return isOp('确定执行此操作?');" cssClass="input-yellow" />
+									<s:submit id="mdyndStatus5" name="mdyndStatus5" cssClass="input-red" value="审核不通过" action="closeOrder_checknd5" onclick="return isOp('确定执行此操作?');" />
+								</s:if>
+
 							</s:elseif>
+							<s:if test="closeOrder.check_state>=1">
+								<input type="button" onclick="linkurl('<s:url namespace="/qkjmanage" action="closeOrder_view"><s:param name="closeOrder.uuid" value="closeOrder.uuid" /></s:url>');" value="转到打印页面" />
+							</s:if>
 							<input type="button" value="返回" onclick="linkurl('<s:url action="closeOrder_relist" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');" class="input-gray" />
 						</div>
 					</div>

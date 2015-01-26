@@ -5,8 +5,10 @@ import java.util.*;
 
 import org.apache.commons.logging.*;
 import org.iweb.sys.*;
+import org.iweb.sysvip.domain.Member;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.qkj.manage.domain.Active;
 import com.qkj.manage.domain.CloseOrder;
 import com.qkj.manage.domain.CloseOrderPro;
 import com.qkj.manage.domain.SalPromot;
@@ -14,12 +16,15 @@ import com.qkj.manage.dao.CloseOrderDAO;
 import com.qkj.manage.dao.CloseOrderProDAO;
 import com.qkj.manage.dao.ProcessDAO;
 import com.qkj.manage.dao.SalPromotDAO;
+import com.qkj.manage.dao.SalPromotPower;
 
 public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	private static final long serialVersionUID = 1L;
 	private static Log log = LogFactory.getLog(CloseOrderAction.class);
 	private Map<String, Object> map = new HashMap<String, Object>();
 	private CloseOrderDAO dao = new CloseOrderDAO();
+	private SalPromotDAO saldao=new SalPromotDAO();
+	private SalPromotPower sal=new SalPromotPower();
 
 	private CloseOrder closeOrder;
 	private List<CloseOrder> closeOrders;
@@ -31,6 +36,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	private int recCount;
 	private int pageSize;
 	private int currPage;
+	private String pro_id[];
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;结案提货单";
 
 	public String getPath() {
@@ -117,17 +123,27 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 		this.closeOrderPro = closeOrderPro;
 	}
 
+	public String[] getPro_id() {
+		return pro_id;
+	}
+
+	public void setPro_id(String[] pro_id) {
+		this.pro_id = pro_id;
+	}
+
 	public String list() throws Exception {
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_LIST");
 		try {
 			map.clear();
-			if (closeOrder != null) map.putAll(ToolsUtil.getMapByBean(closeOrder));
-			map.putAll(ContextHelper.getDefaultRequestMap4Page());
-			this.setPageSize(ContextHelper.getPageSize(map));
-			this.setCurrPage(ContextHelper.getCurrPage(map));
+			if (closeOrder == null) closeOrder = new CloseOrder();
+			ContextHelper.setSearchDeptPermit4Search(map, "apply_depts", "add_user");
+			ContextHelper.SimpleSearchMap4Page("QKJ_QKJMANAGE_CLOSEORDER_LIST", map, closeOrder, viewFlag);
+			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 			this.setCloseOrders(dao.list(map));
 			this.setRecCount(dao.getResultCount());
 			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;结案提货单列表";
+			
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
@@ -146,11 +162,6 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 				this.setCloseOrder(null);
 				setMessage("你没有选择任何操作!");
 			} else if ("add".equals(viewFlag)) {
-				SalPromotDAO saldao=new SalPromotDAO();
-				map.clear();
-				map.put("status", 2);
-				map.put("proendtime", sdf.format(new Date()));
-				this.setSalPromots(saldao.list(map));
 				this.setCloseOrder(null);
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/closeOrder_relist'>结案提货单列表</a>&nbsp;&gt;&nbsp;增加结案提货单";
 			} else if ("mdy".equals(viewFlag)) {
@@ -159,16 +170,8 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 				} else {
 					this.setCloseOrder(null);
 				}
-				SalPromotDAO saldao=new SalPromotDAO();
-				map.clear();
-				map.put("status", 2);
-				map.put("proendtime", sdf.format(new Date()));
-				this.setSalPromots(saldao.list(map));
-				CloseOrderProDAO cdao=new CloseOrderProDAO();
-				map.clear();
-				map.put("order_id", closeOrder.getUuid());
-				this.setCloseOrderPros(cdao.list(map));
-				System.out.println(closeOrderPros.size()+"bbbbbbbbbbbbbbbb"+closeOrderPros.get(0).getProduct_id());
+				this.setSalPromots(sal.salProPower(closeOrder.getMember_id()));
+				System.out.println(salPromots.size());
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/closeOrder_relist'>结案提货单列表</a>&nbsp;&gt;&nbsp;增加结案提货单";
 			} else {
 				this.setCloseOrder(null);
@@ -180,10 +183,36 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
+	
+	public String view() throws Exception{
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+		try {
+				if (!(closeOrder == null || closeOrder.getUuid() == null)) {
+					this.setCloseOrder((CloseOrder) dao.get(closeOrder.getUuid()));
+				} else {
+					this.setCloseOrder(null);
+				}
+				map.clear();
+				map.put("status", 2);
+				map.put("proendtime", sdf.format(new Date()));
+				this.setSalPromots(saldao.list(map));
+				CloseOrderProDAO cdao=new CloseOrderProDAO();
+				map.clear();
+				map.put("order_id", closeOrder.getUuid());
+				this.setCloseOrderPros(cdao.list(map));
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/closeOrder_relist'>结案提货单列表</a>&nbsp;&gt;&nbsp;结案提货单详情";
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!view 读取数据错误:", e);
+			throw new Exception(this.getClass().getName() + "!view 读取数据错误:", e);
+		}
+		return SUCCESS;
+	}
+	
 
 	public String add() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_ADD");
 		try {
+			closeOrder.setApply_dept(ContextHelper.getUserLoginDept());
 			closeOrder.setAdd_user(ContextHelper.getUserLoginUuid());
 			closeOrder.setAdd_time(new Date());
 			closeOrder.setLm_user(ContextHelper.getUserLoginUuid());
@@ -232,6 +261,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_CHECK0");
 		try {
 			check(1);//待审核
+			checknd(0);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!check0 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!check0 数据更新失败:", e);
@@ -248,6 +278,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_CHECK5");
 		try {
 			check(5);
+			checknd(0);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!check5 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!check5 数据更新失败:", e);
@@ -367,6 +398,38 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 		return SUCCESS;
 	}
 	
+	/**
+	 * 数据中心通过数据中心审核状态0：未审核5：退回10：通过
+	 * @param p_check
+	 * @return
+	 */
+	public String checknd0() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_NDSTATUS0");
+		try {
+			checknd(10);
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!check1 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!check1 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+	
+	/**
+	 * 数据中心退回
+	 * @param p_check
+	 * @return
+	 */
+	public String checknd5() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_NDSTATUS5");
+		try {
+			checknd(5);
+			check(0);
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!check1 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!check1 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
 	
 	public int check(int p_check) {
 		closeOrder.setCheck_state(p_check);
@@ -376,6 +439,16 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 		closeOrder.setLm_time(new Date());
 		addProcess("CLOSEORDER_STATUS_CHANGE", "结案提货单-业务审核状态变更");
 		return dao.check(closeOrder);
+	}
+	
+	public int checknd(int p_check) {
+		closeOrder.setNd_check_state(p_check);
+		closeOrder.setNd_check_user(ContextHelper.getUserLoginUuid());
+		closeOrder.setNd_check_time(new Date());
+		closeOrder.setLm_user(ContextHelper.getUserLoginUuid());
+		closeOrder.setLm_time(new Date());
+		addProcess("CLOSEORDER_NDSTATUS_CHANGE", "结案提货单-数据中心审核状态变更");
+		return dao.checknd(closeOrder);
 	}
 	
 	private void addProcess(String p_sign, String p_note) {

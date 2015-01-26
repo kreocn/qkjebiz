@@ -29,8 +29,9 @@
 		</action>
 		<action name="salPromot_save" class="com.qkj.manage.action.SalPromotAction" method="save">
 			<result type="redirectAction">
-				<param name="actionName">salPromot_list</param>
-				<param name="viewFlag">relist</param>
+				<param name="actionName">salPromot_load</param>
+				<param name="salPromot.uuid">${salPromot.uuid}</param>
+				<param name="viewFlag">mdy</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -51,7 +52,7 @@
 			</result>
 		</action>
 		<!-- 审核中 -->
-		<action name="salPromot_smdstatus20" class="com.qkj.manage.action.SalPromotAction" method="smdstatus20">
+		<action name="salPromot_smdstatus*" class="com.qkj.manage.action.SalPromotAction" method="smdstatus{1}">
 			<result type="redirectAction">
 				<param name="actionName">salPromot_load</param>
 				<param name="salPromot.uuid">${salPromot.uuid}</param>
