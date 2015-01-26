@@ -5,12 +5,10 @@
 	<transactionManager type="JDBC">
 		<dataSource type="JNDI">
 			<!-- 正式环境 DataSource Proxool -->
-			<!-- <property name="DataSource" value="java:/comp/env/qkj/mysql203huzhu_proxool" /> -->
 			<!-- <property name="DataSource" value="java:/comp/env/qkj/mysql_druid_BJ01" /> -->
 			<!-- 测试环境 DataSource Proxool -->
 			<!-- <property name="DataSource" value="java:/comp/env/qkj/mysql204huzhu_proxool" /> -->
 			<!-- 本机Tomcat本机测试环境 DataSource(ERP LOCAL TEST)&测试服务器 Proxool -->
-			<!-- <property name="DataSource" value="java:/comp/env/qkj/mysqlLocalCJ_proxool" /> -->
 			<property name="DataSource" value="java:/comp/env/qkj/mysqlLocalCJ_druid" />
 		</dataSource>
 	</transactionManager>
@@ -28,6 +26,7 @@
 	<sqlMap resource="org/iweb/resource/map/sysvip_MemberCapitalRescoreMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/sysvip_InfoMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/sysvip_DepositMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_sysvip_MemberStockMap.xml" />
 	<!-- 商品/仓库后台管理 -->
 	<sqlMap resource="org/iweb/resource/map/qkjcj_ebiz_Map.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkjcj_sysebiz_GoodsInfoMap.xml" />
@@ -43,6 +42,7 @@
 	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_ProductMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_LadingMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_LadingItemMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_LadingProductgMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_LadingPayMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_RebatesMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_RebatesProductMap.xml" />
@@ -60,6 +60,7 @@
 	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_TravelProductMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_ProTypeMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_MarketActiveMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_salpro_SalPromotMap.xml"/>
 	<!--行政管理 -->
 	<sqlMap resource="org/iweb/resource/map/qkj_adm_AssetsMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_adm_AssetItemMap.xml" />

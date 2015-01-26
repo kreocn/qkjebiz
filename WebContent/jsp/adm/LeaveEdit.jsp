@@ -74,17 +74,17 @@
         <div class="label_hang">
             <div class="label_ltit">申请部门:</div>
             <div class="label_rwben nw">
-            	<span class="label_rwb">
             	<s:textfield id="userdept_nameid" name="leave.leave_dept_name" readonly="true" cssClass="validate[required]" />
 				<s:hidden id="userdept_codeid" name="leave.leave_dept" />
-				</span>
-				<img class="detail vam" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true);" />
             </div>
+			<!-- <img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true,null,1);" /> -->
         </div>
         <div class="label_hang">
             <div class="label_ltit">申请人:</div>
             <div class="label_rwben label_rwb">
-            	<s:select id="membermanagerid" cssClass="selectKick" name="leave.leave_user" list="#{}" headerKey="" headerValue="--请选择--" />
+            	<s:textfield name="leave.leave_user_name" readonly="true" cssClass="validate[required]" />
+            	<s:hidden id="leave_user" name="leave.leave_user" />
+            	<!--<s:select id="membermanagerid" cssClass="selectKick validate[required]" name="leave.leave_user" list="#{}" headerKey="" headerValue="--请选择--" />-->
             </div>
 		</div>
 		</div>
@@ -144,8 +144,9 @@
             <div class="label_ltit">事由:</div>
             <div class="label_rwbenx label_hang_linput">
             <div class="note_area">
-            <s:if test="leave.check_status>=10">${leave.cause}</s:if>
-			<s:else><s:textarea name="leave.cause" title="详细说明" cssClass="xheditorArea validate[maxSize[65535]]" /></s:else>
+	            <s:if test="leave.check_status>=10">${leave.cause}</s:if>
+				<s:else><s:textarea name="leave.cause" title="详细说明" cssClass="xheditorArea validate[maxSize[65535]]" /></s:else>
+				<div class="clear"></div>
 			</div>
             </div>
         </div>

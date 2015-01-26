@@ -2,7 +2,11 @@
  * jquery上传插件 使用方法 $.fn.xhuploadinit(); $("#uploadTextField").xhupload();
  */
 (function($){
-	$.fn.xhuploadinit = function(){
+	var xhuploadAjaxUrl = "/upload/put";
+	var successFuntion = $.noop;
+	$.fn.xhuploadinit = function(initConfig,initSuccessFuntion){
+		if (initConfig) xhuploadAjaxUrl += xhuploadAjaxUrl + "?initConfig=" + initConfig;
+		if(initSuccessFuntion && typeof(initSuccessFuntion)=="function" )successFuntion = initSuccessFuntion;
 		var immediate = true;
 		$("body").append('<input type="file" id="xhUploadFile" name="filedata" class="fileinput" />');
 		$("body").append('<div id="xhUploadFile_progress" title="文件上传"><div id="xhUploadFile_progressbar"></div></div>');
@@ -41,7 +45,7 @@
 	};
 
 	$.fn.xhupload = function(options){
-		var defaults = { url : "/upload/put",// 上传serve
+		var defaults = { url : xhuploadAjaxUrl,// 上传serve
 		filefield : "filedata",// input.file的表单名称
 		immediate : 1,// 0:普通模式 1:立即模式,选择文件即上传
 		info : 0,// 是否返回文件信息(大小,文件名,类型) 0:不返回 1:返回
@@ -57,7 +61,7 @@
 
 	$.fn.xhcreate = function(o, c){
 		var oid = o.attr("id");
-		o.after('<span class="filearea"><input type="button" id="' + oid + '_filebutton" name="filebutton" value="选择文件" class="filebutton" /></span>');
+		o.after('<span id="filebtn" class="filearea"><input type="button" id="' + oid + '_filebutton" name="filebutton" value="选择文件" class="filebutton" /></span>');
 		$("#" + oid + "_filebutton").on("click", function(){
 			$("#xhUploadFile").data("recallid", oid);
 			$("#xhUploadFile").click();
@@ -90,7 +94,7 @@
 			formData = null;
 		}
 
-		$.ajax({ url : "/upload/put",
+		$.ajax({ url : xhuploadAjaxUrl,
 		type : "POST",
 		data : formData,
 		processData : false,
@@ -112,7 +116,7 @@
 						$("#" + $("#xhUploadFile").data("recallid")).val(msg);
 					}
 				} else {
-					alert("上传文件错误,文件最大不能超过10M.");
+					alert(evt.target.responseText);
 				}
 			};
 			xhr.upload.onprogress = function(evt){ // 进度条函数
@@ -133,6 +137,8 @@
 			// 只有当返回时 进度条才算结束
 			$('#xhUploadFile_progress').dialog("close");
 			// alert("afasdf:" + data);
+			if(typeof successFuntion == "function")
+				successFuntion();
 		} });
 	};
 })(jQuery);

@@ -83,7 +83,7 @@ display: none;
 				<s:hidden title="部门代码" id="userdept_codeid" name="apply.apply_dept" readonly="true" />
 				</span>
 				<span class="lb nw">
-				<img class="detail vam" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid');" />
+				<img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid');" />
 				<s:checkbox id="apply_is_sub_dept" name="apply.is_sub_dept" cssClass="regular-checkbox" />
 				<label for="apply_is_sub_dept"></label>包含子部门
 				<span id="ajax_member_message"></span>
@@ -105,7 +105,7 @@ display: none;
             <div class="label_ltit">状态:</div>
             <div class="label_rwben2">
             	<span class="label_rwb">
-            	<s:select name="apply.status_sp" title="状态" headerKey="" headerValue="-申请状态-" list="#{-1:'已作废',0:'新申请',5:'审核退回',10:'待审核',20:'经理/大区已审',25:'销管经理已审',30:'运营总监已审'}" />
+            	<s:select name="apply.status_sp" title="状态" headerKey="" headerValue="-申请状态-" list="#{-1:'已作废',0:'新申请',5:'审核退回',10:'待审核',20:'经理/大区已审',25:'销管经理已审',30:'运营总监已审',40:'销售副总已审',50:'总经理已审'}" />
 				</span>
 				<span class="label_rwb">
 				<s:select name="apply.ship_status" headerKey="" headerValue="-发货状态-" list="#{0:'未发货',10:'已发货',20:'已受理' }" />
@@ -158,9 +158,11 @@ display: none;
 					</s:if>
 					</s:else>
 					<s:if test="30==status"><span class="message_pass">运营总监已审</span></s:if>
+					<s:if test="40==status"><span class="message_pass">销售副总已审</span></s:if>
+					<s:if test="50==status"><span class="message_pass">总经理已审</span></s:if>
 				</td>
 				<td class="td4 op-area nw">
-					<s:if test="30==status">
+					<s:if test="30<=status">
 					<a  href="javascript:;" data="${uuid}" class="mdyApplyShipInfo_Link input-nostyle">
 					<s:if test="0==ship_status">未发货</s:if>
 					<s:if test="10==ship_status"><span class="message_pass">已发货</span></s:if>

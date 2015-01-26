@@ -143,7 +143,7 @@ font-weight: bold;
 }
 
 .label_main {
-	float: left; width: 100%; padding-bottom:5px;
+	width: 100%; padding-bottom:5px;float: left;
 }
 
 .label_hang {
@@ -168,6 +168,10 @@ font-weight: bold;
 
 .label_rwben {
 	float: left; width: 106px; position: relative;
+}
+
+.label_rwben15 {
+	float: left; width: 150px; position: relative;
 }
 
 .label_rwben2 {
@@ -299,11 +303,11 @@ font-weight: bold;
 }
 
 .lb_gstit {
-	border-bottom: 1px dashed #666; padding-bottom: 4px; font-weight: bold;
+	border-bottom: 1px dashed #666; padding-bottom: 4px; font-weight: bold;text-align: right;
 }
 
 .lb_jwei {
-	padding-top: 5px;
+	padding-top: 5px;text-align: right;
 }
 
 .lb_jpin {
@@ -311,7 +315,7 @@ font-weight: bold;
 }
 
 .lb_jpin th {
-	background: #f1f1f1; color: #333; padding: 6px 0; font-size: 14px;
+	background: #f1f1f1; color: #333; padding: 6px 0; font-size: 14px;white-space: nowrap; word-break: break-all;
 }
 
 .lb_jpin td {
@@ -390,6 +394,11 @@ font-weight: bold;
 	vertical-align: middle;
 }
 
+.vatop {
+	vertical-align: top;
+	margin:3px 0 0 2px;
+}
+
 .vab {
 	vertical-align: bottom;
 }
@@ -410,10 +419,6 @@ font-weight: bold;
 	display: none;
 }
 
-.cr {
-	color: #FF0000;
-}
-
 .bgcw {
 	background-color: #FFF;
 }
@@ -422,14 +427,14 @@ font-weight: bold;
 	border: 1px solid #ddd; border-radius: 5px;  padding: 5px;
 }
 
-.message_warning {
+.message_warning,.cy {
 	color: #B8860B;
 }
 
-.message_error {
+.message_error,.cr {
 	color: #FF0000;
 }
-.message_pass {
+.message_pass,.cg {
 	color: #008000;
 }
 
@@ -642,24 +647,23 @@ input[type="button"].input-blue,input[type="submit"].input-blue,input[type="rese
 .dib {
 	display: inline; zoom: 1; *display: inline;
 }
-.yesnull{
-	display: inline-block; width: 16px; height:16px; background: url("../../../images/icon/ico_warn.png") transparent no-repeat 0 -200px;
-	
+.yesnull,.tab_warp .yesnull{
+	border:0; display: inline-block; width: 16px; height:16px; background: url("../../../images/icon/ico_warn.png") transparent no-repeat 0 -200px;
 }
-.nonull{
-	display: inline-block; width: 16px; height: 16px; background: url("../../../images/icon/ico_warn.png") transparent no-repeat 0 -250px;
-}
-
-.success{
-	display: inline-block; width: 16px; height: 16px; background: url("../../../images/icon/ico_warn.png") transparent no-repeat 0 0px;
+.nonull,.tab_warp .nonull{
+	border:0; display: inline-block; width: 16px; height: 16px; background: url("../../../images/icon/ico_warn.png") transparent no-repeat 0 -250px;
 }
 
-.nosuc{
-	display: inline-block; width: 16px; height: 16px; background: url("../../../images/icon/ico_warn.png") transparent no-repeat 0 -50px;
+.success,.tab_warp .success{
+	border:0; display: inline-block; width: 16px; height: 16px; background: url("../../../images/icon/ico_warn.png") transparent no-repeat 0 0px;
 }
 
-.daisuc{
-	display: inline-block; width: 16px; height: 16px; background: url("../../../images/icon/ico_warn.png") transparent no-repeat 0 -250px;
+.nosuc,.tab_warp .nosuc{
+	border:0; display: inline-block; width: 16px; height: 16px; background: url("../../../images/icon/ico_warn.png") transparent no-repeat 0 -50px;
+}
+
+.daisuc,.tab_warp .daisuc{
+	border:0; display: inline-block; width: 16px; height: 16px; background: url("../../../images/icon/ico_warn.png") transparent no-repeat 0 -250px;
 }
 
 /*翻页样式START*/
@@ -706,6 +710,7 @@ input[type="button"].input-blue,input[type="submit"].input-blue,input[type="rese
 }
 /*滚动条样式END*/
 @media screen and (max-width:1180px) {
+	.yesnull,.nonull,.success,.nosuc,.daisuc{margin-top:6px;}
 	.td5 {
 		display: none;
 	}
@@ -888,3 +893,20 @@ table{
 .shaddress{
 	font-size:14px; color:#999; line-height:35px;
 }
+.showladings li{
+	list-style: none;
+	line-height: 25px;
+	padding-right:3px;
+	margin:3px 15px;
+	float:left;
+}
+.label_hline{float:left; width:100%;}
+.ilisttable{font-family: "微软雅黑"; font-size:14px;}
+.ilisttable input,.ilisttable select{border-radius:5px; border:1px solid #ccc; line-height:20px; font-family: "微软雅黑"; margin:2px;}
+.buttonarea input{cursor: pointer; }
+.ilisttable textarea{border-radius:5px; border:1px solid #ccc; font-family: "微软雅黑"; margin:2px;}
+#message{color:#f00;}
+.juese li{line-height:28px; min-width:150px;}
+.dd_zjia{float: right; line-height:28px;}
+.orderconsigneshow{line-height:28px;}
+.dd_nums{line-height:26px;  display: inline-block;}

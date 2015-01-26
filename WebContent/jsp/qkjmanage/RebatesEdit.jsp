@@ -1,25 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
+<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>返利申请单管理--<s:text name="APP_NAME" /></title>
-</head>
-<link rel="stylesheet" href="<s:url value="/css/css.css" />" />
-<link rel="stylesheet" href="<s:url value="/css/navigate.css" />" />
-<link rel="stylesheet" href="<s:url value="/css/main.css" />" />
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-1.8.3.min.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/common_cptb.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/jquery.CommonUtil.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/form_validator.js" />"></script>
-<link rel="stylesheet" href="<s:url value="/include/jQuery/style.ui.smoothness/jquery-ui-1.10.3.min.css" />" />
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-ui-1.10.3.custom.min.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/common_ajax2.0.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/func/select_member.js" />"></script>
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.select.js" />"></script>
+<s:action name="ref" namespace="/manager" executeResult="true" />
 <script type="text/javascript">
 var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
 $(function(){
@@ -43,8 +30,8 @@ $(function(){
 	
 	$("#addProductForm").dialog({
 	      autoOpen: false,
-	      height: 200,
-	      width: 600,
+	      height: 220,
+	      width: 500,
 	      modal: true
 	});
 	
@@ -101,257 +88,246 @@ function closeAddForm() {
 }
 </script>
 <style type="text/css">
-.showladings {
-list-style: none;padding: 5px;margin: 0px;
-}
-
-.showladings li {
-display: inline-block;zoom:1;*display: inline;
-}
-.showladings li {
-line-height: 20px;padding: 3px; margin: 3px;
-}
-.showladings .inputcheckbox {
-vertical-align:middle;
-}
-.showladings label {
-vertical-align:middle;
-}
-
-.showladings li.active {
-background-color: #DFDFDF;
-}
+.ilisttable{font-size:14px; font-family: "微软雅黑";}
+fieldset{margin-bottom:5px;}
+.firstRow{text-align:right; width:100px;}
+.ilisttable select{ font-family: "微软雅黑"; border-radius:5px; border:1px solid #ccc;}
+.ilisttable input{border-radius:5px; border:1px solid #ccc; line-height: 20px;}
+.ui-menu .ui-menu-item a{font-size:14px;}
 </style>
+</head>
 <body>
-<div id="main">
-<div id="result">
-	<div class="itablemdy">
-	<div class="itabletitle">
-		<span class="title1"><s:if test="null == rebates && 'add' == viewFlag">增加</s:if><s:elseif test="null != rebates && 'mdy' == viewFlag">修改</s:elseif>返利申请单</span>
-		<span class="extra1">
-			<a href="<s:url action="rebates_list" namespace="/qkjmanage" />" >返利申请单列表</a>
-		</span>	
+<div class="main" >
+	<div class="dq_step">
+		${path}
+		<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="rebates_list"><s:param name="viewFlag">relist</s:param></s:url>">返利列表</a></span>
 	</div>
-<s:form id="formEdit" name="form1" action="rebates_add" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
-	<div class="ifromoperate" ></div>
-	<table class="ilisttable" width="100%">
-		<s:if test="null != rebates">
-		<tr>
-		<td class='firstRow'>申请编号:</td>
-		<td class='secRow'><s:property value="rebates.uuid" /><s:hidden name="rebates.uuid" /></td>
-		<td class='firstRow'><span style="color:red;">*</span> 状态:</td>
-		<td class='secRow'>
-		<s:if test='0==rebates.status'>新单</s:if>
-		<s:if test='10==rebates.status'>待审核</s:if>
-		<s:if test='20==rebates.status'>主管已审</s:if>
-		<s:if test='30==rebates.status'>经理已审</s:if>
-		<s:if test='40==rebates.status'>财务已审</s:if>
-		<s:if test='50==rebates.status'>总监已审</s:if>
-		<s:if test='60==rebates.status'>总经理已审</s:if>
-		</td>
-		</tr>
-		<tr>
-		<td class='firstRow'>申请人:</td>
-		<td class='secRow'><s:property value="rebates.applicant_name" /></td>
-		<td class='firstRow'>申请时间:</td>
-		<td class='secRow'><s:date name="rebates.apply_time" format="yyyy-MM-dd HH:mm:ss" /></td>
-		</tr>
-		</s:if>
-		  
-		<tr>
-		<td class='firstRow'><span style="color:red;">*</span> 会员:</td>
-		<td class='secRow' colspan="3">
-		<s:if test="null == rebates && 'add' == viewFlag">
-		会员号:<s:textfield id="order_user_id" name="rebates.member_id" title="会员号" require="required" controlName="会员号" />
-		手机:<s:textfield id="order_user_mobile" name="rebates.member_mobile" title="手机" controlName="手机" />
-		姓名:<s:textfield id="order_user_name" name="rebates.member_name" title="姓名" controlName="姓名" />
-		</s:if>
-		<s:if test="null != rebates">
-		会员号:<s:property value="rebates.member_id" /><s:hidden name="rebates.member_id" title="会员号" />
-		手机:<s:property value="rebates.member_mobile" /><s:hidden name="rebates.member_mobile" title="手机" />
-		姓名:<s:property value="rebates.member_name" /><s:hidden name="rebates.member_name" title="姓名" />
-		</s:if>
-		</td>
-		</tr>
-		<tr>
-		<td class='firstRow'>需返利出货单:</td>
-		<td class='secRow' colspan="3">
-			<ul id="ladings" class="showladings">
-			<s:iterator value="rebatesLadings">
-				<li class="active">(<s:date name="lading_time" format="yyyy-MM-dd" />)<a href='<s:url namespace="qkjmanage" action="lading_view"><s:param name="lading.uuid" value="lading_id" /><s:param name="viewFlag">view</s:param></s:url>' target="_blank"><s:property value="lading_id" /></a></li>
-			</s:iterator>
-			</ul>
-			<table class="ilisttable" id="rebatesLadingsTable" width="100%">
-			<tr>
-			    <th>产品名称</th>
-			    <th>出货单总数量</th>
-				<th>出货单总金额</th>
-				<th>返利系数%</th>
-				<th>返利金额</th>
-			</tr>
-			<s:set name="total" value="0" />
-			<s:set name="total_re" value="0" />
-			<s:iterator value="ladingItems" status="sta">
-			<tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>" type="pickrow">
-			<td><s:property value="product_name" /></td>
-			<td align="center"><s:property value="num" /></td>
-			<td align="center"><s:property value="total_price" /></td>
-			<td align="center">
-			<input name='re_scales[<s:property value="#sta.index" />]' value="<s:property value="re_scales[#sta.index]" />" style="width: 30px;" />%
-			</td>
-			<td align="center"><s:property value="total_price*re_scales[#sta.index]/100" /></td>
-			</tr>
-			<s:set name="total" value="#total+total_price" />
-			<s:set name="total_re" value="#total_re+total_price*re_scales[#sta.index]/100" />
-			</s:iterator>
-			<tr>
-				<td colspan="2" align="right">合计:</td>
-				<td align="center"><s:property value="#total" /></td>
-				<td align="right">合计返利:</td>
-				<td align="center"><s:property value="#total_re" /></td>
-			</tr>
-			</table>
-		</td>
-		</tr>
-		<tr>
-		<td class='firstRow'>返利类型:</td>
-		<td class='secRow'><s:radio name="rebates.re_type" title="返利类型"  list="#{0:'随单返利',1:'季度返利',2:'年度返利',3:'活动返利',4:'其他'}" /></td>
-		<td class='firstRow'>随量积分:</td>
-		<td class='secRow'><s:textfield name="rebates.with_score" title="随量积分" dataLength="0,11" dataType="integer" controlName="随量积分" /></td>
-		</tr>
-		<tr>
-		<td class='firstRow'>返现金数:</td>
-		<td class='secRow'><s:textfield name="rebates.re_money" title="返现金数" dataLength="0,11" dataType="number" controlName="返现金数" /></td>
-		<td class='firstRow'>返利积分:</td>
-		<td class='secRow'><s:textfield name="rebates.re_score" title="返利积分" dataLength="0,10" dataType="integer" controlName="返利积分" /></td>
-		
-		</tr>
-		<s:if test="null != rebates && 'mdy' == viewFlag">
-		<tr>
-		<td class='firstRow'>
-		实体返利内容:
-		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATESPRODUCT_ADD')">
-		<br/>
-		<input id="addProduct" type="button" value="添加明细" />
-		</s:if>
-		</td>
-		<td class='secRow' colspan="3">
-<!-- ---------------------------------------------------------------------- -->
-<table class="ilisttable" id="rebatesProductsTable" width="100%">
-	  <tr>
-	    <th>产品名称</th>
-		<th>单价</th>
-		<th>数量</th>
-		<th>总价</th>
-		<th>操作</th>
-	  </tr>
-<s:set name="total2" value="0" />
-<s:iterator value="rebatesProducts" status="sta">
-	  <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>" type="pickrow">
-	    <td><s:property value="product_name" /></td>
-		<td align="center"><s:property value="per_price" /></td>
-		<td align="center"><s:property value="num" /></td>
-		<td align="center"><s:property value="total_price" /></td>
-		<td align="center">
-	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATESPRODUCT_DEL')">
-	    	[<a href="<s:url namespace="/qkjmanage" action="rebatesProduct_del"><s:param name="rebatesProduct.uuid" value="uuid" /><s:param name="rebatesProduct.rebates_id" value="rebates_id" /></s:url>" onclick="return isDel();">删除</a>]
-	    	</s:if>	   
-	    </td>
-	  </tr>
-<s:set name="total2" value="#total2+total_price" />
-</s:iterator>
-	<tr>
-		<td colspan="3" align="right">合计:</td>
-		<td align="center"><s:property value="#total2" /></td>
-		<td ></td>
-	</tr>
-	</table>
-<!-- ---------------------------------------------------------------------- -->
-		</td>
-		</tr>
-		</s:if>
-		<tr>
-		<td class='firstRow'>返利说明:</td>
-		<td class='secRow' colspan="3">
-			<s:textarea name="rebates.note" cssStyle="width:80%;" />
-			<br /><span class="message_prompt">当需要实体返利(需要出货时),请填写送货地址.</span>
-		</td>
-		</tr>
-		
-		<tr>
-		<td class='firstRow'>可用操作:</td>
-		<td class='secRow' colspan="3">
-			<s:if test="null == rebates && 'add' == viewFlag">
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATES_ADD')">
-				<s:submit id="add" name="add" value="确定" action="rebates_add" />
+	<s:form id="formEdit" name="form1" cssClass="validForm" action="rebates_add" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
+		<div class="label_con">
+ 			<div class="label_main">
+ 				<s:if test="null != rebates">
+					<div class="label_hang">
+					       <div class="label_ltit">申请编号:</div>
+					       <div class="label_rwben">${rebates.uuid}<s:hidden name="rebates.uuid" /></div>
+					</div>
+					<div class="label_hang">
+					       <div class="label_ltit">状态:</div>
+					       <div class="label_rwben">
+					       		<s:if test='0==rebates.status'>新单</s:if>
+								<s:if test='10==rebates.status'>待审核</s:if>
+								<s:if test='20==rebates.status'>主管已审</s:if>
+								<s:if test='30==rebates.status'>经理已审</s:if>
+								<s:if test='40==rebates.status'>财务已审</s:if>
+								<s:if test='50==rebates.status'>总监已审</s:if>
+								<s:if test='60==rebates.status'>总经理已审</s:if>
+					       </div>
+					</div>
+					<div class="label_hang">
+					       <div class="label_ltit">申请人:</div>
+					       <div class="label_rwben">${rebates.applicant_name}</div>
+					</div>
+					<div class="label_hang">
+					       <div class="label_ltit">申请时间:</div>
+					       <div class="label_rwbenx">${it:formatDate(rebates.apply_time,"yyyy-MM-dd HH:mm:ss")}</div>
+					</div>
 				</s:if>
-			</s:if>
-			<s:elseif test="null != rebates && 'mdy' == viewFlag">
-				<s:if test="0==rebates.status">
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATES_MDY')">
-					<s:submit id="save" name="save" value="保存信息" action="rebates_save" />
-					<script type="text/javascript">
-					$(function(){
-						$("#formEdit :input").change(function(){
-							$("#rebates_mdyRebatesStatus0").attr("disabled","disabled");
-							$("#message").text("请先保存后才能送审");
-						});
-					});
-					</script>
+				<s:if test="null == rebates && 'add' == viewFlag">
+					<div class="label_hang">
+					       <div class="label_ltit">会员号:</div>
+					       <div class="label_rwben"><s:textfield id="order_user_id" name="rebates.member_id" title="会员号" cssClass="validate[required]" /></div>
+					</div>
+					<div class="label_hang">
+					       <div class="label_ltit">会员手机:</div>
+					       <div class="label_rwben"><s:textfield id="order_user_mobile" name="rebates.member_mobile" title="会员手机" cssClass="validate[required,custom[integer]]" /></div>
+					</div>
+					<div class="label_hang">
+					       <div class="label_ltit">会员姓名:</div>
+					       <div class="label_rwben"><s:textfield id="order_user_name" name="rebates.member_name" title="会员姓名" cssClass="validate[required]" /></div>
+					</div>
+				</s:if>
+				<s:if test="null != rebates">
+					<div class="label_hang">
+					       <div class="label_ltit">会员号:</div>
+					       <div class="label_rwben">${rebates.member_id}<s:hidden name="rebates.member_id" title="会员号" /></div>
+					</div>
+					<div class="label_hang">
+					       <div class="label_ltit">会员手机:</div>
+					       <div class="label_rwben">${rebates.member_mobile}<s:hidden name="rebates.member_mobile" title="会员手机" /></div>
+					</div>
+					<div class="label_hang">
+					       <div class="label_ltit">会员姓名:</div>
+					       <div class="label_rwbenx">${rebates.member_name}<s:hidden name="rebates.member_name" title="会员姓名" /></div>
+					</div>
+				</s:if>
+				<fieldset class="clear">
+					<legend>需返利出货单</legend>
+					<ul id="ladings" class="showladings">
+						<s:iterator value="rebatesLadings">
+							<li class="active">(<s:date name="lading_time" format="yyyy-MM-dd" />)<a href='<s:url namespace="qkjmanage" action="lading_view"><s:param name="lading.uuid" value="lading_id" /><s:param name="viewFlag">view</s:param></s:url>' target="_blank"><s:property value="lading_id" /></a></li>
+						</s:iterator>
+					</ul>
+					<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+						<tr>
+							<th>产品名称</th>
+							<th>出货单总数量</th>
+							<th>出货单总金额</th>
+							<th>返利系数%</th>
+							<th>返利金额</th>
+						</tr>
+						<s:set name="total" value="0" />
+						<s:set name="total_re" value="0" />
+						<s:iterator value="ladingItems" status="sta">
+							<tr>
+								<td>${product_name}</td>
+								<td>${num}</td>
+								<td>${total_price}</td>
+								<td><input name='re_scales[<s:property value="#sta.index" />]' value="<s:property value="re_scales[#sta.index]" />" style="width: 30px;" />%</td>
+								<td><s:property value="total_price*re_scales[#sta.index]/100" /></td>
+							</tr>
+							<s:set name="total" value="#total+total_price" />
+							<s:set name="total_re" value="#total_re+total_price*re_scales[#sta.index]/100" />
+						</s:iterator>
+						<tr>
+							<td colspan="2">&nbsp;</td>
+							<td>合计:<s:property value="#total" /></td>
+							<td>&nbsp;</td>
+							<td>合计返利:<s:property value="#total_re" /></td>
+						</tr>
+						</table>
+				</fieldset>
+				<div class="label_hang">
+				       <div class="label_ltit">返利类型:</div>
+				       <div class="label_rwben"><s:select name="rebates.re_type" title="返利类型" headerKey="" headerValue="--请选择--" list="#{0:'随单返利',1:'季度返利',2:'年度返利',3:'活动返利',4:'其他'}" /></div>
+				</div>
+				<div class="label_hang">
+				       <div class="label_ltit">随量积分:</div>
+				       <div class="label_rwben"><s:textfield name="rebates.with_score" cssClass="validate[required,custom[integer],maxSize[11]]" title="随量积分" /></div>
+				</div>
+				<div class="label_hang">
+				       <div class="label_ltit">返现金数:</div>
+				       <div class="label_rwben"><s:textfield name="rebates.re_money" cssClass="validate[required,,custom[number],maxSize[11]]" title="返现金数" /></div>
+				</div>
+				<div class="label_hang">
+				       <div class="label_ltit">返利积分:</div>
+				       <div class="label_rwben"><s:textfield name="rebates.re_score" cssClass="validate[required,custom[integer],maxSize[10]]" title="返利积分" /></div>
+				</div>
+				<s:if test="null != rebates && 'mdy' == viewFlag">
+				<fieldset class="clear">
+					<legend>实体返利内容</legend>
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATESPRODUCT_ADD')">
+						<input id="addProduct" type="button" value="添加明细" />
 					</s:if>
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATES_DEL')">
-					<s:submit id="delete" name="delete" value="删除申请单(业务)" action="rebates_del" onclick="return isDel();" />
-					</s:if>
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATES_STATUS0')">
-					<s:submit id="rebates_mdyRebatesStatus0" name="rebates_mdyRebatesStatus0" value="送审" action="rebates_mdyRebatesStatus0" onclick="return isOp('是否送审?\n送审后将不能更改!');" />
-					</s:if>
+					<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+						<tr>
+						    <th>产品名称</th>
+							<th>单价</th>
+							<th>数量</th>
+							<th>总价</th>
+							<th>操作</th>
+						  </tr>
+						<s:set name="total2" value="0" />
+						<s:iterator value="rebatesProducts" status="sta">
+							  <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>" type="pickrow">
+							    <td>${product_name}</td>
+								<td>${per_price}</td>
+								<td>${num}</td>
+								<td>${total_price}</td>
+								<td>
+							    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATESPRODUCT_DEL')">
+							    	[<a href="<s:url namespace="/qkjmanage" action="rebatesProduct_del"><s:param name="rebatesProduct.uuid" value="uuid" /><s:param name="rebatesProduct.rebates_id" value="rebates_id" /></s:url>" onclick="return isDel();">删除</a>]
+							    	</s:if>	   
+							    </td>
+							  </tr>
+						<s:set name="total2" value="#total2+total_price" />
+						</s:iterator>
+							<tr>
+								<td colspan="3">&nbsp;</td>
+								<td>合计:<s:property value="#total2" /></td>
+								<td>&nbsp;</td>
+							</tr>
+						</table>
+				</fieldset>
 				</s:if>
-				<s:if test="10==rebates.status">
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATES_STATUS10')">
-				<s:submit id="rebates_mdyRebatesStatus10" name="rebates_mdyRebatesStatus10" value="主管-审核通过" action="rebates_mdyRebatesStatus10" onclick="return isOp('是否审核通过?\n审核通过后将不能更改!');" />
-				</s:if>
-				</s:if>
-				
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATES_STATUS10') && 10==rebates.status && rebates.status<=50">
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATES_DEL')">
-				<s:submit id="delete" name="delete" value="删除申请单(主管)" action="rebates_del" onclick="return isDel();" />
-				</s:if>
-				</s:if>
-				
-				<s:if test="20==rebates.status">
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATES_STATUS20')">
-				<s:submit id="rebates_mdyRebatesStatus20" name="rebates_mdyRebatesStatus20" value="经理-审核通过" action="rebates_mdyRebatesStatus20" onclick="return isOp('是否审核通过?\n审核通过后将不能更改!');" />
-				</s:if>
-				</s:if>
-				<s:if test="30==rebates.status">
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATES_STATUS30')">
-				<s:submit id="rebates_mdyRebatesStatus30" name="rebates_mdyRebatesStatus30" value="财务-审核通过" action="rebates_mdyRebatesStatus30" onclick="return isOp('是否审核通过?\n审核通过后将不能更改!');" />
-				</s:if>
-				</s:if>
-				<s:if test="40==rebates.status">
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATES_STATUS40')">
-				<s:submit id="rebates_mdyRebatesStatus40" name="rebates_mdyRebatesStatus40" value="运营总监-审核通过" action="rebates_mdyRebatesStatus40" onclick="return isOp('是否审核通过?\n审核通过后将不能更改!');" />
-				</s:if>
-				</s:if>
-				<s:if test="50==rebates.status">
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATES_STATUS50')">
-				<s:submit id="rebates_mdyRebatesStatus50" name="rebates_mdyRebatesStatus50" value="总经理-审核通过" action="rebates_mdyRebatesStatus50" onclick="return isOp('是否审核通过?\n审核通过后将不能更改!');" />
-				</s:if>
-				</s:if>
-				<s:if test="50<=rebates.status && rebates.fd_check==0 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATES_FDCHECK')">
-				<s:submit id="rebates_mdyFDCheck" name="rebates_mdyFDCheck" value="财务最终确定" action="rebates_mdyFDCheck"  onclick="return isOp('是否最终确定?\n最终确定后,赠送的积分将直接到账?\n最终确定操作不能更改!');" />
-				</s:if>
-			</s:elseif>
-			<input type="button" value="返回" onclick="linkurl('<s:url action="rebates_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');" />
-			<span id="message"><s:property value="message" /></span>
-		</td>
-		</tr>
-	</table>	
-</s:form>
-	</div>
+				<div class="label_main">
+					<div class="label_hang">
+					       <div class="label_ltit">返利说明:</div>
+					       <div class="label_rwbenx"><s:textarea name="rebates.note" cssClass="label_hang_linput" /><br /><span class="message_prompt">当需要实体返利(需要出货时),请填写送货地址.</span></div>
+					</div>
+				</div>
+				<div class="label_main">
+					<div class="label_hang">
+					       <div class="label_ltit">可用操作:</div>
+					       <div class="label_rwbenx input-a">
+					       		<s:if test="null == rebates && 'add' == viewFlag">
+									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATES_ADD')">
+									<s:submit id="add" name="add" value="确定" cssClass="input-blue" action="rebates_add" />
+									</s:if>
+								</s:if>
+								<s:elseif test="null != rebates && 'mdy' == viewFlag">
+									<s:if test="0==rebates.status">
+										<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATES_MDY')">
+										<s:submit id="save" name="save" cssClass="input-blue" value="保存信息" action="rebates_save" />
+										<script type="text/javascript">
+										$(function(){
+											$("#formEdit :input").change(function(){
+												$("#rebates_mdyRebatesStatus0").attr("disabled","disabled");
+												$("#message").text("请先保存后才能送审");
+											});
+										});
+										</script>
+										</s:if>
+										<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATES_DEL')">
+										<s:submit id="delete" name="delete" cssClass="input-red" value="删除申请单(业务)" action="rebates_del" onclick="return isDel();" />
+										</s:if>
+										<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATES_STATUS0')">
+										<s:submit id="rebates_mdyRebatesStatus0" cssClass="input-yellow" name="rebates_mdyRebatesStatus0" value="送审" action="rebates_mdyRebatesStatus0" onclick="return isOp('是否送审?\n送审后将不能更改!');" />
+										</s:if>
+									</s:if>
+									<s:if test="10==rebates.status">
+									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATES_STATUS10')">
+									<s:submit id="rebates_mdyRebatesStatus10" cssClass="input-green" name="rebates_mdyRebatesStatus10" value="主管-审核通过" action="rebates_mdyRebatesStatus10" onclick="return isOp('是否审核通过?\n审核通过后将不能更改!');" />
+									</s:if>
+									</s:if>
+									
+									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATES_STATUS10') && 10==rebates.status && rebates.status<=50">
+									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATES_DEL')">
+									<s:submit id="delete" name="delete" cssClass="input-red" value="删除申请单(主管)" action="rebates_del" onclick="return isDel();" />
+									</s:if>
+									</s:if>
+									
+									<s:if test="20==rebates.status">
+									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATES_STATUS20')">
+									<s:submit id="rebates_mdyRebatesStatus20" cssClass="input-green" name="rebates_mdyRebatesStatus20" value="经理-审核通过" action="rebates_mdyRebatesStatus20" onclick="return isOp('是否审核通过?\n审核通过后将不能更改!');" />
+									</s:if>
+									</s:if>
+									<s:if test="30==rebates.status">
+									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATES_STATUS30')">
+									<s:submit id="rebates_mdyRebatesStatus30" cssClass="input-green" name="rebates_mdyRebatesStatus30" value="财务-审核通过" action="rebates_mdyRebatesStatus30" onclick="return isOp('是否审核通过?\n审核通过后将不能更改!');" />
+									</s:if>
+									</s:if>
+									<s:if test="40==rebates.status">
+									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATES_STATUS40')">
+									<s:submit id="rebates_mdyRebatesStatus40" cssClass="input-green" name="rebates_mdyRebatesStatus40" value="运营总监-审核通过" action="rebates_mdyRebatesStatus40" onclick="return isOp('是否审核通过?\n审核通过后将不能更改!');" />
+									</s:if>
+									</s:if>
+									<s:if test="50==rebates.status">
+									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATES_STATUS50')">
+									<s:submit id="rebates_mdyRebatesStatus50" cssClass="input-green" name="rebates_mdyRebatesStatus50" value="总经理-审核通过" action="rebates_mdyRebatesStatus50" onclick="return isOp('是否审核通过?\n审核通过后将不能更改!');" />
+									</s:if>
+									</s:if>
+									<s:if test="50<=rebates.status && rebates.fd_check==0 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATES_FDCHECK')">
+									<s:submit id="rebates_mdyFDCheck" cssClass="input-green" name="rebates_mdyFDCheck" value="财务最终确定" action="rebates_mdyFDCheck"  onclick="return isOp('是否最终确定?\n最终确定后,赠送的积分将直接到账?\n最终确定操作不能更改!');" />
+									</s:if>
+								</s:elseif>
+								<input type="button" class="input-gray" value="返回" onclick="linkurl('<s:url action="rebates_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');" />
+								<span id="message"><s:property value="message" /></span>
+					       </div>
+					</div>
+				</div>
+ 			</div>
+ 		</div>
+	</s:form>
 </div>
-</div>
-
 <div id="addProductForm" title="添加酒品" style="display: none;">
 <s:form id="form_addProduct" name="form_addProduct" action="rebatesProduct_add" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
 	<table class="ilisttable" width="100%">
@@ -384,9 +360,9 @@ background-color: #DFDFDF;
 			<td class='firstRow'>合计:</td>
 			<td class='secRow'><s:textfield name="rebatesProduct.total_price" title="合计" dataType="number" controlName="合计" require="required" /></td>
 			</tr>
-
 		<tr>
-		    <td colspan="20" class="buttonarea">
+			<td>&nbsp;</td>
+		    <td>
 				<s:hidden name="rebatesProduct.rebates_id" title="提货单ID" value="%{rebates.uuid}" />
 				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATESPRODUCT_ADD')">
 				<s:submit id="add" name="add" value="确定" action="rebatesProduct_add" />

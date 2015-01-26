@@ -39,6 +39,11 @@ public class TravelAction extends ActionSupport {
 	private int recCount;
 	private int pageSize;
 	private int currPage;
+	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;工业旅游申请列表";
+	
+	public String getPath() {
+		return path;
+	}
 
 	public List<Product> getProducts() {
 		return products;
@@ -119,6 +124,7 @@ public class TravelAction extends ActionSupport {
 			this.setCurrPage(ContextHelper.getCurrPage(map));
 			this.setTravels(dao.list(map));
 			this.setRecCount(dao.getResultCount());
+			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;工业旅游申请列表";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
@@ -141,6 +147,7 @@ public class TravelAction extends ActionSupport {
 				travel.setApply_dept_name(ContextHelper.getUserLoginDeptName());
 				travel.setApply_user(ContextHelper.getUserLoginUuid());
 				travel.setApply_user_name(ContextHelper.getUserLoginInfo().getUser_name());
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/travel_list?viewFlag=relist'>工业旅游申请列表</a>&nbsp;&gt;&nbsp;增加工业旅游申请";
 			} else if ("mdy".equals(viewFlag) || "print1".equals(viewFlag) || "print2".equals(viewFlag) || "print3".equals(viewFlag)) {
 				if (!(travel == null || travel.getUuid() == null)) {
 					this.setTravel((Travel) dao.get(travel.getUuid()));
@@ -165,6 +172,7 @@ public class TravelAction extends ActionSupport {
 
 					if ("print1".equals(viewFlag) || "print2".equals(viewFlag) || "print3".equals(viewFlag)) return viewFlag;
 				}
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/travel_list?viewFlag=relist'>工业旅游申请列表</a>&nbsp;&gt;&nbsp;修改工业旅游申请";
 			} else {
 				this.setMessage("参数丢失,自动转到添加申请单页面.");
 				this.setViewFlag("add");

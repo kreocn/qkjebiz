@@ -58,6 +58,9 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
+		<action name="assetItem_print" class="com.qkj.adm.action.AssetItemAction" method="print">
+			<result>/jsp/adm/AssetItemPrint.jsp</result>
+		</action>
 		<!-- AssetItem End -->
 	</package>
 </struts>

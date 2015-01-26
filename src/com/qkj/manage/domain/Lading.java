@@ -3,32 +3,25 @@ package com.qkj.manage.domain;
 import java.util.Date;
 
 public class Lading {
-	private String uuid;// (varchar)申请编号
+	private Integer uuid;// (int)申请编号
 	private String member_id;// (varchar)客户ID
 	private String content;// (text)内容
 	private String address;// (varchar)配送地点
 	private String note;// (text)其他说明
-	private Double total_price; // 总价
-	private Integer manager_check;// (int)渠道/运营经理确认
-	private String manager_check_user;
-	private Date manager_check_time;// (datetime)确认时间
-	private Integer sd_check;// (int)销售部经理确认
-	private String sd_check_user;
-	private Date sd_check_time;// (datetime)确认时间
-	private Integer md_check;// (int)市场部经理确认
-	private String md_check_user;
-	private Date md_check_time;// (datetime)确认时间
+	private Double total_price; // 订单总价
+	private Double curr_price;// 实际打款金额
+	private Double total_price_g;// 返利总价
 	private Integer fd_check;// (int)财务确认 0 未付款 1 未结清 2 已付款
 	private String fd_type; // 付款方式
 	private Date fd_date; // 付款时间
 	private String fd_check_user;
 	private Date fd_check_time;// (datetime)确认时间
-	private Integer coo_check;// (int)运营总监确认
-	private String coo_check_user;
-	private Date coo_check_time;// (datetime)确认时间
+	private String fd_note;// 确认说明
 	private Integer status;// (int)状态 0初始 1报批 2结案
-	private Date close_time;// (datetime)结案时间
+	private String check_user;// 审核人
+	private Date check_time;// (datetime)结案时间
 	private String applicant;// (varchar)申请人ID
+	private String apply_dept;// 申请部门
 	private Date apply_time;// (datetime)申请时间
 	private String add_user;// (varchar)添加人ID
 	private Date add_time;// (datetime)添加时间
@@ -36,196 +29,51 @@ public class Lading {
 	private Date lm_time;// (timestamp)最后修改时间
 	private Integer out_flag; // 出货标记(0:未出货 1:已出货)
 	private Integer rebates_flag; // 返利标记 0未返利 1已返利
+	private String promotions;// 促销ID
 
 	// 以下为非数据库字段
-	private String manager_check_user_name;
-	private String sd_check_user_name;
-	private String md_check_user_name;
 	private String fd_check_user_name;
-	private String coo_check_user_name;
 	private String applicant_name;
 	private String add_user_name;
 	private String lm_user_name;
+	private String apply_dept_name;
+	private String check_user_name;
 
 	private String member_name;
 	private String member_mobile;
 
 	// 特殊字段
-	private String[] fd_types; // 专门为赋值checkbox而设定
+	private Integer[] fd_typesx; // 专门为赋值checkbox而设定
 
-	public Integer getOut_flag() {
-		return out_flag;
+	public Integer[] getFd_typesx() {
+		return fd_typesx;
 	}
 
-	public void setOut_flag(Integer out_flag) {
-		this.out_flag = out_flag;
+	public void setFd_typesx(Integer[] fd_typesx) {
+		this.fd_typesx = fd_typesx;
 	}
 
-	public Integer getRebates_flag() {
-		return rebates_flag;
+	public String getFd_note() {
+		return fd_note;
 	}
 
-	public void setRebates_flag(Integer rebates_flag) {
-		this.rebates_flag = rebates_flag;
+	public void setFd_note(String fd_note) {
+		this.fd_note = fd_note;
 	}
 
-	public String[] getFd_types() {
-		return fd_types;
+	public String getCheck_user_name() {
+		return check_user_name;
 	}
 
-	public void setFd_types(String[] fd_types) {
-		this.fd_types = fd_types;
+	public void setCheck_user_name(String check_user_name) {
+		this.check_user_name = check_user_name;
 	}
 
-	public String getFd_type() {
-		return fd_type;
-	}
-
-	public void setFd_type(String fd_type) {
-		this.fd_type = fd_type;
-	}
-
-	public Date getFd_date() {
-		return fd_date;
-	}
-
-	public void setFd_date(Date fd_date) {
-		this.fd_date = fd_date;
-	}
-
-	public Double getTotal_price() {
-		return total_price;
-	}
-
-	public void setTotal_price(Double total_price) {
-		this.total_price = total_price;
-	}
-
-	public String getMember_mobile() {
-		return member_mobile;
-	}
-
-	public void setMember_mobile(String member_mobile) {
-		this.member_mobile = member_mobile;
-	}
-
-	public String getManager_check_user() {
-		return manager_check_user;
-	}
-
-	public void setManager_check_user(String manager_check_user) {
-		this.manager_check_user = manager_check_user;
-	}
-
-	public String getSd_check_user() {
-		return sd_check_user;
-	}
-
-	public void setSd_check_user(String sd_check_user) {
-		this.sd_check_user = sd_check_user;
-	}
-
-	public String getMd_check_user() {
-		return md_check_user;
-	}
-
-	public void setMd_check_user(String md_check_user) {
-		this.md_check_user = md_check_user;
-	}
-
-	public String getFd_check_user() {
-		return fd_check_user;
-	}
-
-	public void setFd_check_user(String fd_check_user) {
-		this.fd_check_user = fd_check_user;
-	}
-
-	public String getCoo_check_user() {
-		return coo_check_user;
-	}
-
-	public void setCoo_check_user(String coo_check_user) {
-		this.coo_check_user = coo_check_user;
-	}
-
-	public String getManager_check_user_name() {
-		return manager_check_user_name;
-	}
-
-	public void setManager_check_user_name(String manager_check_user_name) {
-		this.manager_check_user_name = manager_check_user_name;
-	}
-
-	public String getSd_check_user_name() {
-		return sd_check_user_name;
-	}
-
-	public void setSd_check_user_name(String sd_check_user_name) {
-		this.sd_check_user_name = sd_check_user_name;
-	}
-
-	public String getMd_check_user_name() {
-		return md_check_user_name;
-	}
-
-	public void setMd_check_user_name(String md_check_user_name) {
-		this.md_check_user_name = md_check_user_name;
-	}
-
-	public String getFd_check_user_name() {
-		return fd_check_user_name;
-	}
-
-	public void setFd_check_user_name(String fd_check_user_name) {
-		this.fd_check_user_name = fd_check_user_name;
-	}
-
-	public String getCoo_check_user_name() {
-		return coo_check_user_name;
-	}
-
-	public void setCoo_check_user_name(String coo_check_user_name) {
-		this.coo_check_user_name = coo_check_user_name;
-	}
-
-	public String getApplicant_name() {
-		return applicant_name;
-	}
-
-	public void setApplicant_name(String applicant_name) {
-		this.applicant_name = applicant_name;
-	}
-
-	public String getAdd_user_name() {
-		return add_user_name;
-	}
-
-	public void setAdd_user_name(String add_user_name) {
-		this.add_user_name = add_user_name;
-	}
-
-	public String getLm_user_name() {
-		return lm_user_name;
-	}
-
-	public void setLm_user_name(String lm_user_name) {
-		this.lm_user_name = lm_user_name;
-	}
-
-	public String getMember_name() {
-		return member_name;
-	}
-
-	public void setMember_name(String member_name) {
-		this.member_name = member_name;
-	}
-
-	public String getUuid() {
+	public Integer getUuid() {
 		return uuid;
 	}
 
-	public void setUuid(String uuid) {
+	public void setUuid(Integer uuid) {
 		this.uuid = uuid;
 	}
 
@@ -261,52 +109,28 @@ public class Lading {
 		this.note = note;
 	}
 
-	public Integer getManager_check() {
-		return manager_check;
+	public Double getTotal_price() {
+		return total_price;
 	}
 
-	public void setManager_check(Integer manager_check) {
-		this.manager_check = manager_check;
+	public void setTotal_price(Double total_price) {
+		this.total_price = total_price;
 	}
 
-	public Date getManager_check_time() {
-		return manager_check_time;
+	public Double getCurr_price() {
+		return curr_price;
 	}
 
-	public void setManager_check_time(Date manager_check_time) {
-		this.manager_check_time = manager_check_time;
+	public void setCurr_price(Double curr_price) {
+		this.curr_price = curr_price;
 	}
 
-	public Integer getSd_check() {
-		return sd_check;
+	public Double getTotal_price_g() {
+		return total_price_g;
 	}
 
-	public void setSd_check(Integer sd_check) {
-		this.sd_check = sd_check;
-	}
-
-	public Date getSd_check_time() {
-		return sd_check_time;
-	}
-
-	public void setSd_check_time(Date sd_check_time) {
-		this.sd_check_time = sd_check_time;
-	}
-
-	public Integer getMd_check() {
-		return md_check;
-	}
-
-	public void setMd_check(Integer md_check) {
-		this.md_check = md_check;
-	}
-
-	public Date getMd_check_time() {
-		return md_check_time;
-	}
-
-	public void setMd_check_time(Date md_check_time) {
-		this.md_check_time = md_check_time;
+	public void setTotal_price_g(Double total_price_g) {
+		this.total_price_g = total_price_g;
 	}
 
 	public Integer getFd_check() {
@@ -317,28 +141,36 @@ public class Lading {
 		this.fd_check = fd_check;
 	}
 
+	public String getFd_type() {
+		return fd_type;
+	}
+
+	public void setFd_type(String fd_type) {
+		this.fd_type = fd_type;
+	}
+
+	public Date getFd_date() {
+		return fd_date;
+	}
+
+	public void setFd_date(Date fd_date) {
+		this.fd_date = fd_date;
+	}
+
+	public String getFd_check_user() {
+		return fd_check_user;
+	}
+
+	public void setFd_check_user(String fd_check_user) {
+		this.fd_check_user = fd_check_user;
+	}
+
 	public Date getFd_check_time() {
 		return fd_check_time;
 	}
 
 	public void setFd_check_time(Date fd_check_time) {
 		this.fd_check_time = fd_check_time;
-	}
-
-	public Integer getCoo_check() {
-		return coo_check;
-	}
-
-	public void setCoo_check(Integer coo_check) {
-		this.coo_check = coo_check;
-	}
-
-	public Date getCoo_check_time() {
-		return coo_check_time;
-	}
-
-	public void setCoo_check_time(Date coo_check_time) {
-		this.coo_check_time = coo_check_time;
 	}
 
 	public Integer getStatus() {
@@ -349,12 +181,20 @@ public class Lading {
 		this.status = status;
 	}
 
-	public Date getClose_time() {
-		return close_time;
+	public String getCheck_user() {
+		return check_user;
 	}
 
-	public void setClose_time(Date close_time) {
-		this.close_time = close_time;
+	public void setCheck_user(String check_user) {
+		this.check_user = check_user;
+	}
+
+	public Date getCheck_time() {
+		return check_time;
+	}
+
+	public void setCheck_time(Date check_time) {
+		this.check_time = check_time;
 	}
 
 	public String getApplicant() {
@@ -363,6 +203,14 @@ public class Lading {
 
 	public void setApplicant(String applicant) {
 		this.applicant = applicant;
+	}
+
+	public String getApply_dept() {
+		return apply_dept;
+	}
+
+	public void setApply_dept(String apply_dept) {
+		this.apply_dept = apply_dept;
 	}
 
 	public Date getApply_time() {
@@ -405,4 +253,83 @@ public class Lading {
 		this.lm_time = lm_time;
 	}
 
+	public Integer getOut_flag() {
+		return out_flag;
+	}
+
+	public void setOut_flag(Integer out_flag) {
+		this.out_flag = out_flag;
+	}
+
+	public Integer getRebates_flag() {
+		return rebates_flag;
+	}
+
+	public void setRebates_flag(Integer rebates_flag) {
+		this.rebates_flag = rebates_flag;
+	}
+
+	public String getPromotions() {
+		return promotions;
+	}
+
+	public void setPromotions(String promotions) {
+		this.promotions = promotions;
+	}
+
+	public String getFd_check_user_name() {
+		return fd_check_user_name;
+	}
+
+	public void setFd_check_user_name(String fd_check_user_name) {
+		this.fd_check_user_name = fd_check_user_name;
+	}
+
+	public String getApplicant_name() {
+		return applicant_name;
+	}
+
+	public void setApplicant_name(String applicant_name) {
+		this.applicant_name = applicant_name;
+	}
+
+	public String getAdd_user_name() {
+		return add_user_name;
+	}
+
+	public void setAdd_user_name(String add_user_name) {
+		this.add_user_name = add_user_name;
+	}
+
+	public String getLm_user_name() {
+		return lm_user_name;
+	}
+
+	public void setLm_user_name(String lm_user_name) {
+		this.lm_user_name = lm_user_name;
+	}
+
+	public String getApply_dept_name() {
+		return apply_dept_name;
+	}
+
+	public void setApply_dept_name(String apply_dept_name) {
+		this.apply_dept_name = apply_dept_name;
+	}
+
+	public String getMember_name() {
+		return member_name;
+	}
+
+	public void setMember_name(String member_name) {
+		this.member_name = member_name;
+	}
+
+	public String getMember_mobile() {
+		return member_mobile;
+	}
+
+	public void setMember_mobile(String member_mobile) {
+		this.member_mobile = member_mobile;
+	}
 }

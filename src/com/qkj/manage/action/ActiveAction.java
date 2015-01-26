@@ -1,5 +1,6 @@
 package com.qkj.manage.action;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -42,10 +43,14 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 
 	private List<Product> products;
 	private List<ActiveProduct> activeProducts;
+	private List<ActiveProduct> indActiveProducts;
+	private List<ActiveProduct> otherActiveProducts;
 	private List<ActivePosm> activePosms;
 	private List<ActiveMemcost> activeMemcosts;
 
 	private List<ActiveProduct> activeProductsClose;
+	private List<ActiveProduct> indActiveProductsClose;
+	private List<ActiveProduct> otherActiveProductsClose;
 	private List<ActivePosm> activePosmsClose;
 	private List<ActiveMemcost> activeMemcostsClose;
 	private List<Active> activeSing;
@@ -69,8 +74,50 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	private String flag;
 	private String state;
 	private String noteflag = null;
+	private String sselect;
+	private double indprice;
 
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;活动管理";
+
+	public double getIndprice() {
+		return indprice;
+	}
+
+	public void setIndprice(double indprice) {
+		this.indprice = indprice;
+	}
+
+	public List<ActiveProduct> getIndActiveProductsClose() {
+		return indActiveProductsClose;
+	}
+
+	public void setIndActiveProductsClose(List<ActiveProduct> indActiveProductsClose) {
+		this.indActiveProductsClose = indActiveProductsClose;
+	}
+
+	public List<ActiveProduct> getOtherActiveProductsClose() {
+		return otherActiveProductsClose;
+	}
+
+	public void setOtherActiveProductsClose(List<ActiveProduct> otherActiveProductsClose) {
+		this.otherActiveProductsClose = otherActiveProductsClose;
+	}
+
+	public List<ActiveProduct> getOtherActiveProducts() {
+		return otherActiveProducts;
+	}
+
+	public void setOtherActiveProducts(List<ActiveProduct> otherActiveProducts) {
+		this.otherActiveProducts = otherActiveProducts;
+	}
+
+	public List<ActiveProduct> getIndActiveProducts() {
+		return indActiveProducts;
+	}
+
+	public void setIndActiveProducts(List<ActiveProduct> indActiveProducts) {
+		this.indActiveProducts = indActiveProducts;
+	}
 
 	public MyProcess getMyPro() {
 		return myPro;
@@ -316,6 +363,14 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		this.code = code;
 	}
 
+	public String getSselect() {
+		return sselect;
+	}
+
+	public void setSselect(String sselect) {
+		this.sselect = sselect;
+	}
+
 	public String addPro() throws Exception {
 		try {
 			if (state != null && state.equals("2")) {// 结案
@@ -327,8 +382,8 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 			this.setActive(active);
 			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/active_list?viewFlag=relist'>活动列表</a>&nbsp;&gt;&nbsp;修改活动单&nbsp;&gt;&nbsp;增加产品";
 		} catch (Exception e) {
-			log.error(this.getClass().getName() + "!load 读取数据错误:", e);
-			throw new Exception(this.getClass().getName() + "!load 读取数据错误:", e);
+			log.error(this.getClass().getName() + "!addPro 读取数据错误:", e);
+			throw new Exception(this.getClass().getName() + "!addPro 读取数据错误:", e);
 		}
 		return SUCCESS;
 	}
@@ -397,6 +452,9 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				map.put("status", 1);
 				ActiveProductDAO adao = new ActiveProductDAO();
 				this.setActiveProducts(adao.list(map));
+				this.setIndActiveProducts(independence(map, "海拔", 1));
+				this.setOtherActiveProducts(independence(map, "海拔", 2));
+				
 				ActivePosmDAO podao = new ActivePosmDAO();
 				this.setActivePosms(podao.list(map));
 				ActiveMemcostDAO amdao = new ActiveMemcostDAO();
@@ -501,6 +559,9 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				map.put("status", 1);
 				ActiveProductDAO adao = new ActiveProductDAO();
 				this.setActiveProducts(adao.list(map));
+				this.setIndActiveProducts(independence(map, "海拔", 1));
+				this.setOtherActiveProducts(independence(map, "海拔", 2));
+
 				ActivePosmDAO podao = new ActivePosmDAO();
 				this.setActivePosms(podao.list(map));
 				ActiveMemcostDAO amdao = new ActiveMemcostDAO();
@@ -1114,7 +1175,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 			active.setClose_nd_user(ContextHelper.getUserLoginUuid());
 			active.setClose_nd_time(new Date());
 			active.setLm_user(ContextHelper.getUserLoginUuid());
-			String note="结案--数据中心状态变更-"+noteflag;
+			String note = "结案--数据中心状态变更-" + noteflag;
 			addProcess("ACTIVE_MDY_NDCSTATUS", note);
 			return dao.mdyActiveNDCStatus(active);
 		}
@@ -1141,6 +1202,9 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				ActiveMemcostDAO amdao = new ActiveMemcostDAO();
 
 				this.setActiveProducts(adao.list(map));
+				this.setIndActiveProducts(independence(map, "海拔", 1));
+				this.setOtherActiveProducts(independence(map, "海拔", 2));
+
 				this.setActivePosms(podao.list(map));
 				this.setActiveMemcosts(amdao.list(map));
 
@@ -1148,6 +1212,9 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				map.put("active_id", active.getUuid());
 				map.put("status", 2);
 				this.setActiveProductsClose(adao.list(map));
+				this.setIndActiveProductsClose(independence(map, "海拔", 1));
+				this.setOtherActiveProductsClose(independence(map, "海拔", 2));
+
 				this.setActivePosmsClose(podao.list(map));
 				this.setActiveMemcostsClose(amdao.list(map));
 
@@ -1265,6 +1332,9 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				map.put("active_id", active.getUuid());
 				map.put("status", 1);
 				this.setActiveProducts(adao.list(map));
+				//this.setIndActiveProducts(independence(map, "海拔", 1));
+				//this.setOtherActiveProducts(independence(map, "海拔", 2));
+
 				this.setActivePosms(podao.list(map));
 				this.setActiveMemcosts(amdao.list(map));
 
@@ -1272,6 +1342,9 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				map.put("active_id", active.getUuid());
 				map.put("status", 2);
 				this.setActiveProductsClose(adao.list(map));
+				this.setIndActiveProductsClose(independence(map, "海拔", 1));
+				this.setOtherActiveProductsClose(independence(map, "海拔", 2));
+
 				this.setActivePosmsClose(podao.list(map));
 				this.setActiveMemcostsClose(amdao.list(map));
 				map.clear();
@@ -1734,5 +1807,28 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 			pdao.addProcess(1, active.getUuid(), p_sign, p_note, active.getStatus(), active.getSd_status(), active.getSmd_status(), active.getClose_sd_status(),
 					active.getClose_smd_status());
 		}
+	}
+
+	private List<ActiveProduct> independence(Map<String, Object> map, String title, int flag) {
+		ActiveProductDAO adao = new ActiveProductDAO();
+		List<ActiveProduct> products = new ArrayList<>();
+		ActiveProduct pri=new ActiveProduct();
+		if (flag == 1) {// 是需要独立显示的商品
+			map.put("title", title);
+			map.remove("othertitle");
+			products = adao.list(map);
+			if(products.size()>0){
+				for(int i=0;i<products.size();i++){
+					pri=products.get(i);
+					indprice=indprice+pri.getTotal_price();
+				}
+			}
+			System.out.println(indprice);
+		} else {
+			map.remove("title");
+			map.put("othertitle", title);
+			products = adao.list(map);
+		}
+		return products;
 	}
 }

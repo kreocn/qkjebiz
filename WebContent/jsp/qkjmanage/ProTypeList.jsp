@@ -50,7 +50,8 @@
  		<table>
  		<tr id="coltr">
 		<th class="td1">编号</th>
-		<th class="td1">类型名称</th>
+		<th class="td1">类型</th>
+		<th class="td1">名称</th>
 		<th class="td4">操作</th>
 		<th class="td0">查看</th>
 
@@ -58,9 +59,11 @@
 	  	<s:iterator value="proTypes" status="sta">
 	  		<tr id="showtr${uuid}">
 	  			<td class="td1 nw"><s:property value="uuid" /></td>
-			   	<td class="td1 nw">
-			    	<s:property value="name" />
-			    </td>
+				<td class="td1 nw">
+					<s:if test="type==0">产品</s:if>
+					<s:if test="type==1">促销物料</s:if>
+				</td>
+			   	<td class="td1 nw"><s:property value="name" /></td>
 				<td class="td4 op-area">
 				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_PROTYPE_MDY')">
 			    	<a class="input-blue" href="<s:url namespace="/qkjmanage" action="proType_load"><s:param name="viewFlag">mdy</s:param><s:param name="proType.uuid" value="uuid"></s:param></s:url>">修改</a>

@@ -1,6 +1,7 @@
 package org.iweb.rpt.action;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -25,9 +26,9 @@ public class CheckEffMonthlyStatAction extends ActionSupport {
 
 	private CommonDAO dao = new CommonDAO();
 
-	//private Map activeAvgTime;
-	//private Map activeCloseAvgTime;
-	//private Map applyAvgTime;
+	// private Map activeAvgTime;
+	// private Map activeCloseAvgTime;
+	// private Map applyAvgTime;
 	private ActiveTime activetime;
 	private ActiveNum activenum;
 	private List<ActiveTime> activeAvgTime;
@@ -36,14 +37,14 @@ public class CheckEffMonthlyStatAction extends ActionSupport {
 	private List<ActiveNum> activePasses;
 	private List<ActiveNum> activeClosePasses;
 	private List<ActiveNum> applyPasses;
-	
+
 	private List<ActiveNum> totelActivePasses;
 	private List<ActiveNum> totelActiveClosePasses;
 	private List<ActiveNum> totelApplyPasses;
-	
-	//private List<Map> activePasses;
-	//private List<Map> activeClosePasses;
-	//private List<Map> applyPasses;
+
+	// private List<Map> activePasses;
+	// private List<Map> activeClosePasses;
+	// private List<Map> applyPasses;
 
 	private String yearMonth;// 参数 年-月
 	private List<ListObject> yearMonths;
@@ -52,7 +53,7 @@ public class CheckEffMonthlyStatAction extends ActionSupport {
 	private List<ListObject> deptGroups;
 
 	private String message;
-	
+
 	public List<ActiveNum> getTotelActivePasses() {
 		return totelActivePasses;
 	}
@@ -157,24 +158,25 @@ public class CheckEffMonthlyStatAction extends ActionSupport {
 			setDeptGroups();
 
 			if (!ToolsUtil.isEmpty(yearMonth)) {
-				/*this.setActiveAvgTime(dao.commonSelectMap(initSQL(0)));
-				this.setActiveCloseAvgTime(dao.commonSelectMap(initSQL(1)));
-				this.setApplyAvgTime(dao.commonSelectMap(initSQL(2)));
-				this.setActivePasses(dao.commonSelectMapList(initSQL(3)));
-				this.setActiveClosePasses(dao.commonSelectMapList(initSQL(4)));
-				this.setApplyPasses(dao.commonSelectMapList(initSQL(5)));
-				*/
-				String dep=null;
-				if(this.getDeptGroup()!=null){
-					if(this.getDeptGroup().equals("21")){
-						dep="2";
-					}else if(this.getDeptGroup().equals("220")){
-						dep="3";
-					}else{
-						dep="1";
+				/*
+				 * this.setActiveAvgTime(dao.commonSelectMap(initSQL(0)));
+				 * this.setActiveCloseAvgTime(dao.commonSelectMap(initSQL(1)));
+				 * this.setApplyAvgTime(dao.commonSelectMap(initSQL(2)));
+				 * this.setActivePasses(dao.commonSelectMapList(initSQL(3)));
+				 * this.setActiveClosePasses(dao.commonSelectMapList(initSQL(4)));
+				 * this.setApplyPasses(dao.commonSelectMapList(initSQL(5)));
+				 */
+				String dep = null;
+				if (this.getDeptGroup() != null) {
+					if (this.getDeptGroup().equals("21")) {
+						dep = "2";
+					} else if (this.getDeptGroup().equals("220")) {
+						dep = "3";
+					} else {
+						dep = "1";
 					}
-				}else{
-					dep="1";
+				} else {
+					dep = "1";
 				}
 				map.clear();
 				map.put("atype", 1);
@@ -191,7 +193,7 @@ public class CheckEffMonthlyStatAction extends ActionSupport {
 				map.put("adate", yearMonth);
 				map.put("acode", dep);
 				this.setApplyAvgTime(dao.listbytime(map));
-				
+
 				map.clear();
 				map.put("atype", 1);
 				map.put("adate", yearMonth);
@@ -204,7 +206,7 @@ public class CheckEffMonthlyStatAction extends ActionSupport {
 				map.put("acode", dep);
 				map.put("merger", 2);
 				this.setTotelActivePasses(dao.listbynum(map));
-				
+
 				map.clear();
 				map.put("atype", 2);
 				map.put("adate", yearMonth);
@@ -217,14 +219,14 @@ public class CheckEffMonthlyStatAction extends ActionSupport {
 				map.put("acode", dep);
 				map.put("merger", 2);
 				this.setTotelActiveClosePasses(dao.listbynum(map));
-				
+
 				map.clear();
 				map.put("atype", 3);
 				map.put("adate", yearMonth);
 				map.put("acode", dep);
 				map.put("merger", 1);
 				this.setApplyPasses(dao.listbynum(map));
-				
+
 				map.clear();
 				map.put("atype", 3);
 				map.put("adate", yearMonth);
@@ -255,12 +257,19 @@ public class CheckEffMonthlyStatAction extends ActionSupport {
 	}
 
 	private void setYearMonths() {
+		Calendar cal = Calendar.getInstance();// 使用日历类
+		int day = cal.get(Calendar.DAY_OF_MONTH);// 得到天
+		Date de = null;
 		if (yearMonths == null) {
 			yearMonths = new ArrayList<>();
 		}
 		String patten = "yyyy-MM";
 		Date ds = DateUtil.getDate("2014-08", patten);
-		Date de = DateUtil.addMonth(DateUtil.getDate(new Date(), patten), 1);
+		if (day > 25) {
+			de = DateUtil.addMonth(DateUtil.getDate(new Date(), patten), 1);
+		} else {
+			de = DateUtil.addMonth(DateUtil.getDate(new Date(), patten), 0);
+		}
 		while (ds.before(de)) {
 			yearMonths.add(new ListObject(DateUtil.format(ds, patten), DateUtil.format(ds, patten)));
 			ds = DateUtil.addMonth(ds, 1);

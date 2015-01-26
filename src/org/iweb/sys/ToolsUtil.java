@@ -1,6 +1,9 @@
 package org.iweb.sys;
 
 import java.beans.PropertyDescriptor;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.lang.annotation.Annotation;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -18,8 +21,6 @@ import java.util.Vector;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import net.sf.json.JsonConfig;
-import net.sf.json.processors.JsDateJsonBeanProcessor;
 import net.sf.json.util.JSONUtils;
 
 public class ToolsUtil {
@@ -180,8 +181,7 @@ public class ToolsUtil {
 	/**
 	 * 生成固定长度整数
 	 * 
-	 * @param int len
-	 *        长度
+	 * @param int len 长度
 	 * @return 固定长度整数
 	 */
 	public static int getRandomInt(int len) {
@@ -721,19 +721,22 @@ public class ToolsUtil {
 	}
 
 	/**
-	 * 专门为获得uuids(或者其他直接checkbox获取的字段)所设定的函数,因为传入的uuids,如果直接用','来split,
-	 * 则中间的元素会有空格
+	 * 防止分隔符中间还有空格的情况
 	 * 
 	 * @param uuid_str
+	 * @param split
 	 * @return
-	 * @date 2014-2-2 下午4:47:14
 	 */
-	public static String[] getSplitUuids(String uuid_str) {
-		if (ToolsUtil.isEmpty(uuid_str)) {
+	public static String[] spliten(String str, String split) {
+		if (ToolsUtil.isEmpty(str)) {
 			return new String[0];
 		} else {
-			return uuid_str.split("[ ]*,[ ]*");
+			return str.split("[ ]*" + split + "[ ]*");
 		}
+	}
+
+	public static String[] spliten(String str) {
+		return spliten(str, ",");
 	}
 
 	/**
@@ -747,7 +750,6 @@ public class ToolsUtil {
 		// JsDateJsonBeanProcessor jd = new JsDateJsonBeanProcessor();
 		// JsonConfig config = new JsonConfig();
 		// config.registerJsonBeanProcessor(java.sql.Date.class, jd);
-
 		if (obj == null || obj instanceof String || obj instanceof Number) {
 			JSONObject json = new JSONObject();
 			json.put("value", obj);
@@ -764,21 +766,19 @@ public class ToolsUtil {
 	}
 
 	/**
-	 * 字符串数组转换成字符串,用split隔开
+	 * 数组转换成字符串,用split隔开
 	 * 
 	 * @param array
-	 *            字符串数组
+	 *            数组,可以是简单类型的数组String[],Integer[],Double[]等
 	 * @param split
 	 *            分隔字符
 	 * @return
 	 */
-	public static String Array2String(String[] array, String split) {
+	public static String Array2String(Object[] array, String split) {
 		if (!(array == null || array.length == 0)) {
 			StringBuffer sb = new StringBuffer();
-			for (int i = 0; i < array.length; i++) {
+			for (int i = 0; i < array.length; i++)
 				sb.append(array[i]).append(split);
-			}
-
 			sb.delete(sb.length() - split.length(), sb.length());
 			return sb.toString();
 		} else {
@@ -880,5 +880,72 @@ public class ToolsUtil {
 		} else {
 			return s.substring(0, n) + "...";
 		}
+	}
+
+	public static byte[] File2byte(String filePath) {
+		byte[] buffer = null;
+		try {
+			File file = new File(filePath);
+			FileInputStream fis = new FileInputStream(file);
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			byte[] b = new byte[1024];
+			int n;
+			while ((n = fis.read(b)) != -1) {
+				bos.write(b, 0, n);
+			}
+			fis.close();
+			bos.close();
+			buffer = bos.toByteArray();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return buffer;
+	}
+
+	public static byte[] File2byte(File file) {
+		byte[] buffer = null;
+		try {
+			FileInputStream fis = new FileInputStream(file);
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			byte[] b = new byte[1024];
+			int n;
+			while ((n = fis.read(b)) != -1) {
+				bos.write(b, 0, n);
+			}
+			fis.close();
+			bos.close();
+			buffer = bos.toByteArray();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return buffer;
+	}
+
+	public static String formatNum(Double d, Integer digit) {
+		return String.format("%." + digit + "f", d);
+	}
+
+	/**
+	 * 把字符串转成整形数组
+	 * 
+	 * @param str
+	 * @return
+	 */
+	public static Integer[] split2Integer(String str, String split) {
+		if (isEmpty(str)) return new Integer[0];
+		String[] strs = spliten(str, split);
+		Integer[] ints = new Integer[strs.length];
+		for (int i = 0; i < ints.length; i++) {
+			try {
+				ints[i] = Integer.parseInt(strs[i]);
+			} catch (Exception e) {
+				ints[i] = -1;
+			}
+		}
+		return ints;
+	}
+
+	public static Integer[] split2Integer(String str) {
+		return split2Integer(str, ",");
 	}
 }

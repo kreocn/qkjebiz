@@ -1,5 +1,6 @@
 package com.qkj.manage.action;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.util.Date;
@@ -12,9 +13,11 @@ import org.apache.commons.logging.LogFactory;
 import org.iweb.sys.ActionAttr;
 import org.iweb.sys.ContextHelper;
 import org.iweb.sys.IWebConfig;
+import org.iweb.sys.OSSUtil_IMG;
 import org.iweb.sys.Parameters;
 import org.iweb.sys.ToolsUtil;
 
+import com.aliyun.openservices.oss.model.ObjectMetadata;
 import com.opensymphony.xwork2.ActionSupport;
 import com.qkj.manage.dao.MarketDAO;
 import com.qkj.manage.domain.Market;
@@ -127,17 +130,31 @@ public class MarketAction extends ActionSupport implements ActionAttr {
         out.write(info);
         out.flush();
  	    out.close();
+ 	    
+ 	    ObjectMetadata meta = new ObjectMetadata();
+		File f = new File(p+"/js/Info.js");
+		// InputStream in = new FileInputStream(f);
+		meta.setContentLength(f.length());
+		OSSUtil_IMG.uploadFile("qkjbj01", "qkjebiz01/Marketing_network_map_info.js", f, meta);
+		
 		return SUCCESS;
 	}
 	
 	public String list() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_MARKET");
+		String code=ContextHelper.getUserLoginDept();
 		try {
 				map.clear();
 				if (market != null)
 					map.putAll(ToolsUtil.getMapByBean(market));
 				map.putAll(ContextHelper.getDefaultRequestMap4Page());
 				this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
+				if (ContextHelper.isAdmin()) {// 管理员
+					
+				}else{
+					map.put("deptcode", code);
+				}
+				
 				this.setMarkets(dao.list(map));
 				this.setRecCount(dao.getResultCount());
 			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;网络营销管理";
@@ -162,7 +179,6 @@ public class MarketAction extends ActionSupport implements ActionAttr {
 			} else if ("mdy".equals(viewFlag) || "view".equals(viewFlag)) {
 				if (!(market == null || market.getUuid() == null)) {
 					this.setMarket((Market) dao.get(market.getUuid()));
-					System.out.println(market.getLm_time()+"aaaaaaaaaaaa");
 				} else {
 					this.setMarket(null);
 				}
@@ -189,6 +205,7 @@ public class MarketAction extends ActionSupport implements ActionAttr {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_MARKET_ADD");
 		try {
 			market.setLm_user(ContextHelper.getUserLoginUuid());
+			market.setDeptcode(ContextHelper.getUserLoginDept());
 			market.setUuid((Integer) dao.add(market));
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!add 数据添加失败:", e);

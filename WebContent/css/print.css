@@ -121,3 +121,14 @@ table{
 	border:1px solid #c5c5c5!important;
 	padding:2px 5px!important;
 }
+.input-a input[type="button"],.input-a input[type="submit"],.input-a input[type="reset"],.op-area a {
+	font-size: 14px; color: #fffff0; background: #363636; border-radius: 5px; line-height: 22px; height: 22px; border: 1px solid #363636;
+	font-weight: bold; padding: 0 10px; cursor: pointer;
+	width: initial;
+}
+input[type="button"].input-gray,input[type="submit"].input-gray,input[type="reset"].input-gray,a.input-gray {
+	background-color: #999; border-color: #999;
+}
+.noprint{
+		margin:10px 0;
+}

@@ -2,7 +2,7 @@ package com.qkj.manage.domain;
 
 public class LadingItem {
 	private Integer uuid;// (int)
-	private String lading_id;// (varchar)
+	private Integer lading_id;// (varchar)
 	private Integer product_id;// (int)
 	private Double per_price;// (decimal)
 	private Integer num;// (int)
@@ -46,11 +46,11 @@ public class LadingItem {
 		this.uuid = uuid;
 	}
 
-	public String getLading_id() {
+	public Integer getLading_id() {
 		return lading_id;
 	}
 
-	public void setLading_id(String lading_id) {
+	public void setLading_id(Integer lading_id) {
 		this.lading_id = lading_id;
 	}
 

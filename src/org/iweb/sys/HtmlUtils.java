@@ -2,6 +2,7 @@ package org.iweb.sys;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -11,12 +12,14 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.io.IOUtils;
+
 /**
  * 
  * @author 晓峰2007.1.18 抓取雅虎知识堂的文章标题及内容（测试） 手动输入网址抓取，可进一步自动抓取整个知识堂的全部内容
  * 
  */
-public class ToolHTML {
+public class HtmlUtils {
 
 	public String getOneHtml(final String htmlurl) throws IOException {
 		return getOneHtml(htmlurl, "gbk");
@@ -41,11 +44,27 @@ public class ToolHTML {
 			System.out.println("你输入的URL格式有问题！请仔细输入");
 			me.getMessage();
 			throw me;
-		} catch (final IOException e) {
+		} catch (final Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
 		return sb.toString();
+	}
+
+	/**
+	 * 读取一个网页全部内容 encode:gbk gb2312 utf-8 iso-8859-1
+	 */
+	public byte[] getHtml2Byte(final String htmlurl) throws Exception {
+		try {
+			return IOUtils.toByteArray((InputStream) (new URL(htmlurl)).getContent());
+		} catch (final MalformedURLException me) {
+			System.out.println("你输入的URL格式有问题！请仔细输入");
+			me.getMessage();
+			throw me;
+		} catch (final Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	/**
@@ -178,7 +197,7 @@ public class ToolHTML {
 	}
 
 	public static void main(String[] args) throws IOException {
-		ToolHTML t = new ToolHTML();
+		HtmlUtils t = new HtmlUtils();
 		// String js = t.getOneHtml("http://www.gzhu.edu.cn/js/gzunews.js");
 		System.out.println(t.getOneHtml("http://www.cninfo.com.cn/information/brief/szsme002646.html"));
 		// List<String> a = t.getNews(js);

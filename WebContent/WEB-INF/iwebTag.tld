@@ -35,4 +35,10 @@
 		<function-class>org.iweb.sys.ToolsUtil</function-class>
 		<function-signature>java.lang.String subString(java.lang.String,java.lang.Integer)</function-signature>
 	</function>
+	
+	<function>
+		<name>formatNum</name>
+		<function-class>org.iweb.sys.ToolsUtil</function-class>
+		<function-signature>java.lang.String formatNum(java.lang.Double,java.lang.Integer)</function-signature>
+	</function>
 </taglib>

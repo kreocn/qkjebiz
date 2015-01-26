@@ -22,71 +22,24 @@
 			action="sche_add" namespace="/sche" method="post" theme="simple">
 			<div class="label_con">
 			<s:hidden id="sche.type" name="sche.type" value="%{sche.type}"/>
-			<div class="label_main">
-				<div class="label_hang">
-					<div class="label_ltit">编号:</div>
-						<div class="label_rwb">
-							<s:property value="sche.uuid" />
-							<s:hidden id="sche.uuid" name="sche.uuid" value="%{sche.uuid}"/>
-								
-						</div>
+			<s:if test="'view' == viewFlag">
+			      <div class="label_main">
+			      	<h2 class="tac"><s:property value="sche.title" /></h2>
 				</div>
-				<div class="label_hang">
-					<div class="label_ltit">类别:</div>
-						<div class="label_rwb">
-							<div class="label_rwben2">
-			       				<span class="label_rwb">
-				            	 <s:if test="sche.type==0">部门手册</s:if>
+			    </s:if>
+			<div class="label_main">
+				<div class="tac">
+				编号：<s:property value="sche.uuid" /> |
+				类别：<s:if test="sche.type==0">部门手册</s:if>
 								<s:if test="sche.type==1">公司制度和章程</s:if>
 								<s:if test="sche.type==2">公司文件</s:if>
-								<s:if test="sche.type==3">更新公告</s:if>
-				            	</span>
-				            </div>
-						</div>
-				</div>
-				<div class="label_hang">
-							<div class="label_ltit">发布日期:</div>
-							<div class="label_rwb">
-								<s:property value="sche.sdate" />
-							</div>
-				</div>
-				<div class="label_hang">
-							<div class="label_ltit">发布人:</div>
-							<div class="label_rwb">
-								<s:property value="sche.p_name" />
-							</div>
+								<s:if test="sche.type==3">更新公告</s:if> |
+				发布日期：<s:property value="sche.sdate" /> |
+				发布人：<s:property value="sche.p_name" />
+				
 				</div>
 				
 			</div>
-					
-				<s:if test="'view' == viewFlag">
-			      <div class="label_main">
-					<div class="label_hang">
-						<div class="label_ltit">主题:</div>
-						<div class="label_rwben">
-							<s:property value="sche.title" />
-						</div>
-					</div>
-				</div>
-			    </s:if>
-				
-				<s:if test="null != sche && null !=sche.user_name">
-					<div class="label_main">
-					<div class="label_hang">
-						<div class="label_ltit">已阅人:</div>
-						<div class="label_rwben">
-						<s:property value="sche.user_name" />
-						</div>
-					</div>
-				</div>
-				</s:if>
-
-			    <div class="label_main">
-					<div class="label_hang">
-						<div class="label_ltit">公告内容:</div>
-						<div class="label_rwbenx"></div>
-					</div>
-				</div>
 				<div class="label_main">
 					<div class="note_area">
 					${sche.content }

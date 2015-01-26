@@ -15,12 +15,15 @@ import org.iweb.sys.domain.User;
 import com.opensymphony.xwork2.ActionSupport;
 import com.qkj.manage.dao.LadingDAO;
 import com.qkj.manage.dao.LadingItemDAO;
-import com.qkj.manage.dao.LadingPayDAO;
+import com.qkj.manage.dao.LadingProductgDAO;
 import com.qkj.manage.dao.ProductDAO;
+import com.qkj.manage.dao.SalPromotDAO;
 import com.qkj.manage.domain.Lading;
 import com.qkj.manage.domain.LadingItem;
 import com.qkj.manage.domain.LadingPay;
+import com.qkj.manage.domain.LadingProductg;
 import com.qkj.manage.domain.Product;
+import com.qkj.manage.domain.SalPromot;
 
 public class LadingAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
@@ -33,11 +36,29 @@ public class LadingAction extends ActionSupport {
 	private List<User> users;
 	private List<Product> products;
 	private List<LadingItem> ladingItems;
+	private List<LadingProductg> ladingProductgs;
 	private List<LadingPay> ladingPays;
+	private List<SalPromot> salPromots;
 	private String message;
 	private String viewFlag;
 	private int recCount;
 	private int pageSize;
+
+	public List<SalPromot> getSalPromots() {
+		return salPromots;
+	}
+
+	public void setSalPromots(List<SalPromot> salPromots) {
+		this.salPromots = salPromots;
+	}
+
+	public List<LadingProductg> getLadingProductgs() {
+		return ladingProductgs;
+	}
+
+	public void setLadingProductgs(List<LadingProductg> ladingProductgs) {
+		this.ladingProductgs = ladingProductgs;
+	}
 
 	public List<LadingPay> getLadingPays() {
 		return ladingPays;
@@ -148,15 +169,15 @@ public class LadingAction extends ActionSupport {
 			} else if ("mdy".equals(viewFlag) || "view".equals(viewFlag) || "print".equals(viewFlag)) {
 				map.clear();
 				map.put("uuid", lading.getUuid());
-				if (null == map.get("uuid"))
-					this.setLading(null);
+				if (null == map.get("uuid")) this.setLading(null);
 				else {
 					if ("view".equals(viewFlag)) {
 						map.put("status", 2);
 					}
 					this.setLading((Lading) dao.list(map).get(0));
+
 					if (!ToolsUtil.isEmpty(lading.getFd_type())) {
-						lading.setFd_types(lading.getFd_type().split(","));
+						lading.setFd_typesx(ToolsUtil.split2Integer(lading.getFd_type()));
 					}
 
 					ProductDAO pdao = new ProductDAO();
@@ -167,10 +188,14 @@ public class LadingAction extends ActionSupport {
 					map.put("lading_id", lading.getUuid());
 					this.setLadingItems(idao.list(map));
 
-					LadingPayDAO lpdao = new LadingPayDAO();
+					LadingProductgDAO gdao = new LadingProductgDAO();
 					map.clear();
 					map.put("lading_id", lading.getUuid());
-					this.setLadingPays(lpdao.list(map));
+					this.setLadingProductgs(gdao.list(map));
+
+					SalPromotDAO sdao = new SalPromotDAO();
+					map.clear();
+					this.setSalPromots(sdao.list(map));
 				}
 			} else {
 				this.setLading(null);
@@ -188,19 +213,16 @@ public class LadingAction extends ActionSupport {
 		try {
 			Date d = new Date();
 			String u = ContextHelper.getUserLoginUuid();
-			lading.setUuid(ToolsUtil.getCommonUUID("T"));
+			// lading.setUuid(ToolsUtil.getCommonUUID("T"));
 			lading.setApplicant(u);
+			lading.setApply_dept(ContextHelper.getUserLoginDept());
 			lading.setApply_time(d);
-			lading.setManager_check(0);
-			lading.setSd_check(0);
-			lading.setMd_check(0);
 			lading.setFd_check(0);
-			lading.setCoo_check(0);
 			lading.setStatus(0);
 			lading.setAdd_time(d);
 			lading.setAdd_user(u);
 			lading.setLm_user(u);
-			dao.add(lading);
+			lading.setUuid((Integer) dao.add(lading));
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!add 数据添加失败:", e);
 			throw new Exception(this.getClass().getName() + "!add 数据添加失败:", e);
@@ -208,9 +230,16 @@ public class LadingAction extends ActionSupport {
 		return SUCCESS;
 	}
 
+	public String addProd() throws Exception {
+		return SUCCESS;
+	}
+
 	public String save() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_LADING_MDY");
 		try {
+			if (lading != null && !ToolsUtil.isEmpty(lading.getPromotions())) {
+				lading.setPromotions(lading.getPromotions().replaceAll(" ", ""));
+			}
 			lading.setLm_user(ContextHelper.getUserLoginUuid());
 			dao.save(lading);
 		} catch (Exception e) {
@@ -233,7 +262,7 @@ public class LadingAction extends ActionSupport {
 	}
 
 	/**
-	 * 进入报批流程
+	 * 报审
 	 * 
 	 * @return
 	 * @throws Exception
@@ -242,9 +271,7 @@ public class LadingAction extends ActionSupport {
 	public String saveLadingStatus0() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_LADING_STATUS0");
 		try {
-			lading.setStatus(1);
-			lading.setLm_user(ContextHelper.getUserLoginUuid());
-			dao.mdyLadingStatus(lading);
+			saveLadingStatus(10);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!saveLadingStatus0 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!saveLadingStatus0 数据更新失败:", e);
@@ -253,98 +280,67 @@ public class LadingAction extends ActionSupport {
 	}
 
 	/**
-	 * 进入结案状态
+	 * 财务退回
 	 * 
 	 * @return
 	 * @throws Exception
-	 * @date 2014-1-27 下午1:53:24
+	 * @date 2014-1-27 下午1:51:52
 	 */
-	public String saveLadingStatus1() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_LADING_STATUS1");
+	public String saveLadingStatus5() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_LADING_STATUS5");
 		try {
-			lading.setClose_time(new Date());
-			lading.setStatus(2);
-			lading.setLm_user(ContextHelper.getUserLoginUuid());
-			dao.mdyLadingStatus(lading);
+			saveLadingStatus(5);
 		} catch (Exception e) {
-			log.error(this.getClass().getName() + "!saveLadingStatus1 数据更新失败:", e);
-			throw new Exception(this.getClass().getName() + "!saveLadingStatus1 数据更新失败:", e);
+			log.error(this.getClass().getName() + "!saveLadingStatus5 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!saveLadingStatus5 数据更新失败:", e);
 		}
 		return SUCCESS;
 	}
 
-	// mdyLadingManagerCheck
-	public String mdyLadingManagerCheck() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_LADING_MANAGERCHECK");
+	/**
+	 * 财务确认
+	 * 
+	 * @return
+	 * @throws Exception
+	 * @date 2014-1-27 下午1:51:52
+	 */
+	public String saveLadingStatus10() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_LADING_STATUS10");
 		try {
-			lading.setManager_check_user(ContextHelper.getUserLoginUuid());
-			lading.setManager_check(1);
-			lading.setLm_user(ContextHelper.getUserLoginUuid());
-			dao.mdyLadingManagerCheck(lading);
+			saveLadingStatus(20);
 		} catch (Exception e) {
-			log.error(this.getClass().getName() + "!mdyLadingManagerCheck 数据更新失败:", e);
-			throw new Exception(this.getClass().getName() + "!mdyLadingManagerCheck 数据更新失败:", e);
+			log.error(this.getClass().getName() + "!saveLadingStatus10 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!saveLadingStatus10 数据更新失败:", e);
 		}
 		return SUCCESS;
 	}
 
-	// mdyLadingSDCheck
-	public String mdyLadingSDCheck() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_LADING_SDCHECK");
-		try {
-			lading.setSd_check_user(ContextHelper.getUserLoginUuid());
-			lading.setSd_check(1);
-			lading.setLm_user(ContextHelper.getUserLoginUuid());
-			dao.mdyLadingSDCheck(lading);
-		} catch (Exception e) {
-			log.error(this.getClass().getName() + "!mdyLadingSDCheck 数据更新失败:", e);
-			throw new Exception(this.getClass().getName() + "!mdyLadingSDCheck 数据更新失败:", e);
-		}
-		return SUCCESS;
+	/**
+	 * 修改订单状态 0新单 10财务待审 20待出货 30已出货
+	 * 
+	 * @param status
+	 * @throws Exception
+	 */
+	public void saveLadingStatus(Integer status) throws Exception {
+		if (status == null) return;
+		lading.setCheck_time(new Date());
+		lading.setStatus(status);
+		lading.setCheck_user(ContextHelper.getUserLoginUuid());
+		lading.setLm_user(ContextHelper.getUserLoginUuid());
+		dao.mdyLadingStatus(lading);
 	}
 
-	// mdyLadingMDCheck
-	public String mdyLadingMDCheck() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_LADING_MDCHECK");
-		try {
-			lading.setMd_check_user(ContextHelper.getUserLoginUuid());
-			lading.setMd_check(1);
-			lading.setLm_user(ContextHelper.getUserLoginUuid());
-			dao.mdyLadingMDCheck(lading);
-		} catch (Exception e) {
-			log.error(this.getClass().getName() + "!mdyLadingMDCheck 数据更新失败:", e);
-			throw new Exception(this.getClass().getName() + "!mdyLadingMDCheck 数据更新失败:", e);
-		}
-		return SUCCESS;
-	}
-
-	// mdyLadingFDCheck
 	public String mdyLadingFDCheck() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_LADING_FDCHECK");
 		try {
 			lading.setFd_check_user(ContextHelper.getUserLoginUuid());
 			lading.setLm_user(ContextHelper.getUserLoginUuid());
-			lading.setFd_type(ToolsUtil.Array2String(
-					lading.getFd_types() == null ? new String[] {} : lading.getFd_types(), ","));
+			lading.setFd_check_time(new Date());
+			lading.setFd_type(ToolsUtil.Array2String(lading.getFd_typesx() == null ? new Integer[] {} : lading.getFd_typesx(), ","));
 			dao.mdyLadingFDCheck(lading);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyLadingFDCheck 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyLadingFDCheck 数据更新失败:", e);
-		}
-		return SUCCESS;
-	}
-
-	// mdyLadingCOOCheck
-	public String mdyLadingCOOCheck() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_LADING_COOCHECK");
-		try {
-			lading.setCoo_check_user(ContextHelper.getUserLoginUuid());
-			lading.setCoo_check(1);
-			lading.setLm_user(ContextHelper.getUserLoginUuid());
-			dao.mdyLadingCOOCheck(lading);
-		} catch (Exception e) {
-			log.error(this.getClass().getName() + "!mdyLadingCOOCheck 数据更新失败:", e);
-			throw new Exception(this.getClass().getName() + "!mdyLadingCOOCheck 数据更新失败:", e);
 		}
 		return SUCCESS;
 	}

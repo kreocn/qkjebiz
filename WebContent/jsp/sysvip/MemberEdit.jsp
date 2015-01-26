@@ -96,11 +96,12 @@ function checkManager() {
 	<s:if test="'add'==viewFlag">
 	<div class="label_hang">
 		<div class="label_ltit">所属办事处:</div>
-		<div class="label_rwben2 nw">
-			<div class="label_rwb"><s:textfield title="部门名称" id="userdept_nameid" name="member.dept_name" readonly="true" /></div>
-			<s:hidden id="userdept_codeid" name="member.dept_code" />
-			<img class="imglink" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true);" />
-		</div>
+		<div class="label_rwben nw">
+			<div class="label_rwb">
+				<s:textfield title="部门名称" id="userdept_nameid" name="member.dept_name" readonly="true" /></div>
+				<s:hidden id="userdept_codeid" name="member.dept_code" />
+			</div>
+			<img class="imglink vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true,null,1);" />
 	</div>
 	<div class="label_hang">
 	<div class="label_ltit">所属人:</div>
@@ -234,6 +235,11 @@ function checkManager() {
 					<s:submit id="delete" name="delete" value="删除" action="member_del" cssClass="input-red" onclick="return isDel();" />
 				</s:elseif>
 				<input type="button" value="返回" onclick="linkurl('<s:url action="member_list" namespace="/sysvip" />');"  class="input-gray" />
+				<s:if test="'mdy' == viewFlag">
+				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJM_SYSVIP_MEMBERSTOCK_LIST')">
+				<input type="button" value="生成会员库存盘点模板" onclick="linkurl('<s:url action="memberStock_out" namespace="/sysvip" ><s:param name="member.member_name" value="%{member.member_name}"></s:param><s:param name="member.uuid" value="%{member.uuid}"></s:param></s:url>');"  class="input-blue" />
+				</s:if>
+				</s:if>
         	</div>
     	</div>
 	</div>

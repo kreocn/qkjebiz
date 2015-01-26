@@ -1,26 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
+<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>客户管理列表--<s:text name="APP_NAME" /></title>
-</head>
-<link rel="stylesheet" href="<s:url value="/css/css.css" />" />
-<link rel="stylesheet" href="<s:url value="/css/navigate.css" />" />
-<link rel="stylesheet" href="<s:url value="/css/main.css" />" />
-<script type="text/javascript" src="<s:url value="/js/common_listtable.js" />"></script>
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-1.8.3.min.js" />"></script>
-<link rel="stylesheet" href="<s:url value="/include/jQuery/style.ui.smoothness/jquery-ui-1.10.3.min.css" />" />
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-ui-1.10.3.custom.min.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/jquery.dialog.iframe.js" />"></script>
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.ui.datepicker-zh.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/jquery.CommonUtil.js" />"></script>
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.select.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/common_ajax2.0.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/show_page.js" />"></script>
+<s:action name="ref" namespace="/manager" executeResult="true" />
 <link rel="stylesheet" href="<s:url value="/include/jQuery/stylesheets/jquery.rating.css" />" />
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery.rating.pack.js" />"></script>
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery.MetaData.js" />"></script>
@@ -28,16 +14,10 @@
 var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
 var manager = '${customer.manager}';
 $(function(){
-	CommonUtil.pickrow('table1');
-	CommonUtil.pickrowAll('table1','uuidcheck');
-	
 	if($("#customer_dept_code").val()!='') {
 		loadManagers($("#customer_dept_code").val());
 	}
-	
-	$("#customer_add_time").datepicker();
  });
- 
 var sobj01;
 var selectDept2 = function() {
 	sobj01 = new DialogIFrame({src:'<s:url namespace="/sys" action="dept_permit_select" />?objname=sobj01',title:"选择部门"});
@@ -69,124 +49,142 @@ function loadManagers(dept_code) {
 	ajax.sendAjax2();
 }
 </script>
+<style type="text/css">
+.star-rating-control{margin-top:6px; display: inline-block;}
+</style>
+</head>
+
 <body>
-<div id="main">
-<div id="result">
-	<div class="itablemdy">
-	<div class="itabletitle">
-		<span class="title1">客户列表</span>
-		<span class="extra1">
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_CUSTOMER_ADD')">
-			<a href="<s:url namespace="/qkjmanage" action="customer_load"><s:param name="viewFlag">add</s:param></s:url>" >添加客户</a>
-			</s:if>
-		</span>
-	</div>	
-	<div class="ilistsearch">
-<s:form name="form_serach" action="customer_list"  method="get" namespace="/qkjmanage" theme="simple">
-		<table class="ilisttable" id="serach_table" width="100%">
-			<tr>
-			<td class='firstRow3'>客户编号:</td>
-			<td class='secRow3'><s:textfield name="customer.uuid" title="添加时间" /></td>
-			<td class='firstRow3'>客户名称:</td>
-			<td class='secRow3'><s:textfield name="customer.cus_name" title="客户名称" dataLength="0,42" controlName="客户名称" /></td>
-			<td class='firstRow3'>添加时间:</td>
-			<td class='secRow3'><s:textfield id="customer_add_time" name="customer.add_time" title="添加时间" value="%{getText('global.date',{customer.add_time})=='null'?'':getText('global.date',{customer.add_time})}" /></td>
-			</tr>
-			<tr>
-			<td class='firstRow3'>未成交原因:</td>
-			<td class='secRow3'><s:select name="customer.failed_reason" title="未成交原因" headerKey="" headerValue="--请选择--" list="#{'MORE':'首单量太多','HAVE':'区域内已有经销商','NOPROD':'没有合适的产品','QA':'对公司的市场支持和企业实力有疑问','OTHER':'其他原因'}" /></td>
-			<td class='firstRow3'>客户来源:</td>
-			<td class='secRow3'><s:select name="customer.source" title="客户来源" headerKey="" headerValue="--请选择--" list="#{0:'主动联系',1:'朋友介绍',2:'媒体/广告/杂志',3:'互联网',4:'会议会展',5:'其他'}" /></td>
-			<td class='firstRow3'>所属阶段:</td>
-			<td class='secRow3'><s:select name="customer.stage" title="所属阶段" headerKey="" headerValue="--请选择--" list="#{0:'初步了解',1:'深度了解',2:'开始报价',3:'客户未成交',4:'客户成交'}" /></td>
-			</tr><tr>
-			<td class='firstRow3'>所属部门:</td>
-			<td class='secRow3' colspan="3">
-				<s:textfield id="customer_dept_code" name="customer.dept_code" title="所属部门" readonly="readonly" />
-				<s:textfield id="customer_dept_name" name="customer.dept_name" title="所属部门" readonly="readonly" />
-				<img class="imglink" src='<s:url value="/images/open2.gif" />' onclick="selectDept2();" />
-				<s:select id="membermanagerid" name="customer.manager" list="#{}" headerKey="" headerValue="--请选择--"  require="required" controlName="所属人"  />
-				<s:checkbox id="customer_is_sub_dept" name="customer.is_sub_dept" />
-				<label for="customer_is_sub_dept">包含子部门</label>
-				<s:checkbox id="customer_is_sub_dept" name="customer.is_recode" />
-				<label for="customer_is_sub_dept">有2次以上的回访记录的客户</label>
-			</td>
-			<td class='firstRow3'>客户重要等级(>=):</td>
-			<td class='secRow3'>
-				<input name="customer.rating" type="radio" class="star {split:2}" value="0.5" <s:if test="customer.rating==0.5"> checked="checked"</s:if> />
-				<input name="customer.rating" type="radio" class="star {split:2}" value="1.0" <s:if test="customer.rating==1.0"> checked="checked"</s:if> />
-				<input name="customer.rating" type="radio" class="star {split:2}" value="1.5" <s:if test="customer.rating==1.5"> checked="checked"</s:if> />
-				<input name="customer.rating" type="radio" class="star {split:2}" value="2.0" <s:if test="customer.rating==2.0"> checked="checked"</s:if> />
-				<input name="customer.rating" type="radio" class="star {split:2}" value="2.5" <s:if test="customer.rating==2.5"> checked="checked"</s:if> />
-				<input name="customer.rating" type="radio" class="star {split:2}" value="3.0" <s:if test="customer.rating==3.0"> checked="checked"</s:if> />
-				<input name="customer.rating" type="radio" class="star {split:2}" value="3.5" <s:if test="customer.rating==3.5"> checked="checked"</s:if> />
-				<input name="customer.rating" type="radio" class="star {split:2}" value="4.0" <s:if test="customer.rating==4.0"> checked="checked"</s:if> />
-				<input name="customer.rating" type="radio" class="star {split:2}" value="4.5" <s:if test="customer.rating==4.5"> checked="checked"</s:if> />
-				<input name="customer.rating" type="radio" class="star {split:2}" value="5.0" <s:if test="customer.rating==5.0"> checked="checked"</s:if> />
-			</td>
-			</tr>
-			<tr>
-			<td colspan="6" class="buttonarea">
-				<s:submit value="搜索" />
-				<s:reset value="重置" />
-			</td>
-			</tr>
-		</table>
-</s:form>
+ <div class="main" >
+	<div class="dq_step">
+		${path}
+		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_PRODUCT_ADD')">
+			<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="customer_load"><s:param name="viewFlag">add</s:param></s:url>" >添加客户</a></span>
+		</s:if>
 	</div>
-<s:form name="form1" theme="simple">
-	<table class="ilisttable" id="table1" width="100%">
-	<col width="30" />
-	  <tr>
-	    <th><input name="uuidcheck" type="checkbox" /></th>
-	    <th>客户编号</th>
-		<th>所属部门</th>
-		<th>所属阶段</th>
-		<th>客户来源</th>
-		<th>客户名称</th>
-		<th>联系电话</th>
-		<th>回访次数</th>
-		<th>添加人</th>
-		<th>操作</th>
-	  </tr>
-<s:iterator value="customers" status="sta">
-	  <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>" type="pickrow">
-	    <td align="center"><input name="uuid" type="checkbox" value="<s:property value="uuid" />" /></td>
-	    <td><s:property value="uuid" /></td>
-		<td><s:property value="dept_name" /></td>
-		<td><s:if test="0==stage">初步了解</s:if><s:if test="1==stage">深度了解</s:if><s:if test="2==stage">开始报价</s:if><s:if test="3==stage">客户未成交</s:if><s:if test="4==stage">客户成交</s:if></td>
-		<td><s:if test="0==source">主动联系</s:if><s:if test="1==source">朋友介绍</s:if><s:if test="2==source">媒体/广告/杂志</s:if><s:if test="3==source">互联网</s:if><s:if test="4==source">会议会展</s:if><s:if test="5==source">其他</s:if></td>
-		<td><s:property value="cus_name" /></td>
-		<td><s:property value="phone" /></td>
-		<td><s:property value="recode_count" /></td>
-		<td>${add_user_name}(<s:date name="add_time" format="yyyy-MM-dd" />)</td>
-		<td align="center">
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_CUSTOMER')">
-	    	[<a href="<s:url namespace="/qkjmanage" action="customer_load"><s:param name="viewFlag">mdy</s:param><s:param name="customer.uuid" value="uuid"></s:param></s:url>">修改</a>]
-	    	</s:if>
-	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_CUSTOMER_DEL')">
-	    	[<a href="<s:url namespace="/qkjmanage" action="customer_del"><s:param name="customer.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>]
-	    	</s:if>	   
-	    </td>
-	  </tr>
-</s:iterator>
-	  <tr>
-	    <td colspan="20" class="buttonarea">
-		<script type="text/javascript">
-		var spage = new ShowPage(${currPage});
-		spage.show2(<s:property value="recCount" />,<s:property value="pageSize" />,2);
-		</script>
-		</td>	    
-	  </tr>
-	  <tr>
-	    <td colspan="20" class="buttonarea">
-	    <span id="message"><s:property value="message" /></span>
-		</td>
-	  </tr>
-	</table>
-</s:form>
-	</div>
-</div>
+	<s:form id="serachForm" name="serachForm" action="customer_list"  method="get" namespace="/qkjmanage" theme="simple">
+		<div class="label_con">
+ 			<div class="label_main">
+				<div class="label_hang">
+				       <div class="label_ltit">客户编号:</div>
+				       <div class="label_rwben"><s:textfield name="customer.uuid"  title="客户编号" /></div>
+				</div>
+				<div class="label_hang">
+				       <div class="label_ltit">客户名称:</div>
+				       <div class="label_rwben"><s:textfield name="customer.cus_name"  title="客户名称" cssClass="validate[maxSize[42]]"/></div>
+				</div>
+				<div class="label_hang">
+				       <div class="label_ltit">添加时间:</div>
+				       <div class="label_rwben"><input id="customer_add_time" class="datepicker validate[custom[date]]" type="text" name="customer.add_time" title="添加时间" value="${it:formatDate(customer.add_time,'yyyy-MM-dd')}" /></div>
+				</div>
+				<div class="label_hang">
+				       <div class="label_ltit">未成交原因:</div>
+				       <div class="label_rwbenx">
+				       		<s:select name="customer.failed_reason" title="未成交原因" headerKey="" headerValue="--请选择--" list="#{'MORE':'首单量太多','HAVE':'区域内已有经销商','NOPROD':'没有合适的产品','QA':'对公司的市场支持和企业实力有疑问','OTHER':'其他原因'}" />
+				       </div>
+				</div>
+				<div class="label_hang">
+				       <div class="label_ltit">客户来源:</div>
+				       <div class="label_rwben">
+				       		<s:select name="customer.source" title="客户来源" headerKey="" headerValue="--请选择--" list="#{0:'主动联系',1:'朋友介绍',2:'媒体/广告/杂志',3:'互联网',4:'会议会展',5:'其他'}" />
+				       </div>
+				</div>
+				<div class="label_hang">
+				       <div class="label_ltit">所属阶段:</div>
+				       <div class="label_rwben">
+				       		<s:select name="customer.stage" title="所属阶段" headerKey="" headerValue="--请选择--" list="#{0:'初步了解',1:'深度了解',2:'开始报价',3:'客户未成交',4:'客户成交'}" />
+				       </div>
+				</div>
+				<div class="label_hang">
+		            <div class="label_ltit">所属部门:</div>
+		            <div class="label_rwbenx">
+		            	<span class="label_rwb" style="float:left;">
+							<s:textfield title="部门名称" id="customer_dept_name" name="customer.dept_name" readonly="true" />
+							<s:hidden title="部门代码" id="customer_dept_code" name="customer.dept_code" readonly="true" />
+						</span>
+						<span class="lb nw" style="float:left;">
+							<img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept2();" />
+							<s:checkbox id="customer_is_sub_dept" name="customer.is_sub_dept" cssClass="regular-checkbox" />
+							<label for="customer_is_sub_dept"></label>包含子部门<span id="ajax_member_message"></span>
+							<s:checkbox id="customer_is_recode" name="customer.is_recode" cssClass="regular-checkbox" />
+							<label for="customer_is_recode"></label>有2次以上的回访记录的客户
+						</span>
+		            </div>
+		        </div>
+		        <div class="label_hang">
+		            <div class="label_ltit">添加人:</div>
+		            <div class="label_rwben">
+		            	<s:select id="membermanagerid" cssClass="selectKick" name="customer.manager" list="#{}" headerKey="" headerValue="--请选择--" />
+		            </div>
+				</div>
+				<div class="label_main">
+					<div class="label_hang">
+			            <div class="label_ltit" style="width:148px;">客户重要等级(>=):</div>
+			            <div class="label_rwbenx">
+			            	<input name="customer.rating" type="radio" class="star {split:2}" value="0.5" <s:if test="customer.rating==0.5"> checked="checked"</s:if> />
+							<input name="customer.rating" type="radio" class="star {split:2}" value="1.0" <s:if test="customer.rating==1.0"> checked="checked"</s:if> />
+							<input name="customer.rating" type="radio" class="star {split:2}" value="1.5" <s:if test="customer.rating==1.5"> checked="checked"</s:if> />
+							<input name="customer.rating" type="radio" class="star {split:2}" value="2.0" <s:if test="customer.rating==2.0"> checked="checked"</s:if> />
+							<input name="customer.rating" type="radio" class="star {split:2}" value="2.5" <s:if test="customer.rating==2.5"> checked="checked"</s:if> />
+							<input name="customer.rating" type="radio" class="star {split:2}" value="3.0" <s:if test="customer.rating==3.0"> checked="checked"</s:if> />
+							<input name="customer.rating" type="radio" class="star {split:2}" value="3.5" <s:if test="customer.rating==3.5"> checked="checked"</s:if> />
+							<input name="customer.rating" type="radio" class="star {split:2}" value="4.0" <s:if test="customer.rating==4.0"> checked="checked"</s:if> />
+							<input name="customer.rating" type="radio" class="star {split:2}" value="4.5" <s:if test="customer.rating==4.5"> checked="checked"</s:if> />
+							<input name="customer.rating" type="radio" class="star {split:2}" value="5.0" <s:if test="customer.rating==5.0"> checked="checked"</s:if> />
+			            </div>
+					</div>
+					<div class="label_hang label_button tac">
+			        	<s:checkbox id="search_mcondition" name="search_mcondition" fieldValue="true" value="true" cssClass="regular-checkbox" />
+						<label for="search_mcondition"></label>更多条件
+			            <s:submit value="搜索" /> <s:reset value="重置" />
+			        </div>
+				</div>
+			</div>
+		</div>
+	</s:form>
+	<div class="tab_warp">
+	 		<table id="table1">
+	 			<tr id="coltr">
+	 				<th class="td1">客户编号</th>
+					<th class="td2">所属部门</th>
+					<th class="td2">所属阶段</th>
+					<th class="td3">客户来源</th>
+					<th class="td3">客户名称</th>
+					<th class="td4">联系电话</th>
+					<th class="td2">回访次数</th>
+					<th class="td1">添加人</th>
+					<th class="td5">操作</th>
+	              	<th class="td0">查看</th>
+	            </tr>
+	            <s:iterator value="customers" status="sta">
+	            	<tr id="showtr${uuid}">
+	            		<td class="td1">${uuid}</td>
+	            		<td class="td2">${dept_name}</td>
+	            		<td class="td2"><s:if test="0==stage">初步了解</s:if><s:if test="1==stage">深度了解</s:if><s:if test="2==stage">开始报价</s:if><s:if test="3==stage">客户未成交</s:if><s:if test="4==stage">客户成交</s:if></td>
+	            		<td class="td3"><s:if test="0==source">主动联系</s:if><s:if test="1==source">朋友介绍</s:if><s:if test="2==source">媒体/广告/杂志</s:if><s:if test="3==source">互联网</s:if><s:if test="4==source">会议会展</s:if><s:if test="5==source">其他</s:if></td>
+	            		<td class="td3">${cus_name}</td>
+	            		<td class="td4">${phone}</td>
+	            		<td class="td2">${recode_count}</td>
+	            		<td class="td1">${add_user_name}(<s:date name="add_time" format="yyyy-MM-dd" />)</td>
+	            		<td class="td5 op-area">
+	            			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_CUSTOMER')">
+					    		<a class="input-blue" href="<s:url namespace="/qkjmanage" action="customer_load"><s:param name="viewFlag">mdy</s:param><s:param name="customer.uuid" value="uuid"></s:param></s:url>">修改</a>
+					    	</s:if>
+					    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_CUSTOMER_DEL')">
+					    		<a class="input-red" href="<s:url namespace="/qkjmanage" action="customer_del"><s:param name="customer.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
+					    	</s:if>	 
+	            		</td>
+	            		<td  class="td0 op-area"><a onclick="showDetail('showtr${uuid}');" href="javascript:;" class="input-nostyle">查看</a></td>
+	            	</tr>
+	            </s:iterator>
+	        </table>
+	   </div>
+	   <div class="pagination">
+			<script type="text/javascript">
+			var spage = new ShowPage(${currPage});
+			spage.show2(${recCount},${pageSize},2);
+			</script>
+		</div>
 </div>
 </body>
 </html>

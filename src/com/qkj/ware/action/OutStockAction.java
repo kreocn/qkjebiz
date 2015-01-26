@@ -436,7 +436,6 @@ public class OutStockAction extends ActionSupport {
 			setMessage("删除成功!ID=" + outStock.getUuid());
 			OutDetailDAO odao=new OutDetailDAO();
 			//修改库存
-			StockDAO stockdao=new StockDAO();
 			map.clear();
 			map.put("lading_id",outStock.getUuid());
 			this.setOutDetails(odao.list(map));

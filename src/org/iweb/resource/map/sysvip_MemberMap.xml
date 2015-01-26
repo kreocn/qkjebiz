@@ -21,7 +21,10 @@
 		<isNotNull prepend="AND" property="email"><![CDATA[ m.email Like #email# ]]></isNotNull>
 		<isNotNull prepend="AND" property="member_name"><![CDATA[ m.member_name Like #member_name# ]]></isNotNull>
 		<isNotNull prepend="AND" property="manager"><![CDATA[ m.manager=#manager# ]]></isNotNull>
-		<isNotNull prepend="AND" property="dept_code"><![CDATA[ m.dept_code=#dept_code# ]]></isNotNull>
+		<isNotEmpty prepend="AND" property="dept_code">
+				<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ m.dept_code=#dept_code# ]]></isNotEqual>
+				<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ m.dept_code LIKE CONCAT(#dept_code#,'%') ]]></isEqual>
+		</isNotEmpty>
 		<isNotNull prepend="AND" property="dept_codes">
 			<![CDATA[ m.dept_code In ]]>
 			<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
@@ -40,7 +43,11 @@
 	<select id="sysvip_getMembersCounts" resultClass="int" parameterClass="java.util.Map">
 		<![CDATA[ 
 			Select Count(*)
-			FROM   s_vip_member m,s_sys_role r ,s_vip_capital c
+			FROM   s_vip_member m 
+						 LEFT JOIN s_sys_department d 
+										ON ( m.dept_code = d.dept_code ) 
+						 LEFT JOIN s_sys_user s 
+										ON ( m.manager = s.uuid ),s_sys_role r ,s_vip_capital c
 			WHERE  m.user_type = r.uuid
 			AND m.uuid = c.member_id
 		]]>
@@ -50,7 +57,10 @@
 		<isNotNull prepend="AND" property="email"><![CDATA[ m.email Like #email# ]]></isNotNull>
 		<isNotNull prepend="AND" property="member_name"><![CDATA[ m.member_name Like #member_name# ]]></isNotNull>
 		<isNotNull prepend="AND" property="manager"><![CDATA[ m.manager=#manager# ]]></isNotNull>
-		<isNotNull prepend="AND" property="uuid"><![CDATA[ m.dept_code=#dept_code# ]]></isNotNull>
+		<isNotEmpty prepend="AND" property="dept_code">
+				<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ m.dept_code=#dept_code# ]]></isNotEqual>
+				<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ m.dept_code LIKE CONCAT(#dept_code#,'%') ]]></isEqual>
+		</isNotEmpty>
 		<isNotNull prepend="AND" property="dept_codes">
 			<![CDATA[ m.dept_code In ]]>
 			<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
@@ -58,6 +68,7 @@
 		<isNotEmpty prepend="AND" property="uuid_autoc"><![CDATA[ m.uuid LIKE CONCAT(#uuid_autoc#,'%') ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="mobile_autoc"><![CDATA[ m.mobile LIKE CONCAT(#mobile_autoc#,'%') ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="member_name_autoc"><![CDATA[ m.member_name LIKE CONCAT('%',#member_name_autoc#,'%') ]]></isNotEmpty>
+		<![CDATA[ ORDER BY m.UUID ]]>
 		<dynamic prepend="LIMIT ">
 			<isNotEmpty property="limitnum">
 				<isGreaterThan property="limitnum" compareValue="0"><![CDATA[ 0,#limitnum# ]]></isGreaterThan>

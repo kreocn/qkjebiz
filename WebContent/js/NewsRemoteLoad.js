@@ -4,7 +4,7 @@
  */
 var NewsLoad = function(option) {
 	var $this = this;
-	var url = "http://qkjchina.com/qkjebiz/iInfo/json_ajax?callback=?";
+	var url = "http://sw.qkjchina.com/qkjebiz/iInfo/json_ajax?callback=?";
 	// var url = "http://erp.51qkj.com/QKJMS/iInfo/json_ajax?callback=?";
 	var defaults = { uuid : '', /**/
 	class_id : '', /* 当作为得到类别时,代表parent_id,可以用,隔开同时查询多个类别 */

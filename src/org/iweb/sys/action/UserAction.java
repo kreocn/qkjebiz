@@ -51,6 +51,11 @@ public class UserAction extends ActionSupport {
 	private String ajaxResult;
 
 	private boolean overSub;
+	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;用户信息";
+	
+	public String getPath() {
+		return path;
+	}
 
 	public String[] getUroles() {
 		return uroles;
@@ -174,6 +179,7 @@ public class UserAction extends ActionSupport {
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 			this.setUsers(dao.list(map));
 			this.setRecCount(dao.getResultCount());
+			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;客户信息";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:" + ToolsUtil.getStackTrace(e));
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:" + ToolsUtil.getStackTraceHTML(e));

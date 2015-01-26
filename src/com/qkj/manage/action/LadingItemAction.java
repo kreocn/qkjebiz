@@ -80,8 +80,7 @@ public class LadingItemAction extends ActionSupport {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_LADINGITEM_LIST");
 		try {
 			map.clear();
-			if (ladingItem != null)
-				map.putAll(ToolsUtil.getMapByBean(ladingItem));
+			if (ladingItem != null) map.putAll(ToolsUtil.getMapByBean(ladingItem));
 			map.putAll(ContextHelper.getDefaultRequestMap4Page());
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 			this.setLadingItems(dao.list(map));
@@ -103,10 +102,8 @@ public class LadingItemAction extends ActionSupport {
 			} else if ("mdy".equals(viewFlag)) {
 				map.clear();
 				map.put("uuid", ladingItem.getUuid());
-				if (null == map.get("uuid"))
-					this.setLadingItem(null);
-				else
-					this.setLadingItem((LadingItem) dao.list(map).get(0));
+				if (null == map.get("uuid")) this.setLadingItem(null);
+				else this.setLadingItem((LadingItem) dao.list(map).get(0));
 			} else {
 				this.setLadingItem(null);
 				setMessage("无操作类型!");
@@ -149,9 +146,8 @@ public class LadingItemAction extends ActionSupport {
 	public String del() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_LADINGITEM_DEL");
 		try {
-			String lading_id = ladingItem.getLading_id();
+			Integer lading_id = ladingItem.getLading_id();
 			dao.delete(ladingItem);
-
 			LadingDAO ldao = new LadingDAO();
 			ldao.mdyLadingTotalPrice(lading_id);
 			setMessage("删除成功!ID=" + ladingItem.getUuid());

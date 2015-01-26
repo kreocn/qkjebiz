@@ -28,13 +28,19 @@
 	</s:if>
 	<div class="label_main">
 	       <div class="label_hang">
-		         <div class="label_ltit">产品类型名称:</div>
+		         <div class="label_ltit">类型:</div>
 		        <div class="label_rwben2">
-		         <div class="label_rwb"><s:textfield id="proType.name" name="proType.name" title="类型名称" require="required" cssClass="validate[required]" /></div>
+		         <div class="label_rwb"><s:select name="proType.type" title="类型" list="#{0:'产品',1:'促销物料'}" cssClass="validate[required]" /></div>
+	       	</div>
+	 </div>
+	<div class="label_main">
+	       <div class="label_hang">
+		         <div class="label_ltit">名称:</div>
+		        <div class="label_rwben2">
+		         <div class="label_rwb"><s:textfield id="proType.name" name="proType.name" title="名称" require="required" cssClass="validate[required]" /></div>
 		         </div>
 	       	</div>
 	 </div>
-      
         <s:if test="null != proType">
         	<div class="label_main">
         		<div class="label_hang">

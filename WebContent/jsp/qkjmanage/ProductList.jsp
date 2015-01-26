@@ -19,7 +19,7 @@
 			<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="product_load"><s:param name="viewFlag">add</s:param></s:url>" >添加产品</a></span>
 		</s:if>
 	</div>
-	<s:form name="form_serach" action="product_list"  method="get" namespace="/qkjmanage" theme="simple">
+	<s:form id="serachForm" name="serachForm" action="product_list"  method="get" namespace="/qkjmanage" theme="simple">
 		<div class="label_con">
  			<div class="label_main">
 				<div class="label_hang">
@@ -29,7 +29,7 @@
 				<div class="label_hang">
 				       <div class="label_ltit">档次:</div>
 				       <div class="label_rwben">
-				       			<s:select name="product.grade" title="档次 1低端 2中端 3中高端 4高端" headerKey="" headerValue="--请选择--" list="#{1:'低端',2:'中端',3:'中高端',4:'高端'}" />
+				       			<s:select name="product.grade" title="档次" headerKey="" headerValue="--请选择--"  list="#{1:'低端',2:'中端',3:'中高端',4:'高端'}" />
 				       </div>
 				</div>
 				<div class="label_hang label_button tac">
@@ -44,7 +44,7 @@
 	 		<table>
 		 		<tr id="coltr">
 				    <th class="td1">编号</th>
-					<th class="td2">统一编码</th>
+					<th class="td3">统一编码</th>
 					<th class="td1">系列</th>
 					<th class="td2">品名</th>
 					<th class="td5">规格</th>
@@ -60,7 +60,7 @@
 			  	<s:iterator value="products" status="sta">
 			  		<tr id="showtr${uuid}">
 					    <td class="td1">${uuid}</td>
-						<td class="td2">${prod_code}</td>
+						<td class="td3">${prod_code}</td>
 						<td class="td1">${brand_name}</td>
 						<td class="td2">${title}</td>
 						<td class="td5">${spec}</td>

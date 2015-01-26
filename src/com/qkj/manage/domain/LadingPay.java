@@ -7,7 +7,7 @@ public class LadingPay {
 	private Date pay_date;// (date)付款日期
 	private Integer type;// (int)付款方式 0现金 1POS 2支票 3转账 4其他
 	private Double money;// (decimal)付款金额
-	private String lading_id;// (varchar)客户ID
+	private Integer lading_id;// (int)客户ID
 	private String add_user;// (varchar)提交人
 	private Date add_time;// (datetime)提交时间
 	private Integer fd_check;// (int)财务确认 0未确认 1已确认
@@ -77,11 +77,11 @@ public class LadingPay {
 		this.money = money;
 	}
 
-	public String getLading_id() {
+	public Integer getLading_id() {
 		return lading_id;
 	}
 
-	public void setLading_id(String lading_id) {
+	public void setLading_id(Integer lading_id) {
 		this.lading_id = lading_id;
 	}
 

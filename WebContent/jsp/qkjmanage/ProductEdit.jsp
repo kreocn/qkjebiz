@@ -27,7 +27,7 @@
 				</div>
 				</s:if>
 				<div class="label_hang">
-				       <div class="label_ltit">产品统一编码:</div>
+				       <div class="label_ltit">物料统一编码:</div>
 				       <div class="label_rwben"><s:textfield name="product.prod_code" title="产品统一编码" cssClass="validate[required,maxSize[16]]" /></div>
 				</div>
 				<div class="label_hang">

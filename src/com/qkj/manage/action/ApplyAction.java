@@ -348,6 +348,40 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
+	
+	/**
+	 * 销售副总审核通过
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String check30() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_CHECK30");
+		try {
+			check(40);
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!check30 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!check30 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+	
+	/**
+	 * 总经理审核通过
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String check40() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_CHECK40");
+		try {
+			check(50);
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!check40 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!check40 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
 
 	/**
 	 * 特殊审核权限,通过
@@ -461,7 +495,12 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 		apply.setSp_check_status(p_sp_check_status);
 		apply.setSp_check_user(ContextHelper.getUserLoginUuid());
 		apply.setSp_check_time(new Date());
-		apply.setLm_user(ContextHelper.getUserLoginUuid());
+		if(p_sp_check_status==10){
+			apply.setStatus(20);
+			apply.setCheck_user(ContextHelper.getUserLoginUuid());
+			apply.setCheck_time(new Date());
+			apply.setLm_user(ContextHelper.getUserLoginUuid());
+		}
 		dao.spcheck(apply);
 		addProcess("APPLY_CHANGE_SPSTATUS", "至事由-特别状态更改");
 	}
