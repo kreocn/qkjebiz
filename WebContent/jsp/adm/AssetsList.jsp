@@ -39,7 +39,7 @@ $(function(){
 				<div class="label_hang">
 				       <div class="label_ltit">资产分类:</div>
 				       <div class="label_rwbenx" id="mmtype">
-				       		<div class="label_rwben" style="margin-right:5px;"><select name="assets.typea" title="资产种类" class="prov"></select></div>
+				       		<div class="label_rwben" style="margin-right:5px;"><select name="assets.typea" title="资产种类" class="prov" require="required" controlName="资产种类"></select></div>
 							<div class="label_rwben" style="margin-right:5px;"><select name="assets.typeb" title="资产类别" class="city" disabled="disabled"></select></div>
 							<div class="label_rwben"><select name="assets.typec" title="子类别" class="dist" disabled="disabled"></select></div>
 				       </div>
@@ -89,7 +89,7 @@ $(function(){
 	              <th  class="td0">查看</th>
 	            </tr>
 	            <s:iterator value="assetss" status="sta">
-		            <tr>
+		            <tr id="showtr${uuid}">
            				<td  class="td1">${uuid}</td>
 						<td  class="td2">${typea} ${typeb} ${typec}</td>
 						<td  class="td4">${model}</td>

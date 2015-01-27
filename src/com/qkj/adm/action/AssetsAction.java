@@ -144,6 +144,7 @@ public class AssetsAction extends ActionSupport {
 				setMessage("你没有选择任何操作!");
 			} else if ("add".equals(viewFlag)) {
 				this.setAssets(null);
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/adm/assets_list?viewFlag=relist'>资产列表</a>&nbsp;&gt;&nbsp;添加资产";
 			} else if ("mdy".equals(viewFlag)) {
 				if (!(assets == null || assets.getUuid() == null)) {
 					this.setAssets((Assets) dao.get(assets.getUuid()));
@@ -157,6 +158,7 @@ public class AssetsAction extends ActionSupport {
 					map.clear();
 					ContextHelper.setSearchDeptPermit4Search(map, "dept_codes", "uuid");
 					this.setOwnusers(udao.list(map));
+					path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/adm/assets_list?viewFlag=relist'>资产列表</a>&nbsp;&gt;&nbsp;修改资产";
 				} else {
 					this.setAssets(null);
 				}
