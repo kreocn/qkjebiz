@@ -14,8 +14,13 @@
 	}
 </script>
 <style>
-.input-a .selmore{display:none;position:absolute;top:27px;left:0;z-index:9999;height:auto; overflow-x:hidden; overflow-y:auto;}
-.clicksel{position:relative;}
+.input-a .selmore {
+	display: none; position: absolute; top: 27px; left: 0; z-index: 9999; height: auto; overflow-x: hidden; overflow-y: auto;
+}
+
+.clicksel {
+	position: relative;
+}
 </style>
 </head>
 
@@ -24,8 +29,7 @@
 		<div class="dq_step">${path}
 			<span class="opb lb op-area"><a href="<s:url action="closeOrder_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a></span> <span class="opb lb op-area"><s:if test="closeOrder.check_state>=1">
 					<a class="input-gray" href="<s:url namespace="/qkjmanage" action="closeOrder_view"><s:param name="closeOrder.uuid" value="closeOrder.uuid" /></s:url>">转到打印页面</a>
-				</s:if> 
-				</span>
+				</s:if> </span>
 		</div>
 		<s:form id="editForm" name="editForm" cssClass="validForm" action="apply_load" namespace="/qkjmanage" method="post" theme="simple">
 			<div class="label_con">
@@ -94,18 +98,6 @@
 								</span>
 							</div>
 						</div>
-						<s:if test="'mdy' == viewFlag">
-						<div class="label_hang">
-							<div class="label_ltit">促销方案:</div>
-							<div class="label_rwben label_rwb">
-								<span class="label_rwb">
-									<s:textfield class="clicksel" onclick="clicksel();" value="--请选择--" />
-									<s:select name="closeOrder.salPro_id" list="salPromots" listKey="uuid" listValue="sal_title" cssClass="validate[required] selmore" headerKey="" multiple="true" />
-								</span>
-							</div>
-						</div>
-						</s:if>
-
 					</div>
 					<div class="label_main">
 						<div class="label_hang">
@@ -136,7 +128,36 @@
 							</div>
 						</div>
 					</div>
-					<s:if test="'mdy' == viewFlag">
+					<s:if test="'mdy'==viewFlag">
+						<div class="label_main">
+							<fieldset class="clear">
+								<legend>可参与促销活动</legend>
+								<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+									<tr>
+										<th>参加</th>
+										<th>活动名称</th>
+										<th>开始时间</th>
+										<th>结束时间</th>
+										<th>操作</th>
+									</tr>
+									<!-- lading.promotions -->
+									<s:iterator value="salPromots" status="sta">
+										<tr>
+											<td class="nw"><input type="checkbox" name="closeOrder.salPro_id" value="${uuid}" /></td>
+											<td class="nw">${sal_title}</td>
+											<td class="nw">${it:formatDate(startime,'yyyy-MM-dd')}</td>
+											<td class="nw">${it:formatDate(endtime,'yyyy-MM-dd')}</td>
+											<td>查看详情</td>
+										</tr>
+									</s:iterator>
+								</table>
+								<script type="text/javascript">
+									setCheckBox("closeOrder.salPro_id", '${closeOrder.salPro_id}');
+								</script>
+							</fieldset>
+						</div>
+					</s:if>
+					<s:if test="'mdy' == viewFlag && closeOrder.salPro_id!=null">
 						<div class="label_main">
 							<div class="lb_xxsm">
 								<p class="lb_yjtit fy_hide">

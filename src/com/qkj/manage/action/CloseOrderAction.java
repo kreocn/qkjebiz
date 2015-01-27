@@ -228,6 +228,9 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	public String save() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_MDY");
 		try {
+			if (closeOrder != null && !ToolsUtil.isEmpty(closeOrder.getSalPro_id())) {
+				closeOrder.setSalPro_id(closeOrder.getSalPro_id().replaceAll(" ", ""));
+			}
 			closeOrder.setLm_user(ContextHelper.getUserLoginUuid());
 			closeOrder.setLm_time(new Date());
 			dao.save(closeOrder);
