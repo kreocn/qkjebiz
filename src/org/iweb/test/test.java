@@ -7,6 +7,7 @@ import org.iweb.fileupload.logic.MemberStockUploadConfig;
 import org.iweb.fileupload.logic.UploadConfig;
 import org.iweb.sys.HtmlUtils;
 import org.iweb.sys.ToolsUtil;
+import org.iweb.sys.domain.RolePrvg;
 import org.iweb.sys.encrypt.AbstractEncrypt;
 import org.iweb.sys.encrypt.EncryptFactory;
 
@@ -19,17 +20,11 @@ public class test {
 	private StringBuffer sql = new StringBuffer();
 
 	public test() {
-		String str = "1 , 2 ,  3,  4,  5";
-		// System.out.println(ToolsUtil.split2Integer(str, ","));
-		// System.out.println(ToolsUtil.spliten(str, ",").length);
-		Integer[] ss = ToolsUtil.split2Integer(str, ",");
-		// String[] ss = ToolsUtil.spliten(str);
-		for (int i = 0; i < ss.length; i++) {
-			System.out.println(ss[i]);
-		}
-
-		String s = ToolsUtil.Array2String(ss, ",");
-		System.out.println(s);
+		RolePrvg r = new RolePrvg();
+		r.setUuid("asdsad");
+		r.setFunction("sadfasd");
+		r.setPrivilege_id("LKLKJL");
+		System.out.println(ToolsUtil.serialize(r).length);
 	}
 
 	/**
