@@ -34,6 +34,11 @@ public class AssetsAction extends ActionSupport {
 	private int recCount;
 	private int pageSize;
 	private int currPage;
+	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;资产列表";
+	
+	public String getPath() {
+		return path;
+	}
 
 	public List<User> getOwnusers() {
 		return ownusers;
@@ -120,6 +125,7 @@ public class AssetsAction extends ActionSupport {
 					.toString()));
 			this.setAssetss(dao.list(map));
 			this.setRecCount(dao.getResultCount());
+			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;资产列表";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
@@ -138,6 +144,7 @@ public class AssetsAction extends ActionSupport {
 				setMessage("你没有选择任何操作!");
 			} else if ("add".equals(viewFlag)) {
 				this.setAssets(null);
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/adm/assets_list?viewFlag=relist'>资产列表</a>&nbsp;&gt;&nbsp;添加资产";
 			} else if ("mdy".equals(viewFlag)) {
 				if (!(assets == null || assets.getUuid() == null)) {
 					this.setAssets((Assets) dao.get(assets.getUuid()));
@@ -151,6 +158,7 @@ public class AssetsAction extends ActionSupport {
 					map.clear();
 					ContextHelper.setSearchDeptPermit4Search(map, "dept_codes", "uuid");
 					this.setOwnusers(udao.list(map));
+					path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/adm/assets_list?viewFlag=relist'>资产列表</a>&nbsp;&gt;&nbsp;修改资产";
 				} else {
 					this.setAssets(null);
 				}
