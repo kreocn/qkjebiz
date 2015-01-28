@@ -161,7 +161,7 @@ public class ProTypeAction extends ActionSupport implements ActionAttr {
 					byte[] b = encrypt.encrypt(typenode[i].toString());
 					ObjectMetadata meta = new ObjectMetadata();
 					meta.setContentLength(b.length);
-					OSSUtil_IMG.uploadFile("qkjbj01", "CacheFiles/zTree_Products" + s_mapping[i] + ".js", new ByteArrayInputStream(b), meta);
+					OSSUtil_IMG.uploadFile("qkjbj01", "CacheFiles/zTree_Products" + s_mapping[i] + "_tmp.js", new ByteArrayInputStream(b), meta);
 				}
 				// PrintWriter pw = new PrintWriter("D:/tp.js");
 				// pw.print(fnode.toString());

@@ -1,8 +1,10 @@
 package org.iweb.test;
 
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.apache.commons.io.IOUtils;
 import org.iweb.fileupload.logic.MemberStockUploadConfig;
 import org.iweb.fileupload.logic.UploadConfig;
 import org.iweb.sys.HtmlUtils;
@@ -20,11 +22,15 @@ public class test {
 	private StringBuffer sql = new StringBuffer();
 
 	public test() {
-		RolePrvg r = new RolePrvg();
-		r.setUuid("asdsad");
-		r.setFunction("sadfasd");
-		r.setPrivilege_id("LKLKJL");
-		System.out.println(ToolsUtil.serialize(r).length);
+		try {
+			AbstractEncrypt encrypt = EncryptFactory.getEncrypt("AES");
+			byte[] arr = IOUtils.toByteArray(new FileInputStream("D:/zTree_Products1.js"));
+			encrypt.decrypt(arr);
+			//String jsonstr = new String(encrypt.decrypt(arr));
+			//System.out.println(jsonstr);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
