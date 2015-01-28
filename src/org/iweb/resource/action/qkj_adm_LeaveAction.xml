@@ -57,6 +57,23 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
+		
+		<action name="leave_approve" class="com.qkj.adm.action.LeaveAction" method="approve">
+			<result type="redirectAction">
+				<param name="actionName">leave_load</param>
+				<param name="leave.uuid">${leave.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="leave_approveDel" class="com.qkj.adm.action.LeaveAction" method="approveDel">
+			<result type="redirectAction">
+				<param name="actionName">leave_load</param>
+				<param name="leave.uuid">${leave.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
 		<!-- Leave End -->
 	</package>
 </struts>

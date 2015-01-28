@@ -24,6 +24,15 @@ public class SalPromotAction extends ActionSupport implements ActionAttr {
 	private int currPage;
 	private String checkstatus;
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;促销活动";
+	private int salstate;
+
+	public int getSalstate() {
+		return salstate;
+	}
+
+	public void setSalstate(int salstate) {
+		this.salstate = salstate;
+	}
 
 	public String getPath() {
 		return path;

@@ -172,7 +172,7 @@ public class LadingAction extends ActionSupport {
 				if (null == map.get("uuid")) this.setLading(null);
 				else {
 					if ("view".equals(viewFlag)) {
-						map.put("status", 2);
+						//map.put("status", 2);
 					}
 					this.setLading((Lading) dao.list(map).get(0));
 

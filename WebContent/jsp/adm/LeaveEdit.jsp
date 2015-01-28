@@ -161,6 +161,29 @@
        </div>
        </div>
        </s:if>
+       <s:if test="'mdy' == viewFlag">
+					<div class="label_main">
+						<div class="label_hang">
+							<div class="label_ltit">审阅情况:</div>
+							<div class="label_rwbenx approve_list">
+								<ul>
+									<s:iterator value="approves" status="sta">
+										<li>此活动在<span class="approve_ad_time"> ${it:formatDate(ad_time,'yyyy-MM-dd HH:mm:ss')}</span> 被 <span class="approve_check_user"> ${check_user_name}</span> 执行 <span class="approve_flag"> <s:if test="flag==5">
+													<span class="approve_flag_fail">审阅不通过</span>
+												</s:if> <s:if test="flag==10">
+													<span class="approve_flag_pass">审阅通过</span>
+												</s:if>
+										</span> 操作 <s:if test="advice!=null && advice!=''">
+					审阅意见:
+					<span class="approve_advice">${advice}</span>
+											</s:if>
+										</li>
+									</s:iterator>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</s:if>
        <div class="label_main">
 		<div class="label_hang">
             <div class="label_ltit">相关操作:</div>
@@ -181,6 +204,9 @@
 					<s:submit name="delete" value="删除" action="leave_del" cssClass="input-red" onclick="return isDel();" />
 					</s:if>
 				</s:elseif>
+				<s:if test="leave.check_status>=10 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_APPROVE')">
+								<input type="button" value="审阅" onclick="openApprove();" />
+					</s:if>
 				<!-- {0:'新申请',5:'已退回',10:'待审核',20:'经理/大区已审',30:'运营总监已审',40:'业务副总已审' } -->
 				<s:if test="leave.check_status==10&&@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_CHECK10')">
 					<s:submit name="leave_check10" cssClass="input-green" value="经理/大区-审核通过" action="leave_check10" onclick="return isOp('确定执行此操作?');" />
@@ -234,6 +260,45 @@
 		</div>
 	</div>
 	</s:form>
+	<div id="approveFrom" class="label_con idialog" title="审阅信息">
+			<s:form name="form1" action="leave_approve" cssClass="validForm" namespace="/adm" method="post" theme="simple">
+				<input type="hidden" name="leave.uuid" value="${leave['uuid']}" />
+				<input type="hidden" id="add_approve_flag" name="approve.flag" />
+				<div class="label_main">
+					<textarea name="approve.advice" rows="3"></textarea>
+				</div>
+				<div class="label_main tac" style="padding: 5px 0;">
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_APPROVE')">
+						<input type="submit" name="approve_pass" value="审阅通过" onclick="return addApproveCheck(10);" />
+						<input type="submit" name="approve_fail" value="审阅不通过" onclick="return addApproveCheck(5);" />
+					</s:if>
+					<s:if test="'true'==isApprover && @org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_APPROVEDELLAST')">
+						<s:submit name="active_approveDel" value="撤销最后一次审阅" action="leave_approveDel" onclick="return isOp('确定进行此操作?');" />
+					</s:if>
+				</div>
+			</s:form>
+		</div>
+		<script type="text/javascript">
+			$(function(){
+				$("#approveFrom").dialog({ autoOpen : false,
+				modal : true });
+			});
+
+			function openApprove(){
+				$("#approveFrom").dialog("open");
+			}
+
+			//add_approve_flag
+			function addApproveCheck(flag){
+				if (window.confirm("确定要审阅吗?")) {
+					//alert(flag);
+					$("#add_approve_flag").val(flag);
+					return true;
+				} else {
+					return false;
+				}
+			}
+		</script>
 </div>
 <script type="text/javascript">
 var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';

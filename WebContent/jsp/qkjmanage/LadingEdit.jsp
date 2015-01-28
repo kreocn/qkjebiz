@@ -224,7 +224,7 @@ function createAddreeeSelect(p_data) {
 			<td class="nw">${sal_title}</td>
 			<td class="nw">${it:formatDate(startime,'yyyy-MM-dd')}</td>
 			<td class="nw">${it:formatDate(endtime,'yyyy-MM-dd')}</td>
-			<td>查看详情</td>
+			<td><a href="javascript:;" onclick="openCustomerView(${uuid});">[查看详情]</a></td>
 		</tr>
 		</s:iterator>
 		</table>
@@ -389,6 +389,9 @@ function createAddreeeSelect(p_data) {
 						</s:if>
 					</s:if>
 				</s:elseif>
+				<s:if test="lading.status>=10">
+								<input type="button" onclick="linkurl('<s:url namespace="/qkjmanage" action="lading_view"><s:param name="lading.uuid" value="lading.uuid" /><s:param name="viewFlag">view</s:param></s:url>');" value="转到详情页面" />
+				</s:if>
 				<input type="button" value="返回" onclick="linkurl('<s:url action="lading_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');"  class="input-gray" />
 				<span id="message"  class="cr"></span>
 				<!-- <input type="button" value="打印" onclick="window.print();" /> -->
@@ -441,5 +444,44 @@ function createAddreeeSelect(p_data) {
 </div>
 </div>
 <!-- HIDDEN AREA END -->
+<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.ui.datepicker-zh.js" />"></script>
+<script type="text/javascript">
+var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
+var add_user='${customerRecode.add_user}';
+$(function(){
+	CommonUtil.pickrow('table1');
+	CommonUtil.pickrowAll('table1','uuidcheck');
+	$("#customerRecode_recode_time").datepicker();
+	$("#customerRecode_next_date").datepicker();
+	
+	if($("#userdept_codeid").val()!='') {
+		loadManagers($("#userdept_codeid").val());
+	}
+	createCustomerView();
+ });
+
+var sobj02;
+var createCustomerView = function() {
+	//http://localhost:8888/qkjmanage/customer_load?viewFlag=mdy&customer.uuid=3
+	var w_width = $(window).width();
+	var w_height = $(window).height();
+	sobj02 = new DialogIFrame({
+		src:'',
+		title:"查看促销活动信息",
+		width:w_width*0.35,
+		height:w_height*0.85
+	});
+	sobj02.selfAction = function(val1,val2) {};
+	sobj02.create();
+	//sobj02.open();
+};
+
+var openCustomerView = function(customer_uuid) {
+	var iframeId = sobj02.getConid() + "iframe";
+	$("#"+iframeId).attr("src","/salpro/salPromot_load?viewFlag=view&salstate=1&salPromot.uuid=" + customer_uuid);
+	sobj02.open();
+};
+
+</script>
 </body>
 </html>

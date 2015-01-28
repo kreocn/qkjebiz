@@ -9,7 +9,8 @@
 <s:action name="ref" namespace="/manager" executeResult="true" />
 <link rel="stylesheet" href="<s:url value="/css/zTreeStyle/zTreeStyle.css" />" />
 <script type="text/javascript" src="<s:url value="/js/zTreeJs/jquery.ztree.core-3.5.js" />"></script>
-<script type="text/javascript" src="<s:url value="http://images01.qkjchina.com/qkjebiz01/zTree_result.js?v0=1" />"></script>
+<!--<script type="text/javascript" src="<s:url value="http://images01.qkjchina.com/qkjebiz01/zTree_result.js?v0=1" />"></script>-->
+<script type="text/javascript" src="http://images.qkjchina.com/CacheFiles/zTree_Products.js"></script>
 <script type="text/javascript" src="<s:url value="/js/zTreeJs/product.js" />"></script>
 </head>
 <body>
