@@ -84,7 +84,8 @@
 						<div class="label_ltit">活动时间:</div>
 						<div class="label_rwben2">
 							<span class="label_rwb nw"> <input class="datepicker iI iI-f validate[required,custom[date]]" type="text" name="salPromot.startime" title="从" value="${it:formatDate(salPromot.startime,'yyyy-MM-dd')}" />
-							</span> <span class="label_rwb nw"> <input class="datepicker iI iI-t validate[required,custom[date]]" type="text" name="salPromot.endtime" title="到" value="${it:formatDate(salPromot.endtime,'yyyy-MM-dd')}" />
+							</span> 
+							<span class="label_rwb nw"> <input id="saldate" class="datepicker iI iI-t validate[required,custom[date]]" type="text" name="salPromot.endtime" title="到" value="${it:formatDate(salPromot.endtime,'yyyy-MM-dd')}" />
 							</span>
 						</div>
 					</div>
@@ -286,12 +287,19 @@
 	function check(){
 		var num = $("#rebate").val();
 		var pub= $("#sal_scopUs ").val();
+		var cdate= new Date($("#saldate ").val());
+		var myDate = new Date();
 		if (parseInt(num) == num) {
 			if(pub==null || pub==""){
 				alert("许可范围必填！");
 				return false;
 			}else{
-				return true;
+				if(cdate<myDate){
+					alert("结束日期一定要大于当前日期！");
+					return false;
+				}else{
+					return true;
+				}
 			}
 		} else {
 			alert('一定要为整数呀！');

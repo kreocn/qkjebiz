@@ -170,6 +170,7 @@ public class LeaveAction extends ActionSupport implements ActionAttr {
 				/* 检查当前用户是否已经审阅 */
 				if (apdao.userIsIn(approves, ContextHelper.getUserLoginUuid())) this.setIsApprover("true");
 				else this.setIsApprover("false");
+				System.out.println(approves.size()+"aaaaaaaaaaaaaaaaaaaaaaa"+isApprover);
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/adm/leave_list?viewFlag=relist'>工时列表</a>&nbsp;&gt;&nbsp;修改申请单";
 			} else {
 				this.setLeave(null);
