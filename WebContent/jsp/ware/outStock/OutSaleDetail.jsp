@@ -250,7 +250,19 @@
 						<th>实际价格</th>
 						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_ADD') && 2==outStock.send && @com.qkj.ware.action.warepower@checkPermit(outStock.store_id,'del')">
 						<th>
-						<a id="addItem" onclick="commain();" >添加出库明细</a>
+						<s:url id="ladingAddProductsUrl" action="qkjm_addProducts" namespace="qkjmanage">
+												<s:param name="uuidKey">outStock.uuid</s:param>
+												<s:param name="uuidValue" value="outStock.uuid" />
+												<s:param name="backUrl">/outStock/outStock_load?viewFlag=mdy&</s:param>
+												<s:param name="actionUrl">/outDetail/outDetail_add</s:param>
+												<s:param name="keyName">outDetail.lading_id</s:param>
+												<s:param name="prodName">outDetail.product_id</s:param>
+												<s:param name="perName">outDetail.price</s:param>
+												<s:param name="numName">outDetail.num</s:param>
+												<s:param name="totalName">outDetail.totel</s:param>
+							</s:url>
+											<input type="button" id="product" onclick="window.location.href='${ladingAddProductsUrl}';" value="添加酒品" />
+						<!-- <a id="addItem" onclick="commain();" >添加出库明细</a> -->
 						</th>
 						</s:if>
 					</tr>
