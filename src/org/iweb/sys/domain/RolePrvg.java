@@ -1,5 +1,6 @@
 package org.iweb.sys.domain;
 
+
 public class RolePrvg {
 	private String uuid; // 内部编号
 	private String role_id; // 角色id

@@ -2,6 +2,12 @@ package org.iweb.sys;
 
 import java.security.MessageDigest;
 
+/**
+ * 
+ * @author 骏宇
+ * @deprecated replace By org.iweb.sys.encrypt.EncryptMD5
+ */
+@Deprecated
 public class MD5Plus {
 	public static String encrypt(String enteredPassword) {
 		String encryptString = "";
