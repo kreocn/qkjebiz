@@ -114,6 +114,10 @@ public class ActiveDAO extends AbstractDAO {
 	public int mdyShipInfo(Object parameters) {
 		return super.save("qkjmanage_mdyShipInfo", parameters);
 	}
+	
+	public int mdyActiveType(Object parameters) {
+		return super.save("qkjmanage_mdyActiveType", parameters);
+	}
 
 	public int getResultCount() {
 		return super.getResultCount();

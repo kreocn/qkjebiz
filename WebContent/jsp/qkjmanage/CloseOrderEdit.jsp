@@ -206,7 +206,7 @@
 										</tr>
 										<s:iterator value="closeOrderPros" status="sta">
 											<tr>
-												<td class="nw">${product_name}${product_name}</td>
+												<td class="nw">${product_name}</td>
 												<td class="nw">￥${product_price}</td>
 												<td class="nw">${product_num}</td>
 												<td class="nw">￥${total_price}</td>

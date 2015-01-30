@@ -612,6 +612,19 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
+	
+	public String saveType() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_MDYTYPE");
+		try {
+			//active.setLm_user(ContextHelper.getUserLoginUuid());
+			dao.mdyActiveType(active);
+			//addProcess("ACTIVE_MDY", "活动修改");
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
 
 	public String del() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_DEL");
