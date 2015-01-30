@@ -20,6 +20,7 @@ import org.iweb.sys.ContextHelper;
 import org.iweb.sys.OSSUtil_IMG;
 import org.iweb.sys.ToolsUtil;
 import org.iweb.sys.encrypt.AbstractEncrypt;
+import org.iweb.sys.encrypt.EncryptAES;
 import org.iweb.sys.encrypt.EncryptFactory;
 
 import com.aliyun.openservices.oss.model.ObjectMetadata;
@@ -152,16 +153,18 @@ public class ProTypeAction extends ActionSupport implements ActionAttr {
 				allnode.deleteCharAt(allnode.length() - 1).insert(0, "[").insert(allnode.length(), "]");
 				fnode.append("var zNodes=").append(allnode).append(";");
 				// 对产品树进行AES加密
-				AbstractEncrypt encrypt = EncryptFactory.getEncrypt("AES");
+				// AbstractEncrypt encrypt = EncryptFactory.getEncrypt("AES");
+				EncryptAES aes = (EncryptAES) EncryptFactory.getEncrypt("AES");
 				for (int i = 0; i < s_mapping.length; i++) {
 					typenode[i].deleteCharAt(typenode[i].length() - 1).insert(0, "[").insert(typenode[i].length(), "]");
 					fnode.append("var zNodes").append(s_mapping[i]).append("=").append(typenode[i]).append(";");
 					// 生成独立JSON
 					// byte[] b = typenode[i].toString().getBytes("UTF-8");
-					byte[] b = encrypt.encrypt(typenode[i].toString());
+					// String b = aes.encrypt(typenode[i].toString());
+					byte[] bx = aes.encrypt(typenode[i].toString()).getBytes("UTF-8");
 					ObjectMetadata meta = new ObjectMetadata();
-					meta.setContentLength(b.length);
-					OSSUtil_IMG.uploadFile("qkjbj01", "CacheFiles/zTree_Products" + s_mapping[i] + "_tmp.js", new ByteArrayInputStream(b), meta);
+					meta.setContentLength(bx.length);
+					OSSUtil_IMG.uploadFile("qkjbj01", "CacheFiles/zTree_Products" + s_mapping[i] + ".dat", new ByteArrayInputStream(bx), meta);
 				}
 				// PrintWriter pw = new PrintWriter("D:/tp.js");
 				// pw.print(fnode.toString());

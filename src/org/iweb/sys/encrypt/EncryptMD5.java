@@ -1,133 +1,63 @@
 package org.iweb.sys.encrypt;
 
-import java.security.InvalidKeyException;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
- * 未完成
+ * MD5 加密类
  * 
  * @author 骏宇
- * 
+ * @see
+ *      {@code EncryptMD5 md5 = (EncryptMD5) EncryptFactory.getEncrypt("MD5");}
  */
-public class EncryptMD5 extends AbstractEncrypt {
+public final class EncryptMD5 extends AbstractEncrypt {
+	private static Log log = LogFactory.getLog(EncryptMD5.class);
 
-	private static MessageDigest md;
+	/**
+	 * MD5不用密匙加密
+	 */
+	@Override
+	public String encrypt(String content, String password) {
+		return encrypt(content);
+	}
 
-	static {
+	public String encrypt(String content) {
+		String encryptString = "";
 		try {
-			md = MessageDigest.getInstance("MD5");
-		} catch (NoSuchAlgorithmException e) {
-			md = null;
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			md.update(content.getBytes());
+			byte b[] = md.digest();
+			int i;
+			StringBuffer buf = new StringBuffer("");
+			for (int offset = 0; offset < b.length; offset++) {
+				i = b[offset];
+				if (i < 0) i += 256;
+				if (i < 16) buf.append("0");
+				buf.append(Integer.toHexString(i));
+			}
+			encryptString = buf.toString();
+		} catch (Exception e) {
+			log.error("MD5加密错误:", e);
 		}
-	}
-
-	private static EncryptMD5 encrypt;
-
-	private EncryptMD5() {
-
-	}
-
-	public static EncryptMD5 getInstance() {
-		if (encrypt == null) encrypt = new EncryptMD5();
-		return encrypt;
+		return encryptString;
 	}
 
 	/**
-	 * 加密
-	 * 
-	 * @param content
-	 *            需要加密的内容
-	 * @return
+	 * MD5无法解密
 	 */
-	public byte[] encrypt(String content) throws Exception {
-		md.update(content.getBytes("UTF-8"));
-		return md.digest();
-	}
-
-	/**
-	 * 加密
-	 * 
-	 * @param content
-	 *            需要加密的内容
-	 * @return
-	 */
-	public byte[] encrypt(byte[] content) throws Exception {
-		md.update(content);
-		return md.digest();
-	}
-
-	/**
-	 * 解密(MD5无法解密)
-	 * 
-	 * @param content
-	 *            待解密内容
-	 * @return
-	 */
-	public byte[] decrypt(byte[] content) throws Exception {
+	@Override
+	public String decrypt(String encryptResultStr, String password) {
 		return null;
 	}
 
-	/**
-	 * 比较内容
-	 * 
-	 * @param content
-	 * @param enContent
-	 * @return
-	 * @throws Exception
-	 */
-	public boolean equal(String content, String enContent) throws Exception {
-		return equal(content.getBytes("UTF-8"), enContent.getBytes("UTF-8"));
+	@Override
+	public boolean equal(String content, String enContent, String password) {
+		return equal(content, enContent);
 	}
 
-	/**
-	 * 比较内容
-	 * 
-	 * @param content
-	 * @param enContent
-	 * @return
-	 * @throws Exception
-	 */
-	public boolean equal(String content, byte[] enContent) throws Exception {
-		return equal(content.getBytes("UTF-8"), enContent);
-	}
-
-	/**
-	 * 比较内容
-	 * 
-	 * @param content
-	 * @param enContent
-	 * @return
-	 * @throws Exception
-	 */
-	public boolean equal(byte[] content, byte[] enContent) throws Exception {
-		if (content == null || content.length == 0 || enContent == null || enContent.length == 0) {
-			return false;
-		} else {
-			return java.util.Arrays.equals(this.encrypt(content), enContent);
-		}
-	}
-
-	/**
-	 * @param args
-	 * @throws NoSuchPaddingException
-	 * @throws NoSuchAlgorithmException
-	 * @throws BadPaddingException
-	 * @throws IllegalBlockSizeException
-	 * @throws InvalidKeyException
-	 */
-	public static void main(String[] args) throws Exception {
-		// String pwd = "123456";
-		String msg = "郭XX-搞笑相声全集";
-		String en = "&���emY�ͻ�,6";
-		AbstractEncrypt encrypt = EncryptMD5.getInstance();
-		byte[] encontent = encrypt.encrypt(msg);
-		System.out.println("加密后的字符串为:" + new String(encontent));
-		System.out.println("比较结果为:" + encrypt.equal(msg, en.getBytes("UTF-8")));
+	public boolean equal(String content, String enContent) {
+		return encrypt(content).equals(enContent);
 	}
 }
