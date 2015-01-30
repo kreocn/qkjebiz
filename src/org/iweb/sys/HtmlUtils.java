@@ -13,6 +13,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * 
@@ -20,6 +22,7 @@ import org.apache.commons.io.IOUtils;
  * 
  */
 public class HtmlUtils {
+	private static Log log = LogFactory.getLog(HtmlUtils.class);
 
 	public String getOneHtml(final String htmlurl) throws IOException {
 		return getOneHtml(htmlurl, "gbk");
@@ -35,16 +38,18 @@ public class HtmlUtils {
 		try {
 			url = new URL(htmlurl);
 			// 读取网页全部内容
+			log.info("开始请求网页内容:" + htmlurl);
 			final BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream(), encode));
 			while ((temp = in.readLine()) != null) {
 				sb.append(temp);
 			}
 			in.close();
+			log.info("网页内容读取成功:" + htmlurl);
 		} catch (final MalformedURLException me) {
-			System.out.println("你输入的URL格式有问题！请仔细输入");
-			me.getMessage();
+			log.error("你输入的URL格式有问题！请仔细输入:" + htmlurl, me);
 			throw me;
 		} catch (final Exception e) {
+			log.error("读取网页内容错误:" + htmlurl, e);
 			e.printStackTrace();
 			throw e;
 		}
