@@ -506,6 +506,18 @@
 							<p class="lb_yjtit">
 								公司费用
 								<s:if test="active.status==3 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEPRODUCT_ADD')">
+									<!--<s:url id="ladingAddProductsUrl" action="qkjm_addProducts" namespace="qkjmanage">
+												<s:param name="uuidKey">active.uuid</s:param>
+												<s:param name="uuidValue" value="active.uuid" />
+												<s:param name="backUrl">/qkjmanage/active_load?viewFlag=mdy&</s:param>
+												<s:param name="actionUrl">/qkjmanage/activeProductClose_add</s:param>
+												<s:param name="keyName">activeProduct.active_id</s:param>
+												<s:param name="prodName">activeProduct.product_id</s:param>
+												<s:param name="perName">activeProduct.per_price</s:param>
+												<s:param name="numName">activeProduct.num</s:param>
+												<s:param name="totalName">activeProduct.total_price</s:param>
+											</s:url>
+										<input type="button" id="product" onclick="window.location.href='${ladingAddProductsUrl}';" value="添加酒品" />-->
 									<input type="button" id="product" onclick="noedit();" value="添加酒品" />
 									<script type="text/javascript">
 						var edit = false;

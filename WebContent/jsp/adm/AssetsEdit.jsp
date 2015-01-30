@@ -257,6 +257,9 @@ function createMdyOwnDialog(item_id) {
 	var i_use = $(td_objs[4]).attr("data");
 	var i_own = $(td_objs[5]).attr("data");
 	var i_date = $(td_objs[6]).text();
+	alert(tr_id);
+	alert(td_objs);
+	alert(i_use+"a"+i_own+"i_date"+i_date);
 	$("#assetItem_uuid_add_own").val(item_id);
 	//alert(i_use + "---" + i_own + "---" + i_date); 
 	//assetItem_is_use assetItem_own_user assetItem_use_time

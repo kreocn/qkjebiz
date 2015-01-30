@@ -171,7 +171,10 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 					this.setCloseOrder(null);
 				}
 				this.setSalPromots(sal.salProPower(closeOrder.getMember_id()));
-				System.out.println(salPromots.size());
+				CloseOrderProDAO cdao=new CloseOrderProDAO();
+				map.clear();
+				map.put("order_id", closeOrder.getUuid());
+				this.setCloseOrderPros(cdao.list(map));
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/closeOrder_relist'>结案提货单列表</a>&nbsp;&gt;&nbsp;增加结案提货单";
 			} else {
 				this.setCloseOrder(null);

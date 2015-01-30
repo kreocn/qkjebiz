@@ -7,20 +7,33 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>结案提货单管理--<s:text name="APP_NAME" /></title>
 <s:action name="ref" namespace="/manager" executeResult="true" />
-<script type="text/javascript">
-	function clicksel(){
-		$(".clicksel option").hide();
-		$(".selmore").show();
-	}
-</script>
-<style>
-.input-a .selmore {
-	display: none; position: absolute; top: 27px; left: 0; z-index: 9999; height: auto; overflow-x: hidden; overflow-y: auto;
-}
-
-.clicksel {
-	position: relative;
-}
+<style type="text/css">
+#win{  
+    /*窗口的高度和宽度*/  
+    width : 300px;  
+    height: 200px;  
+    /*窗口的位置*/  
+    position : absolute;  
+    top : 100px;  
+    left: 350px;  
+    /*开始时窗口不可见*/  
+    display : none;  
+}  
+/*控制背景色的样式*/  
+#title{  
+    /*控制标题栏的左内边距*/  
+    padding-left: 3px;  
+}  
+#cotent{  
+    padding-left : 3px;  
+    padding-top :  5px;  
+}  
+/*控制关闭按钮的位置*/  
+#close{  
+    margin-left: 188px;  
+    /*当鼠标移动到X上时，出现小手的效果*/  
+    cursor: pointer;  
+} s
 </style>
 </head>
 
@@ -147,7 +160,9 @@
 											<td class="nw">${sal_title}</td>
 											<td class="nw">${it:formatDate(startime,'yyyy-MM-dd')}</td>
 											<td class="nw">${it:formatDate(endtime,'yyyy-MM-dd')}</td>
-											<td>查看详情</td>
+											<td>
+											<a href="javascript:;" onclick="openCustomerView(${uuid});">[查看详情]</a>
+											</td>
 										</tr>
 									</s:iterator>
 								</table>
@@ -191,7 +206,7 @@
 										</tr>
 										<s:iterator value="closeOrderPros" status="sta">
 											<tr>
-												<td class="nw">${product_name}${product_name}</td>
+												<td class="nw">${product_name}</td>
 												<td class="nw">￥${product_price}</td>
 												<td class="nw">${product_num}</td>
 												<td class="nw">￥${total_price}</td>
@@ -340,4 +355,44 @@
 		});
 	}
 </script>
+<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.ui.datepicker-zh.js" />"></script>
+<script type="text/javascript">
+var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
+var add_user='${customerRecode.add_user}';
+$(function(){
+	CommonUtil.pickrow('table1');
+	CommonUtil.pickrowAll('table1','uuidcheck');
+	$("#customerRecode_recode_time").datepicker();
+	$("#customerRecode_next_date").datepicker();
+	
+	if($("#userdept_codeid").val()!='') {
+		loadManagers($("#userdept_codeid").val());
+	}
+	createCustomerView();
+ });
+
+var sobj02;
+var createCustomerView = function() {
+	//http://localhost:8888/qkjmanage/customer_load?viewFlag=mdy&customer.uuid=3
+	var w_width = $(window).width();
+	var w_height = $(window).height();
+	sobj02 = new DialogIFrame({
+		src:'',
+		title:"查看促销活动信息",
+		width:w_width*0.35,
+		height:w_height*0.85
+	});
+	sobj02.selfAction = function(val1,val2) {};
+	sobj02.create();
+	//sobj02.open();
+};
+
+var openCustomerView = function(customer_uuid) {
+	var iframeId = sobj02.getConid() + "iframe";
+	$("#"+iframeId).attr("src","/salpro/salPromot_load?viewFlag=view&salstate=1&salPromot.uuid=" + customer_uuid);
+	sobj02.open();
+};
+
+</script>
+
 </html>

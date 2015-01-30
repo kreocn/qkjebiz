@@ -13,13 +13,16 @@ import org.iweb.sys.ContextHelper;
 import com.opensymphony.xwork2.ActionSupport;
 import com.qkj.adm.dao.LeaveDAO;
 import com.qkj.adm.domain.Leave;
+import com.qkj.manage.dao.ApproveDAO;
 import com.qkj.manage.dao.ProcessDAO;
+import com.qkj.manage.domain.Approve;
 
 public class LeaveAction extends ActionSupport implements ActionAttr {
 	private static final long serialVersionUID = 1L;
 	private static Log log = LogFactory.getLog(LeaveAction.class);
 	private Map<String, Object> map = new HashMap<String, Object>();
 	private LeaveDAO dao = new LeaveDAO();
+	private ApproveDAO apdao = new ApproveDAO();
 
 	private Leave leave;
 	private List<Leave> leaves;
@@ -28,6 +31,10 @@ public class LeaveAction extends ActionSupport implements ActionAttr {
 	private int recCount;
 	private int pageSize;
 	private int currPage;
+	
+	private Approve approve;
+	private List<Approve> approves;
+	private String isApprover;
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;工时管理";
 
 	public String getPath() {
@@ -90,6 +97,30 @@ public class LeaveAction extends ActionSupport implements ActionAttr {
 		this.currPage = currPage;
 	}
 
+	public Approve getApprove() {
+		return approve;
+	}
+
+	public void setApprove(Approve approve) {
+		this.approve = approve;
+	}
+
+	public List<Approve> getApproves() {
+		return approves;
+	}
+
+	public void setApproves(List<Approve> approves) {
+		this.approves = approves;
+	}
+
+	public String getIsApprover() {
+		return isApprover;
+	}
+
+	public void setIsApprover(String isApprover) {
+		this.isApprover = isApprover;
+	}
+
 	public String list() throws Exception {
 		ContextHelper.isPermit("QKJ_ADM_LEAVE_LIST");
 		try {
@@ -130,6 +161,16 @@ public class LeaveAction extends ActionSupport implements ActionAttr {
 				} else {
 					this.setLeave(null);
 				}
+				
+				map.clear();
+				map.put("int_id", leave.getUuid());
+				map.put("approve_type", 2);
+				this.setApproves(apdao.list(map));
+				
+				/* 检查当前用户是否已经审阅 */
+				if (apdao.userIsIn(approves, ContextHelper.getUserLoginUuid())) this.setIsApprover("true");
+				else this.setIsApprover("false");
+				System.out.println(approves.size()+"aaaaaaaaaaaaaaaaaaaaaaa"+isApprover);
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/adm/leave_list?viewFlag=relist'>工时列表</a>&nbsp;&gt;&nbsp;修改申请单";
 			} else {
 				this.setLeave(null);
@@ -394,6 +435,42 @@ public class LeaveAction extends ActionSupport implements ActionAttr {
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!allowance 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!allowance 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+	
+	/**
+	 * 审阅
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String approve() throws Exception {
+		ContextHelper.isPermit("QKJ_ADM_LEAVE_APPROVE");
+		try {
+			apdao.add(approve, 2, leave.getUuid());
+			addProcess("LEAVE_APPROVE", "工时-增加一条审阅信息");
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!approve 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!approve 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+
+	/**
+	 * 删除审阅
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String approveDel() throws Exception {
+		ContextHelper.isPermit("QKJ_ADM_LEAVE_APPROVEDELLAST");
+		try {
+			apdao.deleteLast(approve, 2, leave.getUuid());
+			addProcess("LEAVE_APPROVEDEL", "工时-删除一条审阅信息");
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!approveDel 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!approveDel 数据更新失败:", e);
 		}
 		return SUCCESS;
 	}

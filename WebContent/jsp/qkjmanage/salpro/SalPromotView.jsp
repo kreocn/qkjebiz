@@ -14,10 +14,12 @@
 
 	<div class="main">
 		<div class="dq_step">
+		<s:if test="salstate!=1">
 			${path} 
 			<span class="opb lb op-area"> <s:if test="'view' != viewFlag && @org.iweb.sys.ContextHelper@checkPermit('QKJ_SALPRO_SALPROMOT')"><a
 				href="<s:url action="salPromot_list" namespace="/salpro"></s:url>">促销活动列表</a></s:if>
 			</span>
+			</s:if>
 		</div>
 		<!-- 页面修改 -->
 		<s:form id="editForm" name="editForm" cssClass="validForm"
@@ -132,7 +134,7 @@
 						<div class="clear"></div>
 		        	</div>
 		        </div>
-				
+				<s:if test="salstate!=1">
 				<div class="label_main">
 					<div class="label_hang">
 						<div class="label_ltit">相关操作:</div>
@@ -144,6 +146,7 @@
 						</div>
 					</div>
 				</div>
+				</s:if>
 			</div>
 		</s:form>
 	</div>
