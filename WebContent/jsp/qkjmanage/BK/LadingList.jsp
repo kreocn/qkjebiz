@@ -26,10 +26,10 @@ $(function(){
 <div id="result">
 	<div class="itablemdy">
 	<div class="itabletitle">
-		<span class="title1">提货申请单列表</span>
+		<span class="title1">销售订单列表</span>
 		<span class="extra1">
 			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADING_ADD')">
-			<a href="<s:url namespace="/qkjmanage" action="lading_load"><s:param name="viewFlag">add</s:param></s:url>" >添加提货申请单</a>
+			<a href="<s:url namespace="/qkjmanage" action="lading_load"><s:param name="viewFlag">add</s:param></s:url>" >添加销售订单</a>
 			</s:if>
 		</span>
 	</div>	
