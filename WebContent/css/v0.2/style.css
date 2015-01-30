@@ -851,7 +851,7 @@ footer {
 }
 
 .tab_right {
-	float: right; width: 84%; margin-right: 0.8em;
+	float: right; width: 84%; margin-right: 0.8em; font-size: 14px;
 }
 
 .layout_iframe {
