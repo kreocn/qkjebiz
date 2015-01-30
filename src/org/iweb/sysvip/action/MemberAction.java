@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.iweb.sys.ActionAttr;
@@ -262,5 +264,23 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 			throw new Exception(this.getClass().getName() + "!distribution 数据更改失败:", e);
 		}
 		return SUCCESS;
+	}
+	
+	public boolean get_Member() throws Exception {
+		boolean flag=true;
+		try {
+			HttpServletRequest request=null;
+			String mid=request.getParameter("params");
+			map.clear();
+			map.put("uuid", mid);
+			this.setMembers(dao.list(map));
+			if(members.size()<=0){
+				flag=false;
+			}
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
+			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
+		}
+		return flag;
 	}
 }

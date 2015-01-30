@@ -9,6 +9,22 @@
 <s:action name="ref" namespace="/manager" executeResult="true" />
 </head>
 <script type="text/javascript">
+	function init()
+	{   
+	 var url = '/sysvip/getMember';
+	 var params =$("#order_user_id").val();
+	 $.ajax({
+	     type:'POST',            //http请求方式
+	     url: url,    //服务器段url地址
+	     data: params,           //发送给服务器段的数据
+	     success: callback  //定义交互完成，并且服务器正确返回数据时调用的回调函数
+	  });
+	}
+	
+	function callback(data)
+	{
+	alert(date);
+	}
 	var infoeditor01;
 	$(function(){
 		$("#addProductForm").dialog({ autoOpen : false,
