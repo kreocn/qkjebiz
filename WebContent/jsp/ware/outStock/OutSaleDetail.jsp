@@ -250,7 +250,7 @@
 						<th>实际价格</th>
 						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_ADD') && 2==outStock.send && @com.qkj.ware.action.warepower@checkPermit(outStock.store_id,'del')">
 						<th>
-						<s:url id="ladingAddProductsUrl" action="qkjm_addProducts" namespace="qkjmanage">
+						<s:url id="ladingAddProductsUrl" action="qkjm_addProducts" namespace="/qkjmanage">
 												<s:param name="uuidKey">outStock.uuid</s:param>
 												<s:param name="uuidValue" value="outStock.uuid" />
 												<s:param name="backUrl">/outStock/outStock_load?viewFlag=mdy&</s:param>
@@ -570,84 +570,5 @@ function wol() {
 		document.getElementById("indate").value=dateString;
 }
 </script>
-<script type="text/javascript">
 
-var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
-var curr_apply_dept = '${leave.leave_dept}';
-var curr_apply_user = '${leave.leave_user}';
-$(function(){
-	CommonUtil.pickrow('table1');
-	CommonUtil.pickrowAll('table1','uuidcheck');
-	if(curr_apply_dept!='') {
-		loadManagers(curr_apply_dept);
-	}
-	
-	$("#AddLeaveForm").dialog({
-	      autoOpen: false,
-	      width: 300,
-	      height: 100,
-	      modal: true
-	});
-	
-	$("#AddLeaveLink").click(function(){
-		$("#AddLeaveForm").dialog("open");
-	});
-	
-	showLeaveMold(${leave.leave_type});
-	$("#searchLeaveType").change(function(){
-		showLeaveMold($(this).val());
-	});
-	
-	$(".leave_cause_show").tooltip({
-		items: "[data]",
-		content: function() {
-			//alert($(this).attr("data"));
-			return "<div class='show_dialog'>" + $("#leave_cause" + $(this).attr("data")).html() + "</div>";
-	  }
-	});
-});
- 
-var sobj01;
-var selectDept = function() {
-	sobj01 = new DialogIFrame({src:'<s:url namespace="/sys" action="dept_permit_select" />?objname=sobj01',title:"选择部门"});
-	sobj01.selfAction = function(val1,val2) {
-		$("#userdept_codeid").val(val1);
-		$("#userdept_nameid").val(val2);
-		loadManagers(val1);
-	};
-	sobj01.create();
-	sobj01.open();
-};
-
-function loadManagers(dept_code) {
-	var ajax = new Common_Ajax('ajax_member_message');
-	ajax.config.action_url = ajax_url_action;
-	ajax.config._success = function(data, textStatus) {
-		$("#membermanagerid").clearAllOption();
-		$("#membermanagerid").addOption("--请选择--","");
-		$.each(data, function(i, n){
-			$("#membermanagerid").addOption(n.user_name,n.uuid);
-		});
-		if(curr_apply_user!='') {
-			$("#membermanagerid").val(curr_apply_user);
-		}
-	};
-	ajax.addParameter("work", "AutoComplete");
-	ajax.addParameter("parameters", "privilege_id=QKJCJ_SYS_AJAXLOAD_USER&dept_code=" + encodeURI(dept_code));
-	ajax.sendAjax2();
-}
-
-function addLeave(p_type) {
-	var add_url = '<s:url namespace="/adm" action="leave_load"><s:param name="viewFlag">add</s:param></s:url>';
-	add_url = add_url + "&leave.leave_type="+p_type;
-	//alert(add_url);
-	location.href = add_url;
-}
-
-function showCause(s_id) {
-	alert($("#"+s_id).text());
-}
-
-
-</script>
 </html>

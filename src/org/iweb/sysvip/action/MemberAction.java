@@ -6,9 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.struts2.ServletActionContext;
 import org.iweb.sys.ActionAttr;
 import org.iweb.sys.ContextHelper;
 import org.iweb.sys.MD5Plus;
@@ -269,7 +271,8 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 	public boolean get_Member() throws Exception {
 		boolean flag=true;
 		try {
-			HttpServletRequest request=null;
+			HttpServletResponse response = ServletActionContext.getResponse();
+			HttpServletRequest request = ServletActionContext.getRequest();
 			String mid=request.getParameter("params");
 			map.clear();
 			map.put("uuid", mid);
@@ -281,6 +284,6 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
 		}
-		return flag;
+		return true;
 	}
 }

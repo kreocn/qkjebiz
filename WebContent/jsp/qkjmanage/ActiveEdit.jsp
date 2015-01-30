@@ -9,22 +9,6 @@
 <s:action name="ref" namespace="/manager" executeResult="true" />
 </head>
 <script type="text/javascript">
-	function init()
-	{   
-	 var url = '/sysvip/getMember';
-	 var params =$("#order_user_id").val();
-	 $.ajax({
-	     type:'POST',            //http请求方式
-	     url: url,    //服务器段url地址
-	     data: params,           //发送给服务器段的数据
-	     success: callback  //定义交互完成，并且服务器正确返回数据时调用的回调函数
-	  });
-	}
-	
-	function callback(data)
-	{
-	alert(date);
-	}
 	var infoeditor01;
 	$(function(){
 		$("#addProductForm").dialog({ autoOpen : false,
@@ -1128,7 +1112,7 @@
 					<div class="label_hang label_button tac">
 						<s:hidden name="activeMemcost.active_id" value="%{active.uuid}" />
 						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEMEMCOST_ADD')">
-							<s:submit id="add" name="add" value="确定" action="activeMemcost_add" />
+							<s:submit id="add" name="add" value="确定" action="activeMemcost_add"/>
 						</s:if>
 					</div>
 				</div>
