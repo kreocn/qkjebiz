@@ -84,6 +84,10 @@ public class IWebConfig extends HttpServlet implements javax.servlet.Servlet {
 			/** 开始缓存角色数据 **/
 			/** ------------------- **/
 			db.cacheRole();
+			/** -------------------- **/
+			/** 开始缓存部门数据 **/
+			/** ------------------- **/
+			db.cacheDept();
 		} catch (Exception e) {
 			log.fatal("Init Config Error! Please Container or web.xml is Corrent ! \n" + ToolsUtil.getStackTrace(e));
 			throw new RuntimeException("Init Config Error!");
