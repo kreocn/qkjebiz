@@ -5,14 +5,22 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import net.sf.json.JSONObject;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.iweb.sys.JSONUtil;
 import org.iweb.sys.ToolsUtil;
 import org.iweb.sys.dao.DepartmentDAO;
 import org.iweb.sys.dao.UserRoleDAO;
 import org.iweb.sys.domain.Department;
 import org.iweb.sys.domain.RolePrvg;
+import org.iweb.sys.encrypt.EncryptAES;
+import org.iweb.sys.encrypt.EncryptFactory;
+
+import com.qkj.manage.dao.ProTypeDAO;
+import com.qkj.manage.dao.ProductDAO;
+import com.qkj.manage.domain.ProType;
+import com.qkj.manage.domain.Product;
 
 /**
  * 缓存数据库中的数据到内存,全部采用JSON形式存储
@@ -21,9 +29,8 @@ import org.iweb.sys.domain.RolePrvg;
  * 
  */
 @SuppressWarnings("unchecked")
-public final class SysDBCacheLogic {
+public final class SysDBCacheLogic extends SysCacheLogic {
 	private static Log log = LogFactory.getLog(SysDBCacheLogic.class);
-	private static SysCache cache = CacheFactory.getCacheInstance();
 
 	// 防止重复,定义的key前缀
 	// 角色前缀
@@ -31,7 +38,14 @@ public final class SysDBCacheLogic {
 	// 角色功能前缀
 	public final static String CACHE_ROLE_FUNCTION_PREFIX = "role-function-";
 
-	public synchronized void cacheRole() {
+	public synchronized void cacheRole(boolean delFlag) {
+		// 是否需要先清空原缓存
+		if (delFlag) {
+			log.info("开始清空原角色缓存数据");
+			cache.del(CACHE_ROLE_PREFIX + "*");
+			cache.del(CACHE_ROLE_FUNCTION_PREFIX + "*");
+			log.info("原角色缓存数据清空完毕");
+		}
 		log.info("开始缓存角色权限数据");
 		UserRoleDAO dao = new UserRoleDAO();
 		Map<String, String> m = new HashMap<>();
@@ -52,7 +66,14 @@ public final class SysDBCacheLogic {
 	// 父部门列表前缀
 	public final static String CACHE_DEPT_PREFIX_PARENT = "dept-parent-";
 
-	public synchronized void cacheDept() {
+	public synchronized void cacheDept(boolean delFlag) {
+		// 是否需要先清空原缓存
+		if (delFlag) {
+			log.info("开始清空原部门缓存数据");
+			cache.del(CACHE_DEPT_PREFIX_SUB + "*");
+			cache.del(CACHE_DEPT_PREFIX_PARENT + "*");
+			log.info("原部门缓存数据清空完毕");
+		}
 		log.info("开始缓存部门数据");
 		DepartmentDAO dao = new DepartmentDAO();
 		List<Department> l = dao.list(null);
@@ -82,41 +103,72 @@ public final class SysDBCacheLogic {
 		log.info("缓存部门数据完成");
 	}
 
-	/**
-	 * 碰到相同的值,则value用","分开保存,而不是覆盖
-	 * 
-	 * @param m
-	 * @param key
-	 * @param value
-	 */
-	private void cacheMap(Map<String, String> m, String key, String value) {
-		if (m.containsKey(key)) {
-			m.put(key, m.get(key) + value + ",");
-		} else {
-			m.put(key, value + ",");
-		}
-	}
+	// 子部门列表前缀
+	public final static String CACHE_PRODTREE_PREFIX = "prodtree-";
 
-	/**
-	 * 把用","分开的value,重新保存为Array形式的JSON字符串
-	 * 
-	 * @param m
-	 */
-	private void cacheValue2JSON(Map<String, String> m) {
-		// System.out.println("========================================");
-		if (m.size() > 0) {
-			for (Map.Entry<String, String> entry : m.entrySet()) {
-				String val = entry.getValue();
-				if (val.length() > 1) {
-					val = val.substring(0, val.length() - 1);
-					val = JSONUtil.toJsonString(val.split(","));
-				} else {
-					val = null;
-				}
-				// System.out.println(entry.getKey() + ":" + val);
-				cache.put(entry.getKey(), val);
-			}
+	// 产品树缓存
+	public synchronized void cacheProdTree(boolean delFlag) {
+		// 是否需要先清空原缓存
+		if (delFlag) {
+			log.info("开始清空原产品树缓存数据");
+			cache.del(CACHE_PRODTREE_PREFIX + "*");
+			log.info("原产品缓存数据清空完毕");
 		}
-		// System.out.println("========================================");
+		log.info("开始缓存产品树数据");
+		ProTypeDAO ptdao = new ProTypeDAO();
+		ProType proType;
+		Product product;
+		List<ProType> proTypes = ptdao.list(null);
+		ProductDAO pdao = new ProductDAO();
+		List<Product> products = pdao.list(null);
+		List<Integer> types = ptdao.getTypeCount();
+		if (types.size() > 0) {
+			StringBuffer fnode = new StringBuffer();
+			StringBuffer allnode = new StringBuffer();
+			StringBuffer[] typenode = new StringBuffer[types.size()];
+			// 提供映射 数组下标->type_id
+			int[] s_mapping = new int[types.size()];
+			for (int k = 0; k < s_mapping.length; k++) {
+				s_mapping[k] = types.get(k);
+				typenode[k] = new StringBuffer();
+				for (int i = 0; i < proTypes.size(); i++) {
+					proType = proTypes.get(i);
+					if (s_mapping[k] == proType.getType()) {
+						allnode.append("{id:").append(proType.getUuid()).append(",pId:0, name:'").append(proType.getName()).append("',open:false},");
+						typenode[k].append("{id:").append(proType.getUuid()).append(",pId:0, name:'").append(proType.getName()).append("',open:false},");
+						for (int j = 0; j < products.size(); j++) {
+							product = products.get(j);
+							Integer uuid = proType.getUuid();
+							if (uuid.equals(product.getBrand())) {
+								allnode.append("{id:").append(uuid).append(product.getUuid()).append(", pId:").append(uuid).append(", name:'").append(product.getTitle())
+										.append("',puuid:").append(product.getUuid()).append(",mp:'").append(ToolsUtil.getEmpty(product.getMarket_price())).append("',gp:'")
+										.append(ToolsUtil.getEmpty(product.getGroup_price())).append("',dp:'").append(ToolsUtil.getEmpty(product.getDealer_price()))
+										.append("',a1:'").append(ToolsUtil.getEmpty(product.getAgree_price_1())).append("',a2:'")
+										.append(ToolsUtil.getEmpty(product.getAgree_price_2())).append("',a3:'").append(ToolsUtil.getEmpty(product.getAgree_price_3()))
+										.append("',case_spec:").append(ToolsUtil.getEmpty(product.getCase_spec())).append("},");
+								JSONObject json = JSONObject.fromObject(product);
+								json.put("id", uuid + product.getUuid());
+								json.put("pId", uuid);
+								json.put("name", product.getTitle());
+								typenode[k].append(json.toString() + ",");
+							}
+						}
+					}
+				}
+			}
+			allnode.deleteCharAt(allnode.length() - 1).insert(0, "[").insert(allnode.length(), "]");
+			fnode.append("var zNodes=").append(allnode).append(";");
+			// 对产品树进行AES加密
+			EncryptAES aes = (EncryptAES) EncryptFactory.getEncrypt("AES");
+			for (int i = 0; i < s_mapping.length; i++) {
+				typenode[i].deleteCharAt(typenode[i].length() - 1).insert(0, "[").insert(typenode[i].length(), "]");
+				fnode.append("var zNodes").append(s_mapping[i]).append("=").append(typenode[i]).append(";");
+				// 生成独立JSON
+				cache.put(CACHE_PRODTREE_PREFIX + s_mapping[i], aes.encrypt(typenode[i].toString()));
+			}
+			log.info("缓存产品树数据完成");
+		} else {
+			log.info("缓存产品树数据完成:还没有产品");
+		}
 	}
 }
