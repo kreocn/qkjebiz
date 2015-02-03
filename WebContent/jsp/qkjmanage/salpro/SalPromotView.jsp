@@ -90,12 +90,30 @@
 						</div>
 					</div>
 					
+					<div class="label_main">
 					<div class="label_hang">
 						<div class="label_ltit">范围:</div>
+						${salPromot.sal_scopDept_name }
+					</div>
+				</div>
+				<div class="label_main">
+					<div class="label_hang">
+						<div class="label_ltit">范围说明:</div>
 						<div class="label_rwben">
 						${salPromot.sal_scop }
 						</div>
 					</div>
+				</div>
+				
+				<div class="label_hang">
+							<div class="label_ltit">许可范围:</div>
+							<div class="label_rwben label_rwb">
+								<span class="label_rwb">
+								 <s:select id="sal_scopUs" name="salPromot.sal_scopUs" cssClass="selectKick" list="#{1:'公有',2:'私有'}" headerKey="" headerValue="--请选择--"  onchange="pub();"/>
+								</span>
+							</div>
+				</div>
+				
 				</div>
 				<s:if test="salstate!=1">
 				<div class="label_main">

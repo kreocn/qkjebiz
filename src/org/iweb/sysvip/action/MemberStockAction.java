@@ -2,6 +2,7 @@ package org.iweb.sysvip.action;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -342,8 +343,10 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 		        	                //strc00 = sdf.format(dc.getDate()); 
 		        				   checkdate=sdf.format(dc.getDate());
 		        			   }else{
+		        				   checkdate=content;
+		        				  // DateFormat sdfs=new SimpleDateFormat(checkdate);
 		        				   //checkdate=content;
-		        				   message="模板中日期格式不正确";
+		        				   //message="模板中日期格式不正确";
 		        			   }
 		        			  
 		        		   }
@@ -500,7 +503,7 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 			 //设这输出的类型和文件格式
 			   response.setContentType("application/vnd.ms-excel;charset=UTF-8");
 			   //设置文件名和并且解决中文名不能下载
-			   String filenames = "("+member.getUuid()+")"+date+"库存盘点表.xls";
+			   String filenames = "("+member.getUuid()+")"+date+"%E5%BA%93%E5%AD%98%E7%9B%98%E7%82%B9%E8%A1%A8.xls";
 			      response.addHeader("Content-Disposition","attachment;   filename=\""+ new String(filenames.getBytes(),"UTF-8")+   "\"");    
 			      //创建输出流
 			      OutputStream os = response.getOutputStream();
