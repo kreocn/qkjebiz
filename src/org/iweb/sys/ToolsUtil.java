@@ -397,7 +397,7 @@ public class ToolsUtil {
 	}
 
 	/**
-	 * 在特定的map&lt;id,p_id&gt;中,用来判定是否存在从属关系,即判断id是否从属于p_id(可能包含多层),
+	 * 在特定的map&lt;id:p_id&gt;中,用来判定是否存在从属关系,即判断id是否从属于p_id(可能包含多层),
 	 * id和p_id相同将返回false
 	 * 
 	 * @param map
@@ -406,7 +406,7 @@ public class ToolsUtil {
 	 * @param p_id
 	 * @return
 	 */
-	private static boolean checkParent(Map<String, String> map, String id, String p_id) {
+	public static boolean checkParent(Map<String, String> map, String id, String p_id) {
 		while (true) {
 			if (map.containsKey(id)) {
 				return p_id.equals(map.get(id)) || checkParent(map, map.get(id), p_id);
@@ -985,5 +985,19 @@ public class ToolsUtil {
 
 		}
 		return null;
+	}
+
+	public Object[] mergeArray(Object[] al, Object[] bl) {
+		if ((bl == null || bl.length == 0) && (al == null || al.length == 0)) return null;
+		else if (bl == null || bl.length == 0) return al;
+		else if (al == null || al.length == 0) return bl;
+		else {
+			Object[] a = al;
+			Object[] b = bl;
+			Object[] c = new Object[a.length + b.length];
+			System.arraycopy(a, 0, c, 0, a.length);
+			System.arraycopy(b, 0, c, a.length, b.length);
+			return c;
+		}
 	}
 }

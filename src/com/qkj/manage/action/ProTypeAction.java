@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileReader;
-import java.io.PrintWriter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -12,14 +11,12 @@ import java.util.Map;
 
 import net.sf.json.JSONObject;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.iweb.sys.ActionAttr;
 import org.iweb.sys.ContextHelper;
 import org.iweb.sys.OSSUtil_IMG;
 import org.iweb.sys.ToolsUtil;
-import org.iweb.sys.encrypt.AbstractEncrypt;
 import org.iweb.sys.encrypt.EncryptAES;
 import org.iweb.sys.encrypt.EncryptFactory;
 

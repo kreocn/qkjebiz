@@ -185,7 +185,19 @@ font-size: 14px;
 						<th>实际价格</th>
 						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_ADD') && null==inStock.confirm && @com.qkj.ware.action.warepower@checkPermit(inStock.store_id,'add')">
 						<th>
-						<a id="addItem" onclick="commain();" >添加入库明细</a>
+						<s:url id="ladingAddProductsUrl" action="qkjm_addProducts" namespace="/qkjmanage">
+												<s:param name="uuidKey">inStock.uuid</s:param>
+												<s:param name="uuidValue" value="inStock.uuid" />
+												<s:param name="backUrl">/inStock/inStock_load?viewFlag=mdy&</s:param>
+												<s:param name="actionUrl">/inStock/inDetail_add</s:param>
+												<s:param name="keyName">inDetail.lading_id</s:param>
+												<s:param name="prodName">inDetail.product_id</s:param>
+												<s:param name="perName">inDetail.price</s:param>
+												<s:param name="numName">inDetail.num</s:param>
+												<s:param name="totalName">inDetail.total</s:param>
+							</s:url>
+											<input type="button" id="product" onclick="window.location.href='${ladingAddProductsUrl}';" value="添加酒品" />
+						<!-- <a id="addItem" onclick="commain();" >添加入库明细</a> -->
 						</th>
 						</s:if>
 					</tr>

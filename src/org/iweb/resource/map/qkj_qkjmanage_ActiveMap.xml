@@ -193,8 +193,8 @@ SELECT MAX(a.baotime) baotime,MAX(a.stars) stars,MAX(a.sing) sing,MAX(a.spass) s
 	
 	<insert id="qkjmanage_addActive" parameterClass="active">
 		<![CDATA[ 
-			Insert Into qkjm_r_active(uid,apply_dept,apply_user,theme,purpose,plan_start,plan_end,address,person,note,expect,add_user,add_time,remark)
-			Values (#uid#,#apply_dept#,#apply_user#,#theme#,#purpose#,#plan_start#,#plan_end#,#address#,#person#,#note#,#expect#,#add_user#,now(),#remark#)
+			Insert Into qkjm_r_active(uid,apply_dept,apply_user,theme,purpose,plan_start,plan_end,address,person,note,expect,add_user,add_time,remark,active_type)
+			Values (#uid#,#apply_dept#,#apply_user#,#theme#,#purpose#,#plan_start#,#plan_end#,#address#,#person#,#note#,#expect#,#add_user#,now(),#remark#,#active_type#)
 		]]>
 		<selectKey resultClass="int" keyProperty="uuid">
 		<![CDATA[ Select LAST_INSERT_ID() ]]>
@@ -218,7 +218,8 @@ SELECT MAX(a.baotime) baotime,MAX(a.stars) stars,MAX(a.sing) sing,MAX(a.spass) s
 				m_bprice=#m_bprice#,
 				f_upprice=#f_upprice#,
 				f_price=#f_price#,
-				f_bprice=#f_bprice#
+				f_bprice=#f_bprice#,
+				active_type=#active_type#
 			Where uuid = #uuid#
 		]]>
 	</update>
@@ -458,6 +459,14 @@ SELECT MAX(a.baotime) baotime,MAX(a.stars) stars,MAX(a.sing) sing,MAX(a.spass) s
 				remark=#remark#,
 				ship_type=#ship_type#,
 				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<update id="qkjmanage_mdyActiveType" parameterClass="active">
+		<![CDATA[
+			Update qkjm_r_active
+			Set active_type=#active_type#
 			Where uuid = #uuid#
 		]]>
 	</update>
