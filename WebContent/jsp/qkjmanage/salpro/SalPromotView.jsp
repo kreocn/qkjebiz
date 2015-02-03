@@ -33,6 +33,7 @@
 								${salPromot.uuid }								
 							</div>
 						</div>
+						<s:if test="salstate!=1">
 						<div class="label_hang">
 							<div class="label_ltit">活动状态:</div>
 							<div class="label_rwb">
@@ -41,6 +42,7 @@
 								<s:if test="%{salPromot.status==2}">审核通过</s:if>								
 							</div>
 						</div>
+						
 						<div class="label_hang">
 							<div class="label_ltit">审核状态:</div>
 							<div class="label_rwbenx">
@@ -63,6 +65,7 @@
 															
 							</div>
 						</div>
+						</s:if>
 					</div>
 				</s:if>
 				<div class="label_main">
@@ -72,12 +75,14 @@
 						${salPromot.sal_title }	
 						</div>
 					</div>
+					<s:if test="salstate!=1">
 					<div class="label_hang">
 			            <div class="label_ltit">活动时间:</div>
 			            <div class="label_rwbenx">
 			            	${it:formatDate(salPromot.startime,'yyyy-MM-dd')}&nbsp;至&nbsp;${it:formatDate(salPromot.endtime,'yyyy-MM-dd')}
 			            </div>
 			        </div>
+			        </s:if>
 			        <div class="label_hang">
 						<div class="label_ltit">返利系数:</div>
 						<div class="label_rwben">
@@ -92,7 +97,7 @@
 						</div>
 					</div>
 				</div>
-				
+				<s:if test="salstate!=1">
 				<div class="label_main">
 					<div class="label_hang">
 						<div class="label_ltit">填加人:</div>
@@ -120,7 +125,7 @@
 						</div>
 					</div>
 				</div>
-				
+				</s:if>
 				<div class="label_main">
 		        <div class="label_hang">
 		            <div class="label_ltit">促销方案:</div>

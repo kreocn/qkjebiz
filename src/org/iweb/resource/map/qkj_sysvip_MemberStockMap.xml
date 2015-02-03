@@ -25,7 +25,7 @@
 			<isNotEmpty prepend="AND" property="member_name"><![CDATA[ vm.member_name LIKE CONCAT(#member_name#,'%') ]]></isNotEmpty>
 
 		</dynamic>
-		<![CDATA[ LIMIT 1000 ]]>
+		<![CDATA[ORDER BY m.`check_date` DESC ]]>
 	</select>
 	<select id="sysvip_getMemberStocksCounts" resultClass="int" parameterClass="java.util.Map">
 		<![CDATA[ 

@@ -13,6 +13,7 @@
 			<isNotEmpty prepend="AND" property="title"><![CDATA[ p.title=#title# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="grade"><![CDATA[ p.grade=#grade# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="status"><![CDATA[ p.status=#status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="notype"><![CDATA[ t.`type`<>1 ]]></isNotEmpty>
 		</dynamic>
 	</select>
 	<select id="qkjmanage_getProductsCounts" resultClass="int" parameterClass="java.util.Map">
