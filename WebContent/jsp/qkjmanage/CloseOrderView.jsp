@@ -65,7 +65,15 @@
 								</div>
 							</div>
 						</div>
-
+					<div class="label_main">
+						<div class="label_hang">
+							<div class="label_ltit">单据编号:</div>
+							<div class="label_rwb">
+								${closeOrder.close_num }
+							</div>
+						</div>
+					</div>
+					
 					<div class="label_main">
 						<div class="label_hang">
 							<div class="label_ltit">主题:</div>
@@ -84,14 +92,6 @@
 							</div>
 						</div>
 
-						<div class="label_hang">
-							<div class="label_ltit">促销方案:</div>
-							<div class="label_rwben label_rwb">
-								<span class="label_rwb"> 
-								<s:select name="closeOrder.salPro_id" list="salPromots" listKey="uuid" listValue="sal_title" cssClass="validate[required]" headerKey="" headerValue="--请选择--"  />
-								</span>
-							</div>
-						</div>
 
 						<!--<div class="label_hang">
 							<div class="label_ltit">促销方案:</div>
@@ -138,6 +138,33 @@
 							</div>
 						</div>
 					</div>
+					
+					<div class="label_main">
+							<fieldset class="clear">
+								<legend>可参与促销活动</legend>
+								<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+									<tr>
+										<th>参加</th>
+										<th>活动名称</th>
+										<th>开始时间</th>
+										<th>结束时间</th>
+									</tr>
+									<!-- lading.promotions -->
+									<s:iterator value="salPromots" status="sta">
+										<tr>
+											<td class="nw"><input type="checkbox" name="closeOrder.salPro_id" value="${uuid}" /></td>
+											<td class="nw">${sal_title}</td>
+											<td class="nw">${it:formatDate(startime,'yyyy-MM-dd')}</td>
+											<td class="nw">${it:formatDate(endtime,'yyyy-MM-dd')}</td>
+										</tr>
+									</s:iterator>
+								</table>
+								<script type="text/javascript">
+									setCheckBox("closeOrder.salPro_id", '${closeOrder.salPro_id}');
+								</script>
+							</fieldset>
+						</div>
+						
 						<div class="label_main">
 							<div class="lb_xxsm">
 								<p class="lb_yjtit fy_hide">

@@ -67,8 +67,8 @@
 	</select>
 	<insert id="qkjmanage_addCloseOrder" parameterClass="closeOrder">
 		<![CDATA[ 
-			Insert Into qkjm_r_closeorder(close_time,content,theme,member_id,member_address,member_phone,add_user,add_time,lm_time,lm_user,apply_dept)
-			Values (#close_time#,#content#,#theme#,#member_id#,#member_address#,#member_phone#,#add_user#,#add_time#,#lm_time#,#lm_user#,#apply_dept#)
+			Insert Into qkjm_r_closeorder(close_time,content,theme,member_id,member_address,member_phone,add_user,add_time,lm_time,lm_user,apply_dept,close_num)
+			Values (#close_time#,#content#,#theme#,#member_id#,#member_address#,#member_phone#,#add_user#,#add_time#,#lm_time#,#lm_user#,#apply_dept#,#close_num#)
 		]]>
 		<selectKey resultClass="int" keyProperty="uuid">
 		<![CDATA[ Select LAST_INSERT_ID() ]]>
@@ -85,7 +85,8 @@
 			member_phone=#member_phone#,
 			lm_time=#lm_time#,
 			lm_user=#lm_user#,
-			salPro_id=#salPro_id#
+			salPro_id=#salPro_id#,
+			close_num=#close_num#
 			Where uuid = #uuid#
 		]]>
 	</update>

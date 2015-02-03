@@ -4,6 +4,7 @@ import java.util.*;
 
 public class CloseOrder {
 	private Integer uuid;// (int)
+	private String close_num;// 编号
 	private String salPro_id;// 促销方案
 	private Date close_time;// (date)结案时间
 	private String content;// (text)内容
@@ -39,6 +40,14 @@ public class CloseOrder {
 
 	public void setUuid(Integer uuid) {
 		this.uuid = uuid;
+	}
+
+	public String getClose_num() {
+		return close_num;
+	}
+
+	public void setClose_num(String close_num) {
+		this.close_num = close_num;
 	}
 
 	public Date getClose_time() {
