@@ -173,9 +173,9 @@
 						</div>
 					</s:if>
 					<s:if test="'mdy' == viewFlag && closeOrder.salPro_id!=null">
-						<div class="label_main">
-							<div class="lb_xxsm">
-								<p class="lb_yjtit fy_hide">
+						<fieldset class="clear">
+								<legend>结案单明细</legend>
+								<div class="label_main">
 									<s:if test="(closeOrder.check_state==0 || closeOrder.check_state==5) && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEPRODUCT_ADD')">
 										<div>
 											<s:url id="ladingAddProductsUrl" action="qkjm_addProducts" namespace="qkjmanage">
@@ -192,8 +192,6 @@
 											<input type="button" id="product" onclick="window.location.href='${ladingAddProductsUrl}';" value="添加酒品" />
 										</div>
 									</s:if>
-								</p>
-								<div class="lb_yjcon">
 									<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
 										<tr>
 											<th>品名</th>
@@ -218,11 +216,10 @@
 									</table>
 									<p class="lb_gstit">费用合计</p>
 									<p class="lb_jwei">￥${closeOrder.totel_price}</p>
-								</div>
 							</div>
-						</div>
+						</fieldset>
+						<div style="height:10px;"></div>
 					</s:if>
-
 					<div class="label_main">
 						<div class="label_hang">
 							<div class="label_ltit">说明:</div>
@@ -268,36 +265,36 @@
 							</s:elseif>
 							<s:elseif test="closeOrder.check_state>0 && 'mdy' == viewFlag">
 								<s:if test="closeOrder.check_state==1  && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_CLOSEORDER_STATUS1')">
-									<s:submit id="mdyStatus1" name="mdyStatus1" value="主管审核通过" action="closeOrder_check1" onclick="return isOp('确定执行此操作?');" cssClass="input-yellow" />
+									<s:submit id="mdyStatus1" name="mdyStatus1" value="主管审核通过" action="closeOrder_check1" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
 									<s:submit id="mdyStatus5" name="mdyStatus5" cssClass="input-red" value="审核不通过" action="closeOrder_check5" onclick="return isOp('确定执行此操作?');" />
 								</s:if>
 								<s:if test="closeOrder.check_state==10 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_CLOSEORDER_STATUS10')">
-									<s:submit id="mdyStatus10" name="mdyStatus10" value="招商经理审核通过" action="closeOrder_check10" onclick="return isOp('确定执行此操作?');" cssClass="input-yellow" />
+									<s:submit id="mdyStatus10" name="mdyStatus10" value="招商经理审核通过" action="closeOrder_check10" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
 									<s:submit id="mdyStatus5" name="mdyStatus5" cssClass="input-red" value="审核不通过" action="closeOrder_check5" onclick="return isOp('确定执行此操作?');" />
 								</s:if>
 								<s:if test="closeOrder.check_state==20 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_CLOSEORDER_STATUS20')">
-									<s:submit id="mdyStatus20" name="mdyStatus20" value="大区经理审核通过" action="closeOrder_check20" onclick="return isOp('确定执行此操作?');" cssClass="input-yellow" />
+									<s:submit id="mdyStatus20" name="mdyStatus20" value="大区经理审核通过" action="closeOrder_check20" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
 									<s:submit id="mdyStatus5" name="mdyStatus5" cssClass="input-red" value="审核不通过" action="closeOrder_check5" onclick="return isOp('确定执行此操作?');" />
 								</s:if>
 								<s:if test="closeOrder.check_state==30 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_CLOSEORDER_STATUS30')">
-									<s:submit id="mdyStatus30" name="mdyStatus30" value="财务审核通过" action="closeOrder_check30" onclick="return isOp('确定执行此操作?');" cssClass="input-yellow" />
+									<s:submit id="mdyStatus30" name="mdyStatus30" value="财务审核通过" action="closeOrder_check30" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
 									<s:submit id="mdyStatus5" name="mdyStatus5" cssClass="input-red" value="审核不通过" action="closeOrder_check5" onclick="return isOp('确定执行此操作?');" />
 								</s:if>
 								<s:if test="closeOrder.check_state==40 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_CLOSEORDER_STATUS40')">
-									<s:submit id="mdyStatus40" name="mdyStatus40" value="运营总监审核通过" action="closeOrder_check40" onclick="return isOp('确定执行此操作?');" cssClass="input-yellow" />
+									<s:submit id="mdyStatus40" name="mdyStatus40" value="运营总监审核通过" action="closeOrder_check40" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
 									<s:submit id="mdyStatus5" name="mdyStatus5" cssClass="input-red" value="审核不通过" action="closeOrder_check5" onclick="return isOp('确定执行此操作?');" />
 								</s:if>
 								<s:if test="closeOrder.check_state==50 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_CLOSEORDER_STATUS50')">
-									<s:submit id="mdyStatus50" name="mdyStatus50" value="业务副总审核通过" action="closeOrder_check50" onclick="return isOp('确定执行此操作?');" cssClass="input-yellow" />
+									<s:submit id="mdyStatus50" name="mdyStatus50" value="业务副总审核通过" action="closeOrder_check50" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
 									<s:submit id="mdyStatus5" name="mdyStatus5" cssClass="input-red" value="审核不通过" action="closeOrder_check5" onclick="return isOp('确定执行此操作?');" />
 								</s:if>
 								<s:if test="closeOrder.check_state==60 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_CLOSEORDER_STATUS60')">
-									<s:submit id="mdyStatus60" name="mdyStatus60" value="总经理审核通过" action="closeOrder_check60" onclick="return isOp('确定执行此操作?');" cssClass="input-yellow" />
+									<s:submit id="mdyStatus60" name="mdyStatus60" value="总经理审核通过" action="closeOrder_check60" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
 									<s:submit id="mdyStatus5" name="mdyStatus5" cssClass="input-red" value="审核不通过" action="closeOrder_check5" onclick="return isOp('确定执行此操作?');" />
 								</s:if>
 
 								<s:if test="closeOrder.check_state>=30 && closeOrder.nd_check_state<=5  && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_CLOSEORDER_NDSTATUS0')">
-									<s:submit id="mdyndStatus0" name="mdyndStatus0" value="数据中心审核通过" action="closeOrder_checknd0" onclick="return isOp('确定执行此操作?');" cssClass="input-yellow" />
+									<s:submit id="mdyndStatus0" name="mdyndStatus0" value="数据中心审核通过" action="closeOrder_checknd0" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
 									<s:submit id="mdyndStatus5" name="mdyndStatus5" cssClass="input-red" value="审核不通过" action="closeOrder_checknd5" onclick="return isOp('确定执行此操作?');" />
 								</s:if>
 
