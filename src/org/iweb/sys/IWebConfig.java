@@ -16,8 +16,7 @@ import javax.servlet.http.HttpServlet;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.iweb.sys.cache.CacheFactory;
-import org.iweb.sys.cache.SysCache;
-import org.iweb.sys.cache.SysDBCacheLogic;
+import org.iweb.sys.cache.SysCacheLogic;
 
 /**
  * 系统启动加载缓存的Servlet
@@ -29,14 +28,15 @@ public class IWebConfig extends HttpServlet implements javax.servlet.Servlet {
 	private static final long serialVersionUID = 1L;
 	private static Log log = LogFactory.getLog(IWebConfig.class);
 	private static Map<String, String> map = new HashMap<String, String>();
-	private SysCache cache;
+
+	// private SysCache cache;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public IWebConfig() {
 		super();
-		cache = CacheFactory.getCacheInstance();
+		// cache = CacheFactory.getCacheInstance();
 	}
 
 	/**
@@ -44,16 +44,18 @@ public class IWebConfig extends HttpServlet implements javax.servlet.Servlet {
 	 */
 	public void init(ServletConfig config) throws ServletException {
 		try {
-			super.init(config);
-
 			/** ------------------------------- **/
 			/** 开始加载系统配置和系统参数 **/
 			/** ------------------------------- **/
+			super.init(config);
 			String appDir = config.getServletContext().getRealPath("/");
 			if (!appDir.endsWith(File.separator)) {
 				appDir += File.separator;
 			}
 			String abstractDir = config.getServletContext().getContextPath();
+			if (!abstractDir.endsWith(File.separator)) {
+				abstractDir += File.separator;
+			}
 			this.appendConfig("WebAbsolutePath", appDir);
 			this.appendConfig("WebRelativePath", abstractDir);
 			Enumeration<String> keys = config.getInitParameterNames();
@@ -70,28 +72,34 @@ public class IWebConfig extends HttpServlet implements javax.servlet.Servlet {
 				for (Map.Entry<Object, Object> entry : p.entrySet()) {
 					this.appendConfig((String) entry.getKey(), (String) entry.getValue());
 				}
-				if (!cache.contain("fileUploadRoot")) {
+				if (!getConfigMap().containsKey("fileUploadRoot")) {
 					log.warn("参数:fileUploadRoot 未发现,上传文件功能可能无法使用!");
-				} else if (!(new File((String) cache.get("fileUploadRoot")).exists())) {
+				} else if (!(new File((String) getConfigMap().get("fileUploadRoot")).exists())) {
 					log.warn("参数:fileUploadRoot 所配置路径不存在,上传功能可能无法使用。请到/WEB-INF/sys.properties中配置正确的路径。");
 				}
 			} else {
 				log.warn("系统参数配置文件不存在,加载失败!");
 			}
 
-			SysDBCacheLogic db = new SysDBCacheLogic();
-			/** -------------------- **/
-			/** 开始缓存角色数据 **/
-			/** ------------------- **/
-			db.cacheRole();
+			// 初始化常量
+			new SysCacheLogic(appDir, abstractDir);
+			// 加载缓存
+			CacheFactory.CacheFlow("all");
 		} catch (Exception e) {
 			log.fatal("Init Config Error! Please Container or web.xml is Corrent ! \n" + ToolsUtil.getStackTrace(e));
 			throw new RuntimeException("Init Config Error!");
 		}
 	}
 
+	/**
+	 * @deprecated replace By org.iweb.sys.cache.SysCache
+	 * @see org.iweb.sys.cache.SysCache
+	 * @see org.iweb.sys.cache.CacheFactory
+	 * @return
+	 */
+	@Deprecated
 	public void reloadSysProperties() throws Exception {
-		File f = new File(cache.get("WebAbsolutePath") + "WEB-INF/sys.properties");
+		File f = new File(getConfigMap().get("WebAbsolutePath") + "WEB-INF/sys.properties");
 		if (f.exists()) {
 			Properties p = new Properties();
 			FileInputStream fis = new FileInputStream(f);
@@ -99,9 +107,9 @@ public class IWebConfig extends HttpServlet implements javax.servlet.Servlet {
 			for (Map.Entry<Object, Object> entry : p.entrySet()) {
 				this.appendConfig((String) entry.getKey(), (String) entry.getValue());
 			}
-			if (!cache.contain("fileUploadRoot")) {
+			if (!getConfigMap().containsKey("fileUploadRoot")) {
 				log.warn("参数:fileUploadRoot 未发现,上传文件功能可能无法使用!");
-			} else if (!(new File((String) cache.get("fileUploadRoot")).exists())) {
+			} else if (!(new File((String) getConfigMap().get("fileUploadRoot")).exists())) {
 				log.warn("参数:fileUploadRoot 所配置路径不存在,上传功能可能无法使用。请到/WEB-INF/sys.properties中配置正确的路径。");
 			}
 			fis.close();
@@ -111,7 +119,7 @@ public class IWebConfig extends HttpServlet implements javax.servlet.Servlet {
 	}
 
 	private void appendConfig(String key, String value) {
-		cache.put(key, value);
+		// cache.put(key, value);
 		map.put(key, value);
 		StringBuffer sb = new StringBuffer();
 		sb.append("setConfig:[");

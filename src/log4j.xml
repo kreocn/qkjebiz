@@ -3,7 +3,7 @@
 <log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
 	<appender name="TO_CONSOLE" class="org.apache.log4j.ConsoleAppender">
 		<layout class="org.apache.log4j.PatternLayout">
-			<param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss}][%c{1\}] %m%n" />
+			<param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss}][%p][%c{1\}] %m%n" />
 		</layout>
 		<filter class="org.apache.log4j.varia.LevelRangeFilter">
 			<param name="levelMin" value="INFO" />
@@ -19,7 +19,7 @@
 		<!-- <filter class="org.apache.log4j.varia.LevelRangeFilter"> <param name="levelMin" value="INFO" /> <param name="levelMax" 
 			value="FATAL" /> <param name="acceptOnMatch" value="true" /> </filter> -->
 		<layout class="org.apache.log4j.PatternLayout">
-			<param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss}][%c{3\}] Message:%m%n" />
+			<param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss}][%p][%c{3\}] Message:%m%n" />
 		</layout>
 	</appender>
 
@@ -28,7 +28,7 @@
 		<param name="DatePattern" value="'.'yyyy-MM-dd" />
 		<param name="Threshold" value="ERROR" />
 		<layout class="org.apache.log4j.PatternLayout">
-			<param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss}][%c{3\}] Message:%m%n" />
+			<param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss}][%p][%c{3\}] Message:%m%n" />
 		</layout>
 	</appender>
 
