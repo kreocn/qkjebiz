@@ -9,9 +9,11 @@ import org.iweb.sysvip.domain.Member;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.qkj.manage.domain.Active;
+import com.qkj.manage.domain.Approve;
 import com.qkj.manage.domain.CloseOrder;
 import com.qkj.manage.domain.CloseOrderPro;
 import com.qkj.manage.domain.SalPromot;
+import com.qkj.manage.dao.ApproveDAO;
 import com.qkj.manage.dao.CloseOrderDAO;
 import com.qkj.manage.dao.CloseOrderProDAO;
 import com.qkj.manage.dao.ProcessDAO;
@@ -24,6 +26,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	private Map<String, Object> map = new HashMap<String, Object>();
 	private CloseOrderDAO dao = new CloseOrderDAO();
 	private SalPromotDAO saldao=new SalPromotDAO();
+	private ApproveDAO apdao = new ApproveDAO();
 	private SalPromotPower sal=new SalPromotPower();
 
 	private CloseOrder closeOrder;
@@ -37,6 +40,10 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	private int pageSize;
 	private int currPage;
 	private String pro_id[];
+	
+	private Approve approve;
+	private List<Approve> approves;
+	private String isApprover;
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;结案提货单";
 
 	public String getPath() {
@@ -131,6 +138,30 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 		this.pro_id = pro_id;
 	}
 
+	public Approve getApprove() {
+		return approve;
+	}
+
+	public void setApprove(Approve approve) {
+		this.approve = approve;
+	}
+
+	public List<Approve> getApproves() {
+		return approves;
+	}
+
+	public void setApproves(List<Approve> approves) {
+		this.approves = approves;
+	}
+
+	public String getIsApprover() {
+		return isApprover;
+	}
+
+	public void setIsApprover(String isApprover) {
+		this.isApprover = isApprover;
+	}
+
 	public String list() throws Exception {
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_LIST");
@@ -175,6 +206,15 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 				map.clear();
 				map.put("order_id", closeOrder.getUuid());
 				this.setCloseOrderPros(cdao.list(map));
+				
+				map.clear();
+				map.put("int_id", closeOrder.getUuid());
+				map.put("approve_type", 3);
+				this.setApproves(apdao.list(map));
+				
+				/* 检查当前用户是否已经审阅 */
+				if (apdao.userIsIn(approves, ContextHelper.getUserLoginUuid())) this.setIsApprover("true");
+				else this.setIsApprover("false");
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/closeOrder_relist'>结案提货单列表</a>&nbsp;&gt;&nbsp;增加结案提货单";
 			} else {
 				this.setCloseOrder(null);
@@ -221,6 +261,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 			closeOrder.setLm_user(ContextHelper.getUserLoginUuid());
 			closeOrder.setLm_time(new Date());
 			dao.add(closeOrder);
+			addProcess("CLOSEORDER_ADD", "新增结案提货单");
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!add 数据添加失败:", e);
 			throw new Exception(this.getClass().getName() + "!add 数据添加失败:", e);
@@ -237,6 +278,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 			closeOrder.setLm_user(ContextHelper.getUserLoginUuid());
 			closeOrder.setLm_time(new Date());
 			dao.save(closeOrder);
+			addProcess("CLOSEORDER_MDY", "修改结案提货单");
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
@@ -249,6 +291,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 		try {
 			dao.delete(closeOrder);
 			setMessage("删除成功!ID=" + closeOrder.getUuid());
+			addProcess("CLOSEORDER_ADD", "删除结案提货单");
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!del 数据删除失败:", e);
 			throw new Exception(this.getClass().getName() + "!del 数据删除失败:", e);
@@ -436,6 +479,43 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
+	
+	/**
+	 * 审阅
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String approve() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_APPROVE");
+		try {
+			apdao.add(approve, 3, closeOrder.getUuid());
+			addProcess("CLOSE_APPROVE", "结案提货单-增加一条审阅信息");
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!approve 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!approve 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+
+	/**
+	 * 删除审阅
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String approveDel() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_APPROVEDELLAST");
+		try {
+			apdao.deleteLast(approve, 3,  closeOrder.getUuid());
+			addProcess("CLOSE_APPROVEDEL", "结案提货-删除一条审阅信息");
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!approveDel 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!approveDel 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+
 	
 	public int check(int p_check) {
 		closeOrder.setCheck_state(p_check);
