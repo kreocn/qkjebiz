@@ -7,6 +7,10 @@ public interface SysCache {
 
 	public Object get(String key);
 
+	public void del(String key);
+
+	public void clear();
+
 	public boolean contain(String key);
 
 }
