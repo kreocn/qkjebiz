@@ -37,7 +37,6 @@ $(document).ready(function(){
 });
 
 function deletestock(msg){
-	alert(1);
 	var checked = false;
 	var qx=document.getElementsByName("memberStock.uuid"); //获取复选框对象 
     for(var j = 0; j < qx.length; j ++) {      
@@ -83,11 +82,11 @@ ${path}
 <div class="label_con">
 <div class="label_main">
       <div class="label_hang">
-          <div class="label_ltit">经销商编号:</div>
+          <div class="label_ltit">会员编号:</div>
           <div class="label_rwben"><s:textfield id="order_user_id" name="memberStock.dealer"/></div>
       </div>
       <div class="label_hang">
-          <div class="label_ltit">经销商名称:</div>
+          <div class="label_ltit">会员名称:</div>
           <div class="label_rwben"><s:textfield name="memberStock.member_name"/></div>
       </div>
       <div class="label_hang">
@@ -125,8 +124,8 @@ ${path}
 <tr id="coltr">
 	<th class="td1"><input id="uuidcheck" name="uuidcheck" type="checkbox" onclick="checkAll();" /></th>
 	<th class="td1">编号</th>
-	<th class="td1">经销商帐号</th>
-	<th class="td3">经销商姓名</th>
+	<th class="td1">会员帐号</th>
+	<th class="td3">会员姓名</th>
 	<th class="td1">产品</th>
 	<th class="td2">库存数量（瓶）</th>
 	<th class="td2">核对日期</th>

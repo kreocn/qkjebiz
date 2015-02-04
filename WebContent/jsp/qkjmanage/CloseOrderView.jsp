@@ -29,7 +29,7 @@
 							<div class='label_ltit'>制表人:</div>
 							<div class='label_rwben'>${closeOrder.add_user_name}</div>
 						</div>
-						<div class="label_hang">
+						<!-- <div class="label_hang">
 							<div class="label_ltit">审核状态:</div>
 							<div class="label_rwbenx">
 								<div class="zhuangtai" <s:if test="%{closeOrder.check_state!=0}">title="${it:formatDate(closeOrder.check_time,'yyyy-MM-dd HH:mm:ss')}"</s:if>>
@@ -43,7 +43,7 @@
 									<s:if test="closeOrder.check_state==10">
 										<font class="message_pass">主管已审</font>(${closeOrder.check_user_name})</s:if>
 									<s:if test="closeOrder.check_state==20">
-										<font class="message_pass">招商经理已审</font>(${closeOrder.check_user_name})</s:if>
+										<font class="message_pass">办事处经理已审</font>(${closeOrder.check_user_name})</s:if>
 									<s:if test="closeOrder.check_state==30">
 										<font class="message_pass">大区经理已审</font>(${closeOrder.check_user_name})</s:if>
 									<s:if test="closeOrder.check_state==40">
@@ -64,7 +64,7 @@
 										<font class="message_pass">已通过审</font>(${closeOrder.nd_check_user_name})</s:if>
 								</div>
 							</div>
-						</div>
+						</div> -->
 					<div class="label_main">
 						<div class="label_hang">
 							<div class="label_ltit">单据编号:</div>

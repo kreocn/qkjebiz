@@ -34,7 +34,7 @@
 	<div class="label_main">
 	
 	<div class="label_hang">
-		<div class="label_ltit">经销商帐号:</div>
+		<div class="label_ltit">会员帐号:</div>
 	    <div class="label_rwb">
 		     <s:textfield id="order_user_id" name="memberStock.dealer" title="会员号" cssClass="validate[required]" />
 		 </div>

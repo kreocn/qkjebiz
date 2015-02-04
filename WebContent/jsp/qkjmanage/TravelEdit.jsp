@@ -358,8 +358,8 @@
 	  <table width="100%" class="ilisttable">
 	      <tr>
 		      <td align="right" width="25%">客户姓名:</td>
-		      <td><s:textfield name="travelCustomer.cus_name" title="客户姓名" cssClass="validate[required,maxSize[32]]"/></td>
-	      </tr>
+		      <td width="75%"><s:textfield name="travelCustomer.cus_name" title="客户姓名" cssClass="validate[required,maxSize[32]]"/></td>
+	      </tr> 
 	      <tr>
 		      <td align="right">性别:</td>
 		      <td><s:radio name="travelCustomer.cus_sex" list="#{0:'男',1:'女'}" /></td>

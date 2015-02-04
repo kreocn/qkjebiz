@@ -2,6 +2,7 @@ package org.iweb.sysvip.action;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -333,17 +334,30 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 		        			   continue;
 		        		   }
 		        		  
-		        		   if(i==0 && j==1){//经销商编号
+		        		   if(i==0 && j==1){//会员编号
 		        			   peo=content;
 		        		   }
 		        		   if(i==0 && j==6){//日期
+		        			   int falg=1;
 		        			   if(co.getType()==CellType.DATE){
 		        				   DateCell dc=(DateCell)co;    
-		        	                //strc00 = sdf.format(dc.getDate()); 
 		        				   checkdate=sdf.format(dc.getDate());
 		        			   }else{
-		        				   //checkdate=content;
+		        				   try {
+		        					   sdf.parse(content);
+									} catch (Exception e) {
+										// TODO: handle exception
+										falg=0;
+									}
+		        			   if(falg==1){
+		        				   checkdate=content;
+		        			   }else{
 		        				   message="模板中日期格式不正确";
+		        			   }
+		        				   
+		        				  // DateFormat sdfs=new SimpleDateFormat(checkdate);
+		        				   //checkdate=content;
+		        				   //message="模板中日期格式不正确";
 		        			   }
 		        			  
 		        		   }
@@ -420,7 +434,7 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 		        	   }
 		        	   Cell co= st.getCell(0,0); 
 		        	   String content=co.getContents();
-		        	   if(!content.equals("经销商账号:")){
+		        	   if(!content.equals("会员账号:")){
 		        			message="模板格式不正确请重新下载";
 		        			break;
 		        		}
@@ -450,7 +464,6 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 	
 	public static boolean isNumeric(String str){
 		  for (int i = 0; i < str.length(); i++){
-		   System.out.println(str.charAt(i));
 		   if (!Character.isDigit(str.charAt(i))){
 		    return false;
 		   }
@@ -491,13 +504,16 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 	public String out() throws Exception {
 		ProductDAO prodao=new ProductDAO();
 		HttpServletResponse response =ServletActionContext.getResponse();  
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date dt = new Date();   
+        String date=sdf.format(dt); 
 		//OutputStream os = null;
 		try {
 			WritableWorkbook wwb = null;
 			 //设这输出的类型和文件格式
 			   response.setContentType("application/vnd.ms-excel;charset=UTF-8");
 			   //设置文件名和并且解决中文名不能下载
-			   String filenames = "memberStock.xls";
+			   String filenames = "("+member.getUuid()+")"+date+"%E5%BA%93%E5%AD%98%E7%9B%98%E7%82%B9%E8%A1%A8.xls";
 			      response.addHeader("Content-Disposition","attachment;   filename=\""+ new String(filenames.getBytes(),"UTF-8")+   "\"");    
 			      //创建输出流
 			      OutputStream os = response.getOutputStream();
@@ -511,7 +527,7 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
             wwb = Workbook.createWorkbook(os);
 
             // 创建工作表
-            WritableSheet ws = wwb.createSheet("经销商库存统计", 0);
+            WritableSheet ws = wwb.createSheet("会员库存统计", 0);
             ws.setColumnView(0, 15);
             ws.setColumnView(1, 25);
             ws.setColumnView(2, 15);
@@ -521,13 +537,16 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
             
             WritableCellFormat cellFormat1 = new WritableCellFormat(font1);  
             //查询数据库中所有的数据
-            List<Product> pro=prodao.list(null);
+            map.clear();
+            map.put("notype", 1);
+            List<Product> pro=prodao.list(map);
             //要插入到的Excel表格的行号，默认从0开始
-            Label labelId= new Label(0, 0, "经销商账号:",cellFormat1);//表示第1列1个
+            Label labelId= new Label(0, 0, "会员账号:",cellFormat1);//表示第1列1个
             Label labelName= new Label(1, 0, member.getUuid(),cellFormat1);//第2列1个
-            Label labelMeName= new Label(2, 0, "经销商姓名:",cellFormat1);//第五列1 行
+            Label labelMeName= new Label(2, 0, "会员姓名:",cellFormat1);//第五列1 行
             Label labelMeName2= new Label(3, 0, member.getMember_name(),cellFormat1);//第五列1 行
             Label labelDate= new Label(5, 0, "核对日期:",cellFormat1);//第五列1 行
+            Label labelDa= new Label(6, 0, date,cellFormat1);//第五列1 行
             
             Label title1= new Label(0, 1, "产品编号",getHeadFormat());//表示第
             Label title2= new Label(1, 1, "产品名称",getHeadFormat());
@@ -539,6 +558,7 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
             ws.addCell(labelMeName);
             ws.addCell(labelMeName2);
             ws.addCell(labelDate);
+            ws.addCell(labelDa);
             ws.addCell(title1);
             ws.addCell(title2);
             ws.addCell(title3);
