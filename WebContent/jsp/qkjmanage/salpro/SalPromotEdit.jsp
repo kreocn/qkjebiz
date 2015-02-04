@@ -202,7 +202,7 @@
 							<s:if test="null != salPromot && salPromot.status>=1 && 'mdy' == viewFlag">
 								<!-- 审核中 -->
 								<s:if test="salPromot.smd_status==0 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_SALPRO_SALPROMOT_SMDSTATUS20')">
-									<s:submit id="mdyStatus20" name="mdyStatus20" value="销管经理审核通过" action="salPromot_smdstatus20" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
+									<s:submit id="mdyStatus20" name="mdyStatus20" value="经理/大区审核通过" action="salPromot_smdstatus20" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
 									<s:submit id="mdyStatus5" name="mdyStatus5" value="审核不通过" action="salPromot_smdstatus5" onclick="return isOp('确定执行此操作?');" cssClass="input-red" />
 								</s:if>
 								<s:if test="salPromot.smd_status==20 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_SALPRO_SALPROMOT_SMDSTATUS30')">

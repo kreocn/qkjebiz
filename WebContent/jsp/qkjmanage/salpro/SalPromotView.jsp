@@ -53,7 +53,7 @@
 								</span>
 								</s:if>
 								<s:if test="salPromot.smd_status==20">
-								<span class="message_pass" title="${it:formatDate(salPromot.smd_time,'yyyy-MM-dd HH:mm:ss')}">销管经理已审(${salPromot.smd_name })</span>
+								<span class="message_pass" title="${it:formatDate(salPromot.smd_time,'yyyy-MM-dd HH:mm:ss')}">经理/大区已审(${salPromot.smd_name })</span>
 								</s:if>
 								<s:if test="salPromot.sd_status==5">
 								<span class="message_error" title="${it:formatDate(salPromot.sd_time,'yyyy-MM-dd HH:mm:ss')}">运营总监已退回(${salPromot.sd_name })</span>
