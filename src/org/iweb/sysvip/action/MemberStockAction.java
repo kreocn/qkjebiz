@@ -345,10 +345,10 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 		        			   }else{
 		        				   try {
 		        					   sdf.parse(content);
-								} catch (Exception e) {
-									// TODO: handle exception
-									falg=0;
-								}
+									} catch (Exception e) {
+										// TODO: handle exception
+										falg=0;
+									}
 		        			   if(falg==1){
 		        				   checkdate=content;
 		        			   }else{
