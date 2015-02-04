@@ -338,12 +338,23 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 		        			   peo=content;
 		        		   }
 		        		   if(i==0 && j==6){//日期
+		        			   int falg=1;
 		        			   if(co.getType()==CellType.DATE){
 		        				   DateCell dc=(DateCell)co;    
-		        	                //strc00 = sdf.format(dc.getDate()); 
 		        				   checkdate=sdf.format(dc.getDate());
 		        			   }else{
+		        				   try {
+		        					   sdf.parse(content);
+								} catch (Exception e) {
+									// TODO: handle exception
+									falg=0;
+								}
+		        			   if(falg==1){
 		        				   checkdate=content;
+		        			   }else{
+		        				   message="模板中日期格式不正确";
+		        			   }
+		        				   
 		        				  // DateFormat sdfs=new SimpleDateFormat(checkdate);
 		        				   //checkdate=content;
 		        				   //message="模板中日期格式不正确";
@@ -453,7 +464,6 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 	
 	public static boolean isNumeric(String str){
 		  for (int i = 0; i < str.length(); i++){
-		   System.out.println(str.charAt(i));
 		   if (!Character.isDigit(str.charAt(i))){
 		    return false;
 		   }
