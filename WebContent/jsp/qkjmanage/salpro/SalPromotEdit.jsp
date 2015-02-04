@@ -136,22 +136,15 @@
 				<s:if test="%{salPromot!=null}">
 					<div class="label_main">
 						<div class="label_hang">
-							<div class="label_ltit">添加人:</div>
+							<div class="label_ltit">申请人:</div>
 							<div class="label_rwben">${salPromot.add_user_name }</div>
 						</div>
 						<div class="label_hang">
-							<div class="label_ltit">填加时间:</div>
+							<div class="label_ltit">申请时间:</div>
 							<div class="label_rwbenx">${it:formatDate(salPromot.add_time,'yyyy-MM-dd hh:mm:ss')}</div>
 						</div>
-						<div class="label_hang">
-							<div class="label_ltit">最后修改人:</div>
-							<div class="label_rwben">${salPromot.lm_user_name }</div>
-						</div>
-
-						<div class="label_hang">
-							<div class="label_ltit">最后修改时间:</div>
-							<div class="label_rwbenx">${it:formatDate(salPromot.lm_time,'yyyy-MM-dd hh:mm:ss')}</div>
-						</div>
+						
+					
 					</div>
 
 				</s:if>

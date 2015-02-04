@@ -47,7 +47,7 @@
 						</div>
 					</div>
 					<div class="label_hang">
-						<div class="label_ltit">制表人:</div>
+						<div class="label_ltit">申请人:</div>
 						<div class="label_rwben label_rwb">
 							<s:select id="membermanagerid" cssClass="selectKick" name="closeOrder.add_user" list="#{}" headerKey="" headerValue="--请选择--" />
 						</div>
@@ -79,7 +79,7 @@
 				<tr id="coltr">
 					<th class="td1">主键</th>
 					<th class="td2">申请部门</th>
-					<th class="td1">制表人</th>
+					<th class="td1">申请人</th>
 					<th class="td5">主题</th>
 					<th class="td3">结案时间</th>
 					<th class="td1">单据审核状态</th>
@@ -108,9 +108,9 @@
 									<s:if test="check_state==30">
 										<font class="message_pass">经理/大区已审</font>(${check_user_name})</s:if>
 									<s:if test="check_state==40">
-										<font class="message_pass">财务已审</font>(${check_user_name})</s:if>
-									<s:if test="check_state==50">
 										<font class="message_pass">总监已审</font>(${check_user_name})</s:if>
+									<s:if test="check_state==50">
+										<font class="message_pass">财务已审</font>(${check_user_name})</s:if>
 									<s:if test="check_state==60">
 										<font class="message_pass">业务副总已审</font>(${check_user_name})</s:if>
 									<s:if test="check_state==70">

@@ -366,6 +366,22 @@
 						<div class="label_ltit">执行人:</div>
 						<div class="label_rwben2 nw" style="line-height: 34px;">${active.person}</div>
 					</div>
+					<div class="label_hang">
+			            <div class="label_ltit">活动类型:</div>
+			            <div class="label_rwben label_rwb">
+							 <s:if test="active.active_type==1">一桌式品鉴会</s:if>
+							 <s:if test="active.active_type==2">公关赠酒</s:if>
+							 <s:if test="active.active_type==3">会议赞助</s:if>
+							 <s:if test="active.active_type==4">赛事赞助</s:if>
+							 <s:if test="active.active_type==5">晚宴赞助</s:if>
+							 <s:if test="active.active_type==6">婚宴赞助</s:if>
+							 <s:if test="active.active_type==7">活动推广</s:if>
+							 <s:if test="active.active_type==8">工业旅游</s:if>
+							 <s:if test="active.active_type==9">门店试饮</s:if>
+							 <s:if test="active.active_type==10">其它</s:if>
+							 
+			            </div>
+			        </div>
 				</div>
 				<div class="label_main">
 					<div class="label_hang">

@@ -26,7 +26,7 @@
 							</div>
 						</div>
 						<div class='label_hang'>
-							<div class='label_ltit'>制表人:</div>
+							<div class='label_ltit'>申请人:</div>
 							<div class='label_rwben'>${closeOrder.add_user_name}</div>
 						</div>
 						<!-- <div class="label_hang">
