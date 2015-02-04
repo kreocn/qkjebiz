@@ -71,9 +71,9 @@
 									<s:if test="closeOrder.check_state==10">
 										<font class="message_pass">主管已审</font>(${closeOrder.check_user_name})</s:if>
 									<s:if test="closeOrder.check_state==20">
-										<font class="message_pass">招商经理已审</font>(${closeOrder.check_user_name})</s:if>
+										<font class="message_pass">主管/办事处经理已审</font>(${closeOrder.check_user_name})</s:if>
 									<s:if test="closeOrder.check_state==30">
-										<font class="message_pass">大区经理已审</font>(${closeOrder.check_user_name})</s:if>
+										<font class="message_pass">经理/大区已审</font>(${closeOrder.check_user_name})</s:if>
 									<s:if test="closeOrder.check_state==40">
 										<font class="message_pass">总监已审</font>(${closeOrder.check_user_name})</s:if>
 									<s:if test="closeOrder.check_state==50">
