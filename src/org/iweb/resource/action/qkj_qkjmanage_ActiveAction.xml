@@ -37,6 +37,14 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
+		<action name="mdyActiveType" class="com.qkj.manage.action.ActiveAction" method="saveType">
+			<result type="redirectAction">
+				<param name="actionName">active_load</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
 		<action name="active_del" class="com.qkj.manage.action.ActiveAction" method="del">
 			<result type="redirectAction">
 				<param name="actionName">active_list</param>

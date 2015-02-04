@@ -332,6 +332,20 @@
 						<div class="label_ltit">执行人:</div>
 						<div class="label_rwben">${active.person}</div>
 					</div>
+					<div class="label_hang">
+			            <div class="label_ltit">活动类型:</div>
+			            <div class="label_rwben label_rwb">
+			            	<s:select id="sd_status" name="active.active_type" cssClass="selectKick validate[required]" list="#{1:'一桌式品鉴会',2:'公关赠酒',3:'会议赞助',4:'赛事赞助',5:'赛事赞助',6:'婚宴赞助',7:'活动推广',8:'工业旅游',9:'门店试饮',10:'其它'}"
+							 headerKey="" headerValue="--请选择--" />
+			            </div>
+			        </div>
+			        <div class="label_hang">
+			            <div class="label_rwben">
+			            	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_MDYTYPE')">
+										<s:submit  value="修改类型" action="mdyActiveType"/>
+							</s:if>
+			            </div>
+			        </div>
 				</div>
 				<div class="label_main">
 					<div class="label_hang">

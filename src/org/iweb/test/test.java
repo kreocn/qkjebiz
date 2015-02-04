@@ -31,7 +31,6 @@ public class test {
 		System.out.println(JSONUtils.mayBeJSON(json));
 		System.out.println(JSONUtils.quote(json));
 		System.out.println(JSONUtils.valueToString(o));
-		// JSONUtils.
 	}
 
 	/**

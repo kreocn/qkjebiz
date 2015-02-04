@@ -33,6 +33,7 @@
 								${salPromot.uuid }								
 							</div>
 						</div>
+						<s:if test="salstate!=1">
 						<div class="label_hang">
 							<div class="label_ltit">活动状态:</div>
 							<div class="label_rwb">
@@ -41,6 +42,7 @@
 								<s:if test="%{salPromot.status==2}">审核通过</s:if>								
 							</div>
 						</div>
+						
 						<div class="label_hang">
 							<div class="label_ltit">审核状态:</div>
 							<div class="label_rwbenx">
@@ -63,6 +65,7 @@
 															
 							</div>
 						</div>
+						</s:if>
 					</div>
 				</s:if>
 				<div class="label_main">
@@ -72,12 +75,14 @@
 						${salPromot.sal_title }	
 						</div>
 					</div>
+					<s:if test="salstate!=1">
 					<div class="label_hang">
 			            <div class="label_ltit">活动时间:</div>
 			            <div class="label_rwbenx">
 			            	${it:formatDate(salPromot.startime,'yyyy-MM-dd')}&nbsp;至&nbsp;${it:formatDate(salPromot.endtime,'yyyy-MM-dd')}
 			            </div>
 			        </div>
+			        </s:if>
 			        <div class="label_hang">
 						<div class="label_ltit">返利系数:</div>
 						<div class="label_rwben">
@@ -85,14 +90,32 @@
 						</div>
 					</div>
 					
+					<div class="label_main">
 					<div class="label_hang">
 						<div class="label_ltit">范围:</div>
+						${salPromot.sal_scopDept_name }
+					</div>
+				</div>
+				<div class="label_main">
+					<div class="label_hang">
+						<div class="label_ltit">范围说明:</div>
 						<div class="label_rwben">
 						${salPromot.sal_scop }
 						</div>
 					</div>
 				</div>
 				
+				<div class="label_hang">
+							<div class="label_ltit">许可范围:</div>
+							<div class="label_rwben label_rwb">
+								<span class="label_rwb">
+								 <s:select id="sal_scopUs" name="salPromot.sal_scopUs" cssClass="selectKick" list="#{1:'公有',2:'私有'}" headerKey="" headerValue="--请选择--"  onchange="pub();"/>
+								</span>
+							</div>
+				</div>
+				
+				</div>
+				<s:if test="salstate!=1">
 				<div class="label_main">
 					<div class="label_hang">
 						<div class="label_ltit">填加人:</div>
@@ -120,7 +143,7 @@
 						</div>
 					</div>
 				</div>
-				
+				</s:if>
 				<div class="label_main">
 		        <div class="label_hang">
 		            <div class="label_ltit">促销方案:</div>

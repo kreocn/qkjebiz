@@ -53,7 +53,7 @@ $(function() {
 		${path}
 		<span class="opb lb op-area"><a href="<s:url namespace="/sysebiz" action="order_list"><s:param name="viewFlag">relist</s:param></s:url>">订单列表</a></span>
 	</div>
-	<s:form id="formEdit" name="form1" cssClass="validForm" action="order_add" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
+	<s:form id="formEdit" name="form1" cssClass="validForm" action="order_add" namespace="/sysebiz" onsubmit="return validator(this);" method="post" theme="simple">
 		<div class="label_con">
  			<div class="label_main">
  				<fieldset class="clear">

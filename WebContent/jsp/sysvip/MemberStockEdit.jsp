@@ -34,7 +34,7 @@
 	<div class="label_main">
 	
 	<div class="label_hang">
-		<div class="label_ltit">经销商帐号:</div>
+		<div class="label_ltit">会员帐号:</div>
 	    <div class="label_rwb">
 		     <s:textfield id="order_user_id" name="memberStock.dealer" title="会员号" cssClass="validate[required]" />
 		 </div>
@@ -133,12 +133,16 @@
         <div class="label_hang">
             <div class="label_ltit">相关操作:</div>
             <div class="label_rwbenx">
-            	<s:if test="'add' == viewFlag">
+            	<s:if test="'add' == viewFlag && @org.iweb.sys.ContextHelper@checkPermit('QKJM_SYSVIP_MEMBERSTOCK_ADD')">
 					<s:submit id="add" name="add" value="确定" action="memberStock_add" />
 				</s:if>
 				<s:elseif test="'mdy' == viewFlag">
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJM_SYSVIP_MEMBERSTOCK_MDY')">
 					<s:submit id="save" name="save" value="保存" action="memberStock_save" cssClass="input-blue" />
+					</s:if>
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJM_SYSVIP_MEMBERSTOCK_DEL')">
 					<s:submit id="delete" name="delete" value="删除" action="memberStock_del" cssClass="input-red" onclick="return isDel();" />
+					</s:if>
 				</s:elseif>
 				<input type="button" value="返回" onclick="linkurl('<s:url action="memberStock_list" namespace="/sysvip" />');"  class="input-gray" />
         	</div>

@@ -258,7 +258,19 @@
 						<th>实际价格</th>
 						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_ADD') && 2==outStock.send && @com.qkj.ware.action.warepower@checkPermit(outStock.store_id,'del')">
 						<th>
-						<a id="addItem" onclick="commain();" >添加出库明细</a>
+						<s:url id="ladingAddProductsUrl" action="qkjm_addProducts" namespace="/qkjmanage">
+												<s:param name="uuidKey">outStock.uuid</s:param>
+												<s:param name="uuidValue" value="outStock.uuid" />
+												<s:param name="backUrl">/outStock/outStock_load?viewFlag=mdy&</s:param>
+												<s:param name="actionUrl">/outStock/outDetail_add</s:param>
+												<s:param name="keyName">outDetail.lading_id</s:param>
+												<s:param name="prodName">outDetail.product_id</s:param>
+												<s:param name="perName">outDetail.price</s:param>
+												<s:param name="numName">outDetail.num</s:param>
+												<s:param name="totalName">outDetail.totel</s:param>
+							</s:url>
+											<input type="button" id="product" onclick="window.location.href='${ladingAddProductsUrl}';" value="添加酒品" />
+						<!-- <a id="addItem" onclick="commain();" >添加出库明细</a> -->
 						</th>
 						</s:if>
 					</tr>
@@ -328,235 +340,11 @@
 
 
 <!--出库祥表 -->
-<div id="addItemForm" title="添加明细">
-<s:form id="form_addItem" name="form_addItem" action="outDetail_add" namespace="/outDetail" onsubmit="return validator(this);" method="post" theme="simple">
-	<table>
-		  <tr>
-		   	<td>
-		   	<div class="label_main input-a">
-				<div id="addItemForm" class="label_con" title="请选择出库商品">	
-					<div class="label_hang">
-						<s:hidden id="member_id" name="mid"></s:hidden>
-						<s:hidden id="member_mebile" name="mmebile"></s:hidden>
-						<s:hidden id="member_name" name="mname"></s:hidden>
-						<s:hidden id="member_adress" name="madress"></s:hidden>
-						<s:hidden id="member_price" name="mprice"></s:hidden>
-						<div class="label_ltit">商品:</div>
-			            <div class="label_rwben2">
-							<div class="label_rwb">
-								<select id="membermanagerid" name="outDetail.product_id" title="产品">
-									<option>--请选择--</option>
-									<s:iterator value="stocks" status="sta">
-									<option data='<s:property value="market_price" />#<s:property value="group_price" />#<s:property value="dealer_price" />#<s:property value="agree_price_1" />#<s:property value="agree_price_2" />#<s:property value="agree_price_3" />' data_case='<s:property value="case_spec" />' value='<s:property value="uuid" />'><s:property value="product_name" /></option>
-									</s:iterator>
-								</select>
-							</div>
-						</div>
-			        </div>			
-			        <div class="label_hang">
-		            <div class="label_ltit">单价:</div>
-			            <div class="label_rwben2">
-				            <div class="label_rwb">
-					            <s:textfield id="pri" name="outDetail.price" title="单价" dataType="number" cssClass="validate[required]" />
-								<span id="per_price_select_area"><select id="per_price_select"></select></span>
-							</div>
-			            </div>
-	       		</div>
-	       		<div class="label_hang">
-		            <div class="label_ltit">数量:</div>
-			            <div class="label_rwben2">
-				            <div class="label_rwb">
-					            <s:textfield id="num" name="outDetail.num" title="数量" dataType="integer" cssClass="validate[required]" />
-								<span id="ladingItemnumCase"></span>
-							</div>
-			            </div>
-	       		</div>	
-	       		<div class="label_hang">
-		            <div class="label_ltit">合计:</div>
-			            <div class="label_rwben2">
-		            		<div class="label_rwb"><s:textfield name="outDetail.totel" title="合计"/></div>
-		            	</div>
-	       		</div>																				
-			        <div class="label_hang label_button tac">
-			        <s:hidden name="outDetail.lading_id" title="提货单ID" value="%{outStock.uuid}" />
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_OUTSTOCK_ADD')">
-					<s:submit id="add" name="add" value="确定" action="outDetail_add" onclick="return flag();"/>
-					</s:if>
-					<input type="button" value="关闭" onclick="closeAddForm();" class="input-gray" />	
-			        </div>
-			       </div>																				
-				</div>
-			</td>
-		 	</tr>
-	</table>	
-</s:form>
-</div>
+
+</body>
 
 </body>
 <script type="text/javascript">
-function flag(){
-	var num=$("#num").val();
-	var pri=$("#pri").val();
-	if(num==null||num==""){
-		alert("数量不能为空！");
-		return false;
-	}
-	if(pri==null||pri==""){
-		alert("单价不能为空！");
-		return false;
-	}
-}
-function commain(){
-	var id=$("#order_user_id").val();
-	var mebile=$("#order_user_mobile").val();
-	var name=$("#order_user_name").val();
-	var address=$("#address").val();
-	var price=$("#order_price").val();
-	
-	$("#member_id").val(id);
-	$("#member_mebile").val(mebile);
-	$("#member_name").val(name);
-	$("#member_adress").val(address);
-	$("#member_price").val(price);
-	
-}
-var add_per_price_input = $("#form_addItem :input[name='outDetail.price']");
-var add_num_input = $("#form_addItem :input[name='outDetail.num']");
-var add_total_price_input = $("#form_addItem :input[name='outDetail.totel']");
-var add_product_id = $("#form_addItem :input[name='outDetail.product_id']");
-
-$(function(){
-	add_per_price_input.bind("keyup",function(){
-		add_total_price_input.val($(this).val()*add_num_input.val());
-		
-	});
-	add_num_input.bind("keyup",function(){
-		add_total_price_input.val($(this).val()*add_per_price_input.val());
-		setDataCase();
-	});
-	
-	$("#per_price_select_area").hide();
-	add_product_id.bind("change",function(){
-		add_per_price_input.val("");
-		$("#per_price_select").clearAllOption();
-		if($(this).getSelectedAttr("data")==null || $(this).getSelectedAttr("data")=='') {
-			$("#per_price_select_area").hide();
-		} else {
-			var ps = $(this).getSelectedAttr("data").split("#");
-			if(ps.length>=3) {
-				$("#per_price_select").addOption("自定义","");
-				$("#per_price_select").addOption("市场价("+ps[0]+")",ps[0]);
-				$("#per_price_select").addOption("团购价("+ps[1]+")",ps[1]);
-				$("#per_price_select").addOption("出厂价("+ps[2]+")",ps[2]);
-				if(ps[3]!='')$("#per_price_select").addOption("协议价1("+ps[3]+")",ps[3]);
-				if(ps[4]!='')$("#per_price_select").addOption("协议价2("+ps[4]+")",ps[4]);
-				if(ps[5]!='')$("#per_price_select").addOption("协议价3("+ps[5]+")",ps[5]);
-				$("#per_price_select_area").fadeIn(1000);
-			}
-		}
-	});
-	
-	$("#per_price_select").bind("change",function(){
-		add_per_price_input.val($(this).val());
-		add_total_price_input.val($(this).val()*add_num_input.val());
-		setDataCase();
-	});
-});
-
-function setDataCase() {
-	var data_case = add_product_id.getSelectedAttr("data_case");
-	var num_value = add_num_input.val();
-	if(!(data_case==null || data_case=='' || num_value==null || num_value=='')) {
-		$("#ladingItemnumCase").text((num_value/data_case)+'件');
-	}
-}
-</script>
-</body>
-<script type="text/javascript">
-var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
-var c_mid = '<s:property value="outStock.member_id" />';
-$(function() {
-	SimpleLoadMember(ajax_url_action,function(event, ui) {loadAddress(ui.item.order_user_id);});
-	if(c_mid!='') {
-		loadAddress(c_mid);
-	}
-	$("#addItemForm").dialog({
-	      autoOpen: false,
-	      height: 300,
-	      width: 600,
-	      modal: true
-	});
-	$("#addItem").click(function() {
-		openAddForm();
-	});
-	
-	$("#addoutStockPay").dialog({
-	      autoOpen: false,
-	      height: 200,
-	      width: 600,
-	      modal: true
-	});
-	$("#addoutStockPayOpen").click(function() {
-		$("#addoutStockPay").dialog("open");
-	});
-	
-	//outStock_fd_date
-	if($("#outStock_fd_date").length>0) {
-		$("#outStock_fd_date").datepicker();
-	}
-	
-	// 此段代码可以方式回车提交
-	jQuery(function($){
-	    $("form").keypress(function(e){
-	        if(e.keyCode == 13) {
-	            e.preventDefault();
-	        }
-	    });  
-	});
-	
-	CommonUtil.pickrow('fd_list_table');
-});
-
-function loadAddress(memberid) {
-	var ajax = new Common_Ajax();
-	ajax.config.action_url = ajax_url_action;
-	ajax.config._success = function(data, textStatus) {
-		createAddreeeSelect(data);
-	};
-	ajax.addParameter("privilege_id", "QKJCJ_SYSEBIZ_AJAXLOAD_ADDRESS");
-	ajax.addParameter("parameters", "member_id=" + memberid);
-	ajax.sendAjax();
-}
-
-var c_data=new Array(); // 保存当前用户的所有联系人信息
-function createAddreeeSelect(p_data) {
-	var selectid = $("#selectAddress");
-	selectid.clearAllOption();
-	var sh = "";
-	for ( var i = 0; i < p_data.length; i++) {
-		selectid.addOption(i+"-"+ p_data[i].province,i);
-		sh += p_data[i].province + " " + p_data[i].city + " " + p_data[i].area + " " + p_data[i].street + "  " 
-			+ p_data[i].con_name + ' 收  邮编:' + p_data[i].post + ' 联系电话:' + p_data[i].mobile;
-		if (p_data[i].defaultaddress == 1) {
-			$(":input[name='outStock.address']").val(sh);
-			selectid.setSelectedValue(i);
-		}
-		c_data[i] = sh;
-		sh="";
-	}
-	selectid.unbind().bind("change",function(){
-		$(":input[name='outStock.address']").val(c_data[$(this).getSelectedValue()]);
-	});
-}
-
-function openAddForm() {
-	$("#addItemForm").dialog("open");
-}
-
-function closeAddForm() {
-	$("#addItemForm").dialog("close");
-}
-
 //当前日期
 function wol() {
 	var date = new Date();
@@ -564,85 +352,5 @@ function wol() {
 			+ date.getDate();
 		document.getElementById("indate").value=dateString;
 }
-</script>
-<script type="text/javascript">
-
-var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
-var curr_apply_dept = '${leave.leave_dept}';
-var curr_apply_user = '${leave.leave_user}';
-$(function(){
-	CommonUtil.pickrow('table1');
-	CommonUtil.pickrowAll('table1','uuidcheck');
-	if(curr_apply_dept!='') {
-		loadManagers(curr_apply_dept);
-	}
-	
-	$("#AddLeaveForm").dialog({
-	      autoOpen: false,
-	      width: 300,
-	      height: 100,
-	      modal: true
-	});
-	
-	$("#AddLeaveLink").click(function(){
-		$("#AddLeaveForm").dialog("open");
-	});
-	
-	showLeaveMold(${leave.leave_type});
-	$("#searchLeaveType").change(function(){
-		showLeaveMold($(this).val());
-	});
-	
-	$(".leave_cause_show").tooltip({
-		items: "[data]",
-		content: function() {
-			//alert($(this).attr("data"));
-			return "<div class='show_dialog'>" + $("#leave_cause" + $(this).attr("data")).html() + "</div>";
-	  }
-	});
-});
- 
-var sobj01;
-var selectDept = function() {
-	sobj01 = new DialogIFrame({src:'<s:url namespace="/sys" action="dept_permit_select" />?objname=sobj01',title:"选择部门"});
-	sobj01.selfAction = function(val1,val2) {
-		$("#userdept_codeid").val(val1);
-		$("#userdept_nameid").val(val2);
-		loadManagers(val1);
-	};
-	sobj01.create();
-	sobj01.open();
-};
-
-function loadManagers(dept_code) {
-	var ajax = new Common_Ajax('ajax_member_message');
-	ajax.config.action_url = ajax_url_action;
-	ajax.config._success = function(data, textStatus) {
-		$("#membermanagerid").clearAllOption();
-		$("#membermanagerid").addOption("--请选择--","");
-		$.each(data, function(i, n){
-			$("#membermanagerid").addOption(n.user_name,n.uuid);
-		});
-		if(curr_apply_user!='') {
-			$("#membermanagerid").val(curr_apply_user);
-		}
-	};
-	ajax.addParameter("work", "AutoComplete");
-	ajax.addParameter("parameters", "privilege_id=QKJCJ_SYS_AJAXLOAD_USER&dept_code=" + encodeURI(dept_code));
-	ajax.sendAjax2();
-}
-
-function addLeave(p_type) {
-	var add_url = '<s:url namespace="/adm" action="leave_load"><s:param name="viewFlag">add</s:param></s:url>';
-	add_url = add_url + "&leave.leave_type="+p_type;
-	//alert(add_url);
-	location.href = add_url;
-}
-
-function showCause(s_id) {
-	alert($("#"+s_id).text());
-}
-
-
 </script>
 </html>
