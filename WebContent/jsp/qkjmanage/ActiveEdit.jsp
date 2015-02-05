@@ -169,6 +169,7 @@
 				</s:if> <a href="<s:url namespace="/qkjmanage" action="active_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a></span>
 		</div>
 		<s:form id="editForm" name="editForm" cssClass="validForm" action="active_load" namespace="/qkjmanage" method="post" theme="simple">
+		<s:hidden name="active.apply_dept" value="%{active.apply_dept}"></s:hidden>
 			<div class="label_con">
 				<s:if test="'mdy' == viewFlag">
 					<div class="label_main">

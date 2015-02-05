@@ -15,6 +15,7 @@ import org.iweb.sysvip.dao.MemberCapitalDAO;
 import org.iweb.sysvip.domain.MemberCapital;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.qkj.manage.check.CheckSkip;
 import com.qkj.manage.dao.ActiveDAO;
 import com.qkj.manage.dao.ActiveMemcostDAO;
 import com.qkj.manage.dao.ActivePosmDAO;
@@ -36,6 +37,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	private Map<String, Object> map = new HashMap<String, Object>();
 	private ActiveDAO dao = new ActiveDAO();
 	private ApproveDAO apdao = new ApproveDAO();
+	private CheckSkip cs=new CheckSkip();
 	private Active active;
 	private List<Active> actives;
 	private MyProcess myPro;
@@ -680,6 +682,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 			mdyActiveSDStatus(10);
 			// 销售管理部默认为已签收
 			mdyActiveSMDStatus(10);
+			//cs.checkSkip(active, 1);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyStatus0 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyStatus0 数据更新失败:", e);

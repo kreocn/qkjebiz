@@ -1,6 +1,6 @@
-package com.aqkj.adm.text;
+package com.qkj.manage.check;
 
-public class skip {
+public class SkipStep {
 	private String skip_dept;//需要重置流程的特殊部门
 	private Integer isSub;//是否包涵子部门1是0否
 	private int skip_step;//要跳过的步骤
@@ -22,7 +22,5 @@ public class skip {
 	public void setSkip_step(int skip_step) {
 		this.skip_step = skip_step;
 	}
-	
-	
 
 }
