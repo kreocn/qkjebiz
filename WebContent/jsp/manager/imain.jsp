@@ -15,8 +15,8 @@
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery-ui-1.10.3.custom.min.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/v0.1/common.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/jquery.CommonUtil.js" />"></script>
-<link rel="stylesheet" href="<s:url value="/include/jQuery/stylesheets/jquery.layout1.3.0.css" />" />
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.layout1.3.0.min.js" />"></script>
+<link rel="stylesheet" href="<s:url value="/css/v0.2/layout-default-1.4.4.css" />" />
+<script type="text/javascript" src="<s:url value="/js/v0.2/jquery.layout-1.4.4.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/singlejs/imain.js" />"></script>
 <link rel="stylesheet" href="<s:url value="/include/dtree/dtree.css" />" />
 <script type="text/javascript" src="<s:url value="/include/dtree/dtree.js" />"></script>
@@ -36,9 +36,11 @@ $(function() {
 <style type="text/css">
 .ui-layout-south {overflow: hidden;}
 .ui-layout-north {overflow: hidden;}
-.ui-layout-center{overflow: auto;}
 .layout_iframe{width: 100%;height:100%;overflow:auto;border: none;background: transparent;}
 .ui-layout-pane-west {display: block !important;}
+.ui-layout-center{overflow: auto;-webkit-overflow-scrolling: touch;overflow-y: scroll;}
+.ui-layout-center .layout_iframe{width: 100%;height:100%;overflow:auto;border: none;background: transparent;}
+
 @media screen and (max-width:960px) {
 .ui-layout-pane-west {display: none !important;}
 .ui-layout-pane-show{display: block !important;}
@@ -47,7 +49,7 @@ $(function() {
 </style>
 </head>
 <body>
-<div class="ui-layout-center" style="overflow: hidden;">
+<div class="ui-layout-center">
 	<iframe id="mainFrame" name="mainFrame" src="about:blank" longdesc="default" class="layout_iframe" frameborder="0" scrolling="auto"></iframe>
 </div>
 <div class="ui-layout-south">
