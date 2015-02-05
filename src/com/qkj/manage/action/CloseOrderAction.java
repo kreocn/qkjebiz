@@ -384,7 +384,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	}
 	
 	/**
-	 * 财务通过
+	 * 总监通过
 	 * @return
 	 * @throws Exception
 	 */
@@ -400,7 +400,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	}
 	
 	/**
-	 * 总监通过
+	 * 财务通过
 	 * @return
 	 * @throws Exception
 	 */

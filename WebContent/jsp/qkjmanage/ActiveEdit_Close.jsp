@@ -335,7 +335,7 @@
 					<div class="label_hang">
 			            <div class="label_ltit">活动类型:</div>
 			            <div class="label_rwben label_rwb">
-			            	<s:select id="sd_status" name="active.active_type" cssClass="selectKick validate[required]" list="#{1:'一桌式品鉴会',2:'公关赠酒',3:'会议赞助',4:'赛事赞助',5:'赛事赞助',6:'婚宴赞助',7:'活动推广',8:'工业旅游',9:'门店试饮',10:'其它'}"
+			            	<s:select id="sd_status" name="active.active_type" cssClass="selectKick validate[required]" list="#{1:'一桌式品鉴会',2:'公关赠酒',3:'会议赞助',4:'赛事赞助',5:'晚宴赞助',6:'婚宴赞助',7:'活动推广',8:'工业旅游',9:'门店试饮',10:'其它'}"
 							 headerKey="" headerValue="--请选择--" />
 			            </div>
 			        </div>
@@ -546,7 +546,7 @@
 							if(edit==false){
 								location.href="/qkjmanage/active_addProduct?state=2&active.uuid="+${active.uuid};
 							}else{
-								if(confirm("您有未保存的信息,确认填加吗?确认后将丢失一部分信息。")){
+								if(confirm("您有未保存的信息,确认添加吗?确认后将丢失一部分信息。")){
 									location.href="/qkjmanage/active_addProduct?state=2&active.uuid="+${active.uuid};
 									}else{
 									 return false;
@@ -807,7 +807,7 @@
 
 				<div class="label_main">
 					<div class="label_hang">
-						<div class="label_ltit">填加时间:</div>
+						<div class="label_ltit">添加时间:</div>
 						<div class="label_rwbenx">${it:formatDate(active.add_time,'yyyy-MM-dd hh:mm:ss')}</div>
 					</div>
 					<s:if test="%{active.status!=0}">

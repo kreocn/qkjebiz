@@ -6,7 +6,7 @@
 	<typeAlias alias="process" type="com.qkj.manage.domain.MyProcess"/>
 	<select id="qkjmanage_getActives" resultClass="active" parameterClass="java.util.Map">
 		<![CDATA[ 
-			SELECT a.*,d.dept_cname apply_dept_name,au.user_name apply_user_name,
+			SELECT DISTINCT a.`uuid` duid, a.*,d.dept_cname apply_dept_name,au.user_name apply_user_name,
 			su.USER_NAME sd_user_name,smu.USER_NAME smd_user_name,
 			csu.USER_NAME close_sd_user_name,csmu.USER_NAME close_smd_user_name,
 			su.user_sign sd_user_sign,smu.user_sign smd_user_sign,
@@ -22,6 +22,7 @@
 			LEFT JOIN s_sys_user fdu ON (a.`fd_user`=fdu.`UUID`)
 			LEFT JOIN s_sys_user fdcu ON (a.`close_fd_user`=fdcu.`UUID`)
 			LEFT JOIN s_sys_user ndcu ON (a.`close_nd_user`=ndcu.`UUID`)
+			LEFT JOIN qkjm_r_active_memcost mem ON(a.`uuid`=mem.`active_id`)
 			
 		]]>
 		<dynamic prepend="WHERE">
@@ -58,49 +59,52 @@
 			<isNotEmpty prepend="AND" property="close_pass_time_end"><![CDATA[ a.close_pass_time<=DATE_ADD(#close_pass_time_end#,INTERVAL 1 day) ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="flag"><![CDATA[ NOT ISNULL(a.`spe_remark`) AND a.`spe_remark`!="" ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="spere"><![CDATA[ ISNULL(a.`spe_remark`) ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="member_id"><![CDATA[ mem.member_id=#member_id# ]]></isNotEmpty>
 		</dynamic>
 		<![CDATA[ ORDER BY a.add_time DESC LIMIT 1000 ]]>
 	</select>
 	<select id="qkjmanage_getActivesCounts" resultClass="int" parameterClass="java.util.Map">
 		<![CDATA[ 
 			Select Count(*) From (
-			select 1 from qkjm_r_active
+			SELECT DISTINCT a.`uuid`,1 FROM qkjm_r_active a
+			LEFT JOIN qkjm_r_active_memcost mem ON(a.`uuid`=mem.`active_id`) 
 		]]>
 		<dynamic prepend="WHERE">
-			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="uid"><![CDATA[ uid=#uid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ a.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="uid"><![CDATA[ a.uid=#uid# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="apply_dept">
-				<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ apply_dept=#apply_dept#]]></isNotEqual>
-				<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ apply_dept LIKE CONCAT(#apply_dept#,'%') ]]></isEqual>
+				<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ a.apply_dept=#apply_dept#]]></isNotEqual>
+				<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ a.apply_dept LIKE CONCAT(#apply_dept#,'%') ]]></isEqual>
 			</isNotEmpty>
-			<isNotEmpty prepend="AND" property="apply_user"><![CDATA[ apply_user=#apply_user# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="plan_start"><![CDATA[ plan_start=#plan_start# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="address"><![CDATA[ address=#address# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="sd_status"><![CDATA[ sd_status=#sd_status# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="smd_status"><![CDATA[ smd_status=#smd_status# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="apply_user"><![CDATA[ apply_user=#apply_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_user"><![CDATA[ a.apply_user=#apply_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="plan_start"><![CDATA[ a.plan_start=#plan_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="address"><![CDATA[ a.address=#address# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="sd_status"><![CDATA[ a.sd_status=#sd_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="smd_status"><![CDATA[ a.smd_status=#smd_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_user"><![CDATA[ a.apply_user=#apply_user# ]]></isNotEmpty>
 			
-			<isNotEmpty prepend="AND" property="fd_status"><![CDATA[ fd_status=#fd_status# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="close_fd_status"><![CDATA[ close_fd_status=#close_fd_status# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="close_nd_status"><![CDATA[ close_nd_status=#close_nd_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="fd_status"><![CDATA[ a.fd_status=#fd_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="close_fd_status"><![CDATA[ a.close_fd_status=#close_fd_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="close_nd_status"><![CDATA[ a.close_nd_status=#close_nd_status# ]]></isNotEmpty>
 			
 			<isNotEmpty prepend="AND" property="apply_depts">
-				<![CDATA[ apply_dept In ]]>
+				<![CDATA[ a.apply_dept In ]]>
 				<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
 			</isNotEmpty>
-			<isNotEmpty prepend="AND" property="close_sd_status"><![CDATA[ close_sd_status=#close_sd_status# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="close_smd_status"><![CDATA[ close_smd_status=#close_smd_status# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="status"><![CDATA[ status=#status# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="ship_status"><![CDATA[ ship_status=#ship_status# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="theme"><![CDATA[ theme LIKE CONCAT('%',#theme#,'%') ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="plan_start_begin"><![CDATA[ plan_start>=#plan_start_begin# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="plan_start_end"><![CDATA[ plan_start<=DATE_ADD(#plan_start_end#,INTERVAL 1 day) ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="pass_time_start"><![CDATA[ pass_time>=#pass_time_start# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="pass_time_end"><![CDATA[ pass_time<=DATE_ADD(#pass_time_end#,INTERVAL 1 day) ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="close_pass_time_start"><![CDATA[ close_pass_time>=#close_pass_time_start# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="close_pass_time_end"><![CDATA[ close_pass_time<=DATE_ADD(#close_pass_time_end#,INTERVAL 1 day) ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="flag"><![CDATA[ NOT ISNULL(spe_remark) AND `spe_remark`!="" ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="spere"><![CDATA[ ISNULL(spe_remark) ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="close_sd_status"><![CDATA[ a.close_sd_status=#close_sd_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="close_smd_status"><![CDATA[ a.close_smd_status=#close_smd_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="status"><![CDATA[ a.status=#status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="ship_status"><![CDATA[ a.ship_status=#ship_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="theme"><![CDATA[ a.theme LIKE CONCAT('%',#theme#,'%') ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="plan_start_begin"><![CDATA[ a.plan_start>=#plan_start_begin# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="plan_start_end"><![CDATA[ a.plan_start<=DATE_ADD(#plan_start_end#,INTERVAL 1 day) ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="pass_time_start"><![CDATA[ a.pass_time>=#pass_time_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="pass_time_end"><![CDATA[ a.pass_time<=DATE_ADD(#pass_time_end#,INTERVAL 1 day) ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="close_pass_time_start"><![CDATA[ a.close_pass_time>=#close_pass_time_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="close_pass_time_end"><![CDATA[ a.close_pass_time<=DATE_ADD(#close_pass_time_end#,INTERVAL 1 day) ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="flag"><![CDATA[ NOT ISNULL(a.spe_remark) AND a.`spe_remark`!="" ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="spere"><![CDATA[ ISNULL(a.spe_remark) ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="member_id"><![CDATA[ mem.member_id=#member_id# ]]></isNotEmpty>
 		</dynamic>
 		<![CDATA[ LIMIT 1000) a ]]>
 	</select>

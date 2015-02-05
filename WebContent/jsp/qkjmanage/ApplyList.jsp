@@ -180,7 +180,7 @@ display: none;
 				</td>
 				<td class="td4 op-area">
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_VIEW')">
-					<s:if test="status==30">
+					<s:if test="status>=30">
 					<a class="input-gray" href="<s:url namespace="/qkjmanage" action="apply_print"><s:param name="apply.uuid" value="uuid"></s:param></s:url>">打印</a>
 					</s:if>
 					

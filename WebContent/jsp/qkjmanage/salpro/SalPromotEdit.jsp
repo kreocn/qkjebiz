@@ -136,22 +136,15 @@
 				<s:if test="%{salPromot!=null}">
 					<div class="label_main">
 						<div class="label_hang">
-							<div class="label_ltit">添加人:</div>
+							<div class="label_ltit">申请人:</div>
 							<div class="label_rwben">${salPromot.add_user_name }</div>
 						</div>
 						<div class="label_hang">
-							<div class="label_ltit">填加时间:</div>
+							<div class="label_ltit">申请时间:</div>
 							<div class="label_rwbenx">${it:formatDate(salPromot.add_time,'yyyy-MM-dd hh:mm:ss')}</div>
 						</div>
-						<div class="label_hang">
-							<div class="label_ltit">最后修改人:</div>
-							<div class="label_rwben">${salPromot.lm_user_name }</div>
-						</div>
-
-						<div class="label_hang">
-							<div class="label_ltit">最后修改时间:</div>
-							<div class="label_rwbenx">${it:formatDate(salPromot.lm_time,'yyyy-MM-dd hh:mm:ss')}</div>
-						</div>
+						
+					
 					</div>
 
 				</s:if>
@@ -209,7 +202,7 @@
 							<s:if test="null != salPromot && salPromot.status>=1 && 'mdy' == viewFlag">
 								<!-- 审核中 -->
 								<s:if test="salPromot.smd_status==0 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_SALPRO_SALPROMOT_SMDSTATUS20')">
-									<s:submit id="mdyStatus20" name="mdyStatus20" value="销管经理审核通过" action="salPromot_smdstatus20" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
+									<s:submit id="mdyStatus20" name="mdyStatus20" value="经理/大区审核通过" action="salPromot_smdstatus20" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
 									<s:submit id="mdyStatus5" name="mdyStatus5" value="审核不通过" action="salPromot_smdstatus5" onclick="return isOp('确定执行此操作?');" cssClass="input-red" />
 								</s:if>
 								<s:if test="salPromot.smd_status==20 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_SALPRO_SALPROMOT_SMDSTATUS30')">

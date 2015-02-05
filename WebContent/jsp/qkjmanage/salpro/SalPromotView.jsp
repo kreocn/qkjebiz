@@ -53,7 +53,7 @@
 								</span>
 								</s:if>
 								<s:if test="salPromot.smd_status==20">
-								<span class="message_pass" title="${it:formatDate(salPromot.smd_time,'yyyy-MM-dd HH:mm:ss')}">销管经理已审(${salPromot.smd_name })</span>
+								<span class="message_pass" title="${it:formatDate(salPromot.smd_time,'yyyy-MM-dd HH:mm:ss')}">经理/大区已审(${salPromot.smd_name })</span>
 								</s:if>
 								<s:if test="salPromot.sd_status==5">
 								<span class="message_error" title="${it:formatDate(salPromot.sd_time,'yyyy-MM-dd HH:mm:ss')}">运营总监已退回(${salPromot.sd_name })</span>
@@ -118,30 +118,18 @@
 				<s:if test="salstate!=1">
 				<div class="label_main">
 					<div class="label_hang">
-						<div class="label_ltit">填加人:</div>
+						<div class="label_ltit">申请人:</div>
 						<div class="label_rwben">
 						${salPromot.add_user_name }	
 						</div>
 					</div>
 					<div class="label_hang">
-			            <div class="label_ltit">填加时间:</div>
+			            <div class="label_ltit">申请时间:</div>
 			            <div class="label_rwbenx">
 			            	${it:formatDate(salPromot.add_time,'yyyy-MM-dd hh:mm:ss')}
 			            </div>
 			        </div>
-			        <div class="label_hang">
-						<div class="label_ltit">最后修改人:</div>
-						<div class="label_rwben">
-						${salPromot.lm_user_name }	
-						</div>
-					</div>
 					
-					<div class="label_hang">
-						<div class="label_ltit">最后修改时间:</div>
-						<div class="label_rwbenx">
-						${it:formatDate(salPromot.lm_time,'yyyy-MM-dd hh:mm:ss')}
-						</div>
-					</div>
 				</div>
 				</s:if>
 				<div class="label_main">
