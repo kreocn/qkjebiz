@@ -1,21 +1,40 @@
 package com.qkj.manage.check;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.iweb.sys.ContextHelper;
 
 
 
 
+import org.iweb.sysvip.dao.MemberCapitalDAO;
+import org.iweb.sysvip.domain.MemberCapital;
+
 import com.qkj.manage.dao.ActiveDAO;
+import com.qkj.manage.dao.ActiveMemcostDAO;
 import com.qkj.manage.dao.ProcessDAO;
 import com.qkj.manage.domain.Active;
+import com.qkj.manage.domain.ActiveMemcost;
 
 public class Step {
 	private String noteflag = null;
 	private Active active;
 	private ActiveDAO dao = new ActiveDAO();
+	private List<ActiveMemcost> activeMemcostsClose;
+	private Map<String, Object> map = new HashMap<String, Object>();
 	
+	
+	public List<ActiveMemcost> getActiveMemcostsClose() {
+		return activeMemcostsClose;
+	}
+
+	public void setActiveMemcostsClose(List<ActiveMemcost> activeMemcostsClose) {
+		this.activeMemcostsClose = activeMemcostsClose;
+	}
+
 	public Active getActive() {
 		return active;
 	}
@@ -77,25 +96,53 @@ public class Step {
 	public void step11(String userid){//结案报审
 		mdyStatus(4);
 		// 同时销售部的流程变成待审核
-		mdyCloseActiveSDStatus(10);
+		mdyCloseActiveSDStatus(10,userid);
 		// 同时销管部的流程变成已签收
-		mdyCloseActiveSMDStatus(10);
+		mdyCloseActiveSMDStatus(10,userid);
 	}
 	
 	public void step12(String userid){//结案大区审
-		mdyCloseActiveSDStatus(30);
+		mdyCloseActiveSDStatus(30,userid);
 	}
 	
 	public void step13(String userid){//结案销管经理
-		mdyCloseActiveSMDStatus(30);
+		mdyCloseActiveSMDStatus(30,userid);
 	}
 	
 	public void step14(String userid){//结案总监
-		mdyCloseActiveSDStatus(40);
+		mdyCloseActiveSDStatus(40,userid);
 	}
 	
 	public void step15(String userid){//结案销管部经理
-		mdyCloseActiveSMDStatus(40);
+		mdyCloseActiveSMDStatus(40,userid);
+	}
+	
+	public void step16(String userid){//结案业务副总
+		mdyCloseActiveSDStatus(50,userid);
+	}
+	
+	public void step17(String userid){//结案销管副总
+		mdyCloseActiveSMDStatus(50,userid);
+	}
+	
+	public void step18(String userid){//结案销总经理
+		mdyCloseActiveSMDStatus(60,userid);
+	}
+	
+	public void step19(String userid){//结案财务
+		CheckSkip s=new CheckSkip();
+		this.setActive(s.getActive());
+		mdyActiveFDStatus(2, 10);
+		active.setLm_user(userid);
+		dao.mdyCloseActivePass(active);
+		// 调整随量积分
+		mdyMemberCapital();
+		active.setStatus(5);
+		addProcess("ACTIVE_CLOSE_PASS", "活动结案通过");
+	}
+	
+	public void step20(String userid){//结案数据中心
+		mdyActiveFDStatus(3, 10);
 	}
 	
 	
@@ -265,7 +312,7 @@ public class Step {
 	 * @throws Exception
 	 * @date 2014-4-26 上午10:25:25
 	 */
-	public int mdyCloseActiveSDStatus(int close_sd_status) {
+	public int mdyCloseActiveSDStatus(int close_sd_status,String userid) {
 		CheckSkip s=new CheckSkip();
 		this.setActive(s.getActive());
 		if (close_sd_status == 5) {
@@ -290,8 +337,8 @@ public class Step {
 		active.setClose_nd_status(0);
 		active.setClose_sd_status(close_sd_status);
 		active.setClose_sd_time(new Date());
-		active.setClose_sd_user(ContextHelper.getUserLoginUuid());
-		active.setLm_user(ContextHelper.getUserLoginUuid());
+		active.setClose_sd_user(userid);
+		active.setLm_user(userid);
 		String note = "活动结案-销售审核状态变更-" + noteflag;
 		addProcess("ACTIVE_CLOSE_SDSTATUS", note);
 
@@ -305,7 +352,7 @@ public class Step {
 	 * @throws Exception
 	 * @date 2014-4-26 上午10:25:25
 	 */
-	public int mdyCloseActiveSMDStatus(int close_sd_status) {
+	public int mdyCloseActiveSMDStatus(int close_sd_status,String userid) {
 		CheckSkip s=new CheckSkip();
 		this.setActive(s.getActive());
 		if (close_sd_status == 5) {
@@ -327,8 +374,8 @@ public class Step {
 		active.setClose_nd_status(0);
 		active.setClose_smd_status(close_sd_status);
 		active.setClose_smd_time(new Date());
-		active.setClose_smd_user(ContextHelper.getUserLoginUuid());
-		active.setLm_user(ContextHelper.getUserLoginUuid());
+		active.setClose_smd_user(userid);
+		active.setLm_user(userid);
 		String note = "活动结案-销管审核状态变更" + noteflag;
 		addProcess("ACTIVE_CLOSE_SMDSTATUS", note);
 		return dao.mdyCloseActiveSMDStatus(active);
@@ -341,6 +388,29 @@ public class Step {
 		if (active != null) {
 			pdao.addProcess(1, active.getUuid(), p_sign, p_note, active.getStatus(), active.getSd_status(), active.getSmd_status(), active.getClose_sd_status(),
 					active.getClose_smd_status());
+		}
+	}
+	
+	/**
+	 * 扣除随量积分动作(结案审核完成之后)
+	 * 
+	 * @date 2014-4-26 下午10:19:28
+	 */
+	public void mdyMemberCapital() {
+		ActiveMemcostDAO amdao = new ActiveMemcostDAO();
+		map.clear();
+		map.put("active_id", active.getUuid());
+		map.put("status", 2);
+		this.setActiveMemcostsClose(amdao.list(map));
+		if (!(activeMemcostsClose == null || activeMemcostsClose.size() == 0)) {
+			MemberCapitalDAO mdao = new MemberCapitalDAO();
+			MemberCapital memberCapital;
+			for (ActiveMemcost am : activeMemcostsClose) {
+				memberCapital = new MemberCapital();
+				memberCapital.setMember_id(am.getMember_id());
+				memberCapital.setWith_score(am.getWith_score());
+				mdao.mdyCapital(memberCapital, 8, 0, "积分调整,调整编号:[" + active.getUuid() + "-" + am.getUuid() + "]");
+			}
 		}
 	}
 }
