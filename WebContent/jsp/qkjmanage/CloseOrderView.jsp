@@ -96,9 +96,7 @@
 						<!--<div class="label_hang">
 							<div class="label_ltit">促销方案:</div>
 							<div class="label_rwben label_rwb">
-								<div class="iselect">
 									<s:select name="closeOrder.salPro_id" list="salPromots" listKey="uuid" listValue="sal_title" cssClass="validate[required]"  headerKey="" headerValue="--请选择--"  />
-									
 									<select name="closeOrder.salPro_id" title="产品">
 										<s:iterator value="salPromots" status="sta">
 											<option value='<s:property value="uuid" />'>
@@ -106,7 +104,6 @@
 											</option>
 										</s:iterator>
 									</select>
-								</div>
 							</div>
 						</div>-->
 					</div>

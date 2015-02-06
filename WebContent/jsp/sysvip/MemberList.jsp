@@ -102,8 +102,8 @@ ${path}
 	    	<a class="input-red" href="<s:url namespace="/sysvip" action="member_del"><s:param name="member.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
 	    	</s:if>
 			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJM_SYSVIP_MEMBERSTOCK_LIST')">
-				<input type="button" value="生成盘点模板" onclick="linkurl('<s:url action="memberStock_out" namespace="/sysvip" ><s:param name="member.member_name" value="%{member_name}"></s:param><s:param name="member.uuid" value="%{uuid}"></s:param></s:url>');"  class="input-blue" />
-				</s:if>
+				<a class="input-blue" href="javascript:;" onclick="linkurl('<s:url action="memberStock_out" namespace="/sysvip" ><s:param name="member.member_name" value="%{member_name}"></s:param><s:param name="member.uuid" value="%{uuid}"></s:param></s:url>');" >生成盘点模板</a>
+			</s:if>
 		</td>
 	    <td class="td0 op-area"><a onClick="showDetail('showtr${uuid}');" class="input-nostyle">查看</a></td>
 	  </tr>

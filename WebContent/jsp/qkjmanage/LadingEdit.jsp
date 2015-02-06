@@ -411,9 +411,7 @@ function createAddreeeSelect(p_data) {
 	<div class="label_hang">
 	    <div class="label_ltit">付款状态:</div>
 	   <div class="label_rwben label_rwb">
-	    	<div class="iselect">
 		    	<s:select name="lading.fd_check" list="#{0:'未付款',2:'未付清',3:'已付款' }" />
-			</div>
 	    </div>
 	</div>
 	<div class="label_hang">

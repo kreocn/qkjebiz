@@ -34,7 +34,6 @@
 		<div class="label_hang">
 		    <div class="label_ltit">产品:</div>
 		   <%-- <div class="label_rwben label_rwb">
-		    	<div class="iselect">
 		    	<select name="activeProduct.product_id" title="产品">
 			    	<s:iterator value="products" status="sta">
 						<option data='<s:property value="market_price" />#<s:property value="group_price" />#<s:property value="dealer_price" />#<s:property value="agree_price_1" />#<s:property value="agree_price_2" />#<s:property value="agree_price_3" />' data_case='<s:property value="case_spec" />' value='<s:property value="uuid" />'>
@@ -42,7 +41,6 @@
 						</option>
 					</s:iterator>
 				</select>
-				</div>
 		    </div> --%>
 		    <div class="label_rwben label_rwb" style="width: 140px;">
 		    	<s:textfield  id="citySel"/>
@@ -64,7 +62,7 @@
 		    <div class="label_ltit">单价:</div>
 		    <div class="label_rwben">
 		    	<span class="label_rwb" style="width: 140px;"><s:textfield name="activeProduct.per_price" cssClass="validate[required,custom[number],maxSize[11]]" /></span>
-		    	<div id="per_price_select_area" class="label_rwben"><div class="iselect" style="width: 140px;"><select id="per_price_select"></select></div></div>
+		    	<div id="per_price_select_area" class="label_rwben"><select id="per_price_select"></select></div>
 		    </div>
 		</div>
 		

@@ -217,7 +217,7 @@ display: none;
         </div>
         <div class="label_hang">
             <div class="label_ltit">发货状态:</div>
-            <div class="label_rwben iselect"><s:select id="form_apply_ship_status" name="apply.ship_status" list="#{0:'未发货',10:'已发货',20:'已受理' }" /></div>
+            <div class="label_rwben"><s:select id="form_apply_ship_status" name="apply.ship_status" list="#{0:'未发货',10:'已发货',20:'已受理' }" /></div>
         </div>
 		<div class="label_hang">
             <div class="label_ltit">出库日期:</div>
