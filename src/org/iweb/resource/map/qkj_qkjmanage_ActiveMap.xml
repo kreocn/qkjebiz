@@ -23,7 +23,7 @@
 			LEFT JOIN s_sys_user fdcu ON (a.`close_fd_user`=fdcu.`UUID`)
 			LEFT JOIN s_sys_user ndcu ON (a.`close_nd_user`=ndcu.`UUID`)
 			LEFT JOIN qkjm_r_active_memcost mem ON(a.`uuid`=mem.`active_id`)
-			
+			LEFT JOIN s_vip_member mb ON(mem.`member_id`=mb.`UUID`)
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ a.uuid=#uuid# ]]></isNotEmpty>
@@ -59,7 +59,7 @@
 			<isNotEmpty prepend="AND" property="close_pass_time_end"><![CDATA[ a.close_pass_time<=DATE_ADD(#close_pass_time_end#,INTERVAL 1 day) ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="flag"><![CDATA[ NOT ISNULL(a.`spe_remark`) AND a.`spe_remark`!="" ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="spere"><![CDATA[ ISNULL(a.`spe_remark`) ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="member_id"><![CDATA[ mem.member_id=#member_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="member_id"><![CDATA[ mb.`MEMBER_NAME` LIKE CONCAT('%',#member_id#,'%') ]]></isNotEmpty>
 		</dynamic>
 		<![CDATA[ ORDER BY a.add_time DESC LIMIT 1000 ]]>
 	</select>
@@ -68,6 +68,7 @@
 			Select Count(*) From (
 			SELECT DISTINCT a.`uuid`,1 FROM qkjm_r_active a
 			LEFT JOIN qkjm_r_active_memcost mem ON(a.`uuid`=mem.`active_id`) 
+			LEFT JOIN s_vip_member mb ON(mem.`member_id`=mb.`UUID`)
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ a.uuid=#uuid# ]]></isNotEmpty>
@@ -104,7 +105,7 @@
 			<isNotEmpty prepend="AND" property="close_pass_time_end"><![CDATA[ a.close_pass_time<=DATE_ADD(#close_pass_time_end#,INTERVAL 1 day) ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="flag"><![CDATA[ NOT ISNULL(a.spe_remark) AND a.`spe_remark`!="" ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="spere"><![CDATA[ ISNULL(a.spe_remark) ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="member_id"><![CDATA[ mem.member_id=#member_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="member_id"><![CDATA[ mb.`MEMBER_NAME` LIKE CONCAT('%',#member_id#,'%') ]]></isNotEmpty>
 		</dynamic>
 		<![CDATA[ LIMIT 1000) a ]]>
 	</select>
@@ -120,12 +121,12 @@
 			<isNotEmpty prepend="AND" property="sq"><![CDATA[ s.`biz_status01`>=1 AND s.`biz_status01`<=2 AND s.`process_id`=1 ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="sd60"><![CDATA[ s.`biz_status02`=60 and s.`biz_status03`=50]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="smd40"><![CDATA[ s.`biz_status02`=40 and s.`biz_status03`=40 ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="smd50"><![CDATA[  s.`biz_status03`=50 ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="smd50"><![CDATA[  s.`biz_status03`=50 AND s.`biz_sign`='ACTIVE_MDY_SMDSTATUS']]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="cai"><![CDATA[  a.`fd_status`=10 and s.biz_sign='ACTIVE_MDY_FDSTATUS' ]]></isNotEmpty>
 			<!-- 结案 -->
 			<isNotEmpty prepend="AND" property="csd60"><![CDATA[ s.`biz_status04`=60 and  s.`biz_status05`=50 ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="csmd40"><![CDATA[ s.`biz_status04`=30 and s.`biz_status05`=40 ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="csmd50"><![CDATA[  s.`biz_status04`=50 and s.`biz_status05`=50 ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="csmd40"><![CDATA[ s.`biz_status04`=40 and s.`biz_status05`=40 ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="csmd50"><![CDATA[  s.`biz_status05`=50 and s.biz_sign='ACTIVE_CLOSE_SMDSTATUS']]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="biz_id"><![CDATA[ s.`biz_id`=#biz_id# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="caiClo"><![CDATA[  a.`close_fd_status`=10 and s.biz_sign='ACTIVE_MDY_FDCSTATUS']]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="shuClo"><![CDATA[  a.`close_nd_status`=10 and s.biz_sign='ACTIVE_MDY_NDCSTATUS' ]]></isNotEmpty>
