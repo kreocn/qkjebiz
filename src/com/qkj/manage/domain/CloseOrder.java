@@ -33,6 +33,23 @@ public class CloseOrder {
 	private String check_user_name;
 	private String is_sub_dept;
 	private String apply_dept_name;
+	private String puser_name;
+	private String puser_sign;
+	private Date biz_time;
+	
+	private String sign20;
+	private String sign30;
+	private String sign40;
+	private String sign50;
+	private String sign60;
+	private String sign70;
+	
+	private Date time20;
+	private Date time30;
+	private Date time40;
+	private Date time50;
+	private Date time60;
+	private Date time70;
 
 	public Integer getUuid() {
 		return uuid;
@@ -256,6 +273,126 @@ public class CloseOrder {
 
 	public void setApply_dept_name(String apply_dept_name) {
 		this.apply_dept_name = apply_dept_name;
+	}
+
+	public String getSign20() {
+		return sign20;
+	}
+
+	public void setSign20(String sign20) {
+		this.sign20 = sign20;
+	}
+
+	public String getSign30() {
+		return sign30;
+	}
+
+	public void setSign30(String sign30) {
+		this.sign30 = sign30;
+	}
+
+	public String getSign40() {
+		return sign40;
+	}
+
+	public void setSign40(String sign40) {
+		this.sign40 = sign40;
+	}
+
+	public String getSign50() {
+		return sign50;
+	}
+
+	public void setSign50(String sign50) {
+		this.sign50 = sign50;
+	}
+
+	public String getSign60() {
+		return sign60;
+	}
+
+	public void setSign60(String sign60) {
+		this.sign60 = sign60;
+	}
+
+	public String getSign70() {
+		return sign70;
+	}
+
+	public void setSign70(String sign70) {
+		this.sign70 = sign70;
+	}
+
+	public Date getTime20() {
+		return time20;
+	}
+
+	public void setTime20(Date time20) {
+		this.time20 = time20;
+	}
+
+	public Date getTime30() {
+		return time30;
+	}
+
+	public void setTime30(Date time30) {
+		this.time30 = time30;
+	}
+
+	public Date getTime40() {
+		return time40;
+	}
+
+	public void setTime40(Date time40) {
+		this.time40 = time40;
+	}
+
+	public Date getTime50() {
+		return time50;
+	}
+
+	public void setTime50(Date time50) {
+		this.time50 = time50;
+	}
+
+	public Date getTime60() {
+		return time60;
+	}
+
+	public void setTime60(Date time60) {
+		this.time60 = time60;
+	}
+
+	public Date getTime70() {
+		return time70;
+	}
+
+	public void setTime70(Date time70) {
+		this.time70 = time70;
+	}
+
+	public String getPuser_name() {
+		return puser_name;
+	}
+
+	public void setPuser_name(String puser_name) {
+		this.puser_name = puser_name;
+	}
+
+	public String getPuser_sign() {
+		return puser_sign;
+	}
+
+	public void setPuser_sign(String puser_sign) {
+		this.puser_sign = puser_sign;
+	}
+
+	public Date getBiz_time() {
+		return biz_time;
+	}
+
+	public void setBiz_time(Date biz_time) {
+		this.biz_time = biz_time;
 	}
 
 }

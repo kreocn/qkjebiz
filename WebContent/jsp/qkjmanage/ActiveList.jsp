@@ -51,7 +51,7 @@ cursor: pointer;
         </div>
         
         <div class="label_hang">
-            <div class="label_ltit">客户编号:</div>
+            <div class="label_ltit">客户名称:</div>
             <div class="label_rwben"><s:textfield id="order_user_id" name="active.member_id"/></div>
         </div>
         
