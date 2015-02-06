@@ -209,9 +209,9 @@ cursor: pointer;
 			<td class="td2 nw">${apply_dept_name}</td>
 			<td class="td1 nw">${apply_user_name}</td>
 			<td class="td5 longnote" title="${theme}">${it:subString(theme,18)}</td>
-			<td class="td2 nw">申请：￥${it_price+mt_price}
+			<td class="td2 nw">(申)${it_price+mt_price}
 			<s:if test="status > 2">
-			结案：￥${close_it_price+close_mt_price}
+			(结)${close_it_price+close_mt_price}
 			</s:if>
 			</td>
 			<td class="td5 nw" title="${address}">${it:subString(address,6)}</td>
