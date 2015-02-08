@@ -11,23 +11,41 @@
 <link rel="stylesheet" href="<s:url value="/css/v0.2/jqm-demos.css" />" />
 <link rel="stylesheet" href="<s:url value="/css/v0.2/nav.css" />" />
 <link rel="stylesheet" href="<s:url value="/css/v0.2/style.css" />" />
-<script type="text/javascript" src="<s:url value="/js/v0.1/jquery-1.9.0.min.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/v0.1/jquery-migrate-1.2.1.min.js" />"></script>
+<script type="text/javascript" src="<c:url value="/js/v0.1/jquery-1.9.0.min.js" />"></script>
+<script type="text/javascript" src="<c:url value="/js/v0.1/jquery-migrate-1.2.1.min.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/v0.2/jquery.mobile-1.4.3.min.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/v0.2/index.js" />"></script>
 </head>
+<style type="text/css">
+.ship_info {
+cursor: pointer;
+}
+</style>
 <body>
 <!--top顶部-->
-<s:action name="top" namespace="/manage" executeResult="true" />
+<header>
+	<div class="ht_top">
+        <div class="ht_lTit">互助青稞酒商务管理中心</div>
+        <ul class="ht_rczuo">
+            <li><a href="" title="系统首页" class="rhv">系统首页</a></li><li>|</li><li><a href="" title="帮助信息">帮助信息</a></li><li>|</li><li><a href="" title="刷新主页">刷新主页</a></li><li>|</li><li><a href="" title="退出系统">退出系统</a></li>
+        </ul>
+        <div class="ht_rset">
+        	<a href="javascript:void(0);" class="ht_clicka"><img src="images/ht_tb7.png" width="45"></a>
+            <ul class="ht_sjsub">
+            	<li><a href="" title="系统首页" class="sjhv">系统首页</a></li>
+                <li><a href="" title="帮助信息">帮助信息</a></li>
+                <li><a href="" title="刷新主页">刷新主页</a></li>
+                <li><a href="" title="退出系统">退出系统</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
 <!--left菜单-->
-<s:action name="left" namespace="/manage" executeResult="true" />
+<jsp:include page="top.html"  />
 <!--right列表-->
 <div class="tab_right">
 	<div class="tab_warp  input-a">
-	<p class="dq_step"><a href="">首页</a>&nbsp;&gt;&nbsp;工时申请单列表
-		<span class="opb lb op-area"><a href="">添加申请单</a></span>
-		<span class="opb lb op-area"><a href="javascript:;" onclick="enumCookieValues(mCo);" style="float: right;">测试Cookia</a></span>
-	</p>
+	<p class="dq_step"><a href="">首页</a>&nbsp;&gt;&nbsp;工时申请单列表<span class="opb lb op-area"><a href="">添加申请单</a></span></p>
     <form id="serachForm" name="serachForm" action="/adm/leave_list" method="get">
         <div class="label_main">
             <div class="label_hang">
@@ -293,6 +311,7 @@
     </table>
 	</div>
 </div>
+<div class="height50"></div>
 <footer><p class="botmsg">当前登录信息：互助股份公司&nbsp;&nbsp;系统管理员</p></footer>
 </body>
 </html>

@@ -18,7 +18,6 @@
 <script type="text/javascript" src="<s:url value="/js/common_ajax2.0.js" />"></script>
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery-1.8.3.min.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/v0.1/spin.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/v0.1/loading.js" />"></script>
 <script type="text/javascript">
 var puuid = '<s:property value="privilege.uuid" />';
 var cflag = 0;//状态符,0代表新增状态 1代表修改状态
@@ -53,6 +52,7 @@ function getInfo(obj) {
 		$("#privilege\\.menu_priority").val(json.menu_priority);
 		$("#privilege\\.menu_target").val(json.menu_target);
 		$("#privilege\\.menu_url").val(json.menu_url);
+		$("#privilege\\.module").val(json.module);
 		$("#privilege\\.lm_user").text(json.lm_user);
 		$("#privilege\\.lm_time").text(formatDate(json.lm_time));
 		setControl("save");
@@ -172,8 +172,13 @@ function view(obj) {
 	    <td><s:textfield title="权限名称" id="privilege.privilege_name" name="privilege.privilege_name" require="require" controlName="权限名称" /> <span style="color:red;">*</span></td>
 	  </tr>
 	  <tr>
+	  	<td>所属模块:</td>
+	    <td>
+	    	<s:select id="privilege.module" name="privilege.module" headerKey="" headerValue="--请选择--"  require="require"
+	    		list="#{0:'业务系统',1:'信息系统',2:'报表系统',3:'基础数据',4:'系统设置' }" />
+	    </td>	    
 	    <td>权限描述:</td>
-	    <td colspan="3"><s:textfield title="权限描述" id="privilege.descriptions" name="privilege.descriptions" style="width: 80%" /></td>	    
+	    <td><s:textfield title="权限描述" id="privilege.descriptions" name="privilege.descriptions" /></td>	    
 	  </tr>
 	  <tr>
 	    <td>是否为AJAX权限:</td>

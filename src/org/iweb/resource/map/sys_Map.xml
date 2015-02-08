@@ -17,9 +17,9 @@
 	<insert id="sys_addPrivileges" parameterClass="privilege">
 		<![CDATA[ 
 			Insert Into s_sys_privilege(uuid,privilege_name,parent_privilege,descriptions,privilege_id,privilege_type,is_ajax,ajax_map_id,is_menu,
-			menu_url,menu_target,menu_priority,menu_title,lm_user,lm_time)
+			menu_url,menu_target,menu_priority,menu_title,lm_user,lm_time,module)
 			Values (#uuid#,#privilege_name#,#parent_privilege#,#descriptions#,#privilege_id#,#privilege_type#,#is_ajax#,#ajax_map_id#,
-			#is_menu#,#menu_url#,#menu_target#,#menu_priority#,#menu_title#,#lm_user#,#lm_time#)
+			#is_menu#,#menu_url#,#menu_target#,#menu_priority#,#menu_title#,#lm_user#,#lm_time#,#module#)
 		]]>
 	</insert>
 	<update id="sys_mdyPrivileges" parameterClass="privilege">
@@ -38,7 +38,8 @@
 				menu_priority=#menu_priority#,
 				menu_title=#menu_title#,				
 				lm_user=#lm_user#,
-				lm_time=#lm_time#
+				lm_time=#lm_time#,
+				module=#module#
 			Where uuid=#uuid#
 		]]>
 	</update>

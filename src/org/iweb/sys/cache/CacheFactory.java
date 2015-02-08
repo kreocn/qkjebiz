@@ -11,6 +11,11 @@ public class CacheFactory {
 		return cache;
 	}
 
+	/**
+	 * 缓存流
+	 * 
+	 * @param cacheMode
+	 */
 	public static void CacheFlow(String cacheMode) {
 		SysCacheLogic cacheLogic = new SysCacheLogic();
 		SysDBCacheLogic dbCacheLogic = new SysDBCacheLogic();
