@@ -268,7 +268,7 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 		return SUCCESS;
 	}
 	
-	public boolean get_Member() throws Exception {
+	public String get_Member() throws Exception {
 		boolean flag=true;
 		try {
 			HttpServletResponse response = ServletActionContext.getResponse();
@@ -277,13 +277,14 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 			map.clear();
 			map.put("uuid", mid);
 			this.setMembers(dao.list(map));
-			if(members.size()<=0){
+			if(members.size()!=1){
 				flag=false;
 			}
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
 		}
-		return true;
+		ServletActionContext.getResponse().getWriter().print(flag);
+		return null;
 	}
 }
