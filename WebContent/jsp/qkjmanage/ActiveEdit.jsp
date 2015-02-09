@@ -1112,7 +1112,8 @@
 					<div class="label_hang label_button tac">
 						<s:hidden name="activeMemcost.active_id" value="%{active.uuid}" />
 						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEMEMCOST_ADD')">
-							<s:submit id="add" name="add" value="确定" action="activeMemcost_add"/>
+						<font id="addMemcost" color="red"></font>
+							<s:submit id="addMe" name="add" value="确定" action="activeMemcost_add" disabled="disabled"/>
 						</s:if>
 					</div>
 				</div>
@@ -1122,6 +1123,28 @@
 		<!-- 添加随量信息 -->
 
 		<script type="text/javascript">
+
+		$(function() { 
+			$('#order_user_id').blur(function() { 
+				var params = document.getElementById("order_user_id").value
+				 var url = '/sysvip/getMember';
+				 $.ajax({
+				     type:'POST',            //http请求方式
+				     url: url,    //服务器段url地址
+				     data: "params="+params,           //发送给服务器段的数据
+				     success: function(data){  
+				    	 if(data=="true"){
+				    		 $("#addMe").attr("disabled", false);
+				    		 $("#addMemcost").text( '');
+				 		}else{
+				 			$("#addMe").attr("disabled", "disabled");
+				 			$("#addMemcost").text( '此会员不存在，请确认！');
+				 			return false;
+				     }}    //定义交互完成，并且服务器正确返回数据时调用的回调函数
+				  });
+			}); 
+			}) ;
+
 			$("#upprice").bind("change", function(){
 				$("#bprice").val($("#upprice").val() - $("#price").val());
 			});
