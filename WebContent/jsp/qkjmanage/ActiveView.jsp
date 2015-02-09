@@ -297,9 +297,15 @@
 									<s:if test="puser_sign!=null">
 										<s:if test="puser_sign==null">	(${puser_name})</s:if>
 										<s:else>
-											<span class="user_sign"><img src="${puser_sign}" /></span>
+											<span class="user_sign">
+											<s:if test="%{caiActive.puser_sign!=puser_sign && guanActive.puser_sign!=puser_sign && fuActive.puser_sign!=puser_sign}"><img src="${puser_sign}" /></s:if>
+											</span>
 										</s:else>
-										<span class="vab">${it:formatDate(biz_time,'yyyy-MM-dd HH:mm:ss')}</span>
+										<span class="vab">
+										<s:if test="%{caiActive.puser_sign!=puser_sign && guanActive.puser_sign!=puser_sign && fuActive.puser_sign!=puser_sign}">
+										${it:formatDate(biz_time,'yyyy-MM-dd HH:mm:ss')}
+										</s:if>
+										</span>
 									</s:if>
 								</div>
 							</s:iterator>

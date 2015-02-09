@@ -274,6 +274,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 				this.setAllsigns(dao.allsign(map));
 				
 				this.setSign((CloseOrder) dao.sign(closeOrder.getUuid()));
+				System.out.println(sign.getSign20()+sign.getSign30());
 				
 				CloseOrderProDAO cdao=new CloseOrderProDAO();
 				map.clear();
