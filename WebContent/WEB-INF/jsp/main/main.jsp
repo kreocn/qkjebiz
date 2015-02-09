@@ -7,14 +7,7 @@
 <head>
 <meta charset="utf-8">
 <title>商务管理中心--<s:text name="APP_NAME" /></title>
-<link rel="stylesheet" href="<s:url value="/css/v0.2/jquery.mobile-1.4.3.min.css" />" />
-<link rel="stylesheet" href="<s:url value="/css/v0.2/jqm-demos.css" />" />
-<link rel="stylesheet" href="<s:url value="/css/v0.2/nav.css" />" />
-<link rel="stylesheet" href="<s:url value="/css/v0.2/style.css" />" />
-<script type="text/javascript" src="<s:url value="/js/v0.1/jquery-1.9.0.min.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/v0.1/jquery-migrate-1.2.1.min.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/v0.2/jquery.mobile-1.4.3.min.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/v0.2/index.js" />"></script>
+<s:action name="ref" namespace="/manager" executeResult="true" />
 </head>
 <body>
 <!--top顶部-->

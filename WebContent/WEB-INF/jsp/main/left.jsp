@@ -111,7 +111,8 @@ function mLink(url){
 	if("javascript"==url.substr(0,10)) {
 		return false;
 	}	else {
-		alert('<c:url value="/" />' + url);
+		//alert('<c:url value="/" />' + url);
+		location.href = '<c:url value="/" />' + url;
 	}
 }
 </script>

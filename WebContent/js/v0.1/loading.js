@@ -1,4 +1,14 @@
 var ajax_url = "/common_ajax/json_ajax";
+$(document).bind("mobileinit", function(){   
+    $.mobile.page.prototype.options.keepNative = "html body select checkbox";   
+});
+$(document).on("pagecreate", ".jqm-demos", function(event){
+	var page = $(this);
+	$(".jqm-navmenu-panel ul").listview();
+	$(".jqm-navmenu-link").on("click", function(){
+		page.find(".jqm-navmenu-panel:not(.jqm-panel-page-nav)").panel("open");
+	});
+});
 $(document).ready(function(){
 	// table隔行变色and鼠标经过样式
 	$(".tab_warp tr:even").addClass("even");
@@ -8,6 +18,20 @@ $(document).ready(function(){
 	}).mouseout(function(){
 		$(this).removeClass("trhover");
 	});
+	// 手机右侧导航事件
+	$b = $(".ht_sjsub");
+	$(".ht_clicka").on({ "click" : function(){
+		$b.toggle();
+		return false;
+	} });
+	$(document).on({ "click" : function(e){
+		var src = e.target;
+		if (src.id && src.id === "b") {
+			return false;
+		} else {
+			$b.hide();
+		}
+	} });
 	// 初始化日期
 	$(".datepicker").datepicker();
 	$(".main,.idialog").addClass("input-a");
@@ -117,13 +141,13 @@ function showDetail(trid){
 		$s.find("td").each(function(i, n){
 			if (i == ths.length - 1) { return; }
 			if (!$(this).hasClass("nsd")) {
-				//var cc = "label_rwben";
-				//if ($(this).hasClass("longnote") || $(this).hasClass("op-area")) {
-					//cc = "label_rwbenx";
-				//}
+				// var cc = "label_rwben";
+				// if ($(this).hasClass("longnote") || $(this).hasClass("op-area")) {
+				// cc = "label_rwbenx";
+				// }
 				_h += '<div class="label_hang">';
 				_h += '<div class="label_ltit">' + ths[i].innerHTML + ':</div>';
-				//_h += '<div class="' + cc + '">' + n.innerHTML + '</div>';
+				// _h += '<div class="' + cc + '">' + n.innerHTML + '</div>';
 				_h += '<div class="label_rwbenx">' + n.innerHTML + '</div>';
 				_h += '</div>';
 			}

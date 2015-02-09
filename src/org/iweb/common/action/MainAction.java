@@ -1,5 +1,6 @@
 package org.iweb.common.action;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,36 +8,31 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.iweb.common.dao.MenuDAO;
+import org.iweb.sys.ContextHelper;
 import org.iweb.sys.ToolsUtil;
 import org.iweb.sys.domain.UserPrivilege;
 
 import com.opensymphony.xwork2.ActionSupport;
 
 public class MainAction extends ActionSupport {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -7995560530227347448L;
 
+	@SuppressWarnings("unchecked")
 	public String left() throws Exception {
-		// Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			// if (ContextHelper.isAdmin()) {
-			this.setMenus(dao.listSysMenu(null));
-			// } else {
-			// ArrayList<String> userPermits = new ArrayList().addAll(ContextHelper.getUserLoginPermits().keySet());
-			// ArrayList<String> userPermits = new ArrayList<String>();
-			// userPermits.addAll(ContextHelper.getUserLoginPermits().keySet());
-			// if (userPermits == null || userPermits.size() == 0) {
-			// this.setMenu(null);
-			// } else {
-			// map.clear();
-			// map.put("user_permits", userPermits);
-			// this.setMenus(dao.listSysMenu(map));
-			// }
-			// }
-
+			if (ContextHelper.isAdmin()) {
+				this.setMenus(dao.listSysMenu(null));
+			} else {
+				ArrayList<String> userPermits = new ArrayList<String>();
+				userPermits.addAll(ContextHelper.getUserLoginPermits().keySet());
+				if (userPermits == null || userPermits.size() == 0) {
+					this.setMenu(null);
+				} else {
+					map.clear();
+					map.put("user_permits", userPermits);
+					this.setMenus(dao.listSysMenu(map));
+				}
+			}
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:" + ToolsUtil.getStackTrace(e));
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:" + ToolsUtil.getStackTraceHTML(e));
@@ -45,12 +41,10 @@ public class MainAction extends ActionSupport {
 	}
 
 	public String top() throws Exception {
-		// TODO Auto-generated method stub
 		return SUCCESS;
 	}
 
 	public String main() throws Exception {
-		// TODO Auto-generated method stub
 		return SUCCESS;
 	}
 
