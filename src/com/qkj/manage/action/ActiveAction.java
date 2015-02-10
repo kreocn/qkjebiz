@@ -677,12 +677,12 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyStatus0() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_STATUS0");
 		try {
-			mdyStatus(1);
+			/*mdyStatus(1);
 			// 同时进入销售部审核流程
 			mdyActiveSDStatus(10);
 			// 销售管理部默认为已签收
-			mdyActiveSMDStatus(10);
-			//cs.checkSkip(active, 1);
+			mdyActiveSMDStatus(10);*/
+			cs.checkSkip(active, 1);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyStatus0 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyStatus0 数据更新失败:", e);
@@ -798,7 +798,8 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyActiveSDStatus10() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_SDSTATUS10");
 		try {
-			mdyActiveSDStatus(30);
+			//mdyActiveSDStatus(30);
+			cs.checkSkip(active, 2);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyActiveSDStatus10 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyActiveSDStatus10 数据更新失败:", e);
@@ -816,7 +817,8 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyActiveSDStatus30() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_SDSTATUS30");
 		try {
-			mdyActiveSDStatus(40);
+			//mdyActiveSDStatus(40);
+			cs.checkSkip(active, 4);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyActiveSDStatus30 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyActiveSDStatus30 数据更新失败:", e);
@@ -834,7 +836,8 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyActiveSDStatus40() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_SDSTATUS40");
 		try {
-			mdyActiveSDStatus(50);
+			//mdyActiveSDStatus(50);
+			cs.checkSkip(active, 6);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyActiveSDStatus40 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyActiveSDStatus40 数据更新失败:", e);
@@ -852,7 +855,8 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyActiveSDStatus50() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_SDSTATUS50");
 		try {
-			mdyActiveSMDStatus(60);
+			//mdyActiveSMDStatus(60);
+			cs.checkSkip(active, 8);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyActiveSDStatus50 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyActiveSDStatus50 数据更新失败:", e);
@@ -942,7 +946,8 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyActiveSMDStatus10() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_SMDSTATUS10");
 		try {
-			mdyActiveSMDStatus(30);
+			//mdyActiveSMDStatus(30);
+			cs.checkSkip(active, 3);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyActiveSMDStatus10 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyActiveSMDStatus10 数据更新失败:", e);
@@ -960,7 +965,8 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyActiveSMDStatus50() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_SMDSTATUS50");
 		try {
-			mdyActiveSMDStatus(40);
+			//mdyActiveSMDStatus(40);
+			cs.checkSkip(active, 5);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
@@ -978,7 +984,8 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyActiveSMDStatus40() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_SMDSTATUS40");
 		try {
-			mdyActiveSMDStatus(50);
+			//mdyActiveSMDStatus(50);
+			cs.checkSkip(active, 7);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
@@ -996,7 +1003,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyActiveFDSTATUS10() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_FDSTATUS10");
 		try {
-			Active ac = new Active();
+			/*Active ac = new Active();
 			active.setLm_user(ContextHelper.getUserLoginUuid());
 			mdyActiveFDStatus(1, 10);
 			ac = (Active) dao.get(active.getUuid());
@@ -1004,7 +1011,8 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				active.setStatus(2);// 申请通过执行
 			}
 			dao.mdyActivePass(active);
-			addProcess("ACTIVE_APPLY_PASS", "活动申请通过");
+			addProcess("ACTIVE_APPLY_PASS", "活动申请通过");*/
+			cs.checkSkip(active, 9);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
@@ -1041,13 +1049,14 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyActiveFDCSTATUS10() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_FDCSTATUS10");
 		try {
-			mdyActiveFDStatus(2, 10);
+			/*mdyActiveFDStatus(2, 10);
 			active.setLm_user(ContextHelper.getUserLoginUuid());
 			dao.mdyCloseActivePass(active);
 			// 调整随量积分
 			mdyMemberCapital();
 			active.setStatus(5);
-			addProcess("ACTIVE_CLOSE_PASS", "活动结案通过");
+			addProcess("ACTIVE_CLOSE_PASS", "活动结案通过");*/
+			cs.checkSkip(active, 19);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
@@ -1084,7 +1093,8 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyActiveNDCSTATUS10() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_NDCSTATUS10");
 		try {
-			mdyActiveFDStatus(3, 10);
+			//mdyActiveFDStatus(3, 10);
+			cs.checkSkip(active, 20);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
@@ -1440,11 +1450,12 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyStatus3() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_STATUS3");
 		try {
-			mdyStatus(4);
+			/*mdyStatus(4);
 			// 同时销售部的流程变成待审核
 			mdyCloseActiveSDStatus(10);
 			// 同时销管部的流程变成已签收
-			mdyCloseActiveSMDStatus(10);
+			mdyCloseActiveSMDStatus(10);*/
+			cs.checkSkip(active, 11);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyStatus3 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyStatus3 数据更新失败:", e);
@@ -1529,7 +1540,8 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyCloseActiveSDStatus10() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS10");
 		try {
-			mdyCloseActiveSDStatus(30);
+			//mdyCloseActiveSDStatus(30);
+			cs.checkSkip(active, 12);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyCloseActiveSDStatus10 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyCloseActiveSDStatus10 数据更新失败:", e);
@@ -1547,7 +1559,8 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyCloseActiveSDStatus30() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS30");
 		try {
-			mdyCloseActiveSDStatus(40);
+			//mdyCloseActiveSDStatus(40);
+			cs.checkSkip(active, 14);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyCloseActiveSDStatus30 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyCloseActiveSDStatus30 数据更新失败:", e);
@@ -1565,7 +1578,8 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyCloseActiveSDStatus40() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS40");
 		try {
-			mdyCloseActiveSDStatus(50);
+			//mdyCloseActiveSDStatus(50);
+			cs.checkSkip(active, 16);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyCloseActiveSDStatus40 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyCloseActiveSDStatus40 数据更新失败:", e);
@@ -1583,7 +1597,8 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyCloseActiveSDStatus50() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS50");
 		try {
-			mdyCloseActiveSMDStatus(60);
+			//mdyCloseActiveSMDStatus(60);
+			cs.checkSkip(active, 18);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyCloseActiveSDStatus50 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyCloseActiveSDStatus50 数据更新失败:", e);
@@ -1661,7 +1676,8 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyCloseActiveSMDStatus10() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_SMDSTATUS10");
 		try {
-			mdyCloseActiveSMDStatus(30);
+			//mdyCloseActiveSMDStatus(30);
+			cs.checkSkip(active, 13);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyCloseActiveSMDStatus10 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyCloseActiveSMDStatus10 数据更新失败:", e);
@@ -1679,7 +1695,8 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyCloseActiveSMDStatus50() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_SMDSTATUS50");
 		try {
-			mdyCloseActiveSMDStatus(40);
+			//mdyCloseActiveSMDStatus(40);
+			cs.checkSkip(active, 15);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyCloseActiveSMDStatus10 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyCloseActiveSMDStatus10 数据更新失败:", e);
@@ -1697,7 +1714,8 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyCloseActiveSMDStatus30() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_SMDSTATUS30");
 		try {
-			mdyCloseActiveSMDStatus(50);
+			//mdyCloseActiveSMDStatus(50);
+			cs.checkSkip(active, 17);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyCloseActiveSMDStatus30 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyCloseActiveSMDStatus30 数据更新失败:", e);

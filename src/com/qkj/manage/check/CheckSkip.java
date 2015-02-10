@@ -96,7 +96,7 @@ public class CheckSkip {
 		String userid = ContextHelper.getUserLoginUuid();
 		str = "step" + st;// 现在调用的步骤
 		skipstr = "step" + skipStep.getSkip_step();// 跳过的步骤
-		if (st == (skipStep.getSkip_step() - 1)) {// 下一步跳过则在这一步填加系统管理员审核
+		if (st ==skipStep.getStart_step()) {// 下一步跳过则在这一步填加系统管理员审核
 			try {
 				step.getClass().getMethod(str, new Class[] { String.class }).invoke(step, new Object[] { userid });
 				step.getClass().getMethod(skipstr, new Class[] { String.class }).invoke(step, new Object[] { "1" });// 跳过的方法
@@ -126,16 +126,61 @@ public class CheckSkip {
 	}
 
 	private void skipList() {
+		//北京+省外总监审后，跳过销管副总直接到财务
+		skipStep = new SkipStep();
+		skipStep.setIsSub(1);
+		skipStep.setSkip_dept("210");
+		skipStep.setStart_step(4);//总监
+		skipStep.setSkip_step(7);//申请跳过销管副总
+		skipSteps.add(skipStep);
+		skipStep = new SkipStep();
+		skipStep.setIsSub(1);
+		skipStep.setSkip_dept("210");
+		skipStep.setStart_step(14);//总监
+		skipStep.setSkip_step(17);//结案大区跳过
+		skipSteps.add(skipStep);
+		
 		skipStep = new SkipStep();
 		skipStep.setIsSub(1);
 		skipStep.setSkip_dept("211");
-		skipStep.setSkip_step(2);//申请大区跳过
+		skipStep.setStart_step(4);//总监
+		skipStep.setSkip_step(7);//申请跳过销管副总
 		skipSteps.add(skipStep);
 		skipStep = new SkipStep();
 		skipStep.setIsSub(1);
 		skipStep.setSkip_dept("211");
-		skipStep.setSkip_step(12);//结案大区跳过
+		skipStep.setStart_step(14);//总监
+		skipStep.setSkip_step(17);//结案大区跳过
 		skipSteps.add(skipStep);
+		
+		//新疆+西藏跳过销管经理
+		skipStep = new SkipStep();
+		skipStep.setIsSub(1);
+		skipStep.setSkip_dept("2302");//西藏
+		skipStep.setStart_step(2);//大区
+		skipStep.setSkip_step(3);//申请跳过销管经理
+		skipSteps.add(skipStep);
+		skipStep = new SkipStep();
+		skipStep.setIsSub(1);
+		skipStep.setSkip_dept("2302");
+		skipStep.setStart_step(12);
+		skipStep.setSkip_step(13);
+		skipSteps.add(skipStep);
+		
+		skipStep = new SkipStep();
+		skipStep.setIsSub(1);
+		skipStep.setSkip_dept("22030");//新疆
+		skipStep.setStart_step(2);//大区
+		skipStep.setSkip_step(3);//申请跳过销管经理
+		skipSteps.add(skipStep);
+		skipStep = new SkipStep();
+		skipStep.setIsSub(1);
+		skipStep.setSkip_dept("22030");
+		skipStep.setStart_step(12);
+		skipStep.setSkip_step(13);
+		skipSteps.add(skipStep);
+		
+		
 	}
 
 	public static void main(String[] args) throws Exception {
