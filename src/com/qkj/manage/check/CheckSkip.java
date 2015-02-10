@@ -59,6 +59,13 @@ public class CheckSkip {
 		skipList();
 		int falg = 0;
 		if (skipSteps.size() > 0) {
+		/*	for (int i = 0; i < skipSteps.size(); i++) {
+				SkipStep as = new SkipStep();
+				as = skipSteps.get(i);
+				String str = (String) CacheFactory.getCacheInstance().get(SysDBCacheLogic.CACHE_DEPT_PREFIX_PARENT + active.getApply_dept());//
+				String[] s = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
+				Boolean iskip = ToolsUtil.isIn(as.getSkip_dept(), s);// 判断在不在数组中
+			}*/
 			for (int i = 0; i < skipSteps.size(); i++) {
 				SkipStep as = new SkipStep();
 				as = skipSteps.get(i);
@@ -67,17 +74,25 @@ public class CheckSkip {
 					String[] s = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
 					Boolean iskip = ToolsUtil.isIn(as.getSkip_dept(), s);// 判断在不在数组中
 					if (iskip == true) {// 是特殊部门
-						specialStep(st);
+						if (st ==as.getStart_step()) {
+						specialStep(st,as);
 						falg = 1;
 						break;
+						}else{
+							continue;
+						}
 					} else {
 						continue;
 					}
 				} else {// 不包含子部门
 					if (active.getApply_dept().equals(as.getSkip_dept())) {// 是特殊部门
-						specialStep(st);
+						if (st ==as.getStart_step()) {
+						specialStep(st,as);
 						falg = 1;
 						break;
+						}else{
+							continue;
+						}
 					} else {
 						continue;
 					}
@@ -92,11 +107,10 @@ public class CheckSkip {
 		}
 	}
 
-	private void specialStep(int st) {
+	private void specialStep(int st,SkipStep as) {
 		String userid = ContextHelper.getUserLoginUuid();
 		str = "step" + st;// 现在调用的步骤
-		skipstr = "step" + skipStep.getSkip_step();// 跳过的步骤
-		if (st ==skipStep.getStart_step()) {// 下一步跳过则在这一步填加系统管理员审核
+		skipstr = "step" + as.getSkip_step();// 跳过的步骤
 			try {
 				step.getClass().getMethod(str, new Class[] { String.class }).invoke(step, new Object[] { userid });
 				step.getClass().getMethod(skipstr, new Class[] { String.class }).invoke(step, new Object[] { "1" });// 跳过的方法
@@ -104,14 +118,6 @@ public class CheckSkip {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} else {// 调用审核步骤
-			try {
-				step.getClass().getMethod(str, new Class[] { String.class }).invoke(step, new Object[] { userid });
-			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
 	}
 
 	private void normalStep(int st) {
@@ -168,13 +174,13 @@ public class CheckSkip {
 		skipSteps.add(skipStep);
 		
 		skipStep = new SkipStep();
-		skipStep.setIsSub(1);
+		skipStep.setIsSub(0);
 		skipStep.setSkip_dept("22030");//新疆
 		skipStep.setStart_step(2);//大区
 		skipStep.setSkip_step(3);//申请跳过销管经理
 		skipSteps.add(skipStep);
 		skipStep = new SkipStep();
-		skipStep.setIsSub(1);
+		skipStep.setIsSub(0);
 		skipStep.setSkip_dept("22030");
 		skipStep.setStart_step(12);
 		skipStep.setSkip_step(13);
