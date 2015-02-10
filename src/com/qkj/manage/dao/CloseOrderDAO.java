@@ -39,6 +39,16 @@ public class CloseOrderDAO extends AbstractDAO {
 		return super.save("qkjmanage_mdyClosendCheck", parameters);
 	}
 
+	public List allsign(Map<String, Object> map) {
+		return super.list("qkjmanage_getallclosesign", map);
+	}
+	
+	public Object sign(Object uuid) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("biz_id", uuid);
+		return super.get("qkjmanage_getclosesign", map);
+	}
+	
 	public int getResultCount() {
 		return super.getResultCount();
 	}

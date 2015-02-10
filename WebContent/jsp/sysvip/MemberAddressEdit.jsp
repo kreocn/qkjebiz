@@ -39,9 +39,9 @@ $(function(){
 		<div class="label_hang">
 			<div class="label_ltit">所在地区:</div>
 			<div class="label_rwbenx">
-				<div class="label_rwb iselect"><s:select id="memberAddress.province" name="memberAddress.province" title="省" list="#{}" cssClass="validate[required]" /></div>
-				<div class="label_rwb iselect"><s:select id="memberAddress.city" name="memberAddress.city" title="市" list="#{}" cssClass="validate[required]" data-prompt-position="inline" data-prompt-target="rm_x" /></div>
-				<div class="label_rwb iselect"><s:select id="memberAddress.area" name="memberAddress.area" title="县" list="#{}" /></div>
+				<div class="label_rwb"><s:select id="memberAddress.province" name="memberAddress.province" title="省" list="#{}" cssClass="validate[required]" /></div>
+				<div class="label_rwb"><s:select id="memberAddress.city" name="memberAddress.city" title="市" list="#{}" cssClass="validate[required]" data-prompt-position="inline" data-prompt-target="rm_x" /></div>
+				<div class="label_rwb"><s:select id="memberAddress.area" name="memberAddress.area" title="县" list="#{}" /></div>
 				<script type="text/javascript">
 					var sa = new SArea($("#memberAddress\\.province") ,$("#memberAddress\\.city"),$("#memberAddress\\.area"));
 					sa.ajax_url = ajax_url;

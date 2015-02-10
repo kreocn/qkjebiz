@@ -99,13 +99,25 @@
 						<div class="label_rwben">&nbsp;%</div>
 					</div>
 				</div>
-
+				
+				<div class="label_main">
+					<div class="label_hang">
+						<div class="label_ltit">添加部门:</div>
+						<div class="label_rwben nw">
+							<s:textfield id="useradddept_nameid" name="salPromot.add_user_dept_name" readonly="true" cssClass="validate[required]" />
+							<s:hidden id="useradddept_codeid" name="salPromot.add_user_dept" />
+						</div>
+						<img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept('useradddept_codeid','useradddept_nameid',true,null,1);" />
+					</div>
+				</div>
+				
 				<div class="label_main">
 					<div class="label_hang">
 						<div class="label_ltit">范围:</div>
 						<div class="label_rwben nw">
 							<s:textfield id="userdept_nameid" name="salPromot.sal_scopDept_name" readonly="true" cssClass="validate[required]" />
 							<s:hidden id="userdept_codeid" name="salPromot.sal_scopDept" />
+							
 						</div>
 						<img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true,null,1);" />
 					</div>

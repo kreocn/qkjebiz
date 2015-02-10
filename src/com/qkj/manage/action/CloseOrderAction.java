@@ -31,6 +31,8 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 
 	private CloseOrder closeOrder;
 	private List<CloseOrder> closeOrders;
+	private List<CloseOrder> allsigns;
+	private CloseOrder sign;
 	private List<SalPromot> salPromots;
 	private List<CloseOrderPro> closeOrderPros;
 	private CloseOrderPro closeOrderPro;
@@ -45,6 +47,22 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	private List<Approve> approves;
 	private String isApprover;
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;结案提货单";
+
+	public List<CloseOrder> getAllsigns() {
+		return allsigns;
+	}
+
+	public void setAllsigns(List<CloseOrder> allsigns) {
+		this.allsigns = allsigns;
+	}
+
+	public CloseOrder getSign() {
+		return sign;
+	}
+
+	public void setSign(CloseOrder sign) {
+		this.sign = sign;
+	}
 
 	public String getPath() {
 		return path;
@@ -229,16 +247,35 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	
 	public String view() throws Exception{
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+		String salid=null;
+		List<SalPromot> salps=new ArrayList<>();
 		try {
 				if (!(closeOrder == null || closeOrder.getUuid() == null)) {
 					this.setCloseOrder((CloseOrder) dao.get(closeOrder.getUuid()));
+					salid=closeOrder.getSalPro_id();
 				} else {
 					this.setCloseOrder(null);
 				}
+				
+				if(salid!=null){
+					String stringarray[]=salid.split(",");  
+					for(int i=0;i<stringarray.length;i++){
+						SalPromot sp=new SalPromot();
+						System.out.println(stringarray[i]);
+						sp.setUuid(Integer.parseInt(stringarray[i]));
+						sp=(SalPromot) saldao.get(sp.getUuid());
+						salps.add(sp);
+					}
+					this.setSalPromots(salps);
+				}
 				map.clear();
-				map.put("status", 2);
-				map.put("proendtime", sdf.format(new Date()));
-				this.setSalPromots(saldao.list(map));
+				map.put("allsign", 1);
+				map.put("biz_id", closeOrder.getUuid());
+				this.setAllsigns(dao.allsign(map));
+				
+				this.setSign((CloseOrder) dao.sign(closeOrder.getUuid()));
+				System.out.println(sign.getSign20()+sign.getSign30());
+				
 				CloseOrderProDAO cdao=new CloseOrderProDAO();
 				map.clear();
 				map.put("order_id", closeOrder.getUuid());

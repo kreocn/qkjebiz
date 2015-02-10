@@ -34,6 +34,7 @@ public class SalPromot {
 	private String lm_user_name;
 	private String dept_code;
 	private String sal_scopDept_name;
+	private String add_user_dept_name;
 
 	public Integer getUuid() {
 		return uuid;
@@ -265,6 +266,14 @@ public class SalPromot {
 
 	public void setSal_scopUs(Integer sal_scopUs) {
 		this.sal_scopUs = sal_scopUs;
+	}
+
+	public String getAdd_user_dept_name() {
+		return add_user_dept_name;
+	}
+
+	public void setAdd_user_dept_name(String add_user_dept_name) {
+		this.add_user_dept_name = add_user_dept_name;
 	}
 
 }

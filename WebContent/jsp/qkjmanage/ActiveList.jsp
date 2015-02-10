@@ -51,7 +51,7 @@ cursor: pointer;
         </div>
         
         <div class="label_hang">
-            <div class="label_ltit">客户编号:</div>
+            <div class="label_ltit">客户名称:</div>
             <div class="label_rwben"><s:textfield id="order_user_id" name="active.member_id"/></div>
         </div>
         
@@ -355,7 +355,7 @@ cursor: pointer;
 	<div class="label_main">
         <div class="label_hang">
             <div class="label_ltit">发货状态:</div>
-            <div class="label_rwben"><div class="iselect"><s:select id="e_active_ship_status" name="active.ship_status" list="#{0:'未发货',10:'已发货',99:'其他' }" /></div></div>
+            <div class="label_rwben"><s:select id="e_active_ship_status" name="active.ship_status" list="#{0:'未发货',10:'已发货',99:'其他' }" /></div>
         </div>
 		<div class="label_hang">
             <div class="label_ltit">出库日期:</div>
