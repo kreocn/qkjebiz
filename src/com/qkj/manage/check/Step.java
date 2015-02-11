@@ -87,7 +87,7 @@ public class Step {
 			active.setStatus(2);// 申请通过执行
 		}
 		dao.mdyActivePass(active);
-		addProcess("ACTIVE_APPLY_PASS", "活动申请通过");
+		addProcess("ACTIVE_APPLY_PASS", "活动申请通过",userid);
 	}
 	
 	/**
@@ -138,7 +138,7 @@ public class Step {
 		// 调整随量积分
 		mdyMemberCapital();
 		active.setStatus(5);
-		addProcess("ACTIVE_CLOSE_PASS", "活动结案通过");
+		addProcess("ACTIVE_CLOSE_PASS", "活动结案通过",userid);
 	}
 	
 	public void step20(String userid){//结案数据中心
@@ -177,7 +177,7 @@ public class Step {
 		active.setSmd_user(userid);
 		active.setLm_user(userid);
 		String note = "活动申请-销管审核状态变更-" + noteflag;
-		addProcess("ACTIVE_MDY_SMDSTATUS", note);
+		addProcess("ACTIVE_MDY_SMDSTATUS", note,userid);
 		return dao.mdyActiveSMDStatus(active);
 	}
 	
@@ -208,7 +208,7 @@ public class Step {
 		active.setStatus(status);
 		active.setLm_user(ContextHelper.getUserLoginUuid());
 		String note = "活动状态变更-" + noteflag;
-		addProcess("ACTIVE_MDY_STATUS", note);
+		addProcess("ACTIVE_MDY_STATUS", note,ContextHelper.getUserLoginUuid());
 		return dao.mdyActiveStatus(active);
 	}
 	
@@ -245,7 +245,7 @@ public class Step {
 		active.setSd_user(userid);
 		active.setLm_user(userid);
 		String note = "活动申请-销售审核状态变更-" + noteflag;
-		addProcess("ACTIVE_MDY_SDSTATUS", note);
+		addProcess("ACTIVE_MDY_SDSTATUS", note,userid);
 		return dao.mdyActiveSDStatus(active);
 	}
 	
@@ -271,7 +271,7 @@ public class Step {
 			active.setFd_time(new Date());
 			active.setLm_user(ContextHelper.getUserLoginUuid());
 			String note = "申请--财务状态变更-" + noteflag;
-			addProcess("ACTIVE_MDY_FDSTATUS", note);
+			addProcess("ACTIVE_MDY_FDSTATUS", note,ContextHelper.getUserLoginUuid());
 			return dao.mdyActiveFDStatus(active);
 		} else if (flag == 2) {// 结案
 			if (smd_status == 5) {
@@ -285,7 +285,7 @@ public class Step {
 			active.setClose_fd_time(new Date());
 			active.setLm_user(ContextHelper.getUserLoginUuid());
 			String note = "结案--财务状态变更-" + noteflag;
-			addProcess("ACTIVE_MDY_FDCSTATUS", note);
+			addProcess("ACTIVE_MDY_FDCSTATUS", note,ContextHelper.getUserLoginUuid());
 			return dao.mdyActiveFDCStatus(active);
 		} else {// 数据中心
 			if (smd_status == 5) {
@@ -299,7 +299,7 @@ public class Step {
 			active.setClose_nd_time(new Date());
 			active.setLm_user(ContextHelper.getUserLoginUuid());
 			String note = "结案--数据中心状态变更-" + noteflag;
-			addProcess("ACTIVE_MDY_NDCSTATUS", note);
+			addProcess("ACTIVE_MDY_NDCSTATUS", note,ContextHelper.getUserLoginUuid());
 			return dao.mdyActiveNDCStatus(active);
 		}
 
@@ -340,7 +340,7 @@ public class Step {
 		active.setClose_sd_user(userid);
 		active.setLm_user(userid);
 		String note = "活动结案-销售审核状态变更-" + noteflag;
-		addProcess("ACTIVE_CLOSE_SDSTATUS", note);
+		addProcess("ACTIVE_CLOSE_SDSTATUS", note,userid);
 
 		return dao.mdyCloseActiveSDStatus(active);
 	}
@@ -377,17 +377,17 @@ public class Step {
 		active.setClose_smd_user(userid);
 		active.setLm_user(userid);
 		String note = "活动结案-销管审核状态变更" + noteflag;
-		addProcess("ACTIVE_CLOSE_SMDSTATUS", note);
+		addProcess("ACTIVE_CLOSE_SMDSTATUS", note,userid);
 		return dao.mdyCloseActiveSMDStatus(active);
 	}
 	
-	private void addProcess(String p_sign, String p_note) {
+	private void addProcess(String p_sign, String p_note,String userLogin) {
 		CheckSkip s=new CheckSkip();
 		this.setActive(s.getActive());
 		ProcessDAO pdao = new ProcessDAO();
 		if (active != null) {
 			pdao.addProcess(1, active.getUuid(), p_sign, p_note, active.getStatus(), active.getSd_status(), active.getSmd_status(), active.getClose_sd_status(),
-					active.getClose_smd_status());
+					active.getClose_smd_status(),userLogin);
 		}
 	}
 	

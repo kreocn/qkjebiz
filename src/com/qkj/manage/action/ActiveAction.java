@@ -1839,7 +1839,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		ProcessDAO pdao = new ProcessDAO();
 		if (active != null) {
 			pdao.addProcess(1, active.getUuid(), p_sign, p_note, active.getStatus(), active.getSd_status(), active.getSmd_status(), active.getClose_sd_status(),
-					active.getClose_smd_status());
+					active.getClose_smd_status(),ContextHelper.getUserLoginUuid());
 		}
 	}
 

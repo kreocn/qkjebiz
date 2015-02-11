@@ -66,6 +66,7 @@ public class CheckSkip {
 				String[] s = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
 				Boolean iskip = ToolsUtil.isIn(as.getSkip_dept(), s);// 判断在不在数组中
 			}*/
+			
 			for (int i = 0; i < skipSteps.size(); i++) {
 				SkipStep as = new SkipStep();
 				as = skipSteps.get(i);
@@ -113,7 +114,7 @@ public class CheckSkip {
 		skipstr = "step" + as.getSkip_step();// 跳过的步骤
 			try {
 				step.getClass().getMethod(str, new Class[] { String.class }).invoke(step, new Object[] { userid });
-				step.getClass().getMethod(skipstr, new Class[] { String.class }).invoke(step, new Object[] { "1" });// 跳过的方法
+				step.getClass().getMethod(skipstr, new Class[] { String.class }).invoke(step, new Object[] { "2" });// 跳过的方法
 			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
