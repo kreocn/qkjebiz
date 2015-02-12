@@ -6,8 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.iweb.common.dao.CommonDAO;
 import org.iweb.sys.ActionAttr;
 import org.iweb.sys.ContextHelper;
 import org.iweb.sys.ToolsUtil;
@@ -78,7 +80,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	private String noteflag = null;
 	private String sselect;
 	private double indprice;
-
+	private CommonDAO comdao = new CommonDAO();
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;活动管理";
 
 	public double getIndprice() {
@@ -1864,5 +1866,59 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 			products = adao.list(map);
 		}
 		return products;
+	}
+	
+/**
+ * 流程定制后数据补充
+ */
+	public String reinforce() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_REINFORCE");
+		try {
+			String sql =null;
+			sql="SELECT a.`uuid`,a.`active_type`,a.`apply_dept` FROM qkjm_r_active a WHERE a.`sd_status`=40 AND a.`fd_status`=0 AND a.`smd_status`<50 AND a.`status`=1 AND a.`apply_dept` LIKE '21%'";
+			List<Map> activeMapBs = comdao.commonSelectMapList(sql);
+			if(activeMapBs.size()>0){
+				for(int i=0;i<activeMapBs.size();i++){
+				    active=new Active();
+				    ToolsUtil.getBeanByMap(active, activeMapBs.get(i));
+				    cs.checkSkip(active, 4);
+				}
+			}
+			
+			sql="SELECT a.`uuid`,a.`active_type`,a.`apply_dept` FROM qkjm_r_active a WHERE a.`close_sd_status`=40 AND a.`close_fd_status`=0 AND a.`close_smd_status`<50 AND a.`status`=4 AND a.`apply_dept` LIKE '21%'";
+			List<Map> activeMaps = comdao.commonSelectMapList(sql);
+			if(activeMaps.size()>0){
+				for(int i=0;i<activeMaps.size();i++){
+				    active=new Active();
+				    ToolsUtil.getBeanByMap(active, activeMaps.get(i));
+				    cs.checkSkip(active, 14);
+				}
+			}
+			
+			sql="SELECT a.`uuid`,a.`active_type`,a.`apply_dept` FROM qkjm_r_active a WHERE a.`status`=1 AND  a.`sd_status`=30 AND a.`smd_status`<30 AND a.`apply_dept` LIKE '2302%' OR a.`apply_dept` LIKE '22030%'";
+			List<Map> activeMapXs = comdao.commonSelectMapList(sql);
+			if(activeMapXs.size()>0){
+				for(int i=0;i<activeMapXs.size();i++){
+				    active=new Active();
+				    ToolsUtil.getBeanByMap(active, activeMapXs.get(i));
+				    cs.checkSkip(active, 2);
+				}
+			}
+			
+			sql="SELECT a.`uuid`,a.`active_type`,a.`apply_dept` FROM qkjm_r_active a WHERE a.`status`=4 AND  a.`close_sd_status`=30 AND a.`smd_status`<30 AND a.`apply_dept` LIKE '2302%' OR a.`apply_dept` LIKE '22030%'";
+			List<Map> activeMapJs = comdao.commonSelectMapList(sql);
+			if(activeMapJs.size()>0){
+				for(int i=0;i<activeMapJs.size();i++){
+				    active=new Active();
+				    ToolsUtil.getBeanByMap(active, activeMapJs.get(i));
+				    cs.checkSkip(active, 12);
+				}
+			}
+		
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!approveDel 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!approveDel 数据更新失败:", e);
+		}
+		return SUCCESS;
 	}
 }
