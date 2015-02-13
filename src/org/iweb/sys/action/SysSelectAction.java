@@ -33,6 +33,7 @@ public class SysSelectAction extends ActionSupport {
 
 	// 起始部门代码,为以后集团化运营打下基础
 	private String dept_code;
+	private String check_code;//订单发货部门
 
 	public List<Department> getDepts() {
 		return depts;
@@ -56,6 +57,14 @@ public class SysSelectAction extends ActionSupport {
 
 	public void setDept_mode(Integer dept_mode) {
 		this.dept_mode = dept_mode;
+	}
+
+	public String getCheck_code() {
+		return check_code;
+	}
+
+	public void setCheck_code(String check_code) {
+		this.check_code = check_code;
 	}
 
 	public String dept_select_limit() throws Exception {
@@ -119,6 +128,11 @@ public class SysSelectAction extends ActionSupport {
 				map.put("dept_code", ContextHelper.getUserLoginDept()); // 能选到自己的部门
 			else
 				map.put("dept_codes", ContextHelper.getUserLoginPermitDepts());
+			if(check_code!=null){
+				map.remove("dept_code");
+				map.remove("dept_codes");
+				map.put("dept_codes", ContextHelper.getUserLoginPermitDepts());
+			}
 			this.setDepts(dao.list(map));
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!dept_permit_select 读取数据错误:", e);
