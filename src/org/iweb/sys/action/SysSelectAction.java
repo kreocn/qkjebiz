@@ -131,7 +131,6 @@ public class SysSelectAction extends ActionSupport {
 			if(check_code!=null){
 				map.remove("dept_code");
 				map.remove("dept_codes");
-				map.put("dept_codes", ContextHelper.getUserLoginPermitDepts());
 			}
 			this.setDepts(dao.list(map));
 		} catch (Exception e) {

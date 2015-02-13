@@ -123,9 +123,9 @@ a.confirm_button:hover{background-color:#333;color:#FFF;}
 <div id="result">
 	<div class="itablemdy">
 	<div class="itabletitle">
-		<span class="title1"><s:if test="null == lading && 'add' == viewFlag">增加</s:if><s:elseif test="null != lading && 'mdy' == viewFlag">修改&审核</s:elseif>提货申请单</span>
+		<span class="title1"><s:if test="null == lading && 'add' == viewFlag">增加</s:if><s:elseif test="null != lading && 'mdy' == viewFlag">修改&审核</s:elseif>销售订单</span>
 		<span class="extra1">
-			<a href="<s:url action="lading_list" namespace="/qkjmanage" />" >提货申请单列表</a>
+			<a href="<s:url action="lading_list" namespace="/qkjmanage" />" >销售订单列表</a>
 		</span>	
 	</div>
 <s:form id="formEdit" name="form1" action="lading_add" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
