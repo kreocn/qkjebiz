@@ -7,6 +7,8 @@ public interface SysCache {
 
 	public Object get(String key);
 
+	public Object get(String key, Class<?> cls);
+
 	public void del(String key);
 
 	public void clear();

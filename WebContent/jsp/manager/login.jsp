@@ -5,14 +5,10 @@
 <html>
 <head>
 <title><s:text name="APP_NAME" /></title>
-<s:action name="ref" namespace="/manager" executeResult="true" />
+<s:action name="ref_css" namespace="/manager" executeResult="true" />
 <style type="text/css">
-.print_prepare {
-width: 0;height: 0;position: absolute;left: -9999px;top: -9999px;
-}
-body {
-background-color: #363636;
-}
+body {background-color: #363636;}
+.print_prepare {width: 0;height: 0;position: absolute;left: -9999px;top: -9999px;}
 </style>
 </head>
 <body>
@@ -41,5 +37,6 @@ background-color: #363636;
 <div class="print_prepare"><img src="<s:url value="/images/print/pageheader02.png" />" alt="" /></div>
 <div class="print_prepare"><img src="<s:url value="/images/print/pageheader02.png" />" alt="" /></div>
 </div>
+<s:action name="ref_js" namespace="/manager" executeResult="true" />
 </body>
 </html>

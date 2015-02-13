@@ -4,15 +4,15 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 <link rel="stylesheet" href="<c:url value="/include/jQuery/style.ui.smoothness/jquery-ui-1.10.3.min.css" />" />
-<link rel="stylesheet" href="<c:url value="/css/v0.2/style.css" />" />
+<link rel="stylesheet" href="<c:url value="/css/v0.1/style.css" />" />
 <link rel="stylesheet" href="<c:url value="/css/v0.1/validationEngine.jquery.css" />" />
 <link rel="stylesheet" href="<c:url value="/css/animate.css" />" />
 <link rel="stylesheet" href="<c:url value="/include/jQuery/stylesheets/jquery.xhupload.css" />" />
 <link rel="stylesheet" href="<c:url value="/css/v0.1/demo.css" />" />
-<link rel="stylesheet" href="<c:url value="/css/v0.2/jqm-demos.css" />" />
-<link rel="stylesheet" href="<c:url value="/css/v0.2/jquery.mobile-1.4.3.min.css" />" />
-<link rel="stylesheet" href="<c:url value="/css/v0.2/nav.css" />" />
+<script type="text/javascript">var app_path = '<c:url value="/" />', ajax_url = "/common_ajax/json_ajax";</script>
 <script type="text/javascript" src="<c:url value="/js/v0.1/jquery-1.9.0.min.js" />"></script>
+<!--  <script type="text/javascript" src="<c:url value="/include/jQuery/jquery-1.8.3.min.js" />"></script>  
+ <script type="text/javascript" src="<c:url value="/js/v0.1/jquery-2.1.1.min.js" />"></script> -->
 <script type="text/javascript" src="<c:url value="/js/v0.1/jquery-migrate-1.2.1.min.js" />"></script>
 <script type="text/javascript" src="<c:url value="/include/jQuery/jquery-ui-1.10.3.custom.min.js" />"></script>
 <script type="text/javascript" src="<c:url value="/include/jQuery/jquery.ui.datepicker-zh.js" />"></script>
@@ -32,12 +32,12 @@
 <script type="text/javascript" src="<c:url value="/js/func/create_editor.js" />"></script>
 <script type="text/javascript" src="<c:url value="/include/jQuery/jquery.xhupload.js" />"></script>
 <script type="text/javascript" src="<c:url value="/js/HttpCookie.min.js" />"></script>
+<script type="text/javascript" src="<c:url value="/js/v0.2/Cookie_Imp.js" />"></script>
 <script type="text/javascript" src="<c:url value="/include/jQuery/jquery.select.js" />"></script>
 <script type="text/javascript" src="<c:url value="/js/func/select_member.js" />"></script>
 <script type="text/javascript" src="<c:url value="/js/common_listtable.js" />"></script>
 <script type="text/javascript" src="<c:url value="/js/common_cptb.js" />"></script>
 <script type="text/javascript" src="<c:url value="/js/form_validator.js" />"></script>
-<script type="text/javascript" src="<c:url value="/js/v0.2/jquery.mobile-1.4.3.min.js" />"></script>
 <!--[if lt IE 9]>
 <script type="text/javascript">
 window.onload=function(){

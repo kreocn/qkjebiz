@@ -9,11 +9,15 @@ import net.sf.json.JSONObject;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.iweb.common.dao.MenuDAO;
+import org.iweb.sys.ContextHelper;
+import org.iweb.sys.JSONUtil;
 import org.iweb.sys.ToolsUtil;
 import org.iweb.sys.dao.DepartmentDAO;
 import org.iweb.sys.dao.UserRoleDAO;
 import org.iweb.sys.domain.Department;
 import org.iweb.sys.domain.RolePrvg;
+import org.iweb.sys.domain.UserPrivilege;
 import org.iweb.sys.encrypt.EncryptAES;
 import org.iweb.sys.encrypt.EncryptFactory;
 
@@ -101,6 +105,26 @@ public final class SysDBCacheLogic extends SysCacheLogic {
 		cacheValue2JSON(sub_map);
 		cacheValue2JSON(parent_map);
 		log.info("缓存部门数据完成");
+	}
+
+	// 菜单前缀
+	public final static String CACHE_MENU_PREFIX = "menu-";
+
+	public synchronized void cacheMenu(boolean delFlag) {
+		// 是否需要先清空原缓存
+		if (delFlag) {
+			log.info("开始清空原菜单缓存数据");
+			cache.del(CACHE_MENU_PREFIX + "*");
+			log.info("原菜单缓存数据清空完毕");
+		}
+		log.info("开始缓存菜单权限数据");
+		MenuDAO dao = new MenuDAO();
+		List<UserPrivilege> menus = dao.listSysMenu(null);
+		for (Iterator<UserPrivilege> it = menus.iterator(); it.hasNext();) {
+			UserPrivilege prvg = (UserPrivilege) it.next();
+			cache.put(CACHE_MENU_PREFIX + prvg.getPrivilege_id(), JSONUtil.toJsonString(prvg));
+		}
+		log.info("缓存菜单权限数据完成");
 	}
 
 	// 子部门列表前缀

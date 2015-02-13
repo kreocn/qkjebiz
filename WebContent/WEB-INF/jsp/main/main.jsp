@@ -7,19 +7,19 @@
 <head>
 <meta charset="utf-8">
 <title>商务管理中心--<s:text name="APP_NAME" /></title>
-<s:action name="ref" namespace="/manager" executeResult="true" />
+<s:action name="ref_css" namespace="/manager" executeResult="true" />
 </head>
 <body>
 <!--top顶部-->
 <s:action name="top" namespace="/manage" executeResult="true" />
 <!--left菜单-->
-<s:action name="left" namespace="/manage" executeResult="true" />
+<div id="ht_left_menu" class="ht_left"></div><div class="ht_rhide"></div>
 <!--right列表-->
 <div class="tab_right">
-	<div class="tab_warp  input-a">
+	<div class="tab_warp">
 	<p class="dq_step"><a href="">首页</a>&nbsp;&gt;&nbsp;工时申请单列表
 		<span class="opb lb op-area"><a href="">添加申请单</a></span>
-		<span class="opb lb op-area"><a href="javascript:;" onclick="enumCookieValues(mCo);" style="float: right;">测试Cookia</a></span>
+		<span class="opb lb op-area"><a href="javascript:;" onclick="showCookie(wCo);" style="float: right;">测试dialog</a></span>
 	</p>
     <form id="serachForm" name="serachForm" action="/adm/leave_list" method="get">
         <div class="label_main">
@@ -104,7 +104,7 @@
             </div>
         </div>
     </form>
-    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+    <table style="width: 100%;border-collapse:collapse;border-spacing:0;">
         <tr>
             <th><input type="checkbox" /></th>
             <th>编号</th>
@@ -287,5 +287,6 @@
 	</div>
 </div>
 <footer><p class="botmsg">当前登录信息：互助股份公司&nbsp;&nbsp;系统管理员</p></footer>
+<s:action name="ref_js" namespace="/manager" executeResult="true" />
 </body>
 </html>
