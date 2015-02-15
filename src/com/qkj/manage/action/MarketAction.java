@@ -135,7 +135,7 @@ public class MarketAction extends ActionSupport implements ActionAttr {
 		File f = new File(p+"/js/Info.js");
 		// InputStream in = new FileInputStream(f);
 		meta.setContentLength(f.length());
-		OSSUtil_IMG.uploadFile("qkjbj01", "qkjebiz01/Marketing_network_map_info.js", f, meta);
+		OSSUtil_IMG.uploadFile("qkjbj01", "CacheFiles/Marketing_network_map_info.js", f, meta);
 		
 		return SUCCESS;
 	}
