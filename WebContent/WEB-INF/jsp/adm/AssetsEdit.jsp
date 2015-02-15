@@ -6,32 +6,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>资产管理--<s:text name="APP_NAME" /></title>
-<s:action name="ref" namespace="/manager" executeResult="true" />
-<script type="text/javascript" src="<s:url value="/js/jqueryPlugins/select3/jquery.cityselect.js" />"></script>
-<script type="text/javascript">
-$(function(){
-	$("#mmtype").citySelect({
-		url:'<s:url value="/js/jqueryPlugins/select3/mm.js" />',
-		prov:"${assets.typea}",
-		city:"${assets.typeb}",
-		dist:" ${assets.typec}",
-		nodata:"none"
-	});
-	$("#assets_price").bind("keyup",function(){
-		$("#assets_price_scope").val($("#assets_price").val()*$("#assets_num").val());
-	});
-	$("#assets_num").bind("keyup",function(){
-		$("#assets_price_scope").val($("#assets_price").val()*$("#assets_num").val());
-	});
- });
-</script>
+<s:action name="ref_head" namespace="/manager" executeResult="true" />
 <style type="text/css">
 .pricecss{display:inline-block; height:26px; line-height:26px;}
 .label_hang{clear:both;}
 </style>
 </head>
 <body>
- <div class="main" >
+<s:action name="nav" namespace="/manage" executeResult="true" />
+<div class="tab_right">
+	<div class="tab_warp main">
 	<div class="dq_step">
 		${path}
 		<span class="opb lb op-area"><a href="<s:url namespace="/adm" action="assets_list"><s:param name="viewFlag">relist</s:param></s:url>">订单列表</a></span>
@@ -164,6 +148,7 @@ $(function(){
  		</div>
  	</s:form>
 </div>
+</div>
 <!-- 以下为dialog div内容 -->
 <s:if test="'mdy' == viewFlag">
 <!-- 添加/修改明细 -->
@@ -228,8 +213,24 @@ $(function(){
 </table>
 </s:form>
 </div>
+
+<s:action name="ref_foot" namespace="/manager" executeResult="true" />
+<script type="text/javascript" src="<s:url value="/js/jqueryPlugins/select3/jquery.cityselect.js" />"></script>
 <script type="text/javascript">
 $(function(){
+	$("#mmtype").citySelect({
+		url:'<s:url value="/js/jqueryPlugins/select3/mm.js" />',
+		prov:"${assets.typea}",
+		city:"${assets.typeb}",
+		dist:" ${assets.typec}",
+		nodata:"none"
+	});
+	$("#assets_price").bind("keyup",function(){
+		$("#assets_price_scope").val($("#assets_price").val()*$("#assets_num").val());
+	});
+	$("#assets_num").bind("keyup",function(){
+		$("#assets_price_scope").val($("#assets_price").val()*$("#assets_num").val());
+	});
 	$("#addAssetItems").dialog({
 	      autoOpen: false,
 	      height: 220,
@@ -242,15 +243,13 @@ $(function(){
 	      width: 600,
 	      modal: true
 	});
-});
-
+ });
 function openAddAssetItems() {
 	$("#assetItem_model").val($("#assets_model").val());
 	$("#assetItem_spec").val($("#assets_spec").val());
 	$("#assetItem_price").val($("#assets_price").val());
 	$("#addAssetItems").dialog("open");
 }
-
 function createMdyOwnDialog(item_id) {
 	var tr_id = "assetItems_" + item_id;
 	var td_objs = $("#"+tr_id + " td");

@@ -7,13 +7,11 @@
 <head>
 <meta charset="utf-8">
 <title>商务管理中心--<s:text name="APP_NAME" /></title>
-<s:action name="ref_css" namespace="/manager" executeResult="true" />
+<s:action name="ref_head" namespace="/manager" executeResult="true" />
 </head>
 <body>
-<!--top顶部-->
-<s:action name="top" namespace="/manage" executeResult="true" />
-<!--left菜单-->
-<div id="ht_left_menu" class="ht_left"></div><div class="ht_rhide"></div>
+<!-- 顶部和左侧菜单导航 -->
+<s:action name="nav" namespace="/manage" executeResult="true" />
 <!--right列表-->
 <div class="tab_right">
 	<div class="tab_warp">
@@ -286,7 +284,6 @@
     </table>
 	</div>
 </div>
-<footer><p class="botmsg">当前登录信息：互助股份公司&nbsp;&nbsp;系统管理员</p></footer>
-<s:action name="ref_js" namespace="/manager" executeResult="true" />
+<s:action name="ref_foot" namespace="/manager" executeResult="true" />
 </body>
 </html>

@@ -8,11 +8,11 @@
 	<package name="COMMON" extends="default" namespace="/common">
 		<default-interceptor-ref name="myStackIndex" />
 		<action name="ajax" class="org.iweb.common.action.AjaxAction">
-			<result>/jsp/common/ajax.jsp</result>
+			<result>/WEB-INF/jsp/common/ajax.jsp</result>
 		</action>
 		<!-- JFileSystem 转向 Action -->
 		<action name="open_jfilesystem" class="org.iweb.common.action.OpenJFileSystemAction">
-			<result>/jsp/common/openJFileSystem.jsp</result>
+			<result>/WEB-INF/jsp/common/openJFileSystem.jsp</result>
 		</action>
 	</package>
 	<package name="COMMON_AJAX" extends="json-default" namespace="/common_ajax">

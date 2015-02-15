@@ -7,7 +7,7 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- Leave Start -->
 		<action name="leave_list" class="com.qkj.adm.action.LeaveAction" method="list">
-			<result>/jsp/adm/LeaveList.jsp</result>
+			<result>/WEB-INF/jsp/adm/LeaveList.jsp</result>
 		</action>
 		<action name="leave_relist" class="com.qkj.adm.action.LeaveAction" method="relist">
 			<result type="redirectAction">
@@ -16,7 +16,7 @@
 			</result>
 		</action>
 		<action name="leave_load" class="com.qkj.adm.action.LeaveAction" method="load">
-			<result>/jsp/adm/LeaveEdit.jsp</result>
+			<result>/WEB-INF/jsp/adm/LeaveEdit.jsp</result>
 		</action>
 		<action name="leave_del" class="com.qkj.adm.action.LeaveAction" method="del">
 			<result type="redirectAction">
@@ -33,7 +33,7 @@
 			</result>
 		</action>
 		<action name="leave_print" class="com.qkj.adm.action.LeaveAction" method="print">
-			<result>/jsp/adm/LeavePrint.jsp</result>
+			<result>/WEB-INF/jsp/adm/LeavePrint.jsp</result>
 		</action>
 		<action name="leave_check*" class="com.qkj.adm.action.LeaveAction" method="check{1}">
 			<result type="redirectAction">

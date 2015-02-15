@@ -56,9 +56,10 @@ function conCookie(condition_selector, checkbox_id){
 
 /* 记录左侧菜单打开或关闭的状态开始 */
 function leftMenuCookie(){
-	$(".prvg-module").mouseup(function(){
-		var tid = $(this).attr("id");
-		if ($(this).hasClass("active")) {// true 是打开 -> 关闭 状态
+	$(".prvg-module>p").mouseup(function(){
+		var $module = $(this).parent(".prvg-module");
+		var tid = $module.attr("id");
+		if ($module.hasClass("active")) {// true 是打开 -> 关闭 状态
 			if (spCo.isExisted()) {
 				for (var i = 0, tids = spCo.values.getValues("i"), n = tids.length; i < n; i++) {
 					if (tid == tids[i]) {

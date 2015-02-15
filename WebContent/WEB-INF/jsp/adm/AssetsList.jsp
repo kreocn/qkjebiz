@@ -6,23 +6,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>资产列表--<s:text name="APP_NAME" /></title>
-<s:action name="ref" namespace="/manager" executeResult="true" />
-<script type="text/javascript" src="<s:url value="/js/jqueryPlugins/select3/jquery.cityselect.js" />"></script>
-<script type="text/javascript">
-$(function(){
-	$("#mmtype").citySelect({
-		url:'<s:url value="/js/jqueryPlugins/select3/mm.js" />',
-		prov:"${assets.typea}",
-		city:"${assets.typeb}",
-		dist:" ${assets.typec}",
-		nodata:"none",
-		required:false
-	});
- });
-</script>
+<s:action name="ref_head" namespace="/manager" executeResult="true" />
 </head>
 <body>
- <div class="main" >
+<!-- 顶部和左侧菜单导航 -->
+<s:action name="nav" namespace="/manage" executeResult="true" />
+<!--right列表-->
+<div class="tab_right">
+	<div class="tab_warp main">
 	<div class="dq_step">
 		${path}
 		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_PRODUCT_ADD')">
@@ -111,12 +102,23 @@ $(function(){
 		        </s:iterator>
 	       </table>
     </div>
-    <div class="pagination">
-		<script type="text/javascript">
-		var spage = new ShowPage(${currPage});
-		spage.show2(${recCount},${pageSize},2);
-		</script>
-	</div>
+    <div id="listpage" class="pagination"></div>
 </div>
+</div>
+<s:action name="ref_foot" namespace="/manager" executeResult="true" />
+<script type="text/javascript" src="<s:url value="/js/jqueryPlugins/select3/jquery.cityselect.js" />"></script>
+<script type="text/javascript">
+$(function(){
+	$("#mmtype").citySelect({
+		url:'<s:url value="/js/jqueryPlugins/select3/mm.js" />',
+		prov:"${assets.typea}",
+		city:"${assets.typeb}",
+		dist:" ${assets.typec}",
+		nodata:"none",
+		required:false
+	});
+	printPagination("listpage",'${currPage}','${recCount}','${pageSize}');
+ });
+</script>
 </body>
 </html>

@@ -5,15 +5,15 @@
 <struts>
 	<package name="ROOT" extends="default" namespace="/manager">
 		<action name="login" class="org.iweb.sys.action.UserLoginAction">
-			<result>/jsp/manager/login.jsp</result>
+			<result>/WEB-INF/jsp/manager/login.jsp</result>
 		</action>
 		<action name="login_outside" class="org.iweb.sys.action.UserLoginAction">
-			<result>/jsp/manager/login_outside.jsp</result>
+			<result>/WEB-INF/jsp/manager/login_outside.jsp</result>
 		</action>
 		<action name="check_login" class="org.iweb.sys.action.UserLoginAction" method="checkLogin">
 			<result type="redirectAction">
 				<param name="namespace">/manager</param>
-				<param name="actionName">imain</param>
+				<param name="actionName">default</param>
 				<!--<param name="message">${message}</param> -->
 			</result>
 			<result name="input" type="redirectAction">
@@ -23,26 +23,26 @@
 			</result>
 		</action>
 		<action name="login_out" class="org.iweb.sys.action.UserLoginAction" method="logout">
-			<result>/jsp/common/login_error.jsp</result>
+			<result>/WEB-INF/jsp/common/login_error.jsp</result>
 		</action>
 		<action name="imain" class="org.iweb.common.action.ManageMainAction">
-			<result>/jsp/manager/imain.jsp</result>
+			<result>/WEB-INF/jsp/manager/imain.jsp</result>
 		</action>
 		<action name="ref" class="org.iweb.common.action.ManageMainAction" method="ref">
-			<result>/jsp/manager/ref_v0.1.jsp</result>
+			<result>/WEB-INF/jsp/manager/ref_v0.1.jsp</result>
 		</action>
-		<action name="ref_css" class="org.iweb.common.action.ManageMainAction" method="ref">
-			<result>/jsp/manager/ref_css.jsp</result>
+		<action name="ref_head" class="org.iweb.common.action.ManageMainAction" method="ref">
+			<result>/WEB-INF/jsp/manager/ref_head.jsp</result>
 		</action>
-		<action name="ref_js" class="org.iweb.common.action.ManageMainAction" method="ref">
-			<result>/jsp/manager/ref_js.jsp</result>
+		<action name="ref_foot" class="org.iweb.common.action.ManageMainAction" method="ref">
+			<result>/WEB-INF/jsp/manager/ref_foot.jsp</result>
 		</action>
 		<action name="default" class="org.iweb.common.action.DefaultAction">
 			<interceptor-ref name="myStackIndex" />
-			<result>/jsp/manager/default.jsp</result>
+			<result>/WEB-INF/jsp/manager/default.jsp</result>
 		</action>
 		<action name="test" class="org.iweb.common.action.TestAction">
-			<result>/jsp/manager/test.jsp</result>
+			<result>/WEB-INF/jsp/manager/test.jsp</result>
 		</action>
 		<action name="test_*" class="org.iweb.common.action.TestAction" method="{1}">
 			<result>/WEB-INF/jsp/main/test.jsp</result>

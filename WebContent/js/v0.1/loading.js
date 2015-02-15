@@ -251,7 +251,7 @@ var getMenus = function(){
 		ajax.config._success = function(data, textStatus){
 			createMenu(data);
 		};
-		ajax.sendAjax2();
+		ajax.sendAjax();
 	}
 };
 
@@ -282,19 +282,14 @@ var createMenu = function(prvgs){
 	// 左侧导航初始化
 	left_nav_init();
 	// 初始化左侧菜单显示显示模块信息
-	// alert(moduleCookie());
 	module_toggle(moduleCookie());
 	// Cookie记录打开关闭状态
 	leftMenuCookie();
 };
 
-function JsonToString(o){
-	var arr = [];
-	var fmt = function(s){
-		if (typeof s == 'object' && s != null) return JsonToStr(s);
-		return /^(string|number)$/.test(typeof s) ? "'" + s + "'" : s;
-	};
-	for ( var i in o)
-		arr.push("'" + i + "':" + fmt(o[i]));
-	return '{' + arr.join(',') + '}';
-}
+var printPagination = function(did, currPage, recCount, pageSize){
+	if ($("#" + did).length > 0) {
+		var p = new ShowPage(currPage);
+		$("#" + did).html(p.show_html(recCount, pageSize, 2));
+	}
+};
