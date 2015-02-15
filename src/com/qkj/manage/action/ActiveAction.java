@@ -1905,7 +1905,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				}
 			}
 			
-			sql="SELECT a.`uuid`,a.`active_type`,a.`apply_dept` FROM qkjm_r_active a WHERE a.`status`=4 AND  a.`close_sd_status`=30 AND a.`smd_status`<30 AND (a.`apply_dept` LIKE '2302%' OR a.`apply_dept` LIKE '22030%')";
+			sql="SELECT a.`uuid`,a.`active_type`,a.`apply_dept` FROM qkjm_r_active a WHERE a.`status`=4 AND  a.`close_sd_status`=30 AND a.`close_smd_status`<30 AND (a.`apply_dept` LIKE '2302%' OR a.`apply_dept` LIKE '22030%')";
 			List<Map> activeMapJs = comdao.commonSelectMapList(sql);
 			if(activeMapJs.size()>0){
 				for(int i=0;i<activeMapJs.size();i++){
