@@ -5,12 +5,13 @@
 	<typeAlias alias="salPromot" type="com.qkj.manage.domain.SalPromot" />
 	<select id="salpro_getSalPromots" resultClass="salPromot" parameterClass="java.util.Map">
 		<![CDATA[ 
-			SELECT s.*,sdu.`USER_NAME` sd_name,smdu.`USER_NAME` smd_name,au.`USER_NAME` add_user_name,lu.`USER_NAME` lm_user_name, au.`DEPT_CODE` dept_code,d.`dept_cname` sal_scopDept_name FROM qkjm_r_salpromotion s 
+			SELECT s.*,sdu.`USER_NAME` sd_name,smdu.`USER_NAME` smd_name,au.`USER_NAME` add_user_name,lu.`USER_NAME` lm_user_name, au.`DEPT_CODE` dept_code,d.`dept_cname` sal_scopDept_name,ad.`dept_cname` add_user_dept_name FROM qkjm_r_salpromotion s 
 			LEFT JOIN s_sys_user sdu ON(s.`sd_user`=sdu.`UUID`)
 			LEFT JOIN s_sys_user smdu ON(s.`smd_user`=smdu.`UUID`)
 			LEFT JOIN s_sys_user au ON (s.`add_user`=au.`UUID`)
 			LEFT JOIN s_sys_user lu ON(s.`lm_user`=lu.`UUID`)
 			LEFT JOIN s_sys_department d ON(d.`dept_code`=s.`sal_scopDept`)
+			LEFT JOIN s_sys_department ad ON(ad.`dept_code`=s.`add_user_dept`)
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ s.uuid=#uuid# ]]></isNotEmpty>
@@ -75,7 +76,8 @@
 			priority=#priority#,
 			note=#note#,
 			sal_scopDept=#sal_scopDept#,
-			sal_scopUs=#sal_scopUs#
+			sal_scopUs=#sal_scopUs#,
+			add_user_dept=#add_user_dept#
 			Where uuid = #uuid#
 		]]>
 	</update>

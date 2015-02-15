@@ -338,12 +338,23 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 		        			   peo=content;
 		        		   }
 		        		   if(i==0 && j==6){//日期
+		        			   int falg=1;
 		        			   if(co.getType()==CellType.DATE){
 		        				   DateCell dc=(DateCell)co;    
-		        	                //strc00 = sdf.format(dc.getDate()); 
 		        				   checkdate=sdf.format(dc.getDate());
 		        			   }else{
+		        				   try {
+		        					   sdf.parse(content);
+									} catch (Exception e) {
+										// TODO: handle exception
+										falg=0;
+									}
+		        			   if(falg==1){
 		        				   checkdate=content;
+		        			   }else{
+		        				   message="模板中日期格式不正确";
+		        			   }
+		        				   
 		        				  // DateFormat sdfs=new SimpleDateFormat(checkdate);
 		        				   //checkdate=content;
 		        				   //message="模板中日期格式不正确";
@@ -453,7 +464,6 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 	
 	public static boolean isNumeric(String str){
 		  for (int i = 0; i < str.length(); i++){
-		   System.out.println(str.charAt(i));
 		   if (!Character.isDigit(str.charAt(i))){
 		    return false;
 		   }
@@ -542,7 +552,7 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
             Label title2= new Label(1, 1, "产品名称",getHeadFormat());
             Label title3= new Label(2, 1, "数量",getHeadFormat());
             Label title4= new Label(3, 1, "单位",getHeadFormat());
-            
+            Label title5= new Label(4, 1, "产品类型",getHeadFormat());
             ws.addCell(labelId);
             ws.addCell(labelName);
             ws.addCell(labelMeName);
@@ -553,13 +563,16 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
             ws.addCell(title2);
             ws.addCell(title3);
             ws.addCell(title4);
+            ws.addCell(title5);
            for (int i = 0; i < pro.size(); i++) {
                 Label labelId_i= new Label(0, i+2, pro.get(i).getUuid()+"",cellFormat1);
                 Label labelName_i= new Label(1, i+2, pro.get(i).getTitle(),cellFormat1);
                 Label labelcase_i= new Label(3, i+2, "瓶");
+                Label labelban_i= new Label(4, i+2, pro.get(i).getBrand_name());
                 ws.addCell(labelId_i);
                 ws.addCell(labelName_i);
                 ws.addCell(labelcase_i);
+                ws.addCell(labelban_i);
             }
           
            //写进文档

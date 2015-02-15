@@ -522,7 +522,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 					}
 				}
 
-				if (active.getSmd_status() == 50) {// 销管部经理已审
+				if (active.getSmd_status() == 50) {// 销管副总
 					map.clear();
 					map.put("sq", "sq");
 					map.put("biz_id", active.getUuid());

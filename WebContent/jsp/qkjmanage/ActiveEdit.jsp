@@ -159,11 +159,50 @@
 	color: #008000;
 }
 </style>
+<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.ui.datepicker-zh.js" />"></script>
+<script type="text/javascript">
+var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
+var add_user='${customerRecode.add_user}';
+$(function(){
+	CommonUtil.pickrow('table1');
+	CommonUtil.pickrowAll('table1','uuidcheck');
+	$("#customerRecode_recode_time").datepicker();
+	$("#customerRecode_next_date").datepicker();
+	
+	if($("#userdept_codeid").val()!='') {
+		loadManagers($("#userdept_codeid").val());
+	}
+	createCustomerView();
+ });
+
+var sobj02;
+var createCustomerView = function() {
+	//http://localhost:8888/qkjmanage/customer_load?viewFlag=mdy&customer.uuid=3
+	var w_width = $(window).width();
+	var w_height = $(window).height();
+	sobj02 = new DialogIFrame({
+		src:'',
+		title:"查看操作历史",
+		width:w_width*0.85,
+		height:w_height*0.85
+	});
+	sobj02.selfAction = function(val1,val2) {};
+	sobj02.create();
+	//sobj02.open();
+};
+
+var openCustomerView = function(customer_uuid) {
+	var iframeId = sobj02.getConid() + "iframe";
+	$("#"+iframeId).attr("src","/qkjmanage/active_history?active.uuid=" + customer_uuid);
+	sobj02.open();
+};
+</script>
 <body>
 	<div class="main">
 		<div class="dq_step">
 			${path} <span class="opb lb op-area"> <s:if test="'mdy' == viewFlag && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_HISTORY')">
-					<a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_history"><s:param name="active.uuid" value="active.uuid" /></s:url>">查看操作记录</a>
+					<!-- <a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_history"><s:param name="active.uuid" value="active.uuid" /></s:url>">查看操作记录</a> -->
+					<a href="javascript:;" onclick="openCustomerView(${active.uuid});">查看操作记录</a>
 				</s:if> <s:if test="40<=active.sd_status">
 					<a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_view"><s:param name="active.uuid" value="active.uuid" /></s:url>">转到打印页面</a>
 				</s:if> <a href="<s:url namespace="/qkjmanage" action="active_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a></span>
@@ -309,7 +348,7 @@
 						<div class="label_hang">
 			            <div class="label_ltit">活动类型:</div>
 			            <div class="label_rwben label_rwb">
-			            	<s:select id="sd_status" name="active.active_type" cssClass="selectKick validate[required]" list="#{1:'一桌式品鉴会',2:'公关赠酒',3:'会议赞助',4:'赛事赞助',5:'赛事赞助',6:'婚宴赞助',7:'活动推广',8:'工业旅游',9:'门店试饮',10:'其它'}"
+			            	<s:select id="sd_status" name="active.active_type" cssClass="selectKick validate[required]" list="#{1:'一桌式品鉴会',2:'公关赠酒',3:'会议赞助',4:'赛事赞助',5:'晚宴赞助',6:'婚宴赞助',7:'活动推广',8:'工业旅游',9:'门店试饮',10:'其它'}"
 							 headerKey="" headerValue="--请选择--" />
 			            </div>
 			        </div>
@@ -370,7 +409,7 @@
 						<div class="label_hang">
 			            <div class="label_ltit">活动类型:</div>
 			            <div class="label_rwben label_rwb">
-			            	<s:select   id="sd_status" name="active.active_type" cssClass="selectKick validate[required]" list="#{1:'一桌式品鉴会',2:'公关赠酒',3:'会议赞助',4:'赛事赞助',5:'赛事赞助',6:'婚宴赞助',7:'活动推广',8:'工业旅游',9:'门店试饮',10:'其它'}"
+			            	<s:select   id="sd_status" name="active.active_type" cssClass="selectKick validate[required]" list="#{1:'一桌式品鉴会',2:'公关赠酒',3:'会议赞助',4:'赛事赞助',5:'晚宴赞助',6:'婚宴赞助',7:'活动推广',8:'工业旅游',9:'门店试饮',10:'其它'}"
 							 headerKey="" headerValue="--请选择--"/>
 			            </div>
 			        </div>
@@ -419,7 +458,7 @@
 							if(edit==false){
 								location.href="/qkjmanage/active_addProduct?active.uuid="+${active.uuid};
 							}else{
-								if(confirm("您有未保存的信息,确认填加吗?确认后将丢失一部分信息。")){
+								if(confirm("您有未保存的信息,确认添加吗?确认后将丢失一部分信息。")){
 									location.href="/qkjmanage/active_addProduct?active.uuid="+${active.uuid};
 									}else{
 									 return false;
@@ -691,7 +730,7 @@
 
 				<div class="label_main">
 					<div class="label_hang">
-						<div class="label_ltit">填加时间:</div>
+						<div class="label_ltit">添加时间:</div>
 						<div class="label_rwbenx">${it:formatDate(active.add_time,'yyyy-MM-dd hh:mm:ss')}</div>
 					</div>
 					<s:if test="%{active.status!=0}">
@@ -930,7 +969,6 @@
 					<div class="label_hang">
 						<div class="label_ltit">产品:</div>
 						<div class="label_rwben label_rwb">
-							<div class="iselect">
 								<select name="activeProduct.product_id" title="产品">
 									<s:iterator value="products" status="sta">
 										<option data='<s:property value="market_price" />#<s:property value="group_price" />#<s:property value="dealer_price" />#<s:property value="agree_price_1" />#<s:property value="agree_price_2" />#<s:property value="agree_price_3" />' data_case='<s:property value="case_spec" />'
@@ -939,7 +977,6 @@
 										</option>
 									</s:iterator>
 								</select>
-							</div>
 						</div>
 						<!-- <div class="label_rwben">
 	    	<s:textfield name="activeProduct.product_id"   id="citySel" onclick="showMenu(); return false;"  />
@@ -953,9 +990,7 @@
 						<div class="label_rwben">
 							<span class="label_rwb"><s:textfield name="activeProduct.per_price" cssClass="validate[required,custom[number],maxSize[11]]" /></span>
 							<div id="per_price_select_area" class="label_rwb">
-								<div class="iselect">
 									<select id="per_price_select"></select>
-								</div>
 							</div>
 						</div>
 					</div>
@@ -1112,7 +1147,8 @@
 					<div class="label_hang label_button tac">
 						<s:hidden name="activeMemcost.active_id" value="%{active.uuid}" />
 						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEMEMCOST_ADD')">
-							<s:submit id="add" name="add" value="确定" action="activeMemcost_add"/>
+						<font id="addMemcost" color="red"></font>
+							<s:submit id="addMe" name="add" value="确定" action="activeMemcost_add" disabled="disabled"/>
 						</s:if>
 					</div>
 				</div>
@@ -1122,6 +1158,28 @@
 		<!-- 添加随量信息 -->
 
 		<script type="text/javascript">
+
+		$(function() { 
+			$('#order_user_id').blur(function() { 
+				var params = document.getElementById("order_user_id").value
+				 var url = '/sysvip/getMember';
+				 $.ajax({
+				     type:'POST',            //http请求方式
+				     url: url,    //服务器段url地址
+				     data: "params="+params,           //发送给服务器段的数据
+				     success: function(data){  
+				    	 if(data=="true"){
+				    		 $("#addMe").attr("disabled", false);
+				    		 $("#addMemcost").text( '');
+				 		}else{
+				 			$("#addMe").attr("disabled", "disabled");
+				 			$("#addMemcost").text( '此会员不存在，请确认！');
+				 			return false;
+				     }}    //定义交互完成，并且服务器正确返回数据时调用的回调函数
+				  });
+			}); 
+			}) ;
+
 			$("#upprice").bind("change", function(){
 				$("#bprice").val($("#upprice").val() - $("#price").val());
 			});

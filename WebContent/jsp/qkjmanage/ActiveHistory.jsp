@@ -15,10 +15,10 @@ cursor: pointer;
 </style>
 <body>
 <div class="main" >
- 	<div class="dq_step">
+ 	<!-- <div class="dq_step">
 		${path}
 			<span class="opb lb op-area"><a onclick="location.href='javascript:history.go(-1);'">返回上一页面</a></span>
-	</div>
+	</div> -->
 	<s:hidden name="active.uuid" value="%{active.uuid}"></s:hidden>
 	<div class="label_main">
         <div class="label_hang">

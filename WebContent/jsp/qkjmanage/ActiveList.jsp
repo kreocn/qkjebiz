@@ -49,6 +49,12 @@ cursor: pointer;
             <div class="label_ltit">主题(%):</div>
             <div class="label_rwben"><s:textfield name="active.theme" title="主题" /></div>
         </div>
+        
+        <div class="label_hang">
+            <div class="label_ltit">客户名称:</div>
+            <div class="label_rwben"><s:textfield id="order_user_id" name="active.member_id"/></div>
+        </div>
+        
         <div class="label_hang">
             <div class="label_ltit">申请部门:</div>
             <div class="label_rwben2">
@@ -186,6 +192,7 @@ cursor: pointer;
 		<th class="td2">申请部门</th>
 		<th class="td1">申请人</th>
 		<th class="td5">主题</th>
+		<th class="td2">费用合计</th>
 		<th class="td5">活动地点</th>
 		<th class="td1">活动状态</th>
 		<th class="td3">销售状态</th>
@@ -202,6 +209,11 @@ cursor: pointer;
 			<td class="td2 nw">${apply_dept_name}</td>
 			<td class="td1 nw">${apply_user_name}</td>
 			<td class="td5 longnote" title="${theme}">${it:subString(theme,18)}</td>
+			<td class="td2 nw">(申)${it_price+mt_price}
+			<s:if test="status > 2">
+			(结)${close_it_price+close_mt_price}
+			</s:if>
+			</td>
 			<td class="td5 nw" title="${address}">${it:subString(address,6)}</td>
 			<td  class="td1">
 				<s:if test="status==-1"><font class="message_error">已作废</font></s:if>
@@ -343,7 +355,7 @@ cursor: pointer;
 	<div class="label_main">
         <div class="label_hang">
             <div class="label_ltit">发货状态:</div>
-            <div class="label_rwben"><div class="iselect"><s:select id="e_active_ship_status" name="active.ship_status" list="#{0:'未发货',10:'已发货',99:'其他' }" /></div></div>
+            <div class="label_rwben"><s:select id="e_active_ship_status" name="active.ship_status" list="#{0:'未发货',10:'已发货',99:'其他' }" /></div>
         </div>
 		<div class="label_hang">
             <div class="label_ltit">出库日期:</div>
@@ -683,6 +695,20 @@ function kselect(){
 	 document.getElementById("serachForm").action="/qkjmanage/active_list";
 	 document.getElementById("serachForm").submit();
 	
+}
+</script>
+
+<script type="text/javascript">
+var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
+$(function() {
+	SimpleLoadMember(ajax_url_action,function(event, ui) {loadAddress(ui.item.order_user_id);});
+	CommonUtil.pickrow('fd_list_table');
+});
+
+function loadAddress(memberid) {
+	var ajax = new Common_Ajax();
+	ajax.config.action_url = ajax_url_action;
+	ajax.sendAjax();
 }
 </script>
 </body>

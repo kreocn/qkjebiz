@@ -15,6 +15,7 @@
 			<isNotEmpty prepend="AND" property="status"><![CDATA[ p.status=#status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="notype"><![CDATA[ t.`type`<>1 ]]></isNotEmpty>
 		</dynamic>
+		<![CDATA[ ORDER BY t.`uuid` LIMIT 1000 ]]>
 	</select>
 	<select id="qkjmanage_getProductsCounts" resultClass="int" parameterClass="java.util.Map">
 		<![CDATA[ 

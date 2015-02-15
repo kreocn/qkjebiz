@@ -171,7 +171,10 @@ public class SalPromotAction extends ActionSupport implements ActionAttr {
 	public String add() throws Exception {
 		ContextHelper.isPermit("QKJ_SALPRO_SALPROMOT_ADD");
 		try {
-			salPromot.setAdd_user_dept(ContextHelper.getUserLoginDept());
+			String adddept=salPromot.getAdd_user_dept();
+			adddept=adddept.replaceAll(" ", "");
+			adddept=adddept.replaceAll(",", "");
+			salPromot.setAdd_user_dept(adddept);
 			salPromot.setAdd_user(ContextHelper.getUserLoginUuid());
 			salPromot.setAdd_time(new Date());
 			salPromot.setLm_user(ContextHelper.getUserLoginUuid());
@@ -193,6 +196,10 @@ public class SalPromotAction extends ActionSupport implements ActionAttr {
 	public String save() throws Exception {
 		ContextHelper.isPermit("QKJ_SALPRO_SALPROMOT_MDY");
 		try {
+			String adddept=salPromot.getAdd_user_dept();
+			adddept=adddept.replaceAll(" ", "");
+			adddept=adddept.substring(adddept.indexOf(",")+1,adddept.length());
+			salPromot.setAdd_user_dept(adddept);
 			salPromot.setLm_user(ContextHelper.getUserLoginUuid());
 			salPromot.setLm_time(new Date());
 			dao.save(salPromot);

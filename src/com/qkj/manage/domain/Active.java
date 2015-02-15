@@ -109,9 +109,16 @@ public class Active {
 	private String fd_user_name;
 	private String close_fd_name;
 	private String close_nd_name;
+	private String member_id;
 	
-	
-	
+	public String getMember_id() {
+		return member_id;
+	}
+
+	public void setMember_id(String member_id) {
+		this.member_id = member_id;
+	}
+
 	public Date getStars() {
 		return stars;
 	}
