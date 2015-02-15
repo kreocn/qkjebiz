@@ -198,6 +198,7 @@
 			<![CDATA[ dept_code In ]]>
 			<iterate property="dept_codes" open="(" close=")" conjunction=","> #dept_codes[]#</iterate>
 		</isNotEmpty>
+		<isNotNull prepend="AND" property="check_code"><![CDATA[ dept_code Like CONCAT(#check_code#,'%') ]]></isNotNull>
 		<![CDATA[ ORDER BY DEPT_CODE ]]>
 	</select>
 	<select id="sys_getPermitDepts" resultClass="java.lang.String" parameterClass="java.util.Map">

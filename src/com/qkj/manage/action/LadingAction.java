@@ -158,6 +158,26 @@ public class LadingAction extends ActionSupport {
 		}
 		return SUCCESS;
 	}
+	
+	public String checkList() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_LADING_CHECKLIST");
+		String dept=ContextHelper.getUserLoginDept();
+		try {
+			map.clear();
+			if (lading == null) {
+				lading = new Lading();
+			}
+			ContextHelper.setSearchDeptPermit4Search(map, "dept_chekCodes", "chekCodes");
+			ContextHelper.SimpleSearchMap4Page("QKJ_QKJMANAGE_LADING_LIST", map, lading, viewFlag);
+			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
+			this.setLadings(dao.list(map));
+			this.setRecCount(dao.getResultCount());
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
+			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
+		}
+		return SUCCESS;
+	}
 
 	public String load() throws Exception {
 		try {

@@ -78,7 +78,7 @@ function createAddreeeSelect(p_data) {
 <div class="main">
 	<div class="dq_step">
 		${path}
-		<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="lading_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a></span>
+		<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="lading_checkList"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a></span>
 	</div>
 	<s:form id="editForm" name="editForm" cssClass="validForm" action="lading_load" namespace="/qkjmanage" method="post" theme="simple">
 	<div class="label_con">
@@ -372,41 +372,17 @@ function createAddreeeSelect(p_data) {
 					</s:if>
 				</s:if>
 				<s:elseif test="null != lading && 'mdy' == viewFlag">
-					<s:if test="lading.status<=5">
-						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADING_MDY')">
-						<s:submit id="save" name="save" value="保存" action="lading_save"  cssClass="input-blue" />
-						<script type="text/javascript">
-						$(function(){
-							$("#editForm :input").change(function(){
-								if($("#saveLadingStatus0").length>0)
-									$("#saveLadingStatus0").attr("disabled","disabled");
-								if($("#saveLadingStatus1").length>0)
-									$("#saveLadingStatus1").attr("disabled","disabled");
-								$("#message").text("请先保存后才能进行其他相关操作");
-							});
-						});
-						</script>
-						</s:if>
-						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADING_STATUS0')&&lading.status<=5">
-							<s:submit id="saveLadingStatus0" name="saveLadingStatus0" value="送审" action="saveLadingStatus0" onclick="return isOp('确定执行此操作?');" cssClass="input-yellow" />
-						</s:if>
-						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADING_DEL')">
-							<s:submit id="delete" name="delete" value="删除订单" action="lading_del" onclick="return isDel();" cssClass="input-red" />
-						</s:if>
-					</s:if>
-					
-					
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADING_STATUS10')&&lading.status==10">
-						<s:submit id="saveLadingStatus10" name="saveLadingStatus10" value="财务通过" action="saveLadingStatus10" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
+						<s:submit id="saveLadingStatus10" name="saveLadingStatus10" value="财务通过" action="saveLadingCheckStatus10" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
 						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADING_STATUS5')">
-						<s:submit id="saveLadingStatus5" name="saveLadingStatus5" value="财务退回" action="saveLadingStatus5" onclick="return isOp('确定执行此操作?');" cssClass="input-red" />
+						<s:submit id="saveLadingStatus5" name="saveLadingStatus5" value="财务退回" action="saveLadingCheckStatus5" onclick="return isOp('确定执行此操作?');" cssClass="input-red" />
 						</s:if>
 					</s:if>
 				</s:elseif>
 				<s:if test="lading.status>=10">
 								<input type="button" onclick="linkurl('<s:url namespace="/qkjmanage" action="lading_view"><s:param name="lading.uuid" value="lading.uuid" /><s:param name="viewFlag">view</s:param></s:url>');" value="转到详情页面" />
 				</s:if>
-				<input type="button" value="返回" onclick="linkurl('<s:url action="lading_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');"  class="input-gray" />
+				<input type="button" value="返回" onclick="linkurl('<s:url action="lading_checkList" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');"  class="input-gray" />
 				<span id="message"  class="cr"></span>
 				<!-- <input type="button" value="打印" onclick="window.print();" /> -->
             </div>
@@ -448,7 +424,7 @@ function createAddreeeSelect(p_data) {
 	 <div class="label_hang label_button tac">
 	 	<s:hidden name="lading.uuid" />
 		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADING_FDCHECK')">
-		<s:submit id="mdyLadingFDCheck" name="mdyLadingFDCheck" value="确定" action="mdyLadingFDCheck" />
+		<s:submit id="mdyLadingFDCheck" name="mdyLadingFDCheck" value="确定" action="mdyLadingCheckFDCheck" />
 		</s:if>
 	 </div>
 </div>
@@ -471,28 +447,6 @@ $(function(){
 	}
 	createCustomerView();
  });
-
-var sobj01;
-var selectDept = function(dcode_id, dname_id, isLoad, p_m,b_m){
-	sobj01 = new DialogIFrame({ src : '/sys/dept_permit_select?objname=sobj01&check_code=1',
-	title : "选择部门",
-	width : 200,
-	height : 400 });
-	sobj01.selfAction = function(val1, val2){
-		$("#" + dcode_id).val(val1);
-		$("#" + dname_id).val(val2);
-		if (isLoad) {
-			if(b_m==1){
-				loadManagers(val1, p_m,'1');
-			}else{
-				loadManagers(val1, p_m);
-			}
-			
-		}
-	};
-	sobj01.create();
-	sobj01.open();
-};
 
 var sobj02;
 var createCustomerView = function() {

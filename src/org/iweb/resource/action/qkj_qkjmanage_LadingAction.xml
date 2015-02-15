@@ -9,9 +9,16 @@
 		<action name="lading_list" class="com.qkj.manage.action.LadingAction" method="list">
 			<result>/jsp/qkjmanage/LadingList.jsp</result>
 		</action>
+		<action name="lading_checkList" class="com.qkj.manage.action.LadingAction" method="checkList">
+			<result>/jsp/qkjmanage/LadingCheckList.jsp</result>
+		</action>
 		<action name="lading_load" class="com.qkj.manage.action.LadingAction" method="load">
 			<result>/jsp/qkjmanage/LadingEdit.jsp</result>
 		</action>
+		<action name="lading_Checkload" class="com.qkj.manage.action.LadingAction" method="load">
+			<result>/jsp/qkjmanage/LadingCheckEdit.jsp</result>
+		</action>
+		
 		<action name="lading_view" class="com.qkj.manage.action.LadingAction" method="load">
 			<result>/jsp/qkjmanage/LadingView.jsp</result>
 		</action>
@@ -57,6 +64,14 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
+		
+		<action name="saveLadingCheckStatus5" class="com.qkj.manage.action.LadingAction" method="saveLadingStatus5">
+			<result type="redirectAction">
+				<param name="actionName">lading_checkList</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
 
 		<action name="saveLadingStatus10" class="com.qkj.manage.action.LadingAction" method="saveLadingStatus10">
 			<result type="redirectAction">
@@ -65,10 +80,27 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
+		
+		<action name="saveLadingCheckStatus10" class="com.qkj.manage.action.LadingAction" method="saveLadingStatus10">
+			<result type="redirectAction">
+				<param name="actionName">lading_checkList</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
 
 		<action name="mdyLadingFDCheck" class="com.qkj.manage.action.LadingAction" method="mdyLadingFDCheck">
 			<result type="redirectAction">
 				<param name="actionName">lading_load</param>
+				<param name="lading.uuid">${lading.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="mdyLadingCheckFDCheck" class="com.qkj.manage.action.LadingAction" method="mdyLadingFDCheck">
+			<result type="redirectAction">
+				<param name="actionName">lading_checkList</param>
 				<param name="lading.uuid">${lading.uuid}</param>
 				<param name="viewFlag">mdy</param>
 				<param name="message">${message}</param>

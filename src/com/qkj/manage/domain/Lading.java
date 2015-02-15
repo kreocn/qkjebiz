@@ -30,6 +30,7 @@ public class Lading {
 	private Integer out_flag; // 出货标记(0:未出货 1:已出货)
 	private Integer rebates_flag; // 返利标记 0未返利 1已返利
 	private String promotions;// 促销ID
+	private String dis_dept;//发货部门
 
 	// 以下为非数据库字段
 	private String fd_check_user_name;
@@ -41,6 +42,7 @@ public class Lading {
 
 	private String member_name;
 	private String member_mobile;
+	private String dis_dept_name;
 
 	// 特殊字段
 	private Integer[] fd_typesx; // 专门为赋值checkbox而设定
@@ -332,4 +334,22 @@ public class Lading {
 	public void setMember_mobile(String member_mobile) {
 		this.member_mobile = member_mobile;
 	}
+
+	public String getDis_dept() {
+		return dis_dept;
+	}
+
+	public void setDis_dept(String dis_dept) {
+		this.dis_dept = dis_dept;
+	}
+
+	public String getDis_dept_name() {
+		return dis_dept_name;
+	}
+
+	public void setDis_dept_name(String dis_dept_name) {
+		this.dis_dept_name = dis_dept_name;
+	}
+	
+	
 }
