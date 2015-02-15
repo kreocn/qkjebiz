@@ -137,7 +137,7 @@ a {
 }
 
 .tab_right {
-	float: right;width: 85%; margin-right: .2rem; font-size: 14px; 
+	float: right;width: 85%; margin-right: .2rem; font-size: 14px; margin-bottom:35px;
 }
 
 .pt {
@@ -400,11 +400,11 @@ a {
 }
 
 .lb_jpin th {
-	background: #f1f1f1; color: #333; padding: 6px 0; font-size: 14px; white-space: nowrap; word-break: break-all;
+	background: #ccc; color: #333; padding: 6px 0; font-size: 14px; white-space: nowrap; word-break: break-all;
 }
 
 .lb_jpin td {
-	border-bottom: 1px solid #ccc; font-size: 12px; padding: 5px 0; text-align: center;
+	border-bottom: 1px solid #ccc; font-size: 12px;  text-align: center;
 }
 
 .lb_fasm {
