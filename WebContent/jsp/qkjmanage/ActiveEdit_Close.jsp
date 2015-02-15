@@ -945,7 +945,7 @@ var openCustomerView = function(customer_uuid) {
 								</s:if>
 							</s:if>
 							<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_HISTORY')">
-								<input type="button" value="查看操作记录" class="input-gray" onclick="linkurl('<s:url action="active_history" namespace="/qkjmanage"><s:param name="active.uuid" value="active.uuid" /></s:url>');" />
+								<input type="button" value="查看操作记录" class="input-gray" onclick="openCustomerView(${active.uuid});" />
 							</s:if>
 							<input type="button" class="input-gray" value="返回" onclick="linkurl('<s:url action="active_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');" />
 							<s:if test="active.status==4 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_TH')">
