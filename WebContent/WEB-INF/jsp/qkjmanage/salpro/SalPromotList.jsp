@@ -16,7 +16,10 @@ max-width: 650px !important;
 }
 </style>
 <body>
-<div class="main" >
+<!-- 顶部和左侧菜单导航 -->
+<s:action name="nav" namespace="/manage" executeResult="true" />
+<div class="tab_right">
+ 	<div class="tab_warp main" >
  	<div class="dq_step">
 		${path}
 		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SALPRO_SALPROMOT_ADD')">
@@ -107,7 +110,23 @@ max-width: 650px !important;
 </s:iterator>
 </table>
 </div>
-<div class="pagination"><script type="text/javascript">var spage = new ShowPage(${currPage});	spage.show2(${recCount},${pageSize},2);</script></div>
+<div id="listpage" class="pagination"></div>
 </div>
+</div>
+<s:action name="ref_foot" namespace="/manager" executeResult="true" />
+<script type="text/javascript" src="<s:url value="/js/jqueryPlugins/select3/jquery.cityselect.js" />"></script>
+<script type="text/javascript">
+$(function(){
+	$("#mmtype").citySelect({
+		url:'<s:url value="/js/jqueryPlugins/select3/mm.js" />',
+		prov:"${assets.typea}",
+		city:"${assets.typeb}",
+		dist:" ${assets.typec}",
+		nodata:"none",
+		required:false
+	});
+	printPagination("listpage",'${currPage}','${recCount}','${pageSize}');
+ });
+</script>
 </body>
 </html>

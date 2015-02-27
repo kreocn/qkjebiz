@@ -7,7 +7,7 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- SalPromot Start -->
 		<action name="salPromot_list" class="com.qkj.manage.action.SalPromotAction" method="list">
-			<result>/jsp/qkjmanage/salpro/SalPromotList.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/salpro/SalPromotList.jsp</result>
 		</action>
 		<action name="salPromot_relist" class="com.qkj.manage.action.SalPromotAction" method="relist">
 			<result type="redirectAction">

@@ -7,7 +7,7 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- MemberCellar Start -->
 		<action name="market_list" class="com.qkj.manage.action.MarketAction" method="list">
-			<result>/jsp/qkjmanage/market/MarketList.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/market/MarketList.jsp</result>
 		</action>
 		<action name="market_writejs" class="com.qkj.manage.action.MarketAction" method="writejs">
 			<result type="redirectAction">
