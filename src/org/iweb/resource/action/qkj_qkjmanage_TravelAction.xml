@@ -7,7 +7,7 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- Travel Start -->
 		<action name="travel_list" class="com.qkj.manage.action.TravelAction" method="list">
-			<result>/jsp/qkjmanage/TravelList.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/TravelList.jsp</result>
 		</action>
 		<action name="travel_relist" class="com.qkj.manage.action.TravelAction" method="relist">
 			<result type="redirectAction">

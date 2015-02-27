@@ -6,37 +6,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>至事由申请列表--<s:text name="APP_NAME" /></title>
-<s:action name="ref" namespace="/manager" executeResult="true" />
+<s:action name="ref_head" namespace="/manager" executeResult="true" />
 </head>
-<script type="text/javascript">
-$(function(){
-	$(function(){
-		$("#mdyApplyShipInfoForm").dialog({
-		      autoOpen: false,
-		      modal: true
-		});
-		$(".mdyApplyShipInfo_Link").click(function(){
-			setShipVal($(this).attr("data"));
-			$("#mdyApplyShipInfoForm").dialog("open");
-		});
-		
-		$("#infoDetail").delegate(".mdyApplyShipInfo_Link","click",function(){
-			setShipVal($(this).attr("data"));
-			$("#mdyApplyShipInfoForm").dialog("open");
-		});
-	});
-});
-
-function setShipVal(p_uuid) {
-	$("#form_apply_uuid").val(p_uuid);
-	$("#form_apply_ship_phone").val($("#ship_phone_"+p_uuid).text());
-	$("#form_apply_ship_type").val($("#ship_type_"+p_uuid).text());
-	$("#form_apply_ship_no").val($("#ship_no_"+p_uuid).text());
-	$("#form_apply_ship_date").val($("#ship_date_"+p_uuid).text());
-	$("#form_apply_ship_status").val($("#ship_status_"+p_uuid).text());
-	$("#form_apply_check_note").text($("#check_note_"+p_uuid).text());
-}
-</script>
 <style type="text/css">
 .mdyApplyShipInfo_Link {
 cursor: pointer;
@@ -46,7 +17,10 @@ display: none;
 }
 </style>
 <body>
-<div class="main" >
+<!-- 顶部和左侧菜单导航 -->
+<s:action name="nav" namespace="/manage" executeResult="true" />
+<div class="tab_right">
+ 	<div class="tab_warp main" >
  	<div class="dq_step">
 		${path}
 		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_ADD')">
@@ -197,15 +171,10 @@ display: none;
 	    </table>
 	</div>
 	
-	<div class="pagination">
-		<script type="text/javascript">
-		var spage = new ShowPage(${currPage});
-		spage.show2(${recCount},${pageSize},2);
-		</script>
-	</div>
+	<div id="listpage" class="pagination"></div>
  <!-- <div data-role="footer"></div>  -->
  </div>
- 
+ </div>
  <!-- HIDDEN AREA BEGIN -->
  <div class="dn">
  <div id="mdyApplyShipInfoForm" class="label_con idialog idialog500" title="修改发货信息">
@@ -246,5 +215,49 @@ display: none;
 </div>
 </div>
 <!-- HIDDEN AREA END -->
+<s:action name="ref_foot" namespace="/manager" executeResult="true" />
+<script type="text/javascript" src="<s:url value="/js/jqueryPlugins/select3/jquery.cityselect.js" />"></script>
+<script type="text/javascript">
+$(function(){
+	$("#mmtype").citySelect({
+		url:'<s:url value="/js/jqueryPlugins/select3/mm.js" />',
+		prov:"${assets.typea}",
+		city:"${assets.typeb}",
+		dist:" ${assets.typec}",
+		nodata:"none",
+		required:false
+	});
+	printPagination("listpage",'${currPage}','${recCount}','${pageSize}');
+ });
+</script>
+<script type="text/javascript">
+$(function(){
+	$(function(){
+		$("#mdyApplyShipInfoForm").dialog({
+		      autoOpen: false,
+		      modal: true
+		});
+		$(".mdyApplyShipInfo_Link").click(function(){
+			setShipVal($(this).attr("data"));
+			$("#mdyApplyShipInfoForm").dialog("open");
+		});
+		
+		$("#infoDetail").delegate(".mdyApplyShipInfo_Link","click",function(){
+			setShipVal($(this).attr("data"));
+			$("#mdyApplyShipInfoForm").dialog("open");
+		});
+	});
+});
+
+function setShipVal(p_uuid) {
+	$("#form_apply_uuid").val(p_uuid);
+	$("#form_apply_ship_phone").val($("#ship_phone_"+p_uuid).text());
+	$("#form_apply_ship_type").val($("#ship_type_"+p_uuid).text());
+	$("#form_apply_ship_no").val($("#ship_no_"+p_uuid).text());
+	$("#form_apply_ship_date").val($("#ship_date_"+p_uuid).text());
+	$("#form_apply_ship_status").val($("#ship_status_"+p_uuid).text());
+	$("#form_apply_check_note").text($("#check_note_"+p_uuid).text());
+}
+</script>
 </body>
 </html>

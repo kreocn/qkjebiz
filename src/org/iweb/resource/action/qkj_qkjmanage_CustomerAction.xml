@@ -7,7 +7,7 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- Customer Start -->
 		<action name="customer_list" class="com.qkj.manage.action.CustomerAction" method="list">
-			<result>/jsp/qkjmanage/CustomerList.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/CustomerList.jsp</result>
 		</action>
 		<action name="customer_load" class="com.qkj.manage.action.CustomerAction" method="load">
 			<result>/jsp/qkjmanage/CustomerEdit.jsp</result>

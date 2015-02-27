@@ -7,7 +7,7 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- CustomerRecode Start -->
 		<action name="customerRecode_list" class="com.qkj.manage.action.CustomerRecodeAction" method="list">
-			<result>/jsp/qkjmanage/CustomerRecodeList.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/CustomerRecodeList.jsp</result>
 		</action>
 		<action name="customerRecode_load" class="com.qkj.manage.action.CustomerRecodeAction" method="load">
 			<result>/jsp/qkjmanage/CustomerRecodeEdit.jsp</result>
