@@ -7,7 +7,7 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- CloseOrder Start -->
 		<action name="closeOrder_list" class="com.qkj.manage.action.CloseOrderAction" method="list">
-			<result>/jsp/qkjmanage/CloseOrderList.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/CloseOrderList.jsp</result>
 		</action>
 		<action name="closeOrder_relist" class="com.qkj.manage.action.CloseOrderAction" method="relist">
 			<result type="redirectAction">

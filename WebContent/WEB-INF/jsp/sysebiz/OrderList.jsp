@@ -117,5 +117,19 @@
 </div>
 </div>
 <s:action name="ref_foot" namespace="/manager" executeResult="true" />
+<script type="text/javascript" src="<s:url value="/js/jqueryPlugins/select3/jquery.cityselect.js" />"></script>
+<script type="text/javascript">
+$(function(){
+	$("#mmtype").citySelect({
+		url:'<s:url value="/js/jqueryPlugins/select3/mm.js" />',
+		prov:"${assets.typea}",
+		city:"${assets.typeb}",
+		dist:" ${assets.typec}",
+		nodata:"none",
+		required:false
+	});
+	printPagination("listpage",'${currPage}','${recCount}','${pageSize}');
+ });
+</script>
 </body>
 </html>

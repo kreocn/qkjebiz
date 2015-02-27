@@ -13,7 +13,7 @@
 			<result>/jsp/qkjmanage/ActiveHistory.jsp</result>
 		</action>
 		<action name="active_list" class="com.qkj.manage.action.ActiveAction" method="list">
-			<result>/jsp/qkjmanage/ActiveList.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/ActiveList.jsp</result>
 		</action>
 		<action name="active_load" class="com.qkj.manage.action.ActiveAction" method="load">
 			<result>/jsp/qkjmanage/ActiveEdit.jsp</result>

@@ -7,10 +7,10 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- Lading Start -->
 		<action name="lading_list" class="com.qkj.manage.action.LadingAction" method="list">
-			<result>/jsp/qkjmanage/LadingList.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/LadingList.jsp</result>
 		</action>
 		<action name="lading_checkList" class="com.qkj.manage.action.LadingAction" method="checkList">
-			<result>/jsp/qkjmanage/LadingCheckList.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/LadingCheckList.jsp</result>
 		</action>
 		<action name="lading_load" class="com.qkj.manage.action.LadingAction" method="load">
 			<result>/jsp/qkjmanage/LadingEdit.jsp</result>
