@@ -7,7 +7,7 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- Member Start -->
 		<action name="member_list" class="org.iweb.sysvip.action.MemberAction" method="list">
-			<result>/jsp/sysvip/MemberList.jsp</result>
+			<result>/WEB-INF/jsp/sysvip/MemberList.jsp</result>
 		</action>
 		<action name="member_load" class="org.iweb.sysvip.action.MemberAction" method="load">
 			<result>/jsp/sysvip/MemberEdit.jsp</result>

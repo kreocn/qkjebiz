@@ -51,7 +51,7 @@
 
 		<!-- Ware Start -->
 		<action name="ware_list" class="com.qkjsys.ebiz.action.WareAction" method="list">
-			<result>/jsp/sysebiz/WareList.jsp</result>
+			<result>/WEB-INF/jsp/sysebiz/WareList.jsp</result>
 		</action>
 		<action name="ware_load" class="com.qkjsys.ebiz.action.WareAction" method="load">
 			<result>/jsp/sysebiz/WareEdit.jsp</result>

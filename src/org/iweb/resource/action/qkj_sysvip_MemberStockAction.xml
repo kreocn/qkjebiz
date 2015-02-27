@@ -7,7 +7,7 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- MemberStock Start -->
 		<action name="memberStock_list" class="org.iweb.sysvip.action.MemberStockAction" method="list">
-			<result>/jsp/sysvip/MemberStockList.jsp</result>
+			<result>/WEB-INF/jsp/sysvip/MemberStockList.jsp</result>
 		</action>
 		<action name="memberStock_relist" class="org.iweb.sysvip.action.MemberStockAction" method="relist">
 			<result type="redirectAction">

@@ -7,7 +7,7 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- Warepower Start -->
 		<action name="warepower_list" class="com.qkj.ware.action.WarepowerAction" method="list">
-			<result>/jsp/ware/warepower/WarepowerList.jsp</result>
+			<result>/WEB-INF/jsp/ware/warepower/WarepowerList.jsp</result>
 		</action>
 		<action name="warepower_relist" class="com.qkj.ware.action.WarepowerAction" method="relist">
 			<result type="redirectAction">

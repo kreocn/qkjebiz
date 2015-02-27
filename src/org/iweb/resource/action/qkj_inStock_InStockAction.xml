@@ -7,7 +7,7 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- InStock Start -->
 		<action name="inStock_list" class="com.qkj.ware.action.InStockAction" method="list">
-			<result>/jsp/ware/inStock/InStockList.jsp</result>
+			<result>/WEB-INF/jsp/ware/inStock/InStockList.jsp</result>
 		</action>
 		<action name="inStock_relist" class="com.qkj.ware.action.InStockAction" method="relist">
 			<result type="redirectAction">

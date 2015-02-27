@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>请假单列表--<s:text name="APP_NAME" /></title>
-<s:action name="ref" namespace="/manager" executeResult="true" />
+<s:action name="ref_head" namespace="/manager" executeResult="true" />
 </head>
 <style type="text/css">
 .show_dialog {
@@ -16,7 +16,9 @@ max-width: 650px !important;
 }
 </style>
 <body>
-<div class="main" >
+<s:action name="nav" namespace="/manage" executeResult="true" />
+<div class="tab_right">
+ 	<div class="tab_warp main" >
  	<div class="dq_step">
 		${path}
 		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_ADD')">
@@ -159,7 +161,8 @@ max-width: 650px !important;
 </s:iterator>
 </table>
 </div>
-<div class="pagination"><script type="text/javascript">var spage = new ShowPage(${currPage});	spage.show2(${recCount},${pageSize},2);</script></div>
+<div id="listpage" class="pagination"></div>
+</div>
 </div>
 
  <!-- HIDDEN AREA BEGIN -->
@@ -197,6 +200,22 @@ max-width: 650px !important;
 <div id="infoDetail" class="idialog" title="查看详情" style="width:100%;"><div id="detailMain" class="label_main op-area"></div></div>
 </div>
 <!-- HIDDEN AREA END -->
+<s:action name="ref_foot" namespace="/manager" executeResult="true" />
+<script type="text/javascript" src="<s:url value="/js/jqueryPlugins/select3/jquery.cityselect.js" />"></script>
+<script type="text/javascript">
+$(function(){
+	$("#mmtype").citySelect({
+		url:'<s:url value="/js/jqueryPlugins/select3/mm.js" />',
+		prov:"${assets.typea}",
+		city:"${assets.typeb}",
+		dist:" ${assets.typec}",
+		nodata:"none",
+		required:false
+	});
+	printPagination("listpage",'${currPage}','${recCount}','${pageSize}');
+ });
+</script>
+
 <script type="text/javascript">
 var curr_apply_dept ='${leave.leave_dept}';
 $(function(){
