@@ -7,7 +7,7 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- ProType Start -->
 		<action name="proType_list" class="com.qkj.manage.action.ProTypeAction" method="list">
-			<result>/jsp/qkjmanage/ProTypeList.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/ProTypeList.jsp</result>
 		</action>
 		<action name="proType_lista" class="com.qkj.manage.action.ProTypeAction" method="lista">
 			<result type="redirectAction">

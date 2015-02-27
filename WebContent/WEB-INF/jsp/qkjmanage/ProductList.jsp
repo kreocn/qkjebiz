@@ -86,13 +86,23 @@
 			  	</s:iterator>
 		  	</table>
 		  </div>
-		  <div class="pagination">
-				<script type="text/javascript">
-				var spage = new ShowPage(${currPage});
-				spage.show2(${recCount},${pageSize},2);
-				</script>
-		  </div>
+		  <div id="listpage" class="pagination"></div>
 </div>
 </div>
+<s:action name="ref_foot" namespace="/manager" executeResult="true" />
+<script type="text/javascript" src="<s:url value="/js/jqueryPlugins/select3/jquery.cityselect.js" />"></script>
+<script type="text/javascript">
+$(function(){
+	$("#mmtype").citySelect({
+		url:'<s:url value="/js/jqueryPlugins/select3/mm.js" />',
+		prov:"${assets.typea}",
+		city:"${assets.typeb}",
+		dist:" ${assets.typec}",
+		nodata:"none",
+		required:false
+	});
+	printPagination("listpage",'${currPage}','${recCount}','${pageSize}');
+ });
+</script>
 </body>
 </html>
