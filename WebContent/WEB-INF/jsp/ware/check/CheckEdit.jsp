@@ -6,10 +6,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>盘点管理--<s:text name="APP_NAME" /></title>
-<s:action name="ref" namespace="/manager" executeResult="true" />
+<s:action name="ref_head" namespace="/manager" executeResult="true" />
 </head>
 <body>
-<div class="main">
+<s:action name="nav" namespace="/manage" executeResult="true" />
+<div class="tab_right">
+ 	<div class="tab_warp main" >
 	<div class="dq_step">
 		${path}
 		<span class="opb lb op-area">
@@ -144,11 +146,11 @@
 		</div>
 	</s:form>
 </div>
+</div>
 <div class="hidden_area">
 	<div id="infoDetail" class="idialog" title="查看详情" style="width:100%;"><div id="detailMain" class="label_main op-area"></div></div>
-	</div>
 </div>
-
+<s:action name="ref_foot" namespace="/manager" executeResult="true" />
 
 </body>
 </html>

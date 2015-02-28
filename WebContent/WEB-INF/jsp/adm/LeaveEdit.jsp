@@ -7,11 +7,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>工时管理--<s:text name="APP_NAME" /></title>
 </head>
-<s:action name="ref" namespace="/manager" executeResult="true" />
+<s:action name="ref_head" namespace="/manager" executeResult="true" />
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery-ui-timepicker-addon.js" />"></script>
 <body>
 <!--  0出差 1请假 2加班 3换休 -->
-<div class="main">
+<s:action name="nav" namespace="/manage" executeResult="true" />
+<div class="tab_right">
+	<div class="tab_warp main">
 	<div class="dq_step">
 		${path}
 		(<s:if test="leave.leave_type==0">出差</s:if><s:if test="leave.leave_type==1">请假</s:if><s:if test="leave.leave_type==2">加班</s:if><s:if test="leave.leave_type==3">换休</s:if><s:if test="leave.leave_type==4">补签</s:if>)
@@ -300,6 +302,8 @@
 			}
 		</script>
 </div>
+</div>
+<s:action name="ref_foot" namespace="/manager" executeResult="true" />
 <script type="text/javascript">
 var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
 var curr_dept = '${leave.leave_dept}';

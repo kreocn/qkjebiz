@@ -16,8 +16,8 @@
 			</result>
 		</action>
 		<action name="market_load" class="com.qkj.manage.action.MarketAction" method="load">
-			<result name="Success">/jsp/qkjmanage/market/MarketEdit.jsp</result>
-			<result name="addSuccess">/jsp/qkjmanage/market/net2.jsp</result>
+			<result name="Success">/WEB-INF/jsp/qkjmanage/market/MarketEdit.jsp</result>
+			<result name="addSuccess">/WEB-INF/jsp/qkjmanage/market/net2.jsp</result>
 		</action>
 		
 		<action name="market_add" class="com.qkj.manage.action.MarketAction" method="add">

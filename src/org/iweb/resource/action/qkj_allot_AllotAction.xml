@@ -16,7 +16,7 @@
 			</result>
 		</action>
 		<action name="allot_load" class="com.qkj.ware.action.AllotAction" method="load">
-			<result>/jsp/ware/allot/AllotEdit.jsp</result>
+			<result>/WEB-INF/jsp/ware/allot/AllotEdit.jsp</result>
 		</action>
 		<action name="allot_add" class="com.qkj.ware.action.AllotAction" method="add">
 			<result type="redirectAction">

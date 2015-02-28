@@ -10,7 +10,7 @@
 			<result>/WEB-INF/jsp/qkjmanage/CustomerRecodeList.jsp</result>
 		</action>
 		<action name="customerRecode_load" class="com.qkj.manage.action.CustomerRecodeAction" method="load">
-			<result>/jsp/qkjmanage/CustomerRecodeEdit.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/CustomerRecodeEdit.jsp</result>
 		</action>
 		<action name="customerRecode_add" class="com.qkj.manage.action.CustomerRecodeAction" method="add">
 			<result type="redirectAction">

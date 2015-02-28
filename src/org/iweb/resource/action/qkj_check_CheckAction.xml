@@ -17,7 +17,7 @@
 			</result>
 		</action>
 		<action name="check_load" class="com.qkj.ware.action.CheckAction" method="load">
-			<result>/jsp/ware/check/CheckEdit.jsp</result>
+			<result>/WEB-INF/jsp/ware/check/CheckEdit.jsp</result>
 		</action>
 		<action name="check_add" class="com.qkj.ware.action.CheckAction" method="add">
 			<result type="redirectAction">

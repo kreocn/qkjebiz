@@ -10,7 +10,7 @@
 			<result>/WEB-INF/jsp/sysvip/MemberList.jsp</result>
 		</action>
 		<action name="member_load" class="org.iweb.sysvip.action.MemberAction" method="load">
-			<result>/jsp/sysvip/MemberEdit.jsp</result>
+			<result>/WEB-INF/jsp/sysvip/MemberEdit.jsp</result>
 		</action>
 		<action name="member_add" class="org.iweb.sysvip.action.MemberAction" method="add">
 			<result type="redirectAction">

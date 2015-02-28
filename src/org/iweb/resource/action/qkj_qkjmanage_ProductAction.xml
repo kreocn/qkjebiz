@@ -10,7 +10,7 @@
 			<result>/WEB-INF/jsp/qkjmanage/ProductList.jsp</result>
 		</action>
 		<action name="product_load" class="com.qkj.manage.action.ProductAction" method="load">
-			<result>/jsp/qkjmanage/ProductEdit.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/ProductEdit.jsp</result>
 		</action>
 		<action name="product_add" class="com.qkj.manage.action.ProductAction" method="add">
 			<result type="redirectAction">

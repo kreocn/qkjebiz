@@ -220,7 +220,7 @@
 			<result>/jsp/sys/DeptSelect.jsp</result>
 		</action>
 		<action name="dept_permit_select" class="org.iweb.sys.action.SysSelectAction" method="dept_permit_select">
-			<result>/jsp/sys/DeptPermitSelect.jsp</result>
+			<result>/WEB-INF/jsp/sys/DeptPermitSelect.jsp</result>
 		</action>
 		<action name="dept_select_all_v02" class="org.iweb.sys.action.SysSelectAction" method="dept_select_all">
 			<result>/jsp/sys/DeptPermitSelect.jsp</result>

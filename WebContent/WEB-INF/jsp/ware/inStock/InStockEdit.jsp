@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>入库管理--<s:text name="APP_NAME" /></title>
-<s:action name="ref" namespace="/manager" executeResult="true" />
+<s:action name="ref_head" namespace="/manager" executeResult="true" />
 <style type="text/css">
 #active_remark,#active_remark textarea {
 font-size: 14px;
@@ -16,7 +16,9 @@ font-size: 14px;
 
 <body>
 
-<div class="main">
+<s:action name="nav" namespace="/manage" executeResult="true" />
+<div class="tab_right">
+ 	<div class="tab_warp main" >
 	<div class="dq_step">
 		${path}
 		<span class="opb lb op-area">
@@ -257,6 +259,7 @@ font-size: 14px;
 	</div>
 	</s:form>
 </div>
+</div>
 
 
 <!--盘点仓库 -->
@@ -317,7 +320,7 @@ font-size: 14px;
 	<s:hidden name="viewFlag" value="add" />
 </s:form>
 </div>
-
+<s:action name="ref_foot" namespace="/manager" executeResult="true" />
 </body>
 <script type="text/javascript">
 function flag(){

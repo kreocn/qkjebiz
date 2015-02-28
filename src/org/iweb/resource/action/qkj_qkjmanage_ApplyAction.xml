@@ -16,10 +16,10 @@
 			</result>
 		</action>
 		<action name="apply_load" class="com.qkj.manage.action.ApplyAction" method="load">
-			<result>/jsp/qkjmanage/ApplyEdit.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/ApplyEdit.jsp</result>
 		</action>
 		<action name="apply_print" class="com.qkj.manage.action.ApplyAction" method="view">
-			<result>/jsp/qkjmanage/ApplyView.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/ApplyView.jsp</result>
 		</action>
 		<action name="apply_add" class="com.qkj.manage.action.ApplyAction" method="add">
 			<result type="redirectAction">

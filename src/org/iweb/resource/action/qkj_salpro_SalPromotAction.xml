@@ -16,8 +16,8 @@
 			</result>
 		</action>
 		<action name="salPromot_load" class="com.qkj.manage.action.SalPromotAction" method="load">
-			<result name="SUCCESS">/jsp/qkjmanage/salpro/SalPromotEdit.jsp</result>
-			<result name="VIEWSUCCESS">/jsp/qkjmanage/salpro/SalPromotView.jsp</result>
+			<result name="SUCCESS">/WEB-INF/jsp/qkjmanage/salpro/SalPromotEdit.jsp</result>
+			<result name="VIEWSUCCESS">/WEB-INF/jsp/qkjmanage/salpro/SalPromotView.jsp</result>
 		</action>
 		<action name="salPromot_add" class="com.qkj.manage.action.SalPromotAction" method="add">
 			<result type="redirectAction">

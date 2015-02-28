@@ -16,7 +16,7 @@
 			</result>
 		</action>
 		<action name="memberStock_load" class="org.iweb.sysvip.action.MemberStockAction" method="load">
-			<result>/jsp/sysvip/MemberStockEdit.jsp</result>
+			<result>/WEB-INF/jsp/sysvip/MemberStockEdit.jsp</result>
 		</action>
 		<action name="memberStock_add" class="org.iweb.sysvip.action.MemberStockAction" method="add">
 			<result type="redirectAction">

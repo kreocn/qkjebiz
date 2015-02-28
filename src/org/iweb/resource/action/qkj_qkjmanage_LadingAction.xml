@@ -13,17 +13,17 @@
 			<result>/WEB-INF/jsp/qkjmanage/LadingCheckList.jsp</result>
 		</action>
 		<action name="lading_load" class="com.qkj.manage.action.LadingAction" method="load">
-			<result>/jsp/qkjmanage/LadingEdit.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/LadingEdit.jsp</result>
 		</action>
 		<action name="lading_Checkload" class="com.qkj.manage.action.LadingAction" method="load">
-			<result>/jsp/qkjmanage/LadingCheckEdit.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/LadingCheckEdit.jsp</result>
 		</action>
 		
 		<action name="lading_view" class="com.qkj.manage.action.LadingAction" method="load">
-			<result>/jsp/qkjmanage/LadingView.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/LadingView.jsp</result>
 		</action>
 		<action name="lading_addproduct" class="com.qkj.manage.action.LadingAction" method="addProd">
-			<result>/jsp/qkjmanage/LeadingAddProduct.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/LeadingAddProduct.jsp</result>
 		</action>
 		<action name="lading_add" class="com.qkj.manage.action.LadingAction" method="add">
 			<result type="redirectAction">

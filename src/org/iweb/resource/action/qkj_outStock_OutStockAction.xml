@@ -16,11 +16,11 @@
 			</result>
 		</action>
 		<action name="outStock_load" class="com.qkj.ware.action.OutStockAction" method="load">
-			<result name="success">/jsp/ware/outStock/OutStockEdit.jsp</result>
-			<result name="add">/jsp/ware/outStock/OutNext.jsp</result>
-			<result name="next">/jsp/ware/outStock/OutNext.jsp</result>
-			<result name="sale">/jsp/ware/outStock/OutSaleDetail.jsp</result>
-			<result name="other">/jsp/ware/outStock/OutDetail.jsp</result>
+			<result name="success">/WEB-INF/jsp/ware/outStock/OutStockEdit.jsp</result>
+			<result name="add">/WEB-INF/jsp/ware/outStock/OutNext.jsp</result>
+			<result name="next">/WEB-INF/jsp/ware/outStock/OutNext.jsp</result>
+			<result name="sale">/WEB-INF/jsp/ware/outStock/OutSaleDetail.jsp</result>
+			<result name="other">/WEB-INF/jsp/ware/outStock/OutDetail.jsp</result>
 		</action>
 		<action name="outStock_add" class="com.qkj.ware.action.OutStockAction" method="add">
 			<result type="redirectAction">

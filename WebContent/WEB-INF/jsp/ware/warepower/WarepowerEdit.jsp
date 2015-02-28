@@ -7,11 +7,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>仓库管理权限管理--<s:text name="APP_NAME" /></title>
-<s:action name="ref" namespace="/manager" executeResult="true" />
+<s:action name="ref_head" namespace="/manager" executeResult="true" />
 </head>
 <body>
 
-<div class="main">
+<s:action name="nav" namespace="/manage" executeResult="true" />
+<div class="tab_right">
+ 	<div class="tab_warp main" >
 	<div class="dq_step">
 		${path}
 		<span class="opb lb op-area">
@@ -130,7 +132,8 @@
 	</div>
 	</s:form>
 </div>
-
+</div>
+<s:action name="ref_foot" namespace="/manager" executeResult="true" />
 </body>
 <script type="text/javascript">
 var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
