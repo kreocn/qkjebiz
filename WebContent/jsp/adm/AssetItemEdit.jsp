@@ -12,7 +12,7 @@
  <div class="main" >
 	<div class="dq_step">
 		${path}
-		<span class="opb lb op-area"><a href="<s:url namespace="/adm" action="assetItem_list"><s:param name="viewFlag">relist</s:param></s:url>">资产物品列表</a></span>
+		<span class="opb lb op-area"><a href="<s:url namespace="/adm" action="assets_load"><s:param name="viewFlag">mdy</s:param><s:param name="assets.uuid" value="%{assetItem.asset_id}"></s:param></s:url>">资产物品列表</a></span>
 	</div>
 	<s:form id="formEdit" name="form1" cssClass="validForm" action="assetItem_add" namespace="/adm" onsubmit="return validator(this);" method="post" theme="simple">
 		<div class="label_con">
