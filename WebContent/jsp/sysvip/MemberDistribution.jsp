@@ -7,53 +7,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>会员列表--<s:text name="APP_NAME" /></title>
 <s:action name="ref" namespace="/manager" executeResult="true" />
-<script type="text/javascript">
-var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
-$(function(){
-	//setStyle("table1");
-	CommonUtil.pickrow('table1');
-	CommonUtil.pickrowAll('table1','uuidcheck');
-});
-
-var sobj01;
-var selectDept = function() {
-	sobj01 = new DialogIFrame({src:'<s:url namespace="/sys" action="dept_select_all_v02" />?objname=sobj01',title:'选择部门'});
-	sobj01.selfAction = function(val1,val2) {
-		$("#userdept_codesearch").val(val1);
-		$("#userdept_namesearch").val(val2);
-		loadManagers("membermanagerisearch",val1);
-	};
-	sobj01.create();
-	sobj01.open();
-};
-
-var sobj02;
-var selectDept02 = function() {
-	sobj02 = new DialogIFrame({src:'<s:url namespace="/sys" action="dept_select_all_v02" />?objname=sobj02',title:'选择部门'});
-	sobj02.selfAction = function(val1,val2) {
-		$("#userdept_codeid").val(val1);
-		$("#userdept_nameid").val(val2);
-		loadManagers("membermanagerid",val1);
-	};
-	sobj02.create();
-	sobj02.open();
-};
-
-function loadManagers(selectId,dept_code) {
-	var ajax = new Common_Ajax('ajax_member_message');
-	ajax.config.action_url = ajax_url_action;
-	ajax.config._success = function(data, textStatus) {
-		$("#"+selectId).clearAllOption();
-		$("#"+selectId).addOption("暂无","");
-		$.each(data, function(i, n){
-			$("#"+selectId).addOption(n.user_name,n.uuid);
-		});
-	};
-	ajax.addParameter("work", "AutoComplete");
-	ajax.addParameter("parameters", "privilege_id=QKJCJ_SYS_AJAXLOAD_USER&dept_code=" + encodeURI(dept_code));
-	ajax.sendAjax2();
-}
-</script>
 <style type="text/css">
 .surebtn{margin:3px 0 0 10px; float:right;}
 .f_khjl{float:left; line-height:30px; padding-left:10px;}
@@ -104,10 +57,11 @@ function loadManagers(selectId,dept_code) {
  			</div>
 		</div>
 	</s:form>
+	<s:form name="form1" theme="simple" onsubmit="return validator(this);">
 	<div class="tab_warp">
 		<table id="table1">
 			<tr id="coltr">
-				<th class="td1"><input name="uuidcheck" type="checkbox" /></th>
+				<th class="td1"><input id="uuidcheck" name="uuidcheck" type="checkbox" onclick="checkAll();" /></th>
 				<th class="td1">会员号</th>
 				<th class="td2">会员手机</th>
 				<th class="td3">会员姓名</th>
@@ -162,6 +116,68 @@ function loadManagers(selectId,dept_code) {
 			</div>
 		</div>
 	</div>
+	</s:form>
 </div>
+<script type="text/javascript" src="<s:url value="/js/select_area.js" />"></script>
+<script type="text/javascript">
+var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
+$(function(){
+	//setStyle("table1");
+	CommonUtil.pickrow('table1');
+	CommonUtil.pickrowAll('table1','uuidcheck');
+});
+
+var sobj01;
+var selectDept = function() {
+	sobj01 = new DialogIFrame({src:'<s:url namespace="/sys" action="dept_select_all_v02" />?objname=sobj01',title:'选择部门'});
+	sobj01.selfAction = function(val1,val2) {
+		$("#userdept_codesearch").val(val1);
+		$("#userdept_namesearch").val(val2);
+		loadManagers("membermanagerisearch",val1);
+	};
+	sobj01.create();
+	sobj01.open();
+};
+
+var sobj02;
+var selectDept02 = function() {
+	sobj02 = new DialogIFrame({src:'<s:url namespace="/sys" action="dept_select_all_v02" />?objname=sobj02',title:'选择部门'});
+	sobj02.selfAction = function(val1,val2) {
+		$("#userdept_codeid").val(val1);
+		$("#userdept_nameid").val(val2);
+		loadManagers("membermanagerid",val1);
+	};
+	sobj02.create();
+	sobj02.open();
+};
+
+function loadManagers(selectId,dept_code) {
+	var ajax = new Common_Ajax('ajax_member_message');
+	ajax.config.action_url = ajax_url_action;
+	ajax.config._success = function(data, textStatus) {
+		$("#"+selectId).clearAllOption();
+		$("#"+selectId).addOption("暂无","");
+		$.each(data, function(i, n){
+			$("#"+selectId).addOption(n.user_name,n.uuid);
+		});
+	};
+	ajax.addParameter("work", "AutoComplete");
+	ajax.addParameter("parameters", "privilege_id=QKJCJ_SYS_AJAXLOAD_USER&dept_code=" + encodeURI(dept_code));
+	ajax.sendAjax2();
+};
+function checkAll(){
+	var check=document.getElementsByName("member.uuid");
+	var a=check.length;
+	if(document.getElementById("uuidcheck").checked){
+		for(var i=0;i<a;i++){
+			check[i].checked=true;
+		};
+	}else{
+		for(var i=0;i<a;i++){
+			check[i].checked=false;
+		};
+	};
+};
+</script>
 </body>
 </html>
