@@ -24,8 +24,8 @@
 			LEFT JOIN s_sys_user ndcu ON (a.`close_nd_user`=ndcu.`UUID`)
 			LEFT JOIN qkjm_r_active_memcost mem ON(a.`uuid`=mem.`active_id`)
 			LEFT JOIN s_vip_member mb ON(mem.`member_id`=mb.`UUID`)
+			WHERE a.`status`>=0 
 		]]>
-		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ a.uuid=#uuid# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="uid"><![CDATA[ a.uid=#uid# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="apply_dept">
@@ -60,7 +60,6 @@
 			<isNotEmpty prepend="AND" property="flag"><![CDATA[ NOT ISNULL(a.`spe_remark`) AND a.`spe_remark`!="" ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="spere"><![CDATA[ ISNULL(a.`spe_remark`) ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="member_id"><![CDATA[ mb.`MEMBER_NAME` LIKE CONCAT('%',#member_id#,'%') ]]></isNotEmpty>
-		</dynamic>
 		<![CDATA[ ORDER BY a.add_time DESC LIMIT 1000 ]]>
 	</select>
 	<select id="qkjmanage_getActivesCounts" resultClass="int" parameterClass="java.util.Map">
@@ -69,8 +68,8 @@
 			SELECT DISTINCT a.`uuid`,1 FROM qkjm_r_active a
 			LEFT JOIN qkjm_r_active_memcost mem ON(a.`uuid`=mem.`active_id`) 
 			LEFT JOIN s_vip_member mb ON(mem.`member_id`=mb.`UUID`)
+			WHERE a.`status`>=0
 		]]>
-		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ a.uuid=#uuid# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="uid"><![CDATA[ a.uid=#uid# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="apply_dept">
@@ -106,7 +105,6 @@
 			<isNotEmpty prepend="AND" property="flag"><![CDATA[ NOT ISNULL(a.spe_remark) AND a.`spe_remark`!="" ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="spere"><![CDATA[ ISNULL(a.spe_remark) ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="member_id"><![CDATA[ mb.`MEMBER_NAME` LIKE CONCAT('%',#member_id#,'%') ]]></isNotEmpty>
-		</dynamic>
 		<![CDATA[ LIMIT 1000) a ]]>
 	</select>
 	
