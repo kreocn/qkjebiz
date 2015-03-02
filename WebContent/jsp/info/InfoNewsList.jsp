@@ -15,7 +15,7 @@
 <div class="main" >
 	<div class="dq_step">
 		${path}
-		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_PRODUCT_ADD')">
+		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('INFO_MANAGER_NEWS_ADD')">
 			<span class="opb lb op-area"><a href="<s:url namespace="/info" action="news_load"><s:param name="viewFlag">add</s:param></s:url>" >添加信息</a></span>
 		</s:if>
 	</div>
