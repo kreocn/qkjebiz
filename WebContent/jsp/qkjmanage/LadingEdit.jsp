@@ -219,6 +219,32 @@ function createAddreeeSelect(p_data) {
     </div>
     <div class="label_main">
     <fieldset class="clear">
+   		<legend>已参与促销活动</legend>
+   		<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+		<tr>
+			<th>活动名称</th>
+			<th>开始时间</th>
+			<th>结束时间</th>
+			<th>操作</th>
+		</tr>
+		<!-- lading.promotions -->
+		<s:iterator value="salPromotsed" status="sta">
+		<tr>
+			<td class="nw">${sal_title}</td>
+			<td class="nw">${it:formatDate(startime,'yyyy-MM-dd')}</td>
+			<td class="nw">${it:formatDate(endtime,'yyyy-MM-dd')}</td>
+			<td><a href="javascript:;" onclick="openCustomerView(${uuid});">[查看详情]</a></td>
+		</tr>
+		</s:iterator>
+		</table>
+		<script type="text/javascript">
+		setCheckBox("lading.promotions", '${lading.promotions}');
+		</script>
+	</fieldset>
+	</div>
+	<s:if test="lading.status<=5">
+    <div class="label_main">
+    <fieldset class="clear">
    		<legend>可参与促销活动</legend>
    		<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
 		<tr>
@@ -246,6 +272,7 @@ function createAddreeeSelect(p_data) {
 		</script>
 	</fieldset>
 	</div>
+	</s:if>
 	<s:if test="lading.promotions!=null">
 	<div class="label_main">
     	<fieldset class="clear">
