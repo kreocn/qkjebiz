@@ -19,7 +19,7 @@
 			<result>/WEB-INF/jsp/qkjmanage/CloseOrderEdit.jsp</result>
 		</action>
 		<action name="closeOrder_view" class="com.qkj.manage.action.CloseOrderAction" method="view">
-			<result>/jsp/qkjmanage/CloseOrderView.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/CloseOrderView.jsp</result>
 		</action>
 		<action name="closeOrder_add" class="com.qkj.manage.action.CloseOrderAction" method="add">
 			<result type="redirectAction">

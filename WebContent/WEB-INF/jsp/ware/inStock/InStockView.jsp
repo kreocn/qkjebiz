@@ -7,7 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>入库管理--<s:text name="APP_NAME" /></title>
-<s:action name="ref" namespace="/manager" executeResult="true" />
+<s:action name="ref_head" namespace="/manager" executeResult="true" />
 <style type="text/css">
 #active_remark,#active_remark textarea {
 	font-size: 14px;
@@ -16,7 +16,9 @@
 </head>
 
 <body>
-	<div class="main">
+	<s:action name="nav" namespace="/manage" executeResult="true" />
+<div class="tab_right">
+	<div class="tab_warp main">
 		<div class="dq_step">
 			${path} <span class="opb lb op-area"> <a
 				href="<s:url action="inStock_list" namespace="/inStock" />">返回列表</a>
@@ -190,7 +192,7 @@
 			</div>
 		</s:form>
 	</div>
-
+</div>
 
 	<!--盘点仓库 -->
 	<div id="addItemForm" title="添加明细">
@@ -266,7 +268,7 @@
 			<s:hidden name="viewFlag" value="add" />
 		</s:form>
 	</div>
-
+<s:action name="ref_foot" namespace="/manager" executeResult="true" />
 </body>
 <script type="text/javascript">
 	function flag() {

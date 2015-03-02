@@ -137,7 +137,7 @@ a {
 }
 
 .tab_right {
-	float: right;width: 85%; margin-right: .2rem; font-size: 14px; margin-bottom:35px;
+	float: right; width: 85%; margin-right: .2rem; font-size: 14px; margin-bottom: 35px;
 }
 
 .pt {
@@ -404,7 +404,7 @@ a {
 }
 
 .lb_jpin td {
-	border-bottom: 1px solid #ccc; font-size: 12px;  text-align: center;
+	border-bottom: 1px solid #ccc; font-size: 12px; text-align: center;
 }
 
 .lb_fasm {
@@ -1063,4 +1063,20 @@ footer {
 	.main {
 		padding-top: 55px; background: url("../../images/print/pageheader02.png") transparent no-repeat 0 0;
 	}
+	header {
+		display: none;
+	}
+	footer {
+		display: none;
+	}
+	.tab_right {
+		width: 100%;
+	}
+	.ht_left{
+	display: none;
+	}
+	.ht_rhide{
+	display: none;
+	}
+	.printTab .titleRow{width: 30px;}
 }

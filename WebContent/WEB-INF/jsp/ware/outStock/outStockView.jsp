@@ -6,10 +6,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>出库管理--<s:text name="APP_NAME" /></title>
-<s:action name="ref" namespace="/manager" executeResult="true" />
+<s:action name="ref_head" namespace="/manager" executeResult="true" />
 </head>
 <body>
-	<div class="main">
+	<s:action name="nav" namespace="/manage" executeResult="true" />
+<div class="tab_right">
+	<div class="tab_warp main">
 		<div class="dq_step">
 			${path} <span class="opb lb op-area">
 					<a href="<s:url action="outStock_list" namespace="/outStock" />">出库列表</a>
@@ -279,6 +281,8 @@
 			</div>
 		</s:form>
 	</div>
+	</div>
+	<s:action name="ref_foot" namespace="/manager" executeResult="true" />
 </body>
 
 </html>

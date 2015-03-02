@@ -106,7 +106,7 @@
 		            	</td>
 		            	<td  class="td4 op-area">
 		            		<a class="input-blue" href="<s:url namespace="/sysebiz" action="order_load"><s:param name="viewFlag">mdy</s:param><s:param name="order.uuid" value="uuid"></s:param></s:url>">修改&审核</a>
-		            		<a href="<s:url namespace="/sysebiz" action="order_view"><s:param name="order.uuid" value="uuid" /><s:param name="viewFlag">print</s:param></s:url>" target="_blank">订单打印</a>
+		            		<a href="<s:url namespace="/sysebiz" action="order_view"><s:param name="order.uuid" value="uuid" /><s:param name="viewFlag">print</s:param></s:url>">订单打印</a>
 		            	</td>
 		            	<td  class="td0 op-area"><a onclick="showDetail('showtr${uuid}');" href="javascript:;" class="input-nostyle">查看</a></td>
 		            </tr>

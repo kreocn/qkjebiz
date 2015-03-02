@@ -6,13 +6,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>换休申请单</title>
+<s:action name="ref_head" namespace="/manager" executeResult="true" />
 <link rel="stylesheet" href="<s:url value="/css/css.css" />" />
 <link rel="stylesheet" href="<s:url value="/css/navigate.css" />" />
 <link rel="stylesheet" href="<s:url value="/css/main.css" />" />
 <link rel="stylesheet" href="<s:url value="/css/table-check.css" />" />
 </head>
 <body>
-<div id="main"><div id="result"><div class="itablemdy">
+<s:action name="nav" namespace="/manage" executeResult="true" />
+<div class="tab_right">
+	<div class="tab_warp main"><div id="result"><div class="itablemdy">
 <div class="printarea buttonarea">
 	<input type="button" value="打印本页" onclick="window.print();" />
 	<input type="button" value="返回" onclick="location.href='<s:url action="leave_relist" namespace="/adm" />';" />
@@ -810,5 +813,7 @@
 	<input type="button" value="返回" onclick="location.href='<s:url action="leave_relist" namespace="/adm" />';" />
 </div>
 </div></div></div>
+</div>
+<s:action name="ref_foot" namespace="/manager" executeResult="true" />
 </body>
 </html>
