@@ -28,7 +28,7 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- InfoClass Start -->
 		<action name="class_list" class="org.iweb.info.action.InfoClassAction" method="list">
-			<result>/jsp/info/InfoClassList.jsp</result>
+			<result>/WEB-INF/jsp/info/InfoClassList.jsp</result>
 		</action>
 		<action name="class_control" class="org.iweb.info.action.InfoClassAction">
 			<result type="redirectAction">
@@ -39,10 +39,10 @@
 		<!-- InfoClass End -->
 		<!-- InfoNews Start -->
 		<action name="news_list" class="org.iweb.info.action.InfoNewsAction" method="list">
-			<result>/jsp/info/InfoNewsList.jsp</result>
+			<result>/WEB-INF/jsp/info/InfoNewsList.jsp</result>
 		</action>
 		<action name="news_listRecycle" class="org.iweb.info.action.InfoNewsAction" method="listRecycle">
-			<result>/jsp/info/InfoNewsListRecycle.jsp</result>
+			<result>/WEB-INF/jsp/info/InfoNewsListRecycle.jsp</result>
 		</action>
 
 		<action name="news_saveadd" class="org.iweb.info.action.InfoNewsAction" method="addsave">
@@ -77,10 +77,10 @@
 			</result>
 		</action>
 		<action name="news_load" class="org.iweb.info.action.InfoNewsAction" method="load">
-			<result>/jsp/info/InfoNewsEdit.jsp</result>
+			<result>/WEB-INF/jsp/info/InfoNewsEdit.jsp</result>
 		</action>
 		<action name="news_view" class="org.iweb.info.action.InfoNewsAction" method="load">
-			<result>/jsp/info/InfoNewsView.jsp</result>
+			<result>/WEB-INF/jsp/info/InfoNewsView.jsp</result>
 		</action>
 		<action name="news_saveTop" class="org.iweb.info.action.InfoNewsAction" method="saveTop">
 			<result type="redirectAction">
@@ -109,11 +109,11 @@
 		</action>
 
 		<action name="news_loadCheck" class="org.iweb.info.action.InfoNewsAction" method="loadCheck">
-			<result>/jsp/info/InfoNewsCheckedEdit.jsp</result>
+			<result>/WEB-INF/jsp/info/InfoNewsCheckedEdit.jsp</result>
 		</action>
 
 		<action name="news_firstCheckedList" class="org.iweb.info.action.InfoNewsAction" method="listFirstCheck">
-			<result>/jsp/info/InfoNewsCheckedList.jsp</result>
+			<result>/WEB-INF/jsp/info/InfoNewsCheckedList.jsp</result>
 		</action>
 
 		<action name="news_saveFirstPass" class="org.iweb.info.action.InfoNewsAction" method="saveFirstPass">
@@ -126,7 +126,7 @@
 		</action>
 
 		<action name="news_finalCheckedList" class="org.iweb.info.action.InfoNewsAction" method="listFinalCheck">
-			<result>/jsp/info/InfoNewsCheckedList.jsp</result>
+			<result>/WEB-INF/jsp/info/InfoNewsCheckedList.jsp</result>
 		</action>
 
 
