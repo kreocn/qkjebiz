@@ -281,19 +281,6 @@
 								</s:if>
 								<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK0')">
 									<s:submit id="mdyStatus0" name="mdyStatus0" value="报审" action="closeOrder_check0" onclick="return isOp('确定执行此操作?');" cssClass="input-yellow" />
-									<script type="text/javascript">
-										$(function(){
-											$("#editForm :input").change(function(){
-												//if()cellarOrder_check0 10 15 20
-												//$("#rebates_mdyRebatesStatus0").attr("disabled","disabled");
-												if ($("#mdyStatus0").length > 0) {
-													$("#mdyStatus0").attr("disabled", "disabled");
-												}
-
-												$("#messages").text("请先保存后才能做其他操作!");
-											});
-										});
-									</script>
 								</s:if>
 								<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_CLOSEORDER_DEL')">
 									<s:submit id="delete" name="delete" value="删除" action="closeOrder_del" onclick="return isDel();" cssClass="input-red" />
@@ -362,7 +349,11 @@
 				</div>
 			</s:form>
 		</div>
-		<script type="text/javascript">
+	</div>
+	</div>
+	<s:action name="ref_foot" namespace="/manager" executeResult="true" />
+</body>
+<script type="text/javascript">
 			$(function(){
 				$("#approveFrom").dialog({ autoOpen : false,
 				modal : true });
@@ -383,10 +374,19 @@
 				}
 			}
 		</script>
-	</div>
-	</div>
-	<s:action name="ref_foot" namespace="/manager" executeResult="true" />
-</body>
+<script type="text/javascript">
+										$(function(){
+											$("#editForm :input").change(function(){
+												//if()cellarOrder_check0 10 15 20
+												//$("#rebates_mdyRebatesStatus0").attr("disabled","disabled");
+												if ($("#mdyStatus0").length > 0) {
+													$("#mdyStatus0").attr("disabled", "disabled");
+												}
+
+												$("#messages").text("请先保存后才能做其他操作!");
+											});
+										});
+									</script>
 <script type="text/javascript">
 	var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
 	var c_mid = '<s:property value="outStock.member_id" />';
