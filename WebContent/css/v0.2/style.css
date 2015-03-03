@@ -11,6 +11,7 @@ html,body,img,p,ul {
 
 body {
 	font-size: 1rem;
+	background: #fff;
 }
 
 body,input,select,textarea {

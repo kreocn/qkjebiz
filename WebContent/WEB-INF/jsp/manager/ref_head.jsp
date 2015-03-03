@@ -9,8 +9,6 @@
 <link rel="stylesheet" href="<c:url value="/css/animate.css" />" />
 <link rel="stylesheet" href="<c:url value="/include/jQuery/stylesheets/jquery.xhupload.css" />" />
 <link rel="stylesheet" href="<c:url value="/css/v0.1/demo.css" />" />
-<link rel="stylesheet" href="<c:url value="/css/v0.2/jqm-demos.css" />" />
-<link rel="stylesheet" href="<c:url value="/css/v0.2/jquery.mobile-1.4.3.min.css" />" />
 <link rel="stylesheet" href="<c:url value="/css/v0.2/nav.css" />" />
 <script type="text/javascript">var app_path = '<c:url value="/" />', ajax_url = "/common_ajax/json_ajax";</script>
 <script type="text/javascript" src="<c:url value="/js/v0.1/jquery-1.9.0.min.js" />"></script>
