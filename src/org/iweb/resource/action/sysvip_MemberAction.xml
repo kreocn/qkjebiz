@@ -39,7 +39,7 @@
 		</action>
 
 		<action name="distribution_list" class="org.iweb.sysvip.action.MemberAction" method="list">
-			<result>/jsp/sysvip/MemberDistribution.jsp</result>
+			<result>/WEB-INF/jsp/sysvip/MemberDistribution.jsp</result>
 		</action>
 
 		<action name="member_distribution" class="org.iweb.sysvip.action.MemberAction" method="distribution">

@@ -7,19 +7,19 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- MemberCellar Start -->
 		<action name="schedule_list" class="com.qkj.sche.action.ScheAction" method="list">
-			<result>/jsp/manager/main.jsp</result>
+			<result>/WEB-INF/jsp/manager/main.jsp</result>
 		</action>
 		<action name="schedule_read" class="com.qkj.sche.action.ScheAction" method="read">
-			<result>/jsp/manager/main.jsp</result>
+			<result>/WEB-INF/jsp/manager/main.jsp</result>
 		</action>
 		
 		<action name="schedule_load" class="com.qkj.sche.action.ScheAction" method="load">
-			<result name="SUCCESS">/jsp/schedule/saveSchedule.jsp</result>
-			<result name="VIEWSUCCESS">/jsp/schedule/ScheduleView.jsp</result>
+			<result name="SUCCESS">/WEB-INF/jsp/schedule/saveSchedule.jsp</result>
+			<result name="VIEWSUCCESS">/WEB-INF/jsp/schedule/ScheduleView.jsp</result>
 		</action>
 		
 		<action name="schedule_leftList" class="com.qkj.sche.action.ScheAction" method="leftList">
-			<result>/jsp/schedule/listSchedule.jsp</result>
+			<result>/WEB-INF/jsp/schedule/listSchedule.jsp</result>
 		</action>
 		
 		<action name="schedule_add" class="com.qkj.sche.action.ScheAction" method="add">
