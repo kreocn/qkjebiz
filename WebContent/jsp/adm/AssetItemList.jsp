@@ -95,11 +95,11 @@
 	         </table>
 	   </div>
 	   <div class="pagination">
-		<script type="text/javascript">
-		var spage = new ShowPage(${currPage});
-		spage.show2(${recCount},${pageSize},2);
-		</script>
-	</div>
+			<script type="text/javascript">
+			var spage = new ShowPage(${currPage});
+			spage.show2(${recCount},${pageSize},2);
+			</script>
+		</div>
 </div>
 </body>
 </html>
