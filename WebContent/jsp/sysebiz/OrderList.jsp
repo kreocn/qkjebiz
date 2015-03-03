@@ -12,7 +12,7 @@
  <div class="main" >
 	<div class="dq_step">
 		${path}
-		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_PRODUCT_ADD')">
+		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJCJ_SYSEBIZ_ORDER_ADD')">
 			<span class="opb lb op-area"><a href="<s:url namespace="/sysebiz" action="order_load"><s:param name="viewFlag">add</s:param></s:url>" >添加订单</a></span>
 		</s:if>
 	</div>
