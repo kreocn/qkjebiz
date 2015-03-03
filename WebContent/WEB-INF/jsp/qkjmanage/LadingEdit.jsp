@@ -516,7 +516,7 @@ var createCustomerView = function() {
 
 var openCustomerView = function(customer_uuid) {
 	var iframeId = sobj02.getConid() + "iframe";
-	$("#"+iframeId).attr("src","/salpro/salPromot_load?viewFlag=view&salstate=1&salPromot.uuid=" + customer_uuid);
+	$("#"+iframeId).attr("src","/salpro/salPromot_loadt?viewFlag=view&salstate=1&salPromot.uuid=" + customer_uuid);
 	sobj02.open();
 };
 

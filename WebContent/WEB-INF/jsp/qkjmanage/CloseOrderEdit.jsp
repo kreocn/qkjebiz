@@ -176,9 +176,6 @@
 										</tr>
 									</s:iterator>
 								</table>
-								<script type="text/javascript">
-									setCheckBox("closeOrder.salPro_id", '${closeOrder.salPro_id}');
-								</script>
 							</fieldset>
 						</div>
 					</s:if>
@@ -352,6 +349,9 @@
 	</div>
 	</div>
 	<s:action name="ref_foot" namespace="/manager" executeResult="true" />
+	<script type="text/javascript">
+									setCheckBox("closeOrder.salPro_id", '${closeOrder.salPro_id}');
+								</script>
 </body>
 <script type="text/javascript">
 			$(function(){
@@ -463,7 +463,7 @@ var createCustomerView = function() {
 
 var openCustomerView = function(customer_uuid) {
 	var iframeId = sobj02.getConid() + "iframe";
-	$("#"+iframeId).attr("src","/salpro/salPromot_load?viewFlag=view&salstate=1&salPromot.uuid=" + customer_uuid);
+	$("#"+iframeId).attr("src","/salpro/salPromot_loadt?viewFlag=view&salstate=1&salPromot.uuid=" + customer_uuid);
 	sobj02.open();
 };
 

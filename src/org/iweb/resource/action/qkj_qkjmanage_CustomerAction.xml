@@ -12,6 +12,9 @@
 		<action name="customer_load" class="com.qkj.manage.action.CustomerAction" method="load">
 			<result>/WEB-INF/jsp/qkjmanage/CustomerEdit.jsp</result>
 		</action>
+		<action name="customer_loadt" class="com.qkj.manage.action.CustomerAction" method="load">
+			<result>/WEB-INF/jsp/qkjmanage/CustomerEditT.jsp</result>
+		</action>
 		<action name="customer_relist" class="com.qkj.manage.action.CustomerAction">
 			<result type="redirectAction">
 				<param name="actionName">customer_list</param>

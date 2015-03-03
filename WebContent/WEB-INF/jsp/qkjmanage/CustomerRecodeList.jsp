@@ -169,7 +169,7 @@ var createCustomerView = function() {
 
 var openCustomerView = function(customer_uuid) {
 	var iframeId = sobj02.getConid() + "iframe";
-	$("#"+iframeId).attr("src","/qkjmanage/customer_load?viewFlag=mdy&mode=view&customer.uuid=" + customer_uuid);
+	$("#"+iframeId).attr("src","/qkjmanage/customer_loadt?viewFlag=mdy&mode=view&customer.uuid=" + customer_uuid);
 	sobj02.open();
 };
 
