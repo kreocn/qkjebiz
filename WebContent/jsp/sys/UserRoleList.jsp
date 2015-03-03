@@ -12,9 +12,7 @@
 <div class="main" >
 	<div class="dq_step">
 		<a href="/manager/default">首页</a>&nbsp;&gt;&nbsp;会员组列表
-		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_PRODUCT_ADD')">
-			<span class="opb lb op-area"><a href="<s:url namespace="/sys" action="userrole_load_add"><s:param name="viewFlag">add</s:param></s:url>" >添加系统角色</a></span>
-		</s:if>
+		<span class="opb lb op-area"><a href="<s:url namespace="/sys" action="userrole_load_add"><s:param name="viewFlag">add</s:param></s:url>" >添加系统角色</a></span>
 	</div>
 	<div class="tab_warp">
 	 		<table id="table1">

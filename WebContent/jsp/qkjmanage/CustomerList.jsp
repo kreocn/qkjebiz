@@ -58,7 +58,7 @@ function loadManagers(dept_code) {
  <div class="main" >
 	<div class="dq_step">
 		${path}
-		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_PRODUCT_ADD')">
+		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_CUSTOMER_ADD')">
 			<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="customer_load"><s:param name="viewFlag">add</s:param></s:url>" >添加客户</a></span>
 		</s:if>
 	</div>
