@@ -66,7 +66,7 @@
 	              <th  class="td0">查看</th>
 	            </tr>
 	            <s:iterator value="orders" status="sta">
-		            <tr>
+		            <tr  id="showtr${uuid}">
 		            	<td  class="td1">${uuid}</td>
 		            	<td  class="td1">(${user_id})${user_name}</td>
 		            	<td  class="td2">${con_mobile}</td>
