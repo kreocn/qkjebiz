@@ -89,6 +89,46 @@
 		spage.show2(${recCount},${pageSize},2);
 		</script>
 	</div>
+	<div class="tab_warp">
+		<span id="message"><s:property value="message" /></span>
+	</div>
 </div>
+
+<div id="SaveInStockArea" title="添加商品库存">
+<s:form name="form_saveInStock" action="goods_saveInStock" namespace="/sysebiz" cssClass="validForm" onsubmit="return validator(this);" method="post" theme="simple">
+	<div class="ifromoperate" ></div>
+	<table class="ilisttable" width="100%">
+		  <tr>
+				<td align="right">添加库存数量:</td>
+				<td>
+				<s:textfield name="stockNum" title="库存数量" cssClass="validate[required,custom[integer]]" />
+				</td>
+			</tr>
+					<tr>
+						<td>&nbsp;</td>
+					    <td class="buttonarea">
+							<s:hidden name="goods.uuid" />
+							<s:submit id="add" name="add" value="确定" action="goods_saveInStock" />
+							<s:reset value="重置" />
+						</td>
+				    </tr>
+	</table>
+</s:form>
+</div>
+<script type="text/javascript">
+$(function(){
+	setStyle("table1");
+	$("#SaveInStockArea").dialog({
+	      autoOpen: false,
+	      height: 130,
+	      width: 400,
+	      modal: true
+	});
+});
+function openSaveInStockArea(goods_id) {
+	$("#SaveInStockArea :input[name='goods.uuid']").val(goods_id);
+	$("#SaveInStockArea").dialog("open");
+}
+</script>
 </body>
 </html>
