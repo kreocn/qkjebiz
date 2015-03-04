@@ -32,7 +32,7 @@
 				       <div class="label_ltit">类别:</div>
 				       <div class="label_rwbenx">
 				       		<s:hidden id="news.class_id" title="信息类别" name="news.class_id" />
-				       		<s:textfield id="news.class_name" title="信息类别" name="news.class_name" readonly="true" /><img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectClass();" />
+				       		<s:textfield id="news.class_name" title="信息类别" name="news.class_name" readonly="true" /><img id="class_detail_open" class="detail vatop" src='<s:url value="/images/open2.gif" />'  />
 				       </div>
 				</div>
 				<div class="label_hang">
@@ -100,26 +100,23 @@
 	            	</tr>
 	            </s:iterator>
 	       </table>
-	       <div id="listpage" class="pagination"></div>
+	       <div class="pagination">
+			<div id="listpage" class="pagination"></div>
+		</div>
 	 </div>
 </div>
 </div>
-<div id="selectInfoClass" style="display: none;">
-	<div class="dtree2" style="overflow: scroll; height: 300px;">
-		<!--<p><a href="javascript: d.openAll();">open all</a> | <a href="javascript: d.closeAll();">close all</a></p>-->
-		
-	</div>
-	<div class="dtreebutton">
-		<input type="button" value="确定" onclick="setCheckValue();" /> <input type="button" value="返回" onclick="closemDiv();" />
-	</div>
-</div>
+
 <s:action name="ref_foot" namespace="/manager" executeResult="true" />
-<script type="text/javascript">
-	d = new dTree('d');
-	d.config.check = 2;
-	d.config.useIcons = false;
+<div id="selectInfoClass" style="display: none;">
+	<div class="dtree2" style="overflow: scroll; height: 300px;border: none;">
+		<!--<p><a href="javascript: d.openAll();">open all</a> | <a href="javascript: d.closeAll();">close all</a></p>-->
+		<script type="text/javascript">
+	var d2 = new dTree('d2');
+	d2.config.check = 2;
+	d2.config.useIcons = false;
 	//d.config.isAddNoRootNode = true;
-	d.icon = {
+	d2.icon = {
 			root		: '<s:url value="/include/dtree/" />'+'img/globe.gif',
 			folder		: '<s:url value="/include/dtree/" />'+'img/folder.gif',
 			folderOpen	: '<s:url value="/include/dtree/" />'+'img/folderopen.gif',
@@ -135,32 +132,38 @@
 			nlPlus		: '<s:url value="/include/dtree/" />'+'img/nolines_plus.gif',
 			nlMinus		: '<s:url value="/include/dtree/" />'+'img/nolines_minus.gif'
 	};		
-	d.add('0','-1','信息类别列表');
+	d2.add('0','-1','信息类别列表');
 	<s:iterator value="iclasses">
-	d.add('<s:property value="uuid" />','<s:property value="parent_id" />','<s:property value="title" />',"javascript:getInfo('<s:property value="uuid" />')",'<s:property value="title" />');
+	d2.add('<s:property value="uuid" />','<s:property value="parent_id" />','<s:property value="title" />',"javascript:getInfo('<s:property value="uuid" />')",'<s:property value="title" />');
 	</s:iterator>
-	d.add();
-	document.write(d);
+	d2.add();
+	document.write(d2);
 	function setCheckValue() {
-		var deptInfo = getCheckBox("cd");
+		var deptInfo = getCheckBox("cd2");
 		if(null==deptInfo||""==deptInfo) {
 			if(window.confirm("没有选择任何部门,是否确认?")) {
 				closemDiv();
 			}
 		} else {
+			alert(deptInfo[1]);
 			$("#news\\.class_id").val(deptInfo[1]);
 			$("#news\\.class_name").val(deptInfo[2]);
 			closemDiv();
 		}
 	}
 </script>
+	</div>
+	<div class="dtreebutton" style="border: none;">
+		<input type="button" value="确定" onclick="setCheckValue();" /> <input type="button" value="返回" onclick="closemDiv();" />
+	</div>
+</div>
 <script type="text/javascript">
-var md;
+
+/* var md;
 var ___select_infoclass_html_value;
 window.onload = function() {
 	___select_infoclass_html_value = $('#selectInfoClass').html();
 	$('#selectInfoClass').empty();
-	//setStyle("table1");
 };
 function selectClass() {	
 	md = new modelDiv();
@@ -170,7 +173,20 @@ function selectClass() {
 }
 function closemDiv() {
 	md.dropModelDiv();
+} */
+var md;
+function closemDiv() {
+	 $("#selectInfoClass").dialog("close");
 }
+
+$(function(){
+ $("#selectInfoClass").dialog({ autoOpen : false,
+		modal : true });
+ 
+ $("#class_detail_open").click(function(){
+	 $("#selectInfoClass").dialog("open");
+ });
+});
 </script>
 </body>
 </html>

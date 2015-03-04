@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>客户管理管理--<s:text name="APP_NAME" /></title>
-<s:action name="ref_head" namespace="/manager" executeResult="true" />
+<s:action name="ref" namespace="/manager" executeResult="true" />
 <link rel="stylesheet" href="<s:url value="/include/jQuery/stylesheets/jquery.rating.css" />" />
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery.rating.pack.js" />"></script>
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery.MetaData.js" />"></script>
@@ -19,8 +19,7 @@
 </head>
 <body>
 
-<div class="tab_right">
-	<div class="tab_warp main">
+	<div class="main">
 	<div class="dq_step">
 		${path}
 		<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="customer_list"><s:param name="viewFlag">relist</s:param></s:url>">客户列表</a></span>
@@ -350,7 +349,7 @@
 		</div>
 	</s:form>
 </div>
-</div>
+
 <div id="AddRecode" title="增加回访记录" style="display: none;">
 <s:form name="form_customerRecode_add" cssClass="validForm" action="customerRecode_add" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
 	<div class="ifromoperate" ></div>

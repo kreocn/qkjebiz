@@ -8,57 +8,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>信息内容--<s:text name="APP_NAME" /></title>
 </head>
+<s:action name="ref_head" namespace="/manager" executeResult="true" />
 <link rel="stylesheet" href="<s:url value="/css/css.css" />" />
 <link rel="stylesheet" href="<s:url value="/css/navigate.css" />" />
 <link rel="stylesheet" href="<s:url value="/css/main.css" />" />
 <link rel="StyleSheet" href="<s:url value="/include/dtree/dtree.css" />" />
-<script type="text/javascript" src="<s:url value="/include/dtree/dtree.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/form_validator.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/common_cptb.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/div.js" />"></script>
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-1.8.3.min.js" />"></script>
-<script type="text/javascript" src="<s:url value="/include/fckeditor/fckeditor.js" />"></script>
-<script type="text/javascript">
-var md;
-var ___select_infoclass_html_value;
-
-window.onload = function() {	
-	___select_infoclass_html_value = $('#selectInfoClass').html();
-	$('#selectInfoClass').empty();
-	var oFCKeditor = new FCKeditor('news.content') ;
-	oFCKeditor.BasePath	= '<s:url value="/include/fckeditor/" />';
-	oFCKeditor.Height='300px';
-	oFCKeditor.ReplaceTextarea();
-}
-function selectClass() {	
-	md = new modelDiv();
-	md.setTitle_HTML("");
-	md.setBottom_HTML("");
-	md.createModelDivByContent(220,300,___select_infoclass_html_value);	
-}
-function closemDiv() {
-	md.dropModelDiv();
-}
-
-function showImgInput(obj) {
-	//alert(getRadio("news.isimgnews"));
-	if(getRadio("news.isimgnews")==1) {	
-		document.getElementById("checkimgnews").style.display = "";
-	} else {
-		document.getElementById("checkimgnews").style.display = "none";
-	}
-}
-
-function view(obj) {
-	var str = "";
-	for(var i in obj) {
-		str += i+"\t";
-	}
-	$('#message').html(str);
-}
-</script>
 <body>
-	<div id="main" style="width: 98%;">
+	<s:action name="nav" namespace="/manage" executeResult="true" />
+<div class="tab_right">
+	<div class="tab_warp main">
 		<div id="result">
 			<div class="itablemdy">
 				<div class="itabletitle">审核信息</div>
@@ -191,6 +149,7 @@ function view(obj) {
 			</div>
 		</div>
 	</div>
+	</div>
 	<div id="selectInfoClass" style="display: none;">
 		<div class="dtree2" style="overflow: scroll; height: 300px;">
 			<!--<p><a href="javascript: d.openAll();">open all</a> | <a href="javascript: d.closeAll();">close all</a></p>-->
@@ -246,5 +205,51 @@ function view(obj) {
 			<input type="button" value="确定" onclick="setCheckValue();" /> <input type="button" value="返回" onclick="closemDiv();" />
 		</div>
 	</div>
+	<s:action name="ref_foot" namespace="/manager" executeResult="true" />
+	<script type="text/javascript" src="<s:url value="/include/dtree/dtree.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/form_validator.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/common_cptb.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/div.js" />"></script>
+<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-1.8.3.min.js" />"></script>
+<script type="text/javascript" src="<s:url value="/include/fckeditor/fckeditor.js" />"></script>
+<script type="text/javascript">
+var md;
+var ___select_infoclass_html_value;
+
+window.onload = function() {	
+	___select_infoclass_html_value = $('#selectInfoClass').html();
+	$('#selectInfoClass').empty();
+	var oFCKeditor = new FCKeditor('news.content') ;
+	oFCKeditor.BasePath	= '<s:url value="/include/fckeditor/" />';
+	oFCKeditor.Height='300px';
+	oFCKeditor.ReplaceTextarea();
+}
+function selectClass() {	
+	md = new modelDiv();
+	md.setTitle_HTML("");
+	md.setBottom_HTML("");
+	md.createModelDivByContent(220,300,___select_infoclass_html_value);	
+}
+function closemDiv() {
+	md.dropModelDiv();
+}
+
+function showImgInput(obj) {
+	//alert(getRadio("news.isimgnews"));
+	if(getRadio("news.isimgnews")==1) {	
+		document.getElementById("checkimgnews").style.display = "";
+	} else {
+		document.getElementById("checkimgnews").style.display = "none";
+	}
+}
+
+function view(obj) {
+	var str = "";
+	for(var i in obj) {
+		str += i+"\t";
+	}
+	$('#message').html(str);
+}
+</script>
 </body>
 </html>

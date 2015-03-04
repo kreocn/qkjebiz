@@ -112,11 +112,6 @@
 							<div class="label_rwben"><s:select id="customer_sale_city" name="customer.sale_city" title="经销区域-市/区" headerKey="" headerValue="--请选择--" list="#{}" /></div>
 							<div class="w5"></div>
 							<div class="label_rwben"><s:select id="customer_sale_area" name="customer.sale_area" title="经销区域-县" headerKey="" headerValue="--请选择--" list="#{}" /></div>
-							<script type="text/javascript">
-								var sa = new SArea($("#customer_sale_province"),$("#customer_sale_city"),$("#customer_sale_area"));
-								sa.ajax_url = '<s:url value="/common_ajax/json_ajax" />';
-								sa.init(toHTML.un('<s:property value="customer.sale_province" />'),toHTML.un('<s:property value="customer.sale_city" />'),toHTML.un('<s:property value="customer.sale_area" />'));
-							</script>
 							<div class="w5"></div>
 							<span class="message_prompt">(如果是市级代理,可以不选【县】)</span>
 			            </div>
@@ -133,11 +128,7 @@
 							<div class="label_rwben"><s:select id="customer_m_city" name="customer.m_city" title="邮寄地址-市/区" list="#{}" headerKey="" headerValue="--请选择--"/></div>
 							<div class="w5"></div>
 							<div class="label_rwben"><s:select id="customer_m_area" name="customer.m_area" title="邮寄地址-县" list="#{}" headerKey="" headerValue="--请选择--"/></div>
-							<script type="text/javascript">
-								var sa2 = new SArea($("#customer_m_province") ,$("#customer_m_city"),$("#customer_m_area"));
-								sa2.ajax_url = '<s:url value="/common_ajax/json_ajax" />';
-								sa2.init(toHTML.un('<s:property value="customer.m_province" />'),toHTML.un('<s:property value="customer.m_city" />'),toHTML.un('<s:property value="customer.m_area" />'));
-							</script>
+							
 			            </div>
 					</div>
 					<div class="label_hang">
@@ -290,14 +281,6 @@
 									<input id="print_button" type="button" onclick="window.print();" value="打印本页">
 									<s:if test="mode!=null">
 									<input id="mdy_show_button" type="button" onclick="showMdyButton();" value="我要修改" class="input-blue">
-									<script type="text/javascript">
-									$("#print_button").show();
-									function showMdyButton() {
-										$("#mdy_show_button").hide();
-										if($("#save").length>0)$("#save").show();
-										if($("#addRecode").length>0)$("#addRecode").show();
-									}
-									</script>
 									<span id="message"><s:property value="message" /></span>
 									</s:if>
 									</div>
@@ -397,6 +380,24 @@
 </s:form>
 </div>
 <s:action name="ref_foot" namespace="/manager" executeResult="true" />
+<script type="text/javascript">
+									$("#print_button").show();
+									function showMdyButton() {
+										$("#mdy_show_button").hide();
+										if($("#save").length>0)$("#save").show();
+										if($("#addRecode").length>0)$("#addRecode").show();
+									}
+									</script>
+<script type="text/javascript">
+								var sa2 = new SArea($("#customer_m_province") ,$("#customer_m_city"),$("#customer_m_area"));
+								sa2.ajax_url = '<s:url value="/common_ajax/json_ajax" />';
+								sa2.init(toHTML.un('<s:property value="customer.m_province" />'),toHTML.un('<s:property value="customer.m_city" />'),toHTML.un('<s:property value="customer.m_area" />'));
+							</script>
+<script type="text/javascript">
+								var sa = new SArea($("#customer_sale_province"),$("#customer_sale_city"),$("#customer_sale_area"));
+								sa.ajax_url = '<s:url value="/common_ajax/json_ajax" />';
+								sa.init(toHTML.un('<s:property value="customer.sale_province" />'),toHTML.un('<s:property value="customer.sale_city" />'),toHTML.un('<s:property value="customer.sale_area" />'));
+							</script>
 <script type="text/javascript">
 var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
 var manager = '${customer.manager}';

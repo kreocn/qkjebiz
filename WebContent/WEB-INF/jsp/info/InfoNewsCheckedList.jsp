@@ -6,13 +6,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>信息列表--<s:text name="APP_NAME" /></title>
-<s:action name="ref" namespace="/manager" executeResult="true" />
+<s:action name="ref_head" namespace="/manager" executeResult="true" />
 <link rel="StyleSheet" href="<s:url value="/include/dtree/dtree.css" />" />
 <script type="text/javascript" src="<s:url value="/include/dtree/dtree.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/div.js" />"></script>
 </head>
 <body>
-<div class="main" >
+<s:action name="nav" namespace="/manage" executeResult="true" />
+<div class="tab_right">
+	<div class="tab_warp main">
 	<div class="dq_step"><a href="/manager/default">首页</a>&nbsp;&gt;&nbsp;初审信息列表</div>
 	<s:form id="serachForm" name="serachForm" action="%{acname}"  method="get" namespace="/info" theme="simple">
 		<div class="label_con">
@@ -25,7 +27,7 @@
 				       <div class="label_ltit">类别:</div>
 				       <div class="label_rwbenx">
 				       		<s:hidden id="news.class_id" title="信息类别" name="news.class_id" />
-				       		<s:textfield id="news.class_name" title="信息类别" name="news.class_name" readonly="true" /><img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectClass();" />
+				       		<s:textfield id="news.class_name" title="信息类别" name="news.class_name" readonly="true" /><img id="class_detail_open" class="detail vatop" src='<s:url value="/images/open2.gif" />'/>
 				       </div>
 				</div>
 				<div class="label_hang">
@@ -87,34 +89,14 @@
 	            	</tr>
 	            </s:iterator>
 	       </table>
-	       <div class="pagination">
-			<script type="text/javascript">
-			var spage = new ShowPage(${currPage});
-			spage.show2(${recCount},${pageSize},2);
-			</script>
-		</div>
+	       <div id="listpage" class="pagination"></div>
 	 </div>
 </div>
-<script type="text/javascript">
-var md;
-var ___select_infoclass_html_value;
-window.onload = function() {
-	___select_infoclass_html_value = $('#selectInfoClass').html();
-	$('#selectInfoClass').empty();
-	setStyle("table1");
-};
-function selectClass() {	
-	md = new modelDiv();
-	md.setTitle_HTML("");
-	md.setBottom_HTML("");
-	md.createModelDivByContent(220,300,___select_infoclass_html_value);	
-}
-function closemDiv() {
-	md.dropModelDiv();
-}
-</script>
+</div>
+
+<s:action name="ref_foot" namespace="/manager" executeResult="true" />
 <div id="selectInfoClass" style="display: none;">
-	<div class="dtree2" style="overflow: scroll; height: 300px;">
+	<div class="dtree2" style="overflow: scroll; height: 300px; border: none;">
 		<!--<p><a href="javascript: d.openAll();">open all</a> | <a href="javascript: d.closeAll();">close all</a></p>-->
 		<script type="text/javascript">
 	d = new dTree('d');
@@ -157,9 +139,40 @@ function closemDiv() {
 	}
 </script>
 	</div>
-	<div class="dtreebutton">
+	<div class="dtreebutton" style="border: none;">
 		<input type="button" value="确定" onclick="setCheckValue();" /> <input type="button" value="返回" onclick="closemDiv();" />
 	</div>
 </div>
+<script type="text/javascript">
+/*var md;
+var ___select_infoclass_html_value;
+window.onload = function() {
+	___select_infoclass_html_value = $('#selectInfoClass').html();
+	$('#selectInfoClass').empty();
+	setStyle("table1");
+};
+function selectClass() {	
+	md = new modelDiv();
+	md.setTitle_HTML("");
+	md.setBottom_HTML("");
+	md.createModelDivByContent(220,300,___select_infoclass_html_value);	
+}
+function closemDiv() {
+	md.dropModelDiv();
+}
+*/
+function closemDiv() {
+	$("#selectInfoClass").dialog("close");
+}
+
+$(function(){
+	 $("#selectInfoClass").dialog({ autoOpen : false,
+			modal : true });
+	 
+	 $("#class_detail_open").click(function(){
+		 $("#selectInfoClass").dialog("open");
+	 });
+	});
+</script>
 </body>
 </html>

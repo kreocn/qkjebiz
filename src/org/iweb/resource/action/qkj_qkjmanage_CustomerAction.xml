@@ -36,6 +36,14 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
+		<action name="customer_savet" class="com.qkj.manage.action.CustomerAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">customer_loadt</param>
+				<param name="customer.uuid">${customer.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
 		<action name="customer_del" class="com.qkj.manage.action.CustomerAction" method="del">
 			<result type="redirectAction">
 				<param name="actionName">customer_list</param>
