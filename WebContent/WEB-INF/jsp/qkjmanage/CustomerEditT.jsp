@@ -276,7 +276,7 @@
 									</s:if>
 									<s:elseif test="'mdy' == viewFlag">
 										<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_CUSTOMER_MDY')">
-										<s:submit id="save" name="save" value="保存" action="customer_save" cssClass="input-blue" />
+										<s:submit id="save" name="save" value="保存" action="customer_savet" cssClass="input-blue" />
 										</s:if>
 										<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_CUSTOMER_DEL')">
 										<s:submit id="delete" name="delete" value="删除" action="customer_del" onclick="return isDel();" cssClass="input-red" />
@@ -335,7 +335,7 @@
 								<td>${add_user_name}</td>
 								<td>
 									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_CUSTOMERRECODE_DEL')">
-							    	[<a href="<s:url namespace="/qkjmanage" action="customerRecode_del"><s:param name="customerRecode.uuid" value="uuid" /><s:param name="customerRecode.customer_id" value="customer_id" /></s:url>" onclick="return isDel();">删除</a>]
+							    	[<a href="<s:url namespace="/qkjmanage" action="customerRecode_delt"><s:param name="customerRecode.uuid" value="uuid" /><s:param name="customerRecode.customer_id" value="customer_id" /></s:url>" onclick="return isDel();">删除</a>]
 							    	</s:if>
 							    	[<a href="javascript:;" onclick="showRecode(${uuid});">查看详情</a>]
 							    	<span id="content_${uuid}" class="tooltiptext"><s:property value="content" /></span>
@@ -351,7 +351,7 @@
 </div>
 
 <div id="AddRecode" title="增加回访记录" style="display: none;">
-<s:form name="form_customerRecode_add" cssClass="validForm" action="customerRecode_add" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
+<s:form name="form_customerRecode_add" cssClass="validForm" action="customerRecode_addt" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
 	<div class="ifromoperate" ></div>
 	<table class="ilisttable" width="100%">
 		<tr id="recode_index_tr" style="display: none;">
@@ -387,7 +387,7 @@
 		    <td class="buttonarea">
 		    	<s:hidden name="customerRecode.customer_id" value="%{customer.uuid}" />
 				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_CUSTOMERRECODE_ADD')">
-				<s:submit id="customerRecode_add" name="customerRecode_add" value="确定" action="customerRecode_add" />
+				<s:submit id="customerRecode_add" name="customerRecode_add" value="确定" action="customerRecode_addt" />
 				</s:if>
 				<span id="message"><s:property value="message" /></span>
 			</td>

@@ -30,7 +30,7 @@
 			       <div class="label_ltit">信息类别:</div>
 			       <div class="label_rwbenx">
 			       		<s:hidden id="news.class_id" title="信息类别" cssClass="validate[required]" name="news.class_id" value="%{news.class_id}" />
-			       		<s:textfield id="news.class_name" title="信息类别"  cssClass="validate[required]" name="news.class_name"	value="%{news.class_name}" readonly="true" /><img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectClass();" />
+			       		<s:textfield id="news.class_name" title="信息类别"  cssClass="validate[required]" name="news.class_name"	value="%{news.class_name}" readonly="true" /><img id="class_detail_open" class="detail vatop" src='<s:url value="/images/open2.gif" />' />
 			       		<s:hidden name="news.uuid" />
 			       </div>
 				</div>
@@ -170,19 +170,11 @@
  	</s:form>
 </div>
 </div>
-<div id="selectInfoClass" style="display: none;">
-	<div class="dtree2" style="overflow: scroll; height: 300px;">
-		<!--<p><a href="javascript: d.openAll();">open all</a> | <a href="javascript: d.closeAll();">close all</a></p>-->
-		
-	</div>
-	<div class="dtreebutton">
-		<input type="button" value="确定" onclick="setCheckValue();" /> <input type="button" value="返回" onclick="closemDiv();" />
-	</div>
-</div>
 <s:action name="ref_foot" namespace="/manager" executeResult="true" />
-<script type="text/javascript" src="<s:url value="/js/common_prototype.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/div.js" />"></script>
-<script type="text/javascript">
+<div id="selectInfoClass" style="display: none;">
+	<div class="dtree2" style="overflow: scroll; height: 300px; border: none;">
+		<!--<p><a href="javascript: d.openAll();">open all</a> | <a href="javascript: d.closeAll();">close all</a></p>-->
+		<script type="text/javascript">
 	d = new dTree('d');
 	d.config.check = 2;
 	d.config.useIcons = false;
@@ -229,8 +221,15 @@
 		}
 	}
 	</script>
+	</div>
+	<div class="dtreebutton" style="border: none;">
+		<input type="button" value="确定" onclick="setCheckValue();" /> <input type="button" value="返回" onclick="closemDiv();" />
+	</div>
+</div>
+<script type="text/javascript" src="<s:url value="/js/common_prototype.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/div.js" />"></script>
 <script type="text/javascript">
-var md;
+/*var md;
 var ___select_infoclass_html_value;
 
 var infoeditor01;
@@ -253,7 +252,20 @@ function selectClass() {
 }
 function closemDiv() {
 	md.dropModelDiv();
+}*/
+
+function closemDiv() {
+	 $("#selectInfoClass").dialog("close");
 }
+
+$(function(){
+$("#selectInfoClass").dialog({ autoOpen : false,
+		modal : true });
+
+$("#class_detail_open").click(function(){
+	 $("#selectInfoClass").dialog("open");
+});
+});
 
 function showImgInput(obj) {
 	//alert(getRadio("news.isimgnews"));

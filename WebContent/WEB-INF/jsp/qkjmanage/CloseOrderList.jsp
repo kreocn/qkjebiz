@@ -92,12 +92,12 @@
 				</tr>
 				<s:iterator value="closeOrders" status="sta">
 					<tr id="showtr${uuid}">
-						<td>${uuid}</td>
-						<td>${apply_dept_name}</td>
-						<td>${add_user_name}</td>
+						<td class="td1 nw">${uuid}</td>
+						<td class="td2 nw">${apply_dept_name}</td>
+						<td class="td1 nw">${add_user_name}</td>
 						<td class="td5 longnote" title="${theme}">${it:subString(theme,18)}</td>
-						<td>${it:formatDate(close_time,'yyyy-MM-dd')}</td>
-						<td>
+						<td class="td3 nw">${it:formatDate(close_time,'yyyy-MM-dd')}</td>
+						<td class="td1 nw">
 						<s:if test="check_state==0">新单</s:if>
 									<s:if test="check_state==5">
 										<font class="message_error">审核退回</font>(${check_user_name})</s:if>
@@ -120,7 +120,7 @@
 										<font class="message_pass">总经理已审</font>(${check_user_name})</s:if>
 						
 						</td>
-						<td>
+						<td class="td2 nw">
 						<s:if test="nd_check_state==0">未确认</s:if>
 									<s:if test="nd_check_state==5">
 										<font class="message_error">审核退回</font>(${nd_check_user_name})</s:if>

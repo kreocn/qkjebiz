@@ -128,11 +128,6 @@
 				<div class="label_rwb"><s:select id="memberAddress.province" name="memberAddress.province" title="省" list="#{}" cssClass="validate[required]" /></div>
 				<div class="label_rwb"><s:select id="memberAddress.city" name="memberAddress.city" title="市" list="#{}" cssClass="validate[required]" data-prompt-position="inline" data-prompt-target="rm_x" /></div>
 				<div class="label_rwb"><s:select id="memberAddress.area" name="memberAddress.area" title="县" list="#{}" /></div>
-				<script type="text/javascript">
-					var sa = new SArea($("#memberAddress\\.province") ,$("#memberAddress\\.city"),$("#memberAddress\\.area"));
-					sa.ajax_url = ajax_url;
-					sa.init(toHTML.un('<s:property value="memberAddress.province" />'),toHTML.un('<s:property value="memberAddress.city" />'),toHTML.un('<s:property value="memberAddress.area" />'));
-				</script>
 				<span id="rm_x" class="sva"></span>
 			</div>
 		</div>
@@ -232,6 +227,11 @@
 </div>
 </div>
 <s:action name="ref_foot" namespace="/manager" executeResult="true" />
+<script type="text/javascript">
+					var sa = new SArea($("#memberAddress\\.province") ,$("#memberAddress\\.city"),$("#memberAddress\\.area"));
+					sa.ajax_url = ajax_url;
+					sa.init(toHTML.un('<s:property value="memberAddress.province" />'),toHTML.un('<s:property value="memberAddress.city" />'),toHTML.un('<s:property value="memberAddress.area" />'));
+				</script>
 </body>
 <script type="text/javascript">
 var curr_dept = '${member.dept_code}';

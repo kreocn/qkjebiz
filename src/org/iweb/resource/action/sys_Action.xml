@@ -72,10 +72,10 @@
 		<!-- UserRole End -->
 		<!-- User Group Start -->
 		<action name="userrole_list" class="org.iweb.sys.action.UserRoleAction" method="listGroup">
-			<result>/jsp/sys/UserRoleList.jsp</result>
+			<result>/WEB-INF/jsp/sys/UserRoleList.jsp</result>
 		</action>
 		<action name="userrole_load_add" class="org.iweb.sys.action.UserRoleAction" method="loadAddGroup">
-			<result>/jsp/sys/UserRoleEdit.jsp</result>
+			<result>/WEB-INF/jsp/sys/UserRoleEdit.jsp</result>
 		</action>
 		<action name="role_addsave" class="org.iweb.sys.action.UserRoleAction" method="addSaveGroup">
 			<result type="redirectAction">
