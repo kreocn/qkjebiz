@@ -910,3 +910,9 @@ table{
 .dd_zjia{float: right; line-height:28px;}
 .orderconsigneshow{line-height:28px;}
 .dd_nums{line-height:26px;  display: inline-block;}
+.yesarea {
+display: inline-block; width: 16px; height: 16px; background: url("../../images/icon/ico_warn.png") transparent no-repeat 0 0;
+}
+.noarea {
+display: inline-block; width: 16px; height: 16px; background: url("../../images/icon/ico_warn.png") transparent no-repeat 0 -150px;
+}
