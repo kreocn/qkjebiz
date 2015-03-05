@@ -38,7 +38,6 @@
 	<div class="tab_warp">
  		<table id="table1">
  			<tr id="coltr">
-              <th  class="td1"><input name="uuidcheck" type="checkbox" onclick="pickCheck(this,'uuid');" /></th>
               <th  class="td1">编号</th>
               <th  class="td1">货号</th>
               <th  class="td2">商品名称</th>
@@ -53,7 +52,6 @@
             </tr>
             <s:iterator value="goodx" status="sta">
             	<tr  id="showtr${uuid}">
-            		  <td  class="td1"><input name="uuid" type="checkbox" value="${uuid}" /></td>
 		              <td  class="td1">${uuid}</td>
 		              <td  class="td1">${goods_code}</td>
 		              <td  class="td2">${goods_name}</td>

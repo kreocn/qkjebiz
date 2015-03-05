@@ -174,6 +174,7 @@ public class GoodsAction extends ActionSupport {
 
 			// 临时,以后自动替换
 			setColumn_1list();
+			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/sysebiz/goods_list?viewFlag=relist'>商品列表</a>&nbsp;&gt;&nbsp;添加藏酒";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!addLoad Error:", e);
 			throw new Exception(this.getClass().getName() + "!addLoad Error:", e);
@@ -246,6 +247,7 @@ public class GoodsAction extends ActionSupport {
 
 			// 临时,以后自动替换
 			setColumn_1list();
+			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/sysebiz/goods_list?viewFlag=relist'>商品列表</a>&nbsp;&gt;&nbsp;修改藏酒";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!loadSave 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!loadSave 读取数据错误:", e);
