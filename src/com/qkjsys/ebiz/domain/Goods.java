@@ -54,6 +54,24 @@ public class Goods {
 	// 以下为非数据库字段
 	private Integer available_num; // 可用库存
 	private String ware_name;
+	private String add_user_name;
+	private String lm_user_name;
+
+	public String getAdd_user_name() {
+		return add_user_name;
+	}
+
+	public void setAdd_user_name(String add_user_name) {
+		this.add_user_name = add_user_name;
+	}
+
+	public String getLm_user_name() {
+		return lm_user_name;
+	}
+
+	public void setLm_user_name(String lm_user_name) {
+		this.lm_user_name = lm_user_name;
+	}
 
 	public String getWare_name() {
 		return ware_name;

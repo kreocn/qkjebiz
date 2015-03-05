@@ -86,7 +86,7 @@ ul.showImgList .rightinfo {display: block;clear: both;margin-top: 5px;}
 					<s:if test="'add' != viewFlag">
 						<div class="label_hang clear">
 					       <div class="label_ltit">添加人:</div>
-					       <div class="label_rwbenx">${goods.add_user}<s:hidden name="goods.add_user" /></div>
+					       <div class="label_rwbenx">${goods.add_user_name}<s:hidden name="goods.add_user" /></div>
 						</div>
 						<div class="label_hang">
 					       <div class="label_ltit">添加时间:</div>
@@ -94,7 +94,7 @@ ul.showImgList .rightinfo {display: block;clear: both;margin-top: 5px;}
 						</div>
 						<div class="label_hang">
 					       <div class="label_ltit">修改人:</div>
-					       <div class="label_rwbenx">${goods.lm_user}<s:hidden name="goods.lm_user" /></div>
+					       <div class="label_rwbenx">${goods.lm_user_name}<s:hidden name="goods.lm_user" /></div>
 						</div>
 						<div class="label_hang">
 					       <div class="label_ltit">修改时间:</div>

@@ -4,8 +4,10 @@
 	<typeAlias alias="goods" type="com.qkjsys.ebiz.domain.Goods" />
 	<select id="ebiz_getGoods" resultClass="goods" parameterClass="java.util.Map">
 		<![CDATA[ 
-			SELECT g.*,s.stock_num,s.froze_num,s.break_num
+			SELECT g.*,s.stock_num,s.froze_num,s.break_num,au.`USER_NAME` add_user_name,lu.`USER_NAME` lm_user_name
 			FROM qkj_t_goods g LEFT JOIN qkj_r_goods_stock s ON(g.uuid = s.uuid)
+			LEFT JOIN s_sys_user au ON g.`add_user`=au.`UUID`
+			LEFT JOIN s_sys_user lu ON g.`lm_user`=lu.`UUID`
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotNull prepend="AND" property="uuid"><![CDATA[ g.uuid=#uuid# ]]></isNotNull>
