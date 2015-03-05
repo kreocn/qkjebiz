@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
 <%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
@@ -8,8 +7,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>取酒订单列表--<s:text name="APP_NAME" /></title>
-</head>
 <s:action name="ref_head" namespace="/manager" executeResult="true" />
+</head>
 <body>
 <s:action name="nav" namespace="/manage" executeResult="true" />
 <div class="tab_right">
@@ -65,7 +64,6 @@
 	<div class="tab_warp">
 	 		<table id="table1">
 	 			<tr id="coltr">
-	 			<th class="td1"><input name="uuidcheck" type="checkbox" /></th>
 			    <th class="td1">取酒订单号</th>
 			    <th class="td1">取酒位置号</th>
 				<th class="td2">取酒数量</th>
@@ -79,7 +77,6 @@
 	            </tr>
 	            <s:iterator value="cellarOrders" status="sta">
 				  <tr  id="showtr${uuid}">
-				    <td class="td1 nw"><input name="uuid" type="checkbox" value="<s:property value="uuid" />" /></td>
 				    <td class="td1 nw"><s:property value="uuid" /></td>
 				    <td class="td1 nw"><s:property value="cellar_position" /></td>
 					<td class="td2 nw"><s:property value="order_num" /> <s:property value="cellar_unit" /></td>
@@ -110,16 +107,13 @@
 	        </table>
 	 </div>
 	 <div id="listpage" class="pagination"></div>
-
 </div>
 </div>
 <s:action name="ref_foot" namespace="/manager" executeResult="true" />
-</body>
 <script type="text/javascript">
 $(function(){
-	CommonUtil.pickrow('table1');
-	CommonUtil.pickrowAll('table1','uuidcheck');
-	$("#cellarOrder_add_time").datepicker();
+	printPagination("listpage",'${currPage}','${recCount}','${pageSize}');
  });
 </script>
+</body>
 </html>
