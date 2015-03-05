@@ -182,10 +182,10 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- Simple Report -->
 		<action name="simple" class="org.iweb.rpt.action.SimpleReportAction">
-			<result>/jsp/report/SimpleReport.jsp</result>
+			<result>/WEB-INF/jsp/report/SimpleReport.jsp</result>
 		</action>
 		<action name="checkeffmonthly" class="org.iweb.rpt.action.CheckEffMonthlyStatAction">
-			<result>/jsp/report/CheckEffMonthlyStat.jsp</result>
+			<result>/WEB-INF/jsp/report/CheckEffMonthlyStat.jsp</result>
 		</action>
 	</package>
 </struts>
