@@ -63,7 +63,7 @@
 					</div>
 			</div>
 			<div class="label_hang label_button tac noprint">
-		            <s:submit id="search_form_submit_button" name="memberCellar_list" value="确定" action="memberCellar_list" />
+		            <s:submit cssClass="input-blue" id="search_form_submit_button" name="memberCellar_list" value="确定" action="memberCellar_list" />
 					<input type="button" name="page_print" value="打印本页" onclick="window.print();" />
 		        </div>
 	</div>

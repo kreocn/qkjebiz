@@ -9,10 +9,6 @@
 <s:action name="ref_head" namespace="/manager" executeResult="true" />
 <script type="text/javascript" src="<s:url value="/js/select_area.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/singlejs/order.js" />"></script>
-<style type="text/css">
-.ui-menu .ui-menu-item a{font-size:14px;}
-.firstRow{text-align:right;}
-</style>
 </head>
 <body>
 <s:action name="nav" namespace="/manage" executeResult="true" />
@@ -151,12 +147,12 @@
 							<div class="label_hang">
 							       <div class="label_ltit">商品:</div>
 							       <div class="label_rwbenx">
-							       		<select name="orderGoods.goods_id"  require="required" title="商品">
+							       		<select name="orderGoods.goods_id"  title="商品" class="validate[required]">
 							       				<option>--请选择--</option>
 												<s:iterator value="goodss" status="sta">
 												<option data='<s:property value="goods_price" />#<s:property value="stock_num" />#<s:property value="froze_num" />#<s:property value="goods_unit" />' value='<s:property value="uuid" />'><s:property value="goods_name" /></option>
 												</s:iterator>
-							       		<select>
+							       		</select>
 							       </div>
 							</div>
 							<div class="label_hang">
@@ -249,7 +245,6 @@
 								</td>
 							</tr>
 						 </table>
-						 <script type="text/javascript">setStyle("table_goods_list");</script>
 						</s:elseif>
 					</fieldset>
 				<div style="height: 10px;"></div>
@@ -367,7 +362,6 @@
 							  </tr>
 						</s:iterator>
 					</table>
-					<script type="text/javascript">setStyle("table_goods_list");setStyle("table_orderActns");</script>
 				</s:if>
 			</div>
 		</div>
@@ -375,13 +369,13 @@
 </div>
 </div>
 <div id="addGoodsForm"  title="添加商品">
-<s:form name="form_addGoods" action="orderGoods_add" namespace="/sysebiz" onsubmit="return validator(this);" method="post" theme="simple">
+<s:form name="form_addGoods" action="orderGoods_add"  cssClass="validForm" namespace="/sysebiz" onsubmit="return validator(this);" method="post" theme="simple">
 	<div class="ifromoperate" ></div>
 	<table class="ilisttable" width="100%">
 		  <tr>
 <td class='firstRow'><span style="color:red;">*</span>商品:</td>
 <td class='secRow'>
-	<select name="orderGoods.goods_id" title="商品" require="required" controlName="商品">
+	<select name="orderGoods.goods_id" title="商品" class="validate[required]">
 		<option>--请选择--</option>
 		<s:iterator value="goodss" status="sta">
 		<option data='<s:property value="goods_price" />#<s:property value="stock_num" />#<s:property value="froze_num" />#<s:property value="goods_unit" />' value='<s:property value="uuid" />'><s:property value="goods_name" /></option>
@@ -391,12 +385,12 @@
 </tr>
 <tr>
 <td class='firstRow'><span style="color:red;">*</span>单价:</td>
-<td class='secRow'><s:textfield name="orderGoods.per_price" title="单价" dataType="number" require="required" controlName="单价" /></td>
+<td class='secRow'><s:textfield name="orderGoods.per_price" title="单价" cssClass="validate[required,custom[number]]"/></td>
 </tr>
 <tr>
 <td class='firstRow'><span style="color:red;">*</span>订单数量:</td>
 <td class='secRow'>
-<s:textfield name="orderGoods.order_num" title="订单数量" dataType="integer" require="required" controlName="订单数量" />
+<s:textfield name="orderGoods.order_num" title="订单数量" cssClass="validate[required,custom[integer]]" />
 <span id="goods_unit_01"></span>
 <span id="goods_num_01" class="goods_num_show"></span>
 </td>
@@ -404,19 +398,18 @@
 <tr>
 <td class='firstRow'><span style="color:red;">*</span>保管费:</td>
 <td class='secRow'>
-<s:textfield name="orderGoods.storage_fees" title="保管费" dataType="number" require="required" controlName="保管费" />
+<s:textfield name="orderGoods.storage_fees" title="保管费" cssClass="validate[required,custom[number]]" />
 </td>
 </tr>
 <tr>
 <td class='firstRow'><span style="color:red;">*</span>保管截至时间:</td>
 <td class='secRow'>
-<s:textfield id="orderGoods_storage_date" name="orderGoods.storage_date" value="%{getText('global.date',{orderGoods.storage_date})=='null'?'':getText('global.date',{orderGoods.storage_date})}" title="保管截至时间" controlName="保管截至时间" require="required" />
-<script type="text/javascript">$("#orderGoods_storage_date").datepicker();</script>
+<s:textfield id="orderGoods_storage_date" name="orderGoods.storage_date" value="%{getText('global.date',{orderGoods.storage_date})=='null'?'':getText('global.date',{orderGoods.storage_date})}" title="保管截至时间" cssClass="datepicker validate[required,custom[date]]" />
 </td>
 </tr>
 <tr>
 <td class='firstRow'><span style="color:red;">*</span>小计:</td>
-<td class='secRow'><s:textfield name="orderGoods.total_price" title="小计" dataType="number" require="required" controlName="小计" /></td>
+<td class='secRow'><s:textfield name="orderGoods.total_price" title="小计" cssClass="validate[required,custom[number]]" /></td>
 </tr>
 		<tr>
 			<td>&nbsp;</td>
@@ -428,6 +421,7 @@
 	    </tr>
 	</table>
 </s:form>
+</div>
 <s:action name="ref_foot" namespace="/manager" executeResult="true" />
 <script type="text/javascript">
 $(function(){
@@ -480,7 +474,6 @@ $(function() {
 	$("#addGoods").click(function() {
 		$("#addGoodsForm").dialog("open");
 	});
-	$("#orderGoods_storage_date").datepicker();
 	// 此段代码可以方式回车提交
 	jQuery(function($){
 	    $("form").keypress(function(e){
