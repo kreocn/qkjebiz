@@ -239,7 +239,7 @@
 <s:action name="ref_foot" namespace="/manager" executeResult="true" />
 <script type="text/javascript">
 						$(function(){
-							$("#formEdit :input").change(function(){
+							$("#editForm :input").change(function(){
 								//if()cellarOrder_check0 10 15 20
 								//$("#rebates_mdyRebatesStatus0").attr("disabled","disabled");
 								if($("#cellarOrder_check0").length>0) {
