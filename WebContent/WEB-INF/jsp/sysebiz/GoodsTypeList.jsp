@@ -53,5 +53,10 @@
 </div>
 </div>
 <s:action name="ref_foot" namespace="/manager" executeResult="true" />
+<script type="text/javascript">
+$(function(){
+	printPagination("listpage",'${currPage}','${recCount}','${pageSize}');
+});
+</script>
 </body>
 </html>
