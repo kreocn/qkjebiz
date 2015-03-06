@@ -122,6 +122,7 @@ $(function(){
 	      width: 400,
 	      modal: true
 	});
+	printPagination("listpage",'${currPage}','${recCount}','${pageSize}');
 });
 function openSaveInStockArea(goods_id) {
 	$("#SaveInStockArea :input[name='goods.uuid']").val(goods_id);
