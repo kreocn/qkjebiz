@@ -92,6 +92,11 @@
 </div>
 <s:action name="ref_foot" namespace="/manager" executeResult="true" />
 <script type="text/javascript">
+$(function(){
+	printPagination("listpage",'${currPage}','${recCount}','${pageSize}');
+});
+</script>
+<script type="text/javascript">
 window.onload = function() {
 	setStyle("table1");
 }

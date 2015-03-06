@@ -64,7 +64,9 @@
 	            	<tr id="showtr${uuid}">
 	            		  <td  class="td1">${uuid}</td>
 			              <td  class="td1">${class_name}</td>
-			              <td  class="td2"><a href="<s:url namespace="/info" action="news_view"><s:param name="viewFlag">view</s:param><s:param name="news.uuid" value="uuid" /></s:url>" target="_blank">${title}</a></td>
+			              <td  class="td2 longnote" title="${title}">
+			              <a href="<s:url namespace="/info" action="news_view"><s:param name="viewFlag">view</s:param><s:param name="news.uuid" value="uuid" /></s:url>" target="_blank">${it:subString(title,18)}</a>
+			              </td>
 			              <td  class="td3">${add_user_name}</td>
 			              <td  class="td3">${it:formatDate(add_time,'yyyy-MM-dd HH:mm:ss')}</td>
 			              <td  class="td4">

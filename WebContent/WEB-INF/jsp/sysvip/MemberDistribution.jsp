@@ -90,12 +90,7 @@
 				</tr>
 		    </s:iterator>
 		</table>		
-		<div class="pagination">
-			<script type="text/javascript">
-			var spage = new ShowPage(${currPage});
-			spage.show2(${recCount},${pageSize},2);
-			</script>
-		</div>
+		<div id="listpage" class="pagination"></div>
 		<div class="label_main" style="font-size:14px; margin-top:10px;">
 			<s:submit id="member_distribution" name="member_distribution" value="确定" action="member_distribution" cssClass="input-blue surebtn" />
 			<div style="float:right;">
@@ -123,6 +118,11 @@
 </div>
 <s:action name="ref_foot" namespace="/manager" executeResult="true" />
 <script type="text/javascript" src="<s:url value="/js/select_area.js" />"></script>
+<script type="text/javascript">
+$(function(){
+	printPagination("listpage",'${currPage}','${recCount}','${pageSize}');
+});
+</script>
 <script type="text/javascript">
 var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
 $(function(){

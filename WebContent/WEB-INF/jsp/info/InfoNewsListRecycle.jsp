@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
+<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -53,7 +54,9 @@
 	            	<tr id="showtr${uuid}">
 	            		  <td  class="td1"><input name="uuid" type="checkbox" value="${uuid}" /></td>
 			              <td  class="td1">${class_name}</td>
-			              <td  class="td2">${title}</td>
+			              <td  class="td2 longnote" title="${title}">
+			              ${it:subString(title,18)}
+			              </td>
 			              <td  class="td3">${add_user_name}</td>
 			              <td  class="td3"><s:date name="add_time" format="yyyy-MM-dd HH:mm:ss" /></td>
 			              <td  class="td4">
