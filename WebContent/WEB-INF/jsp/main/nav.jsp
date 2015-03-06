@@ -23,5 +23,5 @@
 </div>
 </header>
 <!--left菜单-->
-<div id="ht_left_menu" class="ht_left"></div><div class="ht_rhide"></div>
+<div id="ht_left_menu" class="ht_left"></div>
 <footer><p class="botmsg">当前登录信息：${dept_name}&nbsp;&nbsp;${user_name}</p></footer>
