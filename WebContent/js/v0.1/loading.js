@@ -207,6 +207,13 @@ var left_nav_init = function(){
 			$lbar.removeClass("bounceInLeft animated").addClass("subHide");
 		}
 	});
+	//屏幕缩小，点击空白地方，左侧菜单消失
+	$(".tab_right").on({"click":function(){
+			if($lbar.css("display")=="block"){
+				$lbar.addClass("subHide");
+			}
+		}
+	});
 };
 
 /* top首页加载的模块函数 */

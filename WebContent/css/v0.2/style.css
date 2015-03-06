@@ -125,10 +125,6 @@ a {
 	float: left; display: none;
 }
 
-.ht_rhide {
-	float: right; position: absolute; right: 0; height: 100%; top: 45px; width: 70%; z-index: 9990; display: none;
-}
-
 .subHide {
 	display: block;
 }
@@ -963,7 +959,7 @@ footer {
 	.ht_sjsub .r_line,.ht_lTit,.subHide {
 		display: none;
 	}
-	.ht_clicka,.ht_lmenu,.ht_rhide {
+	.ht_clicka,.ht_lmenu {
 		display: block;
 	}
 	.ht_sjsub {
@@ -1076,9 +1072,6 @@ footer {
 		width: 100%;
 	}
 	.ht_left{
-	display: none;
-	}
-	.ht_rhide{
 	display: none;
 	}
 	.printTab .titleRow{width: 30px;}
