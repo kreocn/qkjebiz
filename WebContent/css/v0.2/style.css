@@ -70,7 +70,7 @@ a {
 /*top style end*/
 /*left style begin*/
 .ht_left {
-	float: left; width: 14%;
+	float: left; width: 14%; margin-bottom:35px;
 }
 
 .ht_left * {
