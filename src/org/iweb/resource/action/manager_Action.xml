@@ -41,6 +41,10 @@
 			<interceptor-ref name="myStackIndex" />
 			<result>/WEB-INF/jsp/manager/default.jsp</result>
 		</action>
+		<action name="help" class="org.iweb.common.action.DefaultAction">
+			<interceptor-ref name="myStackIndex" />
+			<result>/WEB-INF/jsp/manager/help.jsp</result>
+		</action>
 		<action name="test" class="org.iweb.common.action.TestAction">
 			<result>/WEB-INF/jsp/manager/test.jsp</result>
 		</action>

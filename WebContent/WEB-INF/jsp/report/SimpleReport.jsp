@@ -8,9 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>胶片库存统计--<s:text name="APP_NAME" /></title>
 </head>
-<link rel="stylesheet" href="<s:url value="/css/css.css" />" />
-<link rel="stylesheet" href="<s:url value="/css/navigate.css" />" />
-<link rel="stylesheet" href="<s:url value="/css/main.css" />" />
+<s:action name="ref_head" namespace="/manager" executeResult="true" />
 <script type="text/javascript" src="<s:url value="/js/common_cptb.js" />"></script>
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery-1.8.3.min.js" />"></script>
 <link rel="stylesheet" href="<s:url value="/include/jQuery/style.ui.smoothness/jquery-ui-1.10.3.min.css" />" />
@@ -18,11 +16,7 @@
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery.ui.datepicker-zh.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/jquery.CommonUtil.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/show_page.js" />"></script>
-<script type="text/javascript">
-$(function(){
-	CommonUtil.pickrow('table1');
-});
-</script>
+
 <style type="text/css">
 body,div,td,tr {
 letter-spacing: 1px;
@@ -31,7 +25,9 @@ table td{word-break: keep-all;white-space:nowrap;word-break: keep-all;}
 table th{word-break: keep-all;white-space:nowrap;word-break: keep-all;}
 </style>
 <body>
-<div id="main">
+<s:action name="nav" namespace="/manage" executeResult="true" />
+<div class="tab_right">
+	<div class="tab_warp main">
 <div id="result">
 	<div class="itablemdy">
 	<s:property value="headHtml" escape="false" escapeJavaScript="false" />
@@ -40,5 +36,12 @@ table th{word-break: keep-all;white-space:nowrap;word-break: keep-all;}
 	</div>
 </div>
 </div>
+</div>
+<s:action name="ref_foot" namespace="/manager" executeResult="true" />
 </body>
+<script type="text/javascript">
+$(function(){
+	CommonUtil.pickrow('table1');
+});
+</script>
 </html>
