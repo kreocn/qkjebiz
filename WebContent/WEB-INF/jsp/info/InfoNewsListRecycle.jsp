@@ -160,5 +160,10 @@ $(function(){
  });
 });
 </script>
+<script type="text/javascript">
+$(function(){
+	printPagination("listpage",'${currPage}','${recCount}','${pageSize}');
+});
+</script>
 </body>
 </html>
