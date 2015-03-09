@@ -7,7 +7,7 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- Allot Start -->
 		<action name="allot_list" class="com.qkj.ware.action.AllotAction" method="list">
-			<result>/jsp/ware/allot/AllotList.jsp</result>
+			<result>/WEB-INF/jsp/ware/allot/AllotList.jsp</result>
 		</action>
 		<action name="allot_relist" class="com.qkj.ware.action.AllotAction" method="relist">
 			<result type="redirectAction">
@@ -16,7 +16,7 @@
 			</result>
 		</action>
 		<action name="allot_load" class="com.qkj.ware.action.AllotAction" method="load">
-			<result>/jsp/ware/allot/AllotEdit.jsp</result>
+			<result>/WEB-INF/jsp/ware/allot/AllotEdit.jsp</result>
 		</action>
 		<action name="allot_add" class="com.qkj.ware.action.AllotAction" method="add">
 			<result type="redirectAction">

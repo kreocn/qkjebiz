@@ -49,7 +49,7 @@ public class OrderAction extends ActionSupport {
 	private String viewFlag;
 	private int recCount;
 	private int pageSize;
-	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;订单列表";
+	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;客户藏酒";
 	
 	public String getPath() {
 		return path;
@@ -145,6 +145,10 @@ public class OrderAction extends ActionSupport {
 
 	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
 	}
 
 	public String list() throws Exception {

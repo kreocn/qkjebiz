@@ -54,9 +54,10 @@ function Common_Ajax(result_div_id){
 			return false;
 		} else if (typeof (data.value) != "undefined") {
 			var datavalue = data.value;
-			if (datavalue.substr(0, 6) == 'ERROR:') {
-				alert(datavalue);
-			}
+			if (datavalue == 'NOLOGIN') alert("登录超时.");
+			else if (datavalue == 'NODATA') alert("没有数据");
+			else if (datavalue == 'NOPERMIT') alert('权限不足');
+			else if (datavalue.substr(0, 6) == 'ERROR:') alert(datavalue);
 		}
 		return true;
 	},
@@ -103,6 +104,7 @@ function Common_Ajax(result_div_id){
 		error : this.config._error,
 		complete : this.config._complete });
 	};
+	/* 增加数据校验 */
 	this.sendAjax2 = function(){
 		this.setParameter();
 		$.ajax({ type : 'post',

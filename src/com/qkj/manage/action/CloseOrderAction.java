@@ -34,6 +34,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	private List<CloseOrder> allsigns;
 	private CloseOrder sign;
 	private List<SalPromot> salPromots;
+	private List<SalPromot> salPromotsed;
 	private List<CloseOrderPro> closeOrderPros;
 	private CloseOrderPro closeOrderPro;
 	private String message;
@@ -180,6 +181,14 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 		this.isApprover = isApprover;
 	}
 
+	public List<SalPromot> getSalPromotsed() {
+		return salPromotsed;
+	}
+
+	public void setSalPromotsed(List<SalPromot> salPromotsed) {
+		this.salPromotsed = salPromotsed;
+	}
+
 	public String list() throws Exception {
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_LIST");
@@ -214,12 +223,27 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 				this.setCloseOrder(null);
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/closeOrder_relist'>结案提货单列表</a>&nbsp;&gt;&nbsp;增加结案提货单";
 			} else if ("mdy".equals(viewFlag)) {
+				String salid=null;
 				if (!(closeOrder == null || closeOrder.getUuid() == null)) {
 					this.setCloseOrder((CloseOrder) dao.get(closeOrder.getUuid()));
+					salid=closeOrder.getSalPro_id();
 				} else {
 					this.setCloseOrder(null);
 				}
-				this.setSalPromots(sal.salProPower(closeOrder.getMember_id()));
+				
+				List<SalPromot> salps=new ArrayList<>();
+				if(salid!=null){
+					String stringarray[]=salid.split(",");  
+					for(int i=0;i<stringarray.length;i++){
+						SalPromot sp=new SalPromot();
+						sp.setUuid(Integer.parseInt(stringarray[i]));
+						sp=(SalPromot) saldao.get(sp.getUuid());
+						salps.add(sp);
+					}
+					this.setSalPromotsed(salps);//已经选择的促销活动
+				}
+				this.setSalPromots(sal.salProPower(closeOrder.getMember_id()));//可选的促销活动
+				
 				CloseOrderProDAO cdao=new CloseOrderProDAO();
 				map.clear();
 				map.put("order_id", closeOrder.getUuid());
@@ -274,7 +298,6 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 				this.setAllsigns(dao.allsign(map));
 				
 				this.setSign((CloseOrder) dao.sign(closeOrder.getUuid()));
-				System.out.println(sign.getSign20()+sign.getSign30());
 				
 				CloseOrderProDAO cdao=new CloseOrderProDAO();
 				map.clear();

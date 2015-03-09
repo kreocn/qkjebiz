@@ -11,6 +11,11 @@ public class CacheFactory {
 		return cache;
 	}
 
+	/**
+	 * 缓存流
+	 * 
+	 * @param cacheMode
+	 */
 	public static void CacheFlow(String cacheMode) {
 		SysCacheLogic cacheLogic = new SysCacheLogic();
 		SysDBCacheLogic dbCacheLogic = new SysDBCacheLogic();
@@ -24,6 +29,9 @@ public class CacheFactory {
 		} else if ("dept".equals(cacheMode)) {
 			// 部门数据缓存
 			dbCacheLogic.cacheDept(true);
+		} else if ("menu".equals(cacheMode)) {
+			// 菜单数据缓存
+			dbCacheLogic.cacheMenu(true);
 		} else if ("prod-tree".equals(cacheMode)) {
 			// 产品树数据缓存
 			dbCacheLogic.cacheProdTree(true);
@@ -32,6 +40,7 @@ public class CacheFactory {
 			cacheLogic.cacheSys(false);
 			dbCacheLogic.cacheRole(false);
 			dbCacheLogic.cacheDept(false);
+			dbCacheLogic.cacheMenu(false);
 			dbCacheLogic.cacheProdTree(false);
 		}
 	}

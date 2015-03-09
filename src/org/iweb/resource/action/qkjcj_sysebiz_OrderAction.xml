@@ -7,13 +7,13 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- Order Start -->
 		<action name="order_list" class="com.qkjsys.ebiz.action.OrderAction" method="list">
-			<result>/jsp/sysebiz/OrderList.jsp</result>
+			<result>/WEB-INF/jsp/sysebiz/OrderList.jsp</result>
 		</action>
 		<action name="order_load" class="com.qkjsys.ebiz.action.OrderAction" method="load">
-			<result>/jsp/sysebiz/OrderEdit.jsp</result>
+			<result>/WEB-INF/jsp/sysebiz/OrderEdit.jsp</result>
 		</action>
 		<action name="order_view" class="com.qkjsys.ebiz.action.OrderAction" method="load">
-			<result>/jsp/sysebiz/OrderView.jsp</result>
+			<result>/WEB-INF/jsp/sysebiz/OrderView.jsp</result>
 		</action>
 		<action name="order_add" class="com.qkjsys.ebiz.action.OrderAction" method="add">
 			<result type="redirectAction">

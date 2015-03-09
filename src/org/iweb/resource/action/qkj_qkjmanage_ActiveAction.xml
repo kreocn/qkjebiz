@@ -7,19 +7,19 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- Active Start -->
 		<action name="active_addProduct" class="com.qkj.manage.action.ActiveAction" method="addPro">
-			<result>/jsp/qkjmanage/AddPro.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/AddPro.jsp</result>
 		</action>
 		<action name="active_history" class="com.qkj.manage.action.ActiveAction" method="history">
-			<result>/jsp/qkjmanage/ActiveHistory.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/ActiveHistory.jsp</result>
 		</action>
 		<action name="active_list" class="com.qkj.manage.action.ActiveAction" method="list">
-			<result>/jsp/qkjmanage/ActiveList.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/ActiveList.jsp</result>
 		</action>
 		<action name="active_load" class="com.qkj.manage.action.ActiveAction" method="load">
-			<result>/jsp/qkjmanage/ActiveEdit.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/ActiveEdit.jsp</result>
 		</action>
 		<action name="active_view" class="com.qkj.manage.action.ActiveAction" method="loadView">
-			<result>/jsp/qkjmanage/ActiveView.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/ActiveView.jsp</result>
 		</action>
 		<action name="active_add" class="com.qkj.manage.action.ActiveAction" method="add">
 			<result type="redirectAction">
@@ -203,10 +203,10 @@
 
 		<!-- 以下开始为结案流程 -->
 		<action name="active_closeLoad" class="com.qkj.manage.action.ActiveAction" method="closeLoad">
-			<result>/jsp/qkjmanage/ActiveEdit_Close.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/ActiveEdit_Close.jsp</result>
 		</action>
 		<action name="active_closeView" class="com.qkj.manage.action.ActiveAction" method="closeViewLoad">
-			<result>/jsp/qkjmanage/ActiveView_Close.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/ActiveView_Close.jsp</result>
 		</action>
 		<!-- 结案单修改 -->
 		<action name="mdyCloseActive" class="com.qkj.manage.action.ActiveAction" method="mdyCloseActive">

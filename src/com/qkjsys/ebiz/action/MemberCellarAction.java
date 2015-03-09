@@ -33,6 +33,7 @@ public class MemberCellarAction extends ActionSupport {
 	private String viewFlag;
 	private int recCount;
 	private int pageSize;
+	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;订单列表";
 
 	private String sflag;
 

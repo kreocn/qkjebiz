@@ -633,9 +633,10 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String del() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_DEL");
 		try {
-			dao.delete(active);
-			setMessage("删除成功!ID=" + active.getUuid());
-			addProcess("ACTIVE_DEL", "活动删除");
+			//dao.delete(active);
+			//setMessage("删除成功!ID=" + active.getUuid());
+			//addProcess("ACTIVE_DEL", "活动删除");
+			mdyStatus(-2);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!del 数据删除失败:", e);
 			throw new Exception(this.getClass().getName() + "!del 数据删除失败:", e);
@@ -745,8 +746,12 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		}
 		active.setStatus(status);
 		active.setLm_user(ContextHelper.getUserLoginUuid());
-		String note = "活动状态变更-" + noteflag;
-		addProcess("ACTIVE_MDY_STATUS", note);
+		if(status == -2){
+			addProcess("ACTIVE_DEL", "活动删除");
+		}else{
+			String note = "活动状态变更-" + noteflag;
+			addProcess("ACTIVE_MDY_STATUS", note);
+		}
 		return dao.mdyActiveStatus(active);
 	}
 

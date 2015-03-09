@@ -37,6 +37,7 @@ public class CellarOrderAction extends ActionSupport {
 	private String viewFlag;
 	private int recCount;
 	private int pageSize;
+	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;取酒订单";
 
 	public List<Ware> getWares() {
 		return wares;
@@ -118,6 +119,14 @@ public class CellarOrderAction extends ActionSupport {
 		this.memberCellarID = memberCellarID;
 	}
 
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+
 	public String list() throws Exception {
 		ContextHelper.isPermit("QKJCJ_SYSEBIZ_CELLARORDER_LIST");
 		try {
@@ -131,6 +140,7 @@ public class CellarOrderAction extends ActionSupport {
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 			this.setCellarOrders(dao.list(map));
 			this.setRecCount(dao.getResultCount());
+			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;取酒订单列表";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
@@ -149,6 +159,7 @@ public class CellarOrderAction extends ActionSupport {
 					return SUCCESS;
 				}
 				this.setCellarOrder(null);
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/sysebiz/cellarOrder_list'>取酒订单列表</a>&nbsp;&gt;&nbsp;增加取酒订单";
 			} else if ("mdy".equals(viewFlag)) {
 				map.clear();
 				map.put("uuid", cellarOrder.getUuid());
@@ -167,6 +178,7 @@ public class CellarOrderAction extends ActionSupport {
 
 			MemberCellarDAO mdao = new MemberCellarDAO();
 			this.setMemberCellar((MemberCellar) mdao.get(this.getMemberCellarID()));
+			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/sysebiz/cellarOrder_list'>取酒订单列表</a>&nbsp;&gt;&nbsp;修改取酒订单";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!load 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!load 读取数据错误:", e);

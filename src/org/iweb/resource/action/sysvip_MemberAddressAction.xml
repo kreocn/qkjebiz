@@ -7,10 +7,10 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- MemberAddress Start -->
 		<action name="memberAddress_list" class="org.iweb.sysvip.action.MemberAddressAction" method="list">
-			<result>/jsp/sysvip/MemberAddressList.jsp</result>
+			<result>/WEB-INF/jsp/sysvip/MemberAddressList.jsp</result>
 		</action>
 		<action name="memberAddress_load" class="org.iweb.sysvip.action.MemberAddressAction" method="load">
-			<result>/jsp/sysvip/MemberAddressEdit.jsp</result>
+			<result>/WEB-INF/jsp/sysvip/MemberAddressEdit.jsp</result>
 		</action>
 		<action name="memberAddress_add" class="org.iweb.sysvip.action.MemberAddressAction" method="add">
 			<result type="redirectAction">

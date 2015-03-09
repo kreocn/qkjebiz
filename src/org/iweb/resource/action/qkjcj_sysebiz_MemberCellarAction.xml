@@ -7,10 +7,10 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- MemberCellar Start -->
 		<action name="memberCellar_list" class="com.qkjsys.ebiz.action.MemberCellarAction" method="list">
-			<result>/jsp/sysebiz/MemberCellarList.jsp</result>
+			<result>/WEB-INF/jsp/sysebiz/MemberCellarList.jsp</result>
 		</action>
 		<action name="memberCellar_load" class="com.qkjsys.ebiz.action.MemberCellarAction" method="load">
-			<result>/jsp/sysebiz/MemberCellarEdit.jsp</result>
+			<result>/WEB-INF/jsp/sysebiz/MemberCellarEdit.jsp</result>
 		</action>
 		<action name="memberCellar_add" class="com.qkjsys.ebiz.action.MemberCellarAction" method="add">
 			<result type="redirectAction">

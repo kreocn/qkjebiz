@@ -7,7 +7,7 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- Check Start -->
 		<action name="check_list" class="com.qkj.ware.action.CheckAction" method="list">
-			<result name="SUCCESS">/jsp/ware/check/CheckList.jsp</result>
+			<result name="SUCCESS">/WEB-INF/jsp/ware/check/CheckList.jsp</result>
 			<result name="DETAIL">/jsp/ware/check/CheckDetail.jsp</result>
 		</action>
 		<action name="check_relist" class="com.qkj.ware.action.CheckAction" method="relist">
@@ -17,7 +17,7 @@
 			</result>
 		</action>
 		<action name="check_load" class="com.qkj.ware.action.CheckAction" method="load">
-			<result>/jsp/ware/check/CheckEdit.jsp</result>
+			<result>/WEB-INF/jsp/ware/check/CheckEdit.jsp</result>
 		</action>
 		<action name="check_add" class="com.qkj.ware.action.CheckAction" method="add">
 			<result type="redirectAction">

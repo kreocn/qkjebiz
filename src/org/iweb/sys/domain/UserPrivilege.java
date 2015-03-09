@@ -18,6 +18,15 @@ public class UserPrivilege {
 	private String menu_title;
 	private String lm_user;
 	private Date lm_time;
+	private Integer module;
+
+	public Integer getModule() {
+		return module;
+	}
+
+	public void setModule(Integer module) {
+		this.module = module;
+	}
 
 	public String getUuid() {
 		return uuid;

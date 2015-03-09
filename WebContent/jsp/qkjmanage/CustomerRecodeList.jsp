@@ -7,6 +7,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>客户回访记录列表--<s:text name="APP_NAME" /></title>
 <s:action name="ref" namespace="/manager" executeResult="true" />
+<style>
+.ui-dialog{background:#fff!important;}
+</style>
 </head>
 <body>
 <div class="main" >
