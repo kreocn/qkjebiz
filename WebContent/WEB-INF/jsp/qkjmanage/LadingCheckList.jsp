@@ -14,7 +14,7 @@
 <div class="tab_right">
  	<div class="tab_warp main" >
  	<div class="dq_step">
-		${path}
+		<a href='/manager/default'>首页</a> > 订单确认列表
 	</div>
 	<s:form id="serachForm" name="serachForm" action="lading_checkList"  method="get" namespace="/qkjmanage" theme="simple">
  	<div class="label_con"><div class="label_main">
