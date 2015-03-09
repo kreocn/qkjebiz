@@ -899,6 +899,12 @@ footer {
 	width: 100%; height: 100%; overflow: auto; border: none;
 }
 
+.yesarea {
+display: inline-block; width: 16px; height: 16px; background: url("../../images/icon/ico_warn.png") transparent no-repeat 0 0;
+}
+.noarea {
+display: inline-block; width: 16px; height: 16px; background: url("../../images/icon/ico_warn.png") transparent no-repeat 0 -150px;
+}
 .ui-menu .ui-menu-item a{font-size:14px;}
 .firstRow{text-align:right;}
 @media screen and (max-width:1180px) {
