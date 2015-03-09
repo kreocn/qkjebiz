@@ -106,6 +106,7 @@
 	color: #008000;
 }
 </style>
+<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.ui.datepicker-zh.js" />"></script>
 
 <body>
 	<s:action name="nav" namespace="/manage" executeResult="true" />
@@ -121,6 +122,7 @@
 			</span>
 		</div>
 		<s:form id="editForm" name="editForm" cssClass="validForm" action="active_load" namespace="/qkjmanage" method="post" theme="simple">
+			<s:hidden name="active.apply_dept" value="%{active.apply_dept}"></s:hidden>
 			<div class="label_con">
 				<div class="label_main">
 					<div class="label_hang">
@@ -460,29 +462,6 @@
 											</s:url>
 										<input type="button" id="product" onclick="window.location.href='${ladingAddProductsUrl}';" value="添加酒品" />
 									<!--<input type="button" id="product" onclick="noedit();" value="添加酒品" />-->
-									<script type="text/javascript">
-						var edit = false;
-						$(function(){
-							$("#editForm :input").change(function(){
-								edit = true;
-							});
-						});
-						
-						function noedit(){
-							//.var
-							if(edit==false){
-								location.href="/qkjmanage/active_addProduct?state=2&active.uuid="+${active.uuid};
-							}else{
-								if(confirm("您有未保存的信息,确认添加吗?确认后将丢失一部分信息。")){
-									location.href="/qkjmanage/active_addProduct?state=2&active.uuid="+${active.uuid};
-									}else{
-									 return false;
-									}
-							}
-							
-						}
-						</script>
-
 								</s:if>
 								<s:if test="active.status==3 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEPOSM_ADD')">
 									<input type="button" id="addPosm" value="销售物料" />
@@ -804,19 +783,7 @@
 								<s:if test="active.status==3">
 									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_MDY')">
 										<s:submit cssClass="input-blue" name="mdyCloseActive" value="保存活动概况" action="mdyCloseActive" />
-										<script type="text/javascript">
-											$(function(){
-												$("#editForm :input").change(function(){
-													//if()cellarOrder_check0 10 15 20
-													//$("#rebates_mdyRebatesStatus0").attr("disabled","disabled");
-													if ($("#mdyStatus0").length > 0) {
-														$("#mdyStatus0").attr("disabled", "disabled");
-													}
-
-													$("#messages").text("请先保存后才能做其他操作!");
-												});
-											});
-										</script>
+										
 									</s:if>
 									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_STATUS3')">
 										<s:submit id="mdyStatus0" cssClass="input-yellow" name="mdyStatus3" value="结案报审" action="mdyStatus3" onclick="return isOp('确定执行此操作?');" />
@@ -855,20 +822,11 @@
 									<s:submit cssClass="input-green" name="mdyCloseActiveSDStatus10" value="经理/大区-审核通过" action="mdyCloseActiveSDStatus10" onclick="return isOp('确定执行此操作?');" />
 									<s:submit cssClass="input-red" name="mdyCloseActiveSDStatus5" value="审核不通过" action="mdyCloseActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
 								</s:if>
-								<s:if test="active.apply_dept.substring(0,4)!='2302' && active.apply_dept!='22030' ">
-									<!-- 不是西藏大区新疆 -->
 									<s:if test="30==active.close_sd_status && 30==active.close_smd_status && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS30')">
 										<s:submit cssClass="input-green" name="mdyCloseActiveSDStatus30" value="运营总监-审核通过" action="mdyCloseActiveSDStatus30" onclick="return isOp('确定执行此操作?');" />
 										<s:submit cssClass="input-red" name="mdyCloseActiveSDStatus5" value="审核不通过" action="mdyCloseActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
 									</s:if>
-								</s:if>
-								<s:else>
-										<s:if test="30==active.close_sd_status && 10==active.close_smd_status && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS30')">
-											<s:submit cssClass="input-green" name="mdyCloseActiveSDStatus30" value="运营总监-审核通过" action="mdyCloseActiveSDStatus30" onclick="return isOp('确定执行此操作?');" />
-											<s:submit cssClass="input-red" name="mdyCloseActiveSDStatus5" value="审核不通过" action="mdyCloseActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
-										</s:if>
-									</s:else>
-
+								
 								<s:if test="40==active.close_sd_status && active.close_smd_status>=40  && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS40')">
 									<s:submit cssClass="input-green" name="mdyCloseActiveSDStatus40" value="业务副总-审核通过" action="mdyCloseActiveSDStatus40" onclick="return isOp('确定执行此操作?');" />
 									<s:submit cssClass="input-red" name="mdyCloseActiveSDStatus5" value="审核不通过" action="mdyCloseActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
@@ -900,7 +858,6 @@
 						<div class="label_hang">
 							<div class="label_ltit">销管部审核:</div>
 							<div class="label_rwbenx">
-								<s:if test="active.apply_dept.substring(0,4)!='2302' && active.apply_dept!='22030' ">
 									<s:if test="10==active.close_smd_status && 30==active.close_sd_status && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SMDSTATUS10')">
 										<s:submit cssClass="input-green" name="mdyCloseActiveSMDStatus10" value="销管经理-审核通过" action="mdyCloseActiveSMDStatus10" onclick="return isOp('确定执行此操作?');" />
 										<s:submit cssClass="input-red" name="mdyCloseActiveSMDStatus5" value="审核不通过" action="mdyCloseActiveSMDStatus5" onclick="return isOp('确定执行此操作?');" />
@@ -909,13 +866,7 @@
 										<s:submit id="mdyCloseActiveSMDStatus50" name="mdyCloseActiveSMDStatus50" cssClass="input-green" value="销管部经理-审核通过" action="mdyCloseActiveSMDStatus50" onclick="return isOp('确定执行此操作?');" />
 										<s:submit id="mdyCloseActiveSMDStatus5" name="mdyCloseActiveSMDStatus5" cssClass="input-red" value="审核不通过" action="mdyCloseActiveSMDStatus5" onclick="return isOp('确定执行此操作?');" />
 									</s:if>
-								</s:if>
-								<s:else>
-									<s:if test="10==active.close_smd_status && active.close_sd_status==40 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SMDSTATUS50')">
-										<s:submit id="mdyCloseActiveSMDStatus50" name="mdyCloseActiveSMDStatus50" cssClass="input-green" value="销管部经理-审核通过" action="mdyCloseActiveSMDStatus50" onclick="return isOp('确定执行此操作?');" />
-										<s:submit id="mdyCloseActiveSMDStatus5" name="mdyCloseActiveSMDStatus5" cssClass="input-red" value="审核不通过" action="mdyCloseActiveSMDStatus5" onclick="return isOp('确定执行此操作?');" />
-									</s:if>
-								</s:else>
+								
 								<s:if test="40==active.close_smd_status  && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SMDSTATUS30')">
 									<s:submit cssClass="input-green" name="mdyCloseActiveSMDStatus30" value="销管副总-审核通过" action="mdyCloseActiveSMDStatus30" onclick="return isOp('确定执行此操作?');" />
 									<s:submit cssClass="input-red" name="mdyCloseActiveSMDStatus5" value="审核不通过" action="mdyCloseActiveSMDStatus5" onclick="return isOp('确定执行此操作?');" />
@@ -954,25 +905,12 @@
 							<div class="label_ltit">财务审核:</div>
 							<div class="label_rwbenx">
 								<!-- 财务 -->
-								<s:if test="%{code.substring(0,2)=='21'}">
-									<s:if test="%{10!=active.close_fd_status}">
-										<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_FDCSTATUS10')">
-											<s:if test="active.close_sd_status>=40">
-												<s:submit id="mdyActiveFDCSTATUS10" name="mdyActiveFDCSTATUS10" cssClass="input-green" value="财务-审核通过" action="mdyActiveFDCSTATUS10" onclick="return isOp('确定执行此操作?');" />
-												<s:submit id="mdyActiveFDCStatus5" name="mdyActiveFDCStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveFDCSTATUS" onclick="return isOp('确定执行此操作?');" />
-											</s:if>
-										</s:if>
-									</s:if>
-								</s:if>
-
-								<s:else>
 									<s:if test="%{10!=active.close_fd_status}">
 										<s:if test="(50==active.close_smd_status || 60==active.close_smd_status) && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_FDCSTATUS10')">
 											<s:submit id="mdyActiveFDCSTATUS10" name="mdyActiveFDCSTATUS10" cssClass="input-green" value="财务-审核通过" action="mdyActiveFDCSTATUS10" onclick="return isOp('确定执行此操作?');" />
 											<s:submit id="mdyActiveFDCStatus5" name="mdyActiveFDCStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveFDCSTATUS" onclick="return isOp('确定执行此操作?');" />
 										</s:if>
 									</s:if>
-								</s:else>
 								<div class="statusInline">
 									财务部审核状态:
 									<s:if test="active.close_fd_status==0 || active.fd_status==null">未确认</s:if>
@@ -990,22 +928,12 @@
 							<div class="label_ltit">数据中心审核:</div>
 							<div class="label_rwbenx">
 								<!-- 财务 -->
-								<s:if test="%{code.substring(0,2)=='21'}">
-									<s:if test="10!=active.close_nd_status && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_NDCSTATUS10')">
-										<s:if test="active.close_sd_status>=40">
-											<s:submit id="mdyActiveNDCSTATUS10" name="mdyActiveNDCSTATUS10" cssClass="input-green" value="数据中心-审核通过" action="mdyActiveNDCSTATUS10" onclick="return isOp('确定执行此操作?');" />
-											<s:submit id="mdyActiveNDCSTATUS5" name="mdyActiveNDCSTATUS5" cssClass="input-red" value="审核不通过" action="mdyActiveNDCSTATUS5" onclick="return isOp('确定执行此操作?');" />
-										</s:if>
-									</s:if>
-								</s:if>
-								<s:else>
 									<s:if test="%{10!=active.close_nd_status}">
-										<s:if test="(50==active.close_smd_status || 60==active.close_smd_status) &&　@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_NDCSTATUS10')">
+										<s:if test="(50==active.close_smd_status || 60==active.close_smd_status) && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_NDCSTATUS10')">
 											<s:submit id="mdyActiveNDCSTATUS10" name="mdyActiveNDCSTATUS10" cssClass="input-green" value="数据中心-审核通过" action="mdyActiveNDCSTATUS10" onclick="return isOp('确定执行此操作?');" />
 											<s:submit id="mdyActiveNDCSTATUS5" name="mdyActiveNDCSTATUS5" cssClass="input-red" value="审核不通过" action="mdyActiveNDCSTATUS5" onclick="return isOp('确定执行此操作?');" />
 										</s:if>
 									</s:if>
-								</s:else>
 								<div class="statusInline">
 									数据中心审核状态:
 									<s:if test="active.close_nd_status==0 || active.close_nd_status==null">未确认</s:if>
@@ -1076,6 +1004,7 @@
 				</div>
 			</s:form>
 		</div>
+		
 
 		<!-- 添加销售物料(公司) -->
 		<div id="addPosmForm" class="label_con idialog" title="添加销售物料(公司)">
@@ -1162,6 +1091,9 @@
 			</s:form>
 		</div>
 
+		<!-- 添加随量信息 -->
+
+
 		<div id="viewMember" class="label_con idialog" title="客户实时信息">
 			<div class="label_main">
 				<div class="label_hang">
@@ -1200,10 +1132,141 @@
 				</div>
 			</s:form>
 		</div>
-	</div>
-	<!-- HIDDEN AREA END -->
-	<s:action name="ref_foot" namespace="/manager" executeResult="true" />
-	<script type="text/javascript">
+		<s:action name="ref_foot" namespace="/manager" executeResult="true" />
+		<script type="text/javascript">
+											$(function(){
+												$("#editForm :input").change(function(){
+													//if()cellarOrder_check0 10 15 20
+													//$("#rebates_mdyRebatesStatus0").attr("disabled","disabled");
+													if ($("#mdyStatus0").length > 0) {
+														$("#mdyStatus0").attr("disabled", "disabled");
+													}
+
+													$("#messages").text("请先保存后才能做其他操作!");
+												});
+											});
+										</script>
+		<script type="text/javascript">
+			var add_per_price_input = $("#form_addProductForm :input[name='activeProduct.per_price']");
+			var add_num_input = $("#form_addProductForm :input[name='activeProduct.num']");
+			var add_total_price_input = $("#form_addProductForm :input[name='activeProduct.total_price']");
+			var add_product_id = $("#form_addProductForm :input[name='activeProduct.product_id']");
+
+			$(function(){
+				add_per_price_input.bind("keyup", function(){
+					add_total_price_input.val($(this).val() * add_num_input.val());
+
+				});
+				add_num_input.bind("keyup", function(){
+					add_total_price_input.val($(this).val() * add_per_price_input.val());
+					setDataCase();
+				});
+
+				$("#per_price_select_area").hide();
+				add_product_id.bind("change", function(){
+					add_per_price_input.val("");
+					$("#per_price_select").clearAllOption();
+					if ($(this).getSelectedAttr("data") == null || $(this).getSelectedAttr("data") == '') {
+						$("#per_price_select_area").hide();
+					} else {
+						var ps = $(this).getSelectedAttr("data").split("#");
+						if (ps.length >= 3) {
+							$("#per_price_select").addOption("自定义", "");
+							$("#per_price_select").addOption("市场价(" + ps[0] + ")", ps[0]);
+							$("#per_price_select").addOption("团购价(" + ps[1] + ")", ps[1]);
+							$("#per_price_select").addOption("出厂价(" + ps[2] + ")", ps[2]);
+							if (ps[3] != '') $("#per_price_select").addOption("协议价1(" + ps[3] + ")", ps[3]);
+							if (ps[4] != '') $("#per_price_select").addOption("协议价2(" + ps[4] + ")", ps[4]);
+							if (ps[5] != '') $("#per_price_select").addOption("协议价3(" + ps[5] + ")", ps[5]);
+							$("#per_price_select_area").fadeIn(1000);
+						}
+					}
+				});
+
+				$("#per_price_select").bind("change", function(){
+					add_per_price_input.val($(this).val());
+					add_total_price_input.val($(this).val() * add_num_input.val());
+					setDataCase();
+				});
+			});
+
+			function setDataCase(){
+				var data_case = add_product_id.getSelectedAttr("data_case");
+				var num_value = add_num_input.val();
+				if (!(data_case == null || data_case == '' || num_value == null || num_value == '')) {
+					$("#ladingItemnumCase").text((num_value / data_case) + '件');
+				}
+			}
+		</script>
+		<script type="text/javascript">
+		$(function() { 
+			$('#order_user_id').blur(function() { 
+				var params = document.getElementById("order_user_id").value
+				 var url = '/sysvip/getMember';
+				 $.ajax({
+				     type:'POST',            //http请求方式
+				     url: url,    //服务器段url地址
+				     data: "params="+params,           //发送给服务器段的数据
+				     success: function(data){  
+				    	 if(data=="true"){
+				    		 $("#addMe").attr("disabled", false);
+				    		 $("#addMemcost").text( '');
+				 		}else{
+				 			$("#addMe").attr("disabled", "disabled");
+				 			$("#addMemcost").text( '此会员不存在，请确认！');
+				 			return false;
+				     }}    //定义交互完成，并且服务器正确返回数据时调用的回调函数
+				  });
+			}); 
+			}) ;
+		
+			$("#upprice").bind("change", function(){
+				$("#bprice").val($("#upprice").val() - $("#price").val());
+			});
+		</script>
+
+		<script type="text/javascript">
+			$("#price").bind("change", function(){
+				$("#bprice").val($("#upprice").val() - $("#price").val());
+			});
+		</script>
+
+
+		<!-- 添加市场基金信息 -->
+		<script type="text/javascript">
+			$("#fupprice").bind("change", function(){
+				$("#fbprice").val($("#fupprice").val() - $("#fprice").val());
+			});
+		</script>
+
+		<script type="text/javascript">
+			$("#fprice").bind("change", function(){
+				$("#fbprice").val($("#fupprice").val() - $("#fprice").val());
+			});
+		</script>
+		<script type="text/javascript">
+						var edit = false;
+						$(function(){
+							$("#editForm :input").change(function(){
+								edit = true;
+							});
+						});
+						
+						function noedit(){
+							//.var
+							if(edit==false){
+								location.href="/qkjmanage/active_addProduct?state=2&active.uuid="+${active.uuid};
+							}else{
+								if(confirm("您有未保存的信息,确认添加吗?确认后将丢失一部分信息。")){
+									location.href="/qkjmanage/active_addProduct?state=2&active.uuid="+${active.uuid};
+									}else{
+									 return false;
+									}
+							}
+							
+						}
+						</script>
+		<script type="text/javascript">
 			$(function(){
 				$("#approveFrom").dialog({ autoOpen : false,
 				modal : true });
@@ -1302,7 +1365,6 @@
 		ajax.sendAjax();
 	}
 </script>
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.ui.datepicker-zh.js" />"></script>
 <script type="text/javascript">
 var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
 var add_user='${customerRecode.add_user}';
@@ -1340,105 +1402,7 @@ var openCustomerView = function(customer_uuid) {
 	sobj02.open();
 };
 </script>
-<script type="text/javascript">
-			var add_per_price_input = $("#form_addProductForm :input[name='activeProduct.per_price']");
-			var add_num_input = $("#form_addProductForm :input[name='activeProduct.num']");
-			var add_total_price_input = $("#form_addProductForm :input[name='activeProduct.total_price']");
-			var add_product_id = $("#form_addProductForm :input[name='activeProduct.product_id']");
-
-			$(function(){
-				add_per_price_input.bind("keyup", function(){
-					add_total_price_input.val($(this).val() * add_num_input.val());
-
-				});
-				add_num_input.bind("keyup", function(){
-					add_total_price_input.val($(this).val() * add_per_price_input.val());
-					setDataCase();
-				});
-
-				$("#per_price_select_area").hide();
-				add_product_id.bind("change", function(){
-					add_per_price_input.val("");
-					$("#per_price_select").clearAllOption();
-					if ($(this).getSelectedAttr("data") == null || $(this).getSelectedAttr("data") == '') {
-						$("#per_price_select_area").hide();
-					} else {
-						var ps = $(this).getSelectedAttr("data").split("#");
-						if (ps.length >= 3) {
-							$("#per_price_select").addOption("自定义", "");
-							$("#per_price_select").addOption("市场价(" + ps[0] + ")", ps[0]);
-							$("#per_price_select").addOption("团购价(" + ps[1] + ")", ps[1]);
-							$("#per_price_select").addOption("出厂价(" + ps[2] + ")", ps[2]);
-							if (ps[3] != '') $("#per_price_select").addOption("协议价1(" + ps[3] + ")", ps[3]);
-							if (ps[4] != '') $("#per_price_select").addOption("协议价2(" + ps[4] + ")", ps[4]);
-							if (ps[5] != '') $("#per_price_select").addOption("协议价3(" + ps[5] + ")", ps[5]);
-							$("#per_price_select_area").fadeIn(1000);
-						}
-					}
-				});
-
-				$("#per_price_select").bind("change", function(){
-					add_per_price_input.val($(this).val());
-					add_total_price_input.val($(this).val() * add_num_input.val());
-					setDataCase();
-				});
-			});
-
-			function setDataCase(){
-				var data_case = add_product_id.getSelectedAttr("data_case");
-				var num_value = add_num_input.val();
-				if (!(data_case == null || data_case == '' || num_value == null || num_value == '')) {
-					$("#ladingItemnumCase").text((num_value / data_case) + '件');
-				}
-			}
-		</script>
-		<!-- 添加随量信息 -->
-
-		<script type="text/javascript">
-		$(function() { 
-			$('#order_user_id').blur(function() { 
-				var params = document.getElementById("order_user_id").value
-				 var url = '/sysvip/getMember';
-				 $.ajax({
-				     type:'POST',            //http请求方式
-				     url: url,    //服务器段url地址
-				     data: "params="+params,           //发送给服务器段的数据
-				     success: function(data){  
-				    	 if(data=="true"){
-				    		 $("#addMe").attr("disabled", false);
-				    		 $("#addMemcost").text( '');
-				 		}else{
-				 			$("#addMe").attr("disabled", "disabled");
-				 			$("#addMemcost").text( '此会员不存在，请确认！');
-				 			return false;
-				     }}    //定义交互完成，并且服务器正确返回数据时调用的回调函数
-				  });
-			}); 
-			}) ;
-		
-			$("#upprice").bind("change", function(){
-				$("#bprice").val($("#upprice").val() - $("#price").val());
-			});
-		</script>
-
-		<script type="text/javascript">
-			$("#price").bind("change", function(){
-				$("#bprice").val($("#upprice").val() - $("#price").val());
-			});
-		</script>
-
-
-		<!-- 添加市场基金信息 -->
-		<script type="text/javascript">
-			$("#fupprice").bind("change", function(){
-				$("#fbprice").val($("#fupprice").val() - $("#fprice").val());
-			});
-		</script>
-
-		<script type="text/javascript">
-			$("#fprice").bind("change", function(){
-				$("#fbprice").val($("#fupprice").val() - $("#fprice").val());
-			});
-		</script>
+	</div>
+	<!-- HIDDEN AREA END -->
 </body>
 </html>

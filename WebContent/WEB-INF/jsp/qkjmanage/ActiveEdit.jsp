@@ -8,6 +8,7 @@
 <title>活动申请单管理--<s:text name="APP_NAME" /></title>
 <s:action name="ref_head" namespace="/manager" executeResult="true" />
 </head>
+
 <style type="text/css">
 .active_icost {
 	padding: 3px 5px;
@@ -115,6 +116,7 @@
 				</s:if> <a href="<s:url namespace="/qkjmanage" action="active_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a></span>
 		</div>
 		<s:form id="editForm" name="editForm" cssClass="validForm" action="active_load" namespace="/qkjmanage" method="post" theme="simple">
+		<s:hidden name="active.apply_dept" value="%{active.apply_dept}"></s:hidden>
 			<div class="label_con">
 				<s:if test="'mdy' == viewFlag">
 					<div class="label_main">
@@ -352,28 +354,7 @@
 											</s:url>
 										<input type="button" id="product" onclick="window.location.href='${ladingAddProductsUrl}';" value="添加酒品" />
 										<!--<input type="button" id="product" onclick="noedit();" value="添加酒品" />-->
-										<script type="text/javascript">
-						var edit = false;
-						$(function(){
-							$("#editForm :input").change(function(){
-								edit = true;
-							});
-						});
-						
-						function noedit(){
-							//.var
-							if(edit==false){
-								location.href="/qkjmanage/active_addProduct?active.uuid="+${active.uuid};
-							}else{
-								if(confirm("您有未保存的信息,确认添加吗?确认后将丢失一部分信息。")){
-									location.href="/qkjmanage/active_addProduct?active.uuid="+${active.uuid};
-									}else{
-									 return false;
-									}
-							}
-							
-						}
-						</script>
+										
 									</s:if>
 									<s:if test="active.status==0 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEPOSM_ADD')">
 										<input type="button" id="addPosm" value="添加物料" />
@@ -685,19 +666,7 @@
 							<s:elseif test="null != active && 'mdy' == viewFlag && active.status==0">
 								<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_MDY')">
 									<s:submit name="save" value="保存" action="active_save" cssClass="input-blue" />
-									<script type="text/javascript">
-										$(function(){
-											$("#editForm :input").change(function(){
-												//if()cellarOrder_check0 10 15 20
-												//$("#rebates_mdyRebatesStatus0").attr("disabled","disabled");
-												if ($("#mdyStatus0").length > 0) {
-													$("#mdyStatus0").attr("disabled", "disabled");
-												}
-
-												$("#messages").text("请先保存后才能做其他操作!");
-											});
-										});
-									</script>
+									
 								</s:if>
 								<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_STATUS0')">
 									<s:submit id="mdyStatus0" name="mdyStatus0" value="报审" action="mdyStatus0" onclick="return isOp('确定执行此操作?');" cssClass="input-yellow" />
@@ -739,19 +708,10 @@
 									<s:submit id="mdyActiveSDStatus10" name="mdyActiveSDStatus10" cssClass="input-green" value="经理/大区-审核通过" action="mdyActiveSDStatus10" onclick="return isOp('确定执行此操作?');" />
 									<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
 								</s:if>
-								<s:if test="active.apply_dept.substring(0,4)!='2302' && active.apply_dept!='22030' ">
-									<!-- 不是西藏大区且不是新疆 -->
-									<s:if test="30==active.sd_status && 30==active.smd_status && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS30')">
-										<s:submit id="mdyActiveSDStatus30" name="mdyActiveSDStatus30" cssClass="input-green" value="运营总监-审核通过" action="mdyActiveSDStatus30" onclick="return isOp('确定执行此操作?');" />
-										<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
-									</s:if>
+								<s:if test="30==active.sd_status && 30==active.smd_status && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS30')">
+									<s:submit id="mdyActiveSDStatus30" name="mdyActiveSDStatus30" cssClass="input-green" value="运营总监-审核通过" action="mdyActiveSDStatus30" onclick="return isOp('确定执行此操作?');" />
+									<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
 								</s:if>
-								<s:else>
-									<s:if test="30==active.sd_status && 10==active.smd_status && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS30')">
-										<s:submit id="mdyActiveSDStatus30" name="mdyActiveSDStatus30" cssClass="input-green" value="运营总监-审核通过" action="mdyActiveSDStatus30" onclick="return isOp('确定执行此操作?');" />
-										<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
-									</s:if>
-								</s:else>
 
 								<s:if test="40==active.sd_status && active.smd_status>=40 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS40')">
 									<s:submit id="mdyActiveSDStatus40" name="mdyActiveSDStatus40" cssClass="input-green" value="业务副总-审核通过" action="mdyActiveSDStatus40" onclick="return isOp('确定执行此操作?');" />
@@ -783,8 +743,6 @@
 						<div class="label_hang">
 							<div class="label_ltit">销管审核:</div>
 							<div class="label_rwbenx">
-								<s:if test="active.apply_dept.substring(0,4)!='2302' && active.apply_dept!='22030' ">
-									<!-- 不是西藏大区且不是新疆 -->
 									<s:if test="10==active.smd_status && 30==active.sd_status && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_SMDSTATUS10')">
 										<s:submit id="mdyActiveSMDStatus10" name="mdyActiveSMDStatus10" cssClass="input-green" value="销管经理-审核通过" action="mdyActiveSMDStatus10" onclick="return isOp('确定执行此操作?');" />
 										<s:submit id="mdyActiveSMDStatus5" name="mdyActiveSMDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSMDStatus5" onclick="return isOp('确定执行此操作?');" />
@@ -793,13 +751,6 @@
 										<s:submit id="mdyActiveSMDStatus50" name="mdyActiveSMDStatus50" cssClass="input-green" value="销管部经理-审核通过" action="mdyActiveSMDStatus50" onclick="return isOp('确定执行此操作?');" />
 										<s:submit id="mdyActiveSMDStatus5" name="mdyActiveSMDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSMDStatus5" onclick="return isOp('确定执行此操作?');" />
 									</s:if>
-								</s:if>
-								<s:else>
-									<s:if test="10==active.smd_status && active.sd_status==40 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_SMDSTATUS50')">
-										<s:submit id="mdyActiveSMDStatus50" name="mdyActiveSMDStatus50" cssClass="input-green" value="销管部经理-审核通过" action="mdyActiveSMDStatus50" onclick="return isOp('确定执行此操作?');" />
-										<s:submit id="mdyActiveSMDStatus5" name="mdyActiveSMDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSMDStatus5" onclick="return isOp('确定执行此操作?');" />
-									</s:if>
-								</s:else>
 
 								<s:if test="40==active.smd_status  && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_SMDSTATUS40')">
 									<s:submit id="mdyActiveSMDStatus40" name="mdyActiveSMDStatus40" cssClass="input-green" value="销管副总-审核通过" action="mdyActiveSMDStatus40" onclick="return isOp('确定执行此操作?');" />
@@ -839,19 +790,10 @@
 						<div class="label_hang">
 							<div class="label_ltit">财务审核:</div>
 							<div class="label_rwbenx">
-								<!-- 财务 -->
-								<s:if test="%{code.substring(0,2)=='21'}">
-									<s:if test="null != active && active.sd_status>=40 && 10!=active.fd_status && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_FDSTATUS10')">
-										<s:submit id="mdyActiveFDSTATUS10" name="mdyActiveFDSTATUS10" cssClass="input-green" value="财务-审核通过" action="mdyActiveFDSTATUS10" onclick="return isOp('确定执行此操作?');" />
-										<s:submit id="mdyActiveFDStatus5" name="mdyActiveFDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveFDStatus" onclick="return isOp('确定执行此操作?');" />
-									</s:if>
-								</s:if>
-								<s:else>
 									<s:if test="(50==active.smd_status || 60==active.smd_status) && 10!=active.fd_status && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_FDSTATUS10')">
 										<s:submit id="mdyActiveFDSTATUS10" name="mdyActiveFDSTATUS10" cssClass="input-green" value="财务-审核通过" action="mdyActiveFDSTATUS10" onclick="return isOp('确定执行此操作?');" />
 										<s:submit id="mdyActiveFDStatus5" name="mdyActiveFDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveFDStatus" onclick="return isOp('确定执行此操作?');" />
 									</s:if>
-								</s:else>
 								<div class="statusInline">
 									财务部审核状态:
 									<s:if test="active.fd_status==0">未确认</s:if>
@@ -928,7 +870,6 @@
 				</div>
 			</s:form>
 		</div>
-		
 		
 
 		<!-- 添加销售物料(公司) -->
@@ -1014,6 +955,9 @@
 				</div>
 			</s:form>
 		</div>
+
+		<!-- 添加随量信息 -->
+
 		<div id="viewMember" class="label_con idialog" title="客户实时信息">
 			<div class="label_main">
 				<div class="label_hang">
@@ -1054,7 +998,19 @@
 			</s:form>
 		</div>
 		<s:action name="ref_foot" namespace="/manager" executeResult="true" />
-		<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.ui.datepicker-zh.js" />"></script>
+		<script type="text/javascript">
+										$(function(){
+											$("#editForm :input").change(function(){
+												//if()cellarOrder_check0 10 15 20
+												//$("#rebates_mdyRebatesStatus0").attr("disabled","disabled");
+												if ($("#mdyStatus0").length > 0) {
+													$("#mdyStatus0").attr("disabled", "disabled");
+												}
+
+												$("#messages").text("请先保存后才能做其他操作!");
+											});
+										});
+									</script>
 		<script type="text/javascript">
 			var add_per_price_input = $("#form_addProductForm :input[name='activeProduct.per_price']");
 			var add_num_input = $("#form_addProductForm :input[name='activeProduct.num']");
@@ -1105,8 +1061,6 @@
 				}
 			}
 		</script>
-		<!-- 添加随量信息 -->
-
 		<script type="text/javascript">
 
 		$(function() { 
@@ -1154,43 +1108,28 @@
 				$("#fbprice").val($("#fupprice").val() - $("#fprice").val());
 			});
 		</script>
-<script type="text/javascript">
-var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
-var add_user='${customerRecode.add_user}';
-$(function(){
-	CommonUtil.pickrow('table1');
-	CommonUtil.pickrowAll('table1','uuidcheck');
-	$("#customerRecode_recode_time").datepicker();
-	$("#customerRecode_next_date").datepicker();
-	
-	if($("#userdept_codeid").val()!='') {
-		loadManagers($("#userdept_codeid").val());
-	}
-	createCustomerView();
- });
+		
+		<script type="text/javascript">
+			$(function(){
+				$("#approveFrom").dialog({ autoOpen : false,
+				modal : true });
+			});
 
-var sobj02;
-var createCustomerView = function() {
-	//http://localhost:8888/qkjmanage/customer_load?viewFlag=mdy&customer.uuid=3
-	var w_width = $(window).width();
-	var w_height = $(window).height();
-	sobj02 = new DialogIFrame({
-		src:'',
-		title:"查看操作历史",
-		width:w_width*0.85,
-		height:w_height*0.85
-	});
-	sobj02.selfAction = function(val1,val2) {};
-	sobj02.create();
-	//sobj02.open();
-};
+			function openApprove(){
+				$("#approveFrom").dialog("open");
+			}
 
-var openCustomerView = function(customer_uuid) {
-	var iframeId = sobj02.getConid() + "iframe";
-	$("#"+iframeId).attr("src","/qkjmanage/active_history?active.uuid=" + customer_uuid);
-	sobj02.open();
-};
-</script>
+			//add_approve_flag
+			function addApproveCheck(flag){
+				if (window.confirm("确定要审阅吗?")) {
+					//alert(flag);
+					$("#add_approve_flag").val(flag);
+					return true;
+				} else {
+					return false;
+				}
+			}
+		</script>
 		<script type="text/javascript">
 	var infoeditor01;
 	$(function(){
@@ -1249,27 +1188,66 @@ var openCustomerView = function(customer_uuid) {
 		ajax.sendAjax();
 	}
 </script>
-		<script type="text/javascript">
-			$(function(){
-				$("#approveFrom").dialog({ autoOpen : false,
-				modal : true });
-			});
+<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.ui.datepicker-zh.js" />"></script>
+<script type="text/javascript">
+var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
+var add_user='${customerRecode.add_user}';
+$(function(){
+	CommonUtil.pickrow('table1');
+	CommonUtil.pickrowAll('table1','uuidcheck');
+	$("#customerRecode_recode_time").datepicker();
+	$("#customerRecode_next_date").datepicker();
+	
+	if($("#userdept_codeid").val()!='') {
+		loadManagers($("#userdept_codeid").val());
+	}
+	createCustomerView();
+ });
 
-			function openApprove(){
-				$("#approveFrom").dialog("open");
-			}
+var sobj02;
+var createCustomerView = function() {
+	//http://localhost:8888/qkjmanage/customer_load?viewFlag=mdy&customer.uuid=3
+	var w_width = $(window).width();
+	var w_height = $(window).height();
+	sobj02 = new DialogIFrame({
+		src:'',
+		title:"查看操作历史",
+		width:w_width*0.85,
+		height:w_height*0.85
+	});
+	sobj02.selfAction = function(val1,val2) {};
+	sobj02.create();
+	//sobj02.open();
+};
 
-			//add_approve_flag
-			function addApproveCheck(flag){
-				if (window.confirm("确定要审阅吗?")) {
-					//alert(flag);
-					$("#add_approve_flag").val(flag);
-					return true;
-				} else {
-					return false;
-				}
-			}
-		</script>
+var openCustomerView = function(customer_uuid) {
+	var iframeId = sobj02.getConid() + "iframe";
+	$("#"+iframeId).attr("src","/qkjmanage/active_history?active.uuid=" + customer_uuid);
+	sobj02.open();
+};
+</script>
+<script type="text/javascript">
+						var edit = false;
+						$(function(){
+							$("#editForm :input").change(function(){
+								edit = true;
+							});
+						});
+						
+						function noedit(){
+							//.var
+							if(edit==false){
+								location.href="/qkjmanage/active_addProduct?active.uuid="+${active.uuid};
+							}else{
+								if(confirm("您有未保存的信息,确认添加吗?确认后将丢失一部分信息。")){
+									location.href="/qkjmanage/active_addProduct?active.uuid="+${active.uuid};
+									}else{
+									 return false;
+									}
+							}
+							
+						}
+						</script>
 	</div>
 	<!-- HIDDEN AREA END -->
 </body>
