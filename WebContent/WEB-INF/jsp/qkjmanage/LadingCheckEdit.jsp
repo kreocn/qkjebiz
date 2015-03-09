@@ -14,7 +14,7 @@
 <div class="tab_right">
 	<div class="tab_warp main">
 	<div class="dq_step">
-		${path}
+		<a href='/manager/default'>首页</a> > <a href='/qkjmanage/lading_checkList?viewFlag=relist'>订单确认列表</a>> 审核页面
 		<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="lading_checkList"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a></span>
 	</div>
 	<s:form id="editForm" name="editForm" cssClass="validForm" action="lading_load" namespace="/qkjmanage" method="post" theme="simple">

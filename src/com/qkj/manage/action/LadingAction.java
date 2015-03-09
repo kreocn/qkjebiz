@@ -48,6 +48,7 @@ public class LadingAction extends ActionSupport {
 	private String viewFlag;
 	private int recCount;
 	private int pageSize;
+	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;销售订单";
 
 	public List<SalPromot> getSalPromots() {
 		return salPromots;
@@ -153,6 +154,14 @@ public class LadingAction extends ActionSupport {
 		this.salPromotsed = salPromotsed;
 	}
 
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+
 	public String list() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_LADING_LIST");
 		try {
@@ -165,6 +174,7 @@ public class LadingAction extends ActionSupport {
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 			this.setLadings(dao.list(map));
 			this.setRecCount(dao.getResultCount());
+			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;销售订单列表";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
@@ -199,6 +209,7 @@ public class LadingAction extends ActionSupport {
 				setMessage("你没有选择任何操作!");
 			} else if ("add".equals(viewFlag)) {
 				this.setLading(null);
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/lading_list?viewFlag=relist'>销售订单列表</a>&nbsp;&gt;&nbsp;增加销售订单";
 			} else if ("mdy".equals(viewFlag) || "view".equals(viewFlag) || "print".equals(viewFlag)) {
 				map.clear();
 				map.put("uuid", lading.getUuid());
@@ -244,6 +255,7 @@ public class LadingAction extends ActionSupport {
 					//SalPromotDAO sdao = new SalPromotDAO();
 					//map.clear();
 					//this.setSalPromots(sdao.list(map));
+					path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/lading_list?viewFlag=relist'>销售订单列表</a>&nbsp;&gt;&nbsp;修改销售订单";
 				}
 			} else {
 				this.setLading(null);
