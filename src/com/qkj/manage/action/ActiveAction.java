@@ -1886,7 +1886,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				for(int i=0;i<activeMapBs.size();i++){
 				    active=new Active();
 				    ToolsUtil.getBeanByMap(active, activeMapBs.get(i));
-				    cs.checkSkip(active, 4);
+				    cs.checkSkip2(active, 4);
 				}
 			}
 			
@@ -1896,7 +1896,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				for(int i=0;i<activeMaps.size();i++){
 				    active=new Active();
 				    ToolsUtil.getBeanByMap(active, activeMaps.get(i));
-				    cs.checkSkip(active, 14);
+				    cs.checkSkip2(active, 14);
 				}
 			}
 			
@@ -1906,7 +1906,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				for(int i=0;i<activeMapXs.size();i++){
 				    active=new Active();
 				    ToolsUtil.getBeanByMap(active, activeMapXs.get(i));
-				    cs.checkSkip(active, 2);
+				    cs.checkSkip2(active, 2);
 				}
 			}
 			
@@ -1916,7 +1916,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				for(int i=0;i<activeMapJs.size();i++){
 				    active=new Active();
 				    ToolsUtil.getBeanByMap(active, activeMapJs.get(i));
-				    cs.checkSkip(active, 12);
+				    cs.checkSkip2(active, 12);
 				}
 			}
 		
