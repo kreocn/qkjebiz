@@ -7,14 +7,22 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- CustomerRecode Start -->
 		<action name="customerRecode_list" class="com.qkj.manage.action.CustomerRecodeAction" method="list">
-			<result>/jsp/qkjmanage/CustomerRecodeList.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/CustomerRecodeList.jsp</result>
 		</action>
 		<action name="customerRecode_load" class="com.qkj.manage.action.CustomerRecodeAction" method="load">
-			<result>/jsp/qkjmanage/CustomerRecodeEdit.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/CustomerRecodeEdit.jsp</result>
 		</action>
 		<action name="customerRecode_add" class="com.qkj.manage.action.CustomerRecodeAction" method="add">
 			<result type="redirectAction">
 				<param name="actionName">customer_load</param>
+				<param name="customer.uuid">${customerRecode.customer_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="customerRecode_addt" class="com.qkj.manage.action.CustomerRecodeAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">customer_loadt</param>
 				<param name="customer.uuid">${customerRecode.customer_id}</param>
 				<param name="viewFlag">mdy</param>
 				<param name="message">${message}</param>
@@ -29,6 +37,14 @@
 		<action name="customerRecode_del" class="com.qkj.manage.action.CustomerRecodeAction" method="del">
 			<result type="redirectAction">
 				<param name="actionName">customer_load</param>
+				<param name="customer.uuid">${customerRecode.customer_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="customerRecode_delt" class="com.qkj.manage.action.CustomerRecodeAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">customer_loadt</param>
 				<param name="customer.uuid">${customerRecode.customer_id}</param>
 				<param name="viewFlag">mdy</param>
 				<param name="message">${message}</param>

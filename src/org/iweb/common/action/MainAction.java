@@ -1,81 +1,51 @@
 package org.iweb.common.action;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.iweb.common.dao.MenuDAO;
-import org.iweb.sys.ToolsUtil;
-import org.iweb.sys.domain.UserPrivilege;
+import org.iweb.sys.ContextHelper;
+import org.iweb.sys.domain.UserLoginInfo;
 
 import com.opensymphony.xwork2.ActionSupport;
 
 public class MainAction extends ActionSupport {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -7995560530227347448L;
-
-	public String left() throws Exception {
-		// Map<String, Object> map = new HashMap<String, Object>();
-		try {
-			// if (ContextHelper.isAdmin()) {
-			this.setMenus(dao.listSysMenu(null));
-			// } else {
-			// ArrayList<String> userPermits = new ArrayList().addAll(ContextHelper.getUserLoginPermits().keySet());
-			// ArrayList<String> userPermits = new ArrayList<String>();
-			// userPermits.addAll(ContextHelper.getUserLoginPermits().keySet());
-			// if (userPermits == null || userPermits.size() == 0) {
-			// this.setMenu(null);
-			// } else {
-			// map.clear();
-			// map.put("user_permits", userPermits);
-			// this.setMenus(dao.listSysMenu(map));
-			// }
-			// }
-
-		} catch (Exception e) {
-			log.error(this.getClass().getName() + "!list 读取数据错误:" + ToolsUtil.getStackTrace(e));
-			throw new Exception(this.getClass().getName() + "!list 读取数据错误:" + ToolsUtil.getStackTraceHTML(e));
-		}
-		return SUCCESS;
-	}
-
-	public String top() throws Exception {
-		// TODO Auto-generated method stub
-		return SUCCESS;
-	}
-
-	public String main() throws Exception {
-		// TODO Auto-generated method stub
-		return SUCCESS;
-	}
-
 	private static Log log = LogFactory.getLog(MenuAction.class);
-	private MenuDAO dao = new MenuDAO();
-	private Map<String, Object> map = new HashMap<String, Object>();
-
-	private UserPrivilege menu;
-	private List<UserPrivilege> menus;
 	private String message;
+	private String user_name;
+	private String dept_code;
+	private String org_name;
+	private String dept_name;
 
-	public UserPrivilege getMenu() {
-		return menu;
+	public String getDept_code() {
+		return dept_code;
 	}
 
-	public void setMenu(UserPrivilege menu) {
-		this.menu = menu;
+	public void setDept_code(String dept_code) {
+		this.dept_code = dept_code;
 	}
 
-	public List<UserPrivilege> getMenus() {
-		return menus;
+	public String getOrg_name() {
+		return org_name;
 	}
 
-	public void setMenus(List<UserPrivilege> menus) {
-		this.menus = menus;
+	public void setOrg_name(String org_name) {
+		this.org_name = org_name;
+	}
+
+	public String getDept_name() {
+		return dept_name;
+	}
+
+	public void setDept_name(String dept_name) {
+		this.dept_name = dept_name;
+	}
+
+	public String getUser_name() {
+		return user_name;
+	}
+
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
 	}
 
 	public String getMessage() {
@@ -85,4 +55,18 @@ public class MainAction extends ActionSupport {
 	public void setMessage(String message) {
 		this.message = message;
 	}
+
+	public String nav() throws Exception {
+		UserLoginInfo ulf = ContextHelper.getUserLoginInfo();
+		this.setUser_name(ulf.getUser_name());
+		this.setDept_code(ulf.getDept_code());
+		this.setDept_name(ulf.getDept_cname());
+		this.setOrg_name(ulf.getOrg_name());
+		return SUCCESS;
+	}
+
+	public String main() throws Exception {
+		return SUCCESS;
+	}
+
 }

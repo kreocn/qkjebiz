@@ -7,7 +7,7 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- Apply Start -->
 		<action name="apply_list" class="com.qkj.manage.action.ApplyAction" method="list">
-			<result>/jsp/qkjmanage/ApplyList.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/ApplyList.jsp</result>
 		</action>
 		<action name="apply_relist" class="com.qkj.manage.action.ApplyAction" method="relist">
 			<result type="redirectAction">
@@ -16,10 +16,10 @@
 			</result>
 		</action>
 		<action name="apply_load" class="com.qkj.manage.action.ApplyAction" method="load">
-			<result>/jsp/qkjmanage/ApplyEdit.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/ApplyEdit.jsp</result>
 		</action>
 		<action name="apply_print" class="com.qkj.manage.action.ApplyAction" method="view">
-			<result>/jsp/qkjmanage/ApplyView.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/ApplyView.jsp</result>
 		</action>
 		<action name="apply_add" class="com.qkj.manage.action.ApplyAction" method="add">
 			<result type="redirectAction">

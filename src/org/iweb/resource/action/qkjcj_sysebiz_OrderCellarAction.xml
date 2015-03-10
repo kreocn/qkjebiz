@@ -20,7 +20,7 @@
 			name="errorMessage">${errorMessage}</param> <param name="message">${message}</param> </result> </action> -->
 		<!-- New Start -->
 		<action name="orderCellar_list" class="com.qkjsys.ebiz.action.OrderCellarAddAction" method="listCellarByOrder">
-			<result name="success">/jsp/sysebiz/OrderCellarList.jsp</result>
+			<result name="success">/WEB-INF/jsp/sysebiz/OrderCellarList.jsp</result>
 		</action>
 		<action name="orderCellar_add" class="com.qkjsys.ebiz.action.OrderCellarAddAction" method="add">
 			<result type="redirectAction">

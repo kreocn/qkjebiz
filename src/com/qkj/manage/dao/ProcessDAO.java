@@ -41,13 +41,13 @@ public class ProcessDAO extends AbstractDAO {
 	 * @param p_status05
 	 */
 	public void addProcess(Integer p_type, Integer p_bizid, String p_sign, String p_note, Integer p_status01, Integer p_status02, Integer p_status03,
-			Integer p_status04, Integer p_status05) {
+			Integer p_status04, Integer p_status05,String loginUser) {
 		MyProcess process = new MyProcess();
 		process.setProcess_id(p_type);
 		process.setBiz_id(p_bizid);
 		process.setBiz_sign(p_sign);
 		process.setBiz_note(p_note);
-		process.setBiz_user(ContextHelper.getUserLoginUuid());
+		process.setBiz_user(loginUser);
 		process.setBiz_time(new Date());
 		process.setBiz_status01(p_status01);
 		process.setBiz_status02(p_status02);
@@ -58,8 +58,8 @@ public class ProcessDAO extends AbstractDAO {
 	}
 
 	public void addProcess(Integer p_type, Integer p_bizid, String p_sign, String p_note, Integer p_status01, Integer p_status02, Integer p_status03,
-			Integer p_status04) {
-		addProcess(p_type, p_bizid, p_sign, p_note, p_status01, p_status02, p_status03, p_status04, null);
+			Integer p_status04,String loginUser) {
+		addProcess(p_type, p_bizid, p_sign, p_note, p_status01, p_status02, p_status03, p_status04, null,loginUser);
 	}
 
 	public void addProcess(Integer p_type, Integer p_bizid, String p_sign, String p_note, Integer p_status01, Integer p_status02, Integer p_status03) {

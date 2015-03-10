@@ -17,9 +17,9 @@
 	<insert id="sys_addPrivileges" parameterClass="privilege">
 		<![CDATA[ 
 			Insert Into s_sys_privilege(uuid,privilege_name,parent_privilege,descriptions,privilege_id,privilege_type,is_ajax,ajax_map_id,is_menu,
-			menu_url,menu_target,menu_priority,menu_title,lm_user,lm_time)
+			menu_url,menu_target,menu_priority,menu_title,lm_user,lm_time,module)
 			Values (#uuid#,#privilege_name#,#parent_privilege#,#descriptions#,#privilege_id#,#privilege_type#,#is_ajax#,#ajax_map_id#,
-			#is_menu#,#menu_url#,#menu_target#,#menu_priority#,#menu_title#,#lm_user#,#lm_time#)
+			#is_menu#,#menu_url#,#menu_target#,#menu_priority#,#menu_title#,#lm_user#,#lm_time#,#module#)
 		]]>
 	</insert>
 	<update id="sys_mdyPrivileges" parameterClass="privilege">
@@ -38,7 +38,8 @@
 				menu_priority=#menu_priority#,
 				menu_title=#menu_title#,				
 				lm_user=#lm_user#,
-				lm_time=#lm_time#
+				lm_time=#lm_time#,
+				module=#module#
 			Where uuid=#uuid#
 		]]>
 	</update>
@@ -399,8 +400,8 @@
 	<typeAlias alias="menu" type="org.iweb.sys.domain.UserPrivilege" />
 	<select id="sys_getSysMenus" resultClass="menu" parameterClass="java.util.Map">
 		<![CDATA[ 
-			Select * From s_sys_privilege Where is_menu = 1 
-			And PRIVILEGE_TYPE = 1
+			SELECT UUID,PRIVILEGE_ID,PRIVILEGE_NAME,PARENT_PRIVILEGE,MENU_URL,MENU_TARGET,MENU_TITLE,module 
+			FROM s_sys_privilege Where is_menu = 1	And PRIVILEGE_TYPE = 1
 		]]>
 		<isNotNull prepend="AND" property="user_permits">
 			<![CDATA[ privilege_id In ]]>
@@ -411,8 +412,8 @@
 
 	<select id="sys_getUserMenus" resultClass="menu" parameterClass="java.util.Map">
 		<![CDATA[ 
-			Select * From s_sys_privilege Where is_menu = 1 
-			And PRIVILEGE_TYPE = 0
+			SELECT UUID,PRIVILEGE_ID,PRIVILEGE_NAME,PARENT_PRIVILEGE,MENU_URL,MENU_TARGET,MENU_TITLE,module  
+			FROM s_sys_privilege Where is_menu = 1 And PRIVILEGE_TYPE = 0
 		]]>
 		<isNotNull prepend="AND" property="user_permits">
 			<![CDATA[ privilege_id In ]]>

@@ -114,7 +114,7 @@ function ShowPage(v_aPage) {
 	};
 	
 	this.show_html = function(recCount,pageSize,iPageNum) {
-		return this.show("","","页次:<font color='red'>","</font>/","<font color='red'>","</font>页&nbsp;","&nbsp;每页<font color='red'>","</font>条&nbsp;","&nbsp;共<font color='red'>","</font>个记录&nbsp;&nbsp;","首页","上一页","下一页","尾页","&nbsp;&nbsp;到","<font color='red'>","</font>","[<font color='red'>","</font>]","","","&nbsp;","&nbsp;",recCount,pageSize,iPageNum);
+		return this.show("","","<a class='disabled'>","/","","</a>","","","<a class='disabled'>","</a>","首页","&lt;","&gt;","尾页","","","","","","","","","",recCount,pageSize,iPageNum);
 	};
 }
 

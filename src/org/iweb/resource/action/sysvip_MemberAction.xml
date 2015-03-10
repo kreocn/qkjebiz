@@ -7,10 +7,10 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- Member Start -->
 		<action name="member_list" class="org.iweb.sysvip.action.MemberAction" method="list">
-			<result>/jsp/sysvip/MemberList.jsp</result>
+			<result>/WEB-INF/jsp/sysvip/MemberList.jsp</result>
 		</action>
 		<action name="member_load" class="org.iweb.sysvip.action.MemberAction" method="load">
-			<result>/jsp/sysvip/MemberEdit.jsp</result>
+			<result>/WEB-INF/jsp/sysvip/MemberEdit.jsp</result>
 		</action>
 		<action name="member_add" class="org.iweb.sysvip.action.MemberAction" method="add">
 			<result type="redirectAction">
@@ -39,7 +39,7 @@
 		</action>
 
 		<action name="distribution_list" class="org.iweb.sysvip.action.MemberAction" method="list">
-			<result>/jsp/sysvip/MemberDistribution.jsp</result>
+			<result>/WEB-INF/jsp/sysvip/MemberDistribution.jsp</result>
 		</action>
 
 		<action name="member_distribution" class="org.iweb.sysvip.action.MemberAction" method="distribution">

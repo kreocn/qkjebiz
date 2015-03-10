@@ -6,7 +6,7 @@
 	<package name="qkjmanage_common" extends="default" namespace="/qkjmanage">
 		<default-interceptor-ref name="myStackIndex" />
 		<action name="qkjm_addProducts" class="com.qkj.manage.action.ManageCommonAction" method="products">
-			<result>/jsp/qkjmanage/AddProducts.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/AddProducts.jsp</result>
 		</action>
 	</package>
 </struts>

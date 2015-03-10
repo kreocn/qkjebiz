@@ -91,13 +91,9 @@ public abstract class SimpleReport {
 	 */
 	public String getHeadHtml() {
 		StringBuffer sb = new StringBuffer();
-		sb.append("<div class=\"itabletitle\">").append(getSerachName()).append("</div>");
-		sb.append("<div class=\"ilistsearch\">");
-
+		sb.append("<div class=\"dq_step\">").append(getSerachName()).append("</div>");
 		sb.append("<form id=\"simple_search\" name=\"simple_search\" action=\"").append(Parameters.getRelativePath())
-				.append("/rpt/simple\" method=\"get\"> ");
-		sb.append("<table class=\"ilisttable\" id=\"serach_table\" width=\"100%\" border=\"1\" cellspacing=\"0\" cellpadding=\"0\" bordercolor=\"#8B8B8B\">");
-
+		.append("rpt/simple\" method=\"get\"> ");
 		int i = 0;
 		Object tmp_value;
 		String tmp_str;
@@ -143,80 +139,77 @@ public abstract class SimpleReport {
 					log.warn("(getTmpStr)转换参数出现异常!" + col.getColumnName(), e);
 					tmp_str = "";
 				}
-
-				// 描绘控件
 				if (i % 2 == 0)
-					sb.append("<tr>");
-				sb.append("<td class=\"firstRow\">").append(col.getColumnTitle()).append(":</td> ");
-				sb.append("<td class=\"secRow\">");
-
-				if (col.getSearchObjType() == SimpleReport.ObjType_Text) {// 当控件为文本时 SimpleReport.ObjType_Text
-					sb.append("<input type=\"text\" name=").append(col.getColumnName()).append(" value=\"")
-							.append(tmp_str).append("\" />");
-				} else if (col.getSearchObjType() == SimpleReport.ObjType_Date) {// 当控件为时间时 SimpleReport.ObjType_Text
-					sb.append("<input type=\"text\" id=\"").append(col.getColumnName()).append("_id")
-							.append("\" name=\"").append(col.getColumnName()).append("\" value=\"").append(tmp_str)
-							.append("\" />");
-					sb.append("<script type=\"text/javascript\">$(\"#").append(col.getColumnName()).append("_id")
-							.append("\").datepicker();</script>");
-				} else if (col.getSearchObjType() == SimpleReport.ObjType_Select) {
-					sb.append("<select name=\"").append(col.getColumnName()).append("\">");
-					sb.append("<option value=\"\">请选择</option>");
-					for (Iterator<ListObject> sit = col.getSelectList().iterator(); sit.hasNext();) {
-						ListObject lo = sit.next();
-						sb.append("<option value=\"").append(lo.getKey()).append("\" ");
-						if (lo.getKey().equals(tmp_str)) {
-							sb.append(" selected=\"selected\" ");
-						}
-						sb.append(">").append(lo.getValue()).append("</option>");
-					}
-					sb.append("</select>");
-				} else if (col.getSearchObjType() == SimpleReport.ObjType_Radio) {
-					for (Iterator<ListObject> sit = col.getSelectList().iterator(); sit.hasNext();) {
-						ListObject lo = sit.next();
-						sb.append("<input name=\"").append(col.getColumnName()).append("\" ");
-						sb.append("type=\"radio\" value=\"").append(lo.getKey()).append("\" ");
-						if (lo.getKey().equals(tmp_str)) {
-							sb.append(" checked=\"checked\" ");
-						}
-						sb.append(" /> ").append(lo.getValue()).append(" ");
-					}
-				} else if (col.getSearchObjType() == SimpleReport.ObjType_CheckBox) {
-					for (Iterator<ListObject> sit = col.getSelectList().iterator(); sit.hasNext();) {
-						ListObject lo = sit.next();
-						sb.append("<input name=\"").append(col.getColumnName()).append("\" ");
-						sb.append("type=\"checkbox\" value=\"").append(lo.getKey()).append("\" ");
-						if (lo.getKey().equals(tmp_str)) {
-							sb.append(" checked=\"checked\" ");
-						}
-						sb.append(" /> ").append(lo.getValue()).append(" ");
-					}
+		sb.append("<div class=\"label_main\">");
+		sb.append("<div class=\"label_hang\">");
+		sb.append("<div class=\"label_ltit\">").append(col.getColumnTitle()).append(":</div> ");
+		sb.append("<div class=\"label_rwben label_rwb\">");
+		if (col.getSearchObjType() == SimpleReport.ObjType_Text) {// 当控件为文本时 SimpleReport.ObjType_Text
+			sb.append("<input type=\"text\" name=").append(col.getColumnName()).append(" value=\"")
+					.append(tmp_str).append("\" />");
+		} else if (col.getSearchObjType() == SimpleReport.ObjType_Date) {// 当控件为时间时 SimpleReport.ObjType_Text
+			sb.append("<input type=\"text\" id=\"").append(col.getColumnName()).append("_id")
+					.append("\" name=\"").append(col.getColumnName()).append("\" value=\"").append(tmp_str)
+					.append("\" />");
+			sb.append("<script type=\"text/javascript\">$(\"#").append(col.getColumnName()).append("_id")
+					.append("\").datepicker();</script>");
+		} else if (col.getSearchObjType() == SimpleReport.ObjType_Select) {
+			sb.append("<select name=\"").append(col.getColumnName()).append("\">");
+			sb.append("<option value=\"\">请选择</option>");
+			for (Iterator<ListObject> sit = col.getSelectList().iterator(); sit.hasNext();) {
+				ListObject lo = sit.next();
+				sb.append("<option value=\"").append(lo.getKey()).append("\" ");
+				if (lo.getKey().equals(tmp_str)) {
+					sb.append(" selected=\"selected\" ");
 				}
-				sb.append("</td>");
-				if (i % 2 == 1)
-					sb.append("</tr>");
-				i++;
+				sb.append(">").append(lo.getValue()).append("</option>");
+			}
+			sb.append("</select>");
+		} else if (col.getSearchObjType() == SimpleReport.ObjType_Radio) {
+			for (Iterator<ListObject> sit = col.getSelectList().iterator(); sit.hasNext();) {
+				ListObject lo = sit.next();
+				sb.append("<input name=\"").append(col.getColumnName()).append("\" ");
+				sb.append("type=\"radio\" value=\"").append(lo.getKey()).append("\" ");
+				if (lo.getKey().equals(tmp_str)) {
+					sb.append(" checked=\"checked\" ");
+				}
+				sb.append(" /> ").append(lo.getValue()).append(" ");
+			}
+		} else if (col.getSearchObjType() == SimpleReport.ObjType_CheckBox) {
+			for (Iterator<ListObject> sit = col.getSelectList().iterator(); sit.hasNext();) {
+				ListObject lo = sit.next();
+				sb.append("<input name=\"").append(col.getColumnName()).append("\" ");
+				sb.append("type=\"checkbox\" value=\"").append(lo.getKey()).append("\" ");
+				if (lo.getKey().equals(tmp_str)) {
+					sb.append(" checked=\"checked\" ");
+				}
+				sb.append(" /> ").append(lo.getValue()).append(" ");
 			}
 		}
-
-		if (i % 2 == 1) {
-			sb.append("<td class=\"firstRow\"></td> ");
-			sb.append("<td class=\"secRow\"></td>");
-		}
-		sb.append("</tr>");
-
-		sb.append("<tr><td colspan=\"4\" class=\"buttonarea\">");
-		sb.append("<input name=\"initClassName\" type=\"hidden\" value=\"").append(getInitShortClassName())
-				.append("\"/>");
-		sb.append("<input type=\"submit\" value=\"查询\"/>");
-		// sb.append("<input type=\"button\" value=\"导出\"/>");
-		sb.append("<input type=\"reset\" value=\"重置\"/>");
-		sb.append("</td></tr>");
-
-		sb.append("</table>");
-		sb.append("</form>");
-
 		sb.append("</div>");
+		sb.append("</div>");
+		sb.append("<div class=\"label_hang label_button tac\">");
+		sb.append("<input name=\"initClassName\" type=\"hidden\" value=\"").append(getInitShortClassName())
+		.append("\"/>");
+		sb.append("<input type=\"submit\" value=\"查询\"/>");
+		sb.append("<input type=\"reset\" value=\"重置\"/>");
+		sb.append("</div>");
+		if (i % 2 == 1)
+			sb.append("</div>");
+		i++;
+			}
+		}
+		sb.append("</form>");
+		
+		
+		sb.append("<div class=\"ilistsearch\">");
+
+		sb.append("<form id=\"simple_search\" name=\"simple_search\" action=\"").append(Parameters.getRelativePath())
+				.append("rpt/simple\" method=\"get\"> ");
+		sb.append("<table class=\"ilisttable\" id=\"serach_table\" width=\"100%\" border=\"1\" cellspacing=\"0\" cellpadding=\"0\" bordercolor=\"#8B8B8B\">");
+
+				// 描绘控件
+
 		return sb.toString();
 	}
 

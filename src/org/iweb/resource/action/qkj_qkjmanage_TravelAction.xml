@@ -7,7 +7,7 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- Travel Start -->
 		<action name="travel_list" class="com.qkj.manage.action.TravelAction" method="list">
-			<result>/jsp/qkjmanage/TravelList.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/TravelList.jsp</result>
 		</action>
 		<action name="travel_relist" class="com.qkj.manage.action.TravelAction" method="relist">
 			<result type="redirectAction">
@@ -16,10 +16,10 @@
 			</result>
 		</action>
 		<action name="travel_load" class="com.qkj.manage.action.TravelAction" method="load">
-			<result>/jsp/qkjmanage/TravelEdit.jsp</result>
-			<result name="print1">/jsp/qkjmanage/TravelPrint1.jsp</result>
-			<result name="print2">/jsp/qkjmanage/TravelPrint2.jsp</result>
-			<result name="print3">/jsp/qkjmanage/TravelPrint3.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/TravelEdit.jsp</result>
+			<result name="print1">/WEB-INF/jsp/qkjmanage/TravelPrint1.jsp</result>
+			<result name="print2">/WEB-INF/jsp/qkjmanage/TravelPrint2.jsp</result>
+			<result name="print3">/WEB-INF/jsp/qkjmanage/TravelPrint3.jsp</result>
 		</action>
 		<action name="travel_del" class="com.qkj.manage.action.TravelAction" method="del">
 			<result type="redirectAction">
