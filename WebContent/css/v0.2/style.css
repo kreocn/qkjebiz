@@ -894,11 +894,9 @@ footer {
 .botmsg {
 	float: right; padding-right: 0.8rem; font-size: 14px;
 }
-
 .layout_iframe {
 	width: 100%; height: 100%; overflow: auto; border: none;
 }
-
 .yesarea {
 display: inline-block; width: 16px; height: 16px; background: url("../../images/icon/ico_warn.png") transparent no-repeat 0 0;
 }
@@ -907,6 +905,8 @@ display: inline-block; width: 16px; height: 16px; background: url("../../images/
 }
 .ui-menu .ui-menu-item a{font-size:14px;}
 .firstRow{text-align:right;}
+.left_flsort{background-color: #f0f0f0;float:left; margin:0 10px 10px 0;width: 200px; overflow: auto;text-align:left;}
+
 @media screen and (max-width:1180px) {
 	.yesnull,.nonull,.success,.nosuc,.daisuc {
 		margin-top: 6px;
