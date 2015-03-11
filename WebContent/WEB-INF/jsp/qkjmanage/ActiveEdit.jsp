@@ -477,7 +477,7 @@
 									<div class="label_ltit">随量费用:</div>
 								</div>
 								<div class="label_hang">
-									<div class="label_ltit" style="font-weight: normal;">上期结余:</div>
+									<div class="label_ltit" style="font-weight: normal;">当前结余:</div>
 									<div class="label_rwben label_rwb">${active.m_upprice}</div>
 								</div>
 								<div class="label_hang">
@@ -494,7 +494,7 @@
 									<div class="label_ltit">市场基金:</div>
 								</div>
 								<div class="label_hang">
-									<div class="label_ltit" style="font-weight: normal;">上期结余:</div>
+									<div class="label_ltit" style="font-weight: normal;">当前结余:</div>
 									<div class="label_rwben label_rwb">${active.f_upprice }</div>
 								</div>
 								<div class="label_hang">
@@ -516,7 +516,7 @@
 									<div class="label_ltit">随量费用:</div>
 								</div>
 								<div class="label_hang">
-									<div class="label_ltit" style="font-weight: normal;">上期结余:</div>
+									<div class="label_ltit" style="font-weight: normal;">当前结余:</div>
 									<div class="label_rwben label_rwb">
 										<s:textfield id="upprice" name="active.m_upprice" cssClass="validate[required,custom[number]]" />
 									</div>
@@ -544,7 +544,7 @@
 									<div class="label_ltit">市场基金:</div>
 								</div>
 								<div class="label_hang">
-									<div class="label_ltit" style="font-weight: normal;">上期结余:</div>
+									<div class="label_ltit" style="font-weight: normal;">当前结余:</div>
 									<div class="label_rwben label_rwb">
 										<s:textfield id="fupprice" name="active.f_upprice" cssClass="validate[required,custom[number]]"></s:textfield>
 									</div>

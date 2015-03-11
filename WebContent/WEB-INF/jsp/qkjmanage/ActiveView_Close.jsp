@@ -436,7 +436,7 @@
 							<div class="label_ltit">随量费用:</div>
 						</div>
 						<div class="label_hang">
-							<div class="label_ltit" style="font-weight: normal;">上期结余:</div>
+							<div class="label_ltit" style="font-weight: normal;">当前结余:</div>
 							<div class="label_rwben label_rwb">
 								<s:if test="%{active.close_m_upprice==null}">&nbsp;(未填写)</s:if>
 								<s:else>&nbsp;${active.close_m_upprice}</s:else>
@@ -462,7 +462,7 @@
 							<div class="label_ltit">市场基金:</div>
 						</div>
 						<div class="label_hang">
-							<div class="label_ltit" style="font-weight: normal;">上期结余:</div>
+							<div class="label_ltit" style="font-weight: normal;">当前结余:</div>
 							<div class="label_rwben label_rwb">
 								<s:if test="%{active.close_f_upprice==null}">&nbsp;(未填写)</s:if>
 								<s:else>&nbsp;${active.close_f_upprice }</s:else>
