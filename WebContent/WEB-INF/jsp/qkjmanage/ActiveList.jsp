@@ -25,6 +25,9 @@ cursor: pointer;
 		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_ADD')">
 			<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="active_load"><s:param name="viewFlag">add</s:param></s:url>">添加申请单</a></span>
 		</s:if>
+		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_REINFORCE')">
+			<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="active_reinforce"></s:url>">补充数据</a></span>
+		</s:if>
 	</div>
 	<s:form id="serachForm" name="serachForm" action="active_list"  method="get" namespace="/qkjmanage" theme="simple">
  	<div class="label_con">
@@ -569,7 +572,7 @@ function kselect(){
 	if(parseInt(num)==12){//青藏总监
 		jnull();
 		document.getElementById("sd_status").options[4].selected = true; 
-		document.getElementById("smd_sta").options[3].selected = true;
+		document.getElementById("smd_sta").options[4].selected = true;
 		$("#userdept_codeid").val("2302");
 		$("#userdept_nameid").val("西藏大区");
 		document.getElementById("apply_is_sub_dept").checked=true;
@@ -578,7 +581,7 @@ function kselect(){
 	if(parseInt(num)==13){//新疆总监
 		jnull();
 		document.getElementById("sd_status").options[4].selected = true; 
-		document.getElementById("smd_sta").options[3].selected = true;
+		document.getElementById("smd_sta").options[4].selected = true;
 		$("#userdept_codeid").val("22030");
 		$("#userdept_nameid").val("新疆办事处");
 		document.getElementById("apply_is_sub_dept").checked=true;
@@ -685,7 +688,7 @@ function kselect(){
 	if(parseInt(num)==33){//
 		snull();
 		document.getElementById("clsdsta").options[4].selected = true; 
-		document.getElementById("clsmdsta").options[3].selected = true;
+		document.getElementById("clsmdsta").options[4].selected = true;
 		$("#userdept_codeid").val("2302");
 		$("#userdept_nameid").val("西藏大区");
 		document.getElementById("apply_is_sub_dept").checked=true;
@@ -693,7 +696,7 @@ function kselect(){
 	if(parseInt(num)==34){//
 		snull();
 		document.getElementById("clsdsta").options[4].selected = true; 
-		document.getElementById("clsmdsta").options[3].selected = true;
+		document.getElementById("clsmdsta").options[4].selected = true;
 		$("#userdept_codeid").val("22030");
 		$("#userdept_nameid").val("新疆办事处");
 		document.getElementById("apply_is_sub_dept").checked=true;

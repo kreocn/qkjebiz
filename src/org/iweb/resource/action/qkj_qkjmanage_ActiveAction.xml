@@ -425,6 +425,13 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
+		
+		<action name="active_reinforce" class="com.qkj.manage.action.ActiveAction" method="reinforce">
+			<result type="redirectAction">
+				<param name="actionName">active_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
 		<!-- Active End -->
 	</package>
 </struts>

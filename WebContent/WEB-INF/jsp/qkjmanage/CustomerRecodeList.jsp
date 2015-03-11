@@ -7,6 +7,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>客户回访记录列表--<s:text name="APP_NAME" /></title>
 <s:action name="ref_head" namespace="/manager" executeResult="true" />
+<style type="text/css">
+.ui-corner-all{z-index:999;}
+</style>
 </head>
 <body>
 <!-- 顶部和左侧菜单导航 -->

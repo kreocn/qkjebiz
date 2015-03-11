@@ -1,5 +1,10 @@
 package org.iweb.test;
 
+import org.iweb.sys.JSONUtil;
+import org.iweb.sys.ToolsUtil;
+import org.iweb.sys.cache.CacheFactory;
+import org.iweb.sys.cache.SysCacheLogic;
+import org.iweb.sys.cache.SysDBCacheLogic;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.util.JSONUtils;
@@ -14,13 +19,16 @@ public class test {
 	private StringBuffer sql = new StringBuffer();
 
 	public test() {
+		String str = (String)CacheFactory.getCacheInstance().get(SysDBCacheLogic.CACHE_DEPT_PREFIX_SUB+"210");//返回210所有子部门josn
+		String[] s = (String[])JSONUtil.toObject(str, String[].class);//转换成数组
+		ToolsUtil.isIn("21011", s);//判断在不在数组中
 		String[] ss = { "AAA", "BBB", "CCC", "DDD" };
 		String json = ToolsUtil.Object2JSON(ss).toString();
 		System.out.println(json);
 		JSONArray o = JSONArray.fromObject(json);
 		System.out.println(o.size());
 
-		String s = "AAA";
+		//String s = "AAA";
 		String js = ToolsUtil.Object2JSON(s).toString();
 		System.out.println(s);
 		// JSONArray os = JSONArray.fromObject(js);
