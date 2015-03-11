@@ -504,7 +504,7 @@ var openCustomerView = function(customer_uuid) {
 							<div class="label_ltit">随量费用:</div>
 						</div>
 						<div class="label_hang">
-							<div class="label_ltit" style="font-weight: normal;">上期结余:</div>
+							<div class="label_ltit" style="font-weight: normal;">当前结余:</div>
 							<div class="label_rwben label_rwb">
 								<s:if test="%{active.m_upprice==null}">&nbsp;(未填写)</s:if>
 								<s:else>&nbsp;${active.m_upprice}</s:else>
@@ -530,7 +530,7 @@ var openCustomerView = function(customer_uuid) {
 							<div class="label_ltit">市场基金:</div>
 						</div>
 						<div class="label_hang">
-							<div class="label_ltit" style="font-weight: normal;">上期结余:</div>
+							<div class="label_ltit" style="font-weight: normal;">当前结余:</div>
 							<div class="label_rwben label_rwb">
 								<s:if test="%{active.f_upprice==null}">&nbsp;(未填写)</s:if>
 								<s:else>&nbsp;${active.f_upprice }</s:else>
@@ -713,7 +713,7 @@ var openCustomerView = function(customer_uuid) {
 								<div class="label_ltit">随量费用:</div>
 							</div>
 							<div class="label_hang">
-								<div class="label_ltit" style="font-weight: normal;">上期结余:</div>
+								<div class="label_ltit" style="font-weight: normal;">当前结余:</div>
 								<div class="label_rwben label_rwb">
 
 									<s:textfield id="upprice" name="active.close_m_upprice" cssClass="validate[required,custom[number]]" />
@@ -742,7 +742,7 @@ var openCustomerView = function(customer_uuid) {
 								<div class="label_ltit">市场基金:</div>
 							</div>
 							<div class="label_hang">
-								<div class="label_ltit" style="font-weight: normal;">上期结余:</div>
+								<div class="label_ltit" style="font-weight: normal;">当前结余:</div>
 								<div class="label_rwben label_rwb">
 									<s:textfield id="fupprice" name="active.close_f_upprice" cssClass="validate[required,custom[number]]"></s:textfield>
 								</div>
@@ -775,7 +775,7 @@ var openCustomerView = function(customer_uuid) {
 								<div class="label_ltit">随量费用:</div>
 							</div>
 							<div class="label_hang">
-								<div class="label_ltit" style="font-weight: normal;">上期结余:</div>
+								<div class="label_ltit" style="font-weight: normal;">当前结余:</div>
 								<div class="label_rwben label_rwb">${ active.close_m_upprice}</div>
 							</div>
 							<div class="label_hang">
@@ -792,7 +792,7 @@ var openCustomerView = function(customer_uuid) {
 								<div class="label_ltit">市场基金:</div>
 							</div>
 							<div class="label_hang">
-								<div class="label_ltit" style="font-weight: normal;">上期结余:</div>
+								<div class="label_ltit" style="font-weight: normal;">当前结余:</div>
 								<div class="label_rwben label_rwb">${active.close_f_upprice }</div>
 							</div>
 							<div class="label_hang">

@@ -285,16 +285,10 @@ cursor: pointer;
 			</td>
 			<td class="td5">
 			<s:if test="%{fd_status==10}"><!-- 已审 -->
-			<a href="javascript:;"  data="${uuid}" class="success"></a>
-			<span id="leave_cause${uuid}" style="display:none;" class="leave_cause_shows">
-				操作人:${fd_user_name}<br/> 操作时间：${it:formatDate(fd_time,'yyyy-MM-dd hh:mm:ss')}
-			</span>
-			
+			<a href="javascript:;"  data="${uuid}" title="操作人:${fd_user_name}<br/> 操作时间：${it:formatDate(fd_time,'yyyy-MM-dd hh:mm:ss')}" class="success"></a>
 			</s:if>
-			<s:elseif test="%{fd_status==5}"><a href="javascript:;"  data="${uuid}"  class="nosuc"></a>
-			<span id="leave_cause${uuid}" style="display:none;" class="leave_cause_shows">
-				操作人:${fd_user_name}<br/> 操作时间：${it:formatDate(fd_time,'yyyy-MM-dd hh:mm:ss')}
-			</span>
+			<s:elseif test="%{fd_status==5}">
+			<a href="javascript:;"  data="${uuid}" title="操作人:${fd_user_name}<br/> 操作时间：${it:formatDate(fd_time,'yyyy-MM-dd hh:mm:ss')}"  class="nosuc"></a>
 			</s:elseif>
 			<s:else>
 			<a  class="daisuc"></a>
@@ -302,20 +296,13 @@ cursor: pointer;
 			</td>
 			<td class="td3">
 			<s:if test="%{close_fd_status==10}"><!-- 已审 -->
-			<a href="javascript:;"  data="${uuid}" class="success"></a>
-			<span id="leave_cause${uuid}" style="display:none;" class="leave_cause_shows">
-				操作人:${close_fd_name}<br/> 操作时间：${it:formatDate(close_fd_time,'yyyy-MM-dd hh:mm:ss')}
-			</span>
+			<a href="javascript:;"  data="${uuid}" title="操作人:${close_fd_name}<br/> 操作时间：${it:formatDate(close_fd_time,'yyyy-MM-dd hh:mm:ss')}" class="success"></a>
 			</s:if>
 			<s:elseif test="%{close_fd_status==5}"><a  class="nosuc"></a></s:elseif>
 			<s:else>
-			<a href="javascript:;"  data="${uuid}" class="daisuc"></a>
-			<span id="leave_cause${uuid}" style="display:none;" class="leave_cause_shows">
-				操作人:${close_fd_name}<br/> 操作时间：${it:formatDate(close_fd_time,'yyyy-MM-dd hh:mm:ss')}
-			</span>
+			<a href="javascript:;"  data="${uuid}" title="操作人:${close_fd_name}<br/> 操作时间：${it:formatDate(close_fd_time,'yyyy-MM-dd hh:mm:ss')}" class="daisuc"></a>
 			</s:else>
 			</td>
-			
 			<td class="td5">
 			<s:if test="%{spe_remark!=null && spe_remark!=''}">
 			<a  class="nonull"></a>
@@ -391,17 +378,9 @@ cursor: pointer;
 </div>
 <!-- HIDDEN AREA END -->
 <script type="text/javascript">
-$(".success").tooltip({
-	items: "[data]",
+$(".success,.nosuc").tooltip({
 	content: function() {
-		return "<div class='show_dialog'>" + $("#leave_cause" + $(this).attr("data")).html() + "</div>";
-  }
-});
-
-$(".nosuc").tooltip({
-	items: "[data]",
-	content: function() {
-		return "<div class='show_dialog'>" + $("#leave_cause" + $(this).attr("data")).html() + "</div>";
+		return "<div class='show_dialog'>" + $(this).attr("title") + "</div>";
   }
 });
 //var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
