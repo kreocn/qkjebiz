@@ -9,7 +9,8 @@
 <s:action name="ref" namespace="/manager" executeResult="true" />
 <link rel="stylesheet" href="<s:url value="/css/zTreeStyle/zTreeStyle.css" />" />
 <script type="text/javascript" src="<s:url value="/js/zTreeJs/jquery.ztree.core-3.5.js" />"></script>
-<script type="text/javascript" src="<s:url value="http://images01.qkjchina.com/qkjebiz01/zTree_result.js?v0=1" />"></script>
+<!--<script type="text/javascript" src="<s:url value="http://images01.qkjchina.com/qkjebiz01/zTree_result.js?v0=1" />"></script>-->
+<script type="text/javascript" src="http://images.qkjchina.com/CacheFiles/zTree_Products.js"></script>
 <script type="text/javascript" src="<s:url value="/js/zTreeJs/product.js" />"></script>
 </head>
 <body>
@@ -33,7 +34,7 @@
 	<div class="label_main">
 	
 	<div class="label_hang">
-		<div class="label_ltit">经销商帐号:</div>
+		<div class="label_ltit">会员帐号:</div>
 	    <div class="label_rwb">
 		     <s:textfield id="order_user_id" name="memberStock.dealer" title="会员号" cssClass="validate[required]" />
 		 </div>
@@ -102,13 +103,13 @@
 	<s:if test="'mdy'==viewFlag">
 	<div class="label_main">
 	<div class="label_hang">
-		<div class="label_ltit">填加人:</div>
+		<div class="label_ltit">添加人:</div>
 	    <div class="label_rwben label_rwb">
 	    ${memberStock.add_user_name }
 	    </div>
 	</div>
 	<div class="label_hang">
-		<div class="label_ltit">填加时间:</div>
+		<div class="label_ltit">添加时间:</div>
 	    <div class="label_rwbenx">
 	     ${it:formatDate(memberStock.add_time,'yyyy-MM-dd hh:mm:ss')}
 	    </div>
@@ -132,12 +133,16 @@
         <div class="label_hang">
             <div class="label_ltit">相关操作:</div>
             <div class="label_rwbenx">
-            	<s:if test="'add' == viewFlag">
+            	<s:if test="'add' == viewFlag && @org.iweb.sys.ContextHelper@checkPermit('QKJM_SYSVIP_MEMBERSTOCK_ADD')">
 					<s:submit id="add" name="add" value="确定" action="memberStock_add" />
 				</s:if>
 				<s:elseif test="'mdy' == viewFlag">
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJM_SYSVIP_MEMBERSTOCK_MDY')">
 					<s:submit id="save" name="save" value="保存" action="memberStock_save" cssClass="input-blue" />
+					</s:if>
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJM_SYSVIP_MEMBERSTOCK_DEL')">
 					<s:submit id="delete" name="delete" value="删除" action="memberStock_del" cssClass="input-red" onclick="return isDel();" />
+					</s:if>
 				</s:elseif>
 				<input type="button" value="返回" onclick="linkurl('<s:url action="memberStock_list" namespace="/sysvip" />');"  class="input-gray" />
         	</div>

@@ -28,11 +28,12 @@ cursor: pointer;
  		<div class="label_hang">
             <div class="label_ltit">快速查询:</div>
            <div class="label_rwben2" style="size: 30%">
-            	<s:select id="sselect" onchange="kselect();" name="sselect"  cssClass="selectKick" headerKey="" headerValue="-----请选择-----" list="#{0:'(申)大区经理待审',1:'(申)销管经理待审',2:'(申)运营总监待审',
+            	<s:select id="sselect" onchange="kselect();" name="sselect"  cssClass="selectKick" headerKey="" headerValue="-----请选择-----" list="#{0:'(申)大区经理待审',1:'(申)销管经理待审',
+            	2:'(申)运营总监待审',12:'(申)青藏-运营总监待审',13:'(申)新疆-运营总监待审',14:'(申)西北-运营总监待审',
             	3:'(申)西北-销管部经理待审',4:'(申)西北-业务副总待审',5:'(申)西北-销管副总待审',
             	8:'(申)总经理待审',9:'(申)西北-财务待审',10:'(申)省外-财务待审',11:'(申)北京-财务待审',
             	
-            	21:'(结)大区经理待审',22:'(结)销管经理待审',23:'(结)运营总监待审',
+            	21:'(结)大区经理待审',22:'(结)销管经理待审',23:'(结)运营总监待审',33:'(结)青藏-运营总监待审',34:'(结)新疆-运营总监待审',35:'(结)西北-运营总监待审',
             	24:'(结)西北-销管部经理待审',25:'(结)西北-业务副总待审',26:'(结)西北-销管副总待审',
             	29:'(结)总经理待审',30:'(结)西北-财务待审',31:'(结)省外-财务待审',32:'(结)北京-财务待审'
             	
@@ -48,6 +49,12 @@ cursor: pointer;
             <div class="label_ltit">主题(%):</div>
             <div class="label_rwben"><s:textfield name="active.theme" title="主题" /></div>
         </div>
+        
+        <div class="label_hang">
+            <div class="label_ltit">客户名称:</div>
+            <div class="label_rwben"><s:textfield id="order_user_id" name="active.member_id"/></div>
+        </div>
+        
         <div class="label_hang">
             <div class="label_ltit">申请部门:</div>
             <div class="label_rwben2">
@@ -185,6 +192,7 @@ cursor: pointer;
 		<th class="td2">申请部门</th>
 		<th class="td1">申请人</th>
 		<th class="td5">主题</th>
+		<th class="td2">费用合计</th>
 		<th class="td5">活动地点</th>
 		<th class="td1">活动状态</th>
 		<th class="td3">销售状态</th>
@@ -201,6 +209,11 @@ cursor: pointer;
 			<td class="td2 nw">${apply_dept_name}</td>
 			<td class="td1 nw">${apply_user_name}</td>
 			<td class="td5 longnote" title="${theme}">${it:subString(theme,18)}</td>
+			<td class="td2 nw">(申)${it_price+mt_price}
+			<s:if test="status > 2">
+			(结)${close_it_price+close_mt_price}
+			</s:if>
+			</td>
 			<td class="td5 nw" title="${address}">${it:subString(address,6)}</td>
 			<td  class="td1">
 				<s:if test="status==-1"><font class="message_error">已作废</font></s:if>
@@ -269,16 +282,10 @@ cursor: pointer;
 			</td>
 			<td class="td5">
 			<s:if test="%{fd_status==10}"><!-- 已审 -->
-			<a href="javascript:;"  data="${uuid}" class="success"></a>
-			<span id="leave_cause${uuid}" style="display:none;" class="leave_cause_shows">
-				操作人:${fd_user_name}<br/> 操作时间：${it:formatDate(fd_time,'yyyy-MM-dd hh:mm:ss')}
-			</span>
-			
+			<a href="javascript:;"  data="${uuid}" title="操作人:${fd_user_name}<br/> 操作时间：${it:formatDate(fd_time,'yyyy-MM-dd hh:mm:ss')}" class="success"></a>
 			</s:if>
-			<s:elseif test="%{fd_status==5}"><a href="javascript:;"  data="${uuid}"  class="nosuc"></a>
-			<span id="leave_cause${uuid}" style="display:none;" class="leave_cause_shows">
-				操作人:${fd_user_name}<br/> 操作时间：${it:formatDate(fd_time,'yyyy-MM-dd hh:mm:ss')}
-			</span>
+			<s:elseif test="%{fd_status==5}">
+			<a href="javascript:;"  data="${uuid}" title="操作人:${fd_user_name}<br/> 操作时间：${it:formatDate(fd_time,'yyyy-MM-dd hh:mm:ss')}"  class="nosuc"></a>
 			</s:elseif>
 			<s:else>
 			<a  class="daisuc"></a>
@@ -286,20 +293,13 @@ cursor: pointer;
 			</td>
 			<td class="td3">
 			<s:if test="%{close_fd_status==10}"><!-- 已审 -->
-			<a href="javascript:;"  data="${uuid}" class="success"></a>
-			<span id="leave_cause${uuid}" style="display:none;" class="leave_cause_shows">
-				操作人:${close_fd_name}<br/> 操作时间：${it:formatDate(close_fd_time,'yyyy-MM-dd hh:mm:ss')}
-			</span>
+			<a href="javascript:;"  data="${uuid}" title="操作人:${close_fd_name}<br/> 操作时间：${it:formatDate(close_fd_time,'yyyy-MM-dd hh:mm:ss')}" class="success"></a>
 			</s:if>
 			<s:elseif test="%{close_fd_status==5}"><a  class="nosuc"></a></s:elseif>
 			<s:else>
-			<a href="javascript:;"  data="${uuid}" class="daisuc"></a>
-			<span id="leave_cause${uuid}" style="display:none;" class="leave_cause_shows">
-				操作人:${close_fd_name}<br/> 操作时间：${it:formatDate(close_fd_time,'yyyy-MM-dd hh:mm:ss')}
-			</span>
+			<a href="javascript:;"  data="${uuid}" title="操作人:${close_fd_name}<br/> 操作时间：${it:formatDate(close_fd_time,'yyyy-MM-dd hh:mm:ss')}" class="daisuc"></a>
 			</s:else>
 			</td>
-			
 			<td class="td5">
 			<s:if test="%{spe_remark!=null && spe_remark!=''}">
 			<a  class="nonull"></a>
@@ -342,7 +342,7 @@ cursor: pointer;
 	<div class="label_main">
         <div class="label_hang">
             <div class="label_ltit">发货状态:</div>
-            <div class="label_rwben"><div class="iselect"><s:select id="e_active_ship_status" name="active.ship_status" list="#{0:'未发货',10:'已发货',99:'其他' }" /></div></div>
+            <div class="label_rwben"><s:select id="e_active_ship_status" name="active.ship_status" list="#{0:'未发货',10:'已发货',99:'其他' }" /></div>
         </div>
 		<div class="label_hang">
             <div class="label_ltit">出库日期:</div>
@@ -375,17 +375,9 @@ cursor: pointer;
 </div>
 <!-- HIDDEN AREA END -->
 <script type="text/javascript">
-$(".success").tooltip({
-	items: "[data]",
+$(".success,.nosuc").tooltip({
 	content: function() {
-		return "<div class='show_dialog'>" + $("#leave_cause" + $(this).attr("data")).html() + "</div>";
-  }
-});
-
-$(".nosuc").tooltip({
-	items: "[data]",
-	content: function() {
-		return "<div class='show_dialog'>" + $("#leave_cause" + $(this).attr("data")).html() + "</div>";
+		return "<div class='show_dialog'>" + $(this).attr("title") + "</div>";
   }
 });
 //var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
@@ -527,6 +519,45 @@ function kselect(){
 		document.getElementById("apply_is_sub_dept").checked=true;
 	}
 	
+	if(parseInt(num)==11){//北京财
+		jnull();
+		document.getElementById("sd_status").options[5].selected = true; 
+		document.getElementById("smd_sta").options[0].selected = true; 
+		document.getElementById("fdsta").options[1].selected = true; 
+		$("#userdept_codeid").val("210");
+		$("#userdept_nameid").val("北京销售公司");
+		document.getElementById("apply_is_sub_dept").checked=true;
+	}
+	
+	if(parseInt(num)==12){//青藏总监
+		jnull();
+		document.getElementById("sd_status").options[4].selected = true; 
+		document.getElementById("smd_sta").options[3].selected = true;
+		$("#userdept_codeid").val("2302");
+		$("#userdept_nameid").val("西藏大区");
+		document.getElementById("apply_is_sub_dept").checked=true;
+	}
+	
+	if(parseInt(num)==13){//新疆总监
+		jnull();
+		document.getElementById("sd_status").options[4].selected = true; 
+		document.getElementById("smd_sta").options[3].selected = true;
+		$("#userdept_codeid").val("22030");
+		$("#userdept_nameid").val("新疆办事处");
+		document.getElementById("apply_is_sub_dept").checked=true;
+	}
+	
+	if(parseInt(num)==14){//西北总监
+		jnull();
+		document.getElementById("sd_status").options[4].selected = true; 
+		document.getElementById("smd_sta").options[4].selected = true;
+		$("#userdept_codeid").val("220");
+		$("#userdept_nameid").val("西北运营中心");
+		document.getElementById("apply_is_sub_dept").checked=true;
+	}
+	
+	
+	
 	
 	
 	if(parseInt(num)==21){//(结)大区经理待审
@@ -614,10 +645,49 @@ function kselect(){
 		$("#userdept_nameid").val("北京销售公司");
 		document.getElementById("apply_is_sub_dept").checked=true;
 	}
+	if(parseInt(num)==33){//
+		snull();
+		document.getElementById("clsdsta").options[4].selected = true; 
+		document.getElementById("clsmdsta").options[3].selected = true;
+		$("#userdept_codeid").val("2302");
+		$("#userdept_nameid").val("西藏大区");
+		document.getElementById("apply_is_sub_dept").checked=true;
+	}
+	if(parseInt(num)==34){//
+		snull();
+		document.getElementById("clsdsta").options[4].selected = true; 
+		document.getElementById("clsmdsta").options[3].selected = true;
+		$("#userdept_codeid").val("22030");
+		$("#userdept_nameid").val("新疆办事处");
+		document.getElementById("apply_is_sub_dept").checked=true;
+	}
+	
+	if(parseInt(num)==35){//
+		snull();
+		document.getElementById("clsdsta").options[4].selected = true; 
+		document.getElementById("clsmdsta").options[4].selected = true;
+		$("#userdept_codeid").val("220");
+		$("#userdept_nameid").val("西北运营中心");
+		document.getElementById("apply_is_sub_dept").checked=true;
+	}
 	
 	 document.getElementById("serachForm").action="/qkjmanage/active_list";
 	 document.getElementById("serachForm").submit();
 	
+}
+</script>
+
+<script type="text/javascript">
+var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
+$(function() {
+	SimpleLoadMember(ajax_url_action,function(event, ui) {loadAddress(ui.item.order_user_id);});
+	CommonUtil.pickrow('fd_list_table');
+});
+
+function loadAddress(memberid) {
+	var ajax = new Common_Ajax();
+	ajax.config.action_url = ajax_url_action;
+	ajax.sendAjax();
 }
 </script>
 </body>

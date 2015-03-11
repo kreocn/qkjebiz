@@ -1,9 +1,12 @@
 package org.iweb.sys;
 
 import java.beans.PropertyDescriptor;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.lang.annotation.Annotation;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -394,7 +397,7 @@ public class ToolsUtil {
 	}
 
 	/**
-	 * 在特定的map&lt;id,p_id&gt;中,用来判定是否存在从属关系,即判断id是否从属于p_id(可能包含多层),
+	 * 在特定的map&lt;id:p_id&gt;中,用来判定是否存在从属关系,即判断id是否从属于p_id(可能包含多层),
 	 * id和p_id相同将返回false
 	 * 
 	 * @param map
@@ -403,7 +406,7 @@ public class ToolsUtil {
 	 * @param p_id
 	 * @return
 	 */
-	private static boolean checkParent(Map<String, String> map, String id, String p_id) {
+	public static boolean checkParent(Map<String, String> map, String id, String p_id) {
 		while (true) {
 			if (map.containsKey(id)) {
 				return p_id.equals(map.get(id)) || checkParent(map, map.get(id), p_id);
@@ -947,5 +950,54 @@ public class ToolsUtil {
 
 	public static Integer[] split2Integer(String str) {
 		return split2Integer(str, ",");
+	}
+
+	/**
+	 * 序列化对象
+	 */
+	public static byte[] serialize(Object object) {
+		ObjectOutputStream oos = null;
+		ByteArrayOutputStream baos = null;
+		try {
+			// 序列化
+			baos = new ByteArrayOutputStream();
+			oos = new ObjectOutputStream(baos);
+			oos.writeObject(object);
+			byte[] bytes = baos.toByteArray();
+			return bytes;
+		} catch (Exception e) {
+
+		}
+		return null;
+	}
+
+	/**
+	 * 反序列化对象
+	 */
+	public static Object unserialize(byte[] bytes) {
+		ByteArrayInputStream bais = null;
+		try {
+			// 反序列化
+			bais = new ByteArrayInputStream(bytes);
+			ObjectInputStream ois = new ObjectInputStream(bais);
+			return ois.readObject();
+		} catch (Exception e) {
+
+		}
+		return null;
+	}
+
+	public Object[] mergeArray(Object[] al, Object[] bl) {
+		if ((bl == null || bl.length == 0) && (al == null || al.length == 0)) return null;
+		else if (bl == null || bl.length == 0) return al;
+		else if (al == null || al.length == 0) return bl;
+		else {
+			Object[] a = al;
+			Object[] b = bl;
+			Object[] c = new Object[a.length + b.length];
+			System.arraycopy(a, 0, c, 0, a.length);
+			System.arraycopy(b, 0, c, a.length, b.length);
+			return c;
+		}
 	}
 }

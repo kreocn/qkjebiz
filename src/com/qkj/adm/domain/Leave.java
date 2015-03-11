@@ -39,7 +39,16 @@ public class Leave {
 
 	// 以下为查询专用字段
 	private Date serach_date;
-	
+	private String is_sub_dept; // 包含子部门
+
+	public String getIs_sub_dept() {
+		return is_sub_dept;
+	}
+
+	public void setIs_sub_dept(String is_sub_dept) {
+		this.is_sub_dept = is_sub_dept;
+	}
+
 	public String getPeer() {
 		return peer;
 	}

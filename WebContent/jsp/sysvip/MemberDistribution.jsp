@@ -1,26 +1,123 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
+<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>会员列表--<s:text name="APP_NAME" /></title>
+<s:action name="ref" namespace="/manager" executeResult="true" />
+<style type="text/css">
+.surebtn{margin:3px 0 0 10px; float:right;}
+.f_khjl{float:left; line-height:30px; padding-left:10px;}
+</style>
 </head>
-<link rel="stylesheet" href="<s:url value="/css/css.css" />" />
-<link rel="stylesheet" href="<s:url value="/css/navigate.css" />" />
-<link rel="stylesheet" href="<s:url value="/css/main.css" />" />
-<script type="text/javascript" src="<s:url value="/js/form_validator.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/common_cptb.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/show_page.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/jquery.CommonUtil.js" />"></script>
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-1.8.3.min.js" />"></script>
-<link rel="stylesheet" href="<s:url value="/include/jQuery/style.ui.smoothness/jquery-ui-1.10.3.min.css" />" />
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-ui-1.10.3.custom.min.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/jquery.dialog.iframe.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/common_ajax2.0.js" />"></script>
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.select.js" />"></script>
+<body>
+<div class="main" >
+	<div class="dq_step"><a href="/manager/default">首页</a>&nbsp;&gt;&nbsp;会员分配</div>
+	<s:form id="serachForm" name="serachForm"  method="get" namespace="/sysvip" theme="simple">
+		<div class="label_con">
+			<div class="label_main">
+     			<div class="label_hang">
+	          		<div class="label_ltit">会员号:</div>
+	          		<div class="label_rwben"><s:textfield name="member.uuid" title="会员号" /></div>
+ 				</div>
+ 				<div class="label_hang">
+	          		<div class="label_ltit">(%)会员姓名:</div>
+	          		<div class="label_rwben"><s:textfield name="member.member_name"  title="会员姓名"/></div>
+ 				</div>
+ 				<div class="label_hang">
+	          		<div class="label_ltit">会员手机:</div>
+	          		<div class="label_rwben"><s:textfield name="member.mobile"  title="会员手机"/></div>
+ 				</div>
+ 				<div class="label_hang">
+	          		<div class="label_ltit">所属部门:</div>
+	          		<div class="label_rwben2">
+		            	<span class="label_rwb">
+							<s:textfield title="部门名称" id="userdept_namesearch" name="member.dept_name" readonly="true" />
+							<s:hidden title="部门代码" id="userdept_codesearch" name="member.dept_code" readonly="true" />
+						</span>
+						<span class="lb nw">
+							<img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codesearch','userdept_namesearch',true);" />
+							<span id="ajax_member_message"></span>
+						</span>
+		            </div>
+ 				</div>
+ 				<div class="label_hang">
+		            <div class="label_ltit">客户经理:</div>
+		            <div class="label_rwben label_rwb">
+		            	<s:select id="membermanagerisearch" cssClass="selectKick" name="member.manager" list="#{}" headerKey="" headerValue="暂无" />
+		            </div>
+				</div>
+				<div class="label_hang label_button tac">
+		        	<s:checkbox id="search_mcondition" name="search_mcondition" fieldValue="true" value="true" cssClass="regular-checkbox" />
+					<label for="search_mcondition"></label>更多条件
+		            <s:submit value="搜索" /> <s:reset value="重置" />
+		      	</div>
+ 			</div>
+		</div>
+	</s:form>
+	<s:form name="form1" theme="simple" onsubmit="return validator(this);">
+	<div class="tab_warp">
+		<table id="table1">
+			<tr id="coltr">
+				<th class="td1"><input id="uuidcheck" name="uuidcheck" type="checkbox" onclick="checkAll();" /></th>
+				<th class="td1">会员号</th>
+				<th class="td2">会员手机</th>
+				<th class="td3">会员姓名</th>
+				<th class="td3">会员级别</th>
+				<th class="td4">现归属部门</th>
+				<th class="td4">现归属人</th>
+				<th class="td0">查看</th>
+			</tr>
+			<s:iterator value="members" status="sta">
+				<tr id="showtr${uuid}">
+					<td class="td1"><input name="member.uuid" type="checkbox" value="${uuid}" /></td>
+					<td class="td1">${uuid}</td>
+					<td class="td2">${mobile}</td>
+					<td class="td3">${member_name}</td>
+					<td class="td3">${user_type_name}</td>
+					<td class="td4">${dept_name}</td>
+					<td class="td4">
+						<s:if test="manager==null || manager==''">
+						<span class="message_error">没有分配</span>
+						</s:if>
+						<s:else>${manager_name}</s:else>
+					</td>
+					<td class="td0 op-area"><a onClick="showDetail('showtr${uuid}');" class="input-nostyle">查看</a></td>
+				</tr>
+		    </s:iterator>
+		</table>		
+		<div class="pagination">
+			<script type="text/javascript">
+			var spage = new ShowPage(${currPage});
+			spage.show2(${recCount},${pageSize},2);
+			</script>
+		</div>
+		<div class="label_main" style="font-size:14px; margin-top:10px;">
+			<s:submit id="member_distribution" name="member_distribution" value="确定" action="member_distribution" cssClass="input-blue surebtn" />
+			<div style="float:right;">
+				<b class="f_khjl">客户经理:&nbsp;</b>
+				<div class="label_rwben label_rwb">
+	            	<s:select id="membermanagerid" cssClass="selectKick" name="member.manager" list="#{}" headerKey="" headerValue="暂无" />
+	            </div>
+			</div>
+			<span class="lb nw" style="float:right;">
+				<img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept02();" />
+				<span id="ajax_member_message"></span>
+			</span>
+			<div style="float:right;">
+	   			<span id="message"><s:property value="message" /></span>
+	   			<b>把选中的会员分配给&nbsp;部门:</b>
+	   			<span class="label_rwb">
+					<s:textfield title="部门名称" id="userdept_nameid" name="member.dept_name" readonly="true" />
+					<s:hidden title="部门代码" id="userdept_codeid" name="member.dept_code" readonly="true" />
+				</span>
+			</div>
+		</div>
+	</div>
+	</s:form>
+</div>
 <script type="text/javascript" src="<s:url value="/js/select_area.js" />"></script>
 <script type="text/javascript">
 var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
@@ -67,101 +164,20 @@ function loadManagers(selectId,dept_code) {
 	ajax.addParameter("work", "AutoComplete");
 	ajax.addParameter("parameters", "privilege_id=QKJCJ_SYS_AJAXLOAD_USER&dept_code=" + encodeURI(dept_code));
 	ajax.sendAjax2();
-}
+};
+function checkAll(){
+	var check=document.getElementsByName("member.uuid");
+	var a=check.length;
+	if(document.getElementById("uuidcheck").checked){
+		for(var i=0;i<a;i++){
+			check[i].checked=true;
+		};
+	}else{
+		for(var i=0;i<a;i++){
+			check[i].checked=false;
+		};
+	};
+};
 </script>
-<body>
-<div id="main">
-<div id="result">
-	<div class="itablemdy">
-	<div class="itabletitle">
-		<span class="title1">会员分配</span>
-	</div>	
-	<div class="ilistsearch">
-<s:form name="form_serach" action="distribution_list"  method="get" namespace="/sysvip" theme="simple">
-		<table class="ilisttable" id="serach_table" width="100%">
-			<tr>
-				<td class='firstRow3'>会员号:</td>
-				<td class='secRow3'><s:textfield name="member.uuid" title="会员号" /></td>
-				<td class='firstRow3'>(%)会员姓名:</td>
-				<td class='secRow3'><s:textfield name="member.member_name" title="会员姓名"  /></td>
-				<td class='firstRow3'>会员手机:</td>
-				<td class='secRow3'><s:textfield name="member.mobile" title="会员手机"  /></td>
-				</tr><tr>
-				<td class='firstRow3'>会员所属:</td>
-				<td class='secRow3' colspan="6">
-				部门:
-				<s:textfield title="部门" id="userdept_codesearch" name="member.dept_code" readonly="true" />
-				<s:textfield title="部门名称" id="userdept_namesearch" name="member.dept_name" readonly="true" />
-				<img class="imglink" src='<s:url value="/images/open2.gif" />' onclick="selectDept();" />
-				<span id="ajax_member_message"></span>
-				客户经理:
-				<s:select id="membermanagerisearch" name="member.manager" list="#{}"
-					headerKey="" headerValue="暂无"></s:select>
-				</td>
-			</tr>
-			<tr>
-			<td colspan="4" class="buttonarea">
-				<s:submit value="搜索" />
-				<s:reset value="重置" />
-			</td>
-			</tr>
-		</table>
-</s:form>
-	</div>
-<s:form name="form1" theme="simple" onsubmit="return validator(this);">
-	<table class="ilisttable" id="table1" width="100%">
-	<col width="30" />
-	  <tr>
-	    <th><input name="uuidcheck" type="checkbox" /></th>
-	    <th>会员号</th>
-		<th>会员手机</th>
-		<th>会员姓名</th>
-		<th>会员级别</th>
-		<th>现归属部门</th>
-		<th>现归属人</th>
-	  </tr>
-<s:iterator value="members" status="sta">
-	  <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>" type="pickrow">
-	    <td align="center"><input name="member.uuid" type="checkbox" value="<s:property value="uuid" />" /></td>
-	    <td><s:property value="uuid" /></td>
-		<td><s:property value="mobile" /></td>
-		<td><s:property value="member_name" /></td>
-		<td align="center"><s:property value="user_type_name" /></td>
-		<td align="center"><s:property value="dept_name" /></td>
-		<td align="center">
-			<s:if test="manager==null || manager==''">
-			<span class="message_error">没有分配</span>
-			</s:if>
-			<s:else><s:property value="manager_name" /></s:else>
-		</td>
-	  </tr>
-</s:iterator>
-	  <tr>
-	    <td colspan="20" class="showpagearea">
-		<script type="text/javascript">
-		var spage = new ShowPage();
-		spage.show2(<s:property value="recCount" />,<s:property value="pageSize" />,2);
-		</script>
-		</td>	    
-	  </tr>
-	  <tr>
-	    <td colspan="20" class="showpagearea">
-	    <span id="message"><s:property value="message" /></span>
-	    把选中的会员分配给
-	    部门:
-		<s:textfield title="部门" id="userdept_codeid" name="member.dept_code" readonly="true" require="required" controlName="部门代码" />
-		<s:textfield title="部门名称" id="userdept_nameid" name="member.dept_name" readonly="true" require="required" controlName="部门名称" />
-		<img class="imglink" src='<s:url value="/images/open2.gif" />' onclick="selectDept02();" />
-		<span id="ajax_member_message"></span>
-		客户经理:
-		<s:select id="membermanagerid" name="member.manager" list="#{}"	headerKey="" headerValue="暂无" />
-		<s:submit id="member_distribution" name="member_distribution" value="确定" action="member_distribution" />
-		</td>
-	  </tr>
-	</table>
-</s:form>
-	</div>
-</div>
-</div>
 </body>
 </html>

@@ -1,5 +1,6 @@
 package com.qkj.manage.action;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +19,7 @@ import com.qkj.manage.dao.LadingItemDAO;
 import com.qkj.manage.dao.LadingProductgDAO;
 import com.qkj.manage.dao.ProductDAO;
 import com.qkj.manage.dao.SalPromotDAO;
+import com.qkj.manage.dao.SalPromotPower;
 import com.qkj.manage.domain.Lading;
 import com.qkj.manage.domain.LadingItem;
 import com.qkj.manage.domain.LadingPay;
@@ -30,6 +32,8 @@ public class LadingAction extends ActionSupport {
 	private static Log log = LogFactory.getLog(LadingAction.class);
 	private Map<String, Object> map = new HashMap<String, Object>();
 	private LadingDAO dao = new LadingDAO();
+	private SalPromotDAO saldao=new SalPromotDAO();
+	private SalPromotPower sal=new SalPromotPower();
 
 	private Lading lading;
 	private List<Lading> ladings;
@@ -39,6 +43,7 @@ public class LadingAction extends ActionSupport {
 	private List<LadingProductg> ladingProductgs;
 	private List<LadingPay> ladingPays;
 	private List<SalPromot> salPromots;
+	private List<SalPromot> salPromotsed;
 	private String message;
 	private String viewFlag;
 	private int recCount;
@@ -140,6 +145,14 @@ public class LadingAction extends ActionSupport {
 		this.pageSize = pageSize;
 	}
 
+	public List<SalPromot> getSalPromotsed() {
+		return salPromotsed;
+	}
+
+	public void setSalPromotsed(List<SalPromot> salPromotsed) {
+		this.salPromotsed = salPromotsed;
+	}
+
 	public String list() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_LADING_LIST");
 		try {
@@ -148,6 +161,26 @@ public class LadingAction extends ActionSupport {
 				lading = new Lading();
 			}
 			ContextHelper.setSearchDeptPermit4Search(map, "dept_codes", "manager");
+			ContextHelper.SimpleSearchMap4Page("QKJ_QKJMANAGE_LADING_LIST", map, lading, viewFlag);
+			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
+			this.setLadings(dao.list(map));
+			this.setRecCount(dao.getResultCount());
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
+			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
+		}
+		return SUCCESS;
+	}
+	
+	public String checkList() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_LADING_CHECKLIST");
+		String dept=ContextHelper.getUserLoginDept();
+		try {
+			map.clear();
+			if (lading == null) {
+				lading = new Lading();
+			}
+			ContextHelper.setSearchDeptPermit4Search(map, "dept_chekCodes", "chekCodes");
 			ContextHelper.SimpleSearchMap4Page("QKJ_QKJMANAGE_LADING_LIST", map, lading, viewFlag);
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 			this.setLadings(dao.list(map));
@@ -169,12 +202,14 @@ public class LadingAction extends ActionSupport {
 			} else if ("mdy".equals(viewFlag) || "view".equals(viewFlag) || "print".equals(viewFlag)) {
 				map.clear();
 				map.put("uuid", lading.getUuid());
+				String salid=null;
 				if (null == map.get("uuid")) this.setLading(null);
 				else {
 					if ("view".equals(viewFlag)) {
-						map.put("status", 2);
+						//map.put("status", 2);
 					}
 					this.setLading((Lading) dao.list(map).get(0));
+					salid=lading.getPromotions();
 
 					if (!ToolsUtil.isEmpty(lading.getFd_type())) {
 						lading.setFd_typesx(ToolsUtil.split2Integer(lading.getFd_type()));
@@ -192,10 +227,23 @@ public class LadingAction extends ActionSupport {
 					map.clear();
 					map.put("lading_id", lading.getUuid());
 					this.setLadingProductgs(gdao.list(map));
-
-					SalPromotDAO sdao = new SalPromotDAO();
-					map.clear();
-					this.setSalPromots(sdao.list(map));
+					
+					List<SalPromot> salps=new ArrayList<>();
+					if(salid!=null){
+						String stringarray[]=salid.split(",");  
+						for(int i=0;i<stringarray.length;i++){
+							SalPromot sp=new SalPromot();
+							sp.setUuid(Integer.parseInt(stringarray[i]));
+							sp=(SalPromot) saldao.get(sp.getUuid());
+							salps.add(sp);
+						}
+						this.setSalPromotsed(salps);//已经选择的促销活动
+					}
+					this.setSalPromots(sal.salProPower(lading.getMember_id()));//可选的促销活动
+					
+					//SalPromotDAO sdao = new SalPromotDAO();
+					//map.clear();
+					//this.setSalPromots(sdao.list(map));
 				}
 			} else {
 				this.setLading(null);

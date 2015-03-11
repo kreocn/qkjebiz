@@ -12,23 +12,21 @@ public class ActiveDAO extends AbstractDAO {
 		setCountMapid("qkjmanage_getActivesCounts");
 		return super.list("qkjmanage_getActives", map);
 	}
-	
+
 	public List listHis(Map<String, Object> map) {
 		return super.list("qkjmanage_getActivesHistory", map);
 	}
-	
+
 	public List listSing(Map<String, Object> map) {
 		return super.list("qkjmanage_getsign", map);
 	}
-	
+
 	public List getbaotime(Map<String, Object> map) {
 		return super.list("qkjmanage_gettime", map);
 	}
 
 	public Object get(Object uuid) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("uuid", uuid);
-		return super.get("qkjmanage_getActives", map);
+		return super.get("qkjmanage_getActive", uuid);
 	}
 
 	public Object add(Object parameters) {
@@ -54,13 +52,15 @@ public class ActiveDAO extends AbstractDAO {
 	public int mdyActiveSMDStatus(Object parameters) {
 		return super.save("qkjmanage_mdyActiveSMDStatus", parameters);
 	}
-	
+
 	public int mdyActiveFDStatus(Object parameters) {
 		return super.save("qkjmanage_mdyActiveFDStatus", parameters);
 	}
+
 	public int mdyActiveFDCStatus(Object parameters) {
 		return super.save("qkjmanage_mdyActiveFDCStatus", parameters);
 	}
+
 	public int mdyActiveNDCStatus(Object parameters) {
 		return super.save("qkjmanage_mdyActiveNDCStatus", parameters);
 	}
@@ -85,11 +85,11 @@ public class ActiveDAO extends AbstractDAO {
 	public int startActiveCloseFlow(Object parameters) {
 		return super.save("qkjmanage_startActiveCloseFlow", parameters);
 	}
-	
+
 	public int mdyCloseActive(Object parameters) {
 		return super.save("qkjmanage_mdyCloseActive", parameters);
 	}
-	
+
 	public int mdyCloseActiveSPE(Object parameters) {
 		return super.save("qkjmanage_mdyCloseActiveSPE", parameters);
 	}
@@ -113,6 +113,10 @@ public class ActiveDAO extends AbstractDAO {
 	// 发货信息修改
 	public int mdyShipInfo(Object parameters) {
 		return super.save("qkjmanage_mdyShipInfo", parameters);
+	}
+
+	public int mdyActiveType(Object parameters) {
+		return super.save("qkjmanage_mdyActiveType", parameters);
 	}
 
 	public int getResultCount() {

@@ -55,8 +55,8 @@ p{padding:0; margin:0;}
 				<p><s:property value="message" escape="false" /></p>
 				<p><s:fielderror /></p>
 				<p><s:actionerror /></p>
-				<p><s:property value="exception.message"/></p>
-				<p><s:property value="exceptionStack" /></p>
+				<p><s:property value="exception.message" escape="false"/></p>
+				<p><s:property value="exceptionStack" escape="false" /></p>
 			</div>
 		</div>
 	</div>

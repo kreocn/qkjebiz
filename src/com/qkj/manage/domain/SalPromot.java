@@ -12,6 +12,7 @@ public class SalPromot {
 	private String add_user;// (varchar)添加人
 	private Date add_time;// (datetime)添加时间
 	private Integer status;
+	private Integer sal_scopUs;
 	private Integer sd_status;// (int)销售部审核状态30：大区经理
 	private String sd_user;// (varchar)审核人
 	private Date sd_time;// (datetime)审核时间
@@ -20,16 +21,21 @@ public class SalPromot {
 	private Date smd_time;// (datetime)审核时间
 	private String lm_user;// (varchar)修改人
 	private Date lm_time;// (datetime)修改时间
-	private Double rebate;
+	private Integer rebate;
 	private Integer priority;
 	private String note;
+	private String sal_scopDept;
+	private String add_user_dept;
 
 	// 以下为非数据库字段
 	private String sd_name;
 	private String smd_name;
 	private String add_user_name;
 	private String lm_user_name;
-	
+	private String dept_code;
+	private String sal_scopDept_name;
+	private String add_user_dept_name;
+
 	public Integer getUuid() {
 		return uuid;
 	}
@@ -166,11 +172,11 @@ public class SalPromot {
 		this.status = status;
 	}
 
-	public Double getRebate() {
+	public Integer getRebate() {
 		return rebate;
 	}
 
-	public void setRebate(Double rebate) {
+	public void setRebate(Integer rebate) {
 		this.rebate = rebate;
 	}
 
@@ -221,6 +227,53 @@ public class SalPromot {
 	public void setNote(String note) {
 		this.note = note;
 	}
-	
+
+	public String getDept_code() {
+		return dept_code;
+	}
+
+	public void setDept_code(String dept_code) {
+		this.dept_code = dept_code;
+	}
+
+	public String getSal_scopDept() {
+		return sal_scopDept;
+	}
+
+	public void setSal_scopDept(String sal_scopDept) {
+		this.sal_scopDept = sal_scopDept;
+	}
+
+	public String getSal_scopDept_name() {
+		return sal_scopDept_name;
+	}
+
+	public void setSal_scopDept_name(String sal_scopDept_name) {
+		this.sal_scopDept_name = sal_scopDept_name;
+	}
+
+	public String getAdd_user_dept() {
+		return add_user_dept;
+	}
+
+	public void setAdd_user_dept(String add_user_dept) {
+		this.add_user_dept = add_user_dept;
+	}
+
+	public Integer getSal_scopUs() {
+		return sal_scopUs;
+	}
+
+	public void setSal_scopUs(Integer sal_scopUs) {
+		this.sal_scopUs = sal_scopUs;
+	}
+
+	public String getAdd_user_dept_name() {
+		return add_user_dept_name;
+	}
+
+	public void setAdd_user_dept_name(String add_user_dept_name) {
+		this.add_user_dept_name = add_user_dept_name;
+	}
 
 }

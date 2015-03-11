@@ -16,7 +16,10 @@
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ l.uuid=#uuid# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="leave_type"><![CDATA[ l.leave_type=#leave_type# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="leave_dept"><![CDATA[ l.leave_dept=#leave_dept# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="leave_dept">
+				<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ l.leave_dept=#leave_dept#]]></isNotEqual>
+				<isEqual property="is_sub_dept" compareValue="true"><![CDATA[  l.leave_dept LIKE CONCAT(#leave_dept#,'%') ]]></isEqual>
+			</isNotEmpty>
 			<isNotEmpty prepend="AND" property="leave_depts">
 				<![CDATA[ l.leave_dept In ]]>
 				<iterate property="leave_depts" open="(" close=")" conjunction=" , "> #leave_depts[]#</iterate>
@@ -39,7 +42,10 @@
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ l.uuid=#uuid# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="leave_type"><![CDATA[ l.leave_type=#leave_type# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="leave_dept"><![CDATA[ l.leave_dept=#leave_dept# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="leave_dept">
+				<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ l.leave_dept=#leave_dept#]]></isNotEqual>
+				<isEqual property="is_sub_dept" compareValue="true"><![CDATA[  l.leave_dept LIKE CONCAT(#leave_dept#,'%') ]]></isEqual>
+			</isNotEmpty>
 			<isNotEmpty prepend="AND" property="leave_depts">
 				<![CDATA[ l.leave_dept In ]]>
 				<iterate property="leave_depts" open="(" close=")" conjunction=" , "> #leave_depts[]#</iterate>

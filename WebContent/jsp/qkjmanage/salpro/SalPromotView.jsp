@@ -14,10 +14,12 @@
 
 	<div class="main">
 		<div class="dq_step">
+		<s:if test="salstate!=1">
 			${path} 
 			<span class="opb lb op-area"> <s:if test="'view' != viewFlag && @org.iweb.sys.ContextHelper@checkPermit('QKJ_SALPRO_SALPROMOT')"><a
 				href="<s:url action="salPromot_list" namespace="/salpro"></s:url>">促销活动列表</a></s:if>
 			</span>
+			</s:if>
 		</div>
 		<!-- 页面修改 -->
 		<s:form id="editForm" name="editForm" cssClass="validForm"
@@ -31,6 +33,7 @@
 								${salPromot.uuid }								
 							</div>
 						</div>
+						<s:if test="salstate!=1">
 						<div class="label_hang">
 							<div class="label_ltit">活动状态:</div>
 							<div class="label_rwb">
@@ -39,6 +42,7 @@
 								<s:if test="%{salPromot.status==2}">审核通过</s:if>								
 							</div>
 						</div>
+						
 						<div class="label_hang">
 							<div class="label_ltit">审核状态:</div>
 							<div class="label_rwbenx">
@@ -49,7 +53,7 @@
 								</span>
 								</s:if>
 								<s:if test="salPromot.smd_status==20">
-								<span class="message_pass" title="${it:formatDate(salPromot.smd_time,'yyyy-MM-dd HH:mm:ss')}">销管经理已审(${salPromot.smd_name })</span>
+								<span class="message_pass" title="${it:formatDate(salPromot.smd_time,'yyyy-MM-dd HH:mm:ss')}">经理/大区已审(${salPromot.smd_name })</span>
 								</s:if>
 								<s:if test="salPromot.sd_status==5">
 								<span class="message_error" title="${it:formatDate(salPromot.sd_time,'yyyy-MM-dd HH:mm:ss')}">运营总监已退回(${salPromot.sd_name })</span>
@@ -61,6 +65,7 @@
 															
 							</div>
 						</div>
+						</s:if>
 					</div>
 				</s:if>
 				<div class="label_main">
@@ -70,12 +75,14 @@
 						${salPromot.sal_title }	
 						</div>
 					</div>
+					<s:if test="salstate!=1">
 					<div class="label_hang">
 			            <div class="label_ltit">活动时间:</div>
 			            <div class="label_rwbenx">
 			            	${it:formatDate(salPromot.startime,'yyyy-MM-dd')}&nbsp;至&nbsp;${it:formatDate(salPromot.endtime,'yyyy-MM-dd')}
 			            </div>
 			        </div>
+			        </s:if>
 			        <div class="label_hang">
 						<div class="label_ltit">返利系数:</div>
 						<div class="label_rwben">
@@ -83,42 +90,48 @@
 						</div>
 					</div>
 					
+					<div class="label_main">
 					<div class="label_hang">
 						<div class="label_ltit">范围:</div>
+						${salPromot.sal_scopDept_name }
+					</div>
+				</div>
+				<div class="label_main">
+					<div class="label_hang">
+						<div class="label_ltit">范围说明:</div>
 						<div class="label_rwben">
 						${salPromot.sal_scop }
 						</div>
 					</div>
 				</div>
 				
+				<div class="label_hang">
+							<div class="label_ltit">许可范围:</div>
+							<div class="label_rwben label_rwb">
+								<span class="label_rwb">
+								 <s:select id="sal_scopUs" name="salPromot.sal_scopUs" cssClass="selectKick" list="#{1:'公有',2:'私有'}" headerKey="" headerValue="--请选择--"  onchange="pub();"/>
+								</span>
+							</div>
+				</div>
+				
+				</div>
+				<s:if test="salstate!=1">
 				<div class="label_main">
 					<div class="label_hang">
-						<div class="label_ltit">填加人:</div>
+						<div class="label_ltit">申请人:</div>
 						<div class="label_rwben">
 						${salPromot.add_user_name }	
 						</div>
 					</div>
 					<div class="label_hang">
-			            <div class="label_ltit">填加时间:</div>
+			            <div class="label_ltit">申请时间:</div>
 			            <div class="label_rwbenx">
 			            	${it:formatDate(salPromot.add_time,'yyyy-MM-dd hh:mm:ss')}
 			            </div>
 			        </div>
-			        <div class="label_hang">
-						<div class="label_ltit">最后修改人:</div>
-						<div class="label_rwben">
-						${salPromot.lm_user_name }	
-						</div>
-					</div>
 					
-					<div class="label_hang">
-						<div class="label_ltit">最后修改时间:</div>
-						<div class="label_rwbenx">
-						${it:formatDate(salPromot.lm_time,'yyyy-MM-dd hh:mm:ss')}
-						</div>
-					</div>
 				</div>
-				
+				</s:if>
 				<div class="label_main">
 		        <div class="label_hang">
 		            <div class="label_ltit">促销方案:</div>
@@ -132,7 +145,7 @@
 						<div class="clear"></div>
 		        	</div>
 		        </div>
-				
+				<s:if test="salstate!=1">
 				<div class="label_main">
 					<div class="label_hang">
 						<div class="label_ltit">相关操作:</div>
@@ -144,6 +157,7 @@
 						</div>
 					</div>
 				</div>
+				</s:if>
 			</div>
 		</s:form>
 	</div>

@@ -9,7 +9,6 @@
 <s:action name="ref" namespace="/manager" executeResult="true" />
 <link rel="stylesheet" href="<s:url value="/css/zTreeStyle/zTreeStyle.css" />" />
 <script type="text/javascript" src="<s:url value="/js/zTreeJs/jquery.ztree.core-3.5.js" />"></script>
-<!--<script type="text/javascript" src="http://images.qkjchina.com/CacheFiles/zTree_Products.js"></script>-->
 <script type="text/javascript" src="<s:url value="/js/zTreeJs/product_v0.2.js" />"></script>
 </head>
 <body>
@@ -69,7 +68,7 @@
 	<div id="per_price_select_area" class="label_main">
 		<div class="label_hang">
 		    <div class="label_ltit">参考价:</div>
-		    <div class="label_rwben15"><div class="iselect"><select id="per_price_select"></select></div></div>
+		    <div class="label_rwben15"><select id="per_price_select"></select></div>
 		</div>
 	</div>
 	<div class="label_main">

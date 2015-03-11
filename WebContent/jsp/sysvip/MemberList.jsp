@@ -1,7 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
+<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -42,7 +41,7 @@ ${path}
             <div class="label_rwben2">
             	<span class="label_rwb">
 				<s:textfield title="部门名称" id="userdept_nameid" name="member.dept_name" readonly="true" />
-				<s:hidden title="部门代码" id="userdept_codeid" name="member.DEPT_CODE" readonly="true" />
+				<s:hidden title="部门代码" id="userdept_codeid" name="member.dept_code" readonly="true" />
 				</span>
 				<span class="lb nw">
 				<img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true);" />
@@ -101,9 +100,9 @@ ${path}
 	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('SYSVIP_MEMBER_DEL')">
 	    	<a class="input-red" href="<s:url namespace="/sysvip" action="member_del"><s:param name="member.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
 	    	</s:if>
-	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJM_SYSVIP_MEMBERSTOCK_LIST')">
-	    	<a href="<s:url namespace="/sysvip" action="memberStock_list"><s:param name="memberStock.dealer" value="uuid"></s:param></s:url>">查看库存</a>
-	    	</s:if>
+			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJM_SYSVIP_MEMBERSTOCK_LIST')">
+				<a class="input-blue" href="javascript:;" onclick="linkurl('<s:url action="memberStock_out" namespace="/sysvip" ><s:param name="member.member_name" value="%{member_name}"></s:param><s:param name="member.uuid" value="%{uuid}"></s:param></s:url>');" >生成盘点模板</a>
+			</s:if>
 		</td>
 	    <td class="td0 op-area"><a onClick="showDetail('showtr${uuid}');" class="input-nostyle">查看</a></td>
 	  </tr>

@@ -522,7 +522,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 					}
 				}
 
-				if (active.getSmd_status() == 50) {// 销管部经理已审
+				if (active.getSmd_status() == 50) {// 销管副总
 					map.clear();
 					map.put("sq", "sq");
 					map.put("biz_id", active.getUuid());
@@ -612,13 +612,27 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
+	
+	public String saveType() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_MDYTYPE");
+		try {
+			//active.setLm_user(ContextHelper.getUserLoginUuid());
+			dao.mdyActiveType(active);
+			//addProcess("ACTIVE_MDY", "活动修改");
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
 
 	public String del() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_DEL");
 		try {
-			dao.delete(active);
-			setMessage("删除成功!ID=" + active.getUuid());
-			addProcess("ACTIVE_DEL", "活动删除");
+			//dao.delete(active);
+			//setMessage("删除成功!ID=" + active.getUuid());
+			//addProcess("ACTIVE_DEL", "活动删除");
+			mdyStatus(-2);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!del 数据删除失败:", e);
 			throw new Exception(this.getClass().getName() + "!del 数据删除失败:", e);
@@ -727,8 +741,12 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		}
 		active.setStatus(status);
 		active.setLm_user(ContextHelper.getUserLoginUuid());
-		String note = "活动状态变更-" + noteflag;
-		addProcess("ACTIVE_MDY_STATUS", note);
+		if(status == -2){
+			addProcess("ACTIVE_DEL", "活动删除");
+		}else{
+			String note = "活动状态变更-" + noteflag;
+			addProcess("ACTIVE_MDY_STATUS", note);
+		}
 		return dao.mdyActiveStatus(active);
 	}
 

@@ -42,7 +42,7 @@ max-width: 650px !important;
         
         <div class="label_hang">
             <div class="label_ltit">审核状态:</div>
-            <div class="label_rwben label_rwb"><s:select id="status" name="checkstatus" cssClass="selectKick" headerKey="" headerValue="-活动状态-" list="#{0:'待审核',1:'销管经理已审',2:'销管经理退回',3:'运营总监已审',4:'运营总监退回'}" /></div>
+            <div class="label_rwben label_rwb"><s:select id="status" name="salPromot.smd_status" cssClass="selectKick" headerKey="" headerValue="-活动状态-" list="#{0:'待审核',5:'已退回',20:'经理/大区已审',30:'运营总监已审',40:'业务副总已审',50:'销管副总已审',60:'总经理已审'}" /></div>
         </div>
         
         <div class="label_hang label_button tac">
@@ -82,11 +82,13 @@ max-width: 650px !important;
 		<s:if test="status==2">审核通过</s:if>
 		</td>
 		<td class="td2 nw">
-			<s:if test="smd_status==0 && sd_status==0">待审核</s:if>
-			<s:if test="smd_status==5"><span class="message_error">销管已退回</span></s:if>
-			<s:if test="smd_status==20"><span class="message_pass">销管经理已审</span></s:if>
-			<s:if test="sd_status==5"><span class="message_error">运营总监已退回</span></s:if>
-			<s:if test="sd_status==30"><span class="message_pass">运营总监已审</span></s:if>
+			<s:if test="smd_status==0">待审核</s:if>
+			<s:if test="smd_status==5"><span class="message_error">已退回</span></s:if>
+			<s:if test="smd_status==20"><span class="message_pass">经理/大区已审</span></s:if>
+			<s:if test="smd_status==30"><span class="message_pass">运营总监已审</span></s:if>
+			<s:if test="smd_status==40"><span class="message_pass">业务副总已审</span></s:if>
+			<s:if test="smd_status==50"><span class="message_pass">销管副总已审</span></s:if>
+			<s:if test="smd_status==60"><span class="message_pass">总经理已审</span></s:if>
 		</td>
 		<td class="td3 nw">${rebate }</td>
 		<td  class="td4 op-area">

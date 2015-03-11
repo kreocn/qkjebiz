@@ -62,6 +62,16 @@ public class ApproveDAO extends AbstractDAO {
 			approve.setInt_id((Integer) p_id);
 			approve.setAd_time(new Date());
 			approve.setCheck_user(ContextHelper.getUserLoginUuid());
+		} else if (approve_type == 2) {// 工时审阅
+			approve.setApprove_type(2);
+			approve.setInt_id((Integer) p_id);
+			approve.setAd_time(new Date());
+			approve.setCheck_user(ContextHelper.getUserLoginUuid());
+		} else if (approve_type == 3) {// 结案提货审阅
+			approve.setApprove_type(3);
+			approve.setInt_id((Integer) p_id);
+			approve.setAd_time(new Date());
+			approve.setCheck_user(ContextHelper.getUserLoginUuid());
 		} else {
 			return 0;
 		}
@@ -78,6 +88,14 @@ public class ApproveDAO extends AbstractDAO {
 			approve.setCheck_user(ContextHelper.getUserLoginUuid());
 		} else if (approve_type == 1) {// 活动管理审阅
 			approve.setApprove_type(1);
+			approve.setInt_id((Integer) p_id);
+			approve.setCheck_user(ContextHelper.getUserLoginUuid());
+		}else if (approve_type == 2) {// 工时管理审阅
+			approve.setApprove_type(2);
+			approve.setInt_id((Integer) p_id);
+			approve.setCheck_user(ContextHelper.getUserLoginUuid());
+		}else if (approve_type == 3) {// 结案提货审阅
+			approve.setApprove_type(3);
 			approve.setInt_id((Integer) p_id);
 			approve.setCheck_user(ContextHelper.getUserLoginUuid());
 		} else {

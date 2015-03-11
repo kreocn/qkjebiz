@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
+<sqlMap>
+	<!-- CloseOrderPro Start -->
+	<typeAlias alias="closeOrderPro" type="com.qkj.manage.domain.CloseOrderPro" />
+	<select id="qkjmanage_getCloseOrderPros" resultClass="closeOrderPro" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT cp.*,p.`title` product_name FROM qkjm_r_closeorder_product cp LEFT JOIN qkj_t_product p ON (cp.`product_id`=p.`uuid`)
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="order_id"><![CDATA[ order_id=#order_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="product_id"><![CDATA[ product_id=#product_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="product_num"><![CDATA[ product_num=#product_num# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="product_price"><![CDATA[ product_price=#product_price# ]]></isNotEmpty>
+
+		</dynamic>
+		<![CDATA[ LIMIT 1000 ]]>
+	</select>
+	<select id="qkjmanage_getCloseOrderProsCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) From qkjm_r_closeorder_product
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="order_id"><![CDATA[ order_id=#order_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="product_id"><![CDATA[ product_id=#product_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="product_num"><![CDATA[ product_num=#product_num# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="product_price"><![CDATA[ product_price=#product_price# ]]></isNotEmpty>
+
+		</dynamic>
+		<![CDATA[ LIMIT 1000 ]]>
+	</select>
+	<insert id="qkjmanage_addCloseOrderPro" parameterClass="closeOrderPro">
+		<![CDATA[ 
+			Insert Into qkjm_r_closeorder_product(order_id,product_id,product_num,product_price,total_price)
+			Values (#order_id#,#product_id#,#product_num#,#product_price#,#total_price#)
+		]]>
+		<selectKey resultClass="int" keyProperty="uuid">
+		<![CDATA[ Select LAST_INSERT_ID() ]]>
+		</selectKey>
+	</insert>
+	<update id="qkjmanage_mdyCloseOrderPro" parameterClass="closeOrderPro">
+		<![CDATA[
+			Update qkjm_r_closeorder_product
+			Set order_id=#order_id#,
+product_id=#product_id#,
+product_num=#product_num#,
+product_price=#product_price#,
+total_price=#total_price#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="qkjmanage_delCloseOrderPro" parameterClass="closeOrderPro">
+	<![CDATA[
+		Delete From qkjm_r_closeorder_product Where uuid=#uuid#
+	]]>
+	</delete>
+	<!-- CloseOrderPro End -->
+</sqlMap>

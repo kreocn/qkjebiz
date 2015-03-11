@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="qkjmanage_closeOrder" extends="default" namespace="/qkjmanage">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- CloseOrder Start -->
+		<action name="closeOrder_list" class="com.qkj.manage.action.CloseOrderAction" method="list">
+			<result>/jsp/qkjmanage/CloseOrderList.jsp</result>
+		</action>
+		<action name="closeOrder_relist" class="com.qkj.manage.action.CloseOrderAction" method="relist">
+			<result type="redirectAction">
+				<param name="actionName">closeOrder_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+		<action name="closeOrder_load" class="com.qkj.manage.action.CloseOrderAction" method="load">
+			<result>/jsp/qkjmanage/CloseOrderEdit.jsp</result>
+		</action>
+		<action name="closeOrder_view" class="com.qkj.manage.action.CloseOrderAction" method="view">
+			<result>/jsp/qkjmanage/CloseOrderView.jsp</result>
+		</action>
+		<action name="closeOrder_add" class="com.qkj.manage.action.CloseOrderAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">closeOrder_load</param>
+				<param name="closeOrder.uuid">${closeOrder.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="closeOrder_save" class="com.qkj.manage.action.CloseOrderAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">closeOrder_load</param>
+				<param name="closeOrder.uuid">${closeOrder.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="closeOrder_del" class="com.qkj.manage.action.CloseOrderAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">closeOrder_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="closeOrder_check*" class="com.qkj.manage.action.CloseOrderAction" method="check{1}">
+			<result type="redirectAction">
+				<param name="actionName">closeOrder_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="closeOrder_checknd*" class="com.qkj.manage.action.CloseOrderAction" method="checknd{1}">
+			<result type="redirectAction">
+				<param name="actionName">closeOrder_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="close_approve" class="com.qkj.manage.action.CloseOrderAction" method="approve">
+			<result type="redirectAction">
+				<param name="actionName">closeOrder_load</param>
+				<param name="closeOrder.uuid">${closeOrder.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="close_approveDel" class="com.qkj.manage.action.CloseOrderAction" method="approveDel">
+			<result type="redirectAction">
+				<param name="actionName">closeOrder_load</param>
+				<param name="closeOrder.uuid">${closeOrder.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- CloseOrder End -->
+	</package>
+</struts>

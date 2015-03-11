@@ -37,6 +37,10 @@ public class SalPromotDAO extends AbstractDAO {
 		return super.delete("salpro_delSalPromot", parameters);
 	}
 
+	public List listPower(Map<String, Object> map) {
+		return super.list("salpro_getSalPromotsPower", map);
+	}
+	
 	public int getResultCount() {
 		return super.getResultCount();
 	}

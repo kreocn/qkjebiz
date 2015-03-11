@@ -180,7 +180,7 @@ display: none;
 				</td>
 				<td class="td4 op-area">
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_VIEW')">
-					<s:if test="status==30">
+					<s:if test="status>=30">
 					<a class="input-gray" href="<s:url namespace="/qkjmanage" action="apply_print"><s:param name="apply.uuid" value="uuid"></s:param></s:url>">打印</a>
 					</s:if>
 					
@@ -217,7 +217,7 @@ display: none;
         </div>
         <div class="label_hang">
             <div class="label_ltit">发货状态:</div>
-            <div class="label_rwben iselect"><s:select id="form_apply_ship_status" name="apply.ship_status" list="#{0:'未发货',10:'已发货',20:'已受理' }" /></div>
+            <div class="label_rwben"><s:select id="form_apply_ship_status" name="apply.ship_status" list="#{0:'未发货',10:'已发货',20:'已受理' }" /></div>
         </div>
 		<div class="label_hang">
             <div class="label_ltit">出库日期:</div>

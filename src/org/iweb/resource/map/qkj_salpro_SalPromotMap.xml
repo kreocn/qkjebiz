@@ -5,11 +5,13 @@
 	<typeAlias alias="salPromot" type="com.qkj.manage.domain.SalPromot" />
 	<select id="salpro_getSalPromots" resultClass="salPromot" parameterClass="java.util.Map">
 		<![CDATA[ 
-			SELECT s.*,sdu.`USER_NAME` sd_name,smdu.`USER_NAME` smd_name,au.`USER_NAME` add_user_name,lu.`USER_NAME` lm_user_name FROM qkjm_r_salpromotion s 
+			SELECT s.*,sdu.`USER_NAME` sd_name,smdu.`USER_NAME` smd_name,au.`USER_NAME` add_user_name,lu.`USER_NAME` lm_user_name, au.`DEPT_CODE` dept_code,d.`dept_cname` sal_scopDept_name,ad.`dept_cname` add_user_dept_name FROM qkjm_r_salpromotion s 
 			LEFT JOIN s_sys_user sdu ON(s.`sd_user`=sdu.`UUID`)
 			LEFT JOIN s_sys_user smdu ON(s.`smd_user`=smdu.`UUID`)
 			LEFT JOIN s_sys_user au ON (s.`add_user`=au.`UUID`)
 			LEFT JOIN s_sys_user lu ON(s.`lm_user`=lu.`UUID`)
+			LEFT JOIN s_sys_department d ON(d.`dept_code`=s.`sal_scopDept`)
+			LEFT JOIN s_sys_department ad ON(ad.`dept_code`=s.`add_user_dept`)
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ s.uuid=#uuid# ]]></isNotEmpty>
@@ -17,14 +19,16 @@
 			<isNotEmpty prepend="AND" property="startime"><![CDATA[ s.startime=#startime# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="endtime"><![CDATA[ s.endtime=#endtime# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="sal_scop"><![CDATA[ s.sal_scop=#sal_scop# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="add_user_dept"><![CDATA[ s.add_user_dept LIKE CONCAT(#add_user_dept#,'%') ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="add_user"><![CDATA[ s.add_user=#add_user# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="add_time"><![CDATA[ s.add_time=#add_time# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="lm_user"><![CDATA[ s.lm_user=#lm_user# ]]></isNotEmpty>
-			
+
 			<isNotEmpty prepend="AND" property="status"><![CDATA[ s.status=#status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="smd_status"><![CDATA[ s.smd_status=#smd_status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="sd_status"><![CDATA[ s.sd_status=#sd_status# ]]></isNotEmpty>
 
+			<isNotEmpty prepend="AND" property="proendtime"><![CDATA[ s.`endtime`>=#proendtime# ]]></isNotEmpty>
 		</dynamic>
 		<![CDATA[ order by priority desc LIMIT 1000 ]]>
 	</select>
@@ -41,7 +45,7 @@
 			<isNotEmpty prepend="AND" property="add_user"><![CDATA[ add_user=#add_user# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="add_time"><![CDATA[ add_time=#add_time# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="lm_user"><![CDATA[ lm_user=#lm_user# ]]></isNotEmpty>
-			
+			<isNotEmpty prepend="AND" property="add_user_dept"><![CDATA[ add_user_dept LIKE CONCAT(#add_user_dept#,'%') ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="status"><![CDATA[ status=#status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="smd_status"><![CDATA[ smd_status=#smd_status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="sd_status"><![CDATA[ sd_status=#sd_status# ]]></isNotEmpty>
@@ -51,8 +55,8 @@
 	</select>
 	<insert id="salpro_addSalPromot" parameterClass="salPromot">
 		<![CDATA[ 
-			Insert Into qkjm_r_salpromotion(sal_title,startime,endtime,sal_scop,sal_plan,add_user,add_time,lm_user,lm_time,rebate,priority,note)
-			Values (#sal_title#,#startime#,#endtime#,#sal_scop#,#sal_plan#,#add_user#,#add_time#,#lm_user#,#lm_time#,#rebate#,#priority#,#note#)
+			Insert Into qkjm_r_salpromotion(sal_title,startime,endtime,sal_scop,sal_plan,add_user,add_time,lm_user,lm_time,rebate,priority,note,add_user_dept,sal_scopDept,sal_scopUs)
+			Values (#sal_title#,#startime#,#endtime#,#sal_scop#,#sal_plan#,#add_user#,#add_time#,#lm_user#,#lm_time#,#rebate#,#priority#,#note#,#add_user_dept#,#sal_scopDept#,#sal_scopUs#)
 		]]>
 		<selectKey resultClass="int" keyProperty="uuid">
 		<![CDATA[ Select LAST_INSERT_ID() ]]>
@@ -70,7 +74,10 @@
 			lm_time=#lm_time#,
 			rebate=#rebate#,
 			priority=#priority#,
-			note=#note#
+			note=#note#,
+			sal_scopDept=#sal_scopDept#,
+			sal_scopUs=#sal_scopUs#,
+			add_user_dept=#add_user_dept#
 			Where uuid = #uuid#
 		]]>
 	</update>
@@ -80,7 +87,6 @@
 			Set 
 			status=#status#,
 			smd_status=#smd_status#,
-			sd_status=#sd_status#,
 			lm_user=#lm_user#,
 			lm_time=#lm_time#,
 			note=#note#
@@ -115,12 +121,27 @@
 			Where uuid = #uuid#
 		]]>
 	</update>
-	
-	
+
+
 	<delete id="salpro_delSalPromot" parameterClass="salPromot">
 	<![CDATA[
 		Delete From qkjm_r_salpromotion Where uuid=#uuid#
 	]]>
 	</delete>
+
+	<select id="salpro_getSalPromotsPower" resultClass="salPromot" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT h.*,d.`dept_cname` sal_scopDept_name FROM (SELECT * FROM qkjm_r_salpromotion a WHERE a.`sal_scopUs`=2 AND 
+			(a.`add_user_dept` LIKE CONCAT(#add_user_dept#,'%')  OR LOCATE(#add_user_dept#,a.`sal_scopDept`)>0
+			 )
+			UNION ALL 
+			SELECT * FROM qkjm_r_salpromotion a WHERE a.`sal_scopUs`=1 AND  LOCATE(a.`sal_scopDept`,#sal_scopDept#)>0
+			) h LEFT JOIN s_sys_department d ON(d.`dept_code`=h.`sal_scopDept`)
+		]]>
+		<dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="status"><![CDATA[ h.status=#status# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="proendtime"><![CDATA[ h.`endtime`>=#proendtime# ]]></isNotEmpty>
+	</dynamic>
+	</select>
 	<!-- SalPromot End -->
 </sqlMap>

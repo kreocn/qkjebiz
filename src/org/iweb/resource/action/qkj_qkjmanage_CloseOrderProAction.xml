@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="qkjmanage_closeOrderPro" extends="default" namespace="/qkjmanage">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- CloseOrderPro Start -->
+		<action name="closeOrderPro_list" class="com.qkj.manage.action.CloseOrderProAction" method="list">
+			<result>/jsp/qkjmanage/CloseOrderProList.jsp</result>
+		</action>
+		<action name="closeOrderPro_relist" class="com.qkj.manage.action.CloseOrderProAction" method="relist">
+			<result type="redirectAction">
+				<param name="actionName">closeOrderPro_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+		<action name="closeOrderPro_load" class="com.qkj.manage.action.CloseOrderProAction" method="load">
+			<result>/jsp/qkjmanage/CloseOrderProEdit.jsp</result>
+		</action>
+		<action name="closeOrderPro_add" class="com.qkj.manage.action.CloseOrderProAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">closeOrder_load</param>
+				<param name="closeOrder.uuid">${closeOrderPro.order_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="closeOrderPro_save" class="com.qkj.manage.action.CloseOrderProAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">closeOrderPro_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="closeOrderPro_del" class="com.qkj.manage.action.CloseOrderProAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">closeOrder_load</param>
+				<param name="closeOrder.uuid">${closeOrderPro.order_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- CloseOrderPro End -->
+	</package>
+</struts>

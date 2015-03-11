@@ -215,7 +215,19 @@ fieldset{margin-bottom:5px;}
 				<fieldset class="clear">
 					<legend>实体返利内容</legend>
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_REBATESPRODUCT_ADD')">
-						<input id="addProduct" type="button" value="添加明细" />
+											<s:url id="ladingAddProductsUrl" action="qkjm_addProducts" namespace="qkjmanage">
+												<s:param name="uuidKey">rebates.uuid</s:param>
+												<s:param name="uuidValue" value="rebates.uuid" />
+												<s:param name="backUrl">/qkjmanage/rebates_load?viewFlag=mdy&</s:param>
+												<s:param name="actionUrl">/qkjmanage/rebatesProduct_add</s:param>
+												<s:param name="keyName">rebatesProduct.rebates_id</s:param>
+												<s:param name="prodName">rebatesProduct.product_id</s:param>
+												<s:param name="perName">rebatesProduct.per_price</s:param>
+												<s:param name="numName">rebatesProduct.num</s:param>
+												<s:param name="totalName">rebatesProduct.total_price</s:param>
+											</s:url>
+											<input type="button" id="product" onclick="window.location.href='${ladingAddProductsUrl}';" value="添加明细" />
+						<!-- <input id="addProduct" type="button" value="添加明细" /> -->
 					</s:if>
 					<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
 						<tr>

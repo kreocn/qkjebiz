@@ -109,12 +109,23 @@
 	function indprint(){
 		yindpri();
 		window.print();
-		location.reload();
+		
+		$("#totel1").removeClass("kss"); //添加样式
+		$("#totel2").removeClass("kss"); //添加样式
+		$("#otherprice2").addClass("kss"); //添加样式
+		$("#otherprice").addClass("kss"); //添加样式
+		$("#indprice").addClass("kss"); //添加样式
+		$("#indprice2").addClass("kss"); //添加样式
 	}
 	function otherprint(){
 		otherpri();
 		window.print();
-		location.reload();
+		$("#totel1").removeClass("kss"); //添加样式
+		$("#totel2").removeClass("kss"); //添加样式
+		$("#otherprice2").addClass("kss"); //添加样式
+		$("#otherprice").addClass("kss"); //添加样式
+		$("#indprice").addClass("kss"); //添加样式
+		$("#indprice2").addClass("kss"); //添加样式
 	}
 	function nopri(){
 		$("#mprice").addClass("noprint"); //添加样式
@@ -286,9 +297,24 @@
 									<s:if test="puser_sign!=null">
 										<s:if test="puser_sign==null">	(${puser_name})</s:if>
 										<s:else>
-											<span class="user_sign"><img src="${puser_sign}" /></span>
+											<span class="user_sign">
+											<s:if test="caiActive==null||guanActive==null ||fuActive==null">
+											<s:if test="caiActive!=null"><s:if test="%{caiActive.puser_sign!=puser_sign}"><img src="${puser_sign}" /></s:if></s:if>
+											<s:elseif test="guanActive!=null"><s:if test="%{guanActive.puser_sign!=puser_sign}"><img src="${puser_sign}" /></s:if></s:elseif>
+											<s:elseif test="fuActive!=null"><s:if test="%{fuActive.puser_sign!=puser_sign}"><img src="${puser_sign}" /></s:if></s:elseif>
+											</s:if>
+											<s:else>
+											<s:if test="%{caiActive.puser_sign!=puser_sign && guanActive.puser_sign!=puser_sign && fuActive.puser_sign!=puser_sign}">
+											<img src="${puser_sign}" />
+											</s:if>
+											</s:else>
+											</span>
 										</s:else>
-										<span class="vab">${it:formatDate(biz_time,'yyyy-MM-dd HH:mm:ss')}</span>
+										<span class="vab">
+										<s:if test="%{caiActive.puser_sign!=puser_sign && guanActive.puser_sign!=puser_sign && fuActive.puser_sign!=puser_sign}">
+										${it:formatDate(biz_time,'yyyy-MM-dd HH:mm:ss')}
+										</s:if>
+										</span>
 									</s:if>
 								</div>
 							</s:iterator>
@@ -385,6 +411,23 @@
 						<div class="label_ltit">执行人:</div>
 						<div class="label_rwben2 nw" style="line-height: 34px;">${active.person}</div>
 					</div>
+					
+					<div class="label_hang">
+			            <div class="label_ltit">活动类型:</div>
+			            <div class="label_rwben label_rwb">
+							 <s:if test="active.active_type==1">一桌式品鉴会</s:if>
+							 <s:if test="active.active_type==2">公关赠酒</s:if>
+							 <s:if test="active.active_type==3">会议赞助</s:if>
+							 <s:if test="active.active_type==4">赛事赞助</s:if>
+							 <s:if test="active.active_type==5">晚宴赞助</s:if>
+							 <s:if test="active.active_type==6">婚宴赞助</s:if>
+							 <s:if test="active.active_type==7">活动推广</s:if>
+							 <s:if test="active.active_type==8">工业旅游</s:if>
+							 <s:if test="active.active_type==9">门店试饮</s:if>
+							 <s:if test="active.active_type==10">其它</s:if>
+							 
+			            </div>
+			        </div>
 				</div>
 				<div class="label_main">
 					<div class="label_hang">
@@ -506,7 +549,7 @@
 							<div class="label_ltit">随量费用:</div>
 						</div>
 						<div class="label_hang">
-							<div class="label_ltit" style="font-weight: normal;">上期结余:</div>
+							<div class="label_ltit" style="font-weight: normal;">当前结余:</div>
 							<div class="label_rwben label_rwb">
 								<s:if test="%{active.m_upprice==null}">&nbsp;(未填写)</s:if>
 								<s:else>&nbsp;${active.m_upprice}</s:else>
@@ -532,7 +575,7 @@
 							<div class="label_ltit">市场基金:</div>
 						</div>
 						<div class="label_hang">
-							<div class="label_ltit" style="font-weight: normal;">上期结余:</div>
+							<div class="label_ltit" style="font-weight: normal;">当前结余:</div>
 							<div class="label_rwben label_rwb">
 								<s:if test="%{active.f_upprice==null}">&nbsp;(未填写)</s:if>
 								<s:else>&nbsp;${active.f_upprice }</s:else>

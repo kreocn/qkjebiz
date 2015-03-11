@@ -36,8 +36,12 @@ public class InfoNewsAction extends ActionSupport {
 	private String viewFlag;
 	private int recCount;
 	private int pageSize;
-
 	private String acname;
+    private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;信息列表";
+	
+	public String getPath() {
+		return path;
+	}
 
 	public String getAcname() {
 		return acname;
@@ -157,7 +161,7 @@ public class InfoNewsAction extends ActionSupport {
 			map.put("classes", classes);
 			this.setNewsx(dao.list(map));
 			this.setRecCount(dao.getResultCount());
-
+			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;信息列表";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:" + ToolsUtil.getStackTrace(e));
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:" + ToolsUtil.getStackTraceHTML(e));
@@ -210,6 +214,7 @@ public class InfoNewsAction extends ActionSupport {
 				setMessage("你没有选择任何操作!");
 			} else if ("add".equals(viewFlag)) {
 				setNews(null);
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/info/news_list'>信息列表</a>&nbsp;&gt;&nbsp;添加信息";
 			} else if ("mdy".equals(viewFlag) || "view".equals(viewFlag)) {
 				map.clear();
 				map.put("uuid", news.getUuid());
@@ -217,6 +222,7 @@ public class InfoNewsAction extends ActionSupport {
 					this.setNews(null);
 				else
 					this.setNews((InfoNews) dao.list(map).get(0));
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/info/news_list'>信息列表</a>&nbsp;&gt;&nbsp;修改信息";
 			} else {
 				setNews(null);
 				setMessage("无操作类型!");

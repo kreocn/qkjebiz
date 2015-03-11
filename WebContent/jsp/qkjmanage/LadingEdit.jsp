@@ -146,11 +146,24 @@ function createAddreeeSelect(p_data) {
 			</div>
         </div>
     </div>
+     <!-- 发货部门 -->
+    <div class="label_main">
+        <div class="label_hang">
+            <div class="label_ltit">发货部门:</div>
+            <div class="label_rwben nw">
+            	<s:textfield id="userdept_nameid" name="lading.dis_dept_name" readonly="true" cssClass="validate[required]" />
+				<s:hidden id="userdept_codeid" name="lading.dis_dept" />
+            </div>
+			<img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true,null,1);" />
+        </div>
+        
+		</div>
+		
     <s:if test="'mdy' == viewFlag">
     <div class="label_main">
     	<fieldset class="clear">
     		<legend>订单明细</legend>
-    		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADINGITEM_ADD')">
+    		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADINGITEM_ADD') && lading.status<=5">
     		<div>
     			<s:url id="ladingAddProductsUrl" action="qkjm_addProducts" namespace="qkjmanage">
     				<s:param name="onlyType">0</s:param>
@@ -206,6 +219,32 @@ function createAddreeeSelect(p_data) {
     </div>
     <div class="label_main">
     <fieldset class="clear">
+   		<legend>已参与促销活动</legend>
+   		<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+		<tr>
+			<th>活动名称</th>
+			<th>开始时间</th>
+			<th>结束时间</th>
+			<th>操作</th>
+		</tr>
+		<!-- lading.promotions -->
+		<s:iterator value="salPromotsed" status="sta">
+		<tr>
+			<td class="nw">${sal_title}</td>
+			<td class="nw">${it:formatDate(startime,'yyyy-MM-dd')}</td>
+			<td class="nw">${it:formatDate(endtime,'yyyy-MM-dd')}</td>
+			<td><a href="javascript:;" onclick="openCustomerView(${uuid});">[查看详情]</a></td>
+		</tr>
+		</s:iterator>
+		</table>
+		<script type="text/javascript">
+		setCheckBox("lading.promotions", '${lading.promotions}');
+		</script>
+	</fieldset>
+	</div>
+	<s:if test="lading.status<=5">
+    <div class="label_main">
+    <fieldset class="clear">
    		<legend>可参与促销活动</legend>
    		<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
 		<tr>
@@ -224,7 +263,7 @@ function createAddreeeSelect(p_data) {
 			<td class="nw">${sal_title}</td>
 			<td class="nw">${it:formatDate(startime,'yyyy-MM-dd')}</td>
 			<td class="nw">${it:formatDate(endtime,'yyyy-MM-dd')}</td>
-			<td>查看详情</td>
+			<td><a href="javascript:;" onclick="openCustomerView(${uuid});">[查看详情]</a></td>
 		</tr>
 		</s:iterator>
 		</table>
@@ -233,11 +272,12 @@ function createAddreeeSelect(p_data) {
 		</script>
 	</fieldset>
 	</div>
+	</s:if>
 	<s:if test="lading.promotions!=null">
 	<div class="label_main">
     	<fieldset class="clear">
     		<legend>返利/搭赠明细</legend>
-    		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADINGPRODUCTG_ADD')">
+    		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADINGPRODUCTG_ADD') && lading.status<=5">
     		<div>
     			<s:url id="ladingAddProductgsUrl" action="qkjm_addProducts" namespace="qkjmanage">
         			<s:param name="uuidKey">lading.uuid</s:param>
@@ -330,6 +370,7 @@ function createAddreeeSelect(p_data) {
     	</fieldset>
     </div>
     </s:if>
+   
 	<div class="label_main">
         <div class="label_hang">
             <div class="label_ltit">备注:</div>
@@ -389,6 +430,9 @@ function createAddreeeSelect(p_data) {
 						</s:if>
 					</s:if>
 				</s:elseif>
+				<s:if test="lading.status>=10">
+								<input type="button" onclick="linkurl('<s:url namespace="/qkjmanage" action="lading_view"><s:param name="lading.uuid" value="lading.uuid" /><s:param name="viewFlag">view</s:param></s:url>');" value="转到详情页面" />
+				</s:if>
 				<input type="button" value="返回" onclick="linkurl('<s:url action="lading_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');"  class="input-gray" />
 				<span id="message"  class="cr"></span>
 				<!-- <input type="button" value="打印" onclick="window.print();" /> -->
@@ -402,15 +446,13 @@ function createAddreeeSelect(p_data) {
 <!-- HIDDEN AREA BEGIN -->
 <div class="dn">
 <!-- 添加财务信息 -->
-<div id="addFDCheckInfo" class="label_con idialog" title="添加酒品">
+<div id="addFDCheckInfo" class="label_con idialog" title="添加财务信息">
 <s:form id="form_addFDCheckInfo" name="form_addFDCheckInfo" cssClass="validFormDialog" action="mdyLadingFDCheck" namespace="/qkjmanage" method="post" theme="simple">
 <div class="label_main">
 	<div class="label_hang">
 	    <div class="label_ltit">付款状态:</div>
 	   <div class="label_rwben label_rwb">
-	    	<div class="iselect">
 		    	<s:select name="lading.fd_check" list="#{0:'未付款',2:'未付清',3:'已付款' }" />
-			</div>
 	    </div>
 	</div>
 	<div class="label_hang">
@@ -441,5 +483,66 @@ function createAddreeeSelect(p_data) {
 </div>
 </div>
 <!-- HIDDEN AREA END -->
+<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.ui.datepicker-zh.js" />"></script>
+<script type="text/javascript">
+var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
+var add_user='${customerRecode.add_user}';
+$(function(){
+	CommonUtil.pickrow('table1');
+	CommonUtil.pickrowAll('table1','uuidcheck');
+	$("#customerRecode_recode_time").datepicker();
+	$("#customerRecode_next_date").datepicker();
+	
+	if($("#userdept_codeid").val()!='') {
+		loadManagers($("#userdept_codeid").val());
+	}
+	createCustomerView();
+ });
+
+var sobj01;
+var selectDept = function(dcode_id, dname_id, isLoad, p_m,b_m){
+	sobj01 = new DialogIFrame({ src : '/sys/dept_permit_select?objname=sobj01&check_code=1',
+	title : "选择部门",
+	width : 200,
+	height : 400 });
+	sobj01.selfAction = function(val1, val2){
+		$("#" + dcode_id).val(val1);
+		$("#" + dname_id).val(val2);
+		if (isLoad) {
+			if(b_m==1){
+				loadManagers(val1, p_m,'1');
+			}else{
+				loadManagers(val1, p_m);
+			}
+			
+		}
+	};
+	sobj01.create();
+	sobj01.open();
+};
+
+var sobj02;
+var createCustomerView = function() {
+	//http://localhost:8888/qkjmanage/customer_load?viewFlag=mdy&customer.uuid=3
+	var w_width = $(window).width();
+	var w_height = $(window).height();
+	sobj02 = new DialogIFrame({
+		src:'',
+		title:"查看促销活动信息",
+		width:w_width*0.35,
+		height:w_height*0.85
+	});
+	sobj02.selfAction = function(val1,val2) {};
+	sobj02.create();
+	//sobj02.open();
+};
+
+var openCustomerView = function(customer_uuid) {
+	var iframeId = sobj02.getConid() + "iframe";
+	$("#"+iframeId).attr("src","/salpro/salPromot_load?viewFlag=view&salstate=1&salPromot.uuid=" + customer_uuid);
+	sobj02.open();
+};
+
+</script>
 </body>
 </html>
