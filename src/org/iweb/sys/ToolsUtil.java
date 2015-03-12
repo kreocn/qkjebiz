@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.TreeMap;
+import java.util.UUID;
 import java.util.Vector;
 
 import net.sf.json.JSONArray;
@@ -132,26 +133,12 @@ public class ToolsUtil {
 	}
 
 	/**
+	 * JAVA自带UUID生成器,推荐使用
 	 * 
 	 * @return
 	 */
-	public static String getUUID16() {
-		return getUUIDByDateRandom(10, "yyMMdd");
-	}
-
-	/**
-	 * @return 20位的UUID,适用于不同要求
-	 */
-	public static String getUUID20() {
-		return new StringBuffer().append(System.currentTimeMillis()).append((long) (Math.random() * 9000) + 1000).append((long) (Math.random() * 900) + 100).toString();
-	}
-
-	/**
-	 * @return 32位的UUID,适用于不同要求
-	 */
 	public static String getUUID32() {
-		return new StringBuffer().append(System.currentTimeMillis()).append((long) (Math.random() * 9000) + 1000).append((long) (Math.random() * 9000) + 1000)
-				.append((long) (Math.random() * 9000) + 1000).append((long) (Math.random() * 9000) + 1000).append((long) (Math.random() * 900) + 100).toString();
+		return UUID.randomUUID().toString().replaceAll("-", "");
 	}
 
 	/**
@@ -217,6 +204,22 @@ public class ToolsUtil {
 			}
 		}
 		return pwd.toString();
+	}
+
+	/**
+	 * 根据传入的参数,计算出下一个ID
+	 * 
+	 * @param current_id
+	 *            当前ID
+	 * @param prefix
+	 *            前缀
+	 * @return NextID
+	 * 
+	 * 比如传入(q000155,q)则返回q000156
+	 */
+	public static String getNextID(String current_id, String prefix) {
+		Long l = Long.parseLong(current_id.substring(prefix.length()));
+		return prefix + String.format("%0" + (current_id.length() - prefix.length()) + "d", ++l);
 	}
 
 	/**

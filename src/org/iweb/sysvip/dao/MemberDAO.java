@@ -24,11 +24,11 @@ public class MemberDAO extends AbstractDAO {
 		return (Member) super.get("sysvip_getMembers", map);
 	}
 
-	public Object add(Object parameters) {
-		Object member_id = super.add("sysvip_addMember", parameters);
+	public void add(Object parameters) {
+		Member member = (Member) parameters;
+		super.add("sysvip_addMember", member);
 		MemberCapitalDAO mdao = new MemberCapitalDAO();
-		mdao.addCapital((String) member_id);
-		return member_id;
+		mdao.addCapital(member.getUuid());
 	}
 
 	public int save(Object parameters) {
