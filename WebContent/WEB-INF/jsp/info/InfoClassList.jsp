@@ -17,58 +17,56 @@
 <body>
 <s:action name="nav" namespace="/manage" executeResult="true" />
 <div class="tab_right">
-	<div class="tab_warp main">
-	<div class="dq_step"><a href="/manager/default">首页</a>&nbsp;&gt;&nbsp;新闻类别</div>
-	<div style="float: left">
-		<div id="dtree" class="dtree" style="width: 200px; overflow: auto;text-align:left;">
-						<!--<p><a href="javascript: d.openAll();">open all</a> | <a href="javascript: d.closeAll();">close all</a></p>-->
+	<div class="main">
+		<div class="dq_step"><a href="/manager/default">首页</a>&nbsp;&gt;&nbsp;新闻类别</div>
+		<div id="dtree" class="left_flsort dtree">
+			<!--<p><a href="javascript: d.openAll();">open all</a> | <a href="javascript: d.closeAll();">close all</a></p>-->
 		</div>
-	</div>
-	<div style="float: left">
-	<s:form name="form1" action="class_control" namespace="/info" onsubmit="return validator(this);" method="post" theme="simple">
-							<div class="label_main">
-								<input type="button" value="新增类别" onclick="setControl('add');" />
-							</div>
-							<div class="label_main">
-								<div class="label_hang">
-									<div class="label_ltit">类别ID:</div>
-									<div class="label_rwbenx">
-										<span id="uuid_text"></span><s:hidden id="uuid" name="uuid" />
-									</div>
-								</div>
-								<div class="label_hang clear">
-									<div class="label_ltit">类别名称:</div>
-									<div class="label_rwbenx"><s:textfield id="title" name="title" title="类别名称" cssClass="validate[required]"/></div>
-								</div>
-								<div class="label_hang">
-									<div class="label_ltit">类别别名:</div>
-									<div class="label_rwbenx"><s:textfield id="title2" name="title2" title="类别别名" /></div>
-								</div>
-								<div class="label_hang">
-									<div class="label_ltit">父类别:</div>
-									<div class="label_rwbenx">
-										<s:select title="父部门" id="parent_id" name="parent_id" list="iclasses" listKey="uuid" listValue="title" headerKey="0" headerValue="根节点" require="required" controlName="父部门" />
-									</div>
-								</div>
-								<div class="label_hang clear">
-									<div class="label_ltit">修改人:</div>
-									<div class="label_rwbenx"><span id="lm_user"></span></div>
-								</div>
-								<div class="label_hang">
-									<div class="label_ltit">修改时间:</div>
-									<div class="label_rwbenx"><span id="lm_time"></span></div>
-								</div>
-								<div class="label_hang clear">
-									<div class="label_ltit">相关操作:</div>
-									<div class="label_rwbenx">
-										<span id="label_add"><s:submit	id="add" name="add" value="新增" method="add"  cssClass="input-blue"/></span>
-										<span id="label_save" style="display: none;"><s:submit id="save" name="save"  value="保存" method="save" cssClass="input-blue"/></span>
-										<span id="label_del" style="display: none;"><s:submit id="delete" name="delete" value="删除" method="del" onclick="return isDel();" cssClass="input-red"/></span>
-										&nbsp;<span id="message"><s:property value="message" /></span>
-									</div>
-								</div>
-							</div>
-					</s:form>
+		<div style="float: left;">
+			<s:form name="form1" action="class_control" cssClass="validForm" namespace="/info" onsubmit="return validator(this);" method="post" theme="simple">
+				<div class="label_main">
+					<input type="button" value="新增类别" onclick="setControl('add');" />
+				</div>
+				<div class="label_main">
+					<div class="label_hang">
+						<div class="label_ltit">类别ID:</div>
+						<div class="label_rwbenx">
+							<span id="uuid_text"></span><s:hidden id="uuid" name="uuid" />
+						</div>
+					</div>
+					<div class="label_hang clear">
+						<div class="label_ltit">类别名称:</div>
+						<div class="label_rwbenx"><s:textfield id="title" name="title" title="类别名称" cssClass="validate[required]"/></div>
+					</div>
+					<div class="label_hang">
+						<div class="label_ltit">类别别名:</div>
+						<div class="label_rwbenx"><s:textfield id="title2" name="title2" title="类别别名" /></div>
+					</div>
+					<div class="label_hang">
+						<div class="label_ltit">父类别:</div>
+						<div class="label_rwbenx">
+							<s:select title="父部门" id="parent_id" name="parent_id" list="iclasses" listKey="uuid" listValue="title" headerKey="0" headerValue="根节点" require="required" controlName="父部门" />
+						</div>
+					</div>
+					<div class="label_hang clear">
+						<div class="label_ltit">修改人:</div>
+						<div class="label_rwbenx"><span id="lm_user"></span></div>
+					</div>
+					<div class="label_hang">
+						<div class="label_ltit">修改时间:</div>
+						<div class="label_rwbenx"><span id="lm_time"></span></div>
+					</div>
+					<div class="label_hang clear">
+						<div class="label_ltit">相关操作:</div>
+						<div class="label_rwbenx">
+							<span id="label_add"><s:submit	id="add" name="add" value="新增" method="add"  cssClass="input-blue"/></span>
+							<span id="label_save" style="display: none;"><s:submit id="save" name="save"  value="保存" method="save" cssClass="input-blue"/></span>
+							<span id="label_del" style="display: none;"><s:submit id="delete" name="delete" value="删除" method="del" onclick="return isDel();" cssClass="input-red"/></span>
+							&nbsp;<span id="message"><s:property value="message" /></span>
+						</div>
+					</div>
+				</div>
+		</s:form>
 	</div>
 </div>
 </div>

@@ -114,7 +114,7 @@ function viewx(obj) {
 				</td>
 				<td width="10"></td>
 				<td valign="top">
-					<s:form name="form1" action="class_control" namespace="/info" onsubmit="return validator(this);" method="post" theme="simple">
+					<s:form name="form1" action="class_control" cssClass="validForm" namespace="/info" onsubmit="return validator(this);" method="post" theme="simple">
 							<div class="label_main">
 								<input type="button" value="新增类别" onclick="setControl('add');" />
 							</div>
