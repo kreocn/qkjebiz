@@ -23,7 +23,7 @@
 <script type="text/javascript" src="<c:url value="/js/common_listtable.js" />"></script>
 <script type="text/javascript" src="<c:url value="/js/common_cptb.js" />"></script>
 <script type="text/javascript" src="<c:url value="/js/form_validator.js" />"></script>
-<script type="text/javascript" src="<c:url value="/js/v0.1/loading.js" />"></script>
+<script type="text/javascript" src="<c:url value="/js/v0.1/loading.js?v=2.0" />"></script>
 <!--[if lt IE 9]>
 <script type="text/javascript">
 window.onload=function(){

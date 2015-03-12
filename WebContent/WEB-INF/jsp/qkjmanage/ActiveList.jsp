@@ -38,12 +38,10 @@ cursor: pointer;
             	<s:select id="sselect" onchange="kselect();" name="sselect"  cssClass="selectKick" headerKey="" headerValue="-----请选择-----" list="#{0:'(申)大区经理待审',1:'(申)销管经理待审',
             	2:'(申)运营总监待审',12:'(申)青藏-运营总监待审',13:'(申)新疆-运营总监待审',14:'(申)西北-运营总监待审',
             	3:'(申)西北-销管部经理待审',4:'(申)西北-业务副总待审',5:'(申)西北-销管副总待审',
-            	8:'(申)总经理待审',9:'(申)西北-财务待审',10:'(申)省外-财务待审',11:'(申)北京-财务待审',
-            	
+            	8:'(申)总经理待审',9:'(申)西北-财务待审',10:'(申)省外-财务待审',11:'(申)北京-财务待审',15:'(申)西藏-财务待审',
             	21:'(结)大区经理待审',22:'(结)销管经理待审',23:'(结)运营总监待审',33:'(结)青藏-运营总监待审',34:'(结)新疆-运营总监待审',35:'(结)西北-运营总监待审',
             	24:'(结)西北-销管部经理待审',25:'(结)西北-业务副总待审',26:'(结)西北-销管副总待审',
-            	29:'(结)总经理待审',30:'(结)西北-财务待审',31:'(结)省外-财务待审',32:'(结)北京-财务待审'
-            	
+            	29:'(结)总经理待审',30:'(结)西北-财务待审',31:'(结)省外-财务待审',32:'(结)北京-财务待审',36:'(结)西藏-财务待审'
             	}" />
             </div>
         </div>
@@ -404,16 +402,12 @@ $(function(){
 	});
 	printPagination("listpage",'${currPage}','${recCount}','${pageSize}');
  });
-</script>
-
-<script type="text/javascript">
 $(".success").tooltip({
 	items: "[data]",
 	content: function() {
 		return "<div class='show_dialog'>" + $("#leave_cause" + $(this).attr("data")).html() + "</div>";
   }
 });
-
 $(".nosuc").tooltip({
 	items: "[data]",
 	content: function() {
@@ -448,9 +442,7 @@ function setShipVal(p_uuid) {
 	$("#e_active_ship_status").val($("#ship_status_"+p_uuid).text());
 	$("#e_active_remark").text($("#active_remark_"+p_uuid).text());
 }
-</script>
 
-<script type="text/javascript">
 function jnull(){
 	document.getElementById("clsmdsta").options[0].selected = true; 
 	document.getElementById("clsdsta").options[0].selected = true;
@@ -558,17 +550,15 @@ function kselect(){
 		$("#userdept_nameid").val("北京销售公司");
 		document.getElementById("apply_is_sub_dept").checked=true;
 	}
-	
-	if(parseInt(num)==11){//北京财
+	if(parseInt(num)==15){//西藏财务(申)
 		jnull();
-		document.getElementById("sd_status").options[5].selected = true; 
-		document.getElementById("smd_sta").options[0].selected = true; 
-		document.getElementById("fdsta").options[1].selected = true; 
-		$("#userdept_codeid").val("210");
-		$("#userdept_nameid").val("北京销售公司");
+		document.getElementById("sd_status").options[0].selected = true; 
+		document.getElementById("smd_sta").options[6].selected = true; 
+		document.getElementById("fdsta").options[1].selected = true;
+		$("#userdept_codeid").val("230");
+		$("#userdept_nameid").val("青藏运营中心");
 		document.getElementById("apply_is_sub_dept").checked=true;
 	}
-	
 	if(parseInt(num)==12){//青藏总监
 		jnull();
 		document.getElementById("sd_status").options[4].selected = true; 
@@ -586,7 +576,6 @@ function kselect(){
 		$("#userdept_nameid").val("新疆办事处");
 		document.getElementById("apply_is_sub_dept").checked=true;
 	}
-	
 	if(parseInt(num)==14){//西北总监
 		jnull();
 		document.getElementById("sd_status").options[4].selected = true; 
@@ -595,11 +584,6 @@ function kselect(){
 		$("#userdept_nameid").val("西北运营中心");
 		document.getElementById("apply_is_sub_dept").checked=true;
 	}
-	
-	
-	
-	
-	
 	if(parseInt(num)==21){//(结)大区经理待审
 		snull();
 		document.getElementById("clsdsta").options[3].selected = true; 
@@ -701,7 +685,6 @@ function kselect(){
 		$("#userdept_nameid").val("新疆办事处");
 		document.getElementById("apply_is_sub_dept").checked=true;
 	}
-	
 	if(parseInt(num)==35){//
 		snull();
 		document.getElementById("clsdsta").options[4].selected = true; 
@@ -710,26 +693,28 @@ function kselect(){
 		$("#userdept_nameid").val("西北运营中心");
 		document.getElementById("apply_is_sub_dept").checked=true;
 	}
+	if(parseInt(num)==36){//西藏 财务待审
+		snull();
+		document.getElementById("clsdsta").options[0].selected = true; 
+		document.getElementById("clsmdsta").options[6].selected = true; 
+		document.getElementById("clfd").options[1].selected = true;
+		$("#userdept_codeid").val("230");
+		$("#userdept_nameid").val("青藏运营中心");
+		document.getElementById("apply_is_sub_dept").checked=true;
+	}
 	
 	 document.getElementById("serachForm").action="/qkjmanage/active_list";
 	 document.getElementById("serachForm").submit();
-	
 }
-</script>
-
-<script type="text/javascript">
-var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
 $(function() {
-	SimpleLoadMember(ajax_url_action,function(event, ui) {loadAddress(ui.item.order_user_id);});
+	SimpleLoadMember(ajax_url,function(event, ui) {loadAddress(ui.item.order_user_id);});
 	CommonUtil.pickrow('fd_list_table');
 });
-
 function loadAddress(memberid) {
 	var ajax = new Common_Ajax();
-	ajax.config.action_url = ajax_url_action;
+	ajax.config.action_url = ajax_url;
 	ajax.sendAjax();
 }
 </script>
-
 </body>
 </html>
