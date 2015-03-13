@@ -69,6 +69,10 @@
 								<div class="label_ltit">权限名称:</div>
 								<div class="label_rwbenx"><s:textfield id="privilege.privilege_name" name="privilege.privilege_name" cssClass="validate[required]" title="权限名称"/></div>
 							</div>
+							<div class="label_hang">
+								<div class="label_ltit">所属模块:</div>
+								<div class="label_rwbenx"><s:select title="所属模块" id="privilege.module" name="privilege.module" list="#{0:'业务系统',1:'信息系统',2:'报表系统',3:'基础数据',4:'系统设置'}" cssClass="validate[required]" /></div>
+							</div>
 							<div class="label_hang clear">
 								<div class="label_ltit">权限描述:</div>
 								<div class="label_rwbenx"><s:textfield id="privilege.descriptions" name="privilege.descriptions"  title="权限描述" cssClass="label_hang_linput" /></div>
@@ -189,6 +193,7 @@ function getInfo(obj) {
 		$("#privilege\\.menu_url").val(json.menu_url);
 		$("#privilege\\.lm_user").text(json.lm_user);
 		$("#privilege\\.lm_time").text(formatDate(json.lm_time));
+		$("#privilege\\.module").val(json.module);
 		setControl("save");
 		$("#message").text("获取数据成功!");
 	};
