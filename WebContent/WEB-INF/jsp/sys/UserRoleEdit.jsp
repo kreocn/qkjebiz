@@ -7,16 +7,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>会员组列表--<s:text name="APP_NAME" /></title>
-</head>
 <s:action name="ref_head" namespace="/manager" executeResult="true" />
-<link rel="stylesheet" href="<s:url value="/css/css.css" />" />
-<link rel="stylesheet" href="<s:url value="/css/navigate.css" />" />
-<link rel="stylesheet" href="<s:url value="/css/main.css" />" />
 <link rel="StyleSheet" href="<s:url value="/include/dtree/dtree.css" />" />
-<script type="text/javascript" src="<s:url value="/include/dtree/dtree.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/form_validator.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/div.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/div_Imp.js" />"></script>
+</head>
 <style type="text/css">
 .specialprivilege_title {font-weight: bold;}
 .specialprivilege_list {display: inline-block;}
@@ -149,5 +142,7 @@
 </div>
 </div>
 <s:action name="ref_foot" namespace="/manager" executeResult="true" />
+<script type="text/javascript" src="<s:url value="/js/div.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/div_Imp.js" />"></script>
 </body>
 </html>
