@@ -452,19 +452,15 @@ var openCustomerView = function(customer_uuid) {
 								edit = true;
 							});
 						});
-						
 						function noedit(){
-							//.var
 							if(edit==false){
 								location.href="/qkjmanage/active_addProduct?active.uuid="+${active.uuid};
 							}else{
 								if(confirm("您有未保存的信息,确认添加吗?确认后将丢失一部分信息。")){
 									location.href="/qkjmanage/active_addProduct?active.uuid="+${active.uuid};
-									}else{
+								}else
 									 return false;
-									}
 							}
-							
 						}
 						</script>
 									</s:if>
@@ -1103,7 +1099,7 @@ var openCustomerView = function(customer_uuid) {
 		</div>
 
 		<div id="addMemberForm" class="label_con idialog" title="添加参与客户">
-			<s:form name="form_addMemberForm" cssClass="validFormDialog" action="activeMemcost_add" namespace="/qkjmanage" method="post" theme="simple">
+			<s:form id="addMemberFormTag" name="form_addMemberForm" action="activeMemcost_add" namespace="/qkjmanage" method="post" theme="simple">
 				<div class="label_main">
 					<div class="label_hang">
 						<div class="label_ltit">会员编号:</div>
@@ -1126,27 +1122,27 @@ var openCustomerView = function(customer_uuid) {
 					<div class="label_hang">
 						<div class="label_ltit">名目:</div>
 						<div class="label_rwben label_rwb">
-							<s:textfield name="activeMemcost.title" cssClass="validate[required]" />
+							<s:textfield id="activeMemcost_title" name="activeMemcost.title" cssClass="validate[required]" />
 						</div>
 					</div>
 					<div class="label_hang">
 						<div class="label_ltit">名目说明:</div>
 						<div class="label_rwben label_rwb">
-							<s:textarea name="activeMemcost.note" cssClass="validate[required]" />
+							<s:textarea id="activeMemcost_note" name="activeMemcost.note" cssClass="validate[required]" />
 						</div>
 					</div>
 					<div class="label_hang">
 						<div class="label_ltit">金额:</div>
 						<div class="label_rwben label_rwb nw">
-							<s:textfield name="activeMemcost.total_price" cssClass="validate[required]" />
+							<s:textfield id="activeMemcost_total_price" name="activeMemcost.total_price" cssClass="validate[required]" />
 							元
 						</div>
 					</div>
 					<div class="label_hang label_button tac">
-						<s:hidden name="activeMemcost.active_id" value="%{active.uuid}" />
+						<s:hidden id="activeMemcost_active_id" name="activeMemcost.active_id" value="%{active.uuid}" />
 						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEMEMCOST_ADD')">
+						<input id="addMe" type="button" value="确定" />
 						<font id="addMemcost" color="red"></font>
-							<s:submit id="addMe" name="add" value="确定" action="activeMemcost_add" disabled="disabled"/>
 						</s:if>
 					</div>
 				</div>
@@ -1154,29 +1150,36 @@ var openCustomerView = function(customer_uuid) {
 		</div>
 
 		<!-- 添加随量信息 -->
-
 		<script type="text/javascript">
-
-		$(function() { 
-			$('#order_user_id').blur(function() { 
-				var params = document.getElementById("order_user_id").value
-				 var url = '/sysvip/getMember';
-				 $.ajax({
-				     type:'POST',            //http请求方式
-				     url: url,    //服务器段url地址
-				     data: "params="+params,           //发送给服务器段的数据
-				     success: function(data){  
-				    	 if(data=="true"){
-				    		 $("#addMe").attr("disabled", false);
-				    		 $("#addMemcost").text( '');
-				 		}else{
-				 			$("#addMe").attr("disabled", "disabled");
-				 			$("#addMemcost").text( '此会员不存在，请确认！');
-				 			return false;
-				     }}    //定义交互完成，并且服务器正确返回数据时调用的回调函数
-				  });
-			}); 
-			}) ;
+			$("#addMe").click(function(){
+			 $.ajax({
+			     type:'POST',
+			     url: '/sysvip/getMember',
+			     data: "params="+$("#order_user_id").val(),
+			     beforeSend:function() {
+			    	 $("#addMemcost").text("正在验证...");
+			     },
+			     success: function(data){
+			    	 if(data=="false"){
+			 			alert("此客户不存在\n请到[会员管理>添加会员]处添加会员信息后再继续填写.");
+			 		} else if($("#activeMemcost_title").val()=='') {
+			 			alert("【名目】不许为空!");
+			 			$("#activeMemcost_title").focus();
+			 		} else if($("#activeMemcost_note").val()=='') {
+			 			alert("【名目说明】不许为空!");
+			 			$("#activeMemcost_note").focus();
+			 		} else if($("#activeMemcost_total_price").val()=='') {
+			 			alert("【金额】不许为空!");
+			 			$("#activeMemcost_total_price").focus();
+			 		} else {
+			 			$("#addMemberFormTag").submit();
+			 		}
+			    },
+			    complete:function(){
+			    	$("#addMemcost").text("");
+			    }				    
+			  });
+			});
 
 			$("#upprice").bind("change", function(){
 				$("#bprice").val($("#upprice").val() - $("#price").val());
