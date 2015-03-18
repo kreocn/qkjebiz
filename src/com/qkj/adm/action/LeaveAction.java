@@ -31,7 +31,7 @@ public class LeaveAction extends ActionSupport implements ActionAttr {
 	private int recCount;
 	private int pageSize;
 	private int currPage;
-	
+
 	private Approve approve;
 	private List<Approve> approves;
 	private String isApprover;
@@ -161,12 +161,12 @@ public class LeaveAction extends ActionSupport implements ActionAttr {
 				} else {
 					this.setLeave(null);
 				}
-				
+
 				map.clear();
 				map.put("int_id", leave.getUuid());
 				map.put("approve_type", 2);
 				this.setApproves(apdao.list(map));
-				
+
 				/* 检查当前用户是否已经审阅 */
 				if (apdao.userIsIn(approves, ContextHelper.getUserLoginUuid())) this.setIsApprover("true");
 				else this.setIsApprover("false");
@@ -253,7 +253,7 @@ public class LeaveAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
-	
+
 	/**
 	 * 已受理
 	 * 
@@ -267,6 +267,24 @@ public class LeaveAction extends ActionSupport implements ActionAttr {
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!acheck8 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!acheck0 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+
+	/**
+	 * 省外请假单需过办事处经理审核
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String check9() throws Exception {
+		ContextHelper.isPermit("QKJ_ADM_LEAVE_CHECK9");
+		try {
+			// 只有省外运营中心的出差申请单才需要办事处经理审核
+			if (leave.getLeave_type() == 0 && leave.getLeave_dept().startsWith("211")) check(15);
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!check9 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!check9 数据更新失败:", e);
 		}
 		return SUCCESS;
 	}
@@ -437,7 +455,7 @@ public class LeaveAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
-	
+
 	/**
 	 * 审阅
 	 * 
