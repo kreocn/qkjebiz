@@ -74,7 +74,7 @@ max-width: 650px !important;
         </div>
         <div class="label_hang">
             <div class="label_ltit">业务审核状态:</div>
-            <div class="label_rwben label_rwb"><s:select name="leave.check_status" list="#{0:'新申请',5:'已退回',10:'待审核',20:'经理/大区已审',30:'运营总监已审',40:'业务副总已审' }" headerKey="" headerValue="--请选择--"  /></div>
+            <div class="label_rwben label_rwb"><s:select name="leave.check_status" list="#{0:'新申请',5:'已退回',10:'待审核',15:'主管/办事处已审',20:'经理/大区已审',30:'运营总监已审',40:'业务副总已审' }" headerKey="" headerValue="--请选择--"  /></div>
         </div>
         <div class="label_hang">
             <div class="label_ltit">人事审核状态:</div>
@@ -129,11 +129,12 @@ max-width: 650px !important;
 		</td>
 		<td class="td3">
 			<s:if test="check_status==0">新申请</s:if>
-			<s:if test="check_status==5"><span class="message_error">已退回</span></s:if>
+			<s:if test="check_status==5"><span class="message_error" title="${check_user_name}">已退回</span></s:if>
 			<s:if test="check_status==10"><span class="message_warning">待审核</span></s:if>
-			<s:if test="check_status==20"><span class="message_pass">经理/大区已审</span></s:if>
-			<s:if test="check_status==30"><span class="message_pass">运营总监已审</span></s:if>
-			<s:if test="check_status==40"><span class="message_pass">业务副总已审</span></s:if>
+			<s:if test="check_status==15"><span class="message_pass" title="${check_user_name}">主管/办事处已审</span></s:if>
+			<s:if test="check_status==20"><span class="message_pass" title="${check_user_name}">经理/大区已审</span></s:if>
+			<s:if test="check_status==30"><span class="message_pass" title="${check_user_name}">运营总监已审</span></s:if>
+			<s:if test="check_status==40"><span class="message_pass" title="${check_user_name}">业务副总已审</span></s:if>
 		</td>
 		<td class="td3">
 			<s:if test="check_status==5"><span class="message_error">已退回</span></s:if>
