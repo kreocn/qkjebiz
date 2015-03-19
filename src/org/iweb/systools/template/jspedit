@@ -6,10 +6,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>$app_name$管理--<s:text name="APP_NAME" /></title>
-<s:action name="ref" namespace="/manager" executeResult="true" />
+<s:action name="ref_head" namespace="/manager" executeResult="true" />
 </head>
 <body>
-<div class="main">
+<div class="tab_right">
+<div class="tab_warp main">
 	<div class="dq_step">${path}
 	<span class="opb lb op-area"><a href="<s:url action="$class_alias$_list" namespace="/$name_space$"><s:param name="viewFlag">relist</s:param></s:url>" >返回列表</a></span></div>
 	<s:form id="editForm" name="editForm" cssClass="validForm" action="apply_load" namespace="/qkjmanage" method="post" theme="simple">
@@ -45,5 +46,7 @@
 	</div>
 	</s:form>
 </div>
+</div>
+<s:action name="ref_foot" namespace="/manager" executeResult="true" />
 </body>
 </html>
