@@ -94,7 +94,7 @@
 				 		${lm_user_name }
 				</td>
 				<td class="td3 nw">
-				 	${it:formatDate(lm_time,'yyyy-MM-dd dd:mm:ss')}
+				 	${it:formatDate(lm_time,'yyyy-MM-dd hh:mm:ss')}
 				</td>
 				<td class="td4 op-area">
 			    <s:if test="type==0">
