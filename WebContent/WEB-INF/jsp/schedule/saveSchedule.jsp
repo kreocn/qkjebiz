@@ -63,17 +63,13 @@
 					        </div>
 					        <div class="label_hang">
 				            <div class="label_ltit">接收人:</div>
-				            <div class="label_rwben label_rwb">
-				            	<div class="iselect">
+				            <div class="label_rwbenx">
 				            	<s:select id="membermanagerid" cssClass="selectKick"  list="#{}" headerKey="" headerValue="--请选择--"  controlName="申请人"/>
-				            	</div>
 				            </div>
 						 </div>
-						 <div class="label_hang">
-				            <div class="label_rwben2">
+						 <div class="label_hang" style="padding-left:10px;">
 				            	<input id="sendee" type="button" value="确认接收人">
 				            	<input id="delsend" type="button" value="删除接收人">
-				            </div>
 						 </div>
 				     </div>
 				     </s:if>
@@ -111,17 +107,13 @@
 					        </div>
 					        <div class="label_hang">
 				            <div class="label_ltit">接收人:</div>
-				            <div class="label_rwben label_rwb">
-				            	<div class="iselect">
+				            <div class="label_rwbenx">
 				            	<s:select id="membermanagerid" cssClass="selectKick"  list="#{}" headerKey="" headerValue="--请选择--"  controlName="申请人"/>
-				            	</div>
 				            </div>
 						 </div>
-						 <div class="label_hang">
-				            <div class="label_rwben2">
-				            	<input id="sendee" type="button" value="确认接收人">
-				            	<input id="delsend" type="button" value="删除接收人">
-				            </div>
+						 <div class="label_hang" style="padding-left:10px;">
+				            	<input id="sendee" type="button" value="确认接收人">&nbsp;
+				            	<input id="delsend" type="button" value="删除接收人">&nbsp;
 						 </div>
 				     </div>
 					<div class="label_main">
@@ -141,7 +133,7 @@
 					<div class="label_main">
 				        <div class="label_hang">
 				            <div class="label_ltit">公告类別:</div>
-				             <div class="label_rwben2">
+				             <div class="label_rwbenx">
 			       				<span class="label_rwb">
 				            	 <s:if test="sche.type==0">部门手册</s:if>
 								<s:if test="sche.type==1">公司制度和章程</s:if>
