@@ -30,11 +30,11 @@
 				<div class="label_hang">
 		            <div class="label_ltit">调货编号:</div>
 		            <div class="label_rwb">${allot.uuid }
-		             <s:if test="%{allot.state==0}"><font color="red">（未发货）</font></s:if>
-				    <s:if test="%{allot.state==1}"><font color="red">（已发货）</font></s:if>
-				    <s:if test="%{allot.state==2}"><font color="red">（取消发货）</font></s:if>
-				    <s:if test="%{allot.state==3}"><font color="red">（已收货）</font></s:if>
-				     <s:if test="%{allot.state==4}"><font color="red">（经手人确认）</font></s:if>
+		             <s:if test="%{allot.state==0}"><font color="red">(未发货)</font></s:if>
+				    <s:if test="%{allot.state==1}"><font color="red">(已发货)</font></s:if>
+				    <s:if test="%{allot.state==2}"><font color="red">(取消发货)</font></s:if>
+				    <s:if test="%{allot.state==3}"><font color="red">(已收货)</font></s:if>
+				     <s:if test="%{allot.state==4}"><font color="red">(经手人确认)</font></s:if>
 		            </div>
 	       		</div>
 				<div class="label_hang">
@@ -159,7 +159,7 @@
 	            <div class="label_ltit">调库日期:</div>
 	            <div class="label_rwben2">
 	            	<span class="label_rwb nw">
-					<input class="datepicker iI-t validate[required,custom[date]]" type="text"  name="allot.date" value="${it:formatDate(allot.date,'yyyy-MM-dd')}" />
+					<input class="datepicker validate[required,custom[date]]" type="text"  name="allot.date" value="${it:formatDate(allot.date,'yyyy-MM-dd')}" />
 					</span>
 	            </div>
 	        </div>

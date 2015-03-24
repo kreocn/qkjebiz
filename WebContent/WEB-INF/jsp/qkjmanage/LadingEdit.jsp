@@ -302,10 +302,10 @@
     <div class="label_main">
         <div class="label_hang">
             <div class="label_ltit">相关操作:</div>
-            <div class="label_rwbenx">
+            <div class="label_rwbenx op-area">
             <s:if test="null == lading && 'add' == viewFlag">
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADING_ADD')">
-					<s:submit id="add" name="add" value="下一步&填写出货明细" action="lading_add" />
+					<s:submit id="add" name="add" value="下一步&填写出货明细" action="lading_add" cssClass="input-blue"/>
 					</s:if>
 				</s:if>
 				<s:elseif test="null != lading && 'mdy' == viewFlag">

@@ -31,7 +31,7 @@
 	        <div class="label_hang">
 	            <div class="label_ltit">出库时间:</div>
 	            	<span class="label_rwb nw">
-					<input class="datepicker iI-t validate[required,custom[date]]" type="text"  name="outStock.date" title="从" value="${it:formatDate(outStock.date,'yyyy-MM-dd')}" />
+					<input class="datepicker validate[required,custom[date]]" type="text"  name="outStock.date" title="从" value="${it:formatDate(outStock.date,'yyyy-MM-dd')}" />
 					</span>
 	        </div>
 	     </div>
