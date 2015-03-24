@@ -24,13 +24,12 @@ public class UploadAction extends ActionSupport {
 	private String err;
 	private String msg;
 	private String message;
-	
+
 	private byte[] buffer;
-	
 
 	private UploadConfig config;
 	private String initConfig = "";
-	private boolean successflag=false;
+	private boolean successflag = false;
 
 	public String getInitConfig() {
 		return initConfig;
@@ -125,7 +124,7 @@ public class UploadAction extends ActionSupport {
 			this.setFiledataFileName(dispoString.substring(iFindStart, iFindEnd));
 
 			int i = ContextHelper.getRequest().getContentLength();
-			//byte buffer[] = new byte[i];
+			// byte buffer[] = new byte[i];
 			buffer = new byte[i];
 			int j = 0;
 			while (j < i) {
@@ -149,10 +148,10 @@ public class UploadAction extends ActionSupport {
 			 */
 			// msg = filedata.getName();
 			contentLength = filedata.length();
-			//in = new FileInputStream(filedata);
+			// in = new FileInputStream(filedata);
 			buffer = ToolsUtil.File2byte(filedata);
 		}
-		if (contentLength > 0 && buffer.length>0) {
+		if (contentLength > 0 && buffer.length > 0) {
 			// 生成随机文件名
 			String extensionName = filedataFileName.substring(filedataFileName.lastIndexOf(".") + 1);
 			// 限制图片大小为500K
@@ -163,21 +162,21 @@ public class UploadAction extends ActionSupport {
 			} else if (ToolsUtil.isIn(extensionName, config.getPermitExtFiles(), ",") && contentLength > config.getPermitFileLength()) {
 				err = "文件超过最大限制,不能超过" + NumberUtil.convertSize(config.getPermitFileLength());
 			} else {
-				
+
 				config.fileActionBefore(buffer);
-				
+
 				filename = filedataFileName;
 				if (config.isAutoRename()) {
 					filename = config.getReNameRule(filedataFileName, extensionName);
 				}
 				if (config.isUploadOss()) {
 					// 上传到阿里云存储
-					//ByteArrayInputStream 
+					// ByteArrayInputStream
 					InputStream bin = new ByteArrayInputStream(buffer);
 					if (OSSUtil_IMG.uploadFile(filename, bin, contentLength)) {
-						msg = "!http://images01.qkjchina.com/" + filename;
+						msg = "!" + OSSUtil_IMG.default_addr + filename;
 						log.info("上传文件->OSS成功:" + msg);
-						successflag=true;
+						successflag = true;
 					} else {
 						err = "上传文件失败,无法连接OSS服务器.";
 						log.info(err);
@@ -190,11 +189,11 @@ public class UploadAction extends ActionSupport {
 						// TODO: handle exception
 						log.warn("inupload close error", e);
 					}
-					
+
 				} else {
 					log.info("文件不上传到OSS");
 				}
-				config.fileActionAfter(buffer,filename,successflag);
+				config.fileActionAfter(buffer, filename, successflag);
 			}
 		} else {
 			err = "未接收到图片!";
@@ -202,14 +201,16 @@ public class UploadAction extends ActionSupport {
 		}
 
 		// 关闭文件流
-		/*try {
-			in.close();
-			in = null;
-		} catch (Exception e) {
-		}*/
+		/*
+		 * try {
+		 * in.close();
+		 * in = null;
+		 * } catch (Exception e) {
+		 * }
+		 */
 
 		this.setMessage(config.getMessage(filename, err));
 		return SUCCESS;
 	}
-	
+
 }
