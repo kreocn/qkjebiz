@@ -43,7 +43,7 @@
 				<s:if test="null != goodsType">
 					<div class="label_hang clear">
 				       <div class="label_ltit">修改人:</div>
-				       <div class="label_rwbenx">${goodsType.lm_user}<s:hidden name="goodsType.lm_user" /></div>
+				       <div class="label_rwbenx">${goodsType.lm_user_name}<s:hidden name="goodsType.lm_user" /></div>
 					</div>
 					<div class="label_hang clear">
 				       <div class="label_ltit">修改时间:</div>

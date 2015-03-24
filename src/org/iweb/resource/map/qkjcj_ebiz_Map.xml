@@ -284,8 +284,8 @@
 	<typeAlias alias="goodsType" type="com.qkjsys.ebiz.domain.GoodsType" />
 	<select id="ebiz_getGoodsTypes" resultClass="goodsType" parameterClass="java.util.Map">
 		<![CDATA[ 
-			SELECT t.*,(SELECT COUNT(*) FROM qkj_t_goods_typeitem i WHERE i.type_id = t.uuid) AS item_num
-			FROM qkj_t_goods_type t
+			SELECT t.*,(SELECT COUNT(*) FROM qkj_t_goods_typeitem i WHERE i.type_id = t.uuid) AS item_num,u.`USER_NAME` lm_user_name
+			FROM qkj_t_goods_type t  LEFT JOIN s_sys_user u ON (u.`UUID`=t.`lm_user`)
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotNull prepend="AND" property="uuid"><![CDATA[ t.uuid=#uuid# ]]></isNotNull>

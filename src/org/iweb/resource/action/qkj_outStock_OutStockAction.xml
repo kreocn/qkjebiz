@@ -89,7 +89,7 @@
 		</action>
 		
 		<action name="outStock_view" class="com.qkj.ware.action.OutStockAction" method="load">
-			<result>/jsp/ware/outStock/outStockView.jsp</result>
+			<result>/WEB-INF/jsp/ware/outStock/outStockView.jsp</result>
 		</action>
 		
 		<action name="outStock_cencle" class="com.qkj.ware.action.OutStockAction" method="cencle">

@@ -12,6 +12,7 @@ public class GoodsType {
 
 	// 以下为非数据库字段
 	private Integer item_num;
+	private String lm_user_name;
 
 	public Integer getItem_num() {
 		return item_num;
@@ -68,4 +69,13 @@ public class GoodsType {
 	public void setLm_time(Date lm_time) {
 		this.lm_time = lm_time;
 	}
+
+	public String getLm_user_name() {
+		return lm_user_name;
+	}
+
+	public void setLm_user_name(String lm_user_name) {
+		this.lm_user_name = lm_user_name;
+	}
+	
 }
