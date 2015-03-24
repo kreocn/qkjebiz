@@ -97,11 +97,11 @@
 	  		<tr id="showtr${uuid}">
 	  			<td class="td1 nw"><s:property value="uuid" /></td>
 			    <td class="td3 nw"><s:property value="ordernum" />
-			    <s:if test="%{state==0}"><font color="red">（未发货）</font></s:if>
-			    <s:if test="%{state==1}"><font color="yellow">（已发货）</font></s:if>
-			    <s:if test="%{state==2}"><font color="blue">（取消发货）</font></s:if>
-			    <s:if test="%{state==3}"><font color="gray">（已收货）</font></s:if>
-			     <s:if test="%{state==4}"><font color="green">（确认发货）</font></s:if>
+			    <s:if test="%{state==0}"><font color="red">(未发货)</font></s:if>
+			    <s:if test="%{state==1}"><font color="yellow">(已发货)</font></s:if>
+			    <s:if test="%{state==2}"><font color="blue">(取消发货)</font></s:if>
+			    <s:if test="%{state==3}"><font color="gray">(已收货)</font></s:if>
+			     <s:if test="%{state==4}"><font color="green">(确认发货)</font></s:if>
 			    </td>
 			    <td class="td1 nw"><s:if test="%{reason==0}"><font color="red">调库</font></s:if>
 			    <s:if test="%{reason==1}"><font color="red">借货</font>

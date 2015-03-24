@@ -109,7 +109,7 @@ font-size: 14px;
 	            <div class="label_ltit">入库时间:</div>
 	            <div class="label_rwben2">
 	            	<span class="label_rwb nw">
-					<input class="datepicker iI-t validate[required,custom[date]]" type="text"  name="inStock.date" title="从" value="${it:formatDate(inStock.date,'yyyy-MM-dd')}" />
+					<input class="datepicker validate[required,custom[date]]" type="text"  name="inStock.date" title="从" value="${it:formatDate(inStock.date,'yyyy-MM-dd')}" />
 					</span>
 	            </div>
 	        </div>
