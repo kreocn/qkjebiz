@@ -134,7 +134,7 @@ a {
 }
 
 .tab_right {
-	float: right; width: 85%; margin-right: .2rem; font-size: 14px; margin-bottom: 5em;
+	float: right; width: 85%; margin-right: .2rem; font-size: 14px; padding-bottom: 3em;
 }
 
 .pt {
