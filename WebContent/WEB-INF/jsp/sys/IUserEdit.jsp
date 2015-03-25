@@ -31,11 +31,11 @@
 				</div>
 				<div class="label_hang">
 	            	<div class="label_ltit">电话:</div>
-		            <div class="label_rwben"><s:textfield  name="user.phone" title="电话" cssClass="validate[custom[integer]]"/></div>
+		            <div class="label_rwben"><s:textfield  name="user.phone" title="电话" /></div>
 				</div>
 				<div class="label_hang">
 	            	<div class="label_ltit">移动电话:</div>
-		            <div class="label_rwben"><s:textfield  name="user.mobile" title="移动电话" cssClass="validate[custom[integer]]"/></div>
+		            <div class="label_rwben"><s:textfield  name="user.mobile" title="移动电话" /></div>
 				</div>
 				<div class="label_hang">
 	            	<div class="label_ltit">电子邮件:</div>
