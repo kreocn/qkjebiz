@@ -16,7 +16,7 @@
             <li><a href="javascript:;" title="报表系统" onclick="module_toggle(2)">报表系统</a></li><li class="r_line">|</li>
             <li><a href="javascript:;" title="基础数据" onclick="module_toggle(3)">基础数据</a></li><li class="r_line">|</li>
             <li><a href="javascript:;" title="系统设置" onclick="module_toggle(4)">系统设置</a></li><li class="r_line">|</li>
-            <li><a href="<c:url value="/manager/help" />" title="帮助信息">帮助信息</a></li><li class="r_line">|</li>
+            <li><a href="<c:url value="http://d.qkjchina.com/qkjzn/" />" title="帮助信息" target="_blank">帮助信息</a></li><li class="r_line">|</li>
             <li><a href="<s:url action="login_out" namespace="/manager" />" title="退出系统">退出系统</a></li>
         </ul>
     </div>
