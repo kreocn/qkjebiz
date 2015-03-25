@@ -52,7 +52,7 @@
 		</action>
 		
 		<action name="inStock_view" class="com.qkj.ware.action.InStockAction" method="load">
-			<result>/jsp/ware/inStock/InStockView.jsp</result>
+			<result>/WEB-INF/jsp/ware/inStock/InStockView.jsp</result>
 		</action>
 		
 		<action name="inStock_cencle" class="com.qkj.ware.action.InStockAction" method="cencle">

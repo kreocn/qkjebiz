@@ -22,19 +22,21 @@ import com.aliyun.openservices.oss.model.PutObjectResult;
  */
 public class OSSUtil_IMG {
 	private static Log log = LogFactory.getLog(OSSUtil_IMG.class);
-	// old key:otx1ZFIBfPBRgPEv
-	private final static String key = "MSbILYuT0tRTYXVm";
-	// old secret A1PwcIcvavGUhjZ7amtIEJkI4Xg4QO
-	private final static String secret = "gZThZaap86ETlUeLvQh9AOnQue1GfL";
+	// old key: MSbILYuT0tRTYXVm
+	private final static String key = "eB1vWi8rSnykAHuO";
+	// old secret: gZThZaap86ETlUeLvQh9AOnQue1GfL
+	private final static String secret = "wc1OxeJffJFbcXglwNYc9Va6tmZ3BG";
 	// old endpoint:http://images.qkjchina.com/
 	// 内网地址0: http://oss-cn-beijing-internal.aliyuncs.com/
 	// 外网地址0: http://oss-cn-beijing.aliyuncs.com/
-	// 外网地址1: http://images01.qkjchina.com/
-	// 外网地址2: http://images.qkjchina.com/
-	// private final static String endpoint = "http://images.qkjchina.com/";
+	// 外网地址1: http://images.qkjebiz.qkjchina.com/
+	//private final static String endpoint = "http://oss-cn-beijing.aliyuncs.com/";
 	private final static String endpoint = "http://oss-cn-beijing-internal.aliyuncs.com/";
-	private final static String default_bucket = "qkjbj01";
+	private final static String default_bucket = "qkjebiz";
 	private static OSSClient client;
+
+	// 上传之后的绑定域名地址
+	public final static String default_addr = "http://images.qkjebiz.qkjchina.com/";
 
 	static {
 		client = new OSSClient(endpoint, key, secret);

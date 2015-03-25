@@ -78,7 +78,7 @@ a {
 }
 
 .ht_lnav li {
-	list-style: none; color: #333; font-size: 16px;
+	list-style: none; color: #333; font-size: 16px;background-color: #059c77; 
 }
 
 .ht_lnav li>p {
@@ -90,11 +90,11 @@ a {
 }
 
 .ht_lnav a {
-	color: #333; display: block;
+	color: #fff; display: block;
 }
 
 .ht_lnav li.active p>a,.ht_lnav a:hover {
-	color: #111;
+	color: #fff;
 }
 
 .ht_lnav li.active {
@@ -102,7 +102,7 @@ a {
 }
 
 .ht_lnav li.active>p {
-	background-color: #F8F8F8; background-image: url(../../images/icon/ht_up.png);
+	background-color: #3fc5a4; background-image: url(../../images/icon/ht_up.png);
 }
 
 .ht_lnav li.active .ht_sbar {
@@ -134,7 +134,7 @@ a {
 }
 
 .tab_right {
-	float: right; width: 85%; margin-right: .2rem; font-size: 14px; margin-bottom: 35px;
+	float: right; width: 85%; margin-right: .2rem; font-size: 14px; padding-bottom: 3em;
 }
 
 .pt {
@@ -985,7 +985,7 @@ display: inline-block; width: 16px; height: 16px; background: url("../../images/
 		background-color: #FAFAFA;
 	}
 	.ht_left li {
-		background-color: #f6f6f6;
+		background-color: #059c77;
 	}
 }
 

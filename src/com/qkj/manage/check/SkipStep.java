@@ -14,7 +14,7 @@ public class SkipStep {
 		this.skip_dept = skip_dept;
 		this.isSub = isSub;
 		this.start_step = start_step;
-		this.skip_dept = skip_dept;
+		this.skip_step = skip_step;
 	}
 
 	public String getSkip_dept() {

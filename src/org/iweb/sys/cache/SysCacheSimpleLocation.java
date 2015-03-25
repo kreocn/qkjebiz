@@ -1,6 +1,7 @@
 package org.iweb.sys.cache;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -9,10 +10,10 @@ import org.iweb.sys.JSONUtil;
 import org.iweb.sys.ToolsUtil;
 
 public class SysCacheSimpleLocation implements SysCache {
-	private static LinkedHashMap<String, Object> cacheMap;
+	private static Map<String, Object> cacheMap;
 
 	static {
-		cacheMap = new LinkedHashMap<>();
+		cacheMap = Collections.synchronizedMap(new LinkedHashMap<String, Object>());
 	}
 
 	@Override

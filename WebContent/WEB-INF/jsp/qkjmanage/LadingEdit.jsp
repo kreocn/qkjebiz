@@ -156,6 +156,32 @@
     </div>
     <div class="label_main">
     <fieldset class="clear">
+   		<legend>已参与促销活动</legend>
+   		<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+		<tr>
+			<th>活动名称</th>
+			<th>开始时间</th>
+			<th>结束时间</th>
+			<th>操作</th>
+		</tr>
+		<!-- lading.promotions -->
+		<s:iterator value="salPromotsed" status="sta">
+		<tr>
+			<td class="nw">${sal_title}</td>
+			<td class="nw">${it:formatDate(startime,'yyyy-MM-dd')}</td>
+			<td class="nw">${it:formatDate(endtime,'yyyy-MM-dd')}</td>
+			<td><a href="javascript:;" onclick="openCustomerView(${uuid});">[查看详情]</a></td>
+		</tr>
+		</s:iterator>
+		</table>
+		<script type="text/javascript">
+		setCheckBox("lading.promotions", '${lading.promotions}');
+		</script>
+	</fieldset>
+	</div>
+	<s:if test="lading.status<=5">
+    <div class="label_main">
+    <fieldset class="clear">
    		<legend>可参与促销活动</legend>
    		<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
 		<tr>
@@ -183,6 +209,7 @@
 		</script>
 	</fieldset>
 	</div>
+	</s:if>
 	<s:if test="lading.promotions!=null">
 	<div class="label_main">
     	<fieldset class="clear">
@@ -235,7 +262,14 @@
 				</div>
 				<div class="label_hang">
 				    <div class="label_ltit">返利比例:</div>
-				    <div class="label_rwben">${it:formatNum(lading.total_price_g*100/lading.total_price,2)}%</div>
+				    <div class="label_rwben">
+				    <s:if test="%{lading.total_price<=0.00}">
+				    0.00%
+				    </s:if>
+				    <s:else>
+				  ${it:formatNum(lading.total_price_g*100/lading.total_price,2)}%
+				    </s:else>
+				    </div>
 				</div>
 			</div>
     	</fieldset>
@@ -302,10 +336,10 @@
     <div class="label_main">
         <div class="label_hang">
             <div class="label_ltit">相关操作:</div>
-            <div class="label_rwbenx">
+            <div class="label_rwbenx op-area">
             <s:if test="null == lading && 'add' == viewFlag">
 					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADING_ADD')">
-					<s:submit id="add" name="add" value="下一步&填写出货明细" action="lading_add" />
+					<s:submit id="add" name="add" value="下一步&填写出货明细" action="lading_add" cssClass="input-blue"/>
 					</s:if>
 				</s:if>
 				<s:elseif test="null != lading && 'mdy' == viewFlag">

@@ -80,13 +80,13 @@
 		</div>
 	</div>
 	<div class="label_main">
-	<div class="label_hang">
-	    <div class="label_ltit">数量:</div>
-	    <div class="label_rwben15 nw"><input type="text" name="${numName}" class="validate[required,custom[number],maxSize[11]]" /></div>
-	</div>
-	<div class="label_hang">
-	    <div class="label_rwben"><span id="ladingItemnumCase"></span></div>
-	</div>
+		<div class="label_hang">
+		    <div class="label_ltit">数量:</div>
+		    <div class="label_rwbenx">
+			    <input type="text" name="${numName}" class="validate[required,custom[number],maxSize[11]]" />
+				<span id="ladingItemnumCase"></span>
+			</div>
+		</div>
 	</div>
 	
 	<div class="label_main">
@@ -97,7 +97,7 @@
 	</div>
 	<div class="label_main">
 	<div class="label_hang label_button tar">
-			<input type="submit" value="确定" />
+			<input type="submit" value="确定" class="input-blue"/>
 			<input type="button" value="返回" onclick="linkurl('${backUrl}${uuidKey}=${uuidValue}');"  class="input-gray" />
 		 </div>
 	</div>

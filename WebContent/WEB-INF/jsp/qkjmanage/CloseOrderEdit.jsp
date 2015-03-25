@@ -154,6 +154,34 @@
 					<s:if test="'mdy'==viewFlag">
 						<div class="label_main">
 							<fieldset class="clear">
+								<legend>已参与的促销活动</legend>
+								<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+									<tr>
+										<th>活动名称</th>
+										<th>开始时间</th>
+										<th>结束时间</th>
+										<th>操作</th>
+									</tr>
+									<!-- lading.promotions -->
+									<s:iterator value="salPromotsed" status="sta">
+										<tr>
+											<td class="nw">${sal_title}</td>
+											<td class="nw">${it:formatDate(startime,'yyyy-MM-dd')}</td>
+											<td class="nw">${it:formatDate(endtime,'yyyy-MM-dd')}</td>
+											<td>
+											<a href="javascript:;" onclick="openCustomerView(${uuid});">[查看详情]</a>
+											</td>
+										</tr>
+									</s:iterator>
+								</table>
+								<script type="text/javascript">
+									setCheckBox("closeOrder.salPro_id", '${closeOrder.salPro_id}');
+								</script>
+							</fieldset>
+						</div>
+						<s:if test="closeOrder.check_state==0 || closeOrder.check_state==5">
+						<div class="label_main">
+							<fieldset class="clear">
 								<legend>可参与促销活动</legend>
 								<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
 									<tr>
@@ -176,8 +204,12 @@
 										</tr>
 									</s:iterator>
 								</table>
+								<script type="text/javascript">
+									setCheckBox("closeOrder.salPro_id", '${closeOrder.salPro_id}');
+								</script>
 							</fieldset>
 						</div>
+						</s:if>
 					</s:if>
 					<s:if test="'mdy' == viewFlag && closeOrder.salPro_id!=null">
 						<fieldset class="clear">

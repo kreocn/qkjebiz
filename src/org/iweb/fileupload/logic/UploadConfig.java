@@ -1,5 +1,9 @@
 package org.iweb.fileupload.logic;
 
+import java.util.Date;
+
+import org.iweb.sys.DateUtil;
+import org.iweb.sys.OSSUtil_IMG;
 import org.iweb.sys.ToolsUtil;
 
 public class UploadConfig {
@@ -36,20 +40,25 @@ public class UploadConfig {
 		if (ToolsUtil.isEmpty(filename)) {
 			filename = "";
 		} else {
-			filename = "!http://images01.qkjchina.com/" + filename;
+			filename = "!" + OSSUtil_IMG.default_addr + filename;
 		}
 		return "{\"err\":\"" + err + "\",\"msg\":\"" + filename + "\"}";
 	}
 
 	public String getReNameRule(String filename, String ext) {
-		return "qkjebiz01/" + ToolsUtil.getTimeTimeMillis() + "_" + ToolsUtil.getRandomCode(10) + '.' + ext;
+		String prefix = "qkjebiz/";
+		try {
+			prefix += DateUtil.getDateString(new Date(), "yyyy-MM") + "/";
+		} catch (Exception e) {
+		}
+		return prefix + ToolsUtil.getTimeTimeMillis() + "_" + ToolsUtil.getRandomCode(10) + '.' + ext;
 	}
 
 	public void fileActionBefore(byte[] buffer) {
 
 	}
 
-	public void fileActionAfter(byte[] buffer,String filename,boolean successFlag) {
+	public void fileActionAfter(byte[] buffer, String filename, boolean successFlag) {
 
 	}
 }

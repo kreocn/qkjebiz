@@ -16,7 +16,7 @@
 </head>
 
 <body>
-	<s:action name="nav" namespace="/manage" executeResult="true" />
+<s:action name="nav" namespace="/manage" executeResult="true" />
 <div class="tab_right">
 	<div class="tab_warp main">
 		<div class="dq_step">
@@ -121,7 +121,7 @@
 						<div class="label_ltit">入库仓库:</div>
 						<div class="label_rwben2">
 							<span class="label_rwb"> <select
-								id="membermanagerid" cssClass="selectKick"
+								id="membermanagerid" class="selectKick"
 								name="inStock.store_id" title="入库仓库">
 									<s:iterator value="wares" status="sta" var="x">
 										<option value="<s:property value="uuid" />"
@@ -211,8 +211,7 @@
 											id="membermanagerid" name="inDetail.product_id" title="产品">
 												<option>--请选择--</option>
 												<s:iterator value="products" status="sta">
-													<option
-														data='<s:property value="market_price" />#<s:property value="group_price" />#<s:property value="dealer_price" />#<s:property value="agree_price_1" />#<s:property value="agree_price_2" />#<s:property value="agree_price_3" />'
+													<option data='<s:property value="market_price" />#<s:property value="group_price" />#<s:property value="dealer_price" />#<s:property value="agree_price_1" />#<s:property value="agree_price_2" />#<s:property value="agree_price_3" />'
 														data_case='<s:property value="case_spec" />'
 														value='<s:property value="uuid" />'><s:property
 															value="title" /></option>
@@ -269,7 +268,6 @@
 		</s:form>
 	</div>
 <s:action name="ref_foot" namespace="/manager" executeResult="true" />
-</body>
 <script type="text/javascript">
 	function flag() {
 		var num = $("#num").val();
@@ -378,4 +376,5 @@
 		}
 	}
 </script>
+</body>
 </html>

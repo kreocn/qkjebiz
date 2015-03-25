@@ -4,7 +4,10 @@
 package org.iweb.ajax.data;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -16,6 +19,7 @@ import org.iweb.sys.cache.CacheFactory;
 import org.iweb.sys.cache.SysCache;
 import org.iweb.sys.cache.SysDBCacheLogic;
 import org.iweb.sys.domain.UserPrivilege;
+import org.iweb.sys.logic.ComparatorUserPrivileges;
 
 /**
  * @version 1.0
@@ -48,18 +52,22 @@ public class GetMenusAjax extends Ajax {
 		}
 	}
 
-	private List<UserPrivilege> getMenus() {
+	private ArrayList<UserPrivilege> getMenus() {
 		SysCache cache = CacheFactory.getCacheInstance();
-		List<UserPrivilege> menus = new ArrayList<>();
+		ArrayList<UserPrivilege> menus = new ArrayList<>();
 		if (ContextHelper.isAdmin()) {
 			menus = (ArrayList<UserPrivilege>) cache.get(SysDBCacheLogic.CACHE_MENU_PREFIX + "*");
 		} else {
 			Set<String> prvgs = ContextHelper.getUserLoginPermits().keySet();
 			for (Iterator<String> it = prvgs.iterator(); it.hasNext();) {
 				String p = (String) it.next();
-				menus.add((UserPrivilege) JSONUtil.toObject((String) cache.get(SysDBCacheLogic.CACHE_MENU_PREFIX + p), UserPrivilege.class));
+				UserPrivilege u = (UserPrivilege) JSONUtil.toObject((String) cache.get(SysDBCacheLogic.CACHE_MENU_PREFIX + p), UserPrivilege.class);
+				if (u != null) menus.add(u);
 			}
+			ComparatorUserPrivileges compare = new ComparatorUserPrivileges();
+			Collections.sort(menus, compare);
 		}
 		return menus;
 	}
+
 }
