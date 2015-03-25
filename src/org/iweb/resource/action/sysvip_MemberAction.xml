@@ -52,6 +52,8 @@
 		
 		<action name="getMember" class="org.iweb.sysvip.action.MemberAction" method="get_Member">
 		</action>
+		<action name="getMemberMobile" class="org.iweb.sysvip.action.MemberAction" method="get_MemberMobile">
+		</action>
 
 		<!-- Member End -->
 	</package>
