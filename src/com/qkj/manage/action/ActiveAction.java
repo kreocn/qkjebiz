@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -82,6 +84,8 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	private double indprice;
 	private CommonDAO comdao = new CommonDAO();
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;活动管理";
+	private int maxUid;
+	private int minUid;
 
 	public double getIndprice() {
 		return indprice;
@@ -375,6 +379,22 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		this.sselect = sselect;
 	}
 
+	public int getMaxUid() {
+		return maxUid;
+	}
+
+	public void setMaxUid(int maxUid) {
+		this.maxUid = maxUid;
+	}
+
+	public int getMinUid() {
+		return minUid;
+	}
+
+	public void setMinUid(int minUid) {
+		this.minUid = minUid;
+	}
+
 	public String addPro() throws Exception {
 		try {
 			if (state != null && state.equals("2")) {// 结案
@@ -421,6 +441,10 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 			this.setPageSize(ContextHelper.getPageSize(map));
 			this.setCurrPage(ContextHelper.getCurrPage(map));
 			this.setActives(dao.list(map));
+			if(actives.size()>0){
+				HttpSession session = ContextHelper.getRequest().getSession();
+				session.setAttribute("activeNext",actives );
+			}
 			this.setRecCount(dao.getResultCount());
 			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;活动列表";
 		} catch (Exception e) {
@@ -431,6 +455,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	}
 
 	public String load() throws Exception {
+		HttpSession session = ContextHelper.getRequest().getSession();
 		try {
 			if (null == viewFlag) {
 				this.setActive(null);
@@ -477,7 +502,12 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				if (activets.size() > 0) {
 					this.setActiveTime((Active) activets.get(0));
 				}
-
+				this.setActives((List<Active>) session.getAttribute("activeNext"));
+				if(actives.size()>0){
+					this.setMaxUid(actives.get(0).getUuid());
+					this.setMinUid(actives.get(actives.size()-1).getUuid());
+					System.out.println(maxUid+"最小"+minUid);
+				}
 				/* 检查当前用户是否已经审阅 */
 				if (apdao.userIsIn(approves, ContextHelper.getUserLoginUuid())) this.setIsApprover("true");
 				else this.setIsApprover("false");
