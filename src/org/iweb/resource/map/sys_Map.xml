@@ -400,7 +400,7 @@
 	<typeAlias alias="menu" type="org.iweb.sys.domain.UserPrivilege" />
 	<select id="sys_getSysMenus" resultClass="menu" parameterClass="java.util.Map">
 		<![CDATA[ 
-			SELECT UUID,PRIVILEGE_ID,PRIVILEGE_NAME,PARENT_PRIVILEGE,MENU_URL,MENU_TARGET,MENU_TITLE,module 
+			SELECT UUID,PRIVILEGE_ID,PRIVILEGE_NAME,PARENT_PRIVILEGE,MENU_URL,MENU_TARGET,MENU_TITLE,module,MENU_PRIORITY
 			FROM s_sys_privilege Where is_menu = 1	And PRIVILEGE_TYPE = 1
 		]]>
 		<isNotNull prepend="AND" property="user_permits">
