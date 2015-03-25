@@ -67,8 +67,9 @@
 		<![CDATA[ ORDER BY a.add_time DESC LIMIT 1000 ]]>
 	</select>
 	<select id="qkjmanage_getActivesCounts" resultClass="int" parameterClass="java.util.Map">
+	<![CDATA[ select COUNT(*) from (  ]]>
 		<![CDATA[ 
-			SELECT COUNT(*)
+			SELECT 1
 			FROM qkjm_r_active a
 			LEFT JOIN s_sys_department d ON (a.apply_dept = d.dept_code)
 			LEFT JOIN s_sys_user au ON (a.apply_user = au.uuid)
@@ -121,6 +122,8 @@
 					AND m.`MEMBER_NAME` LIKE CONCAT('%',#member_id#,'%') 
 				)
 			]]></isNotEmpty>
+			
+			<![CDATA[ LIMIT 1000 ) b ]]>
 	</select>
 	<select id="qkjmanage_getActive" resultClass="active" parameterClass="int">
 		<![CDATA[ 
