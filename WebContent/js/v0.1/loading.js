@@ -167,7 +167,7 @@ function left_change(){
 // 顶部导航初始化
 var top_nav_init = function(){
 	// 手机右侧导航事件
-	top_change();
+	//top_change();
 	$(".ht_clicka").on({ "click" : function(){
 		top_change();
 		return false;
@@ -196,7 +196,7 @@ var left_nav_init = function(){
 		});
 	});
 	// 屏幕缩小，左侧点击事件
-	left_change();
+	//left_change();
 	$(".ht_lmenu").click(function(){
 		left_change();
 		$(".ht_left").addClass("bounceInLeft animated");
