@@ -17,8 +17,8 @@ public class CheckSkip {
 	private static List<SkipStep> skipSteps = new ArrayList<>();
 	static {
 		// 北京
-		skipSteps.add(new SkipStep("210", 1, 4, 7)); // 申请 4总监 7跳过销管副总
-		skipSteps.add(new SkipStep("210", 1, 14, 17));// 结案 14总监 17跳过大区
+		skipSteps.add(new SkipStep("3", 1, 4, 7)); // 申请 4总监 7跳过销管副总
+		skipSteps.add(new SkipStep("3", 1, 14, 17));// 结案 14总监 17跳过大区
 		// 省外
 		skipSteps.add(new SkipStep("211", 1, 4, 7)); // 申请 4总监 7跳过销管副总
 		skipSteps.add(new SkipStep("211", 1, 14, 17));// 结案 14总监 17跳过大区

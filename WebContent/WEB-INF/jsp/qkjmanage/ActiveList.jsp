@@ -546,7 +546,7 @@ function kselect(){
 		document.getElementById("sd_status").options[5].selected = true; 
 		document.getElementById("smd_sta").options[0].selected = true; 
 		document.getElementById("fdsta").options[1].selected = true; 
-		$("#userdept_codeid").val("210");
+		$("#userdept_codeid").val("3");
 		$("#userdept_nameid").val("北京销售公司");
 		document.getElementById("apply_is_sub_dept").checked=true;
 	}
@@ -665,7 +665,7 @@ function kselect(){
 		document.getElementById("clsdsta").options[5].selected = true; 
 		document.getElementById("clsmdsta").options[0].selected = true; 
 		document.getElementById("clfd").options[1].selected = true; 
-		$("#userdept_codeid").val("210");
+		$("#userdept_codeid").val("3");
 		$("#userdept_nameid").val("北京销售公司");
 		document.getElementById("apply_is_sub_dept").checked=true;
 	}
