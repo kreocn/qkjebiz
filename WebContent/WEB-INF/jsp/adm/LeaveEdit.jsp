@@ -38,7 +38,7 @@
 				<s:if test="leave.check_status==10"><span class="message_warning">待审核</span></s:if>
 				<s:if test="leave.check_status==15"><span class="message_pass">主管/办事处已审(${leave.check_user_name})</span></s:if>
 				<s:if test="leave.check_status==20"><span class="message_pass">经理/大区已审(${leave.check_user_name})</span></s:if>
-				<s:if test="leave.check_status==30"><span class="message_pass">运营总监已审(${leave.check_user_name})</span></s:if>
+				<s:if test="leave.check_status==30"><span class="message_pass">总监已审(${leave.check_user_name})</span></s:if>
 				<s:if test="leave.check_status==40"><span class="message_pass">业务副总已审(${leave.check_user_name})</span></s:if>
 				</div>
 				<div class="zhuangtai">
@@ -210,7 +210,7 @@
 				<s:if test="leave.check_status>=10 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_APPROVE')">
 								<input type="button" value="审阅" onclick="openApprove();" />
 					</s:if>
-				<!-- {0:'新申请',5:'已退回',10:'待审核',20:'经理/大区已审',30:'运营总监已审',40:'业务副总已审' } -->
+				<!-- {0:'新申请',5:'已退回',10:'待审核',20:'经理/大区已审',30:'总监已审',40:'业务副总已审' } -->
 				<s:if test="leave.check_status>=10 && leave.check_status<20">
 				<s:if test="leave.check_status==10&&leave.leave_type==0&&leave.leave_dept.substring(0,3)=='211'&&@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_CHECK9')">
 					<!-- 添加办事处经理已审 -->
