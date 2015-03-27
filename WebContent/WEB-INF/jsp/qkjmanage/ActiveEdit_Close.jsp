@@ -108,7 +108,7 @@
 </style>
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery.ui.datepicker-zh.js" />"></script>
 
-<body>
+<body onload="checks();">
 	<s:action name="nav" namespace="/manage" executeResult="true" />
 <div class="tab_right">
 	<div class="tab_warp main">
@@ -119,6 +119,14 @@
 				</s:if> <s:if test="active.status >= 4">
 					<a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_closeView"><s:param name="active.uuid" value="active.uuid"></s:param></s:url>">转到打印页面</a>
 				</s:if> <a href="<s:url namespace="/qkjmanage" action="active_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a>
+				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_NEXTACTIVE')">
+				<s:if test="%{maxUid!=active.uuid}">
+				<a href="<s:url namespace="/qkjmanage" action="active_nextListClose"><s:param name="viewFlag">relist</s:param><s:param name="befUid" value="active.uuid" /><s:param name="up" value="1" /></s:url>">上一页</a>
+				</s:if>
+				<s:if test="%{minUid!=1}">
+				<a href="<s:url namespace="/qkjmanage" action="active_nextListClose"><s:param name="viewFlag">relist</s:param><s:param name="befUid" value="active.uuid" /></s:url>">下一页</a>
+				</s:if>
+				</s:if>
 			</span>
 		</div>
 		<s:form id="editForm" name="editForm" cssClass="validForm" action="active_load" namespace="/qkjmanage" method="post" theme="simple">
@@ -1146,6 +1154,15 @@
 		</div>
 		<s:action name="ref_foot" namespace="/manager" executeResult="true" />
 		<script type="text/javascript">
+		function checks(){
+			var n=${nextUuid};
+			if(n!=0){
+				if(confirm("操作成功,是否跳转下一条？")){
+					 location.href="/qkjmanage/active_nextListClose?befUid="+${active.uuid}+"&viewFlag='relist'";
+				}
+			}
+		}
+		
 											$(function(){
 												$("#editForm :input").change(function(){
 													//if()cellarOrder_check0 10 15 20
@@ -1422,6 +1439,7 @@ var openCustomerView = function(customer_uuid) {
 	$("#"+iframeId).attr("src","/qkjmanage/active_history?active.uuid=" + customer_uuid);
 	sobj02.open();
 };
+
 </script>
 	</div>
 	<!-- HIDDEN AREA END -->
