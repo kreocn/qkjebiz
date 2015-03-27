@@ -173,6 +173,7 @@ var top_nav_init = function(){
 		return false;
 	} });
 	$(document).on({ "click" : function(e){
+		$b = $(".ht_sjsub");
 		var src = e.target;
 		if (src.id && src.id === "b") {
 			return false;
@@ -209,12 +210,38 @@ var left_nav_init = function(){
 	});
 	//屏幕缩小，点击空白地方，左侧菜单消失
 	$(".tab_right").on({"click":function(){
+			$lbar = $(".ht_left");
 			if($lbar.css("display")=="block"){
 				$lbar.addClass("subHide");
 			}
 		}
 	});
 };
+//按钮多了 改为 更多操作
+var more_cz_init = function(){
+	$(".more_j").on({ "click" : function(){
+		moreCz();
+		return false;
+	} });
+	$(document).on({ "click" : function(e){
+		$b = $(".mcz_list");
+		var src = e.target;
+		if (src.id && src.id === "b") {
+			return false;
+		} else {
+			$b.addClass("subHide");
+		}
+	} });
+};
+//更多操作事件
+function moreCz(){
+	$mcz=$(".mcz_list");
+	if($mcz.hasClass("subHide")){
+		$mcz.removeClass("subHide");
+	}else{
+		$mcz.addClass("subHide");
+	}
+}
 
 /* top首页加载的模块函数 */
 var module_toggle = function(module_no){
@@ -292,6 +319,8 @@ var createMenu = function(prvgs){
 	module_toggle(moduleCookie());
 	// Cookie记录打开关闭状态
 	leftMenuCookie();
+	//更多操作 初始化
+	more_cz_init();
 };
 
 var printPagination = function(did, currPage, recCount, pageSize){
