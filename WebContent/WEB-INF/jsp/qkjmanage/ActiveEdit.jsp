@@ -110,7 +110,7 @@
 		<div class="dq_step">
 			${path}
 			<div class="opb lb op-area noprint" style="position:relative; z-index:2;">
-				<p class="more_j" onclick="moreCz();">更多操作</p>
+				<p class="more_j">更多操作</p>
 				<div class="mcz_list subHide">
 					<a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a>
 					<s:if test="'mdy' == viewFlag && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_HISTORY')">
