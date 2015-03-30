@@ -108,21 +108,20 @@
 <div class="tab_right">
 	<div class="tab_warp main">
 		<div class="dq_step">
-			${path} <span class="opb lb op-area"> <s:if test="'mdy' == viewFlag && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_HISTORY')">
-					<!-- <a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_history"><s:param name="active.uuid" value="active.uuid" /></s:url>">查看操作记录</a> -->
-					<a href="javascript:;" onclick="openCustomerView(${active.uuid});">查看操作记录</a>
-				</s:if> <s:if test="40<=active.sd_status">
-					<a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_view"><s:param name="active.uuid" value="active.uuid" /></s:url>">转到打印页面</a>
-				</s:if> <a href="<s:url namespace="/qkjmanage" action="active_list"><s:param name="viewFlag">relist</s:param><s:param name="befUid" value="active.uuid" /></s:url>">返回列表</a>
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_NEXTACTIVE')">
-				<s:if test="%{maxUid!=active.uuid}">
-				<a href="<s:url namespace="/qkjmanage" action="active_nextList"><s:param name="viewFlag">relist</s:param><s:param name="befUid" value="active.uuid" /><s:param name="up" value="1" /></s:url>">上一页</a>
-				</s:if>
-				<s:if test="%{minUid!=1}">
-				<a href="<s:url namespace="/qkjmanage" action="active_nextList"><s:param name="viewFlag">relist</s:param><s:param name="befUid" value="active.uuid" /></s:url>">下一页</a>
-				</s:if>
-				</s:if>
-				</span>
+			${path}
+			<div class="opb lb op-area noprint" style="position:relative; z-index:2;">
+				<p class="more_j">更多操作</p>
+				<div class="mcz_list subHide">
+					<a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a>
+					<s:if test="'mdy' == viewFlag && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_HISTORY')">
+						<!-- <a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_history"><s:param name="active.uuid" value="active.uuid" /></s:url>">查看操作记录</a> -->
+						<a href="javascript:;" onclick="openCustomerView(${active.uuid});">查看操作记录</a>
+					</s:if>
+					<s:if test="40<=active.sd_status">
+						<a href="<s:url namespace="/qkjmanage" action="active_view"><s:param name="active.uuid" value="active.uuid" /></s:url>">转到打印页面</a>
+					</s:if>
+				</div>
+			</div>
 		</div>
 		<s:form id="editForm" name="editForm" cssClass="validForm" action="active_load" namespace="/qkjmanage" method="post" theme="simple">
 		<s:hidden name="active.apply_dept" value="%{active.apply_dept}"></s:hidden>
