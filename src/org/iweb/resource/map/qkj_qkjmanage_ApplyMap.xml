@@ -65,6 +65,16 @@
 			<isNotEmpty prepend="AND" property="status_end"><![CDATA[ status<=#status_end# ]]></isNotEmpty>
 		</dynamic>
 	</select>
+	
+	<select id="qkjmanage_getApplysUserSign" resultClass="apply" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT a.user_sign,a.biz_time sign_biz_time,a.biz_user,a.USER_NAME sign_user_name FROM (SELECT u.`user_sign`,p.`biz_time`,p.`biz_user`,u.`USER_NAME` FROM qkjm_r_apply a LEFT JOIN qkjm_h_process p ON (a.`uuid`=p.`biz_id`)
+			LEFT JOIN s_sys_user u ON (u.`UUID`=p.`biz_user`)
+			WHERE p.`process_id`=2  AND p.`biz_id`=#biz_id# AND (p.`biz_status01`>10 OR p.biz_status02>=10)
+			ORDER BY p.`biz_time` DESC) a GROUP BY a.biz_user
+		]]>
+	</select>
+	
 	<insert id="qkjmanage_addApply" parameterClass="apply">
 		<![CDATA[ 
 			Insert Into qkjm_r_apply(touser,title,note,apply_dept,apply_user,apply_time,status,lm_user,is_fullcheck,fullcheck_text)
