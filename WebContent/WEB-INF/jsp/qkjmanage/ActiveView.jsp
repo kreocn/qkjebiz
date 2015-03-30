@@ -111,14 +111,18 @@
 <div class="tab_right">
 	<div class="tab_warp main">
 		<div class="dq_step">
-			<span id="hs" class="pt">活动申请单</span> <span id="ks" class="pt kss">活动执行通知单</span> <span class="opb lb op-area noprint"><a href="<s:url namespace="/qkjmanage" action="active_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a></span> <span class="opb lb op-area noprint"><a
-				href="<s:url namespace="/qkjmanage" action="active_load"><s:param name="viewFlag">mdy</s:param><s:param name="active.uuid" value="%{active.uuid}"></s:param></s:url>">返回修改页面</a></span> 
-				<span class="opb lb op-area noprint">
-				<input type="button" onclick="ypri();window.print();" value="打印本页" />&nbsp;</span> 
-				<span class="opb lb op-area noprint"><input type="button" onclick="indprint();" value="打印海拔系列" />&nbsp;</span> 
-				<span class="opb lb op-area noprint"><input type="button" onclick="otherprint();" value="打印非海拔系列" />&nbsp;</span> 
-				<span
-				class="opb lb op-area noprint"><input type="button" onclick="nopri();window.print();" value="活动执行通知单" />&nbsp;</span>
+			<span id="hs" class="pt">活动申请单</span> <span id="ks" class="pt kss">活动执行通知单</span>
+			<div class="opb lb op-area noprint" style="position:relative; z-index:2;">
+				<p class="more_j">更多操作</p>
+				<div class="mcz_list subHide">
+					<a href="<s:url namespace="/qkjmanage" action="active_load"><s:param name="viewFlag">mdy</s:param><s:param name="active.uuid" value="%{active.uuid}"></s:param></s:url>">返回修改页面</a>
+					<a href="javascript:;" onclick="ypri();window.print();">打印本页</a>
+					<a href="javascript:;" onclick="indprint();">打印海拔系列</a>
+					<a href="javascript:;" onclick="otherprint();">打印非海拔系列</a>
+					<a href="javascript:;" onclick="nopri();window.print();">活动执行通知单</a>
+					<a class="input-gray"  href="<s:url namespace="/qkjmanage" action="active_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a>
+				</div>
+			</div>
 		</div>
 		<s:form id="editForm" name="editForm" cssClass="validForm" action="apply_list" method="get" namespace="/qkjmanage" theme="simple">
 			<div class="label_con">

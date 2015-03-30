@@ -167,12 +167,13 @@ function left_change(){
 // 顶部导航初始化
 var top_nav_init = function(){
 	// 手机右侧导航事件
-	//top_change();
+	// top_change();
 	$(".ht_clicka").on({ "click" : function(){
 		top_change();
 		return false;
 	} });
 	$(document).on({ "click" : function(e){
+		$b = $(".ht_sjsub");
 		var src = e.target;
 		if (src.id && src.id === "b") {
 			return false;
@@ -196,7 +197,7 @@ var left_nav_init = function(){
 		});
 	});
 	// 屏幕缩小，左侧点击事件
-	//left_change();
+	// left_change();
 	$(".ht_lmenu").click(function(){
 		left_change();
 		$(".ht_left").addClass("bounceInLeft animated");
@@ -207,14 +208,39 @@ var left_nav_init = function(){
 			$lbar.removeClass("bounceInLeft animated").addClass("subHide");
 		}
 	});
-	//屏幕缩小，点击空白地方，左侧菜单消失
-	$(".tab_right").on({"click":function(){
-			if($lbar.css("display")=="block"){
-				$lbar.addClass("subHide");
-			}
+	// 屏幕缩小，点击空白地方，左侧菜单消失
+	$(".tab_right").on({ "click" : function(){
+		$lbar = $(".ht_left");
+		if ($lbar.css("display") == "block") {
+			$lbar.addClass("subHide");
 		}
-	});
+	} });
 };
+// 按钮多了 改为 更多操作
+var more_cz_init = function(){
+	$(".more_j").on({ "click" : function(){
+		moreCz();
+		return false;
+	} });
+	$(document).on({ "click" : function(e){
+		$b = $(".mcz_list");
+		var src = e.target;
+		if (src.id && src.id === "b") {
+			return false;
+		} else {
+			$b.addClass("subHide");
+		}
+	} });
+};
+// 更多操作事件
+function moreCz(){
+	$mcz = $(".mcz_list");
+	if ($mcz.hasClass("subHide")) {
+		$mcz.removeClass("subHide");
+	} else {
+		$mcz.addClass("subHide");
+	}
+}
 
 /* top首页加载的模块函数 */
 var module_toggle = function(module_no){
@@ -245,7 +271,8 @@ function mLink(url){
 	if ("javascript" == url.substr(0, 10)) {
 		return false;
 	} else {
-		location.href = app_path + url;
+		// location.href = app_path + url;
+		location.href = urlAddParam(app_path + url, "jsrefress", (new Date()).getTime());
 	}
 }
 
@@ -292,6 +319,8 @@ var createMenu = function(prvgs){
 	module_toggle(moduleCookie());
 	// Cookie记录打开关闭状态
 	leftMenuCookie();
+	// 更多操作 初始化
+	more_cz_init();
 };
 
 var printPagination = function(did, currPage, recCount, pageSize){
