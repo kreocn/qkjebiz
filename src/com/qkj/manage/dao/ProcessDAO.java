@@ -63,15 +63,15 @@ public class ProcessDAO extends AbstractDAO {
 	}
 
 	public void addProcess(Integer p_type, Integer p_bizid, String p_sign, String p_note, Integer p_status01, Integer p_status02, Integer p_status03) {
-		addProcess(p_type, p_bizid, p_sign, p_note, p_status01, p_status02, p_status03, null, null);
+		addProcess(p_type, p_bizid, p_sign, p_note, p_status01, p_status02, p_status03, null, null,ContextHelper.getUserLoginUuid());
 	}
 
 	public void addProcess(Integer p_type, Integer p_bizid, String p_sign, String p_note, Integer p_status01, Integer p_status02) {
-		addProcess(p_type, p_bizid, p_sign, p_note, p_status01, p_status02, null, null, null);
+		addProcess(p_type, p_bizid, p_sign, p_note, p_status01, p_status02, null, null, null,ContextHelper.getUserLoginUuid());
 	}
 
 	public void addProcess(Integer p_type, Integer p_bizid, String p_sign, String p_note, Integer p_status01) {
-		addProcess(p_type, p_bizid, p_sign, p_note, p_status01, null, null, null, null);
+		addProcess(p_type, p_bizid, p_sign, p_note, p_status01, null, null, null, null,ContextHelper.getUserLoginUuid());
 	}
 
 	public int getResultCount() {

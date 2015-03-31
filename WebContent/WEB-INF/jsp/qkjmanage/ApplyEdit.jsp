@@ -192,11 +192,14 @@ color: #008000;
 					</s:if>
 					</s:if>
 					<s:if test="%{(apply.apply_dept==1 || apply.apply_dept.substring(0,3)!='210' || apply.apply_dept.substring(0,2)!='30' || apply.status>=20) && apply.apply_dept!='22030'}">
-					<s:if test="apply.status==20 && apply.sp_check_status<=5 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_SPCHECK10')">
-					<s:submit id="apply_spcheck10" name="apply_spcheck10" value="销管经理审核通过" cssClass="input-green" action="apply_spcheck10" onclick="return isOp('确定进行此操作?');" />
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_SPCHECK5')">
-					<s:submit id="apply_spcheck5" name="apply_spcheck5" value="审核不通过"  cssClass="input-red" action="apply_spcheck5" onclick="return isOp('确定进行此操作?');" />
-					</s:if>
+					
+					<s:if test="apply.apply_dept.substring(0,3)!='211' && apply.apply_dept.substring(0,1)!=3"><!-- 北京加省外跳过销管经理 -->
+						<s:if test="apply.status==20 && apply.sp_check_status<=5 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_SPCHECK10')">
+						<s:submit id="apply_spcheck10" name="apply_spcheck10" value="销管经理审核通过" cssClass="input-green" action="apply_spcheck10" onclick="return isOp('确定进行此操作?');" />
+						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_SPCHECK5')">
+						<s:submit id="apply_spcheck5" name="apply_spcheck5" value="审核不通过"  cssClass="input-red" action="apply_spcheck5" onclick="return isOp('确定进行此操作?');" />
+						</s:if>
+						</s:if>
 					</s:if>
 					
 					<s:if test="apply.apply_dept.substring(0,4)!='2302' && apply.apply_dept!='22030' && apply.apply_dept.substring(0,2)!='30'"><!-- 不是西藏大区 :西藏大区不用总监审跳过-->

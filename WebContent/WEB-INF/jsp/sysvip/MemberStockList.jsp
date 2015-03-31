@@ -9,10 +9,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>会员库存--<s:text name="APP_NAME" /></title>
 <s:action name="ref_head" namespace="/manager" executeResult="true" />
-<link rel="stylesheet" href="<s:url value="/css/zTreeStyle/zTreeStyle.css" />" />
-<script type="text/javascript" src="<s:url value="/js/zTreeJs/jquery.ztree.core-3.5.js" />"></script>
-<script type="text/javascript" src="<s:url value="http://images01.qkjchina.com/qkjebiz01/zTree_result.js?v0=1" />"></script>
-<script type="text/javascript" src="<s:url value="/js/zTreeJs/product.js" />"></script>
 </head>
 <body>
 <!-- 顶部和左侧菜单导航 -->
@@ -30,7 +26,7 @@ ${path}
 
 </s:if>
 </div>
-	<s:form id="serachForm" name="serachForm"  method="get" namespace="/sysvip" theme="simple">
+	<s:form id="serachForm" name="serachForm"  method="post" namespace="/sysvip" theme="simple">
 <div class="label_con">
 <div class="label_main">
       <div class="label_hang">
@@ -42,16 +38,10 @@ ${path}
           <div class="label_rwben"><s:textfield name="memberStock.member_name"/></div>
       </div>
       <div class="label_hang">
-		    <div class="label_ltit">产品:</div>
-		    <div class="label_rwben label_rwb" style="width: 140px;">
-		    <s:textfield  id="citySel" name="memberStock.product_name" onclick="showMenu(); return false;"/>
-		    	<s:hidden name="memberStock.product" id="cityUid"></s:hidden>
-		    	<s:hidden id="datacase"></s:hidden>
-		    	<div id="menuContent" class="menuContent">
-			        <ul id="treeDemo" class="ztree"></ul>
-			    </div>
-		    </div>
-		</div>
+          <div class="label_ltit">产品:</div>
+          <div class="label_rwben"><s:textfield name="memberStock.product_name"/></div>
+      </div>
+      
 		
 		<div class="label_hang">
 		<div class="label_ltit">核对日期:</div>
@@ -63,7 +53,7 @@ ${path}
 	  <div class="label_hang label_button tac">
         	<s:checkbox id="search_mcondition" name="search_mcondition" fieldValue="true" value="true" cssClass="regular-checkbox" />
 			<label for="search_mcondition"></label>更多条件
-            <s:submit value="搜索" onclick="checkstock();" /> <s:reset value="重置" />
+            <s:submit value="搜索" /> <s:reset value="重置" />
         </div>
         <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJM_SYSVIP_MEMBERSTOCK_DEL')">
           		<div style="clear:both;"><input type="button" class="input-red" value="批量删除" onclick="javascript:deletestock('是否真的要批量删除记录?');"></div>
