@@ -324,6 +324,24 @@ public class ContextHelper {
 	}
 
 	/**
+	 * 权限判断的静态方法封装(通用)
+	 * 
+	 * @param p_ids
+	 *            权限,支持多权限,权限用&&隔开代表且,用||隔开代表或
+	 * @param dept_code
+	 * @return
+	 */
+	public static boolean checkPermit(String p_ids, String dept_code) {
+		try {
+			if (p_ids.indexOf("&&") >= 0) return checkPermits(p_ids.split("&&"), true);
+			else if (p_ids.indexOf("||") >= 0) return checkPermits(p_ids.split("\\|\\|"), false);
+			else return checkPermit(p_ids);
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	/**
 	 * 得到权限类型,0代表个人,1代表部门,2代表全局
 	 * 
 	 * @param p_id
