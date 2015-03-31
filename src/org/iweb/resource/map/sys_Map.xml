@@ -421,5 +421,20 @@
 		</isNotNull>
 		<![CDATA[ Order By MENU_PRIORITY,LM_TIME 	]]>
 	</select>
+	
+	<typeAlias alias="userDept" type="org.iweb.sys.domain.UserDept" />
+	
+	<select id="sys_getUsesrDept" resultClass="userDept" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select * 
+			From s_sys_userdept
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotNull>
+		</dynamic>
+		<![CDATA[ ORDER BY uuid ]]>
+	</select>
+	
+	
 	<!-- SYS_MENU End -->
 </sqlMap>
