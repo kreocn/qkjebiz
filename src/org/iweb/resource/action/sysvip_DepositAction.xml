@@ -7,10 +7,10 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- Deposit Start -->
 		<action name="deposit_list" class="org.iweb.sysvip.action.DepositAction" method="list">
-			<result>/jsp/sysvip/DepositList.jsp</result>
+			<result>/WEB-INF/jsp/sysvip/DepositList.jsp</result>
 		</action>
 		<action name="deposit_load" class="org.iweb.sysvip.action.DepositAction" method="load">
-			<result>/jsp/sysvip/DepositEdit.jsp</result>
+			<result>/WEB-INF/jsp/sysvip/DepositEdit.jsp</result>
 		</action>
 		<action name="deposit_add" class="org.iweb.sysvip.action.DepositAction" method="add">
 			<result type="redirectAction">

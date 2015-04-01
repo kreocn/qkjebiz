@@ -7,7 +7,7 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- CloseOrderPro Start -->
 		<action name="closeOrderPro_list" class="com.qkj.manage.action.CloseOrderProAction" method="list">
-			<result>/jsp/qkjmanage/CloseOrderProList.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/CloseOrderProList.jsp</result>
 		</action>
 		<action name="closeOrderPro_relist" class="com.qkj.manage.action.CloseOrderProAction" method="relist">
 			<result type="redirectAction">
@@ -16,7 +16,7 @@
 			</result>
 		</action>
 		<action name="closeOrderPro_load" class="com.qkj.manage.action.CloseOrderProAction" method="load">
-			<result>/jsp/qkjmanage/CloseOrderProEdit.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/CloseOrderProEdit.jsp</result>
 		</action>
 		<action name="closeOrderPro_add" class="com.qkj.manage.action.CloseOrderProAction" method="add">
 			<result type="redirectAction">

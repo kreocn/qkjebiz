@@ -7,10 +7,10 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- MemberCapitalRescore Start -->
 		<action name="memberCapitalRescore_list" class="org.iweb.sysvip.action.MemberCapitalRescoreAction" method="list">
-			<result>/jsp/sysvip/MemberCapitalRescoreList.jsp</result>
+			<result>/WEB-INF/jsp/sysvip/MemberCapitalRescoreList.jsp</result>
 		</action>
 		<action name="memberCapitalRescore_load" class="org.iweb.sysvip.action.MemberCapitalRescoreAction" method="load">
-			<result>/jsp/sysvip/MemberCapitalRescoreEdit.jsp</result>
+			<result>/WEB-INF/jsp/sysvip/MemberCapitalRescoreEdit.jsp</result>
 		</action>
 		<action name="memberCapitalRescore_add" class="org.iweb.sysvip.action.MemberCapitalRescoreAction" method="add">
 			<result type="redirectAction">

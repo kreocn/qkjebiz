@@ -39,7 +39,7 @@
 		</action>
 		
 		<action name="market_saveab" class="com.qkj.manage.action.MarketAction" method="saveab">
-			<result>/jsp/qkjmanage/market/net2.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/market/net2.jsp</result>
 		</action>
 		
 		<action name="market_saveay" class="com.qkj.manage.action.MarketAction" method="saveay">
