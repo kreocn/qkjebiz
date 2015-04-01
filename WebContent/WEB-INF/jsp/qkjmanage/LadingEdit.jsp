@@ -1,7 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -337,46 +337,42 @@
         <div class="label_hang">
             <div class="label_ltit">相关操作:</div>
             <div class="label_rwbenx op-area">
-            <s:if test="null == lading && 'add' == viewFlag">
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADING_ADD')">
+           		<c:if test="${null == lading  && 'add' == viewFlag && it:checkPermit('QKJ_QKJMANAGE_LADING_ADD',null)==true}">
 					<s:submit id="add" name="add" value="下一步&填写出货明细" action="lading_add" cssClass="input-blue"/>
-					</s:if>
-				</s:if>
-				<s:elseif test="null != lading && 'mdy' == viewFlag">
+				</c:if>
+				<s:if test="null != lading && 'mdy' == viewFlag">
 					<s:if test="lading.status<=5">
-						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADING_MDY')">
-						<s:submit id="save" name="save" value="保存" action="lading_save"  cssClass="input-blue" />
-						<script type="text/javascript">
-						$(function(){
-							$("#editForm :input").change(function(){
-								if($("#saveLadingStatus0").length>0)
-									$("#saveLadingStatus0").attr("disabled","disabled");
-								if($("#saveLadingStatus1").length>0)
-									$("#saveLadingStatus1").attr("disabled","disabled");
-								$("#message").text("请先保存后才能进行其他相关操作");
+						<c:if test="${it:checkPermit('QKJ_QKJMANAGE_LADING_MDY',null)==true}">
+							<s:submit id="save" name="save" value="保存" action="lading_save"  cssClass="input-blue" />
+							<script type="text/javascript">
+							$(function(){
+								$("#editForm :input").change(function(){
+									if($("#saveLadingStatus0").length>0)
+										$("#saveLadingStatus0").attr("disabled","disabled");
+									if($("#saveLadingStatus1").length>0)
+										$("#saveLadingStatus1").attr("disabled","disabled");
+									$("#message").text("请先保存后才能进行其他相关操作");
+								});
 							});
-						});
-						</script>
-						</s:if>
-						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADING_STATUS0')&&lading.status<=5">
+							</script>
+						</c:if>
+						<c:if test="${lading.status<=5 && it:checkPermit('QKJ_QKJMANAGE_LADING_STATUS0',null)==true}">
 							<s:submit id="saveLadingStatus0" name="saveLadingStatus0" value="送审" action="saveLadingStatus0" onclick="return isOp('确定执行此操作?');" cssClass="input-yellow" />
-						</s:if>
-						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADING_DEL')">
+						</c:if>
+						<c:if test="${it:checkPermit('QKJ_QKJMANAGE_LADING_DEL',null)==true}">
 							<s:submit id="delete" name="delete" value="删除订单" action="lading_del" onclick="return isDel();" cssClass="input-red" />
-						</s:if>
+						</c:if>
 					</s:if>
-					
-					
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADING_STATUS10')&&lading.status==10">
+					<c:if test="${lading.status==10 && it:checkPermit('QKJ_QKJMANAGE_LADING_STATUS10',null)==true}">
 						<s:submit id="saveLadingStatus10" name="saveLadingStatus10" value="财务通过" action="saveLadingStatus10" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
-						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADING_STATUS5')">
+						<c:if test="${it:checkPermit('QKJ_QKJMANAGE_LADING_STATUS5',null)==true}">
 						<s:submit id="saveLadingStatus5" name="saveLadingStatus5" value="财务退回" action="saveLadingStatus5" onclick="return isOp('确定执行此操作?');" cssClass="input-red" />
-						</s:if>
-					</s:if>
-				</s:elseif>
-				<s:if test="lading.status>=10">
-								<input type="button" onclick="linkurl('<s:url namespace="/qkjmanage" action="lading_view"><s:param name="lading.uuid" value="lading.uuid" /><s:param name="viewFlag">view</s:param></s:url>');" value="转到详情页面" />
+						</c:if>
+					</c:if>
 				</s:if>
+				<c:if test="${lading.status>=10}">
+					<input type="button" onclick="linkurl('<s:url namespace="/qkjmanage" action="lading_view"><s:param name="lading.uuid" value="lading.uuid" /><s:param name="viewFlag">view</s:param></s:url>');" value="转到详情页面" />
+				</c:if>
 				<input type="button" value="返回" onclick="linkurl('<s:url action="lading_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');"  class="input-gray" />
 				<span id="message"  class="cr"></span>
 				<!-- <input type="button" value="打印" onclick="window.print();" /> -->

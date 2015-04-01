@@ -96,12 +96,12 @@ max-width: 650px !important;
 		</td>
 		<td class="td3 nw">${rebate }</td>
 		<td  class="td4 op-area">
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SALPRO_SALPROMOT_MDY')">
+			<c:if test="${it:checkPermit('QKJ_SALPRO_SALPROMOT_MDY',null)==true}">
 	    	<a class="input-blue" href="<s:url namespace="/salpro" action="salPromot_load"><s:param name="viewFlag">mdy</s:param><s:param name="salPromot.uuid" value="uuid"></s:param></s:url>">修改</a>
-	    	</s:if>
-	    	<s:if test="status==0 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_SALPRO_SALPROMOT_DEL')">
+	    	</c:if>
+	    	<c:if test="${status==0 && it:checkPermit('QKJ_SALPRO_SALPROMOT_DEL',null)==true}">
 	    	<a class="input-red" href="<s:url namespace="/salpro" action="salPromot_del"><s:param name="salPromot.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
-	    	</s:if>	   
+	    	</c:if>
 	    </td>
 	    <td class="td0 op-area"><a onClick="showDetail('showtr${uuid}');" href="javascript:;" class="input-nostyle">查看</a></td>
 	  </tr>

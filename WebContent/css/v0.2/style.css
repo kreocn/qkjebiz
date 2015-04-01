@@ -441,7 +441,7 @@ a {
 }
 
 .dq_step .opb {
-	float: right; margin-left: 5px; position: relative;
+	float: right; margin-left: 5px; position: relative; z-index:2;
 }
 
 .dl_msg {
