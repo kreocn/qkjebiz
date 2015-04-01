@@ -229,6 +229,7 @@
 											<s:if test="caiActive!=null"><s:if test="%{caiActive.puser_sign!=puser_sign}"><img src="${puser_sign}" /></s:if></s:if>
 											<s:elseif test="guanActive!=null"><s:if test="%{guanActive.puser_sign!=puser_sign}"><img src="${puser_sign}" /></s:if></s:elseif>
 											<s:elseif test="fuActive!=null"><s:if test="%{fuActive.puser_sign!=puser_sign}"><img src="${puser_sign}" /></s:if></s:elseif>
+											<s:else><img src="${puser_sign}" /></s:else>
 											</s:if>
 											<s:else>
 											<s:if test="%{caiActive.puser_sign!=puser_sign && guanActive.puser_sign!=puser_sign && fuActive.puser_sign!=puser_sign}">
