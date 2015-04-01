@@ -218,8 +218,8 @@
 			LEFT JOIN s_sys_user u ON (s.`biz_user`=u.`UUID`)
 		]]>
 		<dynamic prepend="WHERE">
-			<isNotEmpty prepend="AND" property="ja"><![CDATA[ s.`biz_status01`>=4 AND s.`biz_status01`<6 AND s.`process_id`=1 ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="sq"><![CDATA[ s.`biz_status01`>=1 AND s.`biz_status01`<=2 AND s.`process_id`=1 ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="ja"><![CDATA[ s.`biz_status01`>=4 AND s.`biz_status01`<6 AND s.`process_id`=1 AND s.`biz_time`>(SELECT MAX(s.`biz_time`) FROM qkjm_h_process s WHERE s.`biz_id`=1163 AND s.`biz_status01`=3) ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="sq"><![CDATA[ s.`biz_status01`>=1 AND s.`biz_status01`<=2 AND s.`process_id`=1 AND s.`biz_time`>(SELECT MAX(s.`biz_time`) FROM qkjm_h_process s WHERE s.`biz_id`=1163 AND s.`biz_status01`=0)]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="sd60"><![CDATA[ s.`biz_status02`=60 and s.`biz_status03`=50]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="smd40"><![CDATA[ s.`biz_status02`=40 and s.`biz_status03`=40 ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="smd50"><![CDATA[  s.`biz_status03`=50 AND s.`biz_sign`='ACTIVE_MDY_SMDSTATUS']]></isNotEmpty>
