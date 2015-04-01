@@ -226,28 +226,28 @@
 			<result>/WEB-INF/jsp/sys/DeptPermitSelect.jsp</result>
 		</action>
 		
-		<action name="user_dept_add" class="org.iweb.sys.action.UserAction" method="add">
+		<action name="user_dept_add" class="org.iweb.sys.action.UserDeptAction" method="add">
 			<result type="redirectAction">
 				<param name="actionName">puser_dept_list</param>
 				<param name="privilege.uuid">${userDept.uuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
-		<action name="user_dept_save" class="org.iweb.sys.action.UserAction" method="save">
+		<action name="user_dept_save" class="org.iweb.sys.action.UserDeptAction" method="save">
 			<result type="redirectAction">
 				<param name="actionName">puser_dept_list</param>
 				<param name="privilege.uuid">${userDept.uuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
-		<action name="puser_dept_del" class="org.iweb.sys.action.UserPrivilegeAction" method="del">
+		<action name="puser_dept_del" class="org.iweb.sys.action.UserDeptAction" method="del">
 			<result type="redirectAction">
 				<param name="actionName">puser_dept_list</param>
 				<param name="privilege.uuid">${userDept.uuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
-		<action name="puser_dept_list" class="org.iweb.sys.action.UserPrivilegeAction" method="list">
+		<action name="puser_dept_list" class="org.iweb.sys.action.UserDeptAction" method="list">
 			<result>/WEB-INF/jsp/sys/UserPrivilegeList.jsp</result>
 		</action>
 		<!-- SYS Select End -->

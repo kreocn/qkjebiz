@@ -21,36 +21,6 @@
 			<span class="opb lb op-area"><a href="<s:url namespace="/sys" action="user_list"></s:url>" >管理员列表</a></span>
 		</div>
 		<s:form id="formEdit" name="form1" cssClass="validForm" action="user_add" namespace="/sys" onsubmit="return validator(this);" method="post" theme="simple">
-			<s:if test="null != user">
-			<div class="label_hang">
-		       <div class="label_ltit">用户ID:</div>
-		       <div class="label_rwben">${user.uuid}<s:hidden name="user.uuid" /></div>
-			</div>
-			</s:if>
-			<div class="label_hang clear">
-		       <div class="label_ltit">用户名:</div>
-		       <div class="label_rwben"><input type="text" title="用户名" id="user.title" name="user.title" class="validate[required]" value="${user.title}" <s:if test="null != user && 'mdy' == viewFlag">readonly</s:if>  /></div>
-			</div>
-			<div class="label_hang">
-		       <div class="label_ltit">姓名:</div>
-		       <div class="label_rwben"><s:textfield id="user.user_name" name="user.user_name" title="姓名" cssClass="validate[required]" /></div>
-			</div>
-			<div class="label_hang">
-		       <div class="label_ltit">性别:</div>
-		       <div class="label_rwbenx"><s:radio name="user.sex" list="#{0:'保密',1:'男',2:'女'}" /></div>
-			</div>
-			<div class="label_hang clear">
-		       <div class="label_ltit">电话:</div>
-		       <div class="label_rwben"><s:textfield id="user.phone" title="电话" name="user.phone" /></div>
-			</div>
-			<div class="label_hang">
-		       <div class="label_ltit">移动电话:</div>
-		       <div class="label_rwben"><s:textfield id="user.mobile" title="移动电话" name="user.mobile" cssClass="validate[custom[integer]]"/></div>
-			</div>
-			<div class="label_hang">
-		       <div class="label_ltit">电子邮件:</div>
-		       <div class="label_rwbenx"><s:textfield id="user.email" title="电子邮件" name="user.email" /></div>
-			</div>
 			<div class="label_hang">
 		       <div class="label_ltit">职务:</div>
 		       <div class="label_rwbenx"><s:select name="user.position" list="positions" listKey="uuid" listValue="position_name" headerKey="" headerValue="--请选择--" cssClass="validate[required]"/></div>

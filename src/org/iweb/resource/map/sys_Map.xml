@@ -435,6 +435,12 @@
 		<![CDATA[ ORDER BY uuid ]]>
 	</select>
 	
+	<insert id="sys_addUserDept" parameterClass="userDept">
+		<![CDATA[ 
+			INSERT INTO s_sys_userdept(user_id,dept_code,position,subover,roles,prvgs,lm_time) VALUES(#user_id#,#dept_code#,#position#,#subover#,#roles#,#prvgs#,#lm_time#);
+		]]>
+	</insert>
+	
 	
 	<!-- SYS_MENU End -->
 </sqlMap>
