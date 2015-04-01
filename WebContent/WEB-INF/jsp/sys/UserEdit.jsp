@@ -57,46 +57,9 @@
 			</div>
 			
 			<fieldset class="clear">
-	<legend>收货地址</legend>
+	<legend>所属部门</legend>
 	<!--<span class="shaddress">--------------------收货地址--------------------</span>-->
-	<s:if test="'add' == viewFlag">
-	<div class="label_main">
-		<div class="label_hang">
-			<div class="label_ltit">所在地区:</div>
-			<div class="label_rwbenx">
-				<div class="label_rwb"><s:select id="memberAddress.province" name="memberAddress.province" title="省" list="#{}" cssClass="validate[required]" /></div>
-				<div class="label_rwb"><s:select id="memberAddress.city" name="memberAddress.city" title="市" list="#{}" cssClass="validate[required]" data-prompt-position="inline" data-prompt-target="rm_x" /></div>
-				<div class="label_rwb"><s:select id="memberAddress.area" name="memberAddress.area" title="县" list="#{}" /></div>
-				<span id="rm_x" class="sva"></span>
-			</div>
-		</div>
-	</div>
-		<div class="label_main">
-		<div class="label_hang">
-			<div class="label_ltit">邮政编码:</div>
-			<div class="label_rwben label_rwb"><s:textfield name="memberAddress.post" title="邮政编码" controlName="邮政编码" dataType="zipcode" /></div>
-		</div>
-	</div>
-	<div class="label_main">
-		<div class="label_hang">
-			<div class="label_ltit">街道地址:</div>
-			<div class="label_rwbenx"><s:textarea name="memberAddress.street" cssClass="label_hang_linput" title="街道地址" controlName="街道地址" require="required" /></div>
-		</div>
-	</div>
-	<div class="label_main">
-		<div class="label_hang">
-			<div class="label_ltit">收货人姓名:</div>
-			<div class="label_rwben label_rwb"><s:textfield name="memberAddress.con_name" title="收货人姓名" controlName="收货人姓名" require="required" /></div>
-		</div>
-		<div class="label_hang">
-			<div class="label_ltit">联系号码:</div>
-			<div class="label_rwben label_rwb"><s:textfield name="memberAddress.mobile" title="联系号码" controlName="联系号码" require="required" /></div>
-		</div>
-		<div class="label_hang label_button tac">
-			<a href="javascript:;" onclick="copyval();">复制会员姓名和手机</a>
-		</div>
-	</div>
-	</s:if>
+	
 	<s:if test="'mdy'==viewFlag">
 		 <div class="label_main">
 		 	<!--
@@ -106,12 +69,10 @@
 		 	-->
 			<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
 			<tr>
-				<th>所在地区</th>
-				<th>邮编</th>
-				<th>街道地址</th>
-				<th>收货人姓名</th>
-				<th>手机/联系电话</th>
-				<th>默认地址</th>
+				<th>所属部门</th>
+				<th>职务</th>
+				<th>子部门管理权限</th>
+				<th>更新时间</th>
 				<th><a href="<s:url namespace="/sysvip" action="memberAddress_load"><s:param name="viewFlag">add</s:param><s:param name="memberAddress.member_id" value="member.uuid" /></s:url>" >添加收货地址</a></th>
 			</tr>
 			<s:iterator value="memberAddresses" status="sta">
