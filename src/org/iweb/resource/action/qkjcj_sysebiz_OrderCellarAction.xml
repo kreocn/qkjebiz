@@ -13,7 +13,7 @@
 			<param name="actionName">orderCellar_list</param> <param name="orderCellar.order_id">${orderCellar.order_id}</param> <param 
 			name="errorMessage">${errorMessage}</param> <param name="message">${message}</param> </result> </action> -->
 		<action name="orderCellar_load" class="com.qkjsys.ebiz.action.OrderCellarAction" method="load">
-			<result>/jsp/sysebiz/OrderCellarEdit.jsp</result>
+			<result>/WEB-INF/jsp/sysebiz/OrderCellarEdit.jsp</result>
 		</action>
 		<!-- <action name="orderCellar_del" class="com.qkjsys.ebiz.action.OrderCellarAction" method="del"> <result type="redirectAction"> 
 			<param name="actionName">orderCellar_list</param> <param name="orderCellar.order_id">${orderCellar.order_id}</param> <param 

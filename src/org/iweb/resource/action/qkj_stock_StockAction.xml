@@ -16,7 +16,7 @@
 			</result>
 		</action>
 		<action name="stock_load" class="com.qkj.ware.action.StockAction" method="load">
-			<result>/jsp/ware/stock/StockEdit.jsp</result>
+			<result>/WEB-INF/jsp/ware/stock/StockEdit.jsp</result>
 		</action>
 		<action name="stock_add" class="com.qkj.ware.action.StockAction" method="add">
 			<result type="redirectAction">
