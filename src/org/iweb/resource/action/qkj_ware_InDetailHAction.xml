@@ -7,7 +7,7 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- InDetailH Start -->
 		<action name="inDetailH_list" class="com.qkj.ware.action.InDetailHAction" method="list">
-			<result>/jsp/ware/history/InDetailHList.jsp</result>
+			<result>/WEB-INF/jsp/ware/history/InDetailHList.jsp</result>
 		</action>
 		<action name="inDetailH_relist" class="com.qkj.ware.action.InDetailHAction" method="relist">
 			<result type="redirectAction">
@@ -16,7 +16,7 @@
 			</result>
 		</action>
 		<action name="inDetailH_load" class="com.qkj.ware.action.InDetailHAction" method="load">
-			<result>/jsp/ware/history/InDetailHEdit.jsp</result>
+			<result>/WEB-INF/jsp/ware/history/InDetailHEdit.jsp</result>
 		</action>
 		<action name="inDetailH_add" class="com.qkj.ware.action.InDetailHAction" method="add">
 			<result type="redirectAction">
