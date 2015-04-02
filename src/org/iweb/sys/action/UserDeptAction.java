@@ -1,5 +1,6 @@
 package org.iweb.sys.action;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -11,9 +12,13 @@ import org.iweb.sys.ContextHelper;
 import org.iweb.sys.Parameters;
 import org.iweb.sys.ToolsUtil;
 import org.iweb.sys.dao.DepartmentDAO;
+import org.iweb.sys.dao.PositionDAO;
 import org.iweb.sys.dao.UserDeptDAO;
 import org.iweb.sys.dao.UserRoleDAO;
+import org.iweb.sys.domain.Department;
+import org.iweb.sys.domain.Position;
 import org.iweb.sys.domain.UserDept;
+import org.iweb.sys.domain.UserRole;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -27,6 +32,11 @@ public class UserDeptAction extends ActionSupport {
 
 	private List<UserDept> userDepts;
 	private UserDept userDept;
+	private List<Position> positions;
+	private List<UserRole> roles;
+	private List<UserRole> userRoles;
+	private String[] uroles;
+	private List<Department> depts;
 
 	private String message;
 	private String viewFlag;
@@ -34,6 +44,46 @@ public class UserDeptAction extends ActionSupport {
 	private int pageSize;
 
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;用户权限信息";
+
+	public List<Department> getDepts() {
+		return depts;
+	}
+
+	public void setDepts(List<Department> depts) {
+		this.depts = depts;
+	}
+
+	public String[] getUroles() {
+		return uroles;
+	}
+
+	public void setUroles(String[] uroles) {
+		this.uroles = uroles;
+	}
+
+	public List<UserRole> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<UserRole> roles) {
+		this.roles = roles;
+	}
+
+	public List<UserRole> getUserRoles() {
+		return userRoles;
+	}
+
+	public void setUserRoles(List<UserRole> userRoles) {
+		this.userRoles = userRoles;
+	}
+
+	public List<Position> getPositions() {
+		return positions;
+	}
+
+	public void setPositions(List<Position> positions) {
+		this.positions = positions;
+	}
 
 	public List<UserDept> getUserDepts() {
 		return userDepts;
@@ -118,14 +168,46 @@ public class UserDeptAction extends ActionSupport {
 			} else if ("add".equals(viewFlag)) {
 				this.setUserDept(null);
 				this.setUserDepts(null);
+				this.setUserRoles(null);
 			} else if ("mdy".equals(viewFlag)) {
 				map.clear();
 				map.put("uuid", userDept.getUuid());
 				this.setUserDept((UserDept) dao.get(userDept.getUuid()));
+				
+				if (!ToolsUtil.isEmpty(userDept.getRoles())) {
+					uroles = userDept.getRoles().split(",");
+				}
+
+				if (!ToolsUtil.isEmpty(userDept.getRoles())) {
+					map.clear();
+					map.put("roles", userDept.getRoles().split(","));
+					this.setUserRoles(dao3.listSysRole(map));
+				} else {
+					this.setUserRoles(null);
+				}
 			} else {
 				this.setUserDept(null);
 				setMessage("无操作类型!");
 			}
+			
+			// 得到用户拥有的角色
+
+						if (ContextHelper.isAdmin() || ContextHelper.checkPermit("SYS_MANAGER_ROLE_LISTALL")) { // 如果是超级管理员
+							// 可以选到所有的部门
+							this.setDepts(dao2.list(null));
+							// 可以选到所有的角色
+							this.setRoles(dao3.listSysRole(null));
+						} else {
+							this.setDepts(ToolsUtil.getTreeNode(dao2.list(null), "dept_code", "parent_dept", ContextHelper.getUserLoginInfo().getDept_code(), 2, true));
+							// 只能选到自己的角色
+							this.setRoles(ContextHelper.getUserLoginInfo().getUser_roles_list());
+						}
+
+						if ("mdy".equals(viewFlag)) {
+							this.removeExistRoles(this.getRoles(), this.getUserRoles());
+						}
+			PositionDAO pdao = new PositionDAO();
+			this.setPositions(pdao.list(null));
 
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!load 读取数据错误:" + ToolsUtil.getStackTrace(e));
@@ -165,6 +247,30 @@ public class UserDeptAction extends ActionSupport {
 			throw new Exception(this.getClass().getName() + "!del 数据删除失败:" + ToolsUtil.getStackTraceHTML(e));
 		}
 		return SUCCESS;
+	}
+	
+	/**
+	 * 去除已经拥有的roles
+	 * 
+	 * @param l_roles
+	 *            列表
+	 * @param e_roles
+	 *            需要去除的roles
+	 * @date 2014-4-22 下午10:28:09
+	 */
+	private void removeExistRoles(List<UserRole> l_roles, List<UserRole> e_roles) {
+		if (l_roles != null && e_roles != null) {
+			List<UserRole> d_roles = new ArrayList<>();
+			for (UserRole u1 : l_roles) {
+				for (UserRole u2 : e_roles) {
+					if (u1.getUuid().equals(u2.getUuid())) {
+						d_roles.add(u1);
+					}
+				}
+			}
+			l_roles.removeAll(d_roles);
+			d_roles.clear();
+		}
 	}
 
 }
