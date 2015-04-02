@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -46,7 +47,7 @@
 				</div>
 				<div class="label_hang">
 				       <div class="label_ltit">数量:</div>
-				       <div class="label_rwben"><s:textfield name="product.case_spec" title="数量" cssClass="validate[required,custom[integer]]" style="width:76%;" />&nbsp;/件</div>
+				       <div class="label_rwben"><s:textfield name="product.case_spec" title="数量" cssClass="validate[required,custom[integer]]" cssStyle="width:60%;" />&nbsp;/件</div>
 				</div>
 				<div class="label_hang">
 				       <div class="label_ltit">酒精度:</div>
@@ -78,7 +79,7 @@
 				</div>
 				<div class="label_hang">
 				       <div class="label_ltit">返利标准(%):</div>
-				       <div class="label_rwben"><s:textfield name="product.group_rebates" title="返利标准" cssClass="validate[required,custom[number]]" style="width:76%;"  />&nbsp;%</div>
+				       <div class="label_rwben"><s:textfield name="product.group_rebates" title="返利标准" cssClass="validate[required,custom[number]]" cssStyle="width:76%;"  />&nbsp;%</div>
 				</div>
 				<div class="label_hang">
 				       <div class="label_ltit">协议价1:</div>
@@ -104,17 +105,17 @@
 	            <div class="label_rwbenx">
 	            	<span id="message"><s:property value="message" /></span>
 				<s:if test="null == product && 'add' == viewFlag">
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_PRODUCT_ADD')">
+					<c:if test="${it:checkPermit('QKJ_QKJMANAGE_PRODUCT_ADD',null)==true}">
 					<s:submit id="add" name="add" value="确定" action="product_add" class="input-blue" />
-					</s:if>
+					</c:if>
 				</s:if>
 				<s:elseif test="null != product && 'mdy' == viewFlag">
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_PRODUCT_MDY')">
+					<c:if test="${it:checkPermit('QKJ_QKJMANAGE_PRODUCT_MDY',null)==true}">
 					<s:submit id="save" name="save" value="保存" action="product_save" class="input-blue" />
-					</s:if>
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_PRODUCT_DEL')">
+					</c:if>
+					<c:if test="${it:checkPermit('QKJ_QKJMANAGE_PRODUCT_DEL',null)==true}">
 					<s:submit id="delete"  name="delete" value="删除" action="product_del"  class="input-red" onclick="return isDel();" />
-					</s:if>
+					</c:if>
 				</s:elseif>
 				<input type="button" class="input-gray" value="返回" onclick="linkurl('<s:url action="product_list" namespace="/qkjmanage" />');" />
 	            </div>

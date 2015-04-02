@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -17,12 +18,12 @@
 		<div class="dq_step">
 			${path}
 				<span class="opb lb op-area">
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_MARKET_ADD')">
-				<a href="<s:url namespace="/qkjmanage" action="market_load"><s:param name="viewFlag">add</s:param></s:url>" >添加信息</a>
-				</s:if>
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_MARKET')">
-				<a href="<s:url namespace="/qkjmanage" action="market_writejs"></s:url>" >生成营销网络</a>
-				</s:if>
+					<c:if test="${it:checkPermit('QKJ_QKJMANAGE_MARKET_ADD',null)==true}">
+						<a href="<s:url namespace="/qkjmanage" action="market_load"><s:param name="viewFlag">add</s:param></s:url>" >添加信息</a>
+					</c:if>
+					<c:if test="${it:checkPermit('QKJ_QKJMANAGE_MARKET',null)==true}">
+						<a href="<s:url namespace="/qkjmanage" action="market_writejs"></s:url>" >生成营销网络</a>
+					</c:if>
 	     		</span>
 		</div>
 		<!-- 条件查询 -->

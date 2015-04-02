@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
-<%@ page import="org.iweb.sys.ContextHelper"%>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -115,11 +115,12 @@
 			    <div class="label_hang clear">
 			       <div class="label_ltit">操作:</div>
 			       <div class="label_rwbenx">
-			       		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('INFO_MANAGER_NEWS_FIRSTPASS')">
+			       		<c:if test="${it:checkPermit('INFO_MANAGER_NEWS_FIRSTPASS',null)==true}">
 							<s:submit id="firstpass" name="firstpass" value="初审通过" action="news_saveFirstPass" cssClass="input-green" />
-						</s:if> <s:if test="@org.iweb.sys.ContextHelper@checkPermit('INFO_MANAGER_NEWS_FIRSTFAIL')">
+						</c:if>
+						<c:if test="${it:checkPermit('INFO_MANAGER_NEWS_FIRSTFAIL',null)==true}">
 							<s:submit id="firstfail" name="firstfail" value="初审退回" action="news_saveFirstFail" cssClass="input-red"/>
-						</s:if>
+						</c:if>
 			       </div>
 			    </div> 
 			    </s:if>
@@ -137,11 +138,12 @@
 			    <div class="label_hang clear">
 			       <div class="label_ltit">操作:</div>
 			       <div class="label_rwbenx">
-			       		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('INFO_MANAGER_NEWS_FINALPASS')">
+			       		<c:if test="${it:checkPermit('INFO_MANAGER_NEWS_FINALPASS',null)==true}">
 							<s:submit id="firstpass" name="firstpass" value="终审通过" action="news_saveFinalPass" cssClass="input-green"/>
-						</s:if> <s:if test="@org.iweb.sys.ContextHelper@checkPermit('INFO_MANAGER_NEWS_FINALFAIL')">
+						</c:if>
+						<c:if test="${it:checkPermit('INFO_MANAGER_NEWS_FINALFAIL',null)==true}">
 							<s:submit id="firstfail" name="firstfail" value="终审退回" action="news_saveFinalFail" cssClass="input-red"/>
-						</s:if>
+						</c:if>
 			       </div>
 			    </div> 
 			    </s:if>
@@ -154,13 +156,8 @@
 			    <div class="label_hang clear">
 			    	<div class="label_ltit">相关操作:</div>
 			    	<div class="label_rwbenx">
-				    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('INFO_MANAGER_NEWS_FIRSTPASS')">
-							<input type="button" value="返回"  class="input-gray" onclick="linkurl('<s:url action="news_firstCheckedList" namespace="/info" />');" />
-						</s:if>
-						<s:elseif test="@org.iweb.sys.ContextHelper@checkPermit('INFO_MANAGER_NEWS_FINALPASS')">
-							<input type="button" value="返回" class="input-gray" onclick="linkurl('<s:url action="news_finalCheckedList" namespace="/info" />');" />
-						</s:elseif>&nbsp;
-				    	<span id="message"><s:property value="message" /></span>
+						<input type="button" value="返回"  class="input-gray" onclick="linkurl('<s:url action="news_firstCheckedList" namespace="/info" />');" />
+				    	&nbsp;<span id="message"><s:property value="message" /></span>
 					</div>
 			    </div>
 			</div>

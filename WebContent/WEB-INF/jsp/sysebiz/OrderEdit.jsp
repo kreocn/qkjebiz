@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -130,11 +131,9 @@
 				<div style="height:10px;"></div>
 				<fieldset class="clear">
 					<legend>商品信息
-						<s:if test="(order.status>=10 && order.status<=36) && viewFlag=='mdy'">
-							<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJCJ_SYSEBIZ_ORDERGOODS_ADD')">
+						<c:if test="${(order.status>=10 && order.status<=36) && viewFlag=='mdy' && it:checkPermit('QKJCJ_SYSEBIZ_ORDERGOODS_ADD',null)==true}">
 							[<a id="addGoods" href="javascript:;">添加商品</a>]
-							</s:if>
-						</s:if>
+						</c:if>						
 						<s:if test="30==order.status">
 				    		[<a href="<s:url namespace="/sysebiz" action="orderCellar_list"><s:param name="memberCellar.order_id" value="order.uuid" /><s:param name="memberCellar.member_id" value="order.user_id" /></s:url>">藏酒配货</a>]
 				    	</s:if>
@@ -162,7 +161,7 @@
 							<div class="label_hang" style="height:28px;">
 							       <div class="label_ltit">订单数量:</div>
 							       <div class="label_rwbenx">
-							       		<s:textfield name="orderGoods.order_num" title="订单数量" style="width:100px;" cssClass="validate[required,custom[integer]]"/>
+							       		<s:textfield name="orderGoods.order_num" title="订单数量" cssStyle="width:100px;" cssClass="validate[required,custom[integer]]"/>
 							       		<p class="dd_nums"><span id="goods_unit_02"></span><span id="goods_num_02" class="goods_num_show"></span></p>
 							       </div>
 							</div>
@@ -258,69 +257,69 @@
 					       <div class="label_ltit">当前可操作:</div>
 					       <div class="label_rwbenx">
 					       		<s:if test="null == order && 'add' == viewFlag">
-									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJCJ_SYSEBIZ_ORDER_ADD')">
+					       			<c:if test="${it:checkPermit('QKJCJ_SYSEBIZ_ORDER_ADD',null)==true}">
 									<s:submit id="order_add" cssClass="input-blue"  name="order_add" value="新增订单" action="order_add" />
-									</s:if>
-									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJCJ_SYSEBIZ_ORDER_ADDCHECK')">
+									</c:if>
+									<c:if test="${it:checkPermit('QKJCJ_SYSEBIZ_ORDER_ADDCHECK',null)==true}">
 									<s:submit id="order_add_check" name="order_add_check" value="新增&送交审核" action="order_add_check" onclick="return isOp('是否直接送交审核?\n送审后将不能更改!');" />
-									</s:if>
+									</c:if>
 								</s:if>				
 								<s:if test="10==order.status && 'mdy' == viewFlag">
-									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJCJ_SYSEBIZ_ORDER_MDY')">
+									<c:if test="${it:checkPermit('QKJCJ_SYSEBIZ_ORDER_MDY',null)==true}">
 									<s:submit id="save" name="save" cssClass="input-blue"  value="保存订单" action="order_save" />
-									</s:if>
-									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJCJ_SYSEBIZ_ORDER_CHECK10')">
+									</c:if>
+									<c:if test="${it:checkPermit('QKJCJ_SYSEBIZ_ORDER_CHECK10',null)==true}">
 									<s:submit id="order_check10" cssClass="input-yellow"  name="order_check10" value="送交审核" action="order_check10" onclick="return isOp('是否送交审核?\n送审后将不能更改!');" />
-									</s:if>
-									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJCJ_SYSEBIZ_ORDER_CHECK0')">
+									</c:if>
+									<c:if test="${it:checkPermit('QKJCJ_SYSEBIZ_ORDER_CHECK0',null)==true}">
 									<s:submit id="order_check0" cssClass="input-red" name="order_check0" value="订单作废" action="order_check0" onclick="return isOp('是否作废订单?\n作废操作不能取消!');" />
-									</s:if>
+									</c:if>
 								</s:if>
 								<s:if test="15==order.status && 'mdy' == viewFlag">
-									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJCJ_SYSEBIZ_ORDER_MDY')">
+									<c:if test="${it:checkPermit('QKJCJ_SYSEBIZ_ORDER_MDY',null)==true}">
 									<s:submit id="save" name="save" cssClass="input-blue"  value="保存订单" action="order_save" />
-									</s:if>
-									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJCJ_SYSEBIZ_ORDER_CHECK15')">
+									</c:if>
+									<c:if test="${it:checkPermit('QKJCJ_SYSEBIZ_ORDER_CHECK15',null)==true}">
 									<s:submit id="order_check15" cssClass="input-yellow"  name="order_check15" value="重新送审" action="order_check15" onclick="return isOp('是否重新送审?\n送审后将不能更改!');" />
-									</s:if>
-									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJCJ_SYSEBIZ_ORDER_CHECK0')">
+									</c:if>
+									<c:if test="${it:checkPermit('QKJCJ_SYSEBIZ_ORDER_CHECK0',null)==true}">
 									<s:submit id="order_check0" name="order_check0"  cssClass="input-red"  value="订单作废" action="order_check0" onclick="return isOp('是否作废订单?\n作废操作不能取消!');" />
-									</s:if>
+									</c:if>
 								</s:if>
 								<s:if test="20==order.status && 'mdy' == viewFlag">
-									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJCJ_SYSEBIZ_ORDER_CHECK19')">
+									<c:if test="${it:checkPermit('QKJCJ_SYSEBIZ_ORDER_CHECK19',null)==true}">
 									<s:submit id="order_check19" name="order_check19" cssClass="input-red"  value="不通过" action="order_check19" onclick="return isOp('确定退回订单(审核不通过)?\n退回操作不能取消!');" />
-									</s:if>
-									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJCJ_SYSEBIZ_ORDER_CHECK20')">
+									</c:if>							
+									<c:if test="${it:checkPermit('QKJCJ_SYSEBIZ_ORDER_CHECK20',null)==true}">		
 									<s:submit id="order_check20" name="order_check20" cssClass="input-green"  value="审核通过" action="order_check20" onclick="return isOp('确定通过?\n通过后将直接进行商品配货!');" />
-									</s:if>
-									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJCJ_SYSEBIZ_ORDER_CHECK0')">
+									</c:if>
+									<c:if test="${it:checkPermit('QKJCJ_SYSEBIZ_ORDER_CHECK0',null)==true}">
 									<s:submit id="order_check0" name="order_check0" cssClass="input-red"  value="订单作废" action="order_check0" onclick="return isOp('是否作废订单?\n作废操作不能取消!');" />
-									</s:if>
+									</c:if>
 								</s:if>				
 								<s:if test="30==order.status && 'mdy' == viewFlag">
-									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJCJ_SYSEBIZ_ORDER_CHECK30')">
+									<c:if test="${it:checkPermit('QKJCJ_SYSEBIZ_ORDER_CHECK30',null)==true}">
 									<s:submit id="order_check30" name="order_check30" cssClass="input-blue"  value="配货完成" action="order_check30" onclick="return isOp('确定配货完成?\n配货完成操作不能取消!');" />
-									</s:if>
-									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJCJ_SYSEBIZ_ORDER_CHECK0')">
+									</c:if>
+									<c:if test="${it:checkPermit('QKJCJ_SYSEBIZ_ORDER_CHECK0',null)==true}">
 									<s:submit id="order_check0" name="order_check0"  cssClass="input-red"  value="订单作废" action="order_check0" onclick="return isOp('是否作废订单?\n作废操作不能取消!');" />
-									</s:if>
+									</c:if>
 								</s:if>
 								<s:if test="40==order.status && 'mdy' == viewFlag">
-									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJCJ_SYSEBIZ_ORDER_CHECK39')">
+									<c:if test="${it:checkPermit('QKJCJ_SYSEBIZ_ORDER_CHECK39',null)==true}">
 									<s:submit id="order_check39" name="order_check39" cssClass="input-blue"  value="重新配货" action="order_check39" onclick="return isOp('确定重新配货吗?\n重新配货操作不能取消!');" />
-									</s:if>
-									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJCJ_SYSEBIZ_ORDER_CHECK41')">
+									</c:if>
+									<c:if test="${it:checkPermit('QKJCJ_SYSEBIZ_ORDER_CHECK41',null)==true}">
 									<s:submit id="order_check41" name="order_check41" cssClass="input-green"  value="交易完成" action="order_check41" onclick="return isOp('确定交易完成?\n交易完成操作不能取消!\n交易完成之后,订单将不能进行任何操作!');" />
-									</s:if>
-									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJCJ_SYSEBIZ_ORDER_CHECK0')">
+									</c:if>
+									<c:if test="${it:checkPermit('QKJCJ_SYSEBIZ_ORDER_CHECK0',null)==true}">
 									<s:submit id="order_check0" name="order_check0" cssClass="input-red" value="订单作废" action="order_check0" onclick="return isOp('是否作废订单?\n作废操作不能取消!');" />
-									</s:if>
+									</c:if>
 								</s:if>
 								<s:if test="0==order.pay_status && 'mdy' == viewFlag">
-									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJCJ_SYSEBIZ_ORDER_CHANGEPAYSTATUS')">
+									<c:if test="${it:checkPermit('QKJCJ_SYSEBIZ_ORDER_CHANGEPAYSTATUS',null)==true}">
 									<s:submit id="order_pay_status" name="order_pay_status" cssClass="input-green"  value="确认付款" action="order_pay_status" onclick="return isOp('是否确定钱已到账?\n此操作不能取消!');" />
-									</s:if>
+									</c:if>
 								</s:if>
 								<span id="message"><s:property value="message" /></span>
 					       </div>

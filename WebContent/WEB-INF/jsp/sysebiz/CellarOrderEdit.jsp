@@ -1,7 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -200,32 +200,31 @@
             <s:hidden name="memberCellarID" />
 		    	<span id="message"><s:property value="message" /></span>
 				<s:if test="null == cellarOrder && 'add' == viewFlag">
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJCJ_SYSEBIZ_CELLARORDER_ADD')">
+					<c:if test="${it:checkPermit('QKJCJ_SYSEBIZ_CELLARORDER_ADD',null)==true}">
 					<s:submit id="add" name="add" value="新增订单" action="cellarOrder_add" cssClass="input-blue"/>
-					</s:if>
+					</c:if>
 				</s:if>
 				<s:elseif test="null != cellarOrder && 'mdy' == viewFlag">
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJCJ_SYSEBIZ_CELLARORDER_MDY')">
+					<c:if test="${it:checkPermit('QKJCJ_SYSEBIZ_CELLARORDER_MDY',null)==true}">
 						<s:submit id="save" name="save" value="保存订单" action="cellarOrder_save" cssClass="input-blue"/>
-					</s:if>
-					
+					</c:if>					
 					<s:if test="10==cellarOrder.status">
-						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJCJ_SYSEBIZ_CELLARORDER_CHECK10')">
+						<c:if test="${it:checkPermit('QKJCJ_SYSEBIZ_CELLARORDER_CHECK10',null)==true}">
 						<s:submit id="cellarOrder_check10" name="cellarOrder_check10" value="灌装完成" action="cellarOrder_check10" onclick="return isOp('是否灌装完成?');" cssClass="input-green"/>
-						</s:if>
-						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJCJ_SYSEBIZ_CELLARORDER_CHECK0')">
+						</c:if>
+						<c:if test="${it:checkPermit('QKJCJ_SYSEBIZ_CELLARORDER_CHECK0',null)==true}">
 						<s:submit id="cellarOrder_check0" name="cellarOrder_check0" value="订单作废" action="cellarOrder_check0" onclick="return isOp('是否订单作废?\n订单作废后将直接删除!');" cssClass="input-red"/>
-						</s:if>
+						</c:if>
 					</s:if>
 					<s:if test="20==cellarOrder.status">
-						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJCJ_SYSEBIZ_CELLARORDER_CHECK20')">
+						<c:if test="${it:checkPermit('QKJCJ_SYSEBIZ_CELLARORDER_CHECK20',null)==true}">
 						<s:submit id="cellarOrder_check20" name="cellarOrder_check20" value="发货完成" action="cellarOrder_check20" onclick="return isOp('是否发货完成?') && check_express_no();" cssClass="input-green"/>
-						</s:if>
+						</c:if>
 					</s:if>
 					<s:if test="30==cellarOrder.status">
-						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJCJ_SYSEBIZ_CELLARORDER_CHECK15')">
+						<c:if test="${it:checkPermit('QKJCJ_SYSEBIZ_CELLARORDER_CHECK15',null)==true}">
 						<s:submit id="cellarOrder_check15" name="cellarOrder_check15" value="重新发货" action="cellarOrder_check15" onclick="return isOp('是否重新发货?')" cssClass="input-yellow"/>
-						</s:if>
+						</c:if>
 					</s:if>
 				</s:elseif>
 				<input type="button" value="返回订单列表" onclick="linkurl('<s:url action="cellarOrder_list" namespace="/sysebiz" />');" class="input-gray"/>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -192,81 +193,79 @@
             <div class="label_ltit">相关操作:</div>
             <div class="label_rwbenx">
             	<s:if test="'add' == viewFlag">
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_ADD')">
+            		<c:if test="${it:checkPermit('QKJ_ADM_LEAVE_ADD',null)==true}">
 					<s:submit name="add" value="确定" action="leave_add" cssClass="input-blue" />
-					</s:if>
+					</c:if>
 				</s:if>
 				<s:elseif test="leave.check_status<10 && 'mdy' == viewFlag">
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_MDY')">
+					<c:if test="${it:checkPermit('QKJ_ADM_LEAVE_MDY',null)==true}">
 					<s:submit name="save" value="保存" action="leave_save" cssClass="input-blue" />
-					</s:if>
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_CHECK0')">
+					</c:if>
+					<c:if test="${it:checkPermit('QKJ_ADM_LEAVE_CHECK0',null)==true}">
 					<s:submit name="check0" value="报审" action="leave_check0" cssClass="input-yellow" onclick="return isOp('确定执行此操作?');" />
-					</s:if>
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_DEL')">
+					</c:if>
+					<c:if test="${it:checkPermit('QKJ_ADM_LEAVE_DEL',null)==true}">
 					<s:submit name="delete" value="删除" action="leave_del" cssClass="input-red" onclick="return isDel();" />
-					</s:if>
+					</c:if>
 				</s:elseif>
-				<s:if test="leave.check_status>=10 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_APPROVE')">
-								<input type="button" value="审阅" onclick="openApprove();" />
-					</s:if>
+				<c:if test="${leave.check_status>=10 && it:checkPermit('QKJ_ADM_LEAVE_APPROVE',null)==true}">
+					<input type="button" value="审阅" onclick="openApprove();" />
+				</c:if>
 				<!-- {0:'新申请',5:'已退回',10:'待审核',20:'经理/大区已审',30:'总监已审',40:'业务副总已审' } -->
 				<s:if test="leave.check_status>=10 && leave.check_status<20">
-				<s:if test="leave.check_status==10&&leave.leave_type==0&&leave.leave_dept.substring(0,3)=='211'&&@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_CHECK9')">
-					<!-- 添加办事处经理已审 -->
-					<s:submit name="leave_check9" cssClass="input-green" value="主管/办事处经理-审核通过" action="leave_check9" onclick="return isOp('确定执行此操作?');" />
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_CHECK5')">
-						<s:submit name="leave_check5" value="主管/办事处经理-审核不通过" action="leave_check5" cssClass="input-red" onclick="return isOp('确定执行此操作?');" />
-					</s:if>
+					<c:if test="${leave.check_status==10 && leave.leave_type==0 && leave.leave_dept.substring(0,3)=='211' && it:checkPermit('QKJ_ADM_LEAVE_CHECK9',null)==true}">
+						<!-- 添加办事处经理已审 -->
+						<s:submit name="leave_check9" cssClass="input-green" value="主管/办事处经理-审核通过" action="leave_check9" onclick="return isOp('确定执行此操作?');" />
+						<c:if test="${it:checkPermit('QKJ_ADM_LEAVE_CHECK5',null)==true}">
+							<s:submit name="leave_check5" value="主管/办事处经理-审核不通过" action="leave_check5" cssClass="input-red" onclick="return isOp('确定执行此操作?');" />
+						</c:if>
+					</c:if>
+					<c:if test="${it:checkPermit('QKJ_ADM_LEAVE_CHECK10',null)==true}">
+						<s:submit name="leave_check10" cssClass="input-green" value="经理/大区-审核通过" action="leave_check10" onclick="return isOp('确定执行此操作?');" />
+						<c:if test="${it:checkPermit('QKJ_ADM_LEAVE_CHECK5',null)==true}">
+							<s:submit name="leave_check5" value="经理/大区-审核不通过" action="leave_check5" cssClass="input-red" onclick="return isOp('确定执行此操作?');" />
+						</c:if>
+					</c:if>
 				</s:if>
-				<s:elseif test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_CHECK10')">
-					<s:submit name="leave_check10" cssClass="input-green" value="经理/大区-审核通过" action="leave_check10" onclick="return isOp('确定执行此操作?');" />
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_CHECK5')">
-						<s:submit name="leave_check5" value="经理/大区-审核不通过" action="leave_check5" cssClass="input-red" onclick="return isOp('确定执行此操作?');" />
-					</s:if>
-				</s:elseif>
-				</s:if>
-				
-				<s:if test="leave.check_status==20&&@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_CHECK20')">
+				<c:if test="${leave.check_status==20 && it:checkPermit('QKJ_ADM_LEAVE_CHECK20',null)==true}">
 					<s:submit name="leave_check20" cssClass="input-green" value="总监-审核通过" action="leave_check20" onclick="return isOp('确定执行此操作?');" />
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_CHECK5')">
+					<c:if test="${it:checkPermit('QKJ_ADM_LEAVE_CHECK5',null)==true}">
 						<s:submit name="leave_check5" value="总监-审核不通过" action="leave_check5" cssClass="input-red" onclick="return isOp('确定执行此操作?');" />
-					</s:if>
-				</s:if>
-				<s:if test="leave.check_status==30&&@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_CHECK30')">
+					</c:if>
+				</c:if>
+				<c:if test="${leave.check_status==30 && it:checkPermit('QKJ_ADM_LEAVE_CHECK30',null)==true}">
 					<s:submit name="leave_check30" cssClass="input-green" value="业务副总-审核通过" action="leave_check30" onclick="return isOp('确定执行此操作?');" />
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_CHECK5')">
+					<c:if test="${it:checkPermit('QKJ_ADM_LEAVE_CHECK5',null)==true}">
 						<s:submit name="leave_check5" value="业务副总-审核不通过" action="leave_check5" cssClass="input-red" onclick="return isOp('确定执行此操作?');" />
-					</s:if>
-				</s:if>
+					</c:if>
+				</c:if>
 				<!-- {0:'未审核',10:'人事经理已审',20:'人事副总已审',30:'总经理已审' } -->
 				<s:if test="leave.check_status>=20">
-					<s:if test="leave.acheck_status==0&&@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_ACHECK8')">
+					<c:if test="${leave.acheck_status==0 && it:checkPermit('QKJ_ADM_LEAVE_ACHECK8',null)==true}">
 						<s:submit name="leave_acheck8" cssClass="input-green" value="已受理" action="leave_acheck8" onclick="return isOp('确定执行此操作?');" />
-					</s:if>
-					
-					<s:if test="(leave.acheck_status==0 || leave.acheck_status==8)&&@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_ACHECK0')">
+					</c:if>
+					<c:if test="${(leave.acheck_status==0 || leave.acheck_status==8) && it:checkPermit('QKJ_ADM_LEAVE_ACHECK0',null)==true}">
 						<s:submit name="leave_acheck0" cssClass="input-green" value="人事经理-审核通过" action="leave_acheck0" onclick="return isOp('确定执行此操作?');" />
-						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_CHECK5')">
+						<c:if test="${it:checkPermit('QKJ_ADM_LEAVE_CHECK5',null)==true}">
 							<s:submit name="leave_check5" value="人事经理-审核不通过" action="leave_check5" cssClass="input-red" onclick="return isOp('确定执行此操作?');" />
-						</s:if>
-					</s:if>
-					<s:if test="leave.acheck_status==10&&@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_ACHECK10')">
+						</c:if>
+					</c:if>
+					<c:if test="${leave.acheck_status==10 && it:checkPermit('QKJ_ADM_LEAVE_ACHECK10',null)==true}">
 						<s:submit name="leave_acheck10" cssClass="input-green" value="行政副总-审核通过" action="leave_acheck10" onclick="return isOp('确定执行此操作?');" />
-						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_CHECK5')">
+						<c:if test="${it:checkPermit('QKJ_ADM_LEAVE_CHECK5',null)==true}">
 							<s:submit name="leave_check5" value="行政副总-审核不通过" action="leave_check5" cssClass="input-red" onclick="return isOp('确定执行此操作?');" />
-						</s:if>
-					</s:if>
-					<s:if test="leave.acheck_status==20&&@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_ACHECK20')">
+						</c:if>
+					</c:if>
+					<c:if test="${leave.acheck_status==20 && it:checkPermit('QKJ_ADM_LEAVE_ACHECK20',null)==true}">
 						<s:submit name="leave_acheck20" cssClass="input-green" value="总经理-审核通过" action="leave_acheck20" onclick="return isOp('确定执行此操作?');" />
-						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_CHECK5')">
+						<c:if test="${it:checkPermit('QKJ_ADM_LEAVE_CHECK5',null)==true}">
 							<s:submit name="leave_check5" value="总经理-审核不通过" action="leave_check5" cssClass="input-red" onclick="return isOp('确定执行此操作?');" />
-						</s:if>
-					</s:if>
+						</c:if>
+					</c:if>
 				</s:if>
-				<s:if test="leave.check_status>=10&&@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_CHECK5')&&@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_CHECK5X')">
+				<c:if test="${leave.check_status>=10 && it:checkPermit('QKJ_ADM_LEAVE_CHECK5',null)==true && it:checkPermit('QKJ_ADM_LEAVE_CHECK5X',null)==true}">
 					<s:submit name="leave_check5" value="直接退回" action="leave_check5" cssClass="input-red" onclick="return isOp('确定执行此操作?');" />
-				</s:if>
+				</c:if>
 				<input type="button" class="input-gray" value="返回" onclick="linkurl('<s:url action="leave_relist" namespace="/adm" />');" />
             </div>
 		</div>
@@ -281,13 +280,13 @@
 					<textarea name="approve.advice" rows="3"></textarea>
 				</div>
 				<div class="label_main tac" style="padding: 5px 0;">
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_APPROVE')">
+					<c:if test="${it:checkPermit('QKJ_ADM_LEAVE_APPROVE',null)==true}">
 						<input type="submit" name="approve_pass" value="审阅通过" onclick="return addApproveCheck(10);" />
 						<input type="submit" name="approve_fail" value="审阅不通过" onclick="return addApproveCheck(5);" />
-					</s:if>
-					<s:if test="'true'==isApprover && @org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_APPROVEDELLAST')">
+					</c:if>
+					<c:if test="${'true'==isApprover && it:checkPermit('QKJ_ADM_LEAVE_APPROVEDELLAST',null)==true}">
 						<s:submit name="active_approveDel" value="撤销最后一次审阅" action="leave_approveDel" onclick="return isOp('确定进行此操作?');" />
-					</s:if>
+					</c:if>
 				</div>
 			</s:form>
 		</div>
