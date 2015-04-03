@@ -1,6 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -27,9 +28,9 @@ $(function(){
 	<div class="itabletitle">
 		<span class="title1">资产物品列表</span>
 		<span class="extra1">
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_ASSETITEM_ADD')">
+			<c:if test="${it:checkPermit('QKJ_ADM_ASSETITEM_ADD',null)==true}">
 			<a href="<s:url namespace="/adm" action="assetItem_load"><s:param name="viewFlag">add</s:param></s:url>" >添加资产物品</a>
-			</s:if>
+			</c:if>
 		</span>
 	</div>	
 	<div class="ilistsearch">
@@ -92,12 +93,12 @@ $(function(){
 		<td><s:property value="op_user" /></td>
 		<td><s:date name="op_time" format="yyyy-MM-dd HH:mm:ss" /></td>
 		<td align="center">
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_ASSETITEM_MDY')">
+			<c:if test="${it:checkPermit('QKJ_ADM_ASSETITEM_MDY',null)==true}">
 	    	[<a href="<s:url namespace="/adm" action="assetItem_load"><s:param name="viewFlag">mdy</s:param><s:param name="assetItem.uuid" value="uuid"></s:param></s:url>">修改</a>]
-	    	</s:if>
-	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_ASSETITEM_DEL')">
+	    	</c:if>
+	    	<c:if test="${it:checkPermit('QKJ_ADM_ASSETITEM_DEL',null)==true}">
 	    	[<a href="<s:url namespace="/adm" action="assetItem_del"><s:param name="assetItem.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>]
-	    	</s:if>	   
+	    	</c:if>	   
 	    </td>
 	  </tr>
 </s:iterator>

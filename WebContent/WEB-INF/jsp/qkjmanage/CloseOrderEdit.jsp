@@ -367,13 +367,13 @@
 					<textarea name="approve.advice" rows="3"></textarea>
 				</div>
 				<div class="label_main tac" style="padding: 5px 0;">
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_CLOSEORDER_APPROVE')">
+					<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_APPROVE',null)==true}">
 						<input type="submit" name="approve_pass" value="审阅通过" onclick="return addApproveCheck(10);" />
 						<input type="submit" name="approve_fail" value="审阅不通过" onclick="return addApproveCheck(5);" />
-					</s:if>
-					<s:if test="'true'==isApprover && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_CLOSEORDER_APPROVEDELLAST')">
+					</c:if>
+					<c:if test="${'true'==isApprover && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_APPROVEDELLAST',null)==true}">
 						<s:submit name="active_approveDel" value="撤销最后一次审阅" action="close_approveDel" onclick="return isOp('确定进行此操作?');" />
-					</s:if>
+					</c:if>
 				</div>
 			</s:form>
 		</div>

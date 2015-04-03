@@ -1,7 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags"%>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -18,8 +18,10 @@
 		<div class="dq_step">
 		<s:if test="salstate!=1">
 			${path} 
-			<span class="opb lb op-area"> <s:if test="'view' != viewFlag && @org.iweb.sys.ContextHelper@checkPermit('QKJ_SALPRO_SALPROMOT')"><a
-				href="<s:url action="salPromot_list" namespace="/salpro"></s:url>">促销活动列表</a></s:if>
+			<span class="opb lb op-area">
+				<c:if test="${'view' != viewFlag && it:checkPermit('QKJ_SALPRO_SALPROMOT',null)==true}">
+				<a href="<s:url action="salPromot_list" namespace="/salpro"></s:url>">促销活动列表</a>
+				</c:if>
 			</span>
 			</s:if>
 		</div>

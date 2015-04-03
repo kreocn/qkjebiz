@@ -100,7 +100,7 @@
     <div class="label_main">
     	<fieldset class="clear">
     		<legend>订单明细</legend>
-    		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADINGITEM_ADD') && lading.status<=5">
+    		<c:if test="${it:checkPermit('QKJ_QKJMANAGE_LADINGITEM_ADD',null)==true && lading.status<=5}">
     		<div>
     			<s:url id="ladingAddProductsUrl" action="qkjm_addProducts" namespace="qkjmanage">
     				<s:param name="onlyType">0</s:param>
@@ -116,7 +116,7 @@
         		</s:url>
 				<input type="button" id="product" onclick="window.location.href='${ladingAddProductsUrl}';" value="添加酒品" />
     		</div>
-    		</s:if>
+    		</c:if>
 			<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
 			<tr>
 				<th>品名</th>
@@ -187,7 +187,7 @@
 	<div class="label_main">
     	<fieldset class="clear">
     		<legend>返利/搭赠明细</legend>
-    		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADINGPRODUCTG_ADD') && lading.status<=5">
+    		<c:if test="${it:checkPermit('QKJ_QKJMANAGE_LADINGPRODUCTG_ADD',null)==true && lading.status<=5}">
     		<div>
     			<s:url id="ladingAddProductgsUrl" action="qkjm_addProducts" namespace="qkjmanage">
         			<s:param name="uuidKey">lading.uuid</s:param>
@@ -202,7 +202,7 @@
         		</s:url>
 				<input type="button" id="product" onclick="window.location.href='${ladingAddProductgsUrl}';" value="添加酒品" />
     		</div>
-    		</s:if>
+    		</c:if>
 			<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
 			<tr>
 				<th>品名</th>
@@ -245,9 +245,9 @@
      <div class="label_main">
     	<fieldset class="clear">
     		<legend>财务信息</legend>
-    		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADING_FDCHECK')">
+    		<c:if test="${it:checkPermit('QKJ_QKJMANAGE_LADING_FDCHECK',null)==true}">
 			<div class="op-area"><a id="FDCheckInfoOpener" href="javascript:;">添加/修改财务信息</a></div>
-    		</s:if>
+    		</c:if>
     		<div class="label_main">
 				<div class="label_hang">
 				    <div class="label_ltit">付款状态:</div>
@@ -359,9 +359,9 @@
 	</div>
 	 <div class="label_hang label_button tac">
 	 	<s:hidden name="lading.uuid" />
-		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADING_FDCHECK')">
+	 	<c:if test="${it:checkPermit('QKJ_QKJMANAGE_LADING_FDCHECK',null)==true}">
 		<s:submit id="mdyLadingFDCheck" name="mdyLadingFDCheck" value="确定" action="mdyLadingCheckFDCheck" />
-		</s:if>
+		</c:if>
 	 </div>
 </div>
 </s:form>

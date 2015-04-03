@@ -1,7 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags"%>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -15,8 +15,11 @@
 <div class="tab_right">
 	<div class="tab_warp main">
 		<div class="dq_step">
-			${path} <span class="opb lb op-area"> <s:if test="'view' != viewFlag && @org.iweb.sys.ContextHelper@checkPermit('QKJ_SCHE_LIST')"><a
-				href="<s:url action="schedule_leftList" namespace="/sche"><s:param name="sche.type" value="%{sche.type}"></s:param></s:url>">公告列表</a></s:if>
+			${path}
+			<span class="opb lb op-area">
+				<c:if test="${'view' != viewFlag && it:checkPermit('QKJ_SCHE_LIST',null)==true}">
+					<a href="<s:url action="schedule_leftList" namespace="/sche"><s:param name="sche.type" value="%{sche.type}"></s:param></s:url>">公告列表</a>
+				</c:if>
 			</span>
 		</div>
 		<!-- 页面修改 -->
@@ -120,11 +123,7 @@
 						<div class="label_hang">
 							<div class="label_ltit">日期:</div>
 							<div class="label_rwben2">
-								<span class="label_rwb nw"> <input
-									class="datepicker iI-t validate[required,custom[date]]"
-									type="text" name="sche.sdate"
-									value="${it:formatDate(inStock.date,'yyyy-MM-dd')}" />
-								</span>
+								<span class="label_rwb nw"><input class="datepicker validate[required,custom[date]]" type="text" name="sche.sdate" value="${it:formatDate(inStock.date,'yyyy-MM-dd')}" /></span>
 							</div>
 						</div>
 					</div>
@@ -197,81 +196,58 @@
 					<div class="label_hang">
 						<div class="label_ltit">相关操作:</div>
 						<div class="label_rwbenx">
-							<span id="message"><s:property value="message" /></span>
-							<s:if test="sche.type==0">
-							<s:if test="(null == sche || sche.uuid==null) && 'add' == viewFlag && @org.iweb.sys.ContextHelper@checkPermit('QKJ_SCHE_MANU_ADD')">
-							
-								<s:submit id="add" name="add" value="确定" action="schedule_add"
-									cssClass="input-blue" />
+							<c:if test="${sche.type==0 && (null == sche || sche.uuid==null) && 'add' == viewFlag && it:checkPermit('QKJ_SCHE_MANU_ADD',null)==true}">						
+								<s:submit id="add" name="add" value="确定" action="schedule_add" cssClass="input-blue" />
+							</c:if>
+							<s:if test="sche.type==0 && null != sche && sche.uuid!=null && 'mdy' == viewFlag">
+								<c:if test="${it:checkPermit('QKJ_SCHE_MANU_SAVE',null)==true}">
+									<s:submit id="save" name="save" value="保存" action="schedule_save" cssClass="input-blue" />
+								</c:if>
+								<c:if test="${it:checkPermit('QKJ_SCHE_MANU_DEL',null)==true}">
+									<s:submit id="delete" name="delete" value="删除" action="schedule_del" cssClass="input-red" onclick="return isDel();" />
+								</c:if>
 							</s:if>
-							<s:elseif test="null != sche && sche.uuid!=null && 'mdy' == viewFlag && @com.qkj.ware.action.warepower@checkSche(sche.uuid)">
-								<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SCHE_MANU_SAVE')">
-								<s:submit id="save" name="save" value="保存"
-									action="schedule_save" cssClass="input-blue" />
-								</s:if>
-								<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SCHE_MANU_DEL')">
-								<s:submit id="delete" name="delete" value="删除" action="schedule_del"
-									cssClass="input-red" onclick="return isDel();" />
-								</s:if>
-							</s:elseif>
-							</s:if>
-							
-							<s:if test="sche.type==1">
-							<s:if test="(null == sche || sche.uuid==null) && 'add' == viewFlag && @org.iweb.sys.ContextHelper@checkPermit('QKJ_SCHE_COMP_ADD')">
-							
-								<s:submit id="add" name="add" value="确定" action="schedule_add"
-									cssClass="input-blue" />
-							</s:if>
-							<s:elseif test="null != sche && sche.uuid!=null && 'mdy' == viewFlag && @com.qkj.ware.action.warepower@checkSche(sche.uuid)">
-								<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SCHE_COMP_SAVE')">
-								<s:submit id="save" name="save" value="保存"
-									action="schedule_save" cssClass="input-blue" />
-								</s:if>
-								<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SCHE_COMP_DEL')">
-								<s:submit id="delete" name="delete" value="删除" action="schedule_del"
-									cssClass="input-red" onclick="return isDel();" />
-								</s:if>
-							</s:elseif>
+						
+							<c:if test="${sche.type==1 && (null == sche || sche.uuid==null) && 'add' == viewFlag && it:checkPermit('QKJ_SCHE_COMP_ADD',null)==true}">
+								<s:submit id="add" name="add" value="确定" action="schedule_add" cssClass="input-blue" />
+							</c:if>
+							<s:if test="sche.type==1 && null != sche && sche.uuid!=null && 'mdy' == viewFlag">
+								<c:if test="${it:checkPermit('QKJ_SCHE_COMP_SAVE',null)==true}">
+									<s:submit id="save" name="save" value="保存" action="schedule_save" cssClass="input-blue" />
+								</c:if>
+								<c:if test="${it:checkPermit('QKJ_SCHE_COMP_DEL',null)==true}">
+									<s:submit id="delete" name="delete" value="删除" action="schedule_del" cssClass="input-red" onclick="return isDel();" />
+								</c:if>
 							</s:if>
 							
-							<s:if test="sche.type==2">
-							<s:if test="(null == sche || sche.uuid==null) && 'add' == viewFlag && @org.iweb.sys.ContextHelper@checkPermit('QKJ_SCHE_FILE_ADD')">
-							
-								<s:submit id="add" name="add" value="确定" action="schedule_add"
-									cssClass="input-blue" />
+							<c:if test="${sche.type==2 && (null == sche || sche.uuid==null) && 'add' == viewFlag && it:checkPermit('QKJ_SCHE_FILE_ADD',null)==true}">
+								<s:submit id="add" name="add" value="确定" action="schedule_add" cssClass="input-blue" />
+							</c:if>
+							<s:if test="sche.type==2 && null != sche && sche.uuid!=null && 'mdy' == viewFlag">
+								<c:if test="${it:checkPermit('QKJ_SCHE_FILE_SAVE',null)==true}">
+									<s:submit id="save" name="save" value="保存" action="schedule_save" cssClass="input-blue" />
+								</c:if>
+								<c:if test="${it:checkPermit('QKJ_SCHE_FILE_DEL',null)==true}">
+									<s:submit id="delete" name="delete" value="删除" action="schedule_del" cssClass="input-red" onclick="return isDel();" />
+								</c:if>
 							</s:if>
-							<s:elseif test="null != sche && sche.uuid!=null && 'mdy' == viewFlag && @com.qkj.ware.action.warepower@checkSche(sche.uuid)">
-								<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SCHE_FILE_SAVE')">
-								<s:submit id="save" name="save" value="保存"
-									action="schedule_save" cssClass="input-blue" />
-								</s:if>
-								<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SCHE_FILE_DEL')">
-								<s:submit id="delete" name="delete" value="删除" action="schedule_del"
-									cssClass="input-red" onclick="return isDel();" />
-								</s:if>
-							</s:elseif>
+						
+							<c:if test="${sche.type==3 && (null == sche || sche.uuid==null) && 'add' == viewFlag && it:checkPermit('QKJ_SCHE_UPSC_ADD',null)==true}">
+								<s:submit id="add" name="add" value="确定" action="schedule_add" cssClass="input-blue" />
+							</c:if>
+							<s:if test="sche.type==3 && null != sche && sche.uuid!=null && 'mdy' == viewFlag">
+								<c:if test="${it:checkPermit('QKJ_SCHE_UPSC_SAVE',null)==true}">
+								<s:submit id="save" name="save" value="保存" action="schedule_save" cssClass="input-blue" />
+								</c:if>
+								<c:if test="${it:checkPermit('QKJ_SCHE_UPSC_DEL',null)==true}">
+								<s:submit id="delete" name="delete" value="删除" action="schedule_del" cssClass="input-red" onclick="return isDel();" />
+								</c:if>
 							</s:if>
-							<s:if test="sche.type==3">
-							<s:if test="(null == sche || sche.uuid==null) && 'add' == viewFlag && @org.iweb.sys.ContextHelper@checkPermit('QKJ_SCHE_UPSC_ADD')">
-							
-								<s:submit id="add" name="add" value="确定" action="schedule_add"
-									cssClass="input-blue" />
-							</s:if>
-							<s:elseif test="null != sche && sche.uuid!=null && 'mdy' == viewFlag && @com.qkj.ware.action.warepower@checkSche(sche.uuid)">
-								<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SCHE_UPSC_SAVE')">
-								<s:submit id="save" name="save" value="保存"
-									action="schedule_save" cssClass="input-blue" />
-								</s:if>
-								<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SCHE_UPSC_DEL')">
-								<s:submit id="delete" name="delete" value="删除" action="schedule_del"
-									cssClass="input-red" onclick="return isDel();" />
-								</s:if>
-							</s:elseif>
-							</s:if>
+								
 							<s:if test="'view' != viewFlag">
-							<input type="button" class="input-gray" value="返回"
-								onclick="linkurl('<s:url action="schedule_leftList" namespace="/sche"><s:param name="sche.type" value="%{sche.type}"></s:param></s:url>');" />
+								<input type="button" class="input-gray" value="返回" onclick="linkurl('<s:url action="schedule_leftList" namespace="/sche"><s:param name="sche.type" value="%{sche.type}"></s:param></s:url>');" />
 							</s:if>
+							<span id="message"><s:property value="message" /></span>
 						</div>
 					</div>
 				</div>

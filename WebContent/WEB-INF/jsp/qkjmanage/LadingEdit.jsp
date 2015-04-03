@@ -100,7 +100,7 @@
     <div class="label_main">
     	<fieldset class="clear">
     		<legend>订单明细</legend>
-    		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADINGITEM_ADD') && lading.status<=5">
+    		<c:if test="${it:checkPermit('QKJ_QKJMANAGE_LADINGITEM_ADD',null)==true && lading.status<=5}">
     		<div>
     			<s:url id="ladingAddProductsUrl" action="qkjm_addProducts" namespace="qkjmanage">
     				<s:param name="onlyType">0</s:param>
@@ -116,7 +116,7 @@
         		</s:url>
 				<input type="button" id="product" onclick="window.location.href='${ladingAddProductsUrl}';" value="添加酒品" />
     		</div>
-    		</s:if>
+    		</c:if>
 			<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
 			<tr>
 				<th>品名</th>
@@ -124,9 +124,9 @@
 				<th>数量(瓶)</th>
 				<th>数量(件)</th>
 				<th>合计</th>
-				<s:if test="lading.status<=5 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADINGITEM_DEL')">
+				<c:if test="${lading.status<=5 && it:checkPermit('QKJ_QKJMANAGE_LADINGITEM_DEL',null)==true}">
 				<th>操作</th>
-				</s:if>
+				</c:if>
 			</tr>
 			<s:iterator value="ladingItems" status="sta">
 			<tr>
@@ -135,9 +135,9 @@
 				<td class="nw">${num}</td>
 				<td class="nw">${it:formatNum(num/case_spec,1)}</td>
 				<td class="nw">￥${total_price}</td>
-				<s:if test="lading.status<=5 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADINGITEM_DEL')">
+				<c:if test="${lading.status<=5 && it:checkPermit('QKJ_QKJMANAGE_LADINGITEM_DEL',null)==true}">
 				<td><a href="<s:url action="ladingItem_del" namespace="/qkjmanage"><s:param name="ladingItem.uuid" value="%{uuid}" /><s:param name="ladingItem.lading_id" value="%{lading.uuid}" /></s:url>" onclick="return isDel();">[删除]</a></td>
-				</s:if>
+				</c:if>
 			</tr>
 			</s:iterator>
 			</table>
@@ -214,7 +214,7 @@
 	<div class="label_main">
     	<fieldset class="clear">
     		<legend>返利/搭赠明细</legend>
-    		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADINGPRODUCTG_ADD') && lading.status<=5">
+    		<c:if test="${it:checkPermit('QKJ_QKJMANAGE_LADINGPRODUCTG_ADD',null)==true && lading.status<=5}">
     		<div>
     			<s:url id="ladingAddProductgsUrl" action="qkjm_addProducts" namespace="qkjmanage">
         			<s:param name="uuidKey">lading.uuid</s:param>
@@ -229,7 +229,7 @@
         		</s:url>
 				<input type="button" id="product" onclick="window.location.href='${ladingAddProductgsUrl}';" value="添加酒品" />
     		</div>
-    		</s:if>
+    		</c:if>
 			<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
 			<tr>
 				<th>品名</th>
@@ -237,9 +237,9 @@
 				<th>数量(瓶)</th>
 				<th>数量(件)</th>
 				<th>合计</th>
-				<s:if test="lading.status<=5 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADINGPRODUCTG_DEL')">
+				<c:if test="${lading.status<=5 && it:checkPermit('QKJ_QKJMANAGE_LADINGPRODUCTG_DEL',null)==true}">
 				<th>操作</th>
-				</s:if>
+				</c:if>
 			</tr>
 			<s:iterator value="ladingProductgs" status="sta">
 			<tr>
@@ -248,9 +248,9 @@
 				<td class="nw">${num}</td>
 				<td class="nw">${it:formatNum(num/case_spec,1)}</td>
 				<td class="nw">￥${total_price}</td>
-				<s:if test="lading.status<=5 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADINGPRODUCTG_DEL')">
+				<c:if test="${lading.status<=5 && it:checkPermit('QKJ_QKJMANAGE_LADINGPRODUCTG_DEL',null)==true}">
 				<td><a href="<s:url action="ladingProductg_del" namespace="/qkjmanage"><s:param name="ladingProductg.uuid" value="%{uuid}" /><s:param name="ladingProductg.lading_id" value="%{lading.uuid}" /></s:url>" onclick="return isDel();">[删除]</a></td>
-				</s:if>
+				</c:if>
 			</tr>
 			</s:iterator>
 			</table>
@@ -279,9 +279,9 @@
      <div class="label_main">
     	<fieldset class="clear">
     		<legend>财务信息</legend>
-    		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADING_FDCHECK')">
+    		<c:if test="${it:checkPermit('QKJ_QKJMANAGE_LADING_FDCHECK',null)==true}">
 			<div class="op-area"><a id="FDCheckInfoOpener" href="javascript:;">添加/修改财务信息</a></div>
-    		</s:if>
+    		</c:if>
     		<div class="label_main">
 				<div class="label_hang">
 				    <div class="label_ltit">付款状态:</div>
@@ -414,9 +414,9 @@
 	</div>
 	 <div class="label_hang label_button tac">
 	 	<s:hidden name="lading.uuid" />
-		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADING_FDCHECK')">
+	 	<c:if test="${it:checkPermit('QKJ_QKJMANAGE_LADING_FDCHECK',null)==true}">
 		<s:submit id="mdyLadingFDCheck" name="mdyLadingFDCheck" value="确定" action="mdyLadingFDCheck" />
-		</s:if>
+		</c:if>
 	 </div>
 </div>
 </s:form>
