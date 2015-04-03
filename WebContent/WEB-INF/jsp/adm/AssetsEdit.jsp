@@ -230,6 +230,10 @@ $(function(){
 	$("#assets_num").bind("keyup",function(){
 		$("#assets_price_scope").val($("#assets_price").val()*$("#assets_num").val());
 	});
+ });
+</script>
+<script type="text/javascript">
+$(function(){
 	$("#addAssetItems").dialog({
 	      autoOpen: false,
 	      height: 220,
@@ -242,13 +246,15 @@ $(function(){
 	      width: 600,
 	      modal: true
 	});
- });
+});
+
 function openAddAssetItems() {
 	$("#assetItem_model").val($("#assets_model").val());
 	$("#assetItem_spec").val($("#assets_spec").val());
 	$("#assetItem_price").val($("#assets_price").val());
 	$("#addAssetItems").dialog("open");
 }
+
 function createMdyOwnDialog(item_id) {
 	var tr_id = "assetItems_" + item_id;
 	var td_objs = $("#"+tr_id + " td");

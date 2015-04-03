@@ -7,10 +7,10 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- MemberHandover Start -->
 		<action name="memberHandover_list" class="org.iweb.sysvip.action.MemberHandoverAction" method="list">
-			<result>/jsp/sysvip/MemberHandoverList.jsp</result>
+			<result>/WEB-INF/jsp/sysvip/MemberHandoverList.jsp</result>
 		</action>
 		<action name="memberHandover_load" class="org.iweb.sysvip.action.MemberHandoverAction" method="load">
-			<result>/jsp/sysvip/MemberHandoverEdit.jsp</result>
+			<result>/WEB-INF/jsp/sysvip/MemberHandoverEdit.jsp</result>
 		</action>
 		<action name="memberHandover_add" class="org.iweb.sysvip.action.MemberHandoverAction" method="add">
 			<result type="redirectAction">

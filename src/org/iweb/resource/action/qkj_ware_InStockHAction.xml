@@ -7,7 +7,7 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- InStockH Start -->
 		<action name="inStockH_list" class="com.qkj.ware.action.InStockHAction" method="list">
-			<result>/jsp/ware/history/InStockHList.jsp</result>
+			<result>/WEB-INF/jsp/ware/history/InStockHList.jsp</result>
 		</action>
 		<action name="inStockH_relist" class="com.qkj.ware.action.InStockHAction" method="relist">
 			<result type="redirectAction">
@@ -16,7 +16,7 @@
 			</result>
 		</action>
 		<action name="inStockH_load" class="com.qkj.ware.action.InStockHAction" method="load">
-			<result>/jsp/ware/history/InStockHEdit.jsp</result>
+			<result>/WEB-INF/jsp/ware/history/InStockHEdit.jsp</result>
 		</action>
 		<action name="inStockH_add" class="com.qkj.ware.action.InStockHAction" method="add">
 			<result type="redirectAction">

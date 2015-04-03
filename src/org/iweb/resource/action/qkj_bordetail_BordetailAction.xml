@@ -7,7 +7,7 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- Bordetail Start -->
 		<action name="bordetail_list" class="com.qkj.ware.action.BordetailAction" method="list">
-			<result>/jsp/ware/bordetail/BordetailList.jsp</result>
+			<result>/WEB-INF/jsp/ware/bordetail/BordetailList.jsp</result>
 		</action>
 		<action name="bordetail_relist" class="com.qkj.ware.action.BordetailAction" method="relist">
 			<result type="redirectAction">
@@ -16,7 +16,7 @@
 			</result>
 		</action>
 		<action name="bordetail_load" class="com.qkj.ware.action.BordetailAction" method="load">
-			<result>/jsp/ware/bordetail/BordetailEdit.jsp</result>
+			<result>/WEB-INF/jsp/ware/bordetail/BordetailEdit.jsp</result>
 		</action>
 		<action name="bordetail_add" class="com.qkj.ware.action.BordetailAction" method="add">
 			<result type="redirectAction">

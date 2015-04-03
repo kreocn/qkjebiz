@@ -44,7 +44,9 @@
 	<div class="tab_warp main">
 		<div class="dq_step">${path}
 			<span class="opb lb op-area"><a href="<s:url action="closeOrder_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a></span> <span class="opb lb op-area"><s:if test="closeOrder.check_state>=1">
+			<s:if test="closeOrder.check_state>30">
 					<a class="input-gray" href="<s:url namespace="/qkjmanage" action="closeOrder_view"><s:param name="closeOrder.uuid" value="closeOrder.uuid" /></s:url>">转到打印页面</a>
+			</s:if>
 				</s:if> </span>
 		</div>
 		<s:form id="editForm" name="editForm" cssClass="validForm" action="apply_load" namespace="/qkjmanage" method="post" theme="simple">
@@ -301,10 +303,13 @@
 					<div class="label_hang">
 						<div class="label_ltit">相关操作:</div>
 						<div class="label_rwbenx">
-							<c:if test="${'add' == viewFlag && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_ADD',null)==true}">
-								<s:submit id="add" name="add" value="下一步&填写费用明细" action="closeOrder_add" cssClass="input-blue" />
-							</c:if>
-							<s:if test="(closeOrder.check_state==0 || closeOrder.check_state==5) && 'mdy' == viewFlag">
+							<font color="red"><span id="messages"></span></font>
+							<s:if test="'add' == viewFlag">
+								<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_ADD',null)==true}">
+									<s:submit id="add" name="add" value="下一步&填写费用明细" action="closeOrder_add" cssClass="input-blue" />
+								</c:if>
+							</s:if>
+							<s:elseif test="(closeOrder.check_state==0 || closeOrder.check_state==5) && 'mdy' == viewFlag">
 								<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_MDY',null)==true}">
 									<s:submit id="save" name="save" value="保存" action="closeOrder_save" cssClass="input-blue" />
 								</c:if>
@@ -314,10 +319,10 @@
 								<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_DEL',null)==true}">
 									<s:submit id="delete" name="delete" value="删除" action="closeOrder_del" onclick="return isDel();" cssClass="input-red" />
 								</c:if>
-							</s:if>
-							<s:if test="closeOrder.check_state>0 && 'mdy' == viewFlag">
+							</s:elseif>
+							<s:elseif test="closeOrder.check_state>0 && 'mdy' == viewFlag">
 								<c:if test="${closeOrder.check_state>=1 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_APPROVE',null)==true}">
-									<input type="button" value="审阅" onclick="openApprove();" class="input-yellow" />
+								<input type="button" value="审阅" onclick="openApprove();" class="input-yellow" />
 								</c:if>
 								<c:if test="${closeOrder.check_state==1 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK10',null)==true}">
 									<s:submit id="mdyStatus10" name="mdyStatus10" value="主管/办事处经理审核通过" action="closeOrder_check10" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
@@ -347,12 +352,11 @@
 									<s:submit id="mdyndStatus0" name="mdyndStatus0" value="数据中心审核通过" action="closeOrder_checknd0" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
 									<s:submit id="mdyndStatus5" name="mdyndStatus5" cssClass="input-red" value="审核不通过" action="closeOrder_checknd5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
-							</s:if>
-							<s:if test="closeOrder.check_state>=1">
+							</s:elseif>
+							<s:if test="closeOrder.check_state>30">
 								<input type="button" onclick="linkurl('<s:url namespace="/qkjmanage" action="closeOrder_view"><s:param name="closeOrder.uuid" value="closeOrder.uuid" /></s:url>');" value="转到打印页面" />
 							</s:if>
 							<input type="button" value="返回" onclick="linkurl('<s:url action="closeOrder_relist" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');" class="input-gray" />
-							<font color="red"><span id="messages"></span></font>
 						</div>
 					</div>
 				</div>

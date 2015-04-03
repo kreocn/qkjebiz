@@ -131,11 +131,13 @@
 						<td class="td4 op-area">
 							<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_MDY',null)==true}">
 								<a class="input-blue" href="<s:url namespace="/qkjmanage" action="closeOrder_load"><s:param name="viewFlag">mdy</s:param><s:param name="closeOrder.uuid" value="uuid"></s:param></s:url>">修改</a>
-							</c:if>
-							<c:if test="${check_state<1  && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_DEL',null)==true}">
+							</c:if> 
+							<s:if test="check_state>30">
+					    	<a class="input-gray" href="<s:url namespace="/qkjmanage" action="closeOrder_view"><s:param name="closeOrder.uuid" value="uuid" /></s:url>">打印</a>
+					    	</s:if>
+					    	<c:if test="${check_state<1 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_DEL',null)==true}">
 								<a class="input-red" href="<s:url namespace="/qkjmanage" action="closeOrder_del"><s:param name="closeOrder.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
-							</c:if>
-						</td>
+							</c:if></td>
 						<td class="td0 op-area"><a href="javascript:;" onClick="showDetail('showtr${uuid}');" class="input-nostyle">查看</a></td>
 					</tr>
 				</s:iterator>

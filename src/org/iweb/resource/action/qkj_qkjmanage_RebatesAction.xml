@@ -7,13 +7,13 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- Rebates Start -->
 		<action name="rebates_list" class="com.qkj.manage.action.RebatesAction" method="list">
-			<result>/jsp/qkjmanage/RebatesList.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/RebatesList.jsp</result>
 		</action>
 		<action name="rebates_load" class="com.qkj.manage.action.RebatesAction" method="load">
-			<result>/jsp/qkjmanage/RebatesEdit.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/RebatesEdit.jsp</result>
 		</action>
 		<action name="rebates_view" class="com.qkj.manage.action.RebatesAction" method="load">
-			<result>/jsp/qkjmanage/RebatesView.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/RebatesView.jsp</result>
 		</action>
 		<action name="rebates_add" class="com.qkj.manage.action.RebatesAction" method="add">
 			<result type="redirectAction">

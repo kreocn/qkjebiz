@@ -6,17 +6,17 @@
 	<package name="MemberCenter" extends="default" namespace="/member">
 		<default-interceptor-ref name="MemberPermit" />
 		<action name="center" class="org.iweb.member.action.MemberCenterAction">
-			<result>/jsp/member/center.jsp</result>
+			<result>/WEB-INF/jsp/member/center.jsp</result>
 		</action>
 		<action name="tieba" class="org.iweb.member.action.MemberCenterAction" method="build">
-			<result>/jsp/member/tieba.jsp</result>
+			<result>/WEB-INF/jsp/member/tieba.jsp</result>
 		</action>
 		<action name="dingdan" class="org.iweb.member.action.MemberCenterAction" method="build">
-			<result>/jsp/member/dingdan.jsp</result>
+			<result>/WEB-INF/jsp/member/dingdan.jsp</result>
 		</action>
 		<!-- DEBUG -->
 		<action name="message" class="org.iweb.member.action.MemberMsgAction" method="listMsg">
-			<result>/jsp/member/message.jsp</result>
+			<result>/WEB-INF/jsp/member/message.jsp</result>
 		</action>
 		<action name="addMsg" class="org.iweb.member.action.MemberMsgAction" method="addMsg">
 			<result type="redirectAction">
@@ -26,13 +26,13 @@
 
 		<!-- OK -->
 		<action name="order" class="org.iweb.member.action.MemberOrderAction" method="list">
-			<result>/jsp/member/order.jsp</result>
+			<result>/WEB-INF/jsp/member/order.jsp</result>
 		</action>
 		<action name="cellar" class="org.iweb.member.action.MemberCellarAction">
-			<result>/jsp/member/cellar.jsp</result>
+			<result>/WEB-INF/jsp/member/cellar.jsp</result>
 		</action>
 		<action name="info" class="org.iweb.member.action.MemberInfoAction" method="getInfo">
-			<result>/jsp/member/info.jsp</result>
+			<result>/WEB-INF/jsp/member/info.jsp</result>
 		</action>
 		<action name="saveMember" class="org.iweb.member.action.MemberInfoAction" method="saveMember">
 			<result type="redirectAction">
@@ -41,20 +41,20 @@
 			</result>
 		</action>
 		<action name="pass" class="org.iweb.member.action.MemberInfoAction" method="loadPasswordMdy">
-			<result>/jsp/member/pass.jsp</result>
+			<result>/WEB-INF/jsp/member/pass.jsp</result>
 		</action>
 		<action name="mdyPassword" class="org.iweb.member.action.MemberInfoAction" method="mdyPassword">
 			<result type="redirectAction">
 				<param name="actionName">pass</param>
 				<param name="message">${message}</param>
 			</result>
-			<result name="input">/jsp/member/pass.jsp</result>
+			<result name="input">/WEB-INF/jsp/member/pass.jsp</result>
 		</action>
 		<action name="account" class="org.iweb.member.action.MemberInfoAction" method="getCapital">
-			<result>/jsp/member/account.jsp</result>
+			<result>/WEB-INF/jsp/member/account.jsp</result>
 		</action>
 		<action name="address" class="org.iweb.member.action.MemberInfoAction" method="getAddress">
-			<result>/jsp/member/address.jsp</result>
+			<result>/WEB-INF/jsp/member/address.jsp</result>
 		</action>
 		<action name="changeDefaultAddress" class="org.iweb.member.action.MemberInfoAction" method="changeDefaultAddress">
 			<result type="redirectAction">
@@ -75,10 +75,10 @@
 			</result>
 		</action>
 		<action name="video" class="org.iweb.member.action.MemberCellarAction" method="viewVideo">
-			<result>/jsp/member/video.jsp</result>
+			<result>/WEB-INF/jsp/member/video.jsp</result>
 		</action>
 		<action name="cellarOrderLoad" class="org.iweb.member.action.MemberCellarAction" method="cellarOrderLoad">
-			<result>/jsp/member/cellar_order.jsp</result>
+			<result>/WEB-INF/jsp/member/cellar_order.jsp</result>
 			<result name="input" type="redirectAction">
 				<param name="actionName">cellar</param>
 				<param name="message">${message}</param>
@@ -98,7 +98,7 @@
 		</action>
 		
 		<action name="actives" class="org.iweb.member.action.MemberInfoAction" method="getActive">
-			<result>/jsp/member/actives.jsp</result>
+			<result>/WEB-INF/jsp/member/actives.jsp</result>
 		</action>
 	</package>
 </struts>
