@@ -134,7 +134,7 @@ public class PerWorkAction extends ActionSupport{
 	}
 	
 	public Object selectMap(){
-		if(ContextHelper.checkPermit("")){//活动修改权限
+		if(ContextHelper.checkPermit("QKJ_QKJMANAGE_ACTIVE_MDY")){//活动修改权限
 			
 		}else if(ContextHelper.checkPermit("")){
 			
