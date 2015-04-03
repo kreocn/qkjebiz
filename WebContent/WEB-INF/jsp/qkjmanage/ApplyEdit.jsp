@@ -9,8 +9,7 @@
 <title>至事由申请管理--<s:text name="APP_NAME" /></title>
 <s:action name="ref_head" namespace="/manager" executeResult="true" />
 <style type="text/css">
-.approve_list {
-}
+.approve_list ul{padding:0; margin:0;}
 .approve_ad_time, .approve_check_user, .approve_flag,.approve_advice {
 font-weight: bold;
 }

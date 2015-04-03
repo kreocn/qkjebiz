@@ -7,6 +7,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>工时管理--<s:text name="APP_NAME" /></title>
+<style type="text/css">
+.approve_list ul{padding:0!important; margin:0!important;}
+</style>
 </head>
 <s:action name="ref_head" namespace="/manager" executeResult="true" />
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery-ui-timepicker-addon.js" />"></script>
