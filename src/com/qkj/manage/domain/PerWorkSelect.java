@@ -4,7 +4,8 @@ public class PerWorkSelect {
 	private String table_name;// 表名
 	private String table_field;// 查询的字段
 	private String table_condition;// 查询条件
-
+	private String loginUser;//登录人
+	private String loginPower;//职位
 	public PerWorkSelect() {
 
 	}
@@ -14,6 +15,27 @@ public class PerWorkSelect {
 		this.setTable_field(table_field);
 		this.setTable_condition(table_condition);
 
+	}
+	
+	public PerWorkSelect(String loginUser,String loginPower){
+		this.setLoginUser(loginUser);
+		this.setLoginPower(loginPower);
+	}
+
+	public String getLoginUser() {
+		return loginUser;
+	}
+
+	public void setLoginUser(String loginUser) {
+		this.loginUser = loginUser;
+	}
+
+	public String getLoginPower() {
+		return loginPower;
+	}
+
+	public void setLoginPower(String loginPower) {
+		this.loginPower = loginPower;
 	}
 
 	public String getTable_name() {

@@ -16,13 +16,43 @@ import com.qkj.manage.domain.PerWork;
 import com.qkj.manage.domain.PerWorkSelect;
 
 public class PerWorkSelectAction extends ActionSupport {
-	private static List<PerWorkSelect> selectList = new ArrayList<>();
+	private  List<PerWorkSelect> selectList = new ArrayList<>();
+	private static List<PerWorkSelect> selectPowerList = new ArrayList<>();
+	static{
+		selectPowerList.add(new PerWorkSelect("2015011611365907","0,1"));
+	}
+	public String getSelWork(){
+		String sql="";
+		String uuid=ContextHelper.getUserLoginUuid();
+		PerWorkSelect ws=new PerWorkSelect();
+		if(selectPowerList.size()>0){
+			for(int i=0;i<selectPowerList.size();i++){
+				ws=selectPowerList.get(i);
+				if(ws.getLoginUser().equals(uuid)){
+					String [] p= ws.getLoginPower().split(",");
+					List<PerWorkSelect> selectListnew=new ArrayList<>();
+					selectListnew=getSel(p);
+					for(int j=0;j<selectListnew.size();j++){
+						PerWorkSelect selectnew2=new PerWorkSelect();
+						selectnew2=selectListnew.get(j);
+						if(j>0){
+							sql+="union all ";
+						}
+						sql+="select  "+selectnew2.getTable_field()+" from "+selectnew2.getTable_name()+" where "+selectnew2.getTable_condition()+" ";
+						
+					}
+					break;
+				}
+			}
+		}
+		return sql;
+	}
 
-	public List<PerWorkSelect> getSel(int[] a) {
+	public List<PerWorkSelect> getSel(String[] a) {
 		if (a.length > 0) {
 			for (int i = 0; i < a.length; i++) {
-				int l = a[i];
-				if (l == 0) {// 总监
+				String l = a[i];
+				if (l.equals("0")) {// 总监
 					if (ContextHelper.checkPermit("QKJ_QKJMANAGE_ACTIVE_SDSTATUS30")) {// 总监活动审核权限
 						String s = "a.`uuid` perUuid,a.`apply_dept` apply_dept,a.`theme` title,u.`USER_NAME` apply_user_name,'活动' AS ptype";
 						String t = "a.`status`=1 AND a.`sd_status`=30 AND a.`smd_status`=30";
@@ -44,7 +74,7 @@ public class PerWorkSelectAction extends ActionSupport {
 						selectList.add(new PerWorkSelect("qkja_r_leave l", s, t));
 					}
 
-				} else if (l == 1) {// 副总
+				} else if (l.equals("1")) {// 副总
 					if (ContextHelper.checkPermit("QKJ_QKJMANAGE_ACTIVE_SDSTATUS40") || ContextHelper.checkPermit("QKJ_QKJMANAGE_ACTIVE_SMDSTATUS40")) {// 业务副总活动审核权限
 						String s = "a.`uuid` perUuid,a.`apply_dept` apply_dept,a.`theme` title,u.`USER_NAME` apply_user_name,'活动' AS ptype";
 						String t = "a.`status`=1 AND a.`sd_status`=40 AND a.`smd_status`=40";
@@ -67,7 +97,7 @@ public class PerWorkSelectAction extends ActionSupport {
 						selectList.add(new PerWorkSelect("qkja_r_leave l", s, t));
 					}
 
-				} else if (l == 2) {// 总经理
+				} else if (l.equals("2")) {// 总经理
 					if (ContextHelper.checkPermit("QKJ_QKJMANAGE_ACTIVE_SDSTATUS50")) {// 总监活动审核权限
 						String s = "a.`uuid` perUuid,a.`apply_dept` apply_dept,a.`theme` title,u.`USER_NAME` apply_user_name,'活动' AS ptype";
 						String t = "a.`status`=1  AND a.`smd_status`=50";
@@ -75,17 +105,17 @@ public class PerWorkSelectAction extends ActionSupport {
 					}
 					if (ContextHelper.checkPermit("QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS50")) {// 总监活动审核权限
 						String s = "a.`uuid` perUuid,a.`apply_dept` apply_dept,a.`theme` title,u.`USER_NAME` apply_user_name,'活动' AS ptype";
-						String t = "a.`status`=4 AND a.`close_sd_status`=30 AND a.`close_smd_status`=30";
+						String t = "a.`status`=4  AND a.`close_smd_status`=50";
 						selectList.add(new PerWorkSelect("qkjm_r_active a", s, t));
 					}
 					if (ContextHelper.checkPermit("QKJ_QKJMANAGE_APPLY_CHECK40")) {// 总监至事由审核权限
 						String s = "al.uuid perUuid,al.apply_dept apply_dept,al.title title,u.`USER_NAME` apply_user_name,'至事由' AS ptype";
-						String t = "al.status=20";
+						String t = "al.status=30";
 						selectList.add(new PerWorkSelect("qkjm_r_apply al", s, t));
 					}
 					if (ContextHelper.checkPermit("QKJ_ADM_LEAVE_ACHECK20")) {
 						String s = "l.uuid perUuid,l.leave_dept apply_dept,l.cause title,u.`USER_NAME` apply_user_name, CASE l.`leave_type` WHEN 0 THEN '出差' WHEN 1 THEN '请假' WHEN 2 THEN '加班' WHEN 3 THEN '换休' END AS ptype";
-						String t = "l.check_status=20";
+						String t = "l.acheck_status=20";
 						selectList.add(new PerWorkSelect("qkja_r_leave l", s, t));
 					}
 

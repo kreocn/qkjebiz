@@ -16,7 +16,6 @@ public class PerWorkAction extends ActionSupport{
 	private static final long serialVersionUID = 1L;
 	private static Log log = LogFactory.getLog(ProductAction.class);
 	private Map<String, Object> map = new HashMap<String, Object>();
-	private Map<String ,Object> selectMap=new HashMap<String,Object>();
 	private PerWorkDao dao = new PerWorkDao();
 	
 	private List<PerWork> perWorks;
@@ -133,19 +132,6 @@ public class PerWorkAction extends ActionSupport{
 		return SUCCESS;
 	}
 	
-	public Object selectMap(){
-		if(ContextHelper.checkPermit("QKJ_QKJMANAGE_ACTIVE_MDY")){//活动修改权限
-			
-		}else if(ContextHelper.checkPermit("")){
-			
-		}else if(ContextHelper.checkPermit("")){
-			
-		}else if(ContextHelper.checkPermit("")){
-			
-		}
-		
-		selectMap.put("", "");//活动表名及查询条件
-		return selectMap;
-	}
+	
 
 }
