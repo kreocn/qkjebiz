@@ -97,7 +97,7 @@
         <div class="label_hang">
             <div class="label_ltit">开始时间:</div>
             <div class="label_rwben2">
-            	<span class="label_rwb"><input id="leave_leave_start" name="leave.leave_start" type="text" class="datepicker validate[required,custom[date]]" value="${it:formatDate(leave.leave_start,'yyyy-MM-dd')}"  /></span>
+            	<span class="label_rwb"><input id="leave_leave_start" name="leave.leave_start" type="text" class="validate[required,custom[date]]" value="${it:formatDate(leave.leave_start,'yyyy-MM-dd')}"  /></span>
 				<span class="label_rwb_s"><s:textfield id="leave_leave_start_time" name="leave.leave_start_time"  class="validate[required]" /></span>
 				<!--<span class="message_prompt nowrap">如果是一整天,时间请选00:00</span>-->
             </div>
@@ -105,7 +105,7 @@
         <div class="label_hang">
             <div class="label_ltit">结束时间:</div>
             <div class="label_rwben2">
-            	<span class="label_rwb"><input id="leave_leave_end" type="text"  class="datepicker validate[required,custom[date]]" name="leave.leave_end" title="结束日期" value="${it:formatDate(leave.leave_end,'yyyy-MM-dd')}" dataType="date" controlName="结束日期" /></span>
+            	<span class="label_rwb"><input id="leave_leave_end" type="text"  class="validate[required,custom[date]]" name="leave.leave_end" title="结束日期" value="${it:formatDate(leave.leave_end,'yyyy-MM-dd')}" dataType="date" controlName="结束日期" /></span>
 				<span class="label_rwb_s"><s:textfield id="leave_leave_end_time" name="leave.leave_end_time" title="结束时间" dataLength="0,15" controlName="结束时间" cssClass="time_input" /></span>
             </div>
 		</div>
@@ -291,7 +291,11 @@
 				</div>
 			</s:form>
 		</div>
-		<script type="text/javascript">
+</div>
+</div>
+<s:action name="ref_foot" namespace="/manager" executeResult="true" />
+<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-ui-timepicker-addon.js" />"></script>
+<script type="text/javascript">
 			$(function(){
 				$("#approveFrom").dialog({ autoOpen : false,
 				modal : true });
@@ -312,9 +316,6 @@
 				}
 			}
 		</script>
-</div>
-</div>
-<s:action name="ref_foot" namespace="/manager" executeResult="true" />
 <script type="text/javascript">
 var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
 var curr_dept = '${leave.leave_dept}';

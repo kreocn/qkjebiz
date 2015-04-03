@@ -5,15 +5,13 @@
 	<typeAlias alias="work" type="com.qkj.manage.domain.PerWork" />
 	<select id="personal_getPerWorks" resultClass="work" parameterClass="java.util.Map">
 		<![CDATA[ 
-			$sqltext$
+			select * from ( $sqltext$ ) a
 		]]>
 		<dynamic prepend="WHERE">
-			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ s.uuid=#uuid# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="product_id"><![CDATA[ s.product_id=#product_id# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="store_id"><![CDATA[ s.store_id=#store_id# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="quantity"><![CDATA[ s.quantity=#quantity# ]]></isNotEmpty>
-			
-
+			<isNotEmpty prepend="AND" property="perUuid"><![CDATA[ a.perUuid=#perUuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="ptype"><![CDATA[ a.ptype=#ptype# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="title"><![CDATA[ a.title=#title# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_user_name"><![CDATA[ a.apply_user_name=#apply_user_name# ]]></isNotEmpty>
 		</dynamic>
 	</select>
 	<!-- Stock End -->
