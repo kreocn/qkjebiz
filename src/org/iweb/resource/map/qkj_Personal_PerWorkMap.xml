@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
+<sqlMap>
+	<!-- Stock Start -->
+	<typeAlias alias="work" type="com.qkj.manage.domain.PerWork" />
+	<select id="personal_getPerWorks" resultClass="work" parameterClass="java.util.Map">
+		<![CDATA[ 
+			$sqltext$
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ s.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="product_id"><![CDATA[ s.product_id=#product_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="store_id"><![CDATA[ s.store_id=#store_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="quantity"><![CDATA[ s.quantity=#quantity# ]]></isNotEmpty>
+			
+
+		</dynamic>
+	</select>
+	<!-- Stock End -->
+</sqlMap>
