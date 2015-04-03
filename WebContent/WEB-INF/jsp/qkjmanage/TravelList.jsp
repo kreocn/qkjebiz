@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -15,9 +16,9 @@
  	<div class="tab_warp main" >
 	<div class="dq_step">
 		${path}
-		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_PRODUCT_ADD')">
+		<c:if test="${it:checkPermit('QKJ_QKJMANAGE_PRODUCT_ADD',null)==true}">
 			<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="travel_load"><s:param name="viewFlag">add</s:param></s:url>" >添加工业旅游申请</a></span>
-		</s:if>
+		</c:if>
 	</div>
 	<s:form id="serachForm" name="serachForm" action="travel_list"  method="get" namespace="/qkjmanage" theme="simple">
 		<div class="label_con">
@@ -101,17 +102,17 @@
 								<s:if test="acheck_status==40"><span class="message_pass"  title="${acheck_user_name}">总经理已审</span></s:if>
 	            		</td>
 	            		<td  class="td4 op-area nw">
-	            				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_TRAVEL')">
-				    	    	<a class="input-blue"  href="<s:url namespace="/qkjmanage" action="travel_load"><s:param name="viewFlag">mdy</s:param><s:param name="travel.uuid" value="uuid"></s:param></s:url>">修改</a>
-				    	    	</s:if>
-				                <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_TRAVEL_DEL') && check_status>=30 && acheck_status>=10">
-				                <a class="input-gray"  href="<s:url namespace="/qkjmanage" action="travel_load"><s:param name="viewFlag">print1</s:param><s:param name="travel.uuid" value="uuid" /></s:url>">打印1</a>
-				                <a class="input-gray" href="<s:url namespace="/qkjmanage" action="travel_load"><s:param name="viewFlag">print2</s:param><s:param name="travel.uuid" value="uuid" /></s:url>">打印2</a>
-				                <a class="input-gray" href="<s:url namespace="/qkjmanage" action="travel_load"><s:param name="viewFlag">print3</s:param><s:param name="travel.uuid" value="uuid" /></s:url>">打印客户表</a>
-				                </s:if>
-				                <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_TRAVEL_DEL') && (check_status<=5 || acheck_status<=5)">
-				      	    	<a class="input-red" href="<s:url namespace="/qkjmanage" action="travel_del"><s:param name="travel.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
-				      	    	</s:if>
+	            				<c:if test="${it:checkPermit('QKJ_QKJMANAGE_TRAVEL',null)==true}">
+				    	    		<a class="input-blue"  href="<s:url namespace="/qkjmanage" action="travel_load"><s:param name="viewFlag">mdy</s:param><s:param name="travel.uuid" value="uuid"></s:param></s:url>">修改</a>
+				    	    	</c:if>
+				    	    	<c:if test="${check_status>=30 && acheck_status>=10 && it:checkPermit('QKJ_QKJMANAGE_TRAVEL_DEL',null)==true}">
+					                <a class="input-gray"  href="<s:url namespace="/qkjmanage" action="travel_load"><s:param name="viewFlag">print1</s:param><s:param name="travel.uuid" value="uuid" /></s:url>">打印1</a>
+					                <a class="input-gray" href="<s:url namespace="/qkjmanage" action="travel_load"><s:param name="viewFlag">print2</s:param><s:param name="travel.uuid" value="uuid" /></s:url>">打印2</a>
+					                <a class="input-gray" href="<s:url namespace="/qkjmanage" action="travel_load"><s:param name="viewFlag">print3</s:param><s:param name="travel.uuid" value="uuid" /></s:url>">打印客户表</a>
+				                </c:if>
+				                <c:if test="${(check_status<=5 || acheck_status<=5) && it:checkPermit('QKJ_QKJMANAGE_TRAVEL_DEL',null)==true}">
+				      	    		<a class="input-red" href="<s:url namespace="/qkjmanage" action="travel_del"><s:param name="travel.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
+				      	    	</c:if>
 	            		</td>
 	            		<td  class="td0 op-area"><a onclick="showDetail('showtr${uuid}');" href="javascript:;" class="input-nostyle">查看</a></td>
 	            	</tr>

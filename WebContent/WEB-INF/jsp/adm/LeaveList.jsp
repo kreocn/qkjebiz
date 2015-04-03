@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -21,9 +22,9 @@ max-width: 650px !important;
  	<div class="tab_warp main" >
  	<div class="dq_step">
 		${path}
-		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_ADD')">
+		<c:if test="${it:checkPermit('QKJ_ADM_LEAVE_ADD',null)==true}">
 			<span class="opb lb op-area"><a href="javascript:;" id="AddLeaveLink">添加申请单</a></span>
-		</s:if>
+		</c:if>
 	</div>
  	<s:form id="serachForm" name="serachForm" action="leave_list"  method="get" namespace="/adm" theme="simple">
  	<div class="label_con">
@@ -76,7 +77,7 @@ max-width: 650px !important;
         </div>
         <div class="label_hang">
             <div class="label_ltit">业务审核状态:</div>
-            <div class="label_rwben label_rwb"><s:select name="leave.check_status" list="#{0:'新申请',5:'已退回',10:'待审核',15:'主管/办事处已审',20:'经理/大区已审',30:'运营总监已审',40:'业务副总已审' }" headerKey="" headerValue="--请选择--"  /></div>
+            <div class="label_rwben label_rwb"><s:select name="leave.check_status" list="#{0:'新申请',5:'已退回',10:'待审核',15:'主管/办事处已审',20:'经理/大区已审',30:'总监已审',40:'业务副总已审' }" headerKey="" headerValue="--请选择--"  /></div>
         </div>
         <div class="label_hang">
             <div class="label_ltit">人事审核状态:</div>
@@ -135,7 +136,7 @@ max-width: 650px !important;
 			<s:if test="check_status==10"><span class="message_warning">待审核</span></s:if>
 			<s:if test="check_status==15"><span class="message_pass" title="${check_user_name}">主管/办事处已审</span></s:if>
 			<s:if test="check_status==20"><span class="message_pass" title="${check_user_name}">经理/大区已审</span></s:if>
-			<s:if test="check_status==30"><span class="message_pass" title="${check_user_name}">运营总监已审</span></s:if>
+			<s:if test="check_status==30"><span class="message_pass" title="${check_user_name}">总监已审</span></s:if>
 			<s:if test="check_status==40"><span class="message_pass" title="${check_user_name}">业务副总已审</span></s:if>
 		</td>
 		<td class="td3">
@@ -154,15 +155,15 @@ max-width: 650px !important;
     	</s:if>
 		</td>
 		<td  class="td4 op-area">
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE')">
+			<c:if test="${it:checkPermit('QKJ_ADM_LEAVE',null)==true}">
 	    	<a class="input-blue" href="<s:url namespace="/adm" action="leave_load"><s:param name="viewFlag">mdy</s:param><s:param name="leave.uuid" value="uuid"></s:param></s:url>">修改</a>
-	    	</s:if>
+	    	</c:if>
 	    	<s:if test="check_status>=20">
 	    	<a class="input-gray" href="<s:url namespace="/adm" action="leave_print"><s:param name="leave.uuid" value="uuid" /><s:param name="leave.leave_type" value="leave_type" /></s:url>">打印</a>
 	    	</s:if>
-	    	<s:if test="check_status<=5&&@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_DEL')">
+	    	<c:if test="${check_status<=5 && it:checkPermit('QKJ_ADM_LEAVE_DEL',null)==true}">
 	    	<a class="input-red" href="<s:url namespace="/adm" action="leave_del"><s:param name="leave.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
-	    	</s:if>	   
+	    	</c:if>	   
 	    </td>
 	    <td class="td0 op-area"><a onClick="showDetail('showtr${uuid}');" href="javascript:;" class="input-nostyle">查看</a></td>
 	  </tr>

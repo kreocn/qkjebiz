@@ -38,7 +38,7 @@ public class ToolsUtil {
 	 * @return
 	 */
 	public static String getUUID() {
-		return getUUIDByDateRandom(2, "yyyyMMddHHmmss");
+		return getUUIDByDateRandom(6, "yyyyMMddHH");
 	}
 
 	/**

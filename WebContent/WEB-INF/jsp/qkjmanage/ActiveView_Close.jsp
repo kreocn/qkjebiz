@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags"%>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -63,7 +64,8 @@
 <div class="tab_right">
 	<div class="tab_warp main">
 		<div class="dq_step">
-			<span id="hs" class="pt">活动结案单</span> <span id="ks" class="pt kss">活动客户结案通知单</span> <span class="opb lb op-area noprint"><a href="<s:url namespace="/qkjmanage" action="active_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a></span> <span class="opb lb op-area noprint"><a
+			<span id="hs" class="pt">活动结案单</span> <span id="ks" class="pt kss">活动客户结案通知单</span>
+			<span class="opb lb op-area noprint"><a href="<s:url namespace="/qkjmanage" action="active_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a></span> <span class="opb lb op-area noprint"><a
 				href="<s:url namespace="/qkjmanage" action="active_closeLoad"><s:param name="active.uuid" value="%{active.uuid}"></s:param></s:url>">返回修改页面</a></span> 
 				<span class="opb lb op-area noprint"><input type="button" onclick="ypri();window.print();" value="打印本页" />
 				&nbsp;</span>
@@ -187,6 +189,10 @@
 										<span class="vab">${it:formatDate(biz_time,'yyyy-MM-dd HH:mm:ss')}</span></s:if></s:elseif>
 											<s:elseif test="fuActive!=null"><s:if test="%{fuActive.puser_sign!=puser_sign}"><span class="user_sign"><img src="${puser_sign}" /></span>
 										<span class="vab">${it:formatDate(biz_time,'yyyy-MM-dd HH:mm:ss')}</span></s:if></s:elseif>
+										<s:else>
+										<span class="user_sign"><img src="${puser_sign}" /></span>
+										<span class="vab">${it:formatDate(biz_time,'yyyy-MM-dd HH:mm:ss')}</span>
+										</s:else>
 											</s:if>
 											<s:else>
 									<s:if test="%{caiActive.puser_sign!=puser_sign && guanActive.puser_sign!=puser_sign && fuActive.puser_sign!=puser_sign}">
@@ -351,9 +357,11 @@
 											<td class="nw">￥${per_price}</td>
 											<td class="nw">${num}</td>
 											<td class="nw">￥${total_price}</td>
-											<td class="nw"><s:if test="active.status==3 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEPRODUCT_DEL')">
+											<td class="nw">
+												<c:if test="${active.status==3 && it:checkPermit('QKJ_QKJMANAGE_ACTIVEPRODUCT_DEL',null)==true}">
 													<a href="<s:url action="activeProductClose_del"><s:param name="activeProduct.uuid" value="%{uuid}" /><s:param name="activeProduct.active_id" value="%{active.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
-												</s:if></td>
+												</c:if>
+											</td>
 										</tr>
 									</s:iterator>
 								</table>
@@ -372,9 +380,11 @@
 											<td class="nw">￥${per_price}</td>
 											<td class="nw">${num}</td>
 											<td class="nw">￥${total_price}</td>
-											<td class="nw"><s:if test="active.status==3 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEPRODUCT_DEL')">
+											<td class="nw">
+												<c:if test="${active.status==3 && it:checkPermit('QKJ_QKJMANAGE_ACTIVEPRODUCT_DEL',null)==true}">
 													<a href="<s:url action="activeProductClose_del"><s:param name="activeProduct.uuid" value="%{uuid}" /><s:param name="activeProduct.active_id" value="%{active.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
-												</s:if></td>
+												</c:if>
+											</td>
 										</tr>
 									</s:iterator>
 								</table>
@@ -496,29 +506,28 @@
 						<div class="clear"></div>
 					</div>
 				</div>
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_SELSPE')">
+				<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SELSPE',null)==true}">
 					<div class="label_main noprint">
 						<div class="label_hang">
 							<div class="label_ltit">特殊备注:</div>
 							<div class="label_rwbenx label_hang_linput">${active.spe_remark }</div>
 						</div>
 					</div>
-				</s:if>
+				</c:if>
 
 				<div class="label_main noprint">
 					<div class="label_hang">
 						<div class="label_ltit">相关操作:</div>
 						<div class="label_rwbenx">
-							<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_TH')">
+							<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_TH',null)==true}">
 								<s:submit cssClass="input-red" name="mdyCloseActiveSDStatus5" value="退回" action="mdycloseTH" onclick="return isOp('确定执行此操作?将退回到未审核状态');" />
-							</s:if>
-							<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_STATUS_1')">
+							</c:if>
+							<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVE_STATUS_1',null)==true}">
 								<s:submit id="active_mdyStatus_1" name="active_mdyStatus_1" value="作废" action="active_mdyStatus_1" onclick="return isOp('确定执行此操作?');" />
-							</s:if>
+							</c:if>
 							<input type="button" value="返回" onclick="linkurl('<s:url action="active_relist" namespace="/qkjmanage" />');" /> <input type="button" onclick="window.print();" value="打印本页" /> <input type="button" onclick="nopri();window.print();" value="打印结案通知单" />&nbsp; <input type="button" value="返回修改页面"
 								onclick="linkurl('<s:url action="active_closeLoad" namespace="/qkjmanage"><s:param name="active.uuid" value="%{active.uuid}"></s:param></s:url>');" />
-
-							<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_MDYSHIPINFO')">	(发货信息功能已移动到列表页)</s:if>
+							<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVE_MDYSHIPINFO',null)==true}">  (发货信息功能已移动到列表页)</c:if>
 						</div>
 					</div>
 				</div>

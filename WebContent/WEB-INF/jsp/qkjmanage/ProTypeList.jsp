@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -17,9 +17,9 @@
 	<div class="dq_step">
 		${path}
 			<span class="opb lb op-area">
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_PROTYPE_ADD')">
-			<a href="<s:url namespace="/qkjmanage" action="proType_load"><s:param name="viewFlag">add</s:param></s:url>" >添加类型</a>
-			</s:if>
+				<c:if test="${it:checkPermit('QKJ_QKJMANAGE_PROTYPE_ADD',null)==true}">
+				<a href="<s:url namespace="/qkjmanage" action="proType_load"><s:param name="viewFlag">add</s:param></s:url>" >添加类型</a>
+				</c:if>
      		</span>
 	</div>
 	<!-- 条件查询 -->
@@ -68,12 +68,12 @@
 				</td>
 			   	<td class="td1 nw"><s:property value="name" /></td>
 				<td class="td4 op-area">
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_PROTYPE_MDY')">
-			    	<a class="input-blue" href="<s:url namespace="/qkjmanage" action="proType_load"><s:param name="viewFlag">mdy</s:param><s:param name="proType.uuid" value="uuid"></s:param></s:url>">修改</a>
-			    </s:if>
-			    <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_PROTYPE_DEL')">
-			    	<a class="input-red" href="<s:url namespace="/qkjmanage" action="proType_del"><s:param name="proType.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
-			    </s:if>
+					<c:if test="${it:checkPermit('QKJ_QKJMANAGE_PROTYPE_MDY',null)==true}">
+				    	<a class="input-blue" href="<s:url namespace="/qkjmanage" action="proType_load"><s:param name="viewFlag">mdy</s:param><s:param name="proType.uuid" value="uuid"></s:param></s:url>">修改</a>
+				    </c:if>
+				    <c:if test="${it:checkPermit('QKJ_QKJMANAGE_PROTYPE_DEL',null)==true}">
+				    	<a class="input-red" href="<s:url namespace="/qkjmanage" action="proType_del"><s:param name="proType.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
+				    </c:if>
 			    </td>
 			    <td class="td0 op-area"><a onClick="showDetail('showtr${uuid}');" class="input-nostyle">查看</a></td>
 	  		</tr>

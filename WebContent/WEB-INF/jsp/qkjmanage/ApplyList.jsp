@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -23,9 +24,9 @@ display: none;
  	<div class="tab_warp main" >
  	<div class="dq_step">
 		${path}
-		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_ADD')">
+		<c:if test="${it:checkPermit('QKJ_QKJMANAGE_APPLY_ADD',null)==true}">
 			<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="apply_load"><s:param name="viewFlag">add</s:param></s:url>">添加至事由</a></span>
-		</s:if>
+		</c:if>
 	</div>
  	<s:form id="serachForm" name="serachForm" action="apply_list"  method="get" namespace="/qkjmanage" theme="simple">
  	<div class="label_con">
@@ -79,7 +80,7 @@ display: none;
             <div class="label_ltit">状态:</div>
             <div class="label_rwben2">
             	<span class="label_rwb">
-            	<s:select name="apply.status_sp" title="状态" headerKey="" headerValue="-申请状态-" list="#{-1:'已作废',0:'新申请',5:'审核退回',10:'待审核',20:'经理/大区已审',25:'销管经理已审',30:'运营总监已审',40:'销售副总已审',50:'总经理已审'}" />
+            	<s:select name="apply.status_sp" title="状态" headerKey="" headerValue="-申请状态-" list="#{-1:'已作废',0:'新申请',5:'审核退回',10:'待审核',20:'经理/大区已审',25:'销管经理已审',30:'总监已审',40:'副总已审',50:'总经理已审'}" />
 				</span>
 				<span class="label_rwb">
 				<s:select name="apply.ship_status" headerKey="" headerValue="-发货状态-" list="#{0:'未发货',10:'已发货',20:'已受理' }" />
@@ -118,7 +119,7 @@ display: none;
 					<s:if test="-1==status"><span class="message_error">已作废|(${check_user_name})</span></s:if>
 					<s:if test="0==status">新申请</s:if>
 					<s:if test="5==status"><span class="message_error">已退回(${check_user_name})</span></s:if>
-					<s:if test="%{apply_dept==1 || apply_dept.substring(0,3)!='210' || status>=20}">
+					<s:if test="%{apply_dept==1 || apply_dept.substring(0,2)!='30' || status>=20}">
 					<s:if test="10==status"><span class="message_warning">待审核</span></s:if>
 					<s:if test="20==status">
 					<s:if test="0==sp_check_status || 5==sp_check_status"><span class="message_pass">经理/大区已审</span></s:if>
@@ -131,8 +132,8 @@ display: none;
 					<s:if test="10==sp_check_status"><span class="message_pass">销管经理已审</span></s:if>
 					</s:if>
 					</s:else>
-					<s:if test="30==status"><span class="message_pass">运营总监已审</span></s:if>
-					<s:if test="40==status"><span class="message_pass">销售副总已审</span></s:if>
+					<s:if test="30==status"><span class="message_pass">总监已审</span></s:if>
+					<s:if test="40==status"><span class="message_pass">副总已审</span></s:if>
 					<s:if test="50==status"><span class="message_pass">总经理已审</span></s:if>
 				</td>
 				<td class="td4 op-area nw">
@@ -152,18 +153,16 @@ display: none;
 					</span>
 					</s:if>
 				</td>
-				<td class="td4 op-area">
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_VIEW')">
-					<s:if test="status>=30">
-					<a class="input-gray" href="<s:url namespace="/qkjmanage" action="apply_print"><s:param name="apply.uuid" value="uuid"></s:param></s:url>">打印</a>
-					</s:if>
-					
-			    	<a class="input-blue" href="<s:url namespace="/qkjmanage" action="apply_load"><s:param name="viewFlag">mdy</s:param><s:param name="apply.uuid" value="uuid"></s:param></s:url>">修改</a>
-			    	
-			    	</s:if>
-			    	<s:if test="(status==0||status==5)&&@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_DEL')">
-			    	<a class="input-red" href="<s:url namespace="/qkjmanage" action="apply_del"><s:param name="apply.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
-			    	</s:if>
+				<td class="td4 op-area">				
+					<c:if test="${it:checkPermit('QKJ_QKJMANAGE_APPLY_VIEW',null)==true}">
+						<s:if test="status>=30">
+							<a class="input-gray" href="<s:url namespace="/qkjmanage" action="apply_print"><s:param name="apply.uuid" value="uuid"></s:param></s:url>">打印</a>
+						</s:if>					
+			    		<a class="input-blue" href="<s:url namespace="/qkjmanage" action="apply_load"><s:param name="viewFlag">mdy</s:param><s:param name="apply.uuid" value="uuid"></s:param></s:url>">修改</a>
+			    	</c:if>
+			    	<c:if test="${(status==0||status==5) && it:checkPermit('QKJ_QKJMANAGE_APPLY_DEL',null)==true}">
+			    		<a class="input-red" href="<s:url namespace="/qkjmanage" action="apply_del"><s:param name="apply.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
+			    	</c:if>
 				</td>
 				<td class="td0 op-area"><a onClick="showDetail('showtr${uuid}');" href="javascript:;" class="input-nostyle">查看</a></td>
 			</tr>
@@ -206,9 +205,9 @@ display: none;
         </div>
         <div class="label_hang  label_button tac">
            	<s:hidden id="form_apply_uuid" name="apply.uuid" value="%{apply.uuid}" />
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_MDYAPPLYSHIPINFO')">
+           	<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVE_MDYAPPLYSHIPINFO',null)==true}">
 			<s:submit id="mdyApplyShipInfo" name="mdyApplyShipInfo" value="确定" action="mdyApplyShipInfo" />
-			</s:if>
+			</c:if>
         </div>
     </div>
 </s:form>

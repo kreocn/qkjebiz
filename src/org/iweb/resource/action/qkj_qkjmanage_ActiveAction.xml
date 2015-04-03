@@ -15,6 +15,24 @@
 		<action name="active_list" class="com.qkj.manage.action.ActiveAction" method="list">
 			<result>/WEB-INF/jsp/qkjmanage/ActiveList.jsp</result>
 		</action>
+		<action name="active_nextList" class="com.qkj.manage.action.ActiveAction" method="nextList">
+			<result type="redirectAction">
+				<param name="actionName">active_load</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="minUid">${minUid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="active_nextListClose" class="com.qkj.manage.action.ActiveAction" method="nextList">
+			<result type="redirectAction">
+				<param name="actionName">active_closeLoad</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="minUid">${minUid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
 		<action name="active_load" class="com.qkj.manage.action.ActiveAction" method="load">
 			<result>/WEB-INF/jsp/qkjmanage/ActiveEdit.jsp</result>
 		</action>
@@ -80,6 +98,7 @@
 				<param name="actionName">active_load</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -91,6 +110,7 @@
 				<param name="actionName">active_load</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -100,6 +120,7 @@
 				<param name="actionName">active_load</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -110,6 +131,7 @@
 				<param name="actionName">active_load</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -119,6 +141,7 @@
 				<param name="actionName">active_load</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -128,6 +151,7 @@
 				<param name="actionName">active_load</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -137,6 +161,7 @@
 				<param name="actionName">active_load</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -148,6 +173,7 @@
 				<param name="actionName">active_load</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -157,6 +183,7 @@
 				<param name="actionName">active_load</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -167,6 +194,7 @@
 				<param name="actionName">active_load</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -177,6 +205,7 @@
 				<param name="actionName">active_load</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -187,6 +216,7 @@
 				<param name="actionName">active_load</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -197,6 +227,7 @@
 				<param name="actionName">active_load</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -214,6 +245,7 @@
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -257,6 +289,7 @@
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -266,6 +299,7 @@
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -275,6 +309,7 @@
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -284,6 +319,7 @@
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -293,6 +329,7 @@
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -302,6 +339,7 @@
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -312,6 +350,7 @@
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -322,6 +361,7 @@
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -332,6 +372,7 @@
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -342,6 +383,7 @@
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -352,6 +394,7 @@
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -362,6 +405,7 @@
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -372,6 +416,7 @@
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -382,6 +427,7 @@
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>

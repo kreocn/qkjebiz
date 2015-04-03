@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -169,7 +170,7 @@
 					</div>
 					<div class="label_hang">
 			            <div class="label_ltit">仓库面积:</div>
-			            <div class="label_rwben"><s:textfield name="customer.ware_square" title="仓库面积" style="width:70%;" cssClass="validate[custom[number],maxSize[6]]" />&nbsp;m²</div>
+			            <div class="label_rwben"><s:textfield name="customer.ware_square" title="仓库面积" cssStyle="width:70%;" cssClass="validate[custom[number],maxSize[6]]" />&nbsp;m²</div>
 					</div>
 					<div class="label_hang">
 			            <div class="label_ltit">仓储归属:</div>
@@ -177,7 +178,7 @@
 					</div>
 					<div class="label_hang">
 			            <div class="label_ltit">配送车辆:</div>
-			            <div class="label_rwben"><s:textfield name="customer.vehicle_num" title="配送车辆" style="width:70%;" cssClass="validate[custom[integer],maxSize[10]]" />&nbsp;辆</div>
+			            <div class="label_rwben"><s:textfield name="customer.vehicle_num" title="配送车辆" cssStyle="width:70%;" cssClass="validate[custom[integer],maxSize[10]]" />&nbsp;辆</div>
 					</div>
 					<div class="label_hang">
 			            <div class="label_ltit">市场类型:</div>
@@ -185,19 +186,19 @@
 					</div>
 					<div class="label_hang">
 			            <div class="label_ltit">自有批发商:</div>
-			            <div class="label_rwben"><s:textfield name="customer.in_wholesaler" title="自有批发商" style="width:70%;" cssClass="validate[custom[integer],maxSize[10]]" />&nbsp;个</div>
+			            <div class="label_rwben"><s:textfield name="customer.in_wholesaler" title="自有批发商" cssStyle="width:70%;" cssClass="validate[custom[integer],maxSize[10]]" />&nbsp;个</div>
 					</div>
 					<div class="label_hang">
 			            <div class="label_ltit">自有直供店:</div>
-			            <div class="label_rwben"><s:textfield name="customer.in_shop" title="自有直供店" style="width:70%;" cssClass="validate[custom[integer],maxSize[10]]" />&nbsp;个</div>
+			            <div class="label_rwben"><s:textfield name="customer.in_shop" title="自有直供店" cssStyle="width:70%;" cssClass="validate[custom[integer],maxSize[10]]" />&nbsp;个</div>
 					</div>
 					<div class="label_hang">
 			            <div class="label_ltit">二级批发商:</div>
-			            <div class="label_rwben"><s:textfield name="customer.out_wholesaler" title="二级批发商" style="width:70%;" cssClass="validate[custom[integer],maxSize[10]]" />&nbsp;个</div>
+			            <div class="label_rwben"><s:textfield name="customer.out_wholesaler" title="二级批发商" cssStyle="width:70%;" cssClass="validate[custom[integer],maxSize[10]]" />&nbsp;个</div>
 					</div>
 					<div class="label_hang">
 			            <div class="label_ltit">下级直供店:</div>
-			            <div class="label_rwben"><s:textfield name="customer.out_shop" title="下级直供店" style="width:70%;" cssClass="validate[custom[integer],maxSize[10]]" />&nbsp;个</div>
+			            <div class="label_rwben"><s:textfield name="customer.out_shop" title="下级直供店" cssStyle="width:70%;" cssClass="validate[custom[integer],maxSize[10]]" />&nbsp;个</div>
 					</div>
 					<div class="label_hang">
 			            <div class="label_ltit">客户类型:</div>
@@ -262,20 +263,20 @@
 				            <div class="label_rwbenx">
 				            	<div class="noprintarea">
 									<s:if test="'add' == viewFlag">
-										<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_CUSTOMER_ADD')">
+										<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CUSTOMER_ADD',null)==true}">
 										<s:submit id="add" name="add" value="确定" action="customer_add" cssClass="input-blue" />
-										</s:if>
+										</c:if>
 									</s:if>
 									<s:elseif test="'mdy' == viewFlag">
-										<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_CUSTOMER_MDY')">
+										<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CUSTOMER_MDY',null)==true}">
 										<s:submit id="save" name="save" value="保存" action="customer_save" cssClass="input-blue" />
-										</s:if>
-										<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_CUSTOMER_DEL')">
+										</c:if>
+										<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CUSTOMER_DEL',null)==true}">
 										<s:submit id="delete" name="delete" value="删除" action="customer_del" onclick="return isDel();" cssClass="input-red" />
-										</s:if>
-										<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_CUSTOMERRECODE_ADD')">
+										</c:if>
+										<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CUSTOMERRECODE_ADD',null)==true}">
 										<input id="addRecode" type="button" value="增加回访记录" onclick="openAddRecode();" />
-										</s:if>
+										</c:if>
 									</s:elseif>
 									<input type="button" class="input-gray" value="返回" onclick="linkurl('<s:url action="customer_relist" namespace="/qkjmanage" />');" />
 									<input id="print_button" type="button" onclick="window.print();" value="打印本页">
@@ -318,9 +319,9 @@
 								<td>${it:formatDate(next_date,'yyyy-MM-dd')}</td>
 								<td>${add_user_name}</td>
 								<td>
-									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_CUSTOMERRECODE_DEL')">
+									<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CUSTOMERRECODE_DEL',null)==true}">
 							    	[<a href="<s:url namespace="/qkjmanage" action="customerRecode_del"><s:param name="customerRecode.uuid" value="uuid" /><s:param name="customerRecode.customer_id" value="customer_id" /></s:url>" onclick="return isDel();">删除</a>]
-							    	</s:if>
+							    	</c:if>
 							    	[<a href="javascript:;" onclick="showRecode(${uuid});">查看详情</a>]
 							    	<span id="content_${uuid}" class="tooltiptext"><s:property value="content" /></span>
 									<span id="promise_${uuid}" class="tooltiptext"><s:property value="promise" /></span>
@@ -370,9 +371,9 @@
 			<td>&nbsp;</td>
 		    <td class="buttonarea">
 		    	<s:hidden name="customerRecode.customer_id" value="%{customer.uuid}" />
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_CUSTOMERRECODE_ADD')">
+		    	<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CUSTOMERRECODE_ADD',null)==true}">
 				<s:submit id="customerRecode_add" name="customerRecode_add" value="确定" action="customerRecode_add" />
-				</s:if>
+				</c:if>
 				<span id="message"><s:property value="message" /></span>
 			</td>
 	    </tr>

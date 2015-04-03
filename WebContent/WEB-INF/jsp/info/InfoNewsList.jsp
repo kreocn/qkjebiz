@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -17,9 +18,9 @@
 	<div class="tab_warp main">
 	<div class="dq_step">
 		${path}
-		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('INFO_MANAGER_NEWS_ADD')">
+		<c:if test="${it:checkPermit('INFO_MANAGER_NEWS_ADD',null)==true}">
 			<span class="opb lb op-area"><a href="<s:url namespace="/info" action="news_load"><s:param name="viewFlag">add</s:param></s:url>" >添加信息</a></span>
-		</s:if>
+		</c:if>
 	</div>
 	<s:form id="serachForm" name="serachForm" action="news_list"  method="get" namespace="/info" theme="simple">
 		<div class="label_con">
@@ -90,13 +91,13 @@
 									<span style="color: red; font-weight: bold;">状态异常,请通知管理员</span>
 								</s:else>
 			              </td>
-			              <td  class="td5 op-area"">
-			              		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('INFO_MANAGER_NEWS_MDY')">
+			              <td  class="td5 op-area">
+			              		<c:if test="${it:checkPermit('INFO_MANAGER_NEWS_MDY',null)==true}">
 						    		<a class="input-blue" href="<s:url namespace="/info" action="news_load"><s:param name="viewFlag">mdy</s:param><s:param name="news.uuid" value="uuid"></s:param></s:url>">修改</a>
-						    	</s:if>
-						    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_CUSTOMER_DEL')">
+						    	</c:if>
+						    	<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CUSTOMER_DEL',null)==true}">
 						    		<a class="input-red" href="<s:url namespace="/info" action="news_saveDel"><s:param name="news.uuid" value="uuid" /><s:param name="news.isdel">1</s:param></s:url>" onclick="return isDel('把记录放进回收站吗?');">回收</a>
-						    	</s:if>	  
+						    	</c:if>	  
 			              </td>
 			              <td  class="td0 op-area"><a onclick="showDetail('showtr${uuid}');" href="javascript:;" class="input-nostyle">查看</a></td>
 	            	</tr>

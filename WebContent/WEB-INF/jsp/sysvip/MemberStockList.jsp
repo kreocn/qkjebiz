@@ -1,18 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>会员库存--<s:text name="APP_NAME" /></title>
 <s:action name="ref_head" namespace="/manager" executeResult="true" />
-<link rel="stylesheet" href="<s:url value="/css/zTreeStyle/zTreeStyle.css" />" />
-<script type="text/javascript" src="<s:url value="/js/zTreeJs/jquery.ztree.core-3.5.js" />"></script>
-<script type="text/javascript" src="<s:url value="http://images01.qkjchina.com/qkjebiz01/zTree_result.js?v0=1" />"></script>
-<script type="text/javascript" src="<s:url value="/js/zTreeJs/product.js" />"></script>
 </head>
 <body>
 <!-- 顶部和左侧菜单导航 -->
@@ -22,15 +18,14 @@
 	<div class="tab_warp main">
 <div class="dq_step">
 ${path}
-<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJM_SYSVIP_MEMBERSTOCK_ADD')">
+<c:if test="${it:checkPermit('QKJM_SYSVIP_MEMBERSTOCK_ADD',null)==true}">
 	<span class="opb lb op-area"><a href="<s:url namespace="/sysvip" action="memberStock_load"><s:param name="viewFlag">add</s:param></s:url>">添加库存信息</a></span>
 	<span class="opb lb op-area">
 	<s:hidden id="marketimgid"></s:hidden>
 	</span>
-
-</s:if>
+</c:if>
 </div>
-	<s:form id="serachForm" name="serachForm"  method="get" namespace="/sysvip" theme="simple">
+	<s:form id="serachForm" name="serachForm"  method="post" namespace="/sysvip" theme="simple">
 <div class="label_con">
 <div class="label_main">
       <div class="label_hang">
@@ -42,16 +37,10 @@ ${path}
           <div class="label_rwben"><s:textfield name="memberStock.member_name"/></div>
       </div>
       <div class="label_hang">
-		    <div class="label_ltit">产品:</div>
-		    <div class="label_rwben label_rwb" style="width: 140px;">
-		    <s:textfield  id="citySel" name="memberStock.product_name" onclick="showMenu(); return false;"/>
-		    	<s:hidden name="memberStock.product" id="cityUid"></s:hidden>
-		    	<s:hidden id="datacase"></s:hidden>
-		    	<div id="menuContent" class="menuContent">
-			        <ul id="treeDemo" class="ztree"></ul>
-			    </div>
-		    </div>
-		</div>
+          <div class="label_ltit">产品:</div>
+          <div class="label_rwben"><s:textfield name="memberStock.product_name"/></div>
+      </div>
+      
 		
 		<div class="label_hang">
 		<div class="label_ltit">核对日期:</div>
@@ -63,11 +52,11 @@ ${path}
 	  <div class="label_hang label_button tac">
         	<s:checkbox id="search_mcondition" name="search_mcondition" fieldValue="true" value="true" cssClass="regular-checkbox" />
 			<label for="search_mcondition"></label>更多条件
-            <s:submit value="搜索" onclick="checkstock();" /> <s:reset value="重置" />
+            <s:submit value="搜索" /> <s:reset value="重置" />
         </div>
-        <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJM_SYSVIP_MEMBERSTOCK_DEL')">
+        <c:if test="${it:checkPermit('QKJM_SYSVIP_MEMBERSTOCK_DEL',null)==true}">
           		<div style="clear:both;"><input type="button" class="input-red" value="批量删除" onclick="javascript:deletestock('是否真的要批量删除记录?');"></div>
-        </s:if>
+        </c:if>
 </div>
 </div>
 </s:form>
@@ -97,12 +86,12 @@ ${path}
 		</td>
 		<td class="td2">${it:formatDate(check_date,'yyyy-MM-dd')}</td>
 		<td class="td4 op-area">
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJM_SYSVIP_MEMBERSTOCK_MDY')">
+			<c:if test="${it:checkPermit('QKJM_SYSVIP_MEMBERSTOCK_MDY',null)==true}">
 	    	<a class="input-blue" href="<s:url namespace="/sysvip" action="memberStock_load"><s:param name="viewFlag">mdy</s:param><s:param name="memberStock.uuid" value="uuid"></s:param></s:url>">修改</a>
-	    	</s:if>
-	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJM_SYSVIP_MEMBERSTOCK_DEL')">
+	    	</c:if>
+	    	<c:if test="${it:checkPermit('QKJM_SYSVIP_MEMBERSTOCK_DEL',null)==true}">
 	    	<a class="input-red" href="<s:url namespace="/sysvip" action="memberStock_del"><s:param name="memberStock.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
-	    	</s:if>
+	    	</c:if>
 		</td>
 	    <td class="td0 op-area"><a onClick="showDetail('showtr${uuid}');" class="input-nostyle">查看</a></td>
 	  </tr>

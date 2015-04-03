@@ -27,6 +27,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 	private ApproveDAO adao = new ApproveDAO();
 	private Apply apply;
 	private List<Apply> applys;
+	private List<Apply> applyUserSign;
 	private Approve approve;
 	private List<Approve> approves;
 	private String isApprover;
@@ -36,6 +37,15 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 	private int pageSize;
 	private int currPage;
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;至事由管理";
+	
+
+	public List<Apply> getApplyUserSign() {
+		return applyUserSign;
+	}
+
+	public void setApplyUserSign(List<Apply> applyUserSign) {
+		this.applyUserSign = applyUserSign;
+	}
 
 	public String getPath() {
 		return path;
@@ -202,7 +212,9 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 				setMessage("无显示数据.");
 			} else {
 				this.setApply((Apply) dao.get(apply.getUuid()));
+				this.setApplyUserSign(dao.listUserSign(apply.getUuid()));
 			}
+			
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!view 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!view 读取数据错误:", e);

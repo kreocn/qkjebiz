@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -89,7 +90,7 @@
 			       <div class="label_rwbenx">${it:formatDate(news.add_time,'yyyy-MM-dd hh:mm:ss')}</div>
 			    </div>
 			    </s:if>
-			    <s:if test="null != news && 'mdy' == viewFlag && @org.iweb.sys.ContextHelper@checkPermit('INFO_MANAGER_NEWS_SMDY')">
+			    <c:if test="${null != news && 'mdy' == viewFlag && it:checkPermit('INFO_MANAGER_NEWS_SMDY',null)==true}">
 					<div class="label_hang clear">
 				       <div class="label_ltit">特殊操作:</div>
 				       <div class="label_rwbenx">
@@ -132,37 +133,37 @@
 							<s:else>未置顶[<s:a href="%{toTop}">设置置顶</s:a>]</s:else>
 				       </div>
 				    </div>
-			    </s:if>
+			    </c:if>
 			    <div class="label_hang  clear">
 			       <div class="label_ltit">相关操作:</div>
 			       <div class="label_rwbenx op-area">
-			       		<span id="message"><s:property value="message" /></span>
-			       		<s:if test="null == news && 'add' == viewFlag  && @org.iweb.sys.ContextHelper@checkPermit('INFO_MANAGER_NEWS_ADD')">
+			       		<c:if test="${null == news && 'add' == viewFlag  && it:checkPermit('INFO_MANAGER_NEWS_ADD',null)==true}">
 							<s:submit id="saveadd" name="saveadd" value="暂存" action="news_saveadd" />
 							<s:submit id="add" name="add" value="提交" action="news_add" cssClass="input-blue"/>
 							<input type="button" value="返回" onclick="linkurl('<s:url action="news_list" namespace="/info" />');" class="input-gray"/>
-						</s:if>
-						<s:elseif test="null != news && 'mdy' == viewFlag  && @org.iweb.sys.ContextHelper@checkPermit('INFO_MANAGER_NEWS_MDY')">
+						</c:if>
+						<c:if test="${null != news && 'mdy' == viewFlag  && it:checkPermit('INFO_MANAGER_NEWS_MDY',null)==true}">
 							<s:submit id="savetmp" name="savetmp" value="暂存" action="news_savetmp" />
 							<s:submit id="save" name="save" value="保存并提交" action="news_save"  cssClass="input-blue"/>
 							<s:url id="toRecycle" namespace="/info" action="news_saveDel">
 								<s:param name="news.uuid" value="%{news.uuid}" />
 								<s:param name="news.isdel" value="1" />
 							</s:url>
-							<s:if test="@org.iweb.sys.ContextHelper@checkPermit('INFO_MANAGER_NEWS_MDYDEL')">
+							<c:if test="${it:checkPermit('INFO_MANAGER_NEWS_MDYDEL',null)==true}">
 								<input type="button" value="放入回收站"  class="input-red" onclick="if(window.confirm('真的把记录放进回收站吗?'))location.href='<s:url value="%{toRecycle}" />';" />
-							</s:if>
+							</c:if>
 							<input type="button" class="input-gray" value="返回" onclick="linkurl('<s:url action="news_list" namespace="/info" />');" />
-						</s:elseif>
-						<s:elseif test="null != news && 'view' == viewFlag">
-							<s:if test="@org.iweb.sys.ContextHelper@checkPermit('INFO_MANAGER_NEWS_MDYDEL')">
+						</c:if>
+						<s:if test="null != news && 'view' == viewFlag">
+							<c:if test="${it:checkPermit('INFO_MANAGER_NEWS_MDYDEL',null)==true}">
 								<input type="button" class="input-green" value="还原" onclick="if(window.confirm('还原资源吗?'))location.href='<s:url namespace="/info" action="news_saveDel"><s:param name="news.isdel">0</s:param><s:param name="news.uuid" value="news.uuid" /></s:url>';" />
-							</s:if>
-							<s:if test="@org.iweb.sys.ContextHelper@checkPermit('INFO_MANAGER_NEWS_DEL')">
+							</c:if>
+							<c:if test="${it:checkPermit('INFO_MANAGER_NEWS_DEL',null)==true}">
 								<input type="button" value="删除" class="input-red" onclick="if(isDel())location.href='<s:url namespace="/info" action="news_del"><s:param name="news.uuid" value="news.uuid" /></s:url>';" />
-							</s:if>
+							</c:if>
 							<input type="button" value="返回" onclick="linkurl('<s:url action="news_listRecycle" namespace="/info" />');" class="input-gray" />
-						</s:elseif>
+						</s:if>
+			       		<span id="message"><s:property value="message" /></span>
 			       </div>
 			    </div>
  			</div>

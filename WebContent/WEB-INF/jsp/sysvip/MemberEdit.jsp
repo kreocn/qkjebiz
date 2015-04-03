@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -23,7 +24,7 @@
 	<div class="label_main">
 	<div class="label_hang">
 		<div class="label_ltit">会员号:</div>
-		<div class="label_rwben">${member.uuid}<s:hidden name="member.uuid" title="会员号" /></div>
+		<div class="label_rwben">${member.uuid}<s:hidden id="puid" name="member.uuid" title="会员号" /></div>
 	</div>
 	<div class="label_hang">
 		<div class="label_ltit">登录密码:</div>
@@ -39,13 +40,13 @@
 	<div class="label_hang">
 		<div class="label_ltit">会员手机:</div>
 		<div class="label_rwben2">
-			<span class="label_rwb label_rwbx"><s:textfield name="member.mobile" title="会员手机" cssClass="validate[required,custom[mobile]]" /></span>
+			<span class="label_rwb label_rwbx"><s:textfield id="memMobile" name="member.mobile" title="会员手机" cssClass="validate[required,custom[mobile]]" /></span>
 			<span class="label_rwb nw"><s:radio name="member.is_mobile_check" title="手机验证"  list="#{0:'未验证',1:'已验证'}" value="1" cssClass="regular-radio" /></span>
 		</div>
 	</div>
 	<div class="label_hang">
 		<div class="label_ltit">会员名称:</div>
-		<div class="label_rwben label_rwb"><s:textfield name="member.member_name" cssClass="validate[required,maxSize[85]]" /></div>
+		<div class="label_rwben label_rwb"><s:textfield id="member_name" name="member.member_name" cssClass="validate[required,maxSize[85]]" /></div>
 	</div>
 	<div class="label_hang">
 		<div class="label_ltit">联系人姓名:</div>
@@ -207,18 +208,20 @@
             <div class="label_ltit">相关操作:</div>
             <div class="label_rwbenx">
             	<s:if test="'add' == viewFlag">
-					<s:submit id="add" name="add" value="确定" action="member_add" />
+					
+					<input id="add" name="add" type="button" value="确定" />
 				</s:if>
 				<s:elseif test="'mdy' == viewFlag">
-					<s:submit id="save" name="save" value="保存" action="member_save" cssClass="input-blue" />
+					<input id="save" name="save" type="button" value="保存" class="input-blue" />
 					<s:submit id="delete" name="delete" value="删除" action="member_del" cssClass="input-red" onclick="return isDel();" />
 				</s:elseif>
 				<input type="button" value="返回" onclick="linkurl('<s:url action="member_list" namespace="/sysvip" />');"  class="input-gray" />
 				<s:if test="'mdy' == viewFlag">
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJM_SYSVIP_MEMBERSTOCK_LIST')">
-				<input type="button" value="生成会员库存盘点模板" onclick="linkurl('<s:url action="memberStock_out" namespace="/sysvip" ><s:param name="member.member_name" value="%{member.member_name}"></s:param><s:param name="member.uuid" value="%{member.uuid}"></s:param></s:url>');"  class="input-blue" />
+					<c:if test="${it:checkPermit('QKJM_SYSVIP_MEMBERSTOCK_LIST',null)==true}">
+						<input type="button" value="生成会员库存盘点模板" onclick="linkurl('<s:url action="memberStock_out" namespace="/sysvip" ><s:param name="member.member_name" value="%{member.member_name}"></s:param><s:param name="member.uuid" value="%{member.uuid}"></s:param></s:url>');"  class="input-blue" />
+					</c:if>
 				</s:if>
-				</s:if>
+				<font id="addMobile" color="red"></font>
         	</div>
     	</div>
 	</div>
@@ -233,6 +236,82 @@
 					sa.init(toHTML.un('<s:property value="memberAddress.province" />'),toHTML.un('<s:property value="memberAddress.city" />'),toHTML.un('<s:property value="memberAddress.area" />'));
 				</script>
 </body>
+<script type="text/javascript">
+		$("#add").click(function(){
+			 $.ajax({
+			     type:'POST',
+			     url: '/sysvip/getMemberMobile',
+			     data: "params="+$("#memMobile").val(),
+			     beforeSend:function() {
+			    	 $("#addMobile").text("正在验证...");
+			     },
+			     success: function(data){
+			    	 if($("#memMobile").val()==''){
+			    		 alert("【会员手机】不许为空!");
+				 			$("#memMobile").focus();
+			    	 }else if(data=="false"){
+			 			alert("会员手机号重复请修改.");
+			 		} else if($("#member_name").val()=='') {
+			 			alert("【会员名称】不许为空!");
+			 			$("#member_name").focus();
+			 		} else if($("#memberAddress\\.province").val()=='') {
+			 			alert("【所在省市】不许为空!");
+			 			$("#memberAddress\\.province").focus();
+			 		} else if($("#memberAddress\\.city").val()=='') {
+			 			alert("【所在省市】不许为空!");
+			 			$("#memberAddress\\.city").focus();
+			 		}else {
+			 			 document.forms[0].action="/sysvip/member_add";
+			 			 document.forms[0].submit();
+			 		}
+			    },
+			    complete:function(){
+			    	$("#addMobile").text("");
+			    }				    
+			  });
+			});
+		 
+		$("#save").click(function(){
+			 $.ajax({
+			     type:'POST',
+			     url: '/sysvip/getMemberMobile',
+			     data: "params="+$("#memMobile").val()+"&puid="+$("#puid").val(),
+			     beforeSend:function() {
+			    	 $("#addMobile").text("正在验证...");
+			     },
+			     success: function(data){
+			    	 if($("#memMobile").val()==''){
+			    		 alert("【会员手机】不许为空!");
+				 			$("#memMobile").focus();
+			    	 }else if(data=="false"){
+			 			alert("会员手机号重复请修改.");
+			 		}else if($("#member_name").val()=='') {
+			 			alert("【会员名称】不许为空!");
+			 			$("#member_name").focus();
+			 		} else if($("#memberAddress\\.province").val()=='') {
+			 			alert("【所在省市】不许为空!");
+			 			$("#memberAddress\\.province").focus();
+			 		} else if($("#memberAddress\\.city").val()=='') {
+			 			alert("【所在省市】不许为空!");
+			 			$("#memberAddress\\.city").focus();
+			 		} else if($("#passwords").val()=='') {
+			 			alert("【登录密码】不许为空!");
+			 			$("passwords").focus();
+			 		} else if($("#passwords2").val()=='') {
+			 			alert("【再次输入】不许为空!");
+			 			$("#passwords2").focus();
+			 		} else {
+			 			document.forms[0].action="/sysvip/member_save";
+			 			document.forms[0].submit();
+			 		}
+			    },
+			    complete:function(){
+			    	$("#addMobile").text("");
+			    }				    
+			  });
+			});
+
+		</script>
 <script type="text/javascript">
 var curr_dept = '${member.dept_code}';
 $(function(){

@@ -12,6 +12,10 @@ public class ActiveDAO extends AbstractDAO {
 		setCountMapid("qkjmanage_getActivesCounts");
 		return super.list("qkjmanage_getActives", map);
 	}
+	
+	public List nextList(Map<String, Object> map) {
+		return super.list("qkjmanage_getNextActive", map);
+	}
 
 	public List listHis(Map<String, Object> map) {
 		return super.list("qkjmanage_getActivesHistory", map);

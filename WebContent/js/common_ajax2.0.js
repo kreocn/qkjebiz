@@ -50,7 +50,7 @@ function Common_Ajax(result_div_id){
 	_success : function(data, textStatus){},
 	_checkData : function(data){
 		if (typeof (data) == "undefined") {
-			alert("获取数据异常!");
+			//alert("获取数据异常!");
 			return false;
 		} else if (typeof (data.value) != "undefined") {
 			var datavalue = data.value;
@@ -66,7 +66,7 @@ function Common_Ajax(result_div_id){
 	},
 	_error : function(jqXHR, textStatus, errorThrown){
 		// if (showmsg) $('#' + result_div_id + " #ajax_load_message").text("获取数据异常!" + textStatus + ":" + errorThrown);
-		alert("获取数据错误!" + textStatus + ":" + errorThrown);
+		//alert("获取数据错误!" + textStatus + ":" + errorThrown);
 	},
 	_complete : function(){
 		selfobj.config._loading_end();

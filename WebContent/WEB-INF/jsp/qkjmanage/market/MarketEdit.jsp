@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
 <%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
@@ -33,7 +34,7 @@
 	       <div class="label_hang">
 		         <div class="label_ltit">公司名称:</div>
 		         <div class="label_rwben2">
-		         <div class="label_rwb"><s:textfield id="market.name" name="market.name" title="仓库名称"  cssClass="label_hang_linput validate[required,maxSize[100]]" /></div>
+		         <div class="label_rwb"><s:textfield id="market.name" name="market.name" title="公司名称"  cssClass="label_hang_linput validate[required,maxSize[100]]" /></div>
 		         </div>
 	       	</div>
 	 </div>
@@ -41,7 +42,7 @@
 	       <div class="label_hang">
 		         <div class="label_ltit">所属区域:</div>
 		         <div class="label_rwben2">
-		         <div class="label_rwb"><s:textfield id="market.area" name="market.area" title="仓库名称" cssClass="label_hang_linput validate[required,maxSize[100]]" /></div>
+		         <div class="label_rwb"><s:textfield id="market.area" name="market.area" title="所属区域" cssClass="label_hang_linput validate[required,maxSize[100]]" /></div>
 		         </div>
 	       	</div>
 	 </div>
@@ -49,7 +50,7 @@
 	       <div class="label_hang">
 		         <div class="label_ltit">性质:</div>
 		         <div class="label_rwben2">
-		         <div class="label_rwb"><s:textfield id="market.lead" name="market.lead" title="仓库地点" cssClass="label_hang_linput validate[required,maxSize[255]]" /></div>
+		         <div class="label_rwb"><s:textfield id="market.lead" name="market.lead" title="性质" cssClass="label_hang_linput validate[required,maxSize[255]]" /></div>
 		         </div>
 	       	</div>
 	 </div>
@@ -73,7 +74,7 @@
 	       <div class="label_hang">
 		         <div class="label_ltit">联系电话:</div>
 		         <div class="label_rwben2">
-		         <div class="label_rwb"><s:textfield id="market.phone" name="market.phone" title="仓库地点" cssClass="label_hang_linput validate[required,maxSize[100]]" /></div>
+		         <div class="label_rwb"><s:textfield id="market.phone" name="market.phone" title="联系电话" cssClass="label_hang_linput validate[required,custom[integer],maxSize[21]]" /></div>
 		         </div>
 	       	</div>
 	 </div>
@@ -114,21 +115,20 @@
             <span id="message"><s:property value="message" /></span>
             	
             	<s:if test="null == market && 'add' == viewFlag">
-            	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_MARKET_ADD')">
-				<s:submit id="add" name="add" value="下一步填写位置信息" action="market_add" cssClass="input-blue"/>
-				</s:if>
+            		<c:if test="${it:checkPermit('QKJ_QKJMANAGE_MARKET_ADD',null)==true}">
+						<s:submit id="add" name="add" value="下一步填写位置信息" action="market_add" cssClass="input-blue"/>
+					</c:if>
 				</s:if>
 				<s:elseif test="null != market && 'mdy' == viewFlag">
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_MARKET_MDY')">
-				<s:submit id="save" name="save" value="保存" action="market_save" cssClass="input-blue"/>
-				<s:submit id="saveab" name="saveab" value="修改位置" action="market_saveab" cssClass="input-blue"/>
-				</s:if>
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_MARKET_DEL')">
-				<s:submit id="delete" name="delete" value="删除" action="market_del" onclick="return isDel();" cssClass="input-red"/>
-				</s:if>
+					<c:if test="${it:checkPermit('QKJ_QKJMANAGE_MARKET_MDY',null)==true}">
+						<s:submit id="save" name="save" value="保存" action="market_save" cssClass="input-blue"/>
+						<s:submit id="saveab" name="saveab" value="修改位置" action="market_saveab" cssClass="input-blue"/>
+					</c:if>
+					<c:if test="${it:checkPermit('QKJ_QKJMANAGE_MARKET_DEL',null)==true}">
+						<s:submit id="delete" name="delete" value="删除" action="market_del" onclick="return isDel();" cssClass="input-red"/>
+					</c:if>
 				</s:elseif>
 				<input type="button" value="返回" onclick="linkurl('<s:url action="market_list" namespace="/qkjmanage" />');" />
-				
             </div>
 		</div>
 		</div>

@@ -38,6 +38,12 @@ public class ApplyDAO extends AbstractDAO {
 	public int spcheck(Object parameters) {
 		return super.save("qkjmanage_spcheckApply", parameters);
 	}
+	
+	public List listUserSign(Object uuid) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("biz_id", uuid);
+		return super.list("qkjmanage_getApplysUserSign", map);
+	}
 
 	// 发货信息修改
 	public int mdyShipInfo(Object parameters) {

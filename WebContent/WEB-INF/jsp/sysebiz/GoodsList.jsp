@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -14,9 +15,9 @@
 	<div class="tab_warp main">
 	<div class="dq_step">
 		${path}
-		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('SYS_EBIZ_GOODS_ADDLOAD')">
+		<c:if test="${it:checkPermit('SYS_EBIZ_GOODS_ADDLOAD',null)==true}">
 			<span class="opb lb op-area"><a href="<s:url namespace="/sysebiz" action="goods_addload"><s:param name="viewFlag">add</s:param></s:url>" >添加新商品</a></span>
-		</s:if>
+		</c:if>
 	</div>
 	<s:form id="serachForm" name="serachForm" action="goods_list"  method="get" namespace="/sysebiz" theme="simple">
 		<div class="label_con">
@@ -63,20 +64,33 @@
 		              <td  class="td3">${froze_num}${goods_unit}</td>
 		              <td  class="td3">${stock_num-froze_num}${goods_unit}</td>
 		              <td  class="td3">
-		              		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('SYS_EBIZ_GOODS_SALESDOWN')"><s:url id="op_salesdown" namespace="/sysebiz" action="goods_salesdown"><s:param name="goods.uuid" value="uuid" /></s:url></s:if>
-							<s:else><s:url id="op_salesdown" value="javascript:alert('您没有商品下架的权限!');" /></s:else>		
-							<s:if test="@org.iweb.sys.ContextHelper@checkPermit('SYS_EBIZ_GOODS_SALESUP')"><s:url id="op_salesup" namespace="/sysebiz" action="goods_salesup"><s:param name="goods.uuid" value="uuid" /></s:url></s:if>
-							<s:else><s:url id="op_salesup" value="javascript:alert('您没有商品上架的权限!');" /></s:else>
-							<s:if test="0==goods_sales"><a  class="yesarea" href="${op_salesdown}"></a></s:if>
-							<s:elseif test="1==goods_sales"><a  class="noarea" href="${op_salesup}"></a></s:elseif>
+		              		<c:if test="${it:checkPermit('SYS_EBIZ_GOODS_SALESDOWN',null)==true}">
+		              			<s:url id="op_salesdown" namespace="/sysebiz" action="goods_salesdown"><s:param name="goods.uuid" value="uuid" /></s:url>
+		              		</c:if>
+		              		<c:if test="${not it:checkPermit('SYS_EBIZ_GOODS_SALESDOWN',null)==true}">
+								<s:url id="op_salesdown" value="javascript:alert('您没有商品下架的权限!');" />
+							</c:if>	
+							<c:if test="${it:checkPermit('SYS_EBIZ_GOODS_SALESUP',null)==true}">
+								<s:url id="op_salesup" namespace="/sysebiz" action="goods_salesup">
+								<s:param name="goods.uuid" value="uuid" /></s:url>
+							</c:if>
+							<c:if test="${not it:checkPermit('SYS_EBIZ_GOODS_SALESUP',null)==true}">
+								<s:url id="op_salesup" value="javascript:alert('您没有商品上架的权限!');" />
+							</c:if>
+							<s:if test="0==goods_sales">
+								<a  class="yesarea" href="${op_salesdown}"></a>
+							</s:if>
+							<s:if test="1==goods_sales">
+								<a  class="noarea" href="${op_salesup}"></a>
+							</s:if>
 		              </td>
 		              <td  class="td4 op-area">
-		              		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('SYS_EBIZ_GOODS_SAVELOAD')">
+		              		<c:if test="${it:checkPermit('SYS_EBIZ_GOODS_SAVELOAD',null)==true}">
 					    	<a class="input-blue" href="<s:url namespace="/sysebiz" action="goods_load"><s:param name="viewFlag">mdy</s:param><s:param name="goods.uuid" value="uuid"></s:param></s:url>">修改</a>
-					    	</s:if>
-					    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('SYS_EBIZ_GOODS_SAVEINSTOCK')">
+					    	</c:if>
+					    	<c:if test="${it:checkPermit('SYS_EBIZ_GOODS_SAVEINSTOCK',null)==true}">
 					    	<a class="input-yellow" href="javascript:;" onclick="openSaveInStockArea('<s:property value="uuid" />');">补库存</a>
-					    	</s:if>
+					    	</c:if>
 		              </td>
 		              <td  class="td0 op-area"><a onclick="showDetail('showtr${uuid}');" href="javascript:;" class="input-nostyle">查看</a></td>
             	</tr>

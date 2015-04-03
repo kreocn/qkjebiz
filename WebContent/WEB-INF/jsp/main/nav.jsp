@@ -8,7 +8,7 @@
 	<div class="ht_lTit">互助青稞酒商务管理中心</div>
     <div class="ht_rset">
         <a href="javascript:void(0);" class="ht_clicka"><img src="<c:url value="/images/top/ht_tb7.png" />" width="45" /></a>
-        <ul class="ht_sjsub">
+        <ul class="ht_sjsub  subHide">
             <li><a href="<c:url value="/manager/default" />" title="系统首页">系统首页</a></li><li class="r_line">|</li>
             <li><a href="javascript:;" title="所有功能" onclick="module_toggle(99)">所有功能</a></li><li class="r_line">|</li>
             <li><a href="javascript:;" title="帮助信息" onclick="module_toggle(0)">业务系统</a></li><li class="r_line">|</li>
@@ -16,12 +16,12 @@
             <li><a href="javascript:;" title="报表系统" onclick="module_toggle(2)">报表系统</a></li><li class="r_line">|</li>
             <li><a href="javascript:;" title="基础数据" onclick="module_toggle(3)">基础数据</a></li><li class="r_line">|</li>
             <li><a href="javascript:;" title="系统设置" onclick="module_toggle(4)">系统设置</a></li><li class="r_line">|</li>
-            <li><a href="<c:url value="/manager/help" />" title="帮助信息">帮助信息</a></li><li class="r_line">|</li>
+            <li><a href="<c:url value="http://d.qkjchina.com/qkjzn/" />" title="帮助信息" target="_blank">帮助信息</a></li><li class="r_line">|</li>
             <li><a href="<s:url action="login_out" namespace="/manager" />" title="退出系统">退出系统</a></li>
         </ul>
     </div>
 </div>
 </header>
 <!--left菜单-->
-<div id="ht_left_menu" class="ht_left"></div>
+<div id="ht_left_menu" class="ht_left subHide"></div>
 <footer><p class="botmsg">当前登录信息：${dept_name}&nbsp;&nbsp;${user_name}</p></footer>

@@ -288,4 +288,28 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 		ServletActionContext.getResponse().getWriter().print(flag);
 		return null;
 	}
+	
+	public String get_MemberMobile() throws Exception {
+		boolean flag = true;
+		try {
+			HttpServletResponse response = ServletActionContext.getResponse();
+			HttpServletRequest request = ServletActionContext.getRequest();
+			String mid = request.getParameter("params");
+			String puid=request.getParameter("puid");
+			map.clear();
+			map.put("mobile", mid);
+			if(puid!=null){
+				map.put("puid", puid);
+			}
+			this.setMembers(dao.list(map));
+			if (members.size() >0) {
+				flag = false;
+			}
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
+			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
+		}
+		ServletActionContext.getResponse().getWriter().print(flag);
+		return null;
+	}
 }

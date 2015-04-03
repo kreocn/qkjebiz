@@ -28,6 +28,9 @@ public class Apply {
 	private Integer sp_check_status; // 特殊状态 0表示未审核 5表示退回 10表示已审核
 	private String sp_check_user;
 	private Date sp_check_time;
+	private String user_sign;
+	private Date sign_biz_time;
+	private String sign_user_name;
 
 	// 非数据库字段
 	private String apply_user_name;
@@ -337,8 +340,32 @@ public class Apply {
 		return lm_time;
 	}
 
+	public String getUser_sign() {
+		return user_sign;
+	}
+
+	public void setUser_sign(String user_sign) {
+		this.user_sign = user_sign;
+	}
+
 	public void setLm_time(Date lm_time) {
 		this.lm_time = lm_time;
+	}
+
+	public Date getSign_biz_time() {
+		return sign_biz_time;
+	}
+
+	public void setSign_biz_time(Date sign_biz_time) {
+		this.sign_biz_time = sign_biz_time;
+	}
+
+	public String getSign_user_name() {
+		return sign_user_name;
+	}
+
+	public void setSign_user_name(String sign_user_name) {
+		this.sign_user_name = sign_user_name;
 	}
 
 }

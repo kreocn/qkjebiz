@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -14,7 +15,7 @@
 <div class="tab_right">
  	<div class="tab_warp main" >
  	<div class="dq_step">
-		<a href='/manager/default'>首页</a> > 订单确认列表
+		<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;订单确认列表
 	</div>
 	<s:form id="serachForm" name="serachForm" action="lading_checkList"  method="get" namespace="/qkjmanage" theme="simple">
  	<div class="label_con"><div class="label_main">

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -22,12 +23,12 @@ cursor: pointer;
 <div class="tab_warp main" >
  	<div class="dq_step">
 		${path}
-		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_ADD')">
+		<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVE_ADD',null)==true}">
 			<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="active_load"><s:param name="viewFlag">add</s:param></s:url>">添加申请单</a></span>
-		</s:if>
-		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_REINFORCE')">
+		</c:if>
+		<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVE_REINFORCE',null)==true}">
 			<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="active_reinforce"></s:url>">补充数据</a></span>
-		</s:if>
+		</c:if>
 	</div>
 	<s:form id="serachForm" name="serachForm" action="active_list"  method="get" namespace="/qkjmanage" theme="simple">
  	<div class="label_con">
@@ -327,20 +328,20 @@ cursor: pointer;
 			</s:else>
 			</td>
 			<td class="td4 op-area nw">
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_APPLY')">
-		    	<a class="input-blue" href="<s:url namespace="/qkjmanage" action="active_load"><s:param name="viewFlag">mdy</s:param><s:param name="active.uuid" value="uuid"></s:param></s:url>">申请修改</a>
-		    	</s:if>
-		    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE')">
-		    	<s:if test="status == 2">
-		    	<a class="input-blue" href="<s:url namespace="/qkjmanage" action="active_closeLoad"><s:param name="active.uuid" value="uuid"></s:param></s:url>">开始结案</a>
-		    	</s:if>
-		    	<s:if test="status > 2">
-		    	<a class="input-blue" href="<s:url namespace="/qkjmanage" action="active_closeLoad"><s:param name="active.uuid" value="uuid"></s:param></s:url>">结案修改</a>
-		    	</s:if>
-		    	</s:if>
-		    	<s:if test="status==0 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_DEL')">
-		    	<a class="input-red" href="<s:url namespace="/qkjmanage" action="active_del"><s:param name="active.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
-		    	</s:if>	   
+				<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVE_APPLY',null)==true}">
+		    		<a class="input-blue" href="<s:url namespace="/qkjmanage" action="active_load"><s:param name="viewFlag">mdy</s:param><s:param name="active.uuid" value="uuid"></s:param></s:url>">申请修改</a>
+		    	</c:if>
+		    	<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE',null)==true}">
+			    	<s:if test="status == 2">
+			    		<a class="input-blue" href="<s:url namespace="/qkjmanage" action="active_closeLoad"><s:param name="active.uuid" value="uuid"></s:param></s:url>">开始结案</a>
+			    	</s:if>
+			    	<s:if test="status > 2">
+			    		<a class="input-blue" href="<s:url namespace="/qkjmanage" action="active_closeLoad"><s:param name="active.uuid" value="uuid"></s:param></s:url>">结案修改</a>
+			    	</s:if>
+		    	</c:if>
+		    	<c:if test="${status==0 && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_DEL',null)==true}">
+		    		<a class="input-red" href="<s:url namespace="/qkjmanage" action="active_del"><s:param name="active.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
+		    	</c:if>	   
 		    </td>
 		    <td class="td0 op-area"><a onclick="showDetail('showtr${uuid}');" href="javascript:;" class="input-nostyle">查看</a></td>
 	  	</tr>
@@ -380,9 +381,9 @@ cursor: pointer;
         </div>
         <div class="label_hang label_button tac">
            	<s:hidden id="e_active_uuid" name="active.uuid" value="%{active.uuid}" />
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_MDYSHIPINFO')">
-			<s:submit id="mdyActiveShipInfo" name="mdyActiveShipInfo" value="确定" action="mdyActiveShipInfo" />
-			</s:if>
+           	<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVE_MDYSHIPINFO',null)==true}">
+				<s:submit id="mdyActiveShipInfo" name="mdyActiveShipInfo" value="确定" action="mdyActiveShipInfo" />
+			</c:if>
         </div>
     </div>
 </s:form>
@@ -546,7 +547,7 @@ function kselect(){
 		document.getElementById("sd_status").options[5].selected = true; 
 		document.getElementById("smd_sta").options[0].selected = true; 
 		document.getElementById("fdsta").options[1].selected = true; 
-		$("#userdept_codeid").val("210");
+		$("#userdept_codeid").val("3");
 		$("#userdept_nameid").val("北京销售公司");
 		document.getElementById("apply_is_sub_dept").checked=true;
 	}
@@ -665,7 +666,7 @@ function kselect(){
 		document.getElementById("clsdsta").options[5].selected = true; 
 		document.getElementById("clsmdsta").options[0].selected = true; 
 		document.getElementById("clfd").options[1].selected = true; 
-		$("#userdept_codeid").val("210");
+		$("#userdept_codeid").val("3");
 		$("#userdept_nameid").val("北京销售公司");
 		document.getElementById("apply_is_sub_dept").checked=true;
 	}
