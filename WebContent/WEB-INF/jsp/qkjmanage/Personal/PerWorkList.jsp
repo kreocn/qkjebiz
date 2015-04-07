@@ -42,6 +42,7 @@
 		<div class="tab_warp">
 	 		<table>
 	 		<tr id="coltr">
+	 		<th class="td1">编号</th>
 			<th class="td1">类型</th>
 			<th class="td1">主题</th>
 			<th class="td2">申请人</th>
@@ -50,10 +51,12 @@
 	
 		  	</tr>
 		  	<s:iterator value="markets" status="sta">
-		  		<tr id="showtr${uuid}">
-		  			<td class="td1 nw"><s:property value="uuid" /></td>
-				    <td class="td1 longnote" title="${address}">${it:subString(address,18)}</td>
+		  		<tr id="showtr${perUuid}">
+		  			<td class="td1 nw"><s:property value="perUuid" /></td>
+		  			<td class="td1 nw">${ptype }</td>
+				    <td class="td1 longnote" title="${title}">${it:subString(title,18)}</td>
 				    <td class="td2 nw">
+				    ${apply_user_name }
 				    </td>
 				    
 					<td class="td4 op-area">

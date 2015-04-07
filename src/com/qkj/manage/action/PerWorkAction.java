@@ -17,6 +17,7 @@ public class PerWorkAction extends ActionSupport{
 	private static Log log = LogFactory.getLog(ProductAction.class);
 	private Map<String, Object> map = new HashMap<String, Object>();
 	private PerWorkDao dao = new PerWorkDao();
+	private PerWorkSelectAction wsa=new PerWorkSelectAction();
 	
 	private List<PerWork> perWorks;
 	private PerWork perWork;
@@ -118,9 +119,8 @@ public class PerWorkAction extends ActionSupport{
 			ContextHelper.SimpleSearchMap4Page("QKJ_PERSONAL_WORKLIST", map, perWork, viewFlag);
 			this.setPageSize(ContextHelper.getPageSize(map));
 			this.setCurrPage(ContextHelper.getCurrPage(map));
-			
-			
-			String sql="select * from qkjm_r_active";
+			String sql=wsa.getSelWork();
+			System.out.println(sql);
 			this.setPerWorks(dao.list(map,sql));
 
 			this.setRecCount(dao.getResultCount());
