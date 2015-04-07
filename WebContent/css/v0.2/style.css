@@ -82,7 +82,8 @@ a {
 }
 
 .ht_lnav li>p {
-	padding: 0.6rem 0.8rem; border-bottom: 1px solid #ddd; background: url(../../images/icon/ht_down.png) no-repeat right 0.3rem center;
+	padding: 0.6rem 0.8rem; border-bottom: 1px solid #ddd;
+	background:url(../../images/icon/ht_down.png) no-repeat 95% 50%;
 }
 
 .ht_lnav li .ht_sbar {
@@ -102,7 +103,7 @@ a {
 }
 
 .ht_lnav li.active>p {
-	background: url(../../images/icon/ht_up.png) no-repeat right 0.3rem center #3fc5a4;
+	background:#3fc5a4 url(../../images/icon/ht_up.png) no-repeat 95% 50%;
 }
 
 .ht_lnav li.active .ht_sbar {
@@ -134,7 +135,7 @@ a {
 }
 
 .tab_right {
-	float: right; width: 85%; margin-right: .2rem; font-size: 14px; padding-bottom: 3em;
+	float: right; width: 85%; margin-right: .2rem; font-size: 14px; padding-bottom: 3em; min-height:480px;
 }
 
 .pt {
