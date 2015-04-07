@@ -102,7 +102,7 @@ a {
 }
 
 .ht_lnav li.active>p {
-	background-color: #3fc5a4; background-image: url(../../images/icon/ht_up.png);
+	background: url(../../images/icon/ht_up.png) no-repeat right 0.3rem center #3fc5a4;
 }
 
 .ht_lnav li.active .ht_sbar {
