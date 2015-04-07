@@ -87,6 +87,16 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	private int up;
 	private int nextFlag;
 	private int nextUuid = 0;
+	// 个人工作标识
+	private static String perWorkFlag;
+
+	public static String getPerWorkFlag() {
+		return perWorkFlag;
+	}
+
+	public static void setPerWorkFlag(String perWorkFlag) {
+		ActiveAction.perWorkFlag = perWorkFlag;
+	}
 
 	public int getNextUuid() {
 		return nextUuid;

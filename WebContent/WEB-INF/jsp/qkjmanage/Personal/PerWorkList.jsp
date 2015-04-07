@@ -18,13 +18,13 @@
 			${path}
 		</div>
 		<!-- 条件查询 -->
-		<s:form id="serachForm" name="serachForm" action="market_list"  method="get" namespace="/qkjmanage" theme="simple">
+		<s:form id="serachForm" name="serachForm" action="perWork_list"  method="get" namespace="/qkjmanage" theme="simple">
 			<div class="label_con">
 			<div class="label_main">
 		        <div class="label_hang">
 		            <div class="label_ltit">类型:</div>
 		            <div class="label_rwben label_rwb">
-		            	<s:textfield title="名称" name="market.name" />
+		            	<s:textfield title="名称" name="perWork.ptype" />
 		            </div>
 				</div>
 	        	
@@ -50,7 +50,7 @@
 			<th class="td0">查看</th>
 	
 		  	</tr>
-		  	<s:iterator value="markets" status="sta">
+		  	<s:iterator value="perWorks" status="sta">
 		  		<tr id="showtr${perUuid}">
 		  			<td class="td1 nw"><s:property value="perUuid" /></td>
 		  			<td class="td1 nw">${ptype }</td>
@@ -60,7 +60,7 @@
 				    </td>
 				    
 					<td class="td4 op-area">
-				    	<a class="input-blue" href="<s:url namespace="/qkjmanage" action="market_load"><s:param name="viewFlag">mdy</s:param><s:param name="market.uuid" value="uuid"></s:param></s:url>">修改</a>
+				    	<a class="input-blue" href="<s:url namespace="%{nameSpace }" action="%{upaction }"><s:param name="viewFlag">mdy</s:param><s:param name="%{upUuid }" value="perUuid"></s:param><s:param name="perWorkFlag" value="true"></s:param></s:url>">修改</a>
 				    </td>
 				    <td class="td0 op-area"><a onClick="showDetail('showtr${uuid}');" class="input-nostyle">查看</a></td>
 		  		</tr>

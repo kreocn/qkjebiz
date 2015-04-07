@@ -37,7 +37,16 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 	private int pageSize;
 	private int currPage;
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;至事由管理";
-	
+	//个人工作标识
+    private String perWorkFlag;
+
+	public String getPerWorkFlag() {
+		return perWorkFlag;
+	}
+
+	public void setPerWorkFlag(String perWorkFlag) {
+		this.perWorkFlag = perWorkFlag;
+	}
 
 	public List<Apply> getApplyUserSign() {
 		return applyUserSign;

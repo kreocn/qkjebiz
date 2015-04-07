@@ -118,7 +118,16 @@
 					<a href="javascript:;" onclick="openCustomerView(${active.uuid});">查看操作记录</a>
 				</s:if> <s:if test="active.status >= 4">
 					<a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_closeView"><s:param name="active.uuid" value="active.uuid"></s:param></s:url>">转到打印页面</a>
-				</s:if> <a href="<s:url namespace="/qkjmanage" action="active_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a>
+				</s:if> 
+				<s:if test="%{perWorkFlag==null}">
+				<a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a>
+				</s:if>
+				<s:else>
+				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_PERSONAL_WORKLIST')">
+				<a class="input-gray" href="<s:url namespace="/person" action="perWork_list"><s:param name="viewFlag">relist</s:param></s:url>">返回个人工作列表</a>
+				</s:if>
+				</s:else>
+				
 				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_NEXTACTIVE')">
 				<s:if test="%{maxUid!=active.uuid}">
 				<a href="<s:url namespace="/qkjmanage" action="active_nextListClose"><s:param name="viewFlag">relist</s:param><s:param name="befUid" value="active.uuid" /><s:param name="up" value="1" /></s:url>">上一页</a>
@@ -810,7 +819,16 @@
 							<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_HISTORY')">
 								<input type="button" value="查看操作记录" class="input-gray" onclick="openCustomerView(${active.uuid});" />
 							</s:if>
+							
+							<s:if test="%{perWorkFlag==null}">
 							<input type="button" class="input-gray" value="返回" onclick="linkurl('<s:url action="active_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');" />
+							</s:if>
+							<s:else>
+							<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_PERSONAL_WORKLIST')">
+							<input type="button" class="input-gray" value="返回" onclick="linkurl('<s:url action="perWork_list" namespace="/person"><s:param name="viewFlag">relist</s:param></s:url>');" />
+							</s:if>
+							</s:else>
+				
 							<s:if test="active.status==4 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_TH')">
 								<s:submit cssClass="input-red" name="mdyCloseActiveSDStatus5" value="退回" action="mdycloseTH" onclick="return isOp('确定执行此操作?将退回到未审核状态');" />
 							</s:if>

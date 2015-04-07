@@ -112,7 +112,15 @@
 			<div class="opb lb op-area noprint" style="position:relative; z-index:2;">
 				<p class="more_j">更多操作</p>
 				<div class="mcz_list subHide">
-					<a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a>
+				<s:if test="%{perWorkFlag==null}">
+				<a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a>
+				</s:if>
+				<s:else>
+				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_PERSONAL_WORKLIST')">
+				<a class="input-gray" href="<s:url namespace="/person" action="perWork_list"><s:param name="viewFlag">relist</s:param></s:url>">返回个人工作列表</a>
+				</s:if>
+				</s:else>
+					
 					<s:if test="'mdy' == viewFlag && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_HISTORY')">
 						<!-- <a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_history"><s:param name="active.uuid" value="active.uuid" /></s:url>">查看操作记录</a> -->
 						<a href="javascript:;" onclick="openCustomerView(${active.uuid});">查看操作记录</a>
@@ -125,6 +133,7 @@
 		</div>
 		<s:form id="editForm" name="editForm" cssClass="validForm" action="active_load" namespace="/qkjmanage" method="post" theme="simple">
 		<s:hidden name="active.apply_dept" value="%{active.apply_dept}"></s:hidden>
+		<s:hidden name="perWorkFlag" value="%{perWorkFlag}"></s:hidden>
 		<s:hidden name="nextFlag" value="%{nextFlag}"></s:hidden>
 			<div class="label_con">
 				<s:if test="'mdy' == viewFlag">
@@ -698,7 +707,17 @@
 							<s:if test="'mdy' == viewFlag && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_HISTORY')">
 								<input type="button" value="查看操作记录" class="input-gray" onclick="openCustomerView(${active.uuid});" />
 							</s:if>
+							
+							
+							<s:if test="%{perWorkFlag==null}">
 							<input type="button" value="返回" class="input-gray" onclick="linkurl('<s:url action="active_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');" />
+							</s:if>
+							<s:else>
+							<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_PERSONAL_WORKLIST')">
+							<input type="button" value="返回" class="input-gray" onclick="linkurl('<s:url action="perWork_list" namespace="/person"><s:param name="viewFlag">relist</s:param></s:url>');" />
+							</s:if>
+							</s:else>
+							
 							<s:if test="(active.status==1 || active.status==2) && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_TH')">
 								<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="退回" action="mdyActiveSDStatusT" onclick="return isOp('确定执行此操作?将退回到未审核状态');" />
 							</s:if>
@@ -1017,12 +1036,13 @@
 		<script type="text/javascript">
 		function check(){
 			var n=${nextUuid};
-			if(n!=0){
+			var f=${perWorkFlag};
+			if(n!=0 && f==null){
 				if(confirm("操作成功,是否跳转下一条？")){
 					 location.href="/qkjmanage/active_nextList?befUid="+${active.uuid}+"&viewFlag='relist'";
 				}
 			}
-		}
+		};
 										$(function(){
 											$("#editForm :input").change(function(){
 												//if()cellarOrder_check0 10 15 20

@@ -5,14 +5,19 @@
 	<typeAlias alias="work" type="com.qkj.manage.domain.PerWork" />
 	<select id="personal_getPerWorks" resultClass="work" parameterClass="java.util.Map">
 		<![CDATA[ 
-			select * from ( $sqltext$ ) a
+			select * from ( $sqltext$ ) p
 		]]>
 		<dynamic prepend="WHERE">
-			<isNotEmpty prepend="AND" property="perUuid"><![CDATA[ a.perUuid=#perUuid# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="ptype"><![CDATA[ a.ptype=#ptype# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="title"><![CDATA[ a.title=#title# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="apply_user_name"><![CDATA[ a.apply_user_name=#apply_user_name# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="perUuid"><![CDATA[ p.perUuid=#perUuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="ptype"><![CDATA[ p.ptype=#ptype# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="title"><![CDATA[ p.title=#title# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_user_name"><![CDATA[ p.apply_user_name=#apply_user_name# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_depts">
+				<![CDATA[ p.apply_dept In ]]>
+			<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
+		</isNotEmpty>
 		</dynamic>
+		<![CDATA[ ORDER BY ptype,perUuid DESC	]]>
 	</select>
 	<!-- Stock End -->
 </sqlMap>

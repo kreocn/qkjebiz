@@ -6,6 +6,33 @@ public class PerWork {
 	private String title;
 	private String apply_user_name;
 	private String apply_dept;
+	private String nameSpace;
+	private String upaction;
+	private String upUuid;
+
+	public String getNameSpace() {
+		return nameSpace;
+	}
+
+	public void setNameSpace(String nameSpace) {
+		this.nameSpace = nameSpace;
+	}
+
+	public String getUpaction() {
+		return upaction;
+	}
+
+	public void setUpaction(String upaction) {
+		this.upaction = upaction;
+	}
+
+	public String getUpUuid() {
+		return upUuid;
+	}
+
+	public void setUpUuid(String upUuid) {
+		this.upUuid = upUuid;
+	}
 
 	public String getApply_dept() {
 		return apply_dept;

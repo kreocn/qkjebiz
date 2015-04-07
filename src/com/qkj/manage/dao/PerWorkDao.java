@@ -12,7 +12,7 @@ public class PerWorkDao extends AbstractDAO{
 		Map maps = new HashMap();
 		maps.put("sqltext", sqltext);
 		maps.putAll(map);
-		return super.list("commonSelectMapList", maps);
+		return super.list("personal_getPerWorks", maps);
 	}
 	
 	public Object get(Object uuid) {
