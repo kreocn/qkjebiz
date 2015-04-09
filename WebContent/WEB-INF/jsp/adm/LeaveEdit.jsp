@@ -17,7 +17,19 @@
 	<div class="dq_step">
 		${path}
 		(<s:if test="leave.leave_type==0">出差</s:if><s:if test="leave.leave_type==1">请假</s:if><s:if test="leave.leave_type==2">加班</s:if><s:if test="leave.leave_type==3">换休</s:if><s:if test="leave.leave_type==4">补签</s:if>)
-		<span class="opb lb op-area"><a href="<s:url action="leave_relist" namespace="/adm" />">返回列表</a></span>
+		<span class="opb lb op-area">
+			<s:if test="%{perWorkFlag=='null' || perWorkFlag==null}">
+				<a href="<s:url action="leave_relist" namespace="/adm" />">返回列表</a>
+			</s:if>
+			<s:else>
+				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_PERSONAL_WORKLIST')">
+				<a class="input-gray" href="<s:url namespace="/person" action="perWork_list"><s:param name="viewFlag">relist</s:param></s:url>">返回个人工作列表</a>
+				</s:if>
+			</s:else>
+			<s:if test="leave.check_status>=20">
+	    	<a class="input-gray" href="<s:url namespace="/adm" action="leave_print"><s:param name="leave.uuid" value="leave.uuid" /><s:param name="leave.leave_type" value="leave.leave_type" /></s:url>">打印</a>
+	    	</s:if>
+		</span>
 	</div>
 	<s:form id="editForm" name="editForm" cssClass="validForm" action="leave_load" namespace="/adm" method="post" theme="simple">
 	<s:hidden name="leave.leave_type" /><s:hidden name="leave.check_status" /><s:hidden name="leave.acheck_status" />
@@ -267,7 +279,19 @@
 				<s:if test="leave.check_status>=10&&@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_CHECK5')&&@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_CHECK5X')">
 					<s:submit name="leave_check5" value="直接退回" action="leave_check5" cssClass="input-red" onclick="return isOp('确定执行此操作?');" />
 				</s:if>
+				
+				<s:if test="%{perWorkFlag=='null' || perWorkFlag==null}">
 				<input type="button" class="input-gray" value="返回" onclick="linkurl('<s:url action="leave_relist" namespace="/adm" />');" />
+				</s:if>
+				<s:else>
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_PERSONAL_WORKLIST')">
+					<input type="button" value="返回" onclick="linkurl('<s:url namespace="/person" action="perWork_list"><s:param name="viewFlag">relist</s:param></s:url>');" class="input-gray" />
+					</s:if>
+				</s:else>
+				
+				<s:if test="leave.check_status>=20">
+				<input type="button" onclick="linkurl('<s:url namespace="/adm" action="leave_print"><s:param name="leave.uuid" value="leave.uuid" /><s:param name="leave.leave_type" value="leave.leave_type" /></s:url>');" value="打印"/>
+	    		</s:if>
             </div>
 		</div>
 		</div>

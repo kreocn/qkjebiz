@@ -120,9 +120,11 @@ public class PerWorkAction extends ActionSupport{
 			this.setPageSize(ContextHelper.getPageSize(map));
 			this.setCurrPage(ContextHelper.getCurrPage(map));
 			String sql=wsa.getSelWork();
-			System.out.println(sql);
-			this.setPerWorks(dao.list(map,sql));
-
+			if(sql.equals("") || sql==null){
+				this.setMessage("您还没有此功能权限,请联系管理员解决！");
+			}else{
+				this.setPerWorks(dao.list(map,sql));
+			}
 			this.setRecCount(dao.getResultCount());
 			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;个人工作列表";
 		} catch (Exception e) {

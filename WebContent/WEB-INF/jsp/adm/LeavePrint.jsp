@@ -18,7 +18,15 @@
 	<div class="tab_warp main"><div id="result"><div class="itablemdy">
 <div class="printarea buttonarea">
 	<input type="button" value="打印本页" onclick="window.print();" />
-	<input type="button" value="返回" onclick="location.href='<s:url action="leave_relist" namespace="/adm" />';" />
+	
+		<s:if test="%{perWorkFlag=='null' || perWorkFlag==null}">
+				<input type="button" value="返回" onclick="location.href='<s:url action="leave_relist" namespace="/adm" />';" />
+			</s:if>
+			<s:else>
+				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_PERSONAL_WORKLIST')">
+				<input type="button" value="返回" onclick="location.href='<s:url namespace="/person" action="perWork_list"><s:param name="viewFlag">relist</s:param></s:url>';" />
+				</s:if>
+			</s:else>
 </div>
 <s:if test="leave.leave_type==0">
 <!-- 出差申请单 -->
@@ -810,7 +818,14 @@
 </s:if>
 <div class="printarea buttonarea">
 	<input type="button" value="打印本页" onclick="window.print();" />
-	<input type="button" value="返回" onclick="location.href='<s:url action="leave_relist" namespace="/adm" />';" />
+	<s:if test="%{perWorkFlag=='null' || perWorkFlag==null}">
+				<input type="button" value="返回" onclick="location.href='<s:url action="leave_relist" namespace="/adm" />';" />
+			</s:if>
+			<s:else>
+				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_PERSONAL_WORKLIST')">
+				<input type="button" value="返回" onclick="location.href='<s:url namespace="/person" action="perWork_list"><s:param name="viewFlag">relist</s:param></s:url>';" />
+				</s:if>
+			</s:else>
 </div>
 </div></div></div>
 </div>

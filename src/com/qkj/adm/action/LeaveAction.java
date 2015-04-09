@@ -36,16 +36,15 @@ public class LeaveAction extends ActionSupport implements ActionAttr {
 	private List<Approve> approves;
 	private String isApprover;
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;工时管理";
-	//个人工作标识
-    private String perWorkFlag;
-    
+	// 个人工作标识
+	private static String perWorkFlag;
 
-	public String getPerWorkFlag() {
+	public static String getPerWorkFlag() {
 		return perWorkFlag;
 	}
 
-	public void setPerWorkFlag(String perWorkFlag) {
-		this.perWorkFlag = perWorkFlag;
+	public static void setPerWorkFlag(String perWorkFlag) {
+		LeaveAction.perWorkFlag = perWorkFlag;
 	}
 
 	public String getPath() {

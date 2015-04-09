@@ -155,10 +155,10 @@ max-width: 650px !important;
 		</td>
 		<td  class="td4 op-area">
 			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE')">
-	    	<a class="input-blue" href="<s:url namespace="/adm" action="leave_load"><s:param name="viewFlag">mdy</s:param><s:param name="leave.uuid" value="uuid"></s:param></s:url>">修改</a>
+	    	<a class="input-blue" href="<s:url namespace="/adm" action="leave_load"><s:param name="perWorkFlag">null</s:param><s:param name="viewFlag">mdy</s:param><s:param name="leave.uuid" value="uuid"></s:param></s:url>">修改</a>
 	    	</s:if>
 	    	<s:if test="check_status>=20">
-	    	<a class="input-gray" href="<s:url namespace="/adm" action="leave_print"><s:param name="leave.uuid" value="uuid" /><s:param name="leave.leave_type" value="leave_type" /></s:url>">打印</a>
+	    	<a class="input-gray" href="<s:url namespace="/adm" action="leave_print"><s:param name="perWorkFlag">null</s:param><s:param name="leave.uuid" value="uuid" /><s:param name="leave.leave_type" value="leave_type" /></s:url>">打印</a>
 	    	</s:if>
 	    	<s:if test="check_status<=5&&@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_DEL')">
 	    	<a class="input-red" href="<s:url namespace="/adm" action="leave_del"><s:param name="leave.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>

@@ -67,6 +67,7 @@
 		  	</s:iterator>
 	 		</table>
 	 	</div>
+	 	<div><font color="red">${message }</font></div>
 	 	<div id="listpage" class="pagination"></div>
 		<div class="hidden_area">
 		<div id="infoDetail" class="idialog" title="查看详情" style="width:100%;"><div id="detailMain" class="label_main op-area"></div></div>

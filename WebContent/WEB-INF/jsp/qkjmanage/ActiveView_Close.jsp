@@ -63,7 +63,18 @@
 <div class="tab_right">
 	<div class="tab_warp main">
 		<div class="dq_step">
-			<span id="hs" class="pt">活动结案单</span> <span id="ks" class="pt kss">活动客户结案通知单</span> <span class="opb lb op-area noprint"><a href="<s:url namespace="/qkjmanage" action="active_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a></span> <span class="opb lb op-area noprint"><a
+			<span id="hs" class="pt">活动结案单</span> <span id="ks" class="pt kss">活动客户结案通知单</span> 
+			<span class="opb lb op-area noprint">
+				<s:if test="%{perWorkFlag==null || perWorkFlag=='null'}">
+				<a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a>
+				</s:if>
+				<s:else>
+				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_PERSONAL_WORKLIST')">
+				<a class="input-gray" href="<s:url namespace="/person" action="perWork_list"><s:param name="viewFlag">relist</s:param></s:url>">返回个人工作列表</a>
+				</s:if>
+				</s:else>
+			</span>
+			 <span class="opb lb op-area noprint"><a
 				href="<s:url namespace="/qkjmanage" action="active_closeLoad"><s:param name="active.uuid" value="%{active.uuid}"></s:param></s:url>">返回修改页面</a></span> 
 				<span class="opb lb op-area noprint"><input type="button" onclick="ypri();window.print();" value="打印本页" />
 				&nbsp;</span>
@@ -519,7 +530,17 @@
 							<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_STATUS_1')">
 								<s:submit id="active_mdyStatus_1" name="active_mdyStatus_1" value="作废" action="active_mdyStatus_1" onclick="return isOp('确定执行此操作?');" />
 							</s:if>
-							<input type="button" value="返回" onclick="linkurl('<s:url action="active_relist" namespace="/qkjmanage" />');" /> <input type="button" onclick="window.print();" value="打印本页" /> <input type="button" onclick="nopri();window.print();" value="打印结案通知单" />&nbsp; <input type="button" value="返回修改页面"
+							 
+							<s:if test="%{perWorkFlag=='null' ||perWorkFlag==null}">
+							<input type="button" value="返回" class="input-gray" onclick="linkurl('<s:url action="active_relist" namespace="/qkjmanage" />');" />
+							</s:if>
+							<s:else>
+							<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_PERSONAL_WORKLIST')">
+							<input type="button" value="返回" class="input-gray" onclick="linkurl('<s:url action="perWork_list" namespace="/person"><s:param name="viewFlag">relist</s:param></s:url>');" />
+							</s:if>
+							</s:else>
+							
+							<input type="button" onclick="window.print();" value="打印本页" /> <input type="button" onclick="nopri();window.print();" value="打印结案通知单" />&nbsp; <input type="button" value="返回修改页面"
 								onclick="linkurl('<s:url action="active_closeLoad" namespace="/qkjmanage"><s:param name="active.uuid" value="%{active.uuid}"></s:param></s:url>');" />
 
 							<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_MDYSHIPINFO')">	(发货信息功能已移动到列表页)</s:if>

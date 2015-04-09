@@ -27,7 +27,19 @@ color: #008000;
 	<div class="tab_warp main">
 	<div class="dq_step">
 		${path}
-		<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="apply_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a></span>
+		<span class="opb lb op-area">
+			<s:if test="%{perWorkFlag=='null' || perWorkFlag==null}">
+				<a href="<s:url namespace="/qkjmanage" action="apply_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a>
+			</s:if>
+			<s:else>
+				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_PERSONAL_WORKLIST')">
+				<a href="<s:url namespace="/person" action="perWork_list"><s:param name="viewFlag">relist</s:param></s:url>">返回个人工作列表</a>
+				</s:if>
+			</s:else>
+			<s:if test="apply.status>=30">
+			<a class="input-gray" href="<s:url namespace="/qkjmanage" action="apply_print"><s:param name="apply.uuid" value="apply.uuid"></s:param></s:url>">转到打印页面</a>
+			</s:if>
+		</span>
 	</div>
 	<s:form id="editForm" name="editForm" cssClass="validForm" action="apply_load" namespace="/qkjmanage" method="post" theme="simple">
 	<div class="label_con">
@@ -288,7 +300,17 @@ color: #008000;
 					<input type="button" onclick="linkurl('<s:url namespace="/qkjmanage" action="apply_print"><s:param name="apply.uuid" value="apply.uuid" /></s:url>');" value="转到打印页面"/>
 					</s:if>
 				</s:elseif>
+				
+				
+				<s:if test="%{perWorkFlag=='null' || perWorkFlag==null}">
 				<input type="button" value="返回" onclick="linkurl('<s:url namespace="/qkjmanage" action="apply_list"><s:param name="viewFlag">relist</s:param></s:url>');" class="input-gray" />
+				</s:if>
+				<s:else>
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_PERSONAL_WORKLIST')">
+					<input type="button" value="返回" onclick="linkurl('<s:url namespace="/person" action="perWork_list"><s:param name="viewFlag">relist</s:param></s:url>');" class="input-gray" />
+					</s:if>
+				</s:else>
+				
             </div>
         </div>
         </div>

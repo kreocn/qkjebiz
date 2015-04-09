@@ -37,15 +37,17 @@
 		</action>
 		<action name="leave_check*" class="com.qkj.adm.action.LeaveAction" method="check{1}">
 			<result type="redirectAction">
-				<param name="actionName">leave_list</param>
-				<param name="viewFlag">relist</param>
+				<param name="actionName">leave_load</param>
+				<param name="leave.uuid">${leave.uuid}</param>
+				<param name="viewFlag">mdy</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
 		<action name="leave_acheck*" class="com.qkj.adm.action.LeaveAction" method="acheck{1}">
 			<result type="redirectAction">
-				<param name="actionName">leave_list</param>
-				<param name="viewFlag">relist</param>
+				<param name="actionName">leave_load</param>
+				<param name="leave.uuid">${leave.uuid}</param>
+				<param name="viewFlag">mdy</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>

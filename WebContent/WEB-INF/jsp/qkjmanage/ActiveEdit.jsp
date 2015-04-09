@@ -112,7 +112,7 @@
 			<div class="opb lb op-area noprint" style="position:relative; z-index:2;">
 				<p class="more_j">更多操作</p>
 				<div class="mcz_list subHide">
-				<s:if test="%{perWorkFlag==null}">
+				<s:if test="%{perWorkFlag=='null'}">
 				<a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a>
 				</s:if>
 				<s:else>
@@ -709,7 +709,7 @@
 							</s:if>
 							
 							
-							<s:if test="%{perWorkFlag==null}">
+							<s:if test="%{perWorkFlag=='null'}">
 							<input type="button" value="返回" class="input-gray" onclick="linkurl('<s:url action="active_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');" />
 							</s:if>
 							<s:else>
@@ -1037,7 +1037,7 @@
 		function check(){
 			var n=${nextUuid};
 			var f=${perWorkFlag};
-			if(n!=0 && f==null){
+			if(n!=0 && (f=='null' || f==null)){
 				if(confirm("操作成功,是否跳转下一条？")){
 					 location.href="/qkjmanage/active_nextList?befUid="+${active.uuid}+"&viewFlag='relist'";
 				}

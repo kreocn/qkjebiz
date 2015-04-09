@@ -119,7 +119,7 @@
 				</s:if> <s:if test="active.status >= 4">
 					<a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_closeView"><s:param name="active.uuid" value="active.uuid"></s:param></s:url>">转到打印页面</a>
 				</s:if> 
-				<s:if test="%{perWorkFlag==null}">
+				<s:if test="%{perWorkFlag==null || perWorkFlag=='null'}">
 				<a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a>
 				</s:if>
 				<s:else>
@@ -820,7 +820,7 @@
 								<input type="button" value="查看操作记录" class="input-gray" onclick="openCustomerView(${active.uuid});" />
 							</s:if>
 							
-							<s:if test="%{perWorkFlag==null}">
+							<s:if test="%{perWorkFlag==null || perWorkFlag=='null'}">
 							<input type="button" class="input-gray" value="返回" onclick="linkurl('<s:url action="active_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');" />
 							</s:if>
 							<s:else>
@@ -1174,7 +1174,8 @@
 		<script type="text/javascript">
 		function checks(){
 			var n=${nextUuid};
-			if(n!=0){
+			var f=${perWorkFlag};
+			if(n!=0&&(f==null || f=='null')){
 				if(confirm("操作成功,是否跳转下一条？")){
 					 location.href="/qkjmanage/active_nextListClose?befUid="+${active.uuid}+"&viewFlag='relist'";
 				}

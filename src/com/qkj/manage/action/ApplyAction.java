@@ -37,15 +37,15 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 	private int pageSize;
 	private int currPage;
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;至事由管理";
-	//个人工作标识
-    private String perWorkFlag;
+	// 个人工作标识
+	private static String perWorkFlag;
 
-	public String getPerWorkFlag() {
+	public static String getPerWorkFlag() {
 		return perWorkFlag;
 	}
 
-	public void setPerWorkFlag(String perWorkFlag) {
-		this.perWorkFlag = perWorkFlag;
+	public static void setPerWorkFlag(String perWorkFlag) {
+		ApplyAction.perWorkFlag = perWorkFlag;
 	}
 
 	public List<Apply> getApplyUserSign() {
@@ -172,7 +172,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
 		}
-		return SUCCESS;
+			return SUCCESS;
 	}
 
 	public String relist() throws Exception {
@@ -223,7 +223,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 				this.setApply((Apply) dao.get(apply.getUuid()));
 				this.setApplyUserSign(dao.listUserSign(apply.getUuid()));
 			}
-			
+
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!view 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!view 读取数据错误:", e);
@@ -335,7 +335,6 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 		return SUCCESS;
 	}
 
-	
 	/**
 	 * 大区经理审核通过
 	 * 
@@ -369,7 +368,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
-	
+
 	/**
 	 * 销售副总审核通过
 	 * 
@@ -386,7 +385,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
-	
+
 	/**
 	 * 总经理审核通过
 	 * 
@@ -516,7 +515,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 		apply.setSp_check_status(p_sp_check_status);
 		apply.setSp_check_user(ContextHelper.getUserLoginUuid());
 		apply.setSp_check_time(new Date());
-		if(p_sp_check_status==10){
+		if (p_sp_check_status == 10) {
 			apply.setStatus(20);
 			apply.setCheck_user(ContextHelper.getUserLoginUuid());
 			apply.setCheck_time(new Date());

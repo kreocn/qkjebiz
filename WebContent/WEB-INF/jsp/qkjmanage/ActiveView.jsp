@@ -120,7 +120,15 @@
 					<a href="javascript:;" onclick="indprint();">打印海拔系列</a>
 					<a href="javascript:;" onclick="otherprint();">打印非海拔系列</a>
 					<a href="javascript:;" onclick="nopri();window.print();">活动执行通知单</a>
+					
+					<s:if test="%{perWorkFlag=='null'}">
 					<a class="input-gray"  href="<s:url namespace="/qkjmanage" action="active_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a>
+					</s:if>
+					<s:else>
+					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_PERSONAL_WORKLIST')">
+					<a class="input-gray" href="<s:url namespace="/person" action="perWork_list"><s:param name="viewFlag">relist</s:param></s:url>">返回个人工作列表</a>
+					</s:if>
+					</s:else>
 				</div>
 			</div>
 		</div>
