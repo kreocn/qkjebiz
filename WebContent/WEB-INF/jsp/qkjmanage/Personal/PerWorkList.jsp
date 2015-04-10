@@ -62,7 +62,7 @@
 					<td class="td4 op-area">
 				    	<a class="input-blue" href="<s:url namespace="%{nameSpace }" action="%{upaction }"><s:param name="viewFlag">mdy</s:param><s:param name="%{upUuid }" value="perUuid"></s:param><s:param name="perWorkFlag" value="true"></s:param></s:url>">修改</a>
 				    </td>
-				    <td class="td0 op-area"><a onClick="showDetail('showtr${uuid}');" class="input-nostyle">查看</a></td>
+				    <td class="td0 op-area"><a onClick="showDetail('showtr${perUuid}');" class="input-nostyle">查看</a></td>
 		  		</tr>
 		  	</s:iterator>
 	 		</table>

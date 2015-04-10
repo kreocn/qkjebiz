@@ -3,6 +3,7 @@
 <sqlMap>
 	<!-- Stock Start -->
 	<typeAlias alias="work" type="com.qkj.manage.domain.PerWork" />
+	<typeAlias alias="workPower" type="com.qkj.manage.domain.PerWorkSelect" />
 	<select id="personal_getPerWorks" resultClass="work" parameterClass="java.util.Map">
 		<![CDATA[ 
 			select * from ( $sqltext$ ) p
@@ -17,7 +18,57 @@
 			<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
 		</isNotEmpty>
 		</dynamic>
-		<![CDATA[ ORDER BY ptype,perUuid DESC	]]>
+		<![CDATA[ ORDER BY ptype DESC,perUuid DESC	]]>
 	</select>
+	
+	<select id="personal_getPerWorkPowers" resultClass="workPower" parameterClass="java.util.Map">
+		<![CDATA[ 
+			select * from qkj_t_perWork p
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ p.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="roles"><![CDATA[ p.roles=#roles# ]]></isNotEmpty>
+		</dynamic>
+		<![CDATA[ ORDER BY p.uuid DESC	]]>
+	</select>
+	
+	<select id="personal_getPerWorkPowersCounts" resultClass="workPower" parameterClass="java.util.Map">
+		<![CDATA[ 
+			select count(*)  from qkj_t_perWork p
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ p.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="roles"><![CDATA[ p.roles=#roles# ]]></isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<insert id="personal_add" parameterClass="workPower">
+		<![CDATA[ 
+			INSERT INTO qkj_t_perWork (roles,table_name,table_field,table_condition,lm_user,lm_time) VALUES(#roles#,#table_name#,#table_field#,#table_condition#,#lm_user#,#lm_time#)
+		]]>
+		<selectKey resultClass="int" keyProperty="uuid">
+		<![CDATA[ Select LAST_INSERT_ID() ]]>
+		</selectKey>
+	</insert>
+	
+	<update id="personal_mdy" parameterClass="workPower">
+		<![CDATA[
+			Update qkj_t_perWork
+			Set roles=#roles#,
+				table_name=#table_name#,
+				table_field=#table_field#,
+				table_condition=#table_condition#,
+				lm_user=#lm_user#,
+				lm_time=#lm_time#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<delete id="personal_del" parameterClass="workPower">
+	<![CDATA[
+		Delete From qkj_t_perWork Where uuid=#uuid#
+	]]>
+	</delete>
+	
 	<!-- Stock End -->
 </sqlMap>

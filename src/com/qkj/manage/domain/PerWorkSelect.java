@@ -1,11 +1,16 @@
 package com.qkj.manage.domain;
 
+import java.util.Date;
+
 public class PerWorkSelect {
+	private Integer uuid;
+	private String roles;
 	private String table_name;// 表名
 	private String table_field;// 查询的字段
 	private String table_condition;// 查询条件
-	private String loginUser;//登录人
-	private String loginPower;//职位
+	private String lm_user;
+	private Date lm_time;
+
 	public PerWorkSelect() {
 
 	}
@@ -16,26 +21,37 @@ public class PerWorkSelect {
 		this.setTable_condition(table_condition);
 
 	}
-	
-	public PerWorkSelect(String loginUser,String loginPower){
-		this.setLoginUser(loginUser);
-		this.setLoginPower(loginPower);
+
+	public Integer getUuid() {
+		return uuid;
 	}
 
-	public String getLoginUser() {
-		return loginUser;
+	public void setUuid(Integer uuid) {
+		this.uuid = uuid;
 	}
 
-	public void setLoginUser(String loginUser) {
-		this.loginUser = loginUser;
+	public String getRoles() {
+		return roles;
 	}
 
-	public String getLoginPower() {
-		return loginPower;
+	public void setRoles(String roles) {
+		this.roles = roles;
 	}
 
-	public void setLoginPower(String loginPower) {
-		this.loginPower = loginPower;
+	public String getLm_user() {
+		return lm_user;
+	}
+
+	public void setLm_user(String lm_user) {
+		this.lm_user = lm_user;
+	}
+
+	public Date getLm_time() {
+		return lm_time;
+	}
+
+	public void setLm_time(Date lm_time) {
+		this.lm_time = lm_time;
 	}
 
 	public String getTable_name() {

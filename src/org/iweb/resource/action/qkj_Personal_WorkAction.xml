@@ -9,6 +9,35 @@
 		<action name="perWork_list" class="com.qkj.manage.action.PerWorkAction" method="list">
 			<result>/WEB-INF/jsp/qkjmanage/Personal/PerWorkList.jsp</result>
 		</action>
+		
+		<action name="perWorkPower_list" class="com.qkj.manage.action.PerWorkAction" method="listPower">
+			<result>/WEB-INF/jsp/qkjmanage/Personal/PerWorkPowerList.jsp</result>
+		</action>
+		
+		<action name="perWorkPower_add" class="com.qkj.manage.action.PerWorkAction" method="addPower">
+			<result type="redirectAction">
+				<param name="actionName">perWorkPower_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="perWorkPower_del" class="com.qkj.manage.action.PerWorkAction" method="delPower">
+			<result type="redirectAction">
+				<param name="actionName">perWorkPower_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="perWorkPower_save" class="com.qkj.manage.action.PerWorkAction" method="savePower">
+			<result type="redirectAction">
+				<param name="actionName">perWorkPower_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="perWorkPower_load" class="com.qkj.manage.action.PerWorkAction" method="loadPower">
+			<result>/WEB-INF/jsp/qkjmanage/Personal/PerWorkPowerEdit.jsp</result>
+		</action>
 		<!-- AssetItem End -->
 	</package>
 </struts>

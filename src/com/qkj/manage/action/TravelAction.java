@@ -40,7 +40,17 @@ public class TravelAction extends ActionSupport {
 	private int pageSize;
 	private int currPage;
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;工业旅游申请列表";
+	// 个人工作标识
+	private static String perWorkFlag=null;
 	
+	public static String getPerWorkFlag() {
+		return perWorkFlag;
+	}
+
+	public static void setPerWorkFlag(String perWorkFlag) {
+		TravelAction.perWorkFlag = perWorkFlag;
+	}
+
 	public String getPath() {
 		return path;
 	}

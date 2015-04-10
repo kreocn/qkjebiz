@@ -18,37 +18,32 @@ import com.qkj.manage.domain.PerWorkSelect;
 public class PerWorkSelectAction extends ActionSupport {
 	private  List<PerWorkSelect> selectList = new ArrayList<>();
 	private static List<PerWorkSelect> selectPowerList = new ArrayList<>();
+	private Map<String, Object> map = new HashMap<String, Object>();
 	static{
-		selectPowerList.add(new PerWorkSelect("2015011611365907","0,1"));
+		//selectPowerList.add(new PerWorkSelect("2015011611365907","0,1"));
 	}
 	public String getSelWork(){
+		PerWorkDao pdao=new PerWorkDao();
+		map.clear();
+		selectPowerList=pdao.list(map);
 		String sql="";
 		String uuid=ContextHelper.getUserLoginUuid();
 		PerWorkSelect ws=new PerWorkSelect();
 		if(selectPowerList.size()>0){
 			for(int i=0;i<selectPowerList.size();i++){
 				ws=selectPowerList.get(i);
-				if(ws.getLoginUser().equals(uuid)){
-					String [] p= ws.getLoginPower().split(",");
-					List<PerWorkSelect> selectListnew=new ArrayList<>();
-					selectListnew=getSel(p);
-					for(int j=0;j<selectListnew.size();j++){
-						PerWorkSelect selectnew2=new PerWorkSelect();
-						selectnew2=selectListnew.get(j);
-						if(j>0){
-							sql+="union all ";
-						}
-						sql+="select  "+selectnew2.getTable_field()+" from "+selectnew2.getTable_name()+" where "+selectnew2.getTable_condition()+" ";
-						
+				if (ContextHelper.checkPermit(ws.getRoles())) {
+					if(sql!=null && !sql.equals("")){
+						sql+="union all ";
 					}
-					break;
+					sql+="select  "+ws.getTable_field()+" from "+ws.getTable_name()+" where "+ws.getTable_condition()+" ";
 				}
 			}
 		}
 		return sql;
 	}
 
-	public List<PerWorkSelect> getSel(String[] a) {
+	/*public List<PerWorkSelect> getSel(String[] a) {
 		if (a.length > 0) {
 			for (int i = 0; i < a.length; i++) {
 				String l = a[i];
@@ -135,6 +130,6 @@ public class PerWorkSelectAction extends ActionSupport {
 			}
 		}
 		return selectList;
-	}
+	}*/
 
 }
