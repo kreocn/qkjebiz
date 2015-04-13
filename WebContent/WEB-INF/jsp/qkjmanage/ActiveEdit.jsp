@@ -694,7 +694,7 @@
 							<c:if test="${(active.status==1 || active.status==2) && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_STATUS_1',null)==true}">
 								<s:submit id="active_mdyStatus_1" name="active_mdyStatus_1" value="作废" action="active_mdyStatus_1" onclick="return isOp('确定执行此操作?');" cssClass="input-red" />
 							</c:if>
-							<c:if test="${active.status==1 && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_APPROVE',null)==true}">
+							<c:if test="${'mdy' == viewFlag && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_APPROVE',null)==true}">
 								<input type="button" value="审阅" onclick="openApprove();" />
 							</c:if>
 							<c:if test="${'mdy' == viewFlag && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_HISTORY',null)==true}">
