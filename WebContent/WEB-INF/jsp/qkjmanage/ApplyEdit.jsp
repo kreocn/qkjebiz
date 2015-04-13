@@ -282,7 +282,7 @@ color: #008000;
 							<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
 						</c:if>
 					</s:else>		
-					<c:if test="${apply.status>=10 && it:checkPermit('QKJ_QKJMANAGE_APPLY_APPROVE',null)==true}">
+					<c:if test="${'mdy' == viewFlag && it:checkPermit('QKJ_QKJMANAGE_APPLY_APPROVE',null)==true}">
 						<input type="button" value="审阅"  onclick="openApprove();" />
 					</c:if>
 					<c:if test="${apply.status>=10 && it:checkPermit('QKJ_QKJMANAGE_APPLY_SPT',null)==true}">

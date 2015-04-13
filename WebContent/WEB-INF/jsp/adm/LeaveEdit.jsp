@@ -224,7 +224,7 @@
 					<s:submit name="delete" value="删除" action="leave_del" cssClass="input-red" onclick="return isDel();" />
 					</c:if>
 				</s:elseif>
-				<c:if test="${leave.check_status>=10 && it:checkPermit('QKJ_ADM_LEAVE_APPROVE',null)==true}">
+				<c:if test="${'mdy' == viewFlag && it:checkPermit('QKJ_ADM_LEAVE_APPROVE',null)==true}">
 					<input type="button" value="审阅" onclick="openApprove();" />
 				</c:if>
 				<!-- {0:'新申请',5:'已退回',10:'待审核',20:'经理/大区已审',30:'总监已审',40:'业务副总已审' } -->
