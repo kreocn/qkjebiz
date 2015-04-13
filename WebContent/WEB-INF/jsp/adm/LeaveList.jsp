@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -21,13 +22,23 @@ max-width: 650px !important;
  	<div class="tab_warp main" >
  	<div class="dq_step">
 		${path}
-		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_ADD')">
+		<c:if test="${it:checkPermit('QKJ_ADM_LEAVE_ADD',null)==true}">
 			<span class="opb lb op-area"><a href="javascript:;" id="AddLeaveLink">添加申请单</a></span>
-		</s:if>
+		</c:if>
 	</div>
  	<s:form id="serachForm" name="serachForm" action="leave_list"  method="get" namespace="/adm" theme="simple">
  	<div class="label_con">
  	<div class="label_main">
+ 		<div class="label_hang">
+            <div class="label_ltit">快速查询:</div>
+           		<div class="label_rwben2" style="size: 30%">
+	            	<s:select id="sselect" onchange="kselect();" name="sselect"  cssClass="selectKick" headerKey="" headerValue="-----请选择-----" list="#{0:'主管/办事处待审',1:'经理/大区待审',
+	            	2:'西北-运营总监待审',3:'省外-运营总监待审',4:'北京-运营总监待审',5:'青藏-运营总监待审',
+	            	6:'西北-业务副总待审',7:'人事经理待审',8:'行政副总待审',9:'总经理待审'
+	            	}" />
+            	</div>
+        </div>
+        
         <div class="label_hang">
             <div class="label_ltit">编号:</div>
             <div class="label_rwben"><s:textfield name="leave.uuid" /></div>
@@ -76,11 +87,11 @@ max-width: 650px !important;
         </div>
         <div class="label_hang">
             <div class="label_ltit">业务审核状态:</div>
-            <div class="label_rwben label_rwb"><s:select name="leave.check_status" list="#{0:'新申请',5:'已退回',10:'待审核',15:'主管/办事处已审',20:'经理/大区已审',30:'总监已审',40:'业务副总已审' }" headerKey="" headerValue="--请选择--"  /></div>
+            <div class="label_rwben label_rwb"><s:select id="check" name="leave.check_status" list="#{0:'新申请',5:'已退回',10:'待审核',15:'主管/办事处已审',20:'经理/大区已审',30:'总监已审',40:'业务副总已审' }" headerKey="" headerValue="--请选择--"  /></div>
         </div>
         <div class="label_hang">
             <div class="label_ltit">人事审核状态:</div>
-            <div class="label_rwben label_rwb"><s:select name="leave.acheck_status" list="#{0:'未审核/已退回',8:'已受理',10:'人事经理已审',20:'行政副总已审',30:'总经理已审' }" headerKey="" headerValue="--请选择--"  /></div>
+            <div class="label_rwben label_rwb"><s:select id="acheck" name="leave.acheck_status" list="#{0:'未审核/已退回',8:'已受理',10:'人事经理已审',20:'行政副总已审',30:'总经理已审' }" headerKey="" headerValue="--请选择--"  /></div>
         </div>
         <div class="label_hang label_button tac">
         	<s:checkbox id="search_mcondition" name="search_mcondition" fieldValue="true" value="true" cssClass="regular-checkbox" />
@@ -154,15 +165,15 @@ max-width: 650px !important;
     	</s:if>
 		</td>
 		<td  class="td4 op-area">
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE')">
+			<c:if test="${it:checkPermit('QKJ_ADM_LEAVE',null)==true}">
 	    	<a class="input-blue" href="<s:url namespace="/adm" action="leave_load"><s:param name="perWorkFlag">null</s:param><s:param name="viewFlag">mdy</s:param><s:param name="leave.uuid" value="uuid"></s:param></s:url>">修改</a>
-	    	</s:if>
+	    	</c:if>
 	    	<s:if test="check_status>=20">
 	    	<a class="input-gray" href="<s:url namespace="/adm" action="leave_print"><s:param name="perWorkFlag">null</s:param><s:param name="leave.uuid" value="uuid" /><s:param name="leave.leave_type" value="leave_type" /></s:url>">打印</a>
 	    	</s:if>
-	    	<s:if test="check_status<=5&&@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_LEAVE_DEL')">
+	    	<c:if test="${check_status<=5 && it:checkPermit('QKJ_ADM_LEAVE_DEL',null)==true}">
 	    	<a class="input-red" href="<s:url namespace="/adm" action="leave_del"><s:param name="leave.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
-	    	</s:if>	   
+	    	</c:if>	   
 	    </td>
 	    <td class="td0 op-area"><a onClick="showDetail('showtr${uuid}');" href="javascript:;" class="input-nostyle">查看</a></td>
 	  </tr>
@@ -222,6 +233,7 @@ $(function(){
 	});
 	printPagination("listpage",'${currPage}','${recCount}','${pageSize}');
  });
+
 </script>
 
 <script type="text/javascript">
@@ -284,6 +296,89 @@ function addAllowance() {
 		$("#AddAllowanceForm").dialog("open");
 	});
 	//</s:if>
+}
+</script>
+
+<script type="text/javascript">
+
+function kselect(){
+	var num=$("#sselect").val();
+	if(parseInt(num)==0){//(主管/办事处待审
+		document.getElementById("check").options[3].selected = true; 
+		document.getElementById("acheck").options[1].selected = true;
+		$("#userdept_codeid").val("");
+		$("#userdept_nameid").val("");
+		document.getElementById("leave_is_sub_dept").checked=false;
+	}
+	if(parseInt(num)==1){//经理/大区待审
+		document.getElementById("check").options[3].selected = true; 
+		document.getElementById("acheck").options[1].selected = true;
+		$("#userdept_codeid").val("");
+		$("#userdept_nameid").val("");
+		document.getElementById("leave_is_sub_dept").checked=false;
+	}
+	if(parseInt(num)==2){//西北-运营总监待审
+		document.getElementById("check").options[5].selected = true; 
+		document.getElementById("acheck").options[0].selected = true;
+		$("#userdept_codeid").val("220");
+		$("#userdept_nameid").val("西北运营中心");
+		document.getElementById("leave_is_sub_dept").checked=true;
+	}
+	if(parseInt(num)==3){//省外-运营总监待审
+		document.getElementById("check").options[5].selected = true; 
+		document.getElementById("acheck").options[0].selected = true;
+		$("#userdept_codeid").val("211");
+		$("#userdept_nameid").val("省外运营中心");
+		document.getElementById("leave_is_sub_dept").checked=true;
+		
+	}
+	if(parseInt(num)==4){//北京-运营总监待审
+		document.getElementById("check").options[5].selected = true; 
+		document.getElementById("acheck").options[0].selected = true;
+		$("#userdept_codeid").val("3");
+		$("#userdept_nameid").val("北京销售公司");
+		document.getElementById("leave_is_sub_dept").checked=true;
+	}
+	if(parseInt(num)==5){//青藏-运营总监待审
+		document.getElementById("check").options[5].selected = true; 
+		document.getElementById("acheck").options[0].selected = true;
+		$("#userdept_codeid").val("230");
+		$("#userdept_nameid").val("青藏运营中心");
+		document.getElementById("leave_is_sub_dept").checked=true;
+	}
+	
+	if(parseInt(num)==6){//西北-业务副总待审
+		document.getElementById("check").options[6].selected = true; 
+		document.getElementById("acheck").options[0].selected = true;
+		$("#userdept_codeid").val("220");
+		$("#userdept_nameid").val("西北运营中心");
+		document.getElementById("leave_is_sub_dept").checked=true;
+	}
+	if(parseInt(num)==7){//人事经理待审
+		document.getElementById("check").options[5].selected = true; 
+		document.getElementById("acheck").options[1].selected = true;
+		$("#userdept_codeid").val("");
+		$("#userdept_nameid").val("");
+		document.getElementById("leave_is_sub_dept").checked=false;
+	}
+	
+	if(parseInt(num)==8){//行政副总
+		document.getElementById("acheck").options[3].selected = true;
+		document.getElementById("check").options[0].selected = true; 
+		$("#userdept_codeid").val("");
+		$("#userdept_nameid").val("");
+		document.getElementById("leave_is_sub_dept").checked=false;
+	}
+	if(parseInt(num)==9){//总经理
+		document.getElementById("acheck").options[4].selected = true;
+		document.getElementById("check").options[0].selected = true; 
+		$("#userdept_codeid").val("");
+		$("#userdept_nameid").val("");
+		document.getElementById("leave_is_sub_dept").checked=false;
+	}
+	
+	 document.getElementById("serachForm").action="/adm/leave_list";
+	 document.getElementById("serachForm").submit();
 }
 </script>
 </body>

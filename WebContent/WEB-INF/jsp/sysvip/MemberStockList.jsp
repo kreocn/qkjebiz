@@ -1,8 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -18,13 +18,12 @@
 	<div class="tab_warp main">
 <div class="dq_step">
 ${path}
-<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJM_SYSVIP_MEMBERSTOCK_ADD')">
+<c:if test="${it:checkPermit('QKJM_SYSVIP_MEMBERSTOCK_ADD',null)==true}">
 	<span class="opb lb op-area"><a href="<s:url namespace="/sysvip" action="memberStock_load"><s:param name="viewFlag">add</s:param></s:url>">添加库存信息</a></span>
 	<span class="opb lb op-area">
 	<s:hidden id="marketimgid"></s:hidden>
 	</span>
-
-</s:if>
+</c:if>
 </div>
 	<s:form id="serachForm" name="serachForm"  method="post" namespace="/sysvip" theme="simple">
 <div class="label_con">
@@ -55,9 +54,9 @@ ${path}
 			<label for="search_mcondition"></label>更多条件
             <s:submit value="搜索" /> <s:reset value="重置" />
         </div>
-        <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJM_SYSVIP_MEMBERSTOCK_DEL')">
+        <c:if test="${it:checkPermit('QKJM_SYSVIP_MEMBERSTOCK_DEL',null)==true}">
           		<div style="clear:both;"><input type="button" class="input-red" value="批量删除" onclick="javascript:deletestock('是否真的要批量删除记录?');"></div>
-        </s:if>
+        </c:if>
 </div>
 </div>
 </s:form>
@@ -87,12 +86,12 @@ ${path}
 		</td>
 		<td class="td2">${it:formatDate(check_date,'yyyy-MM-dd')}</td>
 		<td class="td4 op-area">
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJM_SYSVIP_MEMBERSTOCK_MDY')">
+			<c:if test="${it:checkPermit('QKJM_SYSVIP_MEMBERSTOCK_MDY',null)==true}">
 	    	<a class="input-blue" href="<s:url namespace="/sysvip" action="memberStock_load"><s:param name="viewFlag">mdy</s:param><s:param name="memberStock.uuid" value="uuid"></s:param></s:url>">修改</a>
-	    	</s:if>
-	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJM_SYSVIP_MEMBERSTOCK_DEL')">
+	    	</c:if>
+	    	<c:if test="${it:checkPermit('QKJM_SYSVIP_MEMBERSTOCK_DEL',null)==true}">
 	    	<a class="input-red" href="<s:url namespace="/sysvip" action="memberStock_del"><s:param name="memberStock.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
-	    	</s:if>
+	    	</c:if>
 		</td>
 	    <td class="td0 op-area"><a onClick="showDetail('showtr${uuid}');" class="input-nostyle">查看</a></td>
 	  </tr>

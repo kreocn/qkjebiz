@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -87,11 +88,11 @@
 				</div>
 				<div class="label_hang">
 				    <div class="label_ltit">客户人数:</div>
-				    <div class="label_rwben"><s:textfield name="travel.travel_num" title="客户人数" style="width:80%;" cssClass="validate[custom[integer],maxSize[10]]" /> 人</div>
+				    <div class="label_rwben"><s:textfield name="travel.travel_num" title="客户人数" cssStyle="width:80%;" cssClass="validate[custom[integer],maxSize[10]]" /> 人</div>
 				</div>
 				<div class="label_hang">
 				    <div class="label_ltit">陪同:</div>
-				    <div class="label_rwben"><s:textfield name="travel.accompany_num" title="陪同人数" style="width:80%;" cssClass="validate[custom[integer],maxSize[10]]" /> 人</div>
+				    <div class="label_rwben"><s:textfield name="travel.accompany_num" title="陪同人数" cssStyle="width:80%;" cssClass="validate[custom[integer],maxSize[10]]" /> 人</div>
 				</div>
 			</div>
 			<div class="label_main">
@@ -106,9 +107,9 @@
 			<s:if test="'mdy' == viewFlag">
 				<fieldset class="clear">
 					<legend>客户详情/来访客户资料
-						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_TRAVELCUSTOMER_ADD') && (travel.check_status<=5 ||  travel.acheck_status<=5)">
+						<c:if test="${(travel.check_status<=5 ||  travel.acheck_status<=5) && it:checkPermit('QKJ_QKJMANAGE_TRAVELCUSTOMER_ADD',null)==true}">
 			            	<input type="button" id="AddCustomer" value="添加客户资料" />
-			            </s:if>
+			            </c:if>
 					</legend>
 					<s:if test="travelCustomers==null || travelCustomers.size==0">
                         <div style="text-align: center;line-height: 30px;">暂无客户信息</div>
@@ -146,9 +147,9 @@
 				                      <td>${cus_phone}</td>
 				                      <td>${cus_idcard}</td>
 					                  <td align="center">
-					                      <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_TRAVELCUSTOMER_DEL') && (travel.check_status<=5 ||  travel.acheck_status<=5)">
+					                  		<c:if test="${(travel.check_status<=5 ||  travel.acheck_status<=5) && it:checkPermit('QKJ_QKJMANAGE_TRAVELCUSTOMER_DEL',null)==true}">
 					                      [<a href="<s:url namespace="/qkjmanage" action="travelCustomer_del"><s:param name="travelCustomer.uuid" value="uuid" /><s:param name="travelCustomer.travel_id" value="travel_id" /></s:url>" onclick="return isDel();">删除</a>]
-					                      </s:if>    
+					                      </c:if>    
 					                  </td>
 				                  </tr>
 				              </s:iterator>
@@ -162,24 +163,24 @@
 				<div class="label_hang">
 				    <div class="label_ltit">午餐用餐标准:</div>
 				    <div class="label_rwben2">
-				    	￥<s:textfield name="travel.lunch_price" style="width:80px;" title="午餐标准/桌" cssClass="validate[custom[number],maxSize[10]]"/> 元/桌
-		                      共<s:textfield name="travel.lunch_num"  style="width:40px;" title="午餐次数" cssClass="validate[custom[integer],maxSize[10]]" /> 次
-		                      每次<s:textfield name="travel.lunch_desk"  style="width:40px;" title="午餐桌数" cssClass="validate[custom[integer],maxSize[10]]" /> 桌
+				    	￥<s:textfield name="travel.lunch_price" cssStyle="width:80px;" title="午餐标准/桌" cssClass="validate[custom[number],maxSize[10]]"/> 元/桌
+		                      共<s:textfield name="travel.lunch_num"  cssStyle="width:40px;" title="午餐次数" cssClass="validate[custom[integer],maxSize[10]]" /> 次
+		                      每次<s:textfield name="travel.lunch_desk"  cssStyle="width:40px;" title="午餐桌数" cssClass="validate[custom[integer],maxSize[10]]" /> 桌
 				    </div>
 				</div>
 				<div class="label_hang">
 				    <div class="label_ltit">是否使用香烟:</div>
 				    <div class="label_rwbenx">
 				    	<s:radio name="travel.cigarette" list="#{0:'否',1:'是' }" />
-                		<s:textfield name="travel.cigarette_num" title="准备香烟包数" style="width:40px;" cssClass="validate[custom[integer],maxSize[10]]" /> 包
+                		<s:textfield name="travel.cigarette_num" title="准备香烟包数" cssStyle="width:40px;" cssClass="validate[custom[integer],maxSize[10]]" /> 包
 				    </div>
 				</div>
 				<div class="label_hang">
 				    <div class="label_ltit">晚餐用餐标准:</div>
 				    <div class="label_rwbenx">
-				    	￥<s:textfield name="travel.dinner_price" style="width:80px;" title="晚餐标准/桌" cssClass="validate[custom[number],maxSize[10]]"/> 元/桌
-		                      共<s:textfield name="travel.dinner_num"  style="width:40px;" title="晚餐次数" cssClass="validate[custom[integer],maxSize[10]]" /> 次
-		                      每次<s:textfield name="travel.dinner_desk"  style="width:40px;" title="晚餐桌数" cssClass="validate[custom[integer],maxSize[10]]" /> 桌
+				    	￥<s:textfield name="travel.dinner_price" cssStyle="width:80px;" title="晚餐标准/桌" cssClass="validate[custom[number],maxSize[10]]"/> 元/桌
+		                      共<s:textfield name="travel.dinner_num"  cssStyle="width:40px;" title="晚餐次数" cssClass="validate[custom[integer],maxSize[10]]" /> 次
+		                      每次<s:textfield name="travel.dinner_desk"  cssStyle="width:40px;" title="晚餐桌数" cssClass="validate[custom[integer],maxSize[10]]" /> 桌
 				    </div>
 				</div>
 				<div class="label_hang">
@@ -197,8 +198,8 @@
 				<div class="label_hang">
 				    <div class="label_ltit">别墅规格:</div>
 				    <div class="label_rwbenx">
-						<s:textfield name="travel.hotel_house"  style="width:40px;" title="别墅规格(几人一套)" cssClass="validate[custom[integer],maxSize[10]]" /> 人间
-		                <s:textfield name="travel.hotel_house_num"  style="width:40px;" title="别墅套数" cssClass="validate[custom[integer],maxSize[10]]" /> 套
+						<s:textfield name="travel.hotel_house"  cssStyle="width:40px;" title="别墅规格(几人一套)" cssClass="validate[custom[integer],maxSize[10]]" /> 人间
+		                <s:textfield name="travel.hotel_house_num"  cssStyle="width:40px;" title="别墅套数" cssClass="validate[custom[integer],maxSize[10]]" /> 套
 				    </div>
 				</div>
 				<div class="label_hang">
@@ -207,13 +208,13 @@
 						<input style="width:90px;" class="datepicker validate[custom[date]]" type="text" name="travel.hotel_start" title="开始住宿时间" value="${it:formatDate(travel.hotel_start,'yyyy-MM-dd')}" />
 						&nbsp;-&nbsp;
 						<input style="width:90px;" class="datepicker validate[custom[date]]" type="text" name="travel.hotel_end" title="结束住宿时间" value="${it:formatDate(travel.hotel_end,'yyyy-MM-dd')}" />
-						共 <s:textfield name="travel.hotel_total" style="width:40px;"  title="总共住宿天数" cssClass="validate[custom[integer],maxSize[10]]" /> 天
+						共 <s:textfield name="travel.hotel_total" cssStyle="width:40px;"  title="总共住宿天数" cssClass="validate[custom[integer],maxSize[10]]" /> 天
 				    </div>
 				</div>
 				<div class="label_hang">
 				    <div class="label_ltit">标间:</div>
 				    <div class="label_rwbenx">
-						<s:textfield name="travel.hotel_twinroom"  style="width:40px;" title="标间间数" cssClass="validate[custom[integer],maxSize[10]]" /> 间
+						<s:textfield name="travel.hotel_twinroom"  cssStyle="width:40px;" title="标间间数" cssClass="validate[custom[integer],maxSize[10]]" /> 间
 				    </div>
 				</div>
 				<div class="label_hang">
@@ -231,8 +232,10 @@
 				<s:if test="'mdy' == viewFlag">
 					<div class="label_hang clear">
 						<div class="label_ltit">餐酒标准:<br />
-               			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_TRAVELPRODUCT_ADD') && (travel.check_status<=5 ||  travel.acheck_status<=5)">
-               			<input type="button" id="AddProduct" value="添加酒品" /></s:if></div>
+						<c:if test="${(travel.check_status<=5 ||  travel.acheck_status<=5) && it:checkPermit('QKJ_QKJMANAGE_TRAVELPRODUCT_ADD',null)==true}">
+               				<input type="button" id="AddProduct" value="添加酒品" />
+               			</c:if>
+               			</div>
 						<div class="label_rwbenx">
 							<s:if test="travelProducts==null || travelProducts.size==0">
 			                    <div style="line-height: 30px;">暂无酒品信息</div>
@@ -249,9 +252,9 @@
 					                      <td>${product_name}</td>
 					                      <td>${num}</td>
 					                      <td>
-						                      <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_TRAVELPRODUCT_DEL') && (travel.check_status<=5 ||  travel.acheck_status<=5)">
+					                      		<c:if test="${(travel.check_status<=5 ||  travel.acheck_status<=5) && it:checkPermit('QKJ_QKJMANAGE_TRAVELPRODUCT_DEL',null)==true}">
 						                      [<a href="<s:url namespace="/qkjmanage" action="travelProduct_del"><s:param name="travelProduct.uuid" value="uuid" /><s:param name="travelProduct.travel_id" value="travel_id" /></s:url>" onclick="return isDel();">删除</a>]
-						                      </s:if>
+						                      </c:if>
 						                    </td>
 					                    </tr>
 					                  </s:iterator>
@@ -303,60 +306,60 @@
 				    <div class="label_ltit">相关操作:</div>
 				    <div class="label_rwbenx">
 				    	<s:if test="'add' == viewFlag">
-		                  <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_TRAVEL_ADD')">
-		                    <s:submit id="add" cssClass="input-blue"  name="add" value="下一步-添加客户信息和招待酒品信息" action="travel_add" />
-		                  </s:if>
+				    		<c:if test="${it:checkPermit('QKJ_QKJMANAGE_TRAVEL_ADD',null)==true}">
+		                    	<s:submit id="add" cssClass="input-blue"  name="add" value="下一步-添加客户信息和招待酒品信息" action="travel_add" />
+		                  	</c:if>
 		                </s:if>
 		                <s:elseif test="'mdy' == viewFlag">
 		                <s:if test="travel.check_status<=5 ||  travel.acheck_status<=5">
-		                  <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_TRAVEL_MDY')">
+		                	<c:if test="${it:checkPermit('QKJ_QKJMANAGE_TRAVEL_MDY',null)==true}">
 		                    <s:submit id="save" name="save" cssClass="input-blue"  value="保存" action="travel_save" />
-		                  </s:if>
-		                  <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_TRAVEL_CHECK')">
+		                  </c:if>
+		                  <c:if test="${it:checkPermit('QKJ_QKJMANAGE_TRAVEL_CHECK',null)==true}">
 		                    <s:submit id="travel_mdyCheck" cssClass="input-yellow" name="travel_mdyCheck" value="报审" action="travel_mdyCheck" onclick="return isOp('确定要执行此操作?');" />
-		                  </s:if>
-		                  <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_TRAVEL_DEL')">
+		                  </c:if>
+		                  <c:if test="${it:checkPermit('QKJ_QKJMANAGE_TRAVEL_DEL',null)==true}">
 		                    <s:submit id="delete" name="delete" cssClass="input-red" value="删除" action="travel_del" onclick="return isDel();" />
-		                  </s:if>
+		                  </c:if>
 		                </s:if>
 		                <s:else>
-		                  <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_TRAVEL_CHECK10') && travel.check_status==10">
-		                    <s:submit id="travel_mdyCheckStatus10" cssClass="input-green"  name="travel_mdyCheckStatus10" value="经理/大区审核通过" action="travel_mdyCheckStatus10" onclick="return isOp('确定要执行此操作?');" />
-		                    <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_TRAVEL_CHECK5')">
-		                    <s:submit id="travel_mdyCheckStatus5" cssClass="input-red" name="travel_mdyCheckStatus5" value="审核不通过" action="travel_mdyCheckStatus5" onclick="return isOp('确定要执行此操作?');" />
-		                    </s:if>
-		                  </s:if>
-		                  <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_TRAVEL_CHECK20') && travel.check_status==20">
-		                    <s:submit id="travel_mdyCheckStatus20" cssClass="input-green"  name="travel_mdyCheckStatus20" value="总监审核通过" action="travel_mdyCheckStatus20" onclick="return isOp('确定要执行此操作?');" />
-		                    <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_TRAVEL_CHECK5')">
-		                    <s:submit id="travel_mdyCheckStatus5" cssClass="input-red" name="travel_mdyCheckStatus5" value="审核不通过" action="travel_mdyCheckStatus5" onclick="return isOp('确定要执行此操作?');" />
-		                    </s:if>
-		                  </s:if>
-		                  <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_TRAVEL_CHECK30') && travel.check_status==30">
+		                	<c:if test="${it:checkPermit('QKJ_QKJMANAGE_TRAVEL_CHECK10',null)==true && travel.check_status==10}">
+		                    	<s:submit id="travel_mdyCheckStatus10" cssClass="input-green"  name="travel_mdyCheckStatus10" value="经理/大区审核通过" action="travel_mdyCheckStatus10" onclick="return isOp('确定要执行此操作?');" />
+		                    	<c:if test="${it:checkPermit('QKJ_QKJMANAGE_TRAVEL_CHECK5',null)==true}">
+			                    	<s:submit id="travel_mdyCheckStatus5" cssClass="input-red" name="travel_mdyCheckStatus5" value="审核不通过" action="travel_mdyCheckStatus5" onclick="return isOp('确定要执行此操作?');" />
+			                    </c:if>
+		                    </c:if>
+		                    <c:if test="${it:checkPermit('QKJ_QKJMANAGE_TRAVEL_CHECK20',null)==true && travel.check_status==20}">
+			                    <s:submit id="travel_mdyCheckStatus20" cssClass="input-green"  name="travel_mdyCheckStatus20" value="总监审核通过" action="travel_mdyCheckStatus20" onclick="return isOp('确定要执行此操作?');" />
+			                    <c:if test="${it:checkPermit('QKJ_QKJMANAGE_TRAVEL_CHECK5',null)==true}">
+			                   	 <s:submit id="travel_mdyCheckStatus5" cssClass="input-red" name="travel_mdyCheckStatus5" value="审核不通过" action="travel_mdyCheckStatus5" onclick="return isOp('确定要执行此操作?');" />
+			                    </c:if>
+		                  </c:if>
+		                  <c:if test="${it:checkPermit('QKJ_QKJMANAGE_TRAVEL_CHECK30',null)==true && travel.check_status==30}">
 		                    <s:submit id="travel_mdyCheckStatus30" cssClass="input-green"  name="travel_mdyCheckStatus30" value="业务副总审核通过" action="travel_mdyCheckStatus30" onclick="return isOp('确定要执行此操作?');" />
-		                    <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_TRAVEL_CHECK5')">
+		                    <c:if test="${it:checkPermit('QKJ_QKJMANAGE_TRAVEL_CHECK5',null)==true}">
 		                    <s:submit id="travel_mdyCheckStatus5" cssClass="input-red" name="travel_mdyCheckStatus5" value="审核不通过" action="travel_mdyCheckStatus5" onclick="return isOp('确定要执行此操作?');" />
-		                    </s:if>
-		                  </s:if>
+		                    </c:if>
+		                  </c:if>
 		                  <s:if test="travel.check_status>=30">
-		                    <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_TRAVEL_ACHECK10') && travel.acheck_status==10">
+		                  	<c:if test="${it:checkPermit('QKJ_QKJMANAGE_TRAVEL_ACHECK10',null)==true && travel.acheck_status==10}">
 		                      <s:submit id="travel_mdyACheckStatus10" cssClass="input-green" name="travel_mdyACheckStatus10" value="行政经理审核通过" action="travel_mdyACheckStatus10" onclick="return isOp('确定要执行此操作?');" />
-		                      <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_TRAVEL_ACHECK5')">
-		                      <s:submit id="travel_mdyACheckStatus5" cssClass="input-red" name="travel_mdyACheckStatus5" value="审核不通过" action="travel_mdyACheckStatus5" onclick="return isOp('确定要执行此操作?');" />
-		                      </s:if>
-		                    </s:if>
-		                    <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_TRAVEL_ACHECK20') && travel.acheck_status==20">
+		                      	<c:if test="${it:checkPermit('QKJ_QKJMANAGE_TRAVEL_ACHECK5',null)==true}">
+		                      		<s:submit id="travel_mdyACheckStatus5" cssClass="input-red" name="travel_mdyACheckStatus5" value="审核不通过" action="travel_mdyACheckStatus5" onclick="return isOp('确定要执行此操作?');" />
+		                      	</c:if>
+		                    </c:if>
+		                    <c:if test="${it:checkPermit('QKJ_QKJMANAGE_TRAVEL_ACHECK20',null)==true && travel.acheck_status==20}">
 		                      <s:submit id="travel_mdyACheckStatus20" cssClass="input-green"  name="travel_mdyACheckStatus20" value="行政副总审核通过" action="travel_mdyACheckStatus20" onclick="return isOp('确定要执行此操作?');" />
-		                      <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_TRAVEL_ACHECK5')">
-		                      <s:submit id="travel_mdyACheckStatus5" cssClass="input-red" name="travel_mdyACheckStatus5" value="审核不通过" action="travel_mdyACheckStatus5" onclick="return isOp('确定要执行此操作?');" />
-		                      </s:if>
-		                    </s:if>
-		                    <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_TRAVEL_ACHECK30') && travel.acheck_status==30">
-		                      <s:submit id="travel_mdyACheckStatus30" cssClass="input-green"  name="travel_mdyACheckStatus30" value="总经理审核通过" action="travel_mdyACheckStatus30" onclick="return isOp('确定要执行此操作?');" />
-		                      <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_TRAVEL_ACHECK5')">
-		                      <s:submit id="travel_mdyACheckStatus5" cssClass="input-red" name="travel_mdyACheckStatus5" value="审核不通过" action="travel_mdyACheckStatus5" onclick="return isOp('确定要执行此操作?');" />
-		                      </s:if>
-		                    </s:if>
+		                      <c:if test="${it:checkPermit('QKJ_QKJMANAGE_TRAVEL_ACHECK5',null)==true}">
+		                      	<s:submit id="travel_mdyACheckStatus5" cssClass="input-red" name="travel_mdyACheckStatus5" value="审核不通过" action="travel_mdyACheckStatus5" onclick="return isOp('确定要执行此操作?');" />
+		                      </c:if>
+		                    </c:if>
+		                    <c:if test="${it:checkPermit('QKJ_QKJMANAGE_TRAVEL_ACHECK30',null)==true && travel.acheck_status==30}">
+			                      <s:submit id="travel_mdyACheckStatus30" cssClass="input-green"  name="travel_mdyACheckStatus30" value="总经理审核通过" action="travel_mdyACheckStatus30" onclick="return isOp('确定要执行此操作?');" />
+			                      <c:if test="${it:checkPermit('QKJ_QKJMANAGE_TRAVEL_ACHECK5',null)==true}">
+			                      	<s:submit id="travel_mdyACheckStatus5" cssClass="input-red" name="travel_mdyACheckStatus5" value="审核不通过" action="travel_mdyACheckStatus5" onclick="return isOp('确定要执行此操作?');" />
+			                      </c:if>
+		                    </c:if>
 		                  </s:if>
 		                </s:else>
 		              </s:elseif> 
@@ -418,9 +421,9 @@
 	   	  <tr>
 	   	  		<td>&nbsp;</td>
 				<td class="buttonarea">
-				  <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_TRAVELCUSTOMER_ADD') && (travel.check_status<=5 ||  travel.acheck_status<=5)">
+				<c:if test="${it:checkPermit('QKJ_QKJMANAGE_TRAVELCUSTOMER_ADD',null)==true && (travel.check_status<=5 ||  travel.acheck_status<=5)}">
 				  <s:submit id="add" name="add" value="确定" action="travelCustomer_add" />
-				  </s:if>
+				  </c:if>
 				</td>
 	      </tr>
 	  </table>  
@@ -446,9 +449,9 @@
         <tr>
         	<td>&nbsp;</td>
             <td class="buttonarea">
-              <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_TRAVELPRODUCT_ADD')">
+            	<c:if test="${it:checkPermit('QKJ_QKJMANAGE_TRAVELPRODUCT_ADD',null)==true}">
                 <s:submit id="add" name="add" value="确定" action="travelProduct_add" />
-              </s:if>
+              </c:if>
            </td>
         </tr>
       </table>

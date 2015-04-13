@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -78,13 +79,13 @@
 									<span style="color: red; font-weight: bold;">状态异常,请通知管理员</span>
 								</s:else>
 			              </td>
-			              <td  class="td5 op-area"">
-			              		<s:if test="(ischecked==0 || ischecked==1)  && @org.iweb.sys.ContextHelper@checkPermit('INFO_MANAGER_NEWS_FIRSTCHECK')">
+			              <td  class="td5 op-area">
+			              		<c:if test="${(ischecked==0 || ischecked==1) && it:checkPermit('INFO_MANAGER_NEWS_FIRSTCHECK',null)==true}">
 									<input type="button" value="初审" class="input-blue"	onclick="linkurl('<s:url namespace="/info" action="news_loadCheck"><s:param name="viewFlag">first</s:param><s:param name="news.uuid" value="uuid" /></s:url>');" />
-								</s:if>
-								<s:elseif test="(ischecked==2 || ischecked==3)  && @org.iweb.sys.ContextHelper@checkPermit('INFO_MANAGER_NEWS_FINALCHECK') ">
+								</c:if>
+								<c:if test="${(ischecked==2 || ischecked==3) && it:checkPermit('INFO_MANAGER_NEWS_FINALCHECK',null)==true}">
 									<input type="button" value="终审" 	class="input-blue" onclick="linkurl('<s:url namespace="/info" action="news_loadCheck"><s:param name="viewFlag">final</s:param><s:param name="news.uuid" value="uuid" /></s:url>');" />
-								</s:elseif>
+								</c:if>
 								<input type="button" value="查看" class="input-blue" onclick="linkurl('<s:url namespace="/info" action="news_loadCheck"><s:param name="viewFlag">view</s:param><s:param name="news.uuid" value="uuid" /></s:url>');" />	  
 			              </td>
 			              <td  class="td0 op-area"><a onclick="showDetail('showtr${uuid}');" href="javascript:;" class="input-nostyle">查看</a></td>

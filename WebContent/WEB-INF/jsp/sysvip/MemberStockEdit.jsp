@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -15,9 +16,9 @@
 	<div class="tab_warp main">
 <div class="dq_step">
 	${path}
-	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJM_SYSVIP_MEMBERSTOCK_LIST')">
+	<c:if test="${it:checkPermit('QKJM_SYSVIP_MEMBERSTOCK_LIST',null)==true}">
 	<span class="opb lb op-area"><a href="<s:url action="memberStock_list" namespace="/sysvip"></s:url>">返回列表</a></span>
-	</s:if>
+	</c:if>
 </div>
 <s:form id="editForm" name="editForm" cssClass="validForm" namespace="/sysvip" method="post" theme="simple">
 <div class="label_con">
@@ -103,7 +104,7 @@
 		<div class="label_ltit">核对日期:</div>
 		<div class="label_rwben">
 	    <div class="label_rwbenx">
-            	<input  class="datepicker iI-f validate[required,custom[date]]" type="text" name="memberStock.check_date" value="${it:formatDate(memberStock.check_date,'yyyy-MM-dd')}" />
+            	<input  class="datepicker validate[required,custom[date]]" type="text" name="memberStock.check_date" value="${it:formatDate(memberStock.check_date,'yyyy-MM-dd')}" />
             </div>
          </div>
 	</div>
@@ -142,17 +143,17 @@
         <div class="label_hang">
             <div class="label_ltit">相关操作:</div>
             <div class="label_rwbenx">
-            	<s:if test="'add' == viewFlag && @org.iweb.sys.ContextHelper@checkPermit('QKJM_SYSVIP_MEMBERSTOCK_ADD')">
+            	<c:if test="${'add' == viewFlag && it:checkPermit('QKJM_SYSVIP_MEMBERSTOCK_ADD',null)==true}">
 					<s:submit id="add" name="add" value="确定" action="memberStock_add" />
-				</s:if>
-				<s:elseif test="'mdy' == viewFlag">
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJM_SYSVIP_MEMBERSTOCK_MDY')">
+				</c:if>
+				<s:if test="'mdy' == viewFlag">
+					<c:if test="${it:checkPermit('QKJM_SYSVIP_MEMBERSTOCK_MDY',null)==true}">
 					<s:submit id="save" name="save" value="保存" action="memberStock_save" cssClass="input-blue" />
-					</s:if>
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJM_SYSVIP_MEMBERSTOCK_DEL')">
+					</c:if>
+					<c:if test="${it:checkPermit('QKJM_SYSVIP_MEMBERSTOCK_DEL',null)==true}">
 					<s:submit id="delete" name="delete" value="删除" action="memberStock_del" cssClass="input-red" onclick="return isDel();" />
-					</s:if>
-				</s:elseif>
+					</c:if>
+				</s:if>
 				<input type="button" value="返回" onclick="linkurl('<s:url action="memberStock_list" namespace="/sysvip" />');"  class="input-gray" />
         	</div>
     	</div>

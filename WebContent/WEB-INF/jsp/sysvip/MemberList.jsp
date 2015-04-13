@@ -1,7 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -17,9 +17,9 @@
  	<div class="tab_warp main" >
 <div class="dq_step">
 ${path}
-<s:if test="@org.iweb.sys.ContextHelper@checkPermit('SYSVIP_MEMBER_ADD')">
+<c:if test="${it:checkPermit('SYSVIP_MEMBER_ADD',null)==true}">
 	<span class="opb lb op-area"><a href="<s:url namespace="/sysvip" action="member_load"><s:param name="viewFlag">add</s:param></s:url>">添加会员</a></span>
-</s:if>
+</c:if>
 </div>
 	<s:form id="serachForm" name="serachForm"  method="get" namespace="/sysvip" theme="simple">
 <div class="label_con">
@@ -98,15 +98,15 @@ ${path}
 		<td class="td3">${dept_name}</td>
 		<td class="td2">${manager_name}</td>
 		<td class="td4 op-area">
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('SYSVIP_MEMBER_MDY')">
+			<c:if test="${it:checkPermit('SYSVIP_MEMBER_MDY',null)==true}">
 	    	<a class="input-blue" href="<s:url namespace="/sysvip" action="member_load"><s:param name="viewFlag">mdy</s:param><s:param name="member.uuid" value="uuid"></s:param></s:url>">修改</a>
-	    	</s:if>
-	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('SYSVIP_MEMBER_DEL')">
+	    	</c:if>
+	    	<c:if test="${it:checkPermit('SYSVIP_MEMBER_DEL',null)==true}">
 	    	<a class="input-red" href="<s:url namespace="/sysvip" action="member_del"><s:param name="member.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
-	    	</s:if>
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJM_SYSVIP_MEMBERSTOCK_LIST')">
+	    	</c:if>
+	    	<c:if test="${it:checkPermit('QKJM_SYSVIP_MEMBERSTOCK_LIST',null)==true}">
 				<a class="input-blue" href="javascript:;" onclick="linkurl('<s:url action="memberStock_out" namespace="/sysvip" ><s:param name="member.member_name" value="%{member_name}"></s:param><s:param name="member.uuid" value="%{uuid}"></s:param></s:url>');" >生成盘点模板</a>
-			</s:if>
+			</c:if>
 		</td>
 	    <td class="td0 op-area"><a onClick="showDetail('showtr${uuid}');" class="input-nostyle">查看</a></td>
 	  </tr>

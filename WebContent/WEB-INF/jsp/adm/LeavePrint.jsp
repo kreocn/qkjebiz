@@ -23,9 +23,7 @@
 				<input type="button" value="返回" onclick="location.href='<s:url action="leave_relist" namespace="/adm" />';" />
 			</s:if>
 			<s:else>
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_PERSONAL_WORKLIST')">
 				<input type="button" value="返回" onclick="location.href='<s:url namespace="/person" action="perWork_list"><s:param name="viewFlag">relist</s:param></s:url>';" />
-				</s:if>
 			</s:else>
 </div>
 <s:if test="leave.leave_type==0">
@@ -822,9 +820,7 @@
 				<input type="button" value="返回" onclick="location.href='<s:url action="leave_relist" namespace="/adm" />';" />
 			</s:if>
 			<s:else>
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_PERSONAL_WORKLIST')">
 				<input type="button" value="返回" onclick="location.href='<s:url namespace="/person" action="perWork_list"><s:param name="viewFlag">relist</s:param></s:url>';" />
-				</s:if>
 			</s:else>
 </div>
 </div></div></div>

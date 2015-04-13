@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -16,22 +17,18 @@
 	<div class="dq_step">
 		${path}
 			<span class="opb lb op-area">
-					<s:if test="sctype==0">
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SCHE_MANU_ADD')">
-					<a href="<s:url namespace="/sche" action="schedule_load"><s:param name="viewFlag">add</s:param><s:param name="sche.type">0</s:param></s:url>" >添加部门手册</a>
-					</s:if>
-					</s:if>
-					<s:if test="sctype==1">
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SCHE_COMP_ADD')">
-					<a href="<s:url namespace="/sche" action="schedule_load"><s:param name="viewFlag">add</s:param><s:param name="sche.type">1</s:param></s:url>" >添加公司制度</a>
-					</s:if>
-					</s:if>
-					<s:if test="sctype==2">
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SCHE_FILE_ADD')">
-					<a href="<s:url namespace="/sche" action="schedule_load"><s:param name="viewFlag">add</s:param><s:param name="sche.type">2</s:param></s:url>" >添加公司文件</a></s:if></s:if>
-					<s:if test="sctype==3">
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SCHE_UPSC_ADD')">
-					<a href="<s:url namespace="/sche" action="schedule_load"><s:param name="viewFlag">add</s:param><s:param name="sche.type">3</s:param></s:url>" >添加系统公告</a></s:if></s:if>
+					<c:if test="${sche.type==0 && it:checkPermit('QKJ_SCHE_MANU_ADD',null)==true}">
+						<a href="<s:url namespace="/sche" action="schedule_load"><s:param name="viewFlag">add</s:param><s:param name="sche.type">0</s:param></s:url>" >添加部门手册</a>
+					</c:if>
+					<c:if test="${sche.type==1 && it:checkPermit('QKJ_SCHE_COMP_ADD',null)==true}">
+						<a href="<s:url namespace="/sche" action="schedule_load"><s:param name="viewFlag">add</s:param><s:param name="sche.type">1</s:param></s:url>" >添加公司制度</a>
+					</c:if>
+					<c:if test="${sche.type==2 && it:checkPermit('QKJ_SCHE_FILE_ADD',null)==true}">
+						<a href="<s:url namespace="/sche" action="schedule_load"><s:param name="viewFlag">add</s:param><s:param name="sche.type">2</s:param></s:url>" >添加公司文件</a>
+					</c:if>
+					<c:if test="${sche.type==3 && it:checkPermit('QKJ_SCHE_UPSC_ADD',null)==true}">
+						<a href="<s:url namespace="/sche" action="schedule_load"><s:param name="viewFlag">add</s:param><s:param name="sche.type">3</s:param></s:url>" >添加系统公告</a>
+					</c:if>
 			</span>
 	</div>
 	<!-- 条件查询 -->
@@ -41,7 +38,7 @@
 			<div class="label_hang">
             <div class="label_ltit">主题:</div>
             <div class="label_rwben"><s:textfield title="标题" name="sche.title" />
-            <s:hidden name="sche.type" value="%{sctype }"/>
+            <s:hidden name="sche.type" value="%{sctype}"/>
             </div>
        		</div>
         	
@@ -98,49 +95,48 @@
 				</td>
 				<td class="td4 op-area">
 			    <s:if test="type==0">
-			    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SCHE_MANU_SAVE')">
+			    	<c:if test="${it:checkPermit('QKJ_SCHE_MANU_SAVE',null)==true}">
 			    	<a class="input-blue" href="<s:url namespace="/sche" action="schedule_load"><s:param name="viewFlag">mdy</s:param><s:param name="sche.uuid" value="uuid"></s:param></s:url>">修改</a>
-			    	</s:if>
-			    	<s:else>
+			    	</c:if>
+			    	<c:if test="${not it:checkPermit('QKJ_SCHE_MANU_SAVE',null)==true}">
 			    	<a class="input-blue" href="<s:url namespace="/sche" action="schedule_load"><s:param name="viewFlag">view</s:param><s:param name="sche.uuid" value="uuid"></s:param></s:url>">详情</a>
-			    	</s:else>
-			    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SCHE_MANU_DEL')">
+			    	</c:if>
+			    	<c:if test="${it:checkPermit('QKJ_SCHE_MANU_DEL',null)==true}">
 			    	<a class="input-red" href="<s:url namespace="/sche" action="schedule_del"><s:param name="sche.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
-			    	</s:if>
-			    
+			    	</c:if>			    
 			    </s:if>	
 			    <s:if test="type==1">
-			    <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SCHE_COMP_SAVE')">
+			    	<c:if test="${it:checkPermit('QKJ_SCHE_COMP_SAVE',null)==true}">
 			    	<a class="input-blue" href="<s:url namespace="/sche" action="schedule_load"><s:param name="viewFlag">mdy</s:param><s:param name="sche.uuid" value="uuid"></s:param></s:url>">修改</a>
-			    	</s:if>
-			    	<s:else>
+			    	</c:if>
+			    	<c:if test="${not it:checkPermit('QKJ_SCHE_COMP_SAVE',null)==true}">
 			    	<a class="input-blue" href="<s:url namespace="/sche" action="schedule_load"><s:param name="viewFlag">view</s:param><s:param name="sche.uuid" value="uuid"></s:param></s:url>">详情</a>
-			    	</s:else>
-			    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SCHE_COMP_DEL')">
+			    	</c:if>
+			    	<c:if test="${it:checkPermit('QKJ_SCHE_COMP_DEL',null)==true}">
 			    	<a class="input-red" href="<s:url namespace="/sche" action="schedule_del"><s:param name="sche.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
-			    	</s:if>
+			    	</c:if>
 			    </s:if>
 			    <s:if test="type==2">
-			    <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SCHE_FILE_SAVE')">
-			    	<a class="input-blue" href="<s:url namespace="/sche" action="schedule_load"><s:param name="viewFlag">mdy</s:param><s:param name="sche.uuid" value="uuid"></s:param></s:url>">修改</a>
-			    </s:if>
-			    	<s:else>
+			    	<c:if test="${it:checkPermit('QKJ_SCHE_FILE_SAVE',null)==true}">
+				    	<a class="input-blue" href="<s:url namespace="/sche" action="schedule_load"><s:param name="viewFlag">mdy</s:param><s:param name="sche.uuid" value="uuid"></s:param></s:url>">修改</a>
+				    </c:if>
+				    <c:if test="${not it:checkPermit('QKJ_SCHE_FILE_SAVE',null)==true}">
 			    	<a class="input-blue" href="<s:url namespace="/sche" action="schedule_load"><s:param name="viewFlag">view</s:param><s:param name="sche.uuid" value="uuid"></s:param></s:url>">详情</a>
-			    	</s:else>
-			    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SCHE_FILE_DEL')">
+			    	</c:if>
+			    	<c:if test="${it:checkPermit('QKJ_SCHE_FILE_DEL',null)==true}">
 			    	<a class="input-red" href="<s:url namespace="/sche" action="schedule_del"><s:param name="sche.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
-			    	</s:if>
+			    	</c:if>
 			    </s:if>
 			    <s:if test="type==3">
-			    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SCHE_UPSC_SAVE')">
+			    	<c:if test="${it:checkPermit('QKJ_SCHE_UPSC_SAVE',null)==true}">
 			    	<a class="input-blue" href="<s:url namespace="/sche" action="schedule_load"><s:param name="viewFlag">mdy</s:param><s:param name="sche.uuid" value="uuid"></s:param></s:url>">修改</a>
-			    	</s:if>
-			    	<s:else>
+			    	</c:if>
+			    	<c:if test="${not it:checkPermit('QKJ_SCHE_UPSC_SAVE',null)==true}">
 			    	<a class="input-blue" href="<s:url namespace="/sche" action="schedule_load"><s:param name="viewFlag">view</s:param><s:param name="sche.uuid" value="uuid"></s:param></s:url>">详情</a>
-			    	</s:else>
-			    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SCHE_UPSC_DEL')">
+			    	</c:if>
+			    	<c:if test="${it:checkPermit('QKJ_SCHE_UPSC_DEL',null)==true}">
 			    	<a class="input-red" href="<s:url namespace="/sche" action="schedule_del"><s:param name="sche.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
-			    	</s:if>
+			    	</c:if>
 			    </s:if>
 			    </td>
 			    <td class="td0 op-area"><a href="javascript:;" onClick="showDetail('showtr${uuid}');" class="input-nostyle">查看</a></td>

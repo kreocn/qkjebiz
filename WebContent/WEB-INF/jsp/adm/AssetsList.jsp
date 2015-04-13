@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -16,9 +17,9 @@
 	<div class="tab_warp main">
 	<div class="dq_step">
 		${path}
-		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_ASSETS_ADD')">
+		<c:if test="${it:checkPermit('QKJ_ADM_ASSETS_ADD',null)==true}">
 			<span class="opb lb op-area"><a href="<s:url namespace="/adm" action="assets_load"><s:param name="viewFlag">add</s:param></s:url>" >添加资产</a></span>
-		</s:if>
+		</c:if>
 	</div>
 	<s:form id="serachForm" name="serachForm" action="assets_list"  method="get" namespace="/adm" theme="simple">
 		<div class="label_con">
@@ -52,9 +53,9 @@
 				<div class="label_hang">
 				       <div class="label_ltit">剩余数量:</div>
 				       <div class="label_rwben">
-				       		<s:textfield name="assets.residue_num_begin" style="width:40%;float:left;"  title="剩余数量" cssClass="validate[custom[integer],maxSize[10]]" />
+				       		<s:textfield name="assets.residue_num_begin" cssStyle="width:40%;float:left;"  title="剩余数量" cssClass="validate[custom[integer],maxSize[10]]" />
 				       		<span style="float:left;">&nbsp;-&nbsp;</span>
-				       		<s:textfield name="assets.residue_num_end"  style="width:40%;float:left;" title="剩余数量" cssClass="validate[custom[integer],maxSize[10]]" />
+				       		<s:textfield name="assets.residue_num_end"  cssStyle="width:40%;float:left;" title="剩余数量" cssClass="validate[custom[integer],maxSize[10]]" />
 				       	</div>
 				</div>
 				<div class="label_hang label_button tac">
@@ -90,12 +91,12 @@
 						<td  class="td2">${price_scope}(${price})</td>
 						<td  class="td3">${it:formatDate(p_time,'yyyy-MM-dd')}</td>
 						<td  class="td4 op-area">
-							<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_ASSETS')">
+							<c:if test="${it:checkPermit('QKJ_ADM_ASSETS',null)==true}">
 					    	<a class="input-blue" href="<s:url namespace="/adm" action="assets_load"><s:param name="viewFlag">mdy</s:param><s:param name="assets.uuid" value="uuid"></s:param></s:url>">修改</a>
-					    	</s:if>
-					    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_ASSETS_DEL')">
+					    	</c:if>
+					    	<c:if test="${it:checkPermit('QKJ_ADM_ASSETS_DEL',null)==true}">
 					    	<a class="input-red" href="<s:url namespace="/adm" action="assets_del"><s:param name="assets.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
-					    	</s:if>
+					    	</c:if>
 						</td>
 						<td  class="td0 op-area"><a onclick="showDetail('showtr${uuid}');" href="javascript:;" class="input-nostyle">查看</a></td>
 		            </tr>

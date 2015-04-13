@@ -1,7 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -34,7 +34,7 @@
 		</div>
 		</div>
       </s:form>
-<s:if test="@org.iweb.sys.ContextHelper@checkPermit('SYS_MANAGER_SYS_PARAM_CACHE')">
+<c:if test="${it:checkPermit('SYS_MANAGER_SYS_PARAM_CACHE',null)==true}">
       <div class="label_main op-area">
        <div class="label_hang">
            <div class="label_ltit">其他操作:</div>
@@ -54,7 +54,7 @@
            <div id="info_message" class="label_rwbenx cr"></div>
 	</div>
 	</div>
-	</s:if>
+	</c:if>
 </div>
 </div>
 <s:action name="ref_foot" namespace="/manager" executeResult="true" />
