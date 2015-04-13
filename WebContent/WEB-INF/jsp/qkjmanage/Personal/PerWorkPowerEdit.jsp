@@ -30,7 +30,7 @@
 			<div class="label_main">
 			       	<div class="label_hang">
 			            <div class="label_ltit">菜单:</div>
-			            <div class="label_rwben label_rwb"><s:select onchange="checkStatus();" id="status"  cssClass="selectKick" headerKey="" headerValue="-请选择-" list="#{0:'活动',1:'至事由',2:'工时',3:'工业旅游'}" /></div>
+			            <div class="label_rwben label_rwb"><s:select onchange="checkStatus();" id="status"  cssClass="selectKick" headerKey="" headerValue="-请选择-" list="#{0:'活动',1:'至事由',2:'工时',3:'工业旅游',4:‘提货结案单',5:'促销活动'}" /></div>
 			        </div>
 		 	</div>
 			<div class="label_main">
@@ -61,7 +61,15 @@
 		        <div class="label_hang">
 		            <div class="label_ltit">查询条件:</div>
 		            <div class="label_rwbenx">
-		            	<s:textarea name="perWorkSelect.table_condition"  rows="3" title="查询字段" cssClass="label_hang_linput validate[required,maxSize[128]]" />
+		            	<s:textarea name="perWorkSelect.table_condition"  rows="3" title="查询字段" cssClass="label_hang_linput validate[required,maxSize[255]]" />
+		            </div>
+		        </div>
+		      </div>
+		      <div class="label_main">
+		        <div class="label_hang">
+		            <div class="label_ltit">备注:</div>
+		            <div class="label_rwbenx">
+		            	<s:textarea name="perWorkSelect.remark"  rows="3" title="备注" cssClass="label_hang_linput validate[required,maxSize[128]]" />
 		            </div>
 		        </div>
 		      </div>

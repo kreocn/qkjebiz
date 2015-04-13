@@ -44,7 +44,7 @@
 	
 	<insert id="personal_add" parameterClass="workPower">
 		<![CDATA[ 
-			INSERT INTO qkj_t_perWork (roles,table_name,table_field,table_condition,lm_user,lm_time) VALUES(#roles#,#table_name#,#table_field#,#table_condition#,#lm_user#,#lm_time#)
+			INSERT INTO qkj_t_perWork (roles,table_name,table_field,table_condition,lm_user,lm_time,remark,isValid) VALUES(#roles#,#table_name#,#table_field#,#table_condition#,#lm_user#,#lm_time#,#remark#,#isValid#)
 		]]>
 		<selectKey resultClass="int" keyProperty="uuid">
 		<![CDATA[ Select LAST_INSERT_ID() ]]>
@@ -59,7 +59,9 @@
 				table_field=#table_field#,
 				table_condition=#table_condition#,
 				lm_user=#lm_user#,
-				lm_time=#lm_time#
+				lm_time=#lm_time#,
+				remark=#remark#,
+				isValid=#isValid#
 			Where uuid = #uuid#
 		]]>
 	</update>

@@ -25,6 +25,17 @@ public class SalPromotAction extends ActionSupport implements ActionAttr {
 	private String checkstatus;
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;促销活动";
 	private int salstate;
+	// 个人工作标识
+	private static String perWorkFlag=null;
+	
+
+	public static String getPerWorkFlag() {
+		return perWorkFlag;
+	}
+
+	public static void setPerWorkFlag(String perWorkFlag) {
+		SalPromotAction.perWorkFlag = perWorkFlag;
+	}
 
 	public int getSalstate() {
 		return salstate;

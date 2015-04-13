@@ -19,9 +19,16 @@
 		<s:if test="salstate!=1">
 			${path} 
 			<span class="opb lb op-area">
-				<c:if test="${'view' != viewFlag && it:checkPermit('QKJ_SALPRO_SALPROMOT',null)==true}">
-				<a href="<s:url action="salPromot_list" namespace="/salpro"></s:url>">促销活动列表</a>
+				<s:if test="%{perWorkFlag=='null' || perWorkFlag==null}">
+				<c:if test="${it:checkPermit('QKJ_SALPRO_SALPROMOT_ADD',null)==true && 'view' != viewFlag}">
+					<a href="<s:url action="salPromot_list" namespace="/salpro"></s:url>">促销活动列表</a>
 				</c:if>
+				</s:if>
+				<s:else>
+					<c:if test="${it:checkPermit('QKJ_PERSONAL_WORKLIST',null)==true }">
+					<a class="input-gray" href="<s:url namespace="/person" action="perWork_list"><s:param name="viewFlag">relist</s:param></s:url>">返回个人工作列表</a>
+					</c:if>
+				</s:else>
 			</span>
 			</s:if>
 		</div>
@@ -156,8 +163,15 @@
 						<div class="label_rwbenx">
 							<span id="message"><s:property value="message" /></span>
 							<span class="opb lb op-area noprint"><input type="button" onclick="window.print();" value="打印本页"/>&nbsp;</span>
-							<input type="button" class="input-gray" value="返回"
-								onclick="linkurl('<s:url action="salPromot_list" namespace="/salpro"></s:url>');" />
+								
+								<s:if test="%{perWorkFlag=='null' || perWorkFlag==null}">
+									<input type="button" class="input-gray" value="返回" onclick="linkurl('<s:url action="salPromot_list" namespace="/salpro"><s:param name="salPromot.type" value="%{salPromot.type}"></s:param></s:url>');" />
+								</s:if>
+								<s:else>
+									<c:if test="${it:checkPermit('QKJ_PERSONAL_WORKLIST',null)==true }">
+									<input type="button" value="返回" onclick="linkurl('<s:url namespace="/person" action="perWork_list"><s:param name="viewFlag">relist</s:param></s:url>');" class="input-gray" />
+									</c:if>
+								</s:else>
 						</div>
 					</div>
 				</div>

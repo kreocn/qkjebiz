@@ -28,6 +28,7 @@
 			<th class="td1">权限</th>
 			<th class="td1">表名</th>
 			<th class="td2">查询字段</th>
+			<th class="td3">备注</th>
 			<th class="td4">操作</th>
 			<th class="td0">查看</th>
 	
@@ -38,6 +39,9 @@
 		  			<td class="td1 nw">${roles }</td>
 				    <td class="td1 longnote" title="${table_name}">${it:subString(table_name,18)}</td>
 				    <td class="td2 longnote">
+				    ${it:subString(table_field,18)}
+				    </td>
+				     <td class="td3 longnote">
 				    ${it:subString(table_field,18)}
 				    </td>
 					<td class="td4 op-area">

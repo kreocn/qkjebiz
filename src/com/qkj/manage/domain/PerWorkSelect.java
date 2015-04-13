@@ -10,6 +10,8 @@ public class PerWorkSelect {
 	private String table_condition;// 查询条件
 	private String lm_user;
 	private Date lm_time;
+	private String remark;
+	private Integer isValid;
 
 	public PerWorkSelect() {
 
@@ -76,6 +78,22 @@ public class PerWorkSelect {
 
 	public void setTable_condition(String table_condition) {
 		this.table_condition = table_condition;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public Integer getIsValid() {
+		return isValid;
+	}
+
+	public void setIsValid(Integer isValid) {
+		this.isValid = isValid;
 	}
 
 }

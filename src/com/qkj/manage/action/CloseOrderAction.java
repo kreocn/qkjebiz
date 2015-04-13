@@ -48,6 +48,17 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	private List<Approve> approves;
 	private String isApprover;
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;结案提货单";
+	// 个人工作标识
+	private static String perWorkFlag=null;
+		
+
+	public static String getPerWorkFlag() {
+		return perWorkFlag;
+	}
+
+	public static void setPerWorkFlag(String perWorkFlag) {
+		CloseOrderAction.perWorkFlag = perWorkFlag;
+	}
 
 	public List<CloseOrder> getAllsigns() {
 		return allsigns;

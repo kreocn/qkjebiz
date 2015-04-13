@@ -24,7 +24,18 @@
 		        <div class="label_hang">
 		            <div class="label_ltit">类型:</div>
 		            <div class="label_rwben label_rwb">
-		            	<s:textfield title="名称" name="perWork.ptype" />
+		            	<select name="perWork.ptype">
+		            	<option>--请选择--</option>
+						  <option value ="活动">活动</option>
+						  <option value ="至事由">至事由</option>
+						  <option value="出差">出差</option>
+						  <option value="请假">请假</option>
+						  <option value="加班">加班</option>
+						  <option value="换休">换休</option>
+						  <option value="工业旅游">工业旅游</option>
+						  <option value="提货结案单">提货结案单</option>
+						  <option value="促销活动">促销活动</option>
+						</select>
 		            </div>
 				</div>
 	        	

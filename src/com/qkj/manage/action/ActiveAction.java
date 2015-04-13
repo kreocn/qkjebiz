@@ -437,6 +437,12 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public void setUp(int up) {
 		this.up = up;
 	}
+	
+	@Override
+	public void validate() {
+		// TODO Auto-generated method stub
+		super.validate();
+	}
 
 	public String addPro() throws Exception {
 		try {

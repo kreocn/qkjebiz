@@ -22,6 +22,7 @@
 		${path}
 		(<s:if test="leave.leave_type==0">出差</s:if><s:if test="leave.leave_type==1">请假</s:if><s:if test="leave.leave_type==2">加班</s:if><s:if test="leave.leave_type==3">换休</s:if><s:if test="leave.leave_type==4">补签</s:if>)
 		<span class="opb lb op-area">
+		${perWorkFlag }aa
 			<s:if test="%{perWorkFlag=='null' || perWorkFlag==null}">
 				<a href="<s:url action="leave_relist" namespace="/adm" />">返回列表</a>
 			</s:if>

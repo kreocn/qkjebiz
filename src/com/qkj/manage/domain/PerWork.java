@@ -9,6 +9,7 @@ public class PerWork {
 	private String nameSpace;
 	private String upaction;
 	private String upUuid;
+	
 
 	public String getNameSpace() {
 		return nameSpace;
@@ -73,5 +74,6 @@ public class PerWork {
 	public void setApply_user_name(String apply_user_name) {
 		this.apply_user_name = apply_user_name;
 	}
+
 
 }
