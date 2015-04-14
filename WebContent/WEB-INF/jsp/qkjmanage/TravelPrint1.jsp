@@ -11,16 +11,7 @@
 <body>
 <div class="noprint input-a" style="text-align: center;">
   <input type="button" value="打印本页" onclick="window.print();" />
-  	<s:if test="%{perWorkFlag=='null' || perWorkFlag==null}">
-			<input type="button" value="返回" class="input-gray" onclick="location.href='<s:url action="travel_relist" namespace="/qkjmanage" />';" />
-	</s:if>
-	<s:else>
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_PERSONAL_WORKLIST')">
-					<input type="button" value="返回" class="input-gray" onclick="location.href='<s:url namespace="/person" action="perWork_list"><s:param name="viewFlag">relist</s:param></s:url>';" />
-			</s:if>
-	</s:else>
-						
-						
+  <input type="button" value="返回" class="input-gray" onclick="location.href='<s:url action="travel_relist" namespace="/qkjmanage" />';" />
 </div>
  <div class="danz_warp printmain">
   	<h2 class="danz_tit">接待(餐饮、住宿)申请单</h2>
@@ -160,14 +151,7 @@
 </div>
 <div class="noprint input-a" style="text-align: center;">
 	<input type="button" value="打印本页" onclick="window.print();" />
-	<s:if test="%{perWorkFlag=='null' || perWorkFlag==null}">
-			<input type="button" value="返回" class="input-gray" onclick="location.href='<s:url action="travel_relist" namespace="/qkjmanage" />';" />
-	</s:if>
-	<s:else>
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_PERSONAL_WORKLIST')">
-					<input type="button" value="返回" class="input-gray" onclick="location.href='<s:url namespace="/person" action="perWork_list"><s:param name="viewFlag">relist</s:param></s:url>';" />
-			</s:if>
-	</s:else>
+	<input type="button" value="返回" class="input-gray" onclick="location.href='<s:url action="travel_relist" namespace="/qkjmanage" />';" />
 </div>
 </body>
 </html>

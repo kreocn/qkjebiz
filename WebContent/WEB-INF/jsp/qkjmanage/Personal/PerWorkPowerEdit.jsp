@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -30,7 +30,7 @@
 			<div class="label_main">
 			       	<div class="label_hang">
 			            <div class="label_ltit">菜单:</div>
-			            <div class="label_rwben label_rwb"><s:select onchange="checkStatus();" id="status"  cssClass="selectKick" headerKey="" headerValue="-请选择-" list="#{0:'活动',1:'至事由',2:'工时',3:'工业旅游',4:‘提货结案单',5:'促销活动'}" /></div>
+			            <div class="label_rwben label_rwb"><s:select onchange="checkStatus();" id="status"  cssClass="selectKick" headerKey="" headerValue="-请选择-" list="#{0:'活动',1:'至事由',2:'工时',3:'工业旅游',4:'提货结案单',5:'促销活动'}" /></div>
 			        </div>
 		 	</div>
 			<div class="label_main">
@@ -53,7 +53,7 @@
 		        <div class="label_hang">
 		            <div class="label_ltit">查询字段:</div>
 		            <div class="label_rwbenx">
-		            	<s:textarea id="table_field" name="perWorkSelect.table_field"  rows="3" title="查询字段" cssClass="label_hang_linput validate[required,maxSize[255]]" />
+		            	<s:textarea id="table_field" name="perWorkSelect.table_field"  rows="3" title="查询字段" cssClass="label_hang_linput validate[required,maxSize[555]]" />
 		            </div>
 		        </div>
 		      </div>
@@ -69,7 +69,7 @@
 		        <div class="label_hang">
 		            <div class="label_ltit">备注:</div>
 		            <div class="label_rwbenx">
-		            	<s:textarea name="perWorkSelect.remark"  rows="3" title="备注" cssClass="label_hang_linput validate[required,maxSize[128]]" />
+		            	<s:textarea name="perWorkSelect.remark"  rows="3" title="备注" cssClass="label_hang_linput validate[maxSize[128]]" />
 		            </div>
 		        </div>
 		      </div>
@@ -79,17 +79,17 @@
 		            <div class="label_rwbenx">
 		            <span id="message"><s:property value="message" /></span>
 		            	<s:if test="null == perWorkSelect && 'add' == viewFlag">
-		            	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_PERSONAL_POWER_ADD')">
+		            	<c:if test="${ it:checkPermit('QKJ_PERSONAL_POWER_ADD',null)==true}">
 						<s:submit id="add" name="add" value="确定" action="perWorkPower_add" cssClass="input-blue"/>
-						</s:if>
+						</c:if>
 						</s:if>
 						<s:elseif test="null != perWorkSelect && 'mdy' == viewFlag">
-						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_PERSONAL_POWER_MDY')">
+						<c:if test="${ it:checkPermit('QKJ_PERSONAL_POWER_MDY',null)==true}">
 						<s:submit id="save" name="save" value="保存" action="perWorkPower_save" cssClass="input-blue"/>
-						</s:if>
-						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_PERSONAL_POWER_DEL')">
+						</c:if>
+						<c:if test="${ it:checkPermit('QKJ_PERSONAL_POWER_DEL',null)==true}">
 						<s:submit id="delete" name="delete" value="删除" action="perWorkPower_del" onclick="return isDel();" cssClass="input-red"/>
-						</s:if>
+						</c:if>
 						</s:elseif>
 						<input type="button" value="返回" onclick="linkurl('<s:url action="perWorkPower_list" namespace="/person" />');" />
 						
@@ -113,11 +113,21 @@ function checkStatus(){
 	}
 	else if(s==2 || s=='2'){
 		$("#table_name").val(" qkja_r_leave l  LEFT JOIN s_sys_user u ON (l.leave_user=u.`UUID`)  ");
-		$("#table_field").val(" l.uuid perUuid,l.leave_dept apply_dept,l.cause title,u.`USER_NAME` apply_user_name, CASE l.`leave_type` WHEN 0 THEN '出差' WHEN 1 THEN '请假' WHEN 2 THEN '加班' WHEN 3 THEN '换休' END AS ptype,'/adm' AS nameSpace,'leave_load' AS upaction, 'leave.uuid' AS upUuid ");
+		$("#table_field").val(" l.uuid perUuid,l.leave_dept apply_dept,CONCAT_WS(':',l.`leave_start`,l.`leave_start_time`,'-',l.`leave_end`,l.`leave_end_time`,'共',l.`totle`,'天') AS title,u.`USER_NAME` apply_user_name, CASE l.`leave_type` WHEN 0 THEN '出差' WHEN 1 THEN '请假' WHEN 2 THEN '加班' WHEN 3 THEN '换休' END AS ptype,'/adm' AS nameSpace,'leave_load' AS upaction, 'leave.uuid' AS upUuid ");
 	}
 	else if(s==3 || s=='3'){
 		$("#table_name").val(" qkjm_r_travel tl LEFT JOIN s_sys_user u ON(tl.`apply_user`=u.`UUID`)  ");
 		$("#table_field").val(" tl.`uuid` perUuid,tl.`apply_dept` apply_dept,tl.`members_names` title,u.`USER_NAME` apply_user_name,'工业旅游' AS ptype,'/qkjmanage' AS nameSpace,'travel_load' AS upaction, 'travel.uuid' AS upUuid ");
+	}
+	
+	else if(s==4 || s=='4'){
+		$("#table_name").val(" qkjm_r_closeorder cl LEFT JOIN s_sys_user u ON(cl.`add_user`=u.`UUID`)  ");
+		$("#table_field").val(" cl.`uuid` perUuid,cl.`apply_dept` apply_dept,cl.theme title,u.`USER_NAME` apply_user_name,'提货结案单' AS ptype,'/qkjmanage' AS nameSpace,'closeOrder_load' AS upaction, 'closeOrder.uuid' AS upUuid ");
+	}
+	
+	else if(s==5 || s=='5'){
+		$("#table_name").val(" qkjm_r_salpromotion sl LEFT JOIN s_sys_user u ON(sl.`add_user`=u.`UUID`)  ");
+		$("#table_field").val(" sl.`uuid` perUuid,sl.`add_user_dept` apply_dept,sl.sal_title title,u.`USER_NAME` apply_user_name,'促销活动' AS ptype,'/salpro' AS nameSpace,'salPromot_load' AS upaction, 'salPromot.uuid' AS upUuid ");
 	}
 }
 </script>

@@ -166,10 +166,10 @@ max-width: 650px !important;
 		</td>
 		<td  class="td4 op-area">
 			<c:if test="${it:checkPermit('QKJ_ADM_LEAVE',null)==true}">
-	    	<a class="input-blue" href="<s:url namespace="/adm" action="leave_load"><s:param name="perWorkFlag">null</s:param><s:param name="viewFlag">mdy</s:param><s:param name="leave.uuid" value="uuid"></s:param></s:url>">修改</a>
+	    	<a class="input-blue" href="<s:url namespace="/adm" action="leave_load"><s:param name="viewFlag">mdy</s:param><s:param name="leave.uuid" value="uuid"></s:param></s:url>">修改</a>
 	    	</c:if>
 	    	<s:if test="check_status>=20">
-	    	<a class="input-gray" href="<s:url namespace="/adm" action="leave_print"><s:param name="perWorkFlag">null</s:param><s:param name="leave.uuid" value="uuid" /><s:param name="leave.leave_type" value="leave_type" /></s:url>">打印</a>
+	    	<a class="input-gray" href="<s:url namespace="/adm" action="leave_print"><s:param name="leave.uuid" value="uuid" /><s:param name="leave.leave_type" value="leave_type" /></s:url>">打印</a>
 	    	</s:if>
 	    	<c:if test="${check_status<=5 && it:checkPermit('QKJ_ADM_LEAVE_DEL',null)==true}">
 	    	<a class="input-red" href="<s:url namespace="/adm" action="leave_del"><s:param name="leave.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>

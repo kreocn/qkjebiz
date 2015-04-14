@@ -41,8 +41,17 @@ public class TravelAction extends ActionSupport {
 	private int currPage;
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;工业旅游申请列表";
 	// 个人工作标识
+	private String perWorkF;
 	private static String perWorkFlag=null;
 	
+	public String getPerWorkF() {
+		return perWorkF;
+	}
+
+	public void setPerWorkF(String perWorkF) {
+		this.perWorkF = perWorkF;
+	}
+
 	public static String getPerWorkFlag() {
 		return perWorkFlag;
 	}
@@ -139,7 +148,12 @@ public class TravelAction extends ActionSupport {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
 		}
-		return SUCCESS;
+		if(perWorkFlag==null || perWorkFlag.equals("null")){
+			return "success";
+		}else{
+			perWorkFlag=null;
+			return "perSuccess";
+		}
 	}
 
 	public String relist() throws Exception {
@@ -147,6 +161,11 @@ public class TravelAction extends ActionSupport {
 	}
 
 	public String load() throws Exception {
+		if((perWorkF==null || perWorkF.equals("null")) && perWorkFlag==null){
+			perWorkFlag=null;
+		}else{
+			perWorkFlag="perWork";
+		}
 		try {
 			if ("add".equals(viewFlag)) {
 				// this.setTravel(null);

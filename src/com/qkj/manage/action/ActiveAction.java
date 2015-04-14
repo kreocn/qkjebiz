@@ -88,7 +88,16 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	private int nextFlag;
 	private int nextUuid = 0;
 	// 个人工作标识
+	private String perWorkF;
 	private static String perWorkFlag=null;
+
+	public String getPerWorkF() {
+		return perWorkF;
+	}
+
+	public void setPerWorkF(String perWorkF) {
+		this.perWorkF = perWorkF;
+	}
 
 	public static String getPerWorkFlag() {
 		return perWorkFlag;
@@ -553,10 +562,21 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
 		}
-		return SUCCESS;
+		if(perWorkFlag==null || perWorkFlag.equals("null")){
+			return "success";
+		}else{
+			perWorkFlag=null;
+			return "perSuccess";
+		}
 	}
 
 	public String load() throws Exception {
+		if((perWorkF==null || perWorkF.equals("null")) && perWorkFlag==null){
+			perWorkFlag=null;
+		}else{
+			this.setNextUuid(0);
+			perWorkFlag="perWork";
+		}
 		try {
 			if (null == viewFlag) {
 				this.setActive(null);
@@ -1365,6 +1385,12 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	/*********************************************************************/
 	public String closeLoad() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE");
+		if((perWorkF==null || perWorkF.equals("null")) && perWorkFlag==null){
+			perWorkFlag=null;
+		}else{
+			this.setNextUuid(0);
+			perWorkFlag="perWork";
+		}
 		try {
 			if (!(active == null || active.getUuid() == null)) {
 				this.setActive((Active) dao.get(active.getUuid()));

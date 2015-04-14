@@ -103,12 +103,12 @@
 	            		</td>
 	            		<td  class="td4 op-area nw">
 	            				<c:if test="${it:checkPermit('QKJ_QKJMANAGE_TRAVEL',null)==true}">
-				    	    		<a class="input-blue"  href="<s:url namespace="/qkjmanage" action="travel_load"><s:param name="perWorkFlag">null</s:param><s:param name="viewFlag">mdy</s:param><s:param name="travel.uuid" value="uuid"></s:param></s:url>">修改</a>
+				    	    		<a class="input-blue"  href="<s:url namespace="/qkjmanage" action="travel_load"><s:param name="viewFlag">mdy</s:param><s:param name="travel.uuid" value="uuid"></s:param></s:url>">修改</a>
 				    	    	</c:if>
 				    	    	<c:if test="${check_status>=30 && acheck_status>=10 && it:checkPermit('QKJ_QKJMANAGE_TRAVEL_DEL',null)==true}">
-					                <a class="input-gray"  href="<s:url namespace="/qkjmanage" action="travel_load"><s:param name="perWorkFlag">null</s:param><s:param name="viewFlag">print1</s:param><s:param name="travel.uuid" value="uuid" /></s:url>">打印1</a>
-					                <a class="input-gray" href="<s:url namespace="/qkjmanage" action="travel_load"><s:param name="perWorkFlag">null</s:param><s:param name="viewFlag">print2</s:param><s:param name="travel.uuid" value="uuid" /></s:url>">打印2</a>
-					                <a class="input-gray" href="<s:url namespace="/qkjmanage" action="travel_load"><s:param name="perWorkFlag">null</s:param><s:param name="viewFlag">print3</s:param><s:param name="travel.uuid" value="uuid" /></s:url>">打印客户表</a>
+					                <a class="input-gray"  href="<s:url namespace="/qkjmanage" action="travel_load"><s:param name="viewFlag">print1</s:param><s:param name="travel.uuid" value="uuid" /></s:url>">打印1</a>
+					                <a class="input-gray" href="<s:url namespace="/qkjmanage" action="travel_load"><s:param name="viewFlag">print2</s:param><s:param name="travel.uuid" value="uuid" /></s:url>">打印2</a>
+					                <a class="input-gray" href="<s:url namespace="/qkjmanage" action="travel_load"><s:param name="viewFlag">print3</s:param><s:param name="travel.uuid" value="uuid" /></s:url>">打印客户表</a>
 				                </c:if>
 				                <c:if test="${(check_status<=5 || acheck_status<=5) && it:checkPermit('QKJ_QKJMANAGE_TRAVEL_DEL',null)==true}">
 				      	    		<a class="input-red" href="<s:url namespace="/qkjmanage" action="travel_del"><s:param name="travel.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>

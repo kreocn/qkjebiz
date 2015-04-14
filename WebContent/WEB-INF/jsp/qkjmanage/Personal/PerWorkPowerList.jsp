@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -16,9 +16,9 @@
 		<div class="dq_step">
 			${path}
 			<span class="opb lb op-area">
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_PERSONAL_POWER_ADD')">
+				<c:if test="${ it:checkPermit('QKJ_PERSONAL_POWER_ADD',null)==true}">
 				<a href="<s:url namespace="/person" action="perWorkPower_load"><s:param name="viewFlag">add</s:param></s:url>" >添加权限</a>
-				</s:if>
+				</c:if>
 	     		</span>
 		</div>
 		<div class="tab_warp">
@@ -42,7 +42,7 @@
 				    ${it:subString(table_field,18)}
 				    </td>
 				     <td class="td3 longnote">
-				    ${it:subString(table_field,18)}
+				    ${it:subString(remark,18)}
 				    </td>
 					<td class="td4 op-area">
 				    	<a class="input-blue" href="<s:url namespace="/person" action="perWorkPower_load"><s:param name="viewFlag">mdy</s:param><s:param name="perWorkSelect.uuid" value="uuid"></s:param></s:url>">修改</a>

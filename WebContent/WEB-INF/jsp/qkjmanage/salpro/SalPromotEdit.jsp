@@ -18,17 +18,9 @@
 		<div class="dq_step">
 			${path} 
 			<span class="opb lb op-area">
-				<s:if test="%{perWorkFlag=='null' || perWorkFlag==null}">
 				<c:if test="${it:checkPermit('QKJ_SALPRO_SALPROMOT_ADD',null)==true && 'view' != viewFlag}">
 					<a href="<s:url action="salPromot_list" namespace="/salpro"></s:url>">促销活动列表</a>
 				</c:if>
-				</s:if>
-				<s:else>
-					<c:if test="${it:checkPermit('QKJ_PERSONAL_WORKLIST',null)==true }">
-					<a class="input-gray" href="<s:url namespace="/person" action="perWork_list"><s:param name="viewFlag">relist</s:param></s:url>">返回个人工作列表</a>
-					</c:if>
-				</s:else>
-				
 			</span>
 		</div>
 		<!-- 页面修改 -->
@@ -252,16 +244,9 @@
 							</c:if>
 							
 							
-							<s:if test="%{perWorkFlag=='null' || perWorkFlag==null}">
 							<s:if test="'view' != viewFlag">
 								<input type="button" class="input-gray" value="返回" onclick="linkurl('<s:url action="salPromot_list" namespace="/salpro"><s:param name="salPromot.type" value="%{salPromot.type}"></s:param></s:url>');" />
 							</s:if>
-							</s:if>
-							<s:else>
-								<c:if test="${it:checkPermit('QKJ_PERSONAL_WORKLIST',null)==true }">
-								<input type="button" value="返回" onclick="linkurl('<s:url namespace="/person" action="perWork_list"><s:param name="viewFlag">relist</s:param></s:url>');" class="input-gray" />
-								</c:if>
-							</s:else>
 						</div>
 					</div>
 				</div>

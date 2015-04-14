@@ -20,20 +20,7 @@
 	<div class="dq_step">
 		${path}
 		<span class="opb lb op-area">
-		
-		<s:if test="%{perWorkFlag=='null' || perWorkFlag==null}">
 				<a href="<s:url namespace="/qkjmanage" action="travel_list"><s:param name="viewFlag">relist</s:param></s:url>">工业旅游申请列表</a>
-			</s:if>
-			<s:else>
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_PERSONAL_WORKLIST')">
-				<a href="<s:url namespace="/person" action="perWork_list"><s:param name="viewFlag">relist</s:param></s:url>">返回个人工作列表</a>
-				</s:if>
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_TRAVEL_DEL') && travel.check_status>=30 && travel.acheck_status>=10">
-				                <a class="input-gray"  href="<s:url namespace="/qkjmanage" action="travel_load"><s:param name="viewFlag">print1</s:param><s:param name="travel.uuid" value="travel.uuid" /></s:url>">打印1</a>
-				                <a class="input-gray" href="<s:url namespace="/qkjmanage" action="travel_load"><s:param name="viewFlag">print2</s:param><s:param name="travel.uuid" value="travel.uuid" /></s:url>">打印2</a>
-				                <a class="input-gray" href="<s:url namespace="/qkjmanage" action="travel_load"><s:param name="viewFlag">print3</s:param><s:param name="travel.uuid" value="travel.uuid" /></s:url>">打印客户表</a>
-				</s:if>
-			</s:else>
 		</span>
 	</div>
 	<s:form id="formEdit" name="form1" cssClass="validForm" action="travel_add" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
@@ -363,15 +350,7 @@
 		                  </s:if>
 		                </s:else>
 		              </s:elseif> 
-		                
-		                <s:if test="%{perWorkFlag=='null' || perWorkFlag==null}">
 						<input type="button" class="input-gray" value="返回" onclick="location.href='<s:url action="travel_relist" namespace="/qkjmanage" />';" />
-						</s:if>
-						<s:else>
-							<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_PERSONAL_WORKLIST')">
-							<input type="button" value="返回" onclick="linkurl('<s:url namespace="/person" action="perWork_list"><s:param name="viewFlag">relist</s:param></s:url>');" class="input-gray" />
-							</s:if>
-						</s:else>
 		                <span id="message"><s:property value="message" /></span> 
 					</div>
 				</div>

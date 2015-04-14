@@ -38,7 +38,16 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 	private int currPage;
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;至事由管理";
 	// 个人工作标识
+	private String perWorkF;
 	private static String perWorkFlag;
+
+	public String getPerWorkF() {
+		return perWorkF;
+	}
+
+	public void setPerWorkF(String perWorkF) {
+		this.perWorkF = perWorkF;
+	}
 
 	public static String getPerWorkFlag() {
 		return perWorkFlag;
@@ -172,7 +181,12 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
 		}
-			return SUCCESS;
+		if(perWorkFlag==null || perWorkFlag.equals("null")){
+			return "success";
+		}else{
+			perWorkFlag=null;
+			return "perSuccess";
+		}
 	}
 
 	public String relist() throws Exception {
@@ -181,6 +195,11 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 
 	public String load() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_VIEW");
+		if((perWorkF==null || perWorkF.equals("null")) && perWorkFlag==null){
+			perWorkFlag=null;
+		}else{
+			perWorkFlag="perWork";
+		}
 		try {
 			if (null == viewFlag) {
 				this.setApply(null);

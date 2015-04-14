@@ -28,9 +28,9 @@
 		            	<option>--请选择--</option>
 						  <option value ="活动">活动</option>
 						  <option value ="至事由">至事由</option>
-						  <option value="出差">出差</option>
+						 
 						  <option value="请假">请假</option>
-						  <option value="加班">加班</option>
+						  
 						  <option value="换休">换休</option>
 						  <option value="工业旅游">工业旅游</option>
 						  <option value="提货结案单">提货结案单</option>
@@ -55,7 +55,7 @@
 	 		<tr id="coltr">
 	 		<th class="td1">编号</th>
 			<th class="td1">类型</th>
-			<th class="td1">主题</th>
+			<th class="td1">审核内容</th>
 			<th class="td2">申请人</th>
 			<th class="td4">操作</th>
 			<th class="td0">查看</th>
@@ -71,7 +71,7 @@
 				    </td>
 				    
 					<td class="td4 op-area">
-				    	<a class="input-blue" href="<s:url namespace="%{nameSpace }" action="%{upaction }"><s:param name="viewFlag">mdy</s:param><s:param name="%{upUuid }" value="perUuid"></s:param><s:param name="perWorkFlag" value="true"></s:param></s:url>">修改</a>
+				    	<a class="input-blue" href="<s:url namespace="%{nameSpace }" action="%{upaction }"><s:param name="perWorkF">mdy</s:param><s:param name="viewFlag">mdy</s:param><s:param name="%{upUuid }" value="perUuid"></s:param></s:url>">修改</a>
 				    </td>
 				    <td class="td0 op-area"><a onClick="showDetail('showtr${perUuid}');" class="input-nostyle">查看</a></td>
 		  		</tr>

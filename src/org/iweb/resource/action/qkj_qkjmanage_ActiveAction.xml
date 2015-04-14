@@ -6,6 +6,9 @@
 	<package name="qkjmanage_active" extends="default" namespace="/qkjmanage">
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- Active Start -->
+		<action name="perWork_list" class="com.qkj.manage.action.PerWorkAction" method="list">
+			<result>/WEB-INF/jsp/qkjmanage/Personal/PerWorkList.jsp</result>
+		</action>
 		<action name="active_addProduct" class="com.qkj.manage.action.ActiveAction" method="addPro">
 			<result>/WEB-INF/jsp/qkjmanage/AddPro.jsp</result>
 		</action>
@@ -13,7 +16,11 @@
 			<result>/WEB-INF/jsp/qkjmanage/ActiveHistory.jsp</result>
 		</action>
 		<action name="active_list" class="com.qkj.manage.action.ActiveAction" method="list">
-			<result>/WEB-INF/jsp/qkjmanage/ActiveList.jsp</result>
+			<result name="success">/WEB-INF/jsp/qkjmanage/ActiveList.jsp</result>
+			<result name="perSuccess"  type="redirectAction">
+				<param name="actionName">perWork_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
 		</action>
 		<action name="active_nextList" class="com.qkj.manage.action.ActiveAction" method="nextList">
 			<result type="redirectAction">

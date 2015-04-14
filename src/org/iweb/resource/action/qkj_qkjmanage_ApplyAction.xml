@@ -6,8 +6,15 @@
 	<package name="qkjmanage_apply" extends="default" namespace="/qkjmanage">
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- Apply Start -->
+		<action name="perWork_list" class="com.qkj.manage.action.PerWorkAction" method="list">
+			<result>/WEB-INF/jsp/qkjmanage/Personal/PerWorkList.jsp</result>
+		</action>
 		<action name="apply_list" class="com.qkj.manage.action.ApplyAction" method="list">
-			<result>/WEB-INF/jsp/qkjmanage/ApplyList.jsp</result>
+			<result name="success">/WEB-INF/jsp/qkjmanage/ApplyList.jsp</result>
+			<result name="perSuccess"  type="redirectAction">
+				<param name="actionName">perWork_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
 		</action>
 		<action name="apply_relist" class="com.qkj.manage.action.ApplyAction" method="relist">
 			<result type="redirectAction">

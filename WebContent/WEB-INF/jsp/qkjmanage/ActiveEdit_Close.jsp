@@ -117,16 +117,7 @@
 			<div class="opb lb op-area noprint">
 				<p class="more_j">更多操作</p>
 				<div class="mcz_list subHide">
-					
-					<s:if test="%{perWorkFlag==null || perWorkFlag=='null'}">
 					<a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a>
-					</s:if>
-					<s:else>
-					<c:if test="${it:checkPermit('QKJ_PERSONAL_WORKLIST',null)==true}">
-					<a class="input-gray" href="<s:url namespace="/person" action="perWork_list"><s:param name="viewFlag">relist</s:param></s:url>">返回个人工作列表</a>
-					</c:if>
-					</s:else>
-					
 					<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVE_HISTORY',null)==true}">
 						<!-- <a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_history"><s:param name="active.uuid" value="active.uuid" /></s:url>">查看操作记录</a> -->
 						<a href="javascript:;" onclick="openCustomerView(${active.uuid});">查看操作记录</a>
@@ -831,16 +822,7 @@
 							<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVE_HISTORY',null)==true}">
 								<input type="button" value="查看操作记录" class="input-gray" onclick="openCustomerView(${active.uuid});" />
 							</c:if>
-							
-							<s:if test="%{perWorkFlag==null || perWorkFlag=='null'}">
 							<input type="button" class="input-gray" value="返回" onclick="linkurl('<s:url action="active_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');" />
-							</s:if>
-							<s:else>
-							<c:if test="${it:checkPermit('QKJ_PERSONAL_WORKLIST',null)==true}">
-							<input type="button" class="input-gray" value="返回" onclick="linkurl('<s:url action="perWork_list" namespace="/person"><s:param name="viewFlag">relist</s:param></s:url>');" />
-							</c:if>
-							</s:else>
-							
 							<c:if test="${active.status==4 && it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_TH',null)==true}">
 								<s:submit cssClass="input-red" name="mdyCloseActiveSDStatus5" value="退回" action="mdycloseTH" onclick="return isOp('确定执行此操作?将退回到未审核状态');" />
 							</c:if>
@@ -1181,8 +1163,7 @@
 		<script type="text/javascript">
 		function checks(){
 			var n=${nextUuid};
-			var f=${perWorkFlag};
-			if(n!=0&&(f==null || f=='null')){
+			if(n!=0){
 				if(confirm("操作成功,是否跳转下一条？")){
 					 location.href="/qkjmanage/active_nextListClose?befUid="+${active.uuid}+"&viewFlag='relist'";
 				}

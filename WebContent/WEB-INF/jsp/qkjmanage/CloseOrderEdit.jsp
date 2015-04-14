@@ -44,14 +44,7 @@
 	<div class="tab_warp main">
 		<div class="dq_step">${path}
 			<span class="opb lb op-area">
-			<s:if test="%{perWorkFlag=='null' || perWorkFlag==null}">
 				<a href="<s:url action="closeOrder_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a>
-			</s:if>
-			<s:else>
-					<c:if test="${it:checkPermit('QKJ_PERSONAL_WORKLIST',null)==true }">
-							<a class="input-gray" href="<s:url namespace="/person" action="perWork_list"><s:param name="viewFlag">relist</s:param></s:url>">返回个人工作列表</a>
-					</c:if>
-			</s:else>
 			</span>
 			 <span class="opb lb op-area">
 			 <s:if test="closeOrder.check_state>=1">
@@ -367,15 +360,7 @@
 							<s:if test="closeOrder.check_state>30">
 								<input type="button" onclick="linkurl('<s:url namespace="/qkjmanage" action="closeOrder_view"><s:param name="closeOrder.uuid" value="closeOrder.uuid" /></s:url>');" value="转到打印页面" />
 							</s:if>
-							
-							<s:if test="%{perWorkFlag=='null' || perWorkFlag==null}">
 								<input type="button" value="返回" onclick="linkurl('<s:url action="closeOrder_relist" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');" class="input-gray" />
-							</s:if>
-							<s:else>
-								<c:if test="${it:checkPermit('QKJ_PERSONAL_WORKLIST',null)==true }">
-								<input type="button" value="返回" onclick="linkurl('<s:url namespace="/person" action="perWork_list"><s:param name="viewFlag">relist</s:param></s:url>');" class="input-gray" />
-								</c:if>
-							</s:else>
 						</div>
 					</div>
 				</div>

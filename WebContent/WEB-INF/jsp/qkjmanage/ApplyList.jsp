@@ -153,7 +153,6 @@ display: none;
 					</span>
 					</s:if>
 				</td>
-				<td class="td4 op-area">
 				<td class="td4 op-area">				
 					<c:if test="${it:checkPermit('QKJ_QKJMANAGE_APPLY_VIEW',null)==true}">
 						<s:if test="status>=30">
