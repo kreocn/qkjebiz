@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -15,9 +16,11 @@
 <div class="tab_right">
 	<div class="tab_warp main">
 		<div class="dq_step">
-			${path} <span class="opb lb op-area"> <s:if test="'view' != viewFlag && @org.iweb.sys.ContextHelper@checkPermit('QKJ_SALPRO_SALPROMOT')">
+			${path} 
+			<span class="opb lb op-area">
+				<c:if test="${it:checkPermit('QKJ_SALPRO_SALPROMOT_ADD',null)==true && 'view' != viewFlag}">
 					<a href="<s:url action="salPromot_list" namespace="/salpro"></s:url>">促销活动列表</a>
-				</s:if>
+				</c:if>
 			</span>
 		</div>
 		<!-- 页面修改 -->
@@ -202,52 +205,45 @@
 						<div class="label_ltit">相关操作:</div>
 						<div class="label_rwbenx">
 							<span id="message"><s:property value="message" /></span>
-							<s:if test="null == salPromot  && 'add' == viewFlag && @org.iweb.sys.ContextHelper@checkPermit('QKJ_SALPRO_SALPROMOT_ADD')">
+							<c:if test="${null == salPromot  && 'add' == viewFlag && it:checkPermit('QKJ_SALPRO_SALPROMOT_ADD',null)==true}">
 								<s:submit id="add" name="add" value="确定" action="salPromot_add" cssClass="input-blue" onclick="return check();" />
-							</s:if>
-							<s:elseif test="null != salPromot && salPromot.status==0 && 'mdy' == viewFlag">
-								<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SALPRO_SALPROMOT_MDY')">
+							</c:if>
+							<s:if test="null != salPromot && salPromot.status==0 && 'mdy' == viewFlag">
+								<c:if test="${it:checkPermit('QKJ_SALPRO_SALPROMOT_MDY',null)==true}">
 									<s:submit id="save" name="save" value="保存" action="salPromot_save" cssClass="input-blue" onclick="return check();" />
-								</s:if>
-								<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SALPRO_SALPROMOT_SDSTATUS1')">
+								</c:if>
+								<c:if test="${it:checkPermit('QKJ_SALPRO_SALPROMOT_SDSTATUS1',null)==true}">
 									<s:submit id="mdyStatus0" name="mdyStatus0" value="报审" action="salPromot_status1" onclick="return isOp('确定执行此操作?');" cssClass="input-yellow" />
-								</s:if>
-							</s:elseif>
+								</c:if>
+							</s:if>
 							<s:if test="null != salPromot && salPromot.status>=1 && 'mdy' == viewFlag">
 								<!-- 审核中 -->
-								<s:if test="salPromot.smd_status==0 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_SALPRO_SALPROMOT_SMDSTATUS20')">
+								<c:if test="${salPromot.smd_status==0 && it:checkPermit('QKJ_SALPRO_SALPROMOT_SMDSTATUS20',null)==true}">
 									<s:submit id="mdyStatus20" name="mdyStatus20" value="经理/大区审核通过" action="salPromot_smdstatus20" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
 									<s:submit id="mdyStatus5" name="mdyStatus5" value="审核不通过" action="salPromot_smdstatus5" onclick="return isOp('确定执行此操作?');" cssClass="input-red" />
-								</s:if>
-								<s:if test="salPromot.smd_status==20 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_SALPRO_SALPROMOT_SMDSTATUS30')">
+								</c:if>
+								<c:if test="${salPromot.smd_status==20 && it:checkPermit('QKJ_SALPRO_SALPROMOT_SMDSTATUS30',null)==true}">
 									<s:submit id="mdysdStatus30" name="mdysdStatus30" value="运营总监审核通过" action="salPromot_smdstatus30" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
 									<s:submit id="mdysdStatus5" name="mdysdStatus5" value="审核不通过" action="salPromot_smdstatus5" onclick="return isOp('确定执行此操作?');" cssClass="input-red" />
-								</s:if>
-
-								<s:if test="salPromot.smd_status==30 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_SALPRO_SALPROMOT_SMDSTATUS40')">
+								</c:if>
+								<c:if test="${salPromot.smd_status==30 && it:checkPermit('QKJ_SALPRO_SALPROMOT_SMDSTATUS40',null)==true}">
 									<s:submit id="mdysdStatus40" name="mdysdStatus40" value="业务副总审核通过" action="salPromot_smdstatus40" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
 									<s:submit id="mdysdStatus5" name="mdysdStatus5" value="审核不通过" action="salPromot_smdstatus5" onclick="return isOp('确定执行此操作?');" cssClass="input-red" />
-								</s:if>
-
-								<s:if test="salPromot.smd_status==40 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_SALPRO_SALPROMOT_SMDSTATUS50')">
+								</c:if>
+								<c:if test="${salPromot.smd_status==40 && it:checkPermit('QKJ_SALPRO_SALPROMOT_SMDSTATUS50',null)==true}">
 									<s:submit id="mdysdStatus50" name="mdysdStatus50" value="销管副总审核通过" action="salPromot_smdstatus50" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
 									<s:submit id="mdysdStatus5" name="mdysdStatus5" value="审核不通过" action="salPromot_smdstatus5" onclick="return isOp('确定执行此操作?');" cssClass="input-red" />
-								</s:if>
-
-								<s:if test="salPromot.smd_status==50 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_SALPRO_SALPROMOT_SMDSTATUS60')">
+								</c:if>
+								<c:if test="${salPromot.smd_status==50 && it:checkPermit('QKJ_SALPRO_SALPROMOT_SMDSTATUS60',null)==true}">
 									<s:submit id="mdysdStatus60" name="mdysdStatus60" value="总经理审核通过" action="salPromot_smdstatus60" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
 									<s:submit id="mdysdStatus5" name="mdysdStatus5" value="审核不通过" action="salPromot_smdstatus5" onclick="return isOp('确定执行此操作?');" cssClass="input-red" />
-								</s:if>
-
-								<!--<s:if test="salPromot.smd_status==20 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_SALPRO_SALPROMOT_SDSTATUS30')">
-								<s:submit id="mdysdStatus30" name="mdysdStatus30" value="运营总监审核通过" action="salPromot_sdstatus30" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
-								<s:submit id="mdysdStatus5" name="mdysdStatus5" value="运营总监审核不通过" action="salPromot_sdstatus5" onclick="return isOp('确定执行此操作?');" cssClass="input-red" />
-								</s:if>-->
+								</c:if>
 							</s:if>
-							<s:if test="salPromot.status==0 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_SALPRO_SALPROMOT_DEL')">
+							<c:if test="${salPromot.status==0 && it:checkPermit('QKJ_SALPRO_SALPROMOT_DEL',null)==true}">
 								<s:submit id="delete" name="delete" value="删除" action="salPromot_del" cssClass="input-red" onclick="return isDel();" />
-							</s:if>
-
+							</c:if>
+							
+							
 							<s:if test="'view' != viewFlag">
 								<input type="button" class="input-gray" value="返回" onclick="linkurl('<s:url action="salPromot_list" namespace="/salpro"><s:param name="salPromot.type" value="%{salPromot.type}"></s:param></s:url>');" />
 							</s:if>

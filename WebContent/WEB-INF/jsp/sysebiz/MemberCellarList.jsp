@@ -1,7 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -121,20 +121,20 @@
     	<s:hidden name="memberCellar.uuid" />
     	<s:hidden name="memberCellar.ware_id" />
     	<input id="MemberCellar_MDY_sflag" type="hidden" name="sflag" value="unchange" />
-		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJCJ_SYSEBIZ_MEMBERCELLAR_MDY')">
+    	<c:if test="${it:checkPermit('QKJCJ_SYSEBIZ_MEMBERCELLAR_MDY',null)==true}">
 		<s:submit id="memberCellarSave" name="memberCellarSave" value="保存信息" action="memberCellar_save" />
-		</s:if>
-		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJCJ_SYSEBIZ_MEMBERCELLAR_DEL')">
+		</c:if>
+		<c:if test="${it:checkPermit('QKJCJ_SYSEBIZ_MEMBERCELLAR_DEL',null)==true}">
 		<s:submit id="memberCellarDelete" name="memberCellarDelete" value="藏酒退货" action="memberCellar_del" />
-		</s:if>
+		</c:if>
 	</td>
 </tr>
 <tr>
     <td colspan="20" class="buttonarea dialog_button">
-    <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJCJ_SYSEBIZ_CELLARORDER_ADD')">
+    <c:if test="${it:checkPermit('QKJCJ_SYSEBIZ_CELLARORDER_ADD',null)==true}">
 		<!--<span id="cellar_orderadd" class="ui_button_100x24_dark">代客取酒下单</span>-->
 		<input id="cellar_orderadd" type="button" style="background: #363636;line-height: 22px;color: #FFF" value="代客取酒下单">
-	</s:if>
+	</c:if>
     </td>
 </tr>
 </table>

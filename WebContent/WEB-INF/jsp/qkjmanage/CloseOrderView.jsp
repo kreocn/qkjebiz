@@ -15,7 +15,9 @@
 	<div class="tab_warp main">
 		<div class="dq_step">
 			<span id="hs" class="pt">结案提货单</span>
-			<span class="opb lb op-area noprint"><a href="<s:url action="closeOrder_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a></span> 
+			<span class="opb lb op-area noprint">
+				<a href="<s:url action="closeOrder_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a>
+			</span> 
 			<span class="opb lb op-area noprint">
 				<input type="button" onclick="window.print();" value="打印本页" />&nbsp;</span> 
 		</div>

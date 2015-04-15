@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags"%>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -99,12 +100,12 @@
 					<div class="noprint tac">
 						<input type="button" onclick="window.print();" value="打印本页" />&nbsp;
 						<s:form name="form1" action="apply_add" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
-							<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_APPLY_CHECK_1')">
+							<c:if test="${it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK_1',null)==true}">
 								<s:hidden name="apply.uuid" />
 								<s:hidden name="apply.status" />
 								<s:hidden name="apply.sp_check_status" />
 								<s:submit id="apply_check_1" name="apply_check_1" value="作废" action="apply_check_1" onclick="return isOp('确定进行此操作?');" />
-							</s:if>
+							</c:if>
 						</s:form>
 					</div>
 				</div>

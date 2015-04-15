@@ -7,7 +7,14 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- SalPromot Start -->
 		<action name="salPromot_list" class="com.qkj.manage.action.SalPromotAction" method="list">
-			<result>/WEB-INF/jsp/qkjmanage/salpro/SalPromotList.jsp</result>
+			<result name="success">/WEB-INF/jsp/qkjmanage/salpro/SalPromotList.jsp</result>
+			<result name="perSuccess"  type="redirectAction">
+				<param name="actionName">perWork_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+		<action name="perWork_list" class="com.qkj.manage.action.PerWorkAction" method="list">
+			<result>/WEB-INF/jsp/qkjmanage/Personal/PerWorkList.jsp</result>
 		</action>
 		<action name="salPromot_relist" class="com.qkj.manage.action.SalPromotAction" method="relist">
 			<result type="redirectAction">

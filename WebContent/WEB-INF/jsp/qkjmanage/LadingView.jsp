@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags"%>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -83,9 +84,9 @@
 								<th>数量(瓶)</th>
 								<th>数量(件)</th>
 								<th>合计</th>
-								<s:if test="lading.status<=5 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADINGITEM_DEL')">
+								<c:if test="${lading.status<=5 && it:checkPermit('QKJ_QKJMANAGE_LADINGITEM_DEL',null)==true}">
 									<th>操作</th>
-								</s:if>
+								</c:if>
 							</tr>
 							<s:iterator value="ladingItems" status="sta">
 								<tr>
@@ -94,9 +95,9 @@
 									<td class="nw">${num}</td>
 									<td class="nw">${it:formatNum(num/case_spec,1)}</td>
 									<td class="nw">￥${total_price}</td>
-									<s:if test="lading.status<=5 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADINGITEM_DEL')">
+									<c:if test="${lading.status<=5 && it:checkPermit('QKJ_QKJMANAGE_LADINGITEM_DEL',null)==true}">
 										<td><a href="<s:url action="ladingItem_del" namespace="/qkjmanage"><s:param name="ladingItem.uuid" value="%{uuid}" /><s:param name="ladingItem.lading_id" value="%{lading.uuid}" /></s:url>" onclick="return isDel();">[删除]</a></td>
-									</s:if>
+									</c:if>
 								</tr>
 							</s:iterator>
 						</table>
@@ -153,9 +154,9 @@
 								<th>数量(瓶)</th>
 								<th>数量(件)</th>
 								<th>合计</th>
-								<s:if test="lading.status<=5 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADINGPRODUCTG_DEL')">
+								<c:if test="${lading.status<=5 && it:checkPermit('QKJ_QKJMANAGE_LADINGPRODUCTG_DEL',null)==true}">
 									<th>操作</th>
-								</s:if>
+								</c:if>
 							</tr>
 							<s:iterator value="ladingProductgs" status="sta">
 								<tr>
@@ -164,9 +165,9 @@
 									<td class="nw">${num}</td>
 									<td class="nw">${it:formatNum(num/case_spec,1)}</td>
 									<td class="nw">￥${total_price}</td>
-									<s:if test="lading.status<=5 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADINGPRODUCTG_DEL')">
+									<c:if test="${lading.status<=5 && it:checkPermit('QKJ_QKJMANAGE_LADINGPRODUCTG_DEL',null)==true}">
 										<td><a href="<s:url action="ladingProductg_del" namespace="/qkjmanage"><s:param name="ladingProductg.uuid" value="%{uuid}" /><s:param name="ladingProductg.lading_id" value="%{lading.uuid}" /></s:url>" onclick="return isDel();">[删除]</a></td>
-									</s:if>
+									</c:if>
 								</tr>
 							</s:iterator>
 						</table>

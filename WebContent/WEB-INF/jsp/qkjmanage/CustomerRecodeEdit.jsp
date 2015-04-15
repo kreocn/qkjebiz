@@ -1,7 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -84,17 +84,17 @@
 		    	
 		    	<span id="message"><s:property value="message" /></span>
 				<s:if test="null == customerRecode && 'add' == viewFlag">
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_CUSTOMERRECODE_ADD')">
+					<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CUSTOMERRECODE_ADD',null)==true}">
 					<s:submit id="add" name="add" value="确定" action="customerRecode_add" />
-					</s:if>
+					</c:if>
 				</s:if>
 				<s:elseif test="null != customerRecode && 'mdy' == viewFlag">
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_CUSTOMERRECODE_MDY')">
+					<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CUSTOMERRECODE_MDY',null)==true}">
 					<s:submit id="save" name="save" value="保存" action="customerRecode_save" />
-					</s:if>
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_CUSTOMERRECODE_DEL')">
+					</c:if>
+					<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CUSTOMERRECODE_DEL',null)==true}">
 					<s:submit id="delete" name="delete" value="删除" action="customerRecode_del" onclick="return isDel();" />
-					</s:if>
+					</c:if>
 				</s:elseif>
 				<input type="button" value="返回" onclick="linkurl('<s:url action="customerRecode_list" namespace="/qkjmanage" />');" />
 			</td>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags"%>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -113,21 +114,27 @@
 <div class="tab_right">
 	<div class="tab_warp main">
 		<div class="dq_step">
-			${path} <span class="opb lb op-area"> <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_HISTORY')">
-					<!-- <a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_history"><s:param name="active.uuid" value="active.uuid" /></s:url>">查看操作记录</a> -->
-					<a href="javascript:;" onclick="openCustomerView(${active.uuid});">查看操作记录</a>
-				</s:if> <s:if test="active.status >= 4">
-					<a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_closeView"><s:param name="active.uuid" value="active.uuid"></s:param></s:url>">转到打印页面</a>
-				</s:if> <a href="<s:url namespace="/qkjmanage" action="active_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a>
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_NEXTACTIVE')">
-				<s:if test="%{maxUid!=active.uuid}">
-				<a href="<s:url namespace="/qkjmanage" action="active_nextListClose"><s:param name="viewFlag">relist</s:param><s:param name="befUid" value="active.uuid" /><s:param name="up" value="1" /></s:url>">上一页</a>
-				</s:if>
-				<s:if test="%{minUid!=1}">
-				<a href="<s:url namespace="/qkjmanage" action="active_nextListClose"><s:param name="viewFlag">relist</s:param><s:param name="befUid" value="active.uuid" /></s:url>">下一页</a>
-				</s:if>
-				</s:if>
-			</span>
+			<div class="opb lb op-area noprint">
+				<p class="more_j">更多操作</p>
+				<div class="mcz_list subHide">
+					<a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a>
+					<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVE_HISTORY',null)==true}">
+						<!-- <a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_history"><s:param name="active.uuid" value="active.uuid" /></s:url>">查看操作记录</a> -->
+						<a href="javascript:;" onclick="openCustomerView(${active.uuid});">查看操作记录</a>
+					</c:if>
+					<s:if test="active.status >= 4">
+						<a href="<s:url namespace="/qkjmanage" action="active_closeView"><s:param name="active.uuid" value="active.uuid"></s:param></s:url>">转到打印页面</a>
+					</s:if>
+					<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVE_NEXTACTIVE',null)==true}">
+						<s:if test="%{maxUid!=active.uuid}">
+							<a href="<s:url namespace="/qkjmanage" action="active_nextListClose"><s:param name="viewFlag">relist</s:param><s:param name="befUid" value="active.uuid" /><s:param name="up" value="1" /></s:url>">上一页</a>
+						</s:if>
+						<s:if test="%{minUid!=1}">
+							<a href="<s:url namespace="/qkjmanage" action="active_nextListClose"><s:param name="viewFlag">relist</s:param><s:param name="befUid" value="active.uuid" /></s:url>">下一页</a>
+						</s:if>
+					</c:if>
+				</div>
+			</div>
 		</div>
 		<s:form id="editForm" name="editForm" cssClass="validForm" action="active_load" namespace="/qkjmanage" method="post" theme="simple">
 			<s:hidden name="active.apply_dept" value="%{active.apply_dept}"></s:hidden>
@@ -278,9 +285,9 @@
 			        </div>
 			        <div class="label_hang">
 			            <div class="label_rwben">
-			            	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_MDYTYPE')">
-										<s:submit  value="修改类型" action="mdyActiveType"/>
-							</s:if>
+			            	<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVE_MDYTYPE',null)==true}">
+								<s:submit  value="修改类型" action="mdyActiveType"/>
+							</c:if>
 			            </div>
 			        </div>
 				</div>
@@ -296,12 +303,12 @@
 						<div class="lb_lgsfy">
 							<p class="lb_yjtit">
 								公司预计费用
-								<s:if test="active.status==0 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEPRODUCT_ADD')">
+								<c:if test="${active.status==0 && it:checkPermit('QKJ_QKJMANAGE_ACTIVEPRODUCT_ADD',null)==true}">
 									<input type="button" id="addProduct" value="添加酒品" />
-								</s:if>
-								<s:if test="active.status==0 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEPOSM_ADD')">
+								</c:if>
+								<c:if test="${active.status==0 && it:checkPermit('QKJ_QKJMANAGE_ACTIVEPOSM_ADD',null)==true}">
 									<input type="button" id="addPosm" value="添加物料" />
-								</s:if>
+								</c:if>
 							</p>
 							<div class="lb_yjcon">
 								<p class="lb_gstit">公司提供酒品</p>
@@ -363,9 +370,9 @@
 						<div class="lb_gsfy">
 							<p class="lb_yjtit">
 								参与客户&预计费用
-								<s:if test="active.status==0 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEMEMCOST_ADD')">
+								<c:if test="${active.status==0 && it:checkPermit('QKJ_QKJMANAGE_ACTIVEMEMCOST_ADD',null)==true}">
 									<input type="button" id="addMember" value="添加客户" />
-								</s:if>
+								</c:if>
 							</p>
 							<div class="lb_yjcon">
 								<p class="lb_gstit">参与活动客户</p>
@@ -456,7 +463,7 @@
 						<div class="lb_lgsfy">
 							<p class="lb_yjtit">
 								公司费用
-								<s:if test="active.status==3 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEPRODUCT_ADD')">
+								<c:if test="${active.status==3 && it:checkPermit('QKJ_QKJMANAGE_ACTIVEPRODUCT_ADD',null)==true}">
 									<s:url id="ladingAddProductsUrl" action="qkjm_addProducts" namespace="qkjmanage">
 												<s:param name="uuidKey">active.uuid</s:param>
 												<s:param name="uuidValue" value="active.uuid" />
@@ -470,10 +477,10 @@
 											</s:url>
 										<input type="button" id="product" onclick="window.location.href='${ladingAddProductsUrl}';" value="添加酒品" />
 									<!--<input type="button" id="product" onclick="noedit();" value="添加酒品" />-->
-								</s:if>
-								<s:if test="active.status==3 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEPOSM_ADD')">
+								</c:if>
+								<c:if test="${active.status==3 && it:checkPermit('QKJ_QKJMANAGE_ACTIVEPOSM_ADD',null)==true}">
 									<input type="button" id="addPosm" value="销售物料" />
-								</s:if>
+								</c:if>
 							</p>
 							<div class="lb_yjcon">
 								<p class="lb_gstit">公司提供酒品</p>
@@ -492,9 +499,11 @@
 											<td class="nw">￥${per_price}</td>
 											<td class="nw">${num}</td>
 											<td class="nw">￥${total_price}</td>
-											<td class="nw"><s:if test="active.status==3 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEPRODUCT_DEL')">
+											<td class="nw">
+												<c:if test="${active.status==3 && it:checkPermit('QKJ_QKJMANAGE_ACTIVEPRODUCT_DEL',null)==true}">
 													<a href="<s:url action="activeProductClose_del"><s:param name="activeProduct.uuid" value="%{uuid}" /><s:param name="activeProduct.active_id" value="%{active.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
-												</s:if></td>
+												</c:if>
+											</td>
 										</tr>
 									</s:iterator>
 								</table>
@@ -513,9 +522,11 @@
 											<td class="nw">￥${per_price}</td>
 											<td class="nw">${num}</td>
 											<td class="nw">￥${total_price}</td>
-											<td class="nw"><s:if test="active.status==3 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEPRODUCT_DEL')">
+											<td class="nw">
+												<c:if test="${active.status==3 && it:checkPermit('QKJ_QKJMANAGE_ACTIVEPRODUCT_DEL',null)==true}">
 													<a href="<s:url action="activeProductClose_del"><s:param name="activeProduct.uuid" value="%{uuid}" /><s:param name="activeProduct.active_id" value="%{active.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
-												</s:if></td>
+												</c:if>
+											</td>
 										</tr>
 									</s:iterator>
 								</table>
@@ -532,9 +543,11 @@
 											<td>${title}</td>
 											<td>${note}</td>
 											<td class="nw">￥${total_price}</td>
-											<td class="nw"><s:if test="active.status==3 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEPOSM_DEL')">
+											<td class="nw">
+												<c:if test="active.status==3 && ${it:checkPermit('QKJ_QKJMANAGE_ACTIVEPOSM_DEL',null)==true}">
 													<a href="<s:url action="activePosmClose_del"><s:param name="activePosm.uuid" value="%{uuid}" /><s:param name="activePosm.active_id" value="%{active.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
-												</s:if></td>
+												</c:if>
+											</td>
 										</tr>
 									</s:iterator>
 								</table>
@@ -545,9 +558,9 @@
 						<div class="lb_gsfy">
 							<p class="lb_yjtit">
 								参与客户费用
-								<s:if test="active.status==3 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEMEMCOST_ADD')">
+								<c:if test="${active.status==3 && it:checkPermit('QKJ_QKJMANAGE_ACTIVEMEMCOST_ADD',null)==true}">
 									<input type="button" id="addMember" value="添加客户" />
-								</s:if>
+								</c:if>
 							</p>
 							<div class="lb_yjcon">
 								<p class="lb_gstit">参与活动客户</p>
@@ -565,9 +578,11 @@
 											<td>${title}</td>
 											<td>${note}</td>
 											<td class="nw">￥${total_price}</td>
-											<td class="nw"><s:if test="active.status==3 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEMEMCOST_DEL')">
+											<td class="nw">
+												<c:if test="${active.status==3 && it:checkPermit('QKJ_QKJMANAGE_ACTIVEMEMCOST_DEL',null)==true}">
 													<a href="<s:url action="activeMemcostClose_del"><s:param name="activeMemcost.uuid" value="%{uuid}" /><s:param name="activeMemcost.active_id" value="%{active.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
-												</s:if></td>
+												</c:if>
+											</td>
 										</tr>
 									</s:iterator>
 								</table>
@@ -732,7 +747,7 @@
 					</s:if>
 
 				</div>
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_MDYSPE') && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_SELSPE') && active.uuid!=null">
+				<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVE_MDYSPE',null)==true && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SELSPE',null)==true && active.uuid!=null}">
 					<div class="label_main">
 						<div class="label_hang">
 							<div class="label_ltit">特殊备注:</div>
@@ -742,20 +757,19 @@
 							</div>
 						</div>
 						<div class="label_hang">
+							<div class="label_ltit">&nbsp;</div>
 							<s:submit cssClass="input-blue" name="mdyStatus2" value="保存特殊备注" action="mdyCloseSPE" onclick="return isOp('确定执行此操作?');" />
 						</div>
 					</div>
-				</s:if>
-				<s:elseif test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_SELSPE')">
+				</c:if>
+				<!--<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SELSPE',null)==true}">
 					<div class="label_main">
 						<div class="label_hang">
 							<div class="label_ltit">特殊备注:</div>
 							<div class="label_rwbenx label_hang_linput">${active.spe_remark }</div>
 						</div>
 					</div>
-				</s:elseif>
-
-
+				</c:if>-->
 				<s:if test="active.status>=3">
 					<div class="label_main">
 						<div class="label_hang">
@@ -783,40 +797,39 @@
 					<div class="label_hang">
 						<div class="label_ltit">相关操作:</div>
 						<div class="label_rwbenx">
-							<font color="red"><span id="messages"></span></font>
 							<s:if test="null != active">
-								<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_STATUS2') && active.status==2">
+								<c:if test="${active.status==2 && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_STATUS2',null)==true}">
 									<s:submit cssClass="input-blue" name="mdyStatus2" value="结案&填写实际费用明细" action="mdyStatus2" onclick="return isOp('确定执行此操作?');" />
-								</s:if>
+								</c:if>
 								<s:if test="active.status==3">
-									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_MDY')">
+									<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_MDY',null)==true}">
 										<s:submit cssClass="input-blue" name="mdyCloseActive" value="保存活动概况" action="mdyCloseActive" />
-										
-									</s:if>
-									<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_STATUS3')">
+									</c:if>
+									<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVE_STATUS3',null)==true}">
 										<s:submit id="mdyStatus0" cssClass="input-yellow" name="mdyStatus3" value="结案报审" action="mdyStatus3" onclick="return isOp('确定执行此操作?');" />
-									</s:if>
+									</c:if>
 								</s:if>
 								<%-- <s:if test="active.status==4&&active.close_sd_status>=40&&active.close_smd_status>=30 &&@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_STATUS4')">
 				<s:submit cssClass="input-green" name="mdyStatus4" value="结案通过" action="mdyStatus4" onclick="return isOp('确定执行此操作?');" />
 				</s:if> --%>
-								<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_STATUS_1')">
+								<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVE_STATUS_1',null)==true}">
 									<s:submit cssClass="input-red" name="active_mdyStatus_1" value="作废" action="active_mdyStatus_1" onclick="return isOp('确定执行此操作?');" />
-								</s:if>
-								<s:if test="active.status==4 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_APPROVE')">
+								</c:if>
+								<c:if test="${(active.status==4 || active.status==3) && it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_APPROVE',null)==true}">
 									<input type="button" value="审阅" onclick="openApprove();" />
-								</s:if>
+								</c:if>
 							</s:if>
-							<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_HISTORY')">
+							<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVE_HISTORY',null)==true}">
 								<input type="button" value="查看操作记录" class="input-gray" onclick="openCustomerView(${active.uuid});" />
-							</s:if>
+							</c:if>
 							<input type="button" class="input-gray" value="返回" onclick="linkurl('<s:url action="active_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');" />
-							<s:if test="active.status==4 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_TH')">
+							<c:if test="${active.status==4 && it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_TH',null)==true}">
 								<s:submit cssClass="input-red" name="mdyCloseActiveSDStatus5" value="退回" action="mdycloseTH" onclick="return isOp('确定执行此操作?将退回到未审核状态');" />
-							</s:if>
+							</c:if>
 							<s:if test="active.status >= 4">
 								<input type="button" onclick="linkurl('<s:url namespace="/qkjmanage" action="active_closeView"><s:param name="active.uuid" value="active.uuid"></s:param></s:url>');" value="转到打印页面" />
 							</s:if>
+							<font color="red"><span id="messages"></span></font>
 						</div>
 					</div>
 				</div>
@@ -825,21 +838,18 @@
 						<div class="label_hang">
 							<div class="label_ltit">销售部审核:</div>
 							<div class="label_rwbenx">
-
-								<s:if test="10==active.close_sd_status && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS10')">
+								<c:if test="${10==active.close_sd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS10',null)==true}">
 									<s:submit cssClass="input-green" name="mdyCloseActiveSDStatus10" value="经理/大区-审核通过" action="mdyCloseActiveSDStatus10" onclick="return isOp('确定执行此操作?');" />
 									<s:submit cssClass="input-red" name="mdyCloseActiveSDStatus5" value="审核不通过" action="mdyCloseActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
-								</s:if>
-									<s:if test="30==active.close_sd_status && 30==active.close_smd_status && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS30')">
-										<s:submit cssClass="input-green" name="mdyCloseActiveSDStatus30" value="运营总监-审核通过" action="mdyCloseActiveSDStatus30" onclick="return isOp('确定执行此操作?');" />
-										<s:submit cssClass="input-red" name="mdyCloseActiveSDStatus5" value="审核不通过" action="mdyCloseActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
-									</s:if>
-								
-								<s:if test="40==active.close_sd_status && active.close_smd_status>=40  && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS40')">
+								</c:if>
+								<c:if test="${30==active.close_sd_status && 30==active.close_smd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS30',null)==true}">
+									<s:submit cssClass="input-green" name="mdyCloseActiveSDStatus30" value="运营总监-审核通过" action="mdyCloseActiveSDStatus30" onclick="return isOp('确定执行此操作?');" />
+									<s:submit cssClass="input-red" name="mdyCloseActiveSDStatus5" value="审核不通过" action="mdyCloseActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
+								</c:if>
+								<c:if test="${40==active.close_sd_status && active.close_smd_status>=40  && it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS40',null)==true}">
 									<s:submit cssClass="input-green" name="mdyCloseActiveSDStatus40" value="业务副总-审核通过" action="mdyCloseActiveSDStatus40" onclick="return isOp('确定执行此操作?');" />
 									<s:submit cssClass="input-red" name="mdyCloseActiveSDStatus5" value="审核不通过" action="mdyCloseActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
-								</s:if>
-
+								</c:if>
 								<s:if test="active.close_sd_status>0">
 									<div class="statusInline">
 										销售部审核状态:
@@ -855,34 +865,31 @@
 											<font class="message_pass">总监已审</font>(${active.close_sd_user_name} ${it:formatDate(active.close_sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 										<s:if test="active.close_sd_status==50">
 											<font class="message_pass">副总已审</font>(${active.close_sd_user_name} ${it:formatDate(active.close_sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
-
 									</div>
 								</s:if>
 							</div>
 						</div>
 					</div>
-
 					<div class="label_main noprint">
 						<div class="label_hang">
 							<div class="label_ltit">销管部审核:</div>
 							<div class="label_rwbenx">
-									<s:if test="10==active.close_smd_status && 30==active.close_sd_status && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SMDSTATUS10')">
-										<s:submit cssClass="input-green" name="mdyCloseActiveSMDStatus10" value="销管经理-审核通过" action="mdyCloseActiveSMDStatus10" onclick="return isOp('确定执行此操作?');" />
-										<s:submit cssClass="input-red" name="mdyCloseActiveSMDStatus5" value="审核不通过" action="mdyCloseActiveSMDStatus5" onclick="return isOp('确定执行此操作?');" />
-									</s:if>
-									<s:if test="30==active.close_smd_status && active.close_sd_status==40 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SMDSTATUS50')">
-										<s:submit id="mdyCloseActiveSMDStatus50" name="mdyCloseActiveSMDStatus50" cssClass="input-green" value="销管部经理-审核通过" action="mdyCloseActiveSMDStatus50" onclick="return isOp('确定执行此操作?');" />
-										<s:submit id="mdyCloseActiveSMDStatus5" name="mdyCloseActiveSMDStatus5" cssClass="input-red" value="审核不通过" action="mdyCloseActiveSMDStatus5" onclick="return isOp('确定执行此操作?');" />
-									</s:if>
-								
-								<s:if test="40==active.close_smd_status  && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SMDSTATUS30')">
+								<c:if test="${10==active.close_smd_status && 30==active.close_sd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SMDSTATUS10',null)==true}">
+									<s:submit cssClass="input-green" name="mdyCloseActiveSMDStatus10" value="销管经理-审核通过" action="mdyCloseActiveSMDStatus10" onclick="return isOp('确定执行此操作?');" />
+									<s:submit cssClass="input-red" name="mdyCloseActiveSMDStatus5" value="审核不通过" action="mdyCloseActiveSMDStatus5" onclick="return isOp('确定执行此操作?');" />
+								</c:if>
+								<c:if test="${30==active.close_smd_status && active.close_sd_status==40 && it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SMDSTATUS50',null)==true}">
+									<s:submit id="mdyCloseActiveSMDStatus50" name="mdyCloseActiveSMDStatus50" cssClass="input-green" value="销管部经理-审核通过" action="mdyCloseActiveSMDStatus50" onclick="return isOp('确定执行此操作?');" />
+									<s:submit id="mdyCloseActiveSMDStatus5" name="mdyCloseActiveSMDStatus5" cssClass="input-red" value="审核不通过" action="mdyCloseActiveSMDStatus5" onclick="return isOp('确定执行此操作?');" />
+								</c:if>
+								<c:if test="${40==active.close_smd_status  && it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SMDSTATUS30',null)==true}">
 									<s:submit cssClass="input-green" name="mdyCloseActiveSMDStatus30" value="销管副总-审核通过" action="mdyCloseActiveSMDStatus30" onclick="return isOp('确定执行此操作?');" />
 									<s:submit cssClass="input-red" name="mdyCloseActiveSMDStatus5" value="审核不通过" action="mdyCloseActiveSMDStatus5" onclick="return isOp('确定执行此操作?');" />
-								</s:if>
-								<s:if test="active.close_smd_status==50 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS10')">
+								</c:if>
+								<c:if test="${active.close_smd_status==50 && it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS10',null)==true}">
 									<s:submit cssClass="input-green" name="mdyCloseActiveSDStatus50" value="总经理-审核通过" action="mdyCloseActiveSDStatus50" onclick="return isOp('确定执行此操作?');" />
 									<s:submit cssClass="input-red" name="mdyCloseActiveSDStatus5" value="审核不通过" action="mdyCloseActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
-								</s:if>
+								</c:if>
 								<s:if test="active.close_smd_status>0">
 									<div class="statusInline">
 										销管部审核状态:
@@ -915,15 +922,15 @@
 								<!-- 财务 -->
 									<s:if test="%{10!=active.close_fd_status}">
 										<s:if test="%{(active.apply_dept.substring(0,2)=='21' || active.apply_dept.substring(0,2)=='30') && active.smd_status!=50}">
-											<s:if test="null != active && active.sd_status>=40 && 10!=active.fd_status && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_FDCSTATUS10')">
+											<c:if test="${null != active && active.sd_status>=40 && 10!=active.fd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_FDCSTATUS10',null)==true}">
 												<s:submit id="mdyActiveFDCSTATUS10" name="mdyActiveFDCSTATUS10" cssClass="input-green" value="财务-审核通过" action="mdyActiveFDCSTATUS10" onclick="return isOp('确定执行此操作?');" />
 													<s:submit id="mdyActiveFDCStatus5" name="mdyActiveFDCStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveFDCSTATUS" onclick="return isOp('确定执行此操作?');" />
-											</s:if>
+											</c:if>
 										</s:if>
-										<s:if test="(50==active.close_smd_status || 60==active.close_smd_status) && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_FDCSTATUS10')">
+										<c:if test="${(50==active.close_smd_status || 60==active.close_smd_status) &&it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_FDCSTATUS10',null)==true}">
 											<s:submit id="mdyActiveFDCSTATUS10" name="mdyActiveFDCSTATUS10" cssClass="input-green" value="财务-审核通过" action="mdyActiveFDCSTATUS10" onclick="return isOp('确定执行此操作?');" />
 											<s:submit id="mdyActiveFDCStatus5" name="mdyActiveFDCStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveFDCSTATUS" onclick="return isOp('确定执行此操作?');" />
-										</s:if>
+										</c:if>
 									</s:if>
 								<div class="statusInline">
 									财务部审核状态:
@@ -944,15 +951,15 @@
 								<!-- 财务 -->
 									<s:if test="%{10!=active.close_nd_status}">
 										<s:if test="%{(active.apply_dept.substring(0,2)=='21' || active.apply_dept.substring(0,2)=='30') && active.smd_status!=50}">
-											<s:if test="null != active && active.sd_status>=40 && 10!=active.fd_status && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_NDCSTATUS10')">
+											<c:if test="${null != active && active.sd_status>=40 && 10!=active.fd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_NDCSTATUS10',null)==true}">
 												<s:submit id="mdyActiveNDCSTATUS10" name="mdyActiveNDCSTATUS10" cssClass="input-green" value="数据中心-审核通过" action="mdyActiveNDCSTATUS10" onclick="return isOp('确定执行此操作?');" />
-											<s:submit id="mdyActiveNDCSTATUS5" name="mdyActiveNDCSTATUS5" cssClass="input-red" value="审核不通过" action="mdyActiveNDCSTATUS5" onclick="return isOp('确定执行此操作?');" />
-											</s:if>
+												<s:submit id="mdyActiveNDCSTATUS5" name="mdyActiveNDCSTATUS5" cssClass="input-red" value="审核不通过" action="mdyActiveNDCSTATUS5" onclick="return isOp('确定执行此操作?');" />
+											</c:if>
 										</s:if>
-										<s:if test="(50==active.close_smd_status || 60==active.close_smd_status) && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_NDCSTATUS10')">
+										<c:if test="${(50==active.close_smd_status || 60==active.close_smd_status) &&it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_NDCSTATUS10',null)==true}">
 											<s:submit id="mdyActiveNDCSTATUS10" name="mdyActiveNDCSTATUS10" cssClass="input-green" value="数据中心-审核通过" action="mdyActiveNDCSTATUS10" onclick="return isOp('确定执行此操作?');" />
 											<s:submit id="mdyActiveNDCSTATUS5" name="mdyActiveNDCSTATUS5" cssClass="input-red" value="审核不通过" action="mdyActiveNDCSTATUS5" onclick="return isOp('确定执行此操作?');" />
-										</s:if>
+										</c:if>
 									</s:if>
 								<div class="statusInline">
 									数据中心审核状态:
@@ -1017,9 +1024,9 @@
 					</div>
 					<div class="label_hang label_button tac">
 						<s:hidden name="activeProduct.active_id" value="%{active.uuid}" />
-						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEPRODUCTCLOSE_ADD')">
+						<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVEPRODUCTCLOSE_ADD',null)==true}">
 							<s:submit id="activeProduct_add" name="activeProduct_add" value="确定" action="activeProductClose_add" />
-						</s:if>
+						</c:if>
 					</div>
 				</div>
 			</s:form>
@@ -1051,9 +1058,9 @@
 					</div>
 					<div class="label_hang label_button tac">
 						<s:hidden name="activePosm.active_id" value="%{active.uuid}" />
-						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEPOSMCLOSE_ADD')">
+						<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVEPOSMCLOSE_ADD',null)==true}">
 							<s:submit id="add" name="add" value="确定" action="activePosmClose_add" />
-						</s:if>
+						</c:if>
 					</div>
 				</div>
 			</s:form>
@@ -1102,10 +1109,10 @@
 					<div class="label_hang label_button tac">
 						<s:hidden id="activeMemcost_active_id" name="activeMemcost.active_id" value="%{active.uuid}" />
 						<s:hidden name="activeMemcost.with_score" value="0" />
-						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEMEMCOSTCLOSE_ADD')">
+						<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVEMEMCOSTCLOSE_ADD',null)==true}">
 							<input id="addMe" type="button" value="确定" />
 							<font id="addMemcost" color="red"></font>
-						</s:if>
+						</c:if>
 					</div>
 				</div>
 			</s:form>
@@ -1142,13 +1149,13 @@
 					<textarea name="approve.advice" rows="3"></textarea>
 				</div>
 				<div class="label_main tac" style="padding: 5px 0;">
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_APPROVE')">
+					<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVE_APPROVE',null)==true}">
 						<input type="submit" name="approve_pass" value="审阅通过" onclick="return addApproveCheck(10);" />
 						<input type="submit" name="approve_fail" value="审阅不通过" onclick="return addApproveCheck(5);" />
-					</s:if>
-					<s:if test="'true'==isApprover && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_APPROVEDELLAST')">
+					</c:if>
+					<c:if test="${'true'==isApprover && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_APPROVEDELLAST',null)==true}">
 						<s:submit name="active_approveDel" value="撤销最后一次审阅" action="active_approveDel" onclick="return isOp('确定进行此操作?');" />
-					</s:if>
+					</c:if>
 				</div>
 			</s:form>
 		</div>

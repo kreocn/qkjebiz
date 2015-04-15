@@ -37,7 +37,25 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 	private int pageSize;
 	private int currPage;
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;至事由管理";
-	
+	// 个人工作标识
+	private String perWorkF;
+	private static String perWorkFlag;
+
+	public String getPerWorkF() {
+		return perWorkF;
+	}
+
+	public void setPerWorkF(String perWorkF) {
+		this.perWorkF = perWorkF;
+	}
+
+	public static String getPerWorkFlag() {
+		return perWorkFlag;
+	}
+
+	public static void setPerWorkFlag(String perWorkFlag) {
+		ApplyAction.perWorkFlag = perWorkFlag;
+	}
 
 	public List<Apply> getApplyUserSign() {
 		return applyUserSign;
@@ -163,7 +181,12 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
 		}
-		return SUCCESS;
+		if(perWorkFlag==null || perWorkFlag.equals("null")){
+			return "success";
+		}else{
+			perWorkFlag=null;
+			return "perSuccess";
+		}
 	}
 
 	public String relist() throws Exception {
@@ -172,6 +195,11 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 
 	public String load() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_VIEW");
+		if((perWorkF==null || perWorkF.equals("null")) && perWorkFlag==null){
+			perWorkFlag=null;
+		}else{
+			perWorkFlag="perWork";
+		}
 		try {
 			if (null == viewFlag) {
 				this.setApply(null);
@@ -214,7 +242,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 				this.setApply((Apply) dao.get(apply.getUuid()));
 				this.setApplyUserSign(dao.listUserSign(apply.getUuid()));
 			}
-			
+
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!view 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!view 读取数据错误:", e);
@@ -326,7 +354,6 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 		return SUCCESS;
 	}
 
-	
 	/**
 	 * 大区经理审核通过
 	 * 
@@ -360,7 +387,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
-	
+
 	/**
 	 * 销售副总审核通过
 	 * 
@@ -377,7 +404,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
-	
+
 	/**
 	 * 总经理审核通过
 	 * 
@@ -507,7 +534,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 		apply.setSp_check_status(p_sp_check_status);
 		apply.setSp_check_user(ContextHelper.getUserLoginUuid());
 		apply.setSp_check_time(new Date());
-		if(p_sp_check_status==10){
+		if (p_sp_check_status == 10) {
 			apply.setStatus(20);
 			apply.setCheck_user(ContextHelper.getUserLoginUuid());
 			apply.setCheck_time(new Date());

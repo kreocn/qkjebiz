@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags"%>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -112,7 +113,7 @@
 	<div class="tab_warp main">
 		<div class="dq_step">
 			<span id="hs" class="pt">活动申请单</span> <span id="ks" class="pt kss">活动执行通知单</span>
-			<div class="opb lb op-area noprint" style="position:relative; z-index:2;">
+			<div class="opb lb op-area noprint">
 				<p class="more_j">更多操作</p>
 				<div class="mcz_list subHide">
 					<a href="<s:url namespace="/qkjmanage" action="active_load"><s:param name="viewFlag">mdy</s:param><s:param name="active.uuid" value="%{active.uuid}"></s:param></s:url>">返回修改页面</a>
@@ -120,6 +121,7 @@
 					<a href="javascript:;" onclick="indprint();">打印海拔系列</a>
 					<a href="javascript:;" onclick="otherprint();">打印非海拔系列</a>
 					<a href="javascript:;" onclick="nopri();window.print();">活动执行通知单</a>
+					
 					<a class="input-gray"  href="<s:url namespace="/qkjmanage" action="active_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a>
 				</div>
 			</div>
@@ -369,12 +371,12 @@
 						<div class="lb_lgsfy">
 							<p class="lb_yjtit">
 								公司预计费用
-								<s:if test="active.status==0 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEPRODUCT_ADD')">
+								<c:if test="${active.status==0 && it:checkPermit('QKJ_QKJMANAGE_ACTIVEPRODUCT_ADD',null)==true}">
 									<input type="button" id="addProduct" value="添加酒品" />
-								</s:if>
-								<s:if test="active.status==0 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEPOSM_ADD')">
+								</c:if>
+								<c:if test="${active.status==0 && it:checkPermit('QKJ_QKJMANAGE_ACTIVEPOSM_ADD',null)==true}">
 									<input type="button" id="addPosm" value="添加物料" />
-								</s:if>
+								</c:if>
 							</p>
 							<div class="lb_yjcon">
 								<p class="lb_gstit">公司提供酒品</p>
@@ -438,9 +440,9 @@
 						<div class="lb_gsfy">
 							<p class="lb_yjtit">
 								参与客户&预计费用
-								<s:if test="active.status==0 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVEMEMCOST_ADD')">
+								<c:if test="${active.status==0 && it:checkPermit('QKJ_QKJMANAGE_ACTIVEMEMCOST_ADD',null)==true}">
 									<input type="button" id="addMember" value="添加客户" />
-								</s:if>
+								</c:if>
 							</p>
 							<div class="lb_yjcon">
 								<p class="lb_gstit">参与活动客户</p>
@@ -543,9 +545,9 @@
 					<div class="label_hang">
 						<div class="label_ltit">相关操作:</div>
 						<div class="label_rwbenx">
-							<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_TH')">
+							<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVE_TH',null)==true}">
 								<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="退回" action="mdyActiveSDStatusT" onclick="return isOp('确定执行此操作?将退回到未审核状态');" />
-							</s:if>
+							</c:if>
 							<input type="button" onclick="window.print();" value="打印本页" />&nbsp; <input type="button" onclick="nopri();window.print();" value="打印活动执行通知单" />&nbsp; <input type="button" value="返回修改页面"
 								onclick="linkurl('<s:url action="active_load" namespace="/qkjmanage"><s:param name="viewFlag">mdy</s:param><s:param name="active.uuid" value="%{active.uuid}"></s:param></s:url>');" />
 						</div>

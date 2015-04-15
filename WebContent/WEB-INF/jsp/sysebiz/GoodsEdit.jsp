@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -60,20 +61,20 @@ ul.showImgList .rightinfo {display: block;clear: both;margin-top: 5px;}
 				       <div class="label_ltit">商品规格:</div>
 				       <div class="label_rwbenx">
 				       		<s:textfield id="goods.goods_spec" name="goods.goods_spec" title="商品规格"  cssClass="validate[required]"/>
-				       		<s:textfield id="goods.goods_spec_unit" name="goods.goods_spec_unit" title="商品规格单位"  cssClass="danwei validate[required]" style="width:35px; text-indent:inherit;"/>
+				       		<s:textfield id="goods.goods_spec_unit" name="goods.goods_spec_unit" title="商品规格单位"  cssClass="danwei validate[required]" cssStyle="width:35px; text-indent:inherit;"/>
 				       </div>
 					</div>
 					<div class="label_hang">
 				       <div class="label_ltit">商品库存:</div>
 				       <div class="label_rwbenx">
 				       		<s:textfield id="goods.goods_num" name="goods.goods_num" title="商品库存"  cssClass="validate[required]"/>
-				       		<s:textfield id="goods.goods_unit" name="goods.goods_unit" title="商品单位"  cssClass="danwei validate[required]" style="width:35px; text-indent:inherit;"/>
+				       		<s:textfield id="goods.goods_unit" name="goods.goods_unit" title="商品单位"  cssClass="danwei validate[required]" cssStyle="width:35px; text-indent:inherit;"/>
 				       </div>
 					</div>
 					<div class="label_hang">
 				       <div class="label_ltit">产品小图:</div>
 				       <div class="label_rwbenx">
-				       		<s:textfield id="goods_small_img" name="goods.small_img" title="产品小图"  cssClass="validate[required]" style="min-width:193px;"/>
+				       		<s:textfield id="goods_small_img" name="goods.small_img" title="产品小图"  cssClass="validate[required]" cssStyle="min-width:193px;"/>
 				       		<span class="message_prompt">图片规格100x100</span>
 				       		<!--<img src="${goods.small_img}" />-->
 				       </div>
@@ -81,7 +82,7 @@ ul.showImgList .rightinfo {display: block;clear: both;margin-top: 5px;}
 					<div class="label_hang">
 				       <div class="label_ltit">产品大图:</div>
 				       <div class="label_rwbenx">
-				       		<s:textfield id="goods_big_img" name="goods.big_img" title="产品大图" style="min-width:193px;"/>
+				       		<s:textfield id="goods_big_img" name="goods.big_img" title="产品大图" cssStyle="min-width:193px;"/>
 				       		<!--<img src="${goods.big_img}" />-->
 				       </div>
 					</div>

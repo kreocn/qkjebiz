@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -55,7 +56,7 @@
 				</div>
 				<div class="label_hang">
 			       <div class="label_ltit">参考价格:</div>
-			       <div class="label_rwben"><s:textfield id="assets_price" name="assets.price" title="参考价格" style="width:80%;" cssClass="validate[custom[number],maxSize[10]]"/><span class="pricecss">&nbsp;元</span></div>
+			       <div class="label_rwben"><s:textfield id="assets_price" name="assets.price" title="参考价格" cssStyle="width:80%;" cssClass="validate[custom[number],maxSize[10]]"/><span class="pricecss">&nbsp;元</span></div>
 				</div>
 				<div class="label_hang">
 			       <div class="label_ltit">数量:</div>
@@ -63,7 +64,7 @@
 				</div>
 				<div class="label_hang">
 			       <div class="label_ltit">总价:</div>
-			       <div class="label_rwben"><s:textfield id="assets_price_scope" name="assets.price_scope" title="总价" style="width:80%;" cssClass="validate[custom[number],maxSize[10]]"/><span class="pricecss">&nbsp;元</span></div>
+			       <div class="label_rwben"><s:textfield id="assets_price_scope" name="assets.price_scope" title="总价" cssStyle="width:80%;" cssClass="validate[custom[number],maxSize[10]]"/><span class="pricecss">&nbsp;元</span></div>
 				</div>
 				<div class="label_hang">
 			       <div class="label_ltit">所属公司:</div>
@@ -81,22 +82,20 @@
 					<div class="label_hang">
 			       		<div class="label_ltit">相关操作:</div>
 			       		<div class="label_rwbenx">
-			       			<s:if test="null == assets && 'add' == viewFlag">
-								<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_ASSETS_ADD')">
+		       				<c:if test="${null == assets && 'add' == viewFlag && it:checkPermit('QKJ_ADM_ASSETS_ADD',null)==true}">
 								<s:submit id="add" name="add" value="确定" action="assets_add"  cssClass="input-blue"/>
-								</s:if>
+							</c:if>
+							<s:if test="null != assets && 'mdy' == viewFlag">
+								<c:if test="${it:checkPermit('QKJ_ADM_ASSETS_MDY',null)==true}">
+									<s:submit id="save" name="save" value="保存" action="assets_save"  cssClass="input-blue"/>
+								</c:if>
+								<c:if test="${it:checkPermit('QKJ_ADM_ASSETS_DEL',null)==true}">
+									<s:submit id="delete" name="delete" value="删除" action="assets_del" onclick="return isDel();"  cssClass="input-red"/>
+								</c:if>
+								<c:if test="${it:checkPermit('QKJ_ADM_ASSETITEM_MDY',null)==true}">
+						    		<input type="button" value="添加物品明细" onclick='openAddAssetItems();' class="input-green"/>
+						    	</c:if>
 							</s:if>
-							<s:elseif test="null != assets && 'mdy' == viewFlag">
-								<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_ASSETS_MDY')">
-								<s:submit id="save" name="save" value="保存" action="assets_save"  cssClass="input-blue"/>
-								</s:if>
-								<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_ASSETS_DEL')">
-								<s:submit id="delete" name="delete" value="删除" action="assets_del" onclick="return isDel();"  cssClass="input-red"/>
-								</s:if>
-								<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_ASSETITEM_MDY')">
-						    	<input type="button" value="添加物品明细" onclick='openAddAssetItems();' class="input-green"/>
-						    	</s:if>
-							</s:elseif>
 							<input type="button" value="返回" onclick="linkurl('<s:url action="assets_relist" namespace="/adm" />');" />
 							<span id="message"><s:property value="message" /></span>
 			       		</div>
@@ -126,18 +125,18 @@
 									<td>${own_user_name}</td>
 									<td>${it:formatDate(use_time,'yyyy-MM-dd')}</td>
 									<td>
-										<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_ASSETITEM_MDY')">
+										<c:if test="${it:checkPermit('QKJ_ADM_ASSETITEM_MDY',null)==true}">
 								    	[<a href="<s:url namespace="/adm" action="assetItem_load"><s:param name="viewFlag">mdy</s:param><s:param name="assetItem.uuid" value="uuid"></s:param></s:url>">修改</a>]
-								    	</s:if>
-								    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_ASSETITEM_OWN')">
+								    	</c:if>
+								    	<c:if test="${it:checkPermit('QKJ_ADM_ASSETITEM_OWN',null)==true}">
 								    	[<a href="javascript:;" onclick="createMdyOwnDialog('${uuid}');">领用信息</a>]
-								    	</s:if>	  
-								    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_ASSETITEM_DEL')">
+								    	</c:if>	  
+								    	<c:if test="${it:checkPermit('QKJ_ADM_ASSETITEM_DEL',null)==true}">
 								    	[<a href="<s:url namespace="/adm" action="assetItem_del"><s:param name="assetItem.uuid" value="uuid" /><s:param name="assetItem.asset_id" value="asset_id" /></s:url>" onclick="return isDel();">删除</a>]
-								    	</s:if>
-								    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_ASSETITEM_ADD')">
+								    	</c:if>
+								    	<c:if test="${it:checkPermit('QKJ_ADM_ASSETITEM_ADD',null)==true}">
 								    	[<a href="<s:url namespace="/adm" action="assetItem_addSimilar"><s:param name="assetItem.uuid" value="uuid" /><s:param name="assetItem.asset_id" value="asset_id" /></s:url>" onclick="return isOp('对这条信息进行类似创建吗?');">类似创建</a>]
-								    	</s:if>
+								    	</c:if>
 								    </td>
 								  </tr>
 								</s:iterator>
@@ -176,9 +175,9 @@
 	    <td>
 			<s:hidden name="assetItem.asset_id" value="%{assets.uuid}" />
 			<s:hidden id="assetItem_uuid" name="assetItem.uuid"/>
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_ASSETITEM_ADD')">
+			<c:if test="${it:checkPermit('QKJ_ADM_ASSETITEM_ADD',null)==true}">
 				<s:submit id="add" name="add" value="确定" action="assetItem_add" />
-			</s:if>
+			</c:if>
 		</td>
     </tr>
 </table>
@@ -205,15 +204,15 @@
 	    <td>
 			<s:hidden name="assetItem.asset_id" value="%{assets.uuid}" />
 			<s:hidden id="assetItem_uuid_add_own" name="assetItem.uuid"/>
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_ASSETITEM_OWN')">
+			<c:if test="${it:checkPermit('QKJ_ADM_ASSETITEM_OWN',null)==true}">
 				<s:submit id="assetItem_own" name="assetItem_own" value="确定" action="assetItem_own" />
-			</s:if>
+			</c:if>
 		</td>
     </tr>
 </table>
 </s:form>
 </div>
-
+</s:if>
 <s:action name="ref_foot" namespace="/manager" executeResult="true" />
 <script type="text/javascript" src="<s:url value="/js/jqueryPlugins/select3/jquery.cityselect.js" />"></script>
 <script type="text/javascript">
@@ -231,6 +230,10 @@ $(function(){
 	$("#assets_num").bind("keyup",function(){
 		$("#assets_price_scope").val($("#assets_price").val()*$("#assets_num").val());
 	});
+ });
+</script>
+<script type="text/javascript">
+$(function(){
 	$("#addAssetItems").dialog({
 	      autoOpen: false,
 	      height: 220,
@@ -243,13 +246,15 @@ $(function(){
 	      width: 600,
 	      modal: true
 	});
- });
+});
+
 function openAddAssetItems() {
 	$("#assetItem_model").val($("#assets_model").val());
 	$("#assetItem_spec").val($("#assets_spec").val());
 	$("#assetItem_price").val($("#assets_price").val());
 	$("#addAssetItems").dialog("open");
 }
+
 function createMdyOwnDialog(item_id) {
 	var tr_id = "assetItems_" + item_id;
 	var td_objs = $("#"+tr_id + " td");
@@ -265,6 +270,5 @@ function createMdyOwnDialog(item_id) {
 	$("#mdyAssetItemsOwn").dialog("open");
 }
 </script>
-</s:if>
 </body>
 </html>

@@ -1,6 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -55,19 +56,17 @@
 		<tr>
 		    <td colspan="20" class="buttonarea">
 		    	<span id="message"><s:property value="message" /></span>
-				<s:if test="null == assetItem && 'add' == viewFlag">
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_ASSETITEM_ADD')">
+				<c:if test="${null == assetItem && 'add' == viewFlag && it:checkPermit('QKJ_ADM_ASSETITEM_ADD',null)==true}">
 					<s:submit id="add" name="add" value="确定" action="assetItem_add" />
-					</s:if>
-				</s:if>
-				<s:elseif test="null != assetItem && 'mdy' == viewFlag">
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_ASSETITEM_MDY')">
+				</c:if>
+				<s:if test="null != assetItem && 'mdy' == viewFlag">
+					<c:if test="${it:checkPermit('QKJ_ADM_ASSETITEM_MDY',null)==true}">
 					<s:submit id="save" name="save" value="保存" action="assetItem_save" />
-					</s:if>
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_ADM_ASSETITEM_DEL')">
+					</c:if>
+					<c:if test="${it:checkPermit('QKJ_ADM_ASSETITEM_DEL',null)==true}">
 					<s:submit id="delete" name="delete" value="删除" action="assetItem_del" onclick="return isDel();" />
-					</s:if>
-				</s:elseif>
+					</c:if>
+				</s:if>
 				<input type="button" value="返回" onclick="linkurl('<s:url action="assets_load" namespace="/adm"><s:param name="viewFlag">mdy</s:param><s:param name="assets.uuid" value="%{assetItem.asset_id}" /></s:url>');" />
 			</td>
 	    </tr>
