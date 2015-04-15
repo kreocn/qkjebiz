@@ -218,6 +218,8 @@ public class UserDeptAction extends ActionSupport {
 
 	public String add() throws Exception {
 		try {
+			userDept.setLm_time(new Date());
+			userDept.setRoles(ToolsUtil.Array2String(uroles == null ? new String[] {} : uroles, ","));
 			dao.add(userDept);
 		} catch (Exception e) {
 			// setMessage("数据更新失败!" + e.getMessage());

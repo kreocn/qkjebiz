@@ -20,12 +20,12 @@
 	<div class="dq_step">
 		${path}
 		<span class="opb lb op-area">
-		<a href="<s:url action="" namespace="" />" >返回编辑页面</a>
+		<a href="<s:url action="user_dept_list" namespace="/sys" />" >返回编辑页面</a>
 		</span>
 	</div>
 	<s:form id="formEdit" name="form1" cssClass="validForm" action="user_dept_add" namespace="/sys" onsubmit="return validator(this);" method="post" theme="simple">
 	<div class="label_con">
-	<s:if test="null != userDept">
+	<s:if test="null != userDept && 'mdy' == viewFlag">
 	<div class="label_main">
 	       <div class="label_hang">
 		         <div class="label_ltit">编号:</div>
@@ -33,23 +33,37 @@
 	       	</div>
 	 </div>
 	</s:if>
+	
 	<div class="label_main">
+			<div class="label_hang">
+		       <div class="label_ltit">用户编号:</div>
+		       <div class="label_rwbenx"><s:textfield title="用户编号" name="userDept.user_id" /></div>
+			</div>
+			
 	       <div class="label_hang">
 		       <div class="label_ltit">职务:</div>
-		       <div class="label_rwbenx"><s:select name="user.userDept" list="positions" listKey="uuid" listValue="position_name" headerKey="" headerValue="--请选择--" cssClass="validate[required]"/></div>
+		       <div class="label_rwbenx"><s:select name="userDept.position" list="positions" listKey="uuid" listValue="position_name" headerKey="" headerValue="--请选择--" cssClass="validate[required]"/></div>
 			</div>
 			<div class="label_hang">
 		       <div class="label_ltit">部门:</div>
 		       <div class="label_rwben2">
 		       		<span class="label_rwb">
-					<s:textfield title="部门名称" id="userdept_nameid" name="user.dept_cname" readonly="true" />
-					<s:hidden title="部门代码" id="userdept_codeid" name="user.dept_code" readonly="true" />
+					<s:textfield title="部门名称" id="userdept_nameid" name="userDept.dept_cname" readonly="true" />
+					<s:hidden title="部门代码" id="userdept_codeid" name="userDept.dept_code" readonly="true" />
 					</span>
 					<span class="lb nw">
 					<img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true);" />
 					</span>
 		       </div>
 			</div>
+			<div class="label_hang">
+		         <div class="label_ltit">子部门权限:</div>
+		         <div class="label_rwben2">
+		         <div class="label_rwb">
+		         <s:radio name="userDept.subover" list="#{1:'是',0:'否'}" listKey="key" listValue="value" value="0"/>
+		         </div>
+		         </div>
+	       	</div>
 			<div class="label_hang clear">
 		       <div class="label_ltit">用户角色:</div>
 		       <div class="label_rwbenx">
@@ -77,12 +91,7 @@
 				     allowSelectAll="false" />
 		       </div>
 			</div>
-			 <div class="label_hang">
-		         <div class="label_ltit">子部门管理权限:</div>
-		         <div class="label_rwben2">
-		         <div class="label_rwb"><s:textfield id="market.area" name="market.area" title="仓库名称" cssClass="label_hang_linput validate[required,maxSize[100]]" /></div>
-		         </div>
-	       	</div>
+			 
 	 </div>
 	 </div>
 	 
@@ -92,15 +101,14 @@
             <div class="label_rwbenx">
             <span id="message"><s:property value="message" /></span>
             	
-            	<s:if test="null == market && 'add' == viewFlag">
-				<s:submit id="add" name="add" value="添加" action="market_add" cssClass="input-blue"/>
+            	<s:if test="'add' == viewFlag">
+				<s:submit id="add" name="add" value="添加" action="user_dept_add" cssClass="input-blue"/>
 				</s:if>
-				<s:elseif test="null != market && 'mdy' == viewFlag">
-				<s:submit id="save" name="save" value="保存" action="market_save" cssClass="input-blue"/>
-				<s:submit id="saveab" name="saveab" value="修改位置" action="market_saveab" cssClass="input-blue"/>
-				<s:submit id="delete" name="delete" value="删除" action="market_del" onclick="return isDel();" cssClass="input-red"/>
+				<s:elseif test="null != userDept && 'mdy' == viewFlag">
+				<s:submit id="save" name="save" value="保存" action="user_dept_save" cssClass="input-blue"/>
+				<s:submit id="delete" name="delete" value="删除" action="user_dept_del" onclick="return isDel();" cssClass="input-red"/>
 				</s:elseif>
-				<input type="button" value="返回" onclick="linkurl('<s:url action="market_list" namespace="/qkjmanage" />');" />
+				<input type="button" value="返回" onclick="linkurl('<s:url action="user_dept_list" namespace="/qkjmanage" />');" />
 				
             </div>
 		</div>
@@ -114,7 +122,9 @@
 $(function(){
 	$.fn.xhuploadinit();
 	$("#marketimgid").xhupload();
+	addTransferSelect("aroles","uroles");
 });
+
 
 </script>
 <script type="text/javascript" src="<s:url value="/js/optiontransferselect.js" />"></script>

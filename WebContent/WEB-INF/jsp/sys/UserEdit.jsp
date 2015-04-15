@@ -73,7 +73,7 @@
 				<th>职务</th>
 				<th>子部门管理权限</th>
 				<th>更新时间</th>
-				<th><a href="<s:url namespace="/sys" action="user_dept_load"><s:param name="viewFlag">add</s:param></s:url>" >添加部门及权限</a></th>
+				<th><a href="<s:url namespace="/sys" action="user_dept_load"><s:param name="viewFlag">add</s:param><s:param name="userDept.user_id" value="user.uuid"></s:param></s:url>" >添加部门及权限</a></th>
 			</tr>
 			<s:iterator value="memberAddresses" status="sta">
 			  <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>">
