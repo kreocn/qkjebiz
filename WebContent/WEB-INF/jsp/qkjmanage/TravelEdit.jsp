@@ -10,7 +10,6 @@
 <s:action name="ref_head" namespace="/manager" executeResult="true" />
 <style type="text/css">
 .lb_jiup th,.lb_jiup td{border:1px solid #ccc; text-align:center; line-height:22px; font-size:12px;}
-.lb_jiup th{background: #f1f1f1;}
 </style>
 </head>
 <body>
