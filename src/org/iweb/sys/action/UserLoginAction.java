@@ -93,9 +93,14 @@ public class UserLoginAction extends ActionSupport {
 			List l = dao.listCheck(map);
 			if (l.size() == 1) {
 				this.setUser((User) l.get(0));
+				// 多部门多权限
+				map.clear();
+				map.put("user_id", user.getUuid());
+				this.setUserDepts(udDao.list(map));
 				if ("true".equals(IWebConfig.getConfigMap().get("isPasswordEncrypt")) ? MD5Plus.compare(r_passwords, this.getUser().getPasswords()) : r_passwords.equals(this
 						.getUser().getPasswords())) {
 					setUserLoginInfo(user, 0);
+					setUserLoginInfo(userDepts);
 					this.setMessage("Login Successful");
 					return SUCCESS;
 				}
@@ -317,7 +322,11 @@ public class UserLoginAction extends ActionSupport {
 		if(uds.size()>0){
 			for(int i=0;i<uds.size();i++){
 				userDept=uds.get(i);
-				ud_map.put(userDept.getDept_code(), userDept.getRoles());
+				if(userDept.getSubover()==1){//包含子部门
+					ud_map.put(userDept.getDept_code()+"%", userDept.getRoles());
+				}else{
+					ud_map.put(userDept.getDept_code(), userDept.getRoles());
+				}
 			}
 		}
 		session.setAttribute(Parameters.UserLoginDeptInfo_Session_str, ud_map);

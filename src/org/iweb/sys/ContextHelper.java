@@ -4,14 +4,18 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.security.auth.login.LoginException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.ServletActionContext;
+import org.iweb.sys.cache.CacheFactory;
+import org.iweb.sys.cache.SysDBCacheLogic;
 import org.iweb.sys.domain.UserLoginInfo;
 import org.iweb.sys.exception.PermitException;
 
@@ -282,10 +286,40 @@ public class ContextHelper {
 	public static boolean checkPermit2(String p_id,String dept_code) {
 		Map ulf = ContextHelper.getUserLoginDeptInfo();
 		boolean flag=false;
-		if(ulf.get(dept_code).equals(p_id)){
-			flag=true;
+		Set set = ulf.keySet();
+		Iterator it = set.iterator(); 
+		String[] a=ulf.get(dept_code).toString().split(",");
+		if(a!=null && a.length>0){
+			for(int i=0;i<a.length;i++){
+				if(a[i].equals(p_id)){
+					flag=true;
+					break;
+				}
+			}
+		}else{
+			while(it.hasNext())      //第一种迭代方式取键值 
+			  { 
+			   Object key = it.next(); 
+			   String keycode=key.toString();
+			   if(keycode.contains("%")){//包含子部门
+				   //判断是否是父部门
+				   String str = (String) CacheFactory.getCacheInstance().get(SysDBCacheLogic.CACHE_DEPT_PREFIX_PARENT + dept_code);//
+					String[] s = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
+					Boolean iskip = ToolsUtil.isIn(keycode, s);// 判断在不在数组中
+					if(iskip==true){
+						String[] b=ulf.get(keycode).toString().split(",");
+						if(b.length>0){
+							
+						}
+						if(ulf.get(keycode).equals(p_id)){
+							flag=true;
+							break;
+						}
+					}
+			   }
+			   
+			  } 
 		}
-		System.out.println(ulf.get(dept_code));
 		return isAdmin() ||  flag;
 	}
 	

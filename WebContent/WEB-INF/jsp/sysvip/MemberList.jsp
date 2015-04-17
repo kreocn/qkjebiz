@@ -45,7 +45,7 @@ ${path}
             <div class="label_rwben2">
             	<span class="label_rwb">
 				<s:textfield title="部门名称" id="userdept_nameid" name="member.dept_name" readonly="true" />
-				<s:hidden title="部门代码" id="userdept_codeid" name="member.DEPT_CODE" readonly="true" />
+				<s:hidden title="部门代码" id="userdept_codeid" name="member.dept_code"></s:hidden>
 				</span>
 				<span class="lb nw">
 				<img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true);" />
