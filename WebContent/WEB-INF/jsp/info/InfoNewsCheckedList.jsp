@@ -99,7 +99,7 @@
 
 <s:action name="ref_foot" namespace="/manager" executeResult="true" />
 <div id="selectInfoClass" style="display: none;">
-	<div class="dtree2" style="overflow: scroll; height: 300px; border: none;">
+	<div class="dtree2" style="overflow-x:auto; max-height: 300px; margin-bottom:10px; border: none;">
 		<!--<p><a href="javascript: d.openAll();">open all</a> | <a href="javascript: d.closeAll();">close all</a></p>-->
 		<script type="text/javascript">
 	d = new dTree('d');
@@ -142,8 +142,9 @@
 	}
 </script>
 	</div>
-	<div class="dtreebutton" style="border: none;">
-		<input type="button" value="确定" onclick="setCheckValue();" /> <input type="button" value="返回" onclick="closemDiv();" />
+	<div class="dtreebutton op-area" style="border: none;">
+		<a href="javascript:void(0);" onclick="setCheckValue();" class="input-blue">确定</a>
+		<a href="javascript:void(0);" onclick="closemDiv();" class="input-gray">返回</a>
 	</div>
 </div>
 <script type="text/javascript">
