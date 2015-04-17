@@ -313,12 +313,14 @@ public class UserLoginAction extends ActionSupport {
 	
 	private void setUserLoginInfo(List<UserDept> uds) {
 		HashMap<String, String> ud_map = new HashMap<String, String>();
+		HttpSession session = ContextHelper.getRequest().getSession();
 		if(uds.size()>0){
 			for(int i=0;i<uds.size();i++){
 				userDept=uds.get(i);
 				ud_map.put(userDept.getDept_code(), userDept.getRoles());
 			}
 		}
+		session.setAttribute(Parameters.UserLoginDeptInfo_Session_str, ud_map);
 	}
 
 	/**

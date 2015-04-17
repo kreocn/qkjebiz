@@ -143,6 +143,10 @@ public class ContextHelper {
 	public static UserLoginInfo getUserLoginInfo() {
 		return (UserLoginInfo) getRequest().getSession().getAttribute(Parameters.UserLoginInfo_Session_Str);
 	}
+	
+	public static Map getUserLoginDeptInfo() {
+		return (Map) getRequest().getSession().getAttribute(Parameters.UserLoginDeptInfo_Session_str);
+	}
 
 	/**
 	 * 为方便的得到用户所拥有的权限列表而写的方法
@@ -276,8 +280,13 @@ public class ContextHelper {
 	
 	//sunshanshan
 	public static boolean checkPermit2(String p_id,String dept_code) {
-		UserLoginInfo ulf = ContextHelper.getUserLoginInfo();
-		return isAdmin() || (ulf.getStatus() == 1 && ulf.getUser_prvg_map().containsKey(p_id));
+		Map ulf = ContextHelper.getUserLoginDeptInfo();
+		boolean flag=false;
+		if(ulf.get(dept_code).equals(p_id)){
+			flag=true;
+		}
+		System.out.println(ulf.get(dept_code));
+		return isAdmin() ||  flag;
 	}
 	
 	/**
@@ -327,7 +336,7 @@ public class ContextHelper {
 		UserLoginInfo ulf = ContextHelper.getUserLoginInfo();
 		boolean _p = flag ? true : false;
 		for (int i = 0; i < p_id.length; i++) {
-			_p = flag ? _p && checkPermit(p_id[i]) : _p || checkPermit(p_id[i]);
+			_p = flag ? _p && checkPermit2(p_id[i],dept_code) : _p || checkPermit2(p_id[i],dept_code);
 		}
 		return isAdmin() ||(ulf.getStatus()==1 && _p);//ulf.getStatus()==1 是管理员
 	}
@@ -356,9 +365,16 @@ public class ContextHelper {
 	 */
 	public static boolean checkPermit(String p_ids, String dept_code) {
 		try {
-			if (p_ids.indexOf("&&") >= 0) return checkPermits(p_ids.split("&&"), true);
-			else if (p_ids.indexOf("||") >= 0) return checkPermits(p_ids.split("\\|\\|"), false);
-			else return checkPermit(p_ids);
+			if(dept_code==null||dept_code.equals("")){
+				if (p_ids.indexOf("&&") >= 0) return checkPermits(p_ids.split("&&"), true);
+				else if (p_ids.indexOf("||") >= 0) return checkPermits(p_ids.split("\\|\\|"), false);
+				else return checkPermit(p_ids);
+			}else{
+				if (p_ids.indexOf("&&") >= 0) return checkPermits(p_ids.split("&&"), true);
+				else if (p_ids.indexOf("||") >= 0) return checkPermits(p_ids.split("\\|\\|"), false);
+				else return checkPermit2(p_ids,dept_code);
+			}
+			
 		} catch (Exception e) {
 			return false;
 		}
