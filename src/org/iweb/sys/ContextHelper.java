@@ -273,7 +273,13 @@ public class ContextHelper {
 		UserLoginInfo ulf = ContextHelper.getUserLoginInfo();
 		return isAdmin() || (ulf.getStatus() == 1 && ulf.getUser_prvg_map().containsKey(p_id));
 	}
-
+	
+	//sunshanshan
+	public static boolean checkPermit2(String p_id,String dept_code) {
+		UserLoginInfo ulf = ContextHelper.getUserLoginInfo();
+		return isAdmin() || (ulf.getStatus() == 1 && ulf.getUser_prvg_map().containsKey(p_id));
+	}
+	
 	/**
 	 * 封装权限判断,如果无此权限,则抛出名为"无此操作权限"的PermitException异常(此异常会跳出"无此操作权限"的提示,并后退)
 	 * 
@@ -307,6 +313,23 @@ public class ContextHelper {
 			_p = flag ? _p && checkPermit(p_id[i]) : _p || checkPermit(p_id[i]);
 		}
 		return isAdmin() || (ulf.getStatus() == 1 && _p);
+	}
+	
+	/**
+	 * 多权限多部门判断,判断p_id[]是否符合通过标准
+	 * sunshanshan
+	 * @param p_id
+	 * @param flag
+	 *            多权限判断标准 true = && | false == ||
+	 * @return
+	 */
+	public static boolean checkPermits(String[] p_id,boolean flag,String dept_code){
+		UserLoginInfo ulf = ContextHelper.getUserLoginInfo();
+		boolean _p = flag ? true : false;
+		for (int i = 0; i < p_id.length; i++) {
+			_p = flag ? _p && checkPermit(p_id[i]) : _p || checkPermit(p_id[i]);
+		}
+		return isAdmin() ||(ulf.getStatus()==1 && _p);//ulf.getStatus()==1 是管理员
 	}
 
 	/**

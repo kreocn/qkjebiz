@@ -16,10 +16,12 @@ import org.iweb.sys.ToolsUtil;
 import org.iweb.sys.dao.DepartmentDAO;
 import org.iweb.sys.dao.PositionDAO;
 import org.iweb.sys.dao.UserDAO;
+import org.iweb.sys.dao.UserDeptDAO;
 import org.iweb.sys.dao.UserRoleDAO;
 import org.iweb.sys.domain.Department;
 import org.iweb.sys.domain.Position;
 import org.iweb.sys.domain.User;
+import org.iweb.sys.domain.UserDept;
 import org.iweb.sys.domain.UserRole;
 import org.iweb.sys.exception.PermitException;
 
@@ -32,6 +34,7 @@ public class UserAction extends ActionSupport {
 	private UserDAO dao = new UserDAO();
 	private DepartmentDAO dao2 = new DepartmentDAO();
 	private UserRoleDAO dao3 = new UserRoleDAO();
+	private UserDeptDAO udDao=new UserDeptDAO();
 
 	private User user;
 	private List<User> users;
@@ -39,6 +42,7 @@ public class UserAction extends ActionSupport {
 	private List<UserRole> roles;
 	private List<Position> positions;
 	private List<UserRole> userRoles;
+	private List<UserDept> userDepts;
 
 	//
 	private String[] uroles;
@@ -52,7 +56,15 @@ public class UserAction extends ActionSupport {
 
 	private boolean overSub;
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;用户信息";
-	
+
+	public List<UserDept> getUserDepts() {
+		return userDepts;
+	}
+
+	public void setUserDepts(List<UserDept> userDepts) {
+		this.userDepts = userDepts;
+	}
+
 	public String getPath() {
 		return path;
 	}
@@ -236,6 +248,9 @@ public class UserAction extends ActionSupport {
 
 			PositionDAO pdao = new PositionDAO();
 			this.setPositions(pdao.list(null));
+			map.clear();
+			map.put("user_id", user.getUuid());
+			this.setUserDepts(udDao.list(map));
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!load 读取数据错误:" + ToolsUtil.getStackTrace(e));
 			throw new Exception(this.getClass().getName() + "!load 读取数据错误:" + ToolsUtil.getStackTraceHTML(e));

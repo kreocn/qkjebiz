@@ -232,22 +232,25 @@
 		
 		<action name="user_dept_add" class="org.iweb.sys.action.UserDeptAction" method="add">
 			<result type="redirectAction">
-				<param name="actionName">user_dept_list</param>
-				<param name="privilege.uuid">${userDept.uuid}</param>
+				<param name="actionName">user_load</param>
+				<param name="user.uuid">${userDept.user_id}</param>
+				<param name="viewFlag">mdy</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
 		<action name="user_dept_save" class="org.iweb.sys.action.UserDeptAction" method="save">
 			<result type="redirectAction">
-				<param name="actionName">user_dept_list</param>
-				<param name="privilege.uuid">${userDept.uuid}</param>
+				<param name="actionName">user_load</param>
+				<param name="user.uuid">${userDept.user_id}</param>
+				<param name="viewFlag">mdy</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
 		<action name="user_dept_del" class="org.iweb.sys.action.UserDeptAction" method="del">
 			<result type="redirectAction">
-				<param name="actionName">user_dept_list</param>
-				<param name="privilege.uuid">${userDept.uuid}</param>
+				<param name="actionName">user_load</param>
+				<param name="user.uuid">${userDept.user_id}</param>
+				<param name="viewFlag">mdy</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>

@@ -13,6 +13,15 @@ public class UserDept {
 	private Date lm_time;
 
 	private String dept_cname;
+	private String position_name;
+
+	public String getPosition_name() {
+		return position_name;
+	}
+
+	public void setPosition_name(String position_name) {
+		this.position_name = position_name;
+	}
 
 	public String getDept_cname() {
 		return dept_cname;

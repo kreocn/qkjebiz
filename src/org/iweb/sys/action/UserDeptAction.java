@@ -17,6 +17,7 @@ import org.iweb.sys.dao.UserDeptDAO;
 import org.iweb.sys.dao.UserRoleDAO;
 import org.iweb.sys.domain.Department;
 import org.iweb.sys.domain.Position;
+import org.iweb.sys.domain.User;
 import org.iweb.sys.domain.UserDept;
 import org.iweb.sys.domain.UserRole;
 
@@ -37,6 +38,7 @@ public class UserDeptAction extends ActionSupport {
 	private List<UserRole> userRoles;
 	private String[] uroles;
 	private List<Department> depts;
+	private User user;
 
 	private String message;
 	private String viewFlag;
@@ -44,6 +46,14 @@ public class UserDeptAction extends ActionSupport {
 	private int pageSize;
 
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;用户权限信息";
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 	public List<Department> getDepts() {
 		return depts;
@@ -244,6 +254,8 @@ public class UserDeptAction extends ActionSupport {
 		try {
 			dao.delete(userDept);
 			setMessage("删除成功!ID=" + userDept.getUuid());
+			user=new User();
+			user.setUuid(userDept.getUser_id());
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!del 数据删除失败:" + ToolsUtil.getStackTrace(e));
 			throw new Exception(this.getClass().getName() + "!del 数据删除失败:" + ToolsUtil.getStackTraceHTML(e));

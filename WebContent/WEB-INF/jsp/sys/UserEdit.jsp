@@ -57,7 +57,7 @@
 			</div>
 			
 			<fieldset class="clear">
-	<legend>所属部门</legend>
+	<legend>多部门多权限</legend>
 	<!--<span class="shaddress">--------------------收货地址--------------------</span>-->
 	
 	<s:if test="'mdy'==viewFlag">
@@ -75,25 +75,22 @@
 				<th>更新时间</th>
 				<th><a href="<s:url namespace="/sys" action="user_dept_load"><s:param name="viewFlag">add</s:param><s:param name="userDept.user_id" value="user.uuid"></s:param></s:url>" >添加部门及权限</a></th>
 			</tr>
-			<s:iterator value="memberAddresses" status="sta">
+			<s:iterator value="userDepts" status="sta">
 			  <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>">
-				<td><s:property value="province" /> <s:property value="city" /> <s:property value="area" /></td>
-				<td><s:property value="post" /></td>
-				<td><s:property value="street" /></td>
-				<td><s:property value="con_name" /></td>
-				<td><s:property value="mobile" /></td>
+				<td>${dept_cname }</td>
+				<td>${position_name }</td>
 				<td>
-				<s:url id="setDefault" namespace="/sysvip" action="memberAddress_default">
-					<s:param name="memberAddress.uuid" value="uuid" />
-					<s:param name="memberAddress.member_id" value="member.uuid" />
-					<s:param name="memberAddress.defaultaddress">1</s:param>
-				</s:url>
-				<s:if test="0==defaultaddress"><a href="${setDefault}"><span class="aI aI-e"></span></a></s:if>
-				<s:if test="1==defaultaddress"><span class="aI aI-y"></span></s:if>
+				<s:if test="%{subover==0}">
+				无子部门管理权限
+				</s:if>
+				<s:else>
+				有子部门管理权限
+				</s:else>
 				</td>
+				<td>${it:formatDate(lm_time,'yyyy-MM-dd hh:mm:ss')}</td>
 				<td>
-			    	[<a href="<s:url namespace="/sysvip" action="memberAddress_load"><s:param name="viewFlag">mdy</s:param><s:param name="memberAddress.uuid" value="uuid"></s:param></s:url>">修改</a>]
-			    	[<a href="<s:url namespace="/sysvip" action="memberAddress_del"><s:param name="memberAddress.uuid" value="uuid" /><s:param name="memberAddress.member_id" value="member.uuid" /></s:url>" onclick="return isDel();">删除</a>]
+			    	[<a href="<s:url namespace="/sys" action="user_dept_load"><s:param name="viewFlag">mdy</s:param><s:param name="userDept.uuid" value="uuid"></s:param></s:url>">修改</a>]
+			    	[<a href="<s:url namespace="/sys" action="user_dept_del"><s:param name="userDept.uuid" value="uuid" /><s:param name="userDept.user_id" value="user_id"/></s:url>" onclick="return isDel();">删除</a>]
 			    </td>
 			  </tr>
 			</s:iterator>

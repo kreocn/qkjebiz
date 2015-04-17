@@ -20,7 +20,7 @@
 	<div class="dq_step">
 		${path}
 		<span class="opb lb op-area">
-		<a href="<s:url action="user_dept_list" namespace="/sys" />" >返回编辑页面</a>
+		<a href="<s:url namespace="/sys" action="user_load"><s:param name="viewFlag">mdy</s:param><s:param name="user.uuid" value="userDept.user_id"></s:param></s:url>">返回编辑页面</a>
 		</span>
 	</div>
 	<s:form id="formEdit" name="form1" cssClass="validForm" action="user_dept_add" namespace="/sys" onsubmit="return validator(this);" method="post" theme="simple">
@@ -108,8 +108,7 @@
 				<s:submit id="save" name="save" value="保存" action="user_dept_save" cssClass="input-blue"/>
 				<s:submit id="delete" name="delete" value="删除" action="user_dept_del" onclick="return isDel();" cssClass="input-red"/>
 				</s:elseif>
-				<input type="button" value="返回" onclick="linkurl('<s:url action="user_dept_list" namespace="/qkjmanage" />');" />
-				
+				<input type="button" value="返回" onclick="linkurl('<s:url action="user_load" namespace="/sys"><s:param name="viewFlag">mdy</s:param><s:param name="user.uuid" value="%{userDept.user_id}"></s:param></s:url>');" />
             </div>
 		</div>
 		</div>
