@@ -65,7 +65,15 @@
 		  		<tr id="showtr${perUuid}">
 		  			<td class="td1 nw"><s:property value="perUuid" /></td>
 		  			<td class="td1 nw">${ptype }</td>
-				    <td class="td1 longnote" title="${title}">${it:subString(title,18)}</td>
+				    <td class="td1 longnote" title="${title}">
+				    <s:if test="%{ptype=='请假' || ptype=='换休'}">
+				    ${title }
+				    </s:if>
+				    <s:else>
+				    ${it:subString(title,18)}
+				    </s:else>
+				    
+				    </td>
 				    <td class="td2 nw">
 				    ${apply_user_name }
 				    </td>
