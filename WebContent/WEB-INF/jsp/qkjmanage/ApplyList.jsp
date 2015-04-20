@@ -156,9 +156,9 @@ display: none;
 				<td class="td4 op-area">				
 					<c:if test="${it:checkPermit('QKJ_QKJMANAGE_APPLY_VIEW',null)==true}">
 						<s:if test="status>=30">
-							<a class="input-gray" href="<s:url namespace="/qkjmanage" action="apply_print"><s:param name="apply.uuid" value="uuid"></s:param></s:url>">打印</a>
+							<a class="input-gray" href="<s:url namespace="/qkjmanage" action="apply_print"><s:param name="perWorkFlag">null</s:param><s:param name="apply.uuid" value="uuid"></s:param></s:url>">打印</a>
 						</s:if>					
-			    		<a class="input-blue" href="<s:url namespace="/qkjmanage" action="apply_load"><s:param name="viewFlag">mdy</s:param><s:param name="apply.uuid" value="uuid"></s:param></s:url>">修改</a>
+			    		<a class="input-blue" href="<s:url namespace="/qkjmanage" action="apply_load"><s:param name="perWorkFlag">null</s:param><s:param name="viewFlag">mdy</s:param><s:param name="apply.uuid" value="uuid"></s:param></s:url>">修改</a>
 			    	</c:if>
 			    	<c:if test="${(status==0||status==5) && it:checkPermit('QKJ_QKJMANAGE_APPLY_DEL',null)==true}">
 			    		<a class="input-red" href="<s:url namespace="/qkjmanage" action="apply_del"><s:param name="apply.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>

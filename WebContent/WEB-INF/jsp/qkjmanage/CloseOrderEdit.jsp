@@ -43,7 +43,11 @@
 <div class="tab_right">
 	<div class="tab_warp main">
 		<div class="dq_step">${path}
-			<span class="opb lb op-area"><a href="<s:url action="closeOrder_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a></span> <span class="opb lb op-area"><s:if test="closeOrder.check_state>=1">
+			<span class="opb lb op-area">
+				<a href="<s:url action="closeOrder_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a>
+			</span>
+			 <span class="opb lb op-area">
+			 <s:if test="closeOrder.check_state>=1">
 			<s:if test="closeOrder.check_state>30">
 					<a class="input-gray" href="<s:url namespace="/qkjmanage" action="closeOrder_view"><s:param name="closeOrder.uuid" value="closeOrder.uuid" /></s:url>">转到打印页面</a>
 			</s:if>
@@ -356,7 +360,7 @@
 							<s:if test="closeOrder.check_state>30">
 								<input type="button" onclick="linkurl('<s:url namespace="/qkjmanage" action="closeOrder_view"><s:param name="closeOrder.uuid" value="closeOrder.uuid" /></s:url>');" value="转到打印页面" />
 							</s:if>
-							<input type="button" value="返回" onclick="linkurl('<s:url action="closeOrder_relist" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');" class="input-gray" />
+								<input type="button" value="返回" onclick="linkurl('<s:url action="closeOrder_relist" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');" class="input-gray" />
 						</div>
 					</div>
 				</div>

@@ -48,6 +48,26 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	private List<Approve> approves;
 	private String isApprover;
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;结案提货单";
+	// 个人工作标识
+	private String perWorkF;
+	private static String perWorkFlag=null;
+		
+
+	public String getPerWorkF() {
+		return perWorkF;
+	}
+
+	public void setPerWorkF(String perWorkF) {
+		this.perWorkF = perWorkF;
+	}
+
+	public static String getPerWorkFlag() {
+		return perWorkFlag;
+	}
+
+	public static void setPerWorkFlag(String perWorkFlag) {
+		CloseOrderAction.perWorkFlag = perWorkFlag;
+	}
 
 	public List<CloseOrder> getAllsigns() {
 		return allsigns;
@@ -206,7 +226,12 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
 		}
-		return SUCCESS;
+		if(perWorkFlag==null || perWorkFlag.equals("null")){
+			return "success";
+		}else{
+			perWorkFlag=null;
+			return "perSuccess";
+		}
 	}
 
 	public String relist() throws Exception {
@@ -215,6 +240,11 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 
 	public String load() throws Exception {
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+		if((perWorkF==null || perWorkF.equals("null")) && perWorkFlag==null){
+			perWorkFlag=null;
+		}else{
+			perWorkFlag="perWork";
+		}
 		try {
 			if (null == viewFlag) {
 				this.setCloseOrder(null);

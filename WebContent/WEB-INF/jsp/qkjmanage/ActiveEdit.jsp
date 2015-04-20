@@ -126,6 +126,7 @@
 		</div>
 		<s:form id="editForm" name="editForm" cssClass="validForm" action="active_load" namespace="/qkjmanage" method="post" theme="simple">
 		<s:hidden name="active.apply_dept" value="%{active.apply_dept}"></s:hidden>
+		<s:hidden name="perWorkFlag" value="%{perWorkFlag}"></s:hidden>
 		<s:hidden name="nextFlag" value="%{nextFlag}"></s:hidden>
 			<div class="label_con">
 				<s:if test="'mdy' == viewFlag">
@@ -694,11 +695,12 @@
 							<c:if test="${(active.status==1 || active.status==2) && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_STATUS_1',null)==true}">
 								<s:submit id="active_mdyStatus_1" name="active_mdyStatus_1" value="作废" action="active_mdyStatus_1" onclick="return isOp('确定执行此操作?');" cssClass="input-red" />
 							</c:if>
-							<c:if test="${active.status==1 && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_APPROVE',null)==true}">
+							<c:if test="${'mdy' == viewFlag && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_APPROVE',null)==true}">
 								<input type="button" value="审阅" onclick="openApprove();" />
 							</c:if>
 							<c:if test="${'mdy' == viewFlag && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_HISTORY',null)==true}">
 								<input type="button" value="查看操作记录" class="input-gray" onclick="openCustomerView(${active.uuid});" />
+							
 							</c:if>
 							<input type="button" value="返回" class="input-gray" onclick="linkurl('<s:url action="active_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');" />
 							<c:if test="${(active.status==1 || active.status==2) && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_TH',null)==true}">
@@ -1016,7 +1018,7 @@
 					 location.href="/qkjmanage/active_nextList?befUid="+${active.uuid}+"&viewFlag='relist'";
 				}
 			}
-		}
+		};
 										$(function(){
 											$("#editForm :input").change(function(){
 												//if()cellarOrder_check0 10 15 20

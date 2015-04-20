@@ -97,7 +97,7 @@ max-width: 650px !important;
 		<td class="td3 nw">${rebate }</td>
 		<td  class="td4 op-area">
 			<c:if test="${it:checkPermit('QKJ_SALPRO_SALPROMOT_MDY',null)==true}">
-	    	<a class="input-blue" href="<s:url namespace="/salpro" action="salPromot_load"><s:param name="viewFlag">mdy</s:param><s:param name="salPromot.uuid" value="uuid"></s:param></s:url>">修改</a>
+	    	<a class="input-blue" href="<s:url namespace="/salpro" action="salPromot_load"><s:param name="perWorkFlag">null</s:param><s:param name="viewFlag">mdy</s:param><s:param name="salPromot.uuid" value="uuid"></s:param></s:url>">修改</a>
 	    	</c:if>
 	    	<c:if test="${status==0 && it:checkPermit('QKJ_SALPRO_SALPROMOT_DEL',null)==true}">
 	    	<a class="input-red" href="<s:url namespace="/salpro" action="salPromot_del"><s:param name="salPromot.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>

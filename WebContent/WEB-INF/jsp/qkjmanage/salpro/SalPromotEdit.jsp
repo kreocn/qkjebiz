@@ -242,6 +242,8 @@
 							<c:if test="${salPromot.status==0 && it:checkPermit('QKJ_SALPRO_SALPROMOT_DEL',null)==true}">
 								<s:submit id="delete" name="delete" value="删除" action="salPromot_del" cssClass="input-red" onclick="return isDel();" />
 							</c:if>
+							
+							
 							<s:if test="'view' != viewFlag">
 								<input type="button" class="input-gray" value="返回" onclick="linkurl('<s:url action="salPromot_list" namespace="/salpro"><s:param name="salPromot.type" value="%{salPromot.type}"></s:param></s:url>');" />
 							</s:if>

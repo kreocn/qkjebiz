@@ -64,15 +64,18 @@
 <div class="tab_right">
 	<div class="tab_warp main">
 		<div class="dq_step">
-			<span id="hs" class="pt">活动结案单</span> <span id="ks" class="pt kss">活动客户结案通知单</span>
-			<span class="opb lb op-area noprint"><a href="<s:url namespace="/qkjmanage" action="active_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a></span> <span class="opb lb op-area noprint"><a
-				href="<s:url namespace="/qkjmanage" action="active_closeLoad"><s:param name="active.uuid" value="%{active.uuid}"></s:param></s:url>">返回修改页面</a></span> 
-				<span class="opb lb op-area noprint"><input type="button" onclick="ypri();window.print();" value="打印本页" />
+		<span id="hs" class="pt">活动结案单</span> <span id="ks" class="pt kss">活动客户结案通知单</span> 
+			<span class="opb lb op-area noprint">
+				<a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a>
+			</span> 
+			<span class="opb lb op-area noprint"><a href="<s:url namespace="/qkjmanage" action="active_closeLoad"><s:param name="active.uuid" value="%{active.uuid}"></s:param></s:url>">返回修改页面</a></span> 
+			<span class="opb lb op-area noprint"><input type="button" onclick="ypri();window.print();" value="打印本页" />
 				&nbsp;</span>
 				<span class="opb lb op-area noprint"><input type="button" onclick="indprint();" value="打印海拔系列" />&nbsp;</span> 
 				<span class="opb lb op-area noprint"><input type="button" onclick="otherprint();" value="打印非海拔系列" />&nbsp;</span> 
 				 <span class="opb lb op-area noprint"><input
 				type="button" onclick="nopri();window.print();" value="打印结案通知单" />&nbsp;</span>
+				
 		</div>
 		<s:form id="editForm" name="editForm" action="apply_list" method="get" namespace="/qkjmanage" theme="simple">
 			<div class="label_con">
@@ -525,8 +528,10 @@
 							<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVE_STATUS_1',null)==true}">
 								<s:submit id="active_mdyStatus_1" name="active_mdyStatus_1" value="作废" action="active_mdyStatus_1" onclick="return isOp('确定执行此操作?');" />
 							</c:if>
-							<input type="button" value="返回" onclick="linkurl('<s:url action="active_relist" namespace="/qkjmanage" />');" /> <input type="button" onclick="window.print();" value="打印本页" /> <input type="button" onclick="nopri();window.print();" value="打印结案通知单" />&nbsp; <input type="button" value="返回修改页面"
-								onclick="linkurl('<s:url action="active_closeLoad" namespace="/qkjmanage"><s:param name="active.uuid" value="%{active.uuid}"></s:param></s:url>');" />
+							<input type="button" value="返回" class="input-gray" onclick="linkurl('<s:url action="active_relist" namespace="/qkjmanage" />');" />
+							<input type="button" onclick="window.print();" value="打印本页" /> <input type="button" onclick="nopri();window.print();" value="打印结案通知单" />&nbsp; 
+
+							 <input type="button" onclick="nopri();window.print();" value="打印结案通知单" />&nbsp; <input type="button" value="返回修改页面" onclick="linkurl('<s:url action="active_closeLoad" namespace="/qkjmanage"><s:param name="active.uuid" value="%{active.uuid}"></s:param></s:url>');" />
 							<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVE_MDYSHIPINFO',null)==true}">  (发货信息功能已移动到列表页)</c:if>
 						</div>
 					</div>

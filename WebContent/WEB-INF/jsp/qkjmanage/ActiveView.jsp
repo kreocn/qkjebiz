@@ -121,6 +121,7 @@
 					<a href="javascript:;" onclick="indprint();">打印海拔系列</a>
 					<a href="javascript:;" onclick="otherprint();">打印非海拔系列</a>
 					<a href="javascript:;" onclick="nopri();window.print();">活动执行通知单</a>
+					
 					<a class="input-gray"  href="<s:url namespace="/qkjmanage" action="active_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a>
 				</div>
 			</div>

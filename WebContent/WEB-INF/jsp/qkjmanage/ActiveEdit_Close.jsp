@@ -114,7 +114,6 @@
 <div class="tab_right">
 	<div class="tab_warp main">
 		<div class="dq_step">
-			${path}
 			<div class="opb lb op-area noprint">
 				<p class="more_j">更多操作</p>
 				<div class="mcz_list subHide">
@@ -816,7 +815,7 @@
 								<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVE_STATUS_1',null)==true}">
 									<s:submit cssClass="input-red" name="active_mdyStatus_1" value="作废" action="active_mdyStatus_1" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
-								<c:if test="${active.status==4 && it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_APPROVE',null)==true}">
+								<c:if test="${(active.status==4 || active.status==3) && it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_APPROVE',null)==true}">
 									<input type="button" value="审阅" onclick="openApprove();" />
 								</c:if>
 							</s:if>
