@@ -414,8 +414,8 @@ public class ContextHelper {
 				else if (p_ids.indexOf("||") >= 0) return checkPermits(p_ids.split("\\|\\|"), false);
 				else return checkPermit(p_ids);
 			} else {
-				if (p_ids.indexOf("&&") >= 0) return checkPermits(p_ids.split("&&"), true);
-				else if (p_ids.indexOf("||") >= 0) return checkPermits(p_ids.split("\\|\\|"), false);
+				if (p_ids.indexOf("&&") >= 0) return checkPermits(p_ids.split("&&"), true,dept_code);
+				else if (p_ids.indexOf("||") >= 0) return checkPermits(p_ids.split("\\|\\|"), false,dept_code);
 				else return checkPermit2(p_ids, dept_code);
 			}
 
