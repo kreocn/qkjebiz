@@ -250,7 +250,7 @@
 			    		 alert("【会员手机】不许为空!");
 				 			$("#memMobile").focus();
 			    	 }else if(data=="false"){
-			 			alert("会员手机号重复请修改.");
+			 			alert("会员手机号重复.");
 			 		} else if($("#member_name").val()=='') {
 			 			alert("【会员名称】不许为空!");
 			 			$("#member_name").focus();
@@ -284,7 +284,7 @@
 			    		 alert("【会员手机】不许为空!");
 				 			$("#memMobile").focus();
 			    	 }else if(data=="false"){
-			 			alert("会员手机号重复请修改.");
+			 			alert("会员手机号重复.");
 			 		}else if($("#member_name").val()=='') {
 			 			alert("【会员名称】不许为空!");
 			 			$("#member_name").focus();
