@@ -4,49 +4,67 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.iweb.sys.cache.CacheFactory;
+import org.iweb.sys.cache.SysCacheLogic;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
 import com.ibatis.sqlmap.client.SqlMapClientBuilder;
 
 public class DBHelper {
-
-	private static SqlMapClient sqlMap;
 	private static Log log = LogFactory.getLog(DBHelper.class);
+
+	private final static String[] configs = { "WEB-INF/classes/sql-map-config.xml", "WEB-INF/classes/sql-map-config02.xml" };
+	private static SqlMapClient[] sqlMaps;
+	private static SqlMapClient sqlMap;
+	private static int targetDB = 0;
 
 	// 批量操作时,一次性提交的数目
 	private int batchNum = 50;
 
 	private static DBHelper db;
+	private static DBHelper[] dbs;
 
 	static {
-		try {
-			String resource = Parameters.getAbsolutePath() + "WEB-INF/classes/sql-map-config.xml";
-			InputStream is = new FileInputStream(new File(resource));
-			sqlMap = SqlMapClientBuilder.buildSqlMapClient(is);
-			is.close();
-			log.info("SqlMap配置文件加载成功!");
-		} catch (Exception e) {
-			sqlMap = null;
-			log.fatal("SqlMap配置文件加载失败,系统将无法正常运行!");
-			e.printStackTrace();
-			throw new RuntimeException("SqlMap配置文件加载失败! " + e);
+		String rootPath = (String) CacheFactory.getCacheInstance().get(SysCacheLogic.CACHE_SYS_PREFIX + "WebAbsolutePath");
+		sqlMaps = new SqlMapClient[configs.length];
+		dbs = new DBHelper[configs.length];
+		for (int i = 0; i < configs.length; i++) {
+			try {
+				InputStream is = new FileInputStream(new File(rootPath + configs[i]));
+				sqlMaps[i] = SqlMapClientBuilder.buildSqlMapClient(is);
+				is.close();
+				log.info("SqlMap配置文件[" + rootPath + configs[i] + "]加载成功!");
+			} catch (Exception e) {
+				// sqlMap = null;
+				log.fatal("SqlMap配置文件加载失败,系统将可能正常运行!", e);
+			}
 		}
-		db = new DBHelper();
+		// db = new DBHelper();
 	}
 
 	private DBHelper() {
+		sqlMap = sqlMaps[targetDB];
+	}
+
+	private DBHelper(int db_num) {
+		targetDB = db_num;
+		sqlMap = sqlMaps[targetDB];
 	}
 
 	public synchronized static DBHelper getInstance() {
-		if (db == null) {
-			db = new DBHelper();
+		return getInstance(0);
+	}
+
+	public synchronized static DBHelper getInstance(int db_num) {
+		if (dbs[db_num] == null) {
+			dbs[db_num] = new DBHelper(db_num);
 		}
+		db = dbs[db_num];
 		return db;
 	}
 
@@ -69,10 +87,8 @@ public class DBHelper {
 	public List getResultList(String map_id, Object parameters) throws Exception {
 		// Map<String, Object> parameters
 		List list;
-		if (null != parameters)
-			list = sqlMap.queryForList(map_id, parameters);
-		else
-			list = sqlMap.queryForList(map_id);
+		if (null != parameters) list = sqlMap.queryForList(map_id, parameters);
+		else list = sqlMap.queryForList(map_id);
 		return list;
 	}
 
@@ -80,8 +96,7 @@ public class DBHelper {
 		return getResultList(map_id, null);
 	}
 
-	public Map getResultMap(String map_id, Object parameters, String keyProperty, String valueProperty)
-			throws Exception {
+	public Map getResultMap(String map_id, Object parameters, String keyProperty, String valueProperty) throws Exception {
 		Map map;
 		map = sqlMap.queryForMap(map_id, parameters, keyProperty, valueProperty);
 		return map;
@@ -141,9 +156,7 @@ public class DBHelper {
 	 *            使用batchNum识标,如为true,则每batchNum个单位提交一次.
 	 */
 	public void batchStatment(List<String> map_id_list, List<Object> parameter_list, Boolean isUseBatchNum) {
-		if (map_id_list == null || parameter_list == null || map_id_list.size() == 0 || parameter_list.size() == 0) {
-			return;
-		}
+		if (map_id_list == null || parameter_list == null || map_id_list.size() == 0 || parameter_list.size() == 0) { return; }
 		int t = 0;
 		try {
 			boolean flag = true;
@@ -155,8 +168,7 @@ public class DBHelper {
 					flag = false;
 				}
 				sqlMap.delete(map_id_list.get(i), parameter_list.get(i));
-				log.info("Batch(" + i + ")!:" + map_id_list.get(i) + ";parameter:"
-						+ ToolsUtil.dumpObject(parameter_list.get(i)));
+				log.info("Batch(" + i + ")!:" + map_id_list.get(i) + ";parameter:" + ToolsUtil.dumpObject(parameter_list.get(i)));
 				if (isUseBatchNum && (i + 1) % batchNum == 0) {
 					sqlMap.executeBatch();
 					sqlMap.commitTransaction();
@@ -168,9 +180,7 @@ public class DBHelper {
 			sqlMap.commitTransaction();
 			log.info("Bacth Statmeter Successful! \nTotal Operate Number:" + map_id_list.size());
 		} catch (Exception e) {
-			log.error(
-					"Bacth Statmeter Failed!Transaction Will Be RollBack!!parameter:"
-							+ ToolsUtil.dumpObject(parameter_list.get(t)), e);
+			log.error("Bacth Statmeter Failed!Transaction Will Be RollBack!!parameter:" + ToolsUtil.dumpObject(parameter_list.get(t)), e);
 		} finally {
 			try {
 				sqlMap.endTransaction();

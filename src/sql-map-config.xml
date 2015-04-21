@@ -9,7 +9,7 @@
 			<!-- 测试环境 DataSource Proxool -->
 			<!-- <property name="DataSource" value="java:/comp/env/qkj/mysql_druid_local203" /> -->
 			<!-- 本机Tomcat本机测试环境 DataSource(ERP LOCAL TEST)&测试服务器 Proxool -->
-			 <property name="DataSource" value="java:/comp/env/qkj/mysqlLocalCJ_druid" />
+			<property name="DataSource" value="java:/comp/env/qkj/mysqlLocalCJ_druid" />
 		</dataSource>
 	</transactionManager>
 	<!-- 要想实现*通配符模式,可以修改com.ibatis.sqlmap.engine.builder.xml.SqlMapConfigParser类源代码中的addSqlMapNodelets()方法 -->
@@ -60,9 +60,9 @@
 	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_TravelProductMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_ProTypeMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_MarketActiveMap.xml" />
-	<sqlMap resource="org/iweb/resource/map/qkj_salpro_SalPromotMap.xml"/>
-	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_CloseOrderMap.xml"/>
-	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_CloseOrderProMap.xml"/>
+	<sqlMap resource="org/iweb/resource/map/qkj_salpro_SalPromotMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_CloseOrderMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_CloseOrderProMap.xml" />
 	<!--行政管理 -->
 	<sqlMap resource="org/iweb/resource/map/qkj_adm_AssetsMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_adm_AssetItemMap.xml" />
@@ -88,6 +88,6 @@
 	<sqlMap resource="org/iweb/resource/map/qkj_ware_OutDetailHMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_ware_OutStockHMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_bordetail_BordetailMap.xml" />
-	
+
 	<sqlMap resource="org/iweb/resource/map/qkj_Personal_PerWorkMap.xml" />
 </sqlMapConfig>
