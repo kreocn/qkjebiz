@@ -16,8 +16,11 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.ServletActionContext;
 import org.iweb.sys.cache.CacheFactory;
 import org.iweb.sys.cache.SysDBCacheLogic;
+import org.iweb.sys.domain.RolePrvg;
 import org.iweb.sys.domain.UserLoginInfo;
 import org.iweb.sys.exception.PermitException;
+
+import com.fasterxml.jackson.annotation.JsonFormat.Value;
 
 /**
  * HttpServlet相关的工具类
@@ -147,7 +150,7 @@ public class ContextHelper {
 	public static UserLoginInfo getUserLoginInfo() {
 		return (UserLoginInfo) getRequest().getSession().getAttribute(Parameters.UserLoginInfo_Session_Str);
 	}
-	
+
 	public static Map getUserLoginDeptInfo() {
 		return (Map) getRequest().getSession().getAttribute(Parameters.UserLoginDeptInfo_Session_str);
 	}
@@ -281,48 +284,54 @@ public class ContextHelper {
 		UserLoginInfo ulf = ContextHelper.getUserLoginInfo();
 		return isAdmin() || (ulf.getStatus() == 1 && ulf.getUser_prvg_map().containsKey(p_id));
 	}
-	
-	//sunshanshan
-	public static boolean checkPermit2(String p_id,String dept_code) {
+
+	// sunshanshan
+	public static boolean checkPermit2(String p_id, String dept_code) {
 		Map ulf = ContextHelper.getUserLoginDeptInfo();
-		boolean flag=false;
+		boolean flag = false;
 		Set set = ulf.keySet();
-		Iterator it = set.iterator(); 
-		String[] a=ulf.get(dept_code).toString().split(",");
-		if(a!=null && a.length>0){
-			for(int i=0;i<a.length;i++){
-				if(a[i].equals(p_id)){
-					flag=true;
-					break;
-				}
-			}
-		}else{
-			while(it.hasNext())      //第一种迭代方式取键值 
-			  { 
-			   Object key = it.next(); 
-			   String keycode=key.toString();
-			   if(keycode.contains("%")){//包含子部门
-				   //判断是否是父部门
-				   String str = (String) CacheFactory.getCacheInstance().get(SysDBCacheLogic.CACHE_DEPT_PREFIX_PARENT + dept_code);//
-					String[] s = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
-					Boolean iskip = ToolsUtil.isIn(keycode, s);// 判断在不在数组中
-					if(iskip==true){
-						String[] b=ulf.get(keycode).toString().split(",");
-						if(b.length>0){
-							
+		Iterator it = set.iterator();
+		while (it.hasNext()) // 第一种迭代方式取键值
+		{
+			Object key = it.next();
+			String keycode = key.toString();
+			if (keycode.contains("%")) {// 包含子部门
+				// 判断是否是父部门
+				String str = (String) CacheFactory.getCacheInstance().get(SysDBCacheLogic.CACHE_DEPT_PREFIX_PARENT + dept_code);//
+				String[] s = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
+				Boolean iskip = ToolsUtil.isIn(keycode.substring(0, keycode.length() - 1), s);// 判断在不在数组中
+				if (iskip == true) {
+					List<RolePrvg> value = (List<RolePrvg>) ulf.get(keycode);
+					if (value != null) {
+						for (int i = 0; i < value.size(); i++) {
+							RolePrvg rp = new RolePrvg();
+							rp = value.get(i);
+							System.out.println(rp.getPrivilege_id());
+							if (rp.getPrivilege_id().equals(p_id)) {
+								flag = true;
+								break;
+							}
 						}
-						if(ulf.get(keycode).equals(p_id)){
-							flag=true;
+					}
+				}
+			}else{
+				List<RolePrvg> value = (List<RolePrvg>) ulf.get(keycode);
+				if (value != null) {
+					for (int i = 0; i < value.size(); i++) {
+						RolePrvg rp = new RolePrvg();
+						rp = value.get(i);
+						if (rp.getPrivilege_id().equals(p_id)) {
+							flag = true;
 							break;
 						}
 					}
-			   }
-			   
-			  } 
+				}
+			}
+
 		}
-		return isAdmin() ||  flag;
+		return isAdmin() || flag;
 	}
-	
+
 	/**
 	 * 封装权限判断,如果无此权限,则抛出名为"无此操作权限"的PermitException异常(此异常会跳出"无此操作权限"的提示,并后退)
 	 * 
@@ -357,22 +366,23 @@ public class ContextHelper {
 		}
 		return isAdmin() || (ulf.getStatus() == 1 && _p);
 	}
-	
+
 	/**
 	 * 多权限多部门判断,判断p_id[]是否符合通过标准
 	 * sunshanshan
+	 * 
 	 * @param p_id
 	 * @param flag
 	 *            多权限判断标准 true = && | false == ||
 	 * @return
 	 */
-	public static boolean checkPermits(String[] p_id,boolean flag,String dept_code){
+	public static boolean checkPermits(String[] p_id, boolean flag, String dept_code) {
 		UserLoginInfo ulf = ContextHelper.getUserLoginInfo();
 		boolean _p = flag ? true : false;
 		for (int i = 0; i < p_id.length; i++) {
-			_p = flag ? _p && checkPermit2(p_id[i],dept_code) : _p || checkPermit2(p_id[i],dept_code);
+			_p = flag ? _p && checkPermit2(p_id[i], dept_code) : _p || checkPermit2(p_id[i], dept_code);
 		}
-		return isAdmin() ||(ulf.getStatus()==1 && _p);//ulf.getStatus()==1 是管理员
+		return isAdmin() || (ulf.getStatus() == 1 && _p);// ulf.getStatus()==1 是管理员
 	}
 
 	/**
@@ -399,16 +409,16 @@ public class ContextHelper {
 	 */
 	public static boolean checkPermit(String p_ids, String dept_code) {
 		try {
-			if(dept_code==null||dept_code.equals("")){
+			if (dept_code == null || dept_code.equals("")) {
 				if (p_ids.indexOf("&&") >= 0) return checkPermits(p_ids.split("&&"), true);
 				else if (p_ids.indexOf("||") >= 0) return checkPermits(p_ids.split("\\|\\|"), false);
 				else return checkPermit(p_ids);
-			}else{
+			} else {
 				if (p_ids.indexOf("&&") >= 0) return checkPermits(p_ids.split("&&"), true);
 				else if (p_ids.indexOf("||") >= 0) return checkPermits(p_ids.split("\\|\\|"), false);
-				else return checkPermit2(p_ids,dept_code);
+				else return checkPermit2(p_ids, dept_code);
 			}
-			
+
 		} catch (Exception e) {
 			return false;
 		}

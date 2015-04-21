@@ -60,7 +60,12 @@
 		         <div class="label_ltit">子部门权限:</div>
 		         <div class="label_rwben2">
 		         <div class="label_rwb">
+		         <s:if test="'add' == viewFlag">
 		         <s:radio name="userDept.subover" list="#{1:'是',0:'否'}" listKey="key" listValue="value" value="0"/>
+		         </s:if>
+		         <s:else>
+		         <s:radio name="userDept.subover" list="#{1:'是',0:'否'}" listKey="key" listValue="value"/>
+		         </s:else>
 		         </div>
 		         </div>
 	       	</div>

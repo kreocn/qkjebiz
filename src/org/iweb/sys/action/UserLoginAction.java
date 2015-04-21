@@ -20,6 +20,7 @@ import org.iweb.sys.domain.RolePrvg;
 import org.iweb.sys.domain.User;
 import org.iweb.sys.domain.UserDept;
 import org.iweb.sys.domain.UserLoginInfo;
+import org.iweb.sys.domain.UserRole;
 import org.iweb.sys.logic.DeptLogic;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -317,16 +318,27 @@ public class UserLoginAction extends ActionSupport {
 	}
 	
 	private void setUserLoginInfo(List<UserDept> uds) {
-		HashMap<String, String> ud_map = new HashMap<String, String>();
+		HashMap<String, List<RolePrvg>> ud_map = new HashMap<String, List<RolePrvg>>();
 		HttpSession session = ContextHelper.getRequest().getSession();
+		List<RolePrvg> role_p_list;
 		if(uds.size()>0){
 			for(int i=0;i<uds.size();i++){
 				userDept=uds.get(i);
-				if(userDept.getSubover()==1){//包含子部门
-					ud_map.put(userDept.getDept_code()+"%", userDept.getRoles());
-				}else{
-					ud_map.put(userDept.getDept_code(), userDept.getRoles());
+				if(userDept.getRoles()!=null&&!userDept.getRoles().equals("")){
+					String[] roles=userDept.getRoles().split(",");
+					map.clear();
+					map.put("roles", roles);
+					map.put("no_tree_view", "A");
+					System.out.println(roles);
+					role_p_list = (new UserRoleDAO()).listRolePrvg(map);
+					if(userDept.getSubover()==1){//包含子部门
+						ud_map.put(userDept.getDept_code()+"%", role_p_list);
+					}else{
+						ud_map.put(userDept.getDept_code(), role_p_list);
+					}
 				}
+				
+				
 			}
 		}
 		session.setAttribute(Parameters.UserLoginDeptInfo_Session_str, ud_map);

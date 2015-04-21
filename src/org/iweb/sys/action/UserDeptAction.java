@@ -242,6 +242,7 @@ public class UserDeptAction extends ActionSupport {
 	public String save() throws Exception {
 		try {
 			userDept.setLm_time(new Date());
+			userDept.setRoles(ToolsUtil.Array2String(uroles == null ? new String[] {} : uroles, ","));
 			dao.save(userDept);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!save 数据更新失败:" + ToolsUtil.getStackTrace(e));

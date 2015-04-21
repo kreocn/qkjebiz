@@ -1,6 +1,7 @@
 package org.iweb.sys.domain;
 
 import java.util.Date;
+import java.util.List;
 
 public class UserDept {
 	private Integer uuid;
@@ -14,6 +15,16 @@ public class UserDept {
 
 	private String dept_cname;
 	private String position_name;
+	
+	private List<UserRole> user_roles_list;
+
+	public List<UserRole> getUser_roles_list() {
+		return user_roles_list;
+	}
+
+	public void setUser_roles_list(List<UserRole> user_roles_list) {
+		this.user_roles_list = user_roles_list;
+	}
 
 	public String getPosition_name() {
 		return position_name;

@@ -725,7 +725,7 @@
 									<s:submit id="mdyActiveSDStatus30" name="mdyActiveSDStatus30" cssClass="input-green" value="运营总监-审核通过" action="mdyActiveSDStatus30" onclick="return isOp('确定执行此操作?');" />
 									<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
-								<c:if test="${40==active.sd_status && active.smd_status>=40 && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS40',null)==true}">
+								<c:if test="${40==active.sd_status && active.smd_status>=40 && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS40',active.apply_dept)==true}">
 									<s:submit id="mdyActiveSDStatus40" name="mdyActiveSDStatus40" cssClass="input-green" value="业务副总-审核通过" action="mdyActiveSDStatus40" onclick="return isOp('确定执行此操作?');" />
 									<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
