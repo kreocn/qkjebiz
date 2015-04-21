@@ -28,6 +28,14 @@
 		 		</div>
 			</s:if>
 			<div class="label_main">
+		       <div class="label_hang">
+			         <div class="label_ltit">管理员:</div>
+			         <div class="label_rwben2">
+			         <div class="label_rwb"><s:textfield name="perWorkSelect.perUser" title="权限" cssClass="label_hang_linput validate[required,maxSize[100]]" /></div>
+			         </div>
+		       	</div>
+	 		</div>
+			<div class="label_main">
 			       	<div class="label_hang">
 			            <div class="label_ltit">菜单:</div>
 			            <div class="label_rwben label_rwb"><s:select onchange="checkStatus();" id="status"  cssClass="selectKick" headerKey="" headerValue="-请选择-" list="#{0:'活动',1:'至事由',2:'工时',3:'工业旅游',4:'提货结案单',5:'促销活动'}" /></div>

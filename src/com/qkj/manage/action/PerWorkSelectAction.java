@@ -25,6 +25,7 @@ public class PerWorkSelectAction extends ActionSupport {
 	public String getSelWork(){
 		PerWorkDao pdao=new PerWorkDao();
 		map.clear();
+		map.put("perUser", ContextHelper.getUserLoginUuid());
 		selectPowerList=pdao.list(map);
 		String sql="";
 		String uuid=ContextHelper.getUserLoginUuid();

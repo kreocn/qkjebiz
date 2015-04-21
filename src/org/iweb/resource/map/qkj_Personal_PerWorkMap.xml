@@ -27,6 +27,7 @@
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ p.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="perUser"><![CDATA[ p.perUser=#perUser# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="roles"><![CDATA[ p.roles=#roles# ]]></isNotEmpty>
 		</dynamic>
 		<![CDATA[ ORDER BY p.uuid DESC	]]>
@@ -38,13 +39,14 @@
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ p.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="perUser"><![CDATA[ p.perUser=#perUser# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="roles"><![CDATA[ p.roles=#roles# ]]></isNotEmpty>
 		</dynamic>
 	</select>
 	
 	<insert id="personal_add" parameterClass="workPower">
 		<![CDATA[ 
-			INSERT INTO qkj_t_perwork (roles,table_name,table_field,table_condition,lm_user,lm_time,remark) VALUES(#roles#,#table_name#,#table_field#,#table_condition#,#lm_user#,#lm_time#,#remark#)
+			INSERT INTO qkj_t_perwork (perUser,roles,table_name,table_field,table_condition,lm_user,lm_time,remark) VALUES(#perUser#,#roles#,#table_name#,#table_field#,#table_condition#,#lm_user#,#lm_time#,#remark#)
 		]]>
 		<selectKey resultClass="int" keyProperty="uuid">
 		<![CDATA[ Select LAST_INSERT_ID() ]]>
@@ -55,6 +57,7 @@
 		<![CDATA[
 			Update qkj_t_perwork
 			Set roles=#roles#,
+				perUser=#perUser#,
 				table_name=#table_name#,
 				table_field=#table_field#,
 				table_condition=#table_condition#,

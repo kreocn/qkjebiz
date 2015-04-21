@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class PerWorkSelect {
 	private Integer uuid;
+	private String perUser;
 	private String roles;
 	private String table_name;// 表名
 	private String table_field;// 查询的字段
@@ -12,6 +13,14 @@ public class PerWorkSelect {
 	private Date lm_time;
 	private String remark;
 	private Integer isValid;
+
+	public String getPerUser() {
+		return perUser;
+	}
+
+	public void setPerUser(String perUser) {
+		this.perUser = perUser;
+	}
 
 	public PerWorkSelect() {
 
