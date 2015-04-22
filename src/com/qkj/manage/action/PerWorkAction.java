@@ -189,7 +189,6 @@ public class PerWorkAction extends ActionSupport{
 				this.setPerWorkSelect(null);
 				setMessage("你没有选择任何操作!");
 			} else if ("add".equals(viewFlag)) {
-				this.setPerWorkSelect(null);
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/person/perWorkPower_list?viewFlag=relist'>个人工作权限列表</a>&nbsp;&gt;&nbsp;增加权限";
 			} else if ("mdy".equals(viewFlag)) {
 				this.setPerWorkSelect((PerWorkSelect) dao.getPower(perWorkSelect.getUuid()));
