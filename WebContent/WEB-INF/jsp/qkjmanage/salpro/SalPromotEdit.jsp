@@ -210,7 +210,7 @@
 							</c:if>
 							<s:if test="null != salPromot && salPromot.status==0 && 'mdy' == viewFlag">
 								<c:if test="${it:checkPermit('QKJ_SALPRO_SALPROMOT_MDY',null)==true}">
-									<s:submit id="save" name="save" value="保存" action="salPromot_save" cssClass="input-blue"  />
+									<s:submit id="save" name="save" value="保存" action="salPromot_save" cssClass="input-blue" />
 								</c:if>
 								<c:if test="${it:checkPermit('QKJ_SALPRO_SALPROMOT_SDSTATUS1',null)==true}">
 									<s:submit id="mdyStatus0" name="mdyStatus0" value="报审" action="salPromot_status1" onclick="return isOp('确定执行此操作?');" cssClass="input-yellow" />
