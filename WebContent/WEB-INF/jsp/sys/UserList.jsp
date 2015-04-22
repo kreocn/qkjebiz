@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -74,6 +75,9 @@
 	              </td>
 	              <td class="td5 op-area">
 	              		<a class="input-blue" href="<s:url namespace="/sys" action="user_load"><s:param name="viewFlag">mdy</s:param><s:param name="user.uuid" value="uuid"></s:param></s:url>">修改</a>
+	              		<c:if test="${ it:checkPermit('QKJ_PERSONAL_POWER_ADD',null)==true}">
+						<a class="input-blue" href="<s:url namespace="/person" action="perWorkPower_load"><s:param name="viewFlag">add</s:param><s:param name="perWorkSelect.perUser" value="uuid"></s:param></s:url>" >添加个人工作权限</a>
+						</c:if>
 	    				<a class="input-red" href="<s:url namespace="/sys" action="user_del"><s:param name="user.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
 	              </td>
 	              <td  class="td0 op-area"><a onclick="showDetail('showtr${uuid}');" href="javascript:;" class="input-nostyle">查看</a></td>

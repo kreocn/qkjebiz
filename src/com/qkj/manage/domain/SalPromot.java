@@ -21,7 +21,7 @@ public class SalPromot {
 	private Date smd_time;// (datetime)审核时间
 	private String lm_user;// (varchar)修改人
 	private Date lm_time;// (datetime)修改时间
-	private Integer rebate;
+	private Double rebate;
 	private Integer priority;
 	private String note;
 	private String sal_scopDept;
@@ -172,11 +172,11 @@ public class SalPromot {
 		this.status = status;
 	}
 
-	public Integer getRebate() {
+	public Double getRebate() {
 		return rebate;
 	}
 
-	public void setRebate(Integer rebate) {
+	public void setRebate(Double rebate) {
 		this.rebate = rebate;
 	}
 

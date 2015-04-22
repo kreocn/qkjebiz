@@ -14,4 +14,5 @@
 	</transactionManager>
 	<!-- 要想实现*通配符模式,可以修改com.ibatis.sqlmap.engine.builder.xml.SqlMapConfigParser类源代码中的addSqlMapNodelets()方法 -->
 	<!-- 以下为自定义的MAP文件 -->
+	<sqlMap resource="org/iweb/resource/map/sys_Map.xml" />
 </sqlMapConfig>

@@ -212,7 +212,7 @@ public class SalPromotAction extends ActionSupport implements ActionAttr {
 				salPromot.setPriority(0);
 			}
 			if (salPromot.getRebate() == null) {
-				salPromot.setRebate(0);
+				salPromot.setRebate(0.0);
 			}
 			dao.add(salPromot);
 		} catch (Exception e) {
