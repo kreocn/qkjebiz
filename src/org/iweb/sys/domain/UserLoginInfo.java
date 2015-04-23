@@ -43,10 +43,19 @@ public class UserLoginInfo {
 
 	private HashMap<String, Integer> user_prvg_map;
 	private HashMap<String, String> user_function_map;
+	private HashMap<String,String> user_dept_prvg;
 
 	private String sex_name;
 	private String status_name;
 	private String position_name;
+
+	public HashMap<String, String> getUser_dept_prvg() {
+		return user_dept_prvg;
+	}
+
+	public void setUser_dept_prvg(HashMap<String, String> user_dept_prvg) {
+		this.user_dept_prvg = user_dept_prvg;
+	}
 
 	public String getUser_sign() {
 		return user_sign;

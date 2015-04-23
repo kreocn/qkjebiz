@@ -10,7 +10,6 @@ public class Parameters {
 	final public static String Current_Page_Str = "Current_Page";
 	final public static String Page_Size_Str = "Page_Size";
 	final public static String UserLoginInfo_Session_Str = "userlogininfosessionstr";
-	final public static String UserLoginDeptInfo_Session_str="userlogindeptinfosessionstr";
 	final public static String left_menu_refresh = "jsrefreshpagesss";
 	final public static String searchMap_Session_Str = "serachmapsessionstr";
 	final public static String MemberLoginInfo_Session_Str = "memberlogininfosessionstr";
