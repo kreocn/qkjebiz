@@ -374,15 +374,15 @@ public class ContextHelper {
 	 */
 	public static boolean checkPermit(String p_ids, String dept_code) {
 		try {
-		/*	if (dept_code == null || dept_code.equals("")) {
+		if (dept_code == null || dept_code.equals("")) {
 				if (p_ids.indexOf("&&") >= 0) return checkPermits(p_ids.split("&&"), true);
 				else if (p_ids.indexOf("||") >= 0) return checkPermits(p_ids.split("\\|\\|"), false);
 				else return checkPermit(p_ids);
-			} else {*/
+			} else {
 				if (p_ids.indexOf("&&") >= 0) return checkPermits(p_ids.split("&&"), true,dept_code);
 				else if (p_ids.indexOf("||") >= 0) return checkPermits(p_ids.split("\\|\\|"), false,dept_code);
 				else return checkPermit2(p_ids, dept_code);
-			//}
+			}
 
 		} catch (Exception e) {
 			return false;

@@ -352,12 +352,18 @@ public class UserLoginAction extends ActionSupport {
 											String str = (String) CacheFactory.getCacheInstance().get(SysDBCacheLogic.CACHE_DEPT_PREFIX_SUB + userDept.getDept_code());
 											if(ud_dept_map.containsKey(roles_prvg.getPrivilege_id())){
 												String v=ud_dept_map.get(roles_prvg.getPrivilege_id());
+												String[] d = (String[]) JSONUtil.toObject(userDept.getDept_code(), String[].class);// 转换成数组
 												String[] s = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
 												String[] a= (String[]) JSONUtil.toObject(v, String[].class);// 转换成数组
-												String[] all=(String[]) ArrayUtils.addAll(s, a);
+												String[] all1=(String[]) ArrayUtils.addAll(s, a);
+												String[] all=(String[]) ArrayUtils.addAll(all1, d);
+												
 												ud_dept_map.put(roles_prvg.getPrivilege_id(), JSONUtil.toJsonString(all));
 											}else{
-												ud_dept_map.put(roles_prvg.getPrivilege_id(), str);
+												String[] d = (String[]) JSONUtil.toObject(userDept.getDept_code(), String[].class);// 转换成数组
+												String[] s = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
+												String[] all=(String[]) ArrayUtils.addAll(s, d);
+												ud_dept_map.put(roles_prvg.getPrivilege_id(), JSONUtil.toJsonString(all));
 											}
 											
 										}else{
