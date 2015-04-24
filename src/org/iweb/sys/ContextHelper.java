@@ -154,12 +154,12 @@ public class ContextHelper {
 	/**
 	 * 为方便的得到用户所拥有的权限列表而写的方法
 	 */
-	public static HashMap<String, Integer> getUserLoginPermits() {
+	public static HashMap<String, String> getUserLoginPermits() {
 		try {
-			if (ContextHelper.getUserLoginInfo().getUser_prvg_map() != null) return (HashMap<String, Integer>) (ContextHelper.getUserLoginInfo().getUser_prvg_map());
-			else return new HashMap<String, Integer>();
+			if (ContextHelper.getUserLoginInfo().getUser_prvg_map() != null) return (HashMap<String, String>) (ContextHelper.getUserLoginInfo().getUser_prvg_map());
+			else return new HashMap<String, String>();
 		} catch (Exception e) {
-			return new HashMap<String, Integer>();
+			return new HashMap<String, String>();
 		}
 	}
 
@@ -288,9 +288,9 @@ public class ContextHelper {
 		UserLoginInfo ulf = ContextHelper.getUserLoginInfo();
 		boolean flag = false;
 		if(dept_code==null || dept_code.equals("")){
-			flag=ulf.getUser_dept_prvg().containsKey(p_id);
+			flag=ulf.getUser_prvg_map().containsKey(p_id);
 		}else{
-			String value=ulf.getUser_dept_prvg().get(p_id);
+			String value=ulf.getUser_prvg_map().get(p_id);
 			String[] s = (String[]) JSONUtil.toObject(value, String[].class);// 转换成数组
 			flag=ToolsUtil.isIn(dept_code, s);// 判断在不在数组中
 		}
@@ -395,10 +395,10 @@ public class ContextHelper {
 	 * @param p_id
 	 * @return
 	 */
-	public static Integer getPermitType(String p_id) {
+/*	public static Integer getPermitType(String p_id) {
 		UserLoginInfo ulf = ContextHelper.getUserLoginInfo();
 		return isAdmin() ? 2 : ulf.getUser_prvg_map().get(p_id);
-	}
+	}*/
 
 	/**
 	 * 得到权限功能

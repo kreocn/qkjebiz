@@ -243,9 +243,9 @@ public class UserLoginAction extends ActionSupport {
 					role_p_list = (new UserRoleDAO()).listRolePrvg(map);
 
 					for (int i = 0, n = role_p_list.size(); i < n; i++) {
-						if (!(p_map.containsKey(role_p_list.get(i).getPrivilege_id()) && (p_map.get(role_p_list.get(i).getPrivilege_id()) > role_p_list.get(i).getType()))) { // 如已经存在此权限,则从高原则
+					/*	if (!(p_map.containsKey(role_p_list.get(i).getPrivilege_id()) && (p_map.get(role_p_list.get(i).getPrivilege_id()) > role_p_list.get(i).getType()))) { // 如已经存在此权限,则从高原则
 							p_map.put(role_p_list.get(i).getPrivilege_id(), role_p_list.get(i).getType());
-						}
+						}*/
 
 						if (f_map.containsKey(role_p_list.get(i).getPrivilege_id()) && !ToolsUtil.isEmpty(f_map.get(role_p_list.get(i).getPrivilege_id()))) {
 							String tmp = f_map.get(role_p_list.get(i).getPrivilege_id());
@@ -256,7 +256,7 @@ public class UserLoginAction extends ActionSupport {
 
 						log.info(ulf.getTitle() + ":" + role_p_list.get(i).getPrivilege_id() + "(" + role_p_list.get(i).getType() + ":" + role_p_list.get(i).getFunction() + ")");
 					}
-					ulf.setUser_prvg_map(p_map);
+					//ulf.setUser_prvg_map(p_map);
 					ulf.setUser_function_map(f_map);
 				}
 			}
@@ -265,7 +265,7 @@ public class UserLoginAction extends ActionSupport {
 			map.clear();
 			map.put("user_id", user.getUuid());
 			this.setUserDepts(udDao.list(map));
-			ulf.setUser_dept_prvg((HashMap<String, String>) setUserLoginInfo(userDepts));
+			ulf.setUser_prvg_map((HashMap<String, String>) setUserLoginInfo(userDepts));
 		}
 
 		if (!ToolsUtil.isEmpty(ulf.getUser_type())) {

@@ -41,20 +41,20 @@ public class UserLoginInfo {
 	private HashMap<String, Integer> member_prvg_map;
 	private HashMap<String, String> member_function_map;
 
-	private HashMap<String, Integer> user_prvg_map;
+	private HashMap<String, String> user_prvg_map;
 	private HashMap<String, String> user_function_map;
-	private HashMap<String,String> user_dept_prvg;
+	private HashMap<String, Integer> user_dept_type;// 是否包含子部门
 
 	private String sex_name;
 	private String status_name;
 	private String position_name;
 
-	public HashMap<String, String> getUser_dept_prvg() {
-		return user_dept_prvg;
+	public HashMap<String, Integer> getUser_dept_type() {
+		return user_dept_type;
 	}
 
-	public void setUser_dept_prvg(HashMap<String, String> user_dept_prvg) {
-		this.user_dept_prvg = user_dept_prvg;
+	public void setUser_dept_type(HashMap<String, Integer> user_dept_type) {
+		this.user_dept_type = user_dept_type;
 	}
 
 	public String getUser_sign() {
@@ -297,11 +297,11 @@ public class UserLoginInfo {
 		this.member_function_map = member_function_map;
 	}
 
-	public HashMap<String, Integer> getUser_prvg_map() {
+	public HashMap<String, String> getUser_prvg_map() {
 		return user_prvg_map;
 	}
 
-	public void setUser_prvg_map(HashMap<String, Integer> user_prvg_map) {
+	public void setUser_prvg_map(HashMap<String, String> user_prvg_map) {
 		this.user_prvg_map = user_prvg_map;
 	}
 

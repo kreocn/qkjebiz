@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,9 +12,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.iweb.sys.ContextHelper;
+import org.iweb.sys.JSONUtil;
 import org.iweb.sys.ToolsUtil;
 import org.iweb.sys.dao.DepartmentDAO;
 import org.iweb.sys.domain.Department;
+import org.iweb.sys.domain.UserLoginInfo;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -58,7 +61,22 @@ public class DepartmentAction extends ActionSupport implements ServletRequestAwa
 	}
 
 	public String list() throws Exception {
-		ContextHelper.isPermit("SYS_MANAGER_DEPT_LIST");
+		boolean flag=ContextHelper.checkPermit2("SYS_SELECT_DEPT_LIST_ALL", null);
+		try {
+			DepartmentDAO dao = new DepartmentDAO();
+			if (ContextHelper.isAdmin() || flag == true) {
+				this.setDepts(dao.list(null));
+			} else{
+				UserLoginInfo ulf = ContextHelper.getUserLoginInfo();
+				 Set<String> set = ulf.getUser_prvg_map().keySet(); 
+				  for (String s:set) {
+				   String dept[]=(String[]) JSONUtil.toObject(map.get(s).toString(), String[].class);// 转换成数组
+				   map.clear();
+				   map.put("dept_codes", dept);
+				   this.depts.addAll(dao.list(map));
+				  }
+			}
+/*		ContextHelper.isPermit("SYS_MANAGER_DEPT_LIST");
 		Integer permitType = ContextHelper.getPermitType("SYS_MANAGER_DEPT_LIST");
 		try {
 			if (ContextHelper.isAdmin() || permitType == 2) {
@@ -71,7 +89,7 @@ public class DepartmentAction extends ActionSupport implements ServletRequestAwa
 				map.clear();
 				map.put("dept_code", ContextHelper.getUserLoginInfo().getDept_code());
 				this.setDepts(dao.list(map));
-			}
+			}*/
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:" + ToolsUtil.getStackTrace(e));
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:" + ToolsUtil.getStackTraceHTML(e));

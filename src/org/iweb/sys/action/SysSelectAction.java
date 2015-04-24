@@ -3,13 +3,16 @@ package org.iweb.sys.action;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.iweb.sys.ContextHelper;
+import org.iweb.sys.JSONUtil;
 import org.iweb.sys.ToolsUtil;
 import org.iweb.sys.dao.DepartmentDAO;
 import org.iweb.sys.domain.Department;
+import org.iweb.sys.domain.UserLoginInfo;
 import org.iweb.sys.logic.DeptLogic;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -68,13 +71,25 @@ public class SysSelectAction extends ActionSupport {
 	}
 
 	public String dept_select_limit() throws Exception {
-		ContextHelper.isPermit("SYS_SELECT_DEPT_LIMIT_LIST");
-		Integer permitType = ContextHelper.getPermitType("SYS_SELECT_DEPT_LIMIT_LIST");
+		//ContextHelper.isPermits(new String[]{"SYS_SELECT_DEPT_LIMIT_LIST","SYS_SELECT_DEPT_LIST_ALL"}, false);
+		//ContextHelper.isPermit("SYS_SELECT_DEPT_LIMIT_LIST");
+		//Integer permitType = ContextHelper.getPermitType("SYS_SELECT_DEPT_LIMIT_LIST");
+		boolean flag=ContextHelper.checkPermit2("SYS_SELECT_DEPT_LIST_ALL", null);
 		try {
 			DepartmentDAO dao = new DepartmentDAO();
-			if (ContextHelper.isAdmin() || permitType == 2) {
+			if (ContextHelper.isAdmin() || flag == true) {
 				this.setDepts(dao.list(null));
-			} else if (permitType == 1) {
+			} else{
+				UserLoginInfo ulf = ContextHelper.getUserLoginInfo();
+				 Set<String> set = ulf.getUser_prvg_map().keySet(); 
+				  for (String s:set) {
+				   String dept[]=(String[]) JSONUtil.toObject(map.get(s).toString(), String[].class);// 转换成数组
+				   map.clear();
+				   map.put("dept_codes", dept);
+				   this.depts.addAll(dao.list(map));
+				  }
+			}
+			/*else if (permitType == 1) {
 				// 则只显示自己对应的下级部门及直属上级部门
 				if (dept_mode == 0) { // 以{dept_code的父部门}作为起始部门
 					map.clear();
@@ -87,7 +102,8 @@ public class SysSelectAction extends ActionSupport {
 					} else {
 						this.setDepts(ToolsUtil.getTreeNode(dao.list(null), "dept_code", "parent_dept", p_dept, 2, true));
 					}
-				} else { // 以自身部门为起始部门
+				} 
+				else { // 以自身部门为起始部门
 					this.setDepts(ToolsUtil.getTreeNode(dao.list(null), "dept_code", "parent_dept", ContextHelper
 							.getUserLoginInfo().getDept_code(), 3, true));
 				}
@@ -95,7 +111,7 @@ public class SysSelectAction extends ActionSupport {
 				map.clear();
 				map.put("dept_code", ContextHelper.getUserLoginInfo().getDept_code());
 				this.setDepts(dao.list(map));
-			}
+			}*/
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!limit_dept_select 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!limit_dept_select 读取数据错误:", e);
