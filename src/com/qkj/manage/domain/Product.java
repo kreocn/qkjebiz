@@ -5,6 +5,7 @@ import java.util.Date;
 public class Product {
 	private Integer uuid;// (int)主键ID
 	private String prod_code;// 产品统一编码
+	private String bar_code;
 	private Integer brand;// (varchar)系列/类型/品牌
 	private String title;// (varchar)品名
 	private String spec;// (varchar)规格(500ml)
@@ -26,6 +27,14 @@ public class Product {
 	private Date lm_time;// (timestamp)
 
 	private String brand_name;
+
+	public String getBar_code() {
+		return bar_code;
+	}
+
+	public void setBar_code(String bar_code) {
+		this.bar_code = bar_code;
+	}
 
 	public Integer getStatus() {
 		return status;

@@ -30,6 +30,10 @@
 				</div>
 				</s:if>
 				<div class="label_hang">
+				       <div class="label_ltit">条形码:</div>
+				       <div class="label_rwben2"><span class="label_rwb"><s:textfield name="product.bar_code" title="条形码" cssClass="validate[maxSize[26]]" /></span></div>
+				</div>
+				<div class="label_hang">
 				       <div class="label_ltit">物料统一编码:</div>
 				       <div class="label_rwben"><s:textfield name="product.prod_code" title="产品统一编码" cssClass="validate[required,maxSize[16]]" /></div>
 				</div>
