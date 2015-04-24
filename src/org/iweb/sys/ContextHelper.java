@@ -151,10 +151,6 @@ public class ContextHelper {
 		return (UserLoginInfo) getRequest().getSession().getAttribute(Parameters.UserLoginInfo_Session_Str);
 	}
 
-	public static Map getUserLoginDeptInfo() {
-		return (Map) getRequest().getSession().getAttribute(Parameters.UserLoginDeptInfo_Session_str);
-	}
-
 	/**
 	 * 为方便的得到用户所拥有的权限列表而写的方法
 	 */
@@ -285,49 +281,18 @@ public class ContextHelper {
 		return isAdmin() || (ulf.getStatus() == 1 && ulf.getUser_prvg_map().containsKey(p_id));
 	}
 
-	// sunshanshan
+	/*
+	 * sunshanshan
+	 */
 	public static boolean checkPermit2(String p_id, String dept_code) {
-		Map ulf = ContextHelper.getUserLoginDeptInfo();
+		UserLoginInfo ulf = ContextHelper.getUserLoginInfo();
 		boolean flag = false;
-		Set set = ulf.keySet();
-		Iterator it = set.iterator();
-		while (it.hasNext()) // 第一种迭代方式取键值
-		{
-			Object key = it.next();
-			String keycode = key.toString();
-			if (keycode.contains("%")) {// 包含子部门
-				// 判断是否是父部门
-				String str = (String) CacheFactory.getCacheInstance().get(SysDBCacheLogic.CACHE_DEPT_PREFIX_PARENT + dept_code);//
-				String[] s = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
-				Boolean iskip = ToolsUtil.isIn(keycode.substring(0, keycode.length() - 1), s);// 判断在不在数组中
-				if (iskip == true) {
-					List<RolePrvg> value = (List<RolePrvg>) ulf.get(keycode);
-					if (value != null) {
-						for (int i = 0; i < value.size(); i++) {
-							RolePrvg rp = new RolePrvg();
-							rp = value.get(i);
-							System.out.println(rp.getPrivilege_id());
-							if (rp.getPrivilege_id().equals(p_id)) {
-								flag = true;
-								break;
-							}
-						}
-					}
-				}
-			}else{
-				List<RolePrvg> value = (List<RolePrvg>) ulf.get(keycode);
-				if (value != null) {
-					for (int i = 0; i < value.size(); i++) {
-						RolePrvg rp = new RolePrvg();
-						rp = value.get(i);
-						if (rp.getPrivilege_id().equals(p_id)) {
-							flag = true;
-							break;
-						}
-					}
-				}
-			}
-
+		if(dept_code==null || dept_code.equals("")){
+			flag=ulf.getUser_dept_prvg().containsKey(p_id);
+		}else{
+			String value=ulf.getUser_dept_prvg().get(p_id);
+			String[] s = (String[]) JSONUtil.toObject(value, String[].class);// 转换成数组
+			flag=ToolsUtil.isIn(dept_code, s);// 判断在不在数组中
 		}
 		return isAdmin() || flag;
 	}
@@ -409,15 +374,15 @@ public class ContextHelper {
 	 */
 	public static boolean checkPermit(String p_ids, String dept_code) {
 		try {
-			if (dept_code == null || dept_code.equals("")) {
+		/*	if (dept_code == null || dept_code.equals("")) {
 				if (p_ids.indexOf("&&") >= 0) return checkPermits(p_ids.split("&&"), true);
 				else if (p_ids.indexOf("||") >= 0) return checkPermits(p_ids.split("\\|\\|"), false);
 				else return checkPermit(p_ids);
-			} else {
+			} else {*/
 				if (p_ids.indexOf("&&") >= 0) return checkPermits(p_ids.split("&&"), true,dept_code);
 				else if (p_ids.indexOf("||") >= 0) return checkPermits(p_ids.split("\\|\\|"), false,dept_code);
 				else return checkPermit2(p_ids, dept_code);
-			}
+			//}
 
 		} catch (Exception e) {
 			return false;
