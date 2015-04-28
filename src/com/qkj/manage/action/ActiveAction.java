@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.iweb.common.dao.CommonDAO;
 import org.iweb.sys.ActionAttr;
 import org.iweb.sys.ContextHelper;
 import org.iweb.sys.ToolsUtil;
@@ -15,6 +16,7 @@ import org.iweb.sysvip.dao.MemberCapitalDAO;
 import org.iweb.sysvip.domain.MemberCapital;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.qkj.manage.check.CheckSkip;
 import com.qkj.manage.dao.ActiveDAO;
 import com.qkj.manage.dao.ActiveMemcostDAO;
 import com.qkj.manage.dao.ActivePosmDAO;
@@ -36,6 +38,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	private Map<String, Object> map = new HashMap<String, Object>();
 	private ActiveDAO dao = new ActiveDAO();
 	private ApproveDAO apdao = new ApproveDAO();
+	private CheckSkip cs = new CheckSkip();
 	private Active active;
 	private List<Active> actives;
 	private MyProcess myPro;
@@ -76,8 +79,49 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	private String noteflag = null;
 	private String sselect;
 	private double indprice;
-
+	private CommonDAO comdao = new CommonDAO();
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;活动管理";
+	private static int maxUid;
+	private int befUid;
+	private int minUid;
+	private int up;
+	private int nextFlag;
+	private int nextUuid = 0;
+	// 个人工作标识
+	private String perWorkF;
+	private static String perWorkFlag=null;
+
+	public String getPerWorkF() {
+		return perWorkF;
+	}
+
+	public void setPerWorkF(String perWorkF) {
+		this.perWorkF = perWorkF;
+	}
+
+	public static String getPerWorkFlag() {
+		return perWorkFlag;
+	}
+
+	public static void setPerWorkFlag(String perWorkFlag) {
+		ActiveAction.perWorkFlag = perWorkFlag;
+	}
+
+	public int getNextUuid() {
+		return nextUuid;
+	}
+
+	public void setNextUuid(int nextUuid) {
+		this.nextUuid = nextUuid;
+	}
+
+	public int getNextFlag() {
+		return nextFlag;
+	}
+
+	public void setNextFlag(int nextFlag) {
+		this.nextFlag = nextFlag;
+	}
 
 	public double getIndprice() {
 		return indprice;
@@ -371,6 +415,44 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		this.sselect = sselect;
 	}
 
+	public static int getMaxUid() {
+		return maxUid;
+	}
+
+	public static void setMaxUid(int maxUid) {
+		ActiveAction.maxUid = maxUid;
+	}
+
+	public int getBefUid() {
+		return befUid;
+	}
+
+	public void setBefUid(int befUid) {
+		this.befUid = befUid;
+	}
+
+	public int getMinUid() {
+		return minUid;
+	}
+
+	public void setMinUid(int minUid) {
+		this.minUid = minUid;
+	}
+
+	public int getUp() {
+		return up;
+	}
+
+	public void setUp(int up) {
+		this.up = up;
+	}
+	
+	@Override
+	public void validate() {
+		// TODO Auto-generated method stub
+		super.validate();
+	}
+
 	public String addPro() throws Exception {
 		try {
 			if (state != null && state.equals("2")) {// 结案
@@ -393,13 +475,66 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		map.clear();
 		map.put("biz_id", active.getUuid());
 		if (myPro != null) map.putAll(ToolsUtil.getMapByBean(myPro));
-		// map.putAll(ContextHelper.getDefaultRequestMap4Page());
-		// this.setPageSize(ContextHelper.getPageSize(map));
-		// this.setCurrPage(ContextHelper.getCurrPage(map));
 		this.setMyPros(dao.listHis(map));
-		// this.setRecCount(dao.getResultCount());
 		path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/active_list?viewFlag=relist'>活动列表</a>&nbsp;&gt;&nbsp;操作历史";
 		return SUCCESS;
+	}
+
+	public String nextList() throws Exception {
+		if (nextUuid != 0) {
+			active = new Active();
+			active.setUuid(nextUuid);
+		} else {
+			this.setUp(0);
+			nextActive();
+		}
+		return SUCCESS;
+	}
+
+	private void nextActive() {
+		List<Active> nextActives = new ArrayList<>();
+		map.clear();
+		this.setViewFlag("relist");
+		if (active == null) active = new Active();
+		ContextHelper.setSearchDeptPermit4Search(map, "apply_depts", "apply_user");
+		ContextHelper.SimpleSearchMap4Page("QKJ_QKJMANAGE_ACTIVE_LIST", map, active, viewFlag);
+
+		if (up == 1) {
+			// 上一页
+			this.setViewFlag("mdy");
+			map.put("pageup", befUid);
+			map.remove("Page_Size");
+			map.remove("Current_Page");
+			nextActives = dao.nextList(map);
+			active = new Active();
+			active.setUuid(nextActives.get(0).getUuid());
+		} else if (up == 2) {
+			map.put("pagedown", befUid);
+			map.remove("Page_Size");
+			map.remove("Current_Page");
+			nextActives = dao.nextList(map);
+			if (nextActives.size() > 0) {
+				this.setNextUuid(nextActives.get(0).getUuid());
+			}
+		} else {
+			// 下一页
+			this.setViewFlag("mdy");
+			map.put("pagedown", befUid);
+			map.remove("Page_Size");
+			map.remove("Current_Page");
+			nextActives = dao.nextList(map);
+			active = new Active();
+			if (nextActives.size() > 0) {
+				active.setUuid(nextActives.get(0).getUuid());
+			} else {
+				this.setViewFlag("mdy");
+				active = new Active();
+				active.setUuid(befUid);
+				this.setMinUid(1);
+				this.setMessage("已没有下一条!");
+			}
+
+		}
 	}
 
 	public String list() throws Exception {
@@ -417,16 +552,31 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 			this.setPageSize(ContextHelper.getPageSize(map));
 			this.setCurrPage(ContextHelper.getCurrPage(map));
 			this.setActives(dao.list(map));
+
 			this.setRecCount(dao.getResultCount());
+			if (recCount > 0) {
+				this.setMaxUid(actives.get(0).getUuid());
+			}
 			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;活动列表";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
 		}
-		return SUCCESS;
+		if(perWorkFlag==null || perWorkFlag.equals("null")){
+			return "success";
+		}else{
+			perWorkFlag=null;
+			return "perSuccess";
+		}
 	}
 
 	public String load() throws Exception {
+		if((perWorkF==null || perWorkF.equals("null")) && perWorkFlag==null){
+			perWorkFlag=null;
+		}else{
+			this.setNextUuid(0);
+			perWorkFlag="perWork";
+		}
 		try {
 			if (null == viewFlag) {
 				this.setActive(null);
@@ -454,7 +604,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				this.setActiveProducts(adao.list(map));
 				this.setIndActiveProducts(independence(map, "海拔", 1));
 				this.setOtherActiveProducts(independence(map, "海拔", 2));
-				
+
 				ActivePosmDAO podao = new ActivePosmDAO();
 				this.setActivePosms(podao.list(map));
 				ActiveMemcostDAO amdao = new ActiveMemcostDAO();
@@ -469,11 +619,12 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				map.clear();
 				map.put("biz_id", active.getUuid());
 				List<Active> activets = dao.getbaotime(map);
-				System.out.println(activets.size());
 				if (activets.size() > 0) {
 					this.setActiveTime((Active) activets.get(0));
 				}
-
+				if (nextUuid != 0) {
+					this.setNextUuid(nextUuid);
+				}
 				/* 检查当前用户是否已经审阅 */
 				if (apdao.userIsIn(approves, ContextHelper.getUserLoginUuid())) this.setIsApprover("true");
 				else this.setIsApprover("false");
@@ -530,7 +681,6 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 					List<Active> s = dao.listSing(map);
 					if (s.size() > 0) {
 						this.setFuActive((Active) s.get(0));
-						System.out.println(fuActive.getPuser_sign());
 					}
 
 					map.clear();
@@ -612,13 +762,11 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
-	
+
 	public String saveType() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_MDYTYPE");
 		try {
-			//active.setLm_user(ContextHelper.getUserLoginUuid());
 			dao.mdyActiveType(active);
-			//addProcess("ACTIVE_MDY", "活动修改");
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
@@ -629,9 +777,6 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String del() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_DEL");
 		try {
-			//dao.delete(active);
-			//setMessage("删除成功!ID=" + active.getUuid());
-			//addProcess("ACTIVE_DEL", "活动删除");
 			mdyStatus(-2);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!del 数据删除失败:", e);
@@ -676,11 +821,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyStatus0() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_STATUS0");
 		try {
-			mdyStatus(1);
-			// 同时进入销售部审核流程
-			mdyActiveSDStatus(10);
-			// 销售管理部默认为已签收
-			mdyActiveSMDStatus(10);
+			cs.checkSkip(active, 1);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyStatus0 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyStatus0 数据更新失败:", e);
@@ -741,9 +882,9 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		}
 		active.setStatus(status);
 		active.setLm_user(ContextHelper.getUserLoginUuid());
-		if(status == -2){
+		if (status == -2) {
 			addProcess("ACTIVE_DEL", "活动删除");
-		}else{
+		} else {
 			String note = "活动状态变更-" + noteflag;
 			addProcess("ACTIVE_MDY_STATUS", note);
 		}
@@ -763,6 +904,9 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 			mdyActiveSDStatus(5);
 			mdyActiveFDStatus(1, 0);
 			mdyStatus(0);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyActiveSDStatus5 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyActiveSDStatus5 数据更新失败:", e);
@@ -800,7 +944,11 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyActiveSDStatus10() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_SDSTATUS10");
 		try {
-			mdyActiveSDStatus(30);
+			// mdyActiveSDStatus(30);
+			cs.checkSkip(active, 2);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyActiveSDStatus10 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyActiveSDStatus10 数据更新失败:", e);
@@ -818,7 +966,11 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyActiveSDStatus30() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_SDSTATUS30");
 		try {
-			mdyActiveSDStatus(40);
+			// mdyActiveSDStatus(40);
+			cs.checkSkip(active, 4);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyActiveSDStatus30 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyActiveSDStatus30 数据更新失败:", e);
@@ -836,7 +988,11 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyActiveSDStatus40() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_SDSTATUS40");
 		try {
-			mdyActiveSDStatus(50);
+			// mdyActiveSDStatus(50);
+			cs.checkSkip(active, 6);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyActiveSDStatus40 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyActiveSDStatus40 数据更新失败:", e);
@@ -854,7 +1010,11 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyActiveSDStatus50() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_SDSTATUS50");
 		try {
-			mdyActiveSMDStatus(60);
+			// mdyActiveSMDStatus(60);
+			cs.checkSkip(active, 8);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyActiveSDStatus50 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyActiveSDStatus50 数据更新失败:", e);
@@ -927,6 +1087,9 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		try {
 			mdyActiveSMDStatus(5);
 			mdyStatus(0);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyActiveSMDStatus5 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyActiveSMDStatus5 数据更新失败:", e);
@@ -944,7 +1107,11 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyActiveSMDStatus10() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_SMDSTATUS10");
 		try {
-			mdyActiveSMDStatus(30);
+			// mdyActiveSMDStatus(30);
+			cs.checkSkip(active, 3);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyActiveSMDStatus10 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyActiveSMDStatus10 数据更新失败:", e);
@@ -962,7 +1129,11 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyActiveSMDStatus50() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_SMDSTATUS50");
 		try {
-			mdyActiveSMDStatus(40);
+			// mdyActiveSMDStatus(40);
+			cs.checkSkip(active, 5);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
@@ -980,7 +1151,11 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyActiveSMDStatus40() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_SMDSTATUS40");
 		try {
-			mdyActiveSMDStatus(50);
+			// mdyActiveSMDStatus(50);
+			cs.checkSkip(active, 7);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
@@ -998,15 +1173,10 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyActiveFDSTATUS10() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_FDSTATUS10");
 		try {
-			Active ac = new Active();
-			active.setLm_user(ContextHelper.getUserLoginUuid());
-			mdyActiveFDStatus(1, 10);
-			ac = (Active) dao.get(active.getUuid());
-			if (ac.getStatus() <= 2) {
-				active.setStatus(2);// 申请通过执行
-			}
-			dao.mdyActivePass(active);
-			addProcess("ACTIVE_APPLY_PASS", "活动申请通过");
+			cs.checkSkip(active, 9);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
@@ -1026,6 +1196,9 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		try {
 			mdyActiveFDStatus(1, 5);
 			mdyStatus(0);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyActiveFDStatus5 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyActiveFDStatus5 数据更新失败:", e);
@@ -1043,13 +1216,10 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyActiveFDCSTATUS10() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_FDCSTATUS10");
 		try {
-			mdyActiveFDStatus(2, 10);
-			active.setLm_user(ContextHelper.getUserLoginUuid());
-			dao.mdyCloseActivePass(active);
-			// 调整随量积分
-			mdyMemberCapital();
-			active.setStatus(5);
-			addProcess("ACTIVE_CLOSE_PASS", "活动结案通过");
+			cs.checkSkip(active, 19);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
@@ -1069,6 +1239,9 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		try {
 			mdyActiveFDStatus(2, 5);
 			mdyStatus(3);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyActiveFDCSTATUS5 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyActiveFDCSTATUS5 数据更新失败:", e);
@@ -1086,7 +1259,11 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyActiveNDCSTATUS10() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_NDCSTATUS10");
 		try {
-			mdyActiveFDStatus(3, 10);
+			// mdyActiveFDStatus(3, 10);
+			cs.checkSkip(active, 20);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
@@ -1106,6 +1283,9 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		try {
 			mdyActiveFDStatus(3, 5);
 			mdyStatus(3);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyActiveNDCSTATUS5 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyActiveNDCSTATUS5 数据更新失败:", e);
@@ -1205,6 +1385,12 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	/*********************************************************************/
 	public String closeLoad() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE");
+		if((perWorkF==null || perWorkF.equals("null")) && perWorkFlag==null){
+			perWorkFlag=null;
+		}else{
+			this.setNextUuid(0);
+			perWorkFlag="perWork";
+		}
 		try {
 			if (!(active == null || active.getUuid() == null)) {
 				this.setActive((Active) dao.get(active.getUuid()));
@@ -1250,7 +1436,9 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				/* 检查当前用户是否已经审阅 */
 				if (apdao.userIsIn(approves, ContextHelper.getUserLoginUuid())) this.setIsApprover("true");
 				else this.setIsApprover("false");
-
+				if (nextUuid != 0) {
+					this.setNextUuid(nextUuid);
+				}
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/active_list?viewFlag=relist'>活动列表</a>&nbsp;&gt;&nbsp;活动结案";
 
 			} else {
@@ -1350,8 +1538,8 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				map.put("active_id", active.getUuid());
 				map.put("status", 1);
 				this.setActiveProducts(adao.list(map));
-				//this.setIndActiveProducts(independence(map, "海拔", 1));
-				//this.setOtherActiveProducts(independence(map, "海拔", 2));
+				// this.setIndActiveProducts(independence(map, "海拔", 1));
+				// this.setOtherActiveProducts(independence(map, "海拔", 2));
 
 				this.setActivePosms(podao.list(map));
 				this.setActiveMemcosts(amdao.list(map));
@@ -1442,11 +1630,14 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyStatus3() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_STATUS3");
 		try {
-			mdyStatus(4);
-			// 同时销售部的流程变成待审核
-			mdyCloseActiveSDStatus(10);
-			// 同时销管部的流程变成已签收
-			mdyCloseActiveSMDStatus(10);
+			/*
+			 * mdyStatus(4);
+			 * // 同时销售部的流程变成待审核
+			 * mdyCloseActiveSDStatus(10);
+			 * // 同时销管部的流程变成已签收
+			 * mdyCloseActiveSMDStatus(10);
+			 */
+			cs.checkSkip(active, 11);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyStatus3 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyStatus3 数据更新失败:", e);
@@ -1493,6 +1684,9 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		try {
 			mdyCloseActiveSDStatus(5);
 			mdyStatus(3);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyCloseActiveSDStatus5 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyCloseActiveSDStatus5 数据更新失败:", e);
@@ -1531,7 +1725,11 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyCloseActiveSDStatus10() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS10");
 		try {
-			mdyCloseActiveSDStatus(30);
+			// mdyCloseActiveSDStatus(30);
+			cs.checkSkip(active, 12);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyCloseActiveSDStatus10 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyCloseActiveSDStatus10 数据更新失败:", e);
@@ -1549,7 +1747,11 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyCloseActiveSDStatus30() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS30");
 		try {
-			mdyCloseActiveSDStatus(40);
+			// mdyCloseActiveSDStatus(40);
+			cs.checkSkip(active, 14);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyCloseActiveSDStatus30 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyCloseActiveSDStatus30 数据更新失败:", e);
@@ -1567,7 +1769,11 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyCloseActiveSDStatus40() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS40");
 		try {
-			mdyCloseActiveSDStatus(50);
+			// mdyCloseActiveSDStatus(50);
+			cs.checkSkip(active, 16);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyCloseActiveSDStatus40 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyCloseActiveSDStatus40 数据更新失败:", e);
@@ -1585,7 +1791,11 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyCloseActiveSDStatus50() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS50");
 		try {
-			mdyCloseActiveSMDStatus(60);
+			// mdyCloseActiveSMDStatus(60);
+			cs.checkSkip(active, 18);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyCloseActiveSDStatus50 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyCloseActiveSDStatus50 数据更新失败:", e);
@@ -1646,6 +1856,9 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		try {
 			mdyCloseActiveSMDStatus(5);
 			mdyStatus(3);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyCloseActiveSMDStatus5 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyCloseActiveSMDStatus5 数据更新失败:", e);
@@ -1663,7 +1876,11 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyCloseActiveSMDStatus10() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_SMDSTATUS10");
 		try {
-			mdyCloseActiveSMDStatus(30);
+			// mdyCloseActiveSMDStatus(30);
+			cs.checkSkip(active, 13);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyCloseActiveSMDStatus10 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyCloseActiveSMDStatus10 数据更新失败:", e);
@@ -1681,7 +1898,11 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyCloseActiveSMDStatus50() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_SMDSTATUS50");
 		try {
-			mdyCloseActiveSMDStatus(40);
+			// mdyCloseActiveSMDStatus(40);
+			cs.checkSkip(active, 15);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyCloseActiveSMDStatus10 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyCloseActiveSMDStatus10 数据更新失败:", e);
@@ -1699,7 +1920,11 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyCloseActiveSMDStatus30() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_SMDSTATUS30");
 		try {
-			mdyCloseActiveSMDStatus(50);
+			// mdyCloseActiveSMDStatus(50);
+			cs.checkSkip(active, 17);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyCloseActiveSMDStatus30 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyCloseActiveSMDStatus30 数据更新失败:", e);
@@ -1823,30 +2048,83 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		ProcessDAO pdao = new ProcessDAO();
 		if (active != null) {
 			pdao.addProcess(1, active.getUuid(), p_sign, p_note, active.getStatus(), active.getSd_status(), active.getSmd_status(), active.getClose_sd_status(),
-					active.getClose_smd_status());
+					active.getClose_smd_status(), ContextHelper.getUserLoginUuid());
 		}
 	}
 
 	private List<ActiveProduct> independence(Map<String, Object> map, String title, int flag) {
 		ActiveProductDAO adao = new ActiveProductDAO();
 		List<ActiveProduct> products = new ArrayList<>();
-		ActiveProduct pri=new ActiveProduct();
+		ActiveProduct pri = new ActiveProduct();
 		if (flag == 1) {// 是需要独立显示的商品
 			map.put("title", title);
 			map.remove("othertitle");
 			products = adao.list(map);
-			if(products.size()>0){
-				for(int i=0;i<products.size();i++){
-					pri=products.get(i);
-					indprice=indprice+pri.getTotal_price();
+			if (products.size() > 0) {
+				for (int i = 0; i < products.size(); i++) {
+					pri = products.get(i);
+					indprice = indprice + pri.getTotal_price();
 				}
 			}
-			System.out.println(indprice);
 		} else {
 			map.remove("title");
 			map.put("othertitle", title);
 			products = adao.list(map);
 		}
 		return products;
+	}
+
+	/**
+	 * 流程定制后数据补充
+	 */
+	public String reinforce() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_REINFORCE");
+		try {
+			String sql = null;
+			sql = "SELECT a.`uuid`,a.`active_type`,a.`apply_dept` FROM qkjm_r_active a WHERE a.`sd_status`=40 AND a.`fd_status`=0 AND a.`smd_status`<50 AND a.`status`=1 AND a.`apply_dept` LIKE '21%'";
+			List<Map> activeMapBs = comdao.commonSelectMapList(sql);
+			if (activeMapBs.size() > 0) {
+				for (int i = 0; i < activeMapBs.size(); i++) {
+					active = new Active();
+					ToolsUtil.getBeanByMap(active, activeMapBs.get(i));
+					cs.checkSkip2(active, 4);
+				}
+			}
+
+			sql = "SELECT a.`uuid`,a.`active_type`,a.`apply_dept` FROM qkjm_r_active a WHERE a.`close_sd_status`=40 AND a.`close_fd_status`=0 AND a.`close_smd_status`<50 AND a.`status`=4 AND a.`apply_dept` LIKE '21%'";
+			List<Map> activeMaps = comdao.commonSelectMapList(sql);
+			if (activeMaps.size() > 0) {
+				for (int i = 0; i < activeMaps.size(); i++) {
+					active = new Active();
+					ToolsUtil.getBeanByMap(active, activeMaps.get(i));
+					cs.checkSkip2(active, 14);
+				}
+			}
+
+			sql = "SELECT a.`uuid`,a.`active_type`,a.`apply_dept` FROM qkjm_r_active a WHERE a.`status`=1 AND  a.`sd_status`=30 AND a.`smd_status`<30 AND (a.`apply_dept` LIKE '2302%' OR a.`apply_dept` LIKE '22030%')";
+			List<Map> activeMapXs = comdao.commonSelectMapList(sql);
+			if (activeMapXs.size() > 0) {
+				for (int i = 0; i < activeMapXs.size(); i++) {
+					active = new Active();
+					ToolsUtil.getBeanByMap(active, activeMapXs.get(i));
+					cs.checkSkip2(active, 2);
+				}
+			}
+
+			sql = "SELECT a.`uuid`,a.`active_type`,a.`apply_dept` FROM qkjm_r_active a WHERE a.`status`=4 AND  a.`close_sd_status`=30 AND a.`close_smd_status`<30 AND (a.`apply_dept` LIKE '2302%' OR a.`apply_dept` LIKE '22030%')";
+			List<Map> activeMapJs = comdao.commonSelectMapList(sql);
+			if (activeMapJs.size() > 0) {
+				for (int i = 0; i < activeMapJs.size(); i++) {
+					active = new Active();
+					ToolsUtil.getBeanByMap(active, activeMapJs.get(i));
+					cs.checkSkip2(active, 12);
+				}
+			}
+
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!approveDel 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!approveDel 数据更新失败:", e);
+		}
+		return SUCCESS;
 	}
 }

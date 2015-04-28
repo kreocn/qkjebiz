@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
+<sqlMap>
+	<!-- Stock Start -->
+	<typeAlias alias="work" type="com.qkj.manage.domain.PerWork" />
+	<typeAlias alias="workPower" type="com.qkj.manage.domain.PerWorkSelect" />
+	<select id="personal_getPerWorks" resultClass="work" parameterClass="java.util.Map">
+		<![CDATA[ 
+			select * from ( $sqltext$ ) p
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="perUuid"><![CDATA[ p.perUuid=#perUuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="ptype"><![CDATA[ p.ptype=#ptype# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="title"><![CDATA[ p.title=#title# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_user_name"><![CDATA[ p.apply_user_name=#apply_user_name# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_depts">
+				<![CDATA[ p.apply_dept In ]]>
+			<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
+		</isNotEmpty>
+		</dynamic>
+		<![CDATA[  ORDER BY ptype DESC,perUuid DESC	]]>
+	</select>
+	
+	<select id="personal_getPerWorkPowers" resultClass="workPower" parameterClass="java.util.Map">
+		<![CDATA[ 
+			select * from qkj_t_perwork p
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ p.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="perUser"><![CDATA[ p.perUser=#perUser# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="roles"><![CDATA[ p.roles=#roles# ]]></isNotEmpty>
+		</dynamic>
+		<![CDATA[ ORDER BY p.uuid DESC	]]>
+	</select>
+	
+	<select id="personal_getPerWorkPowersCounts" resultClass="workPower" parameterClass="java.util.Map">
+		<![CDATA[ 
+			select count(*)  from qkj_t_perwork p
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ p.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="perUser"><![CDATA[ p.perUser=#perUser# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="roles"><![CDATA[ p.roles=#roles# ]]></isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<insert id="personal_add" parameterClass="workPower">
+		<![CDATA[ 
+			INSERT INTO qkj_t_perwork (perUser,roles,table_name,table_field,table_condition,lm_user,lm_time,remark) VALUES(#perUser#,#roles#,#table_name#,#table_field#,#table_condition#,#lm_user#,#lm_time#,#remark#)
+		]]>
+		<selectKey resultClass="int" keyProperty="uuid">
+		<![CDATA[ Select LAST_INSERT_ID() ]]>
+		</selectKey>
+	</insert>
+	
+	<update id="personal_mdy" parameterClass="workPower">
+		<![CDATA[
+			Update qkj_t_perwork
+			Set roles=#roles#,
+				perUser=#perUser#,
+				table_name=#table_name#,
+				table_field=#table_field#,
+				table_condition=#table_condition#,
+				lm_user=#lm_user#,
+				lm_time=#lm_time#,
+				remark=#remark#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<delete id="personal_del" parameterClass="workPower">
+	<![CDATA[
+		Delete From qkj_t_perwork Where uuid=#uuid#
+	]]>
+	</delete>
+	
+	<!-- Stock End -->
+</sqlMap>

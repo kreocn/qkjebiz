@@ -1,0 +1,210 @@
+body{
+	font-family:"微软雅黑";
+}
+/* Header */
+.jqm-demos .jqm-header {
+	background: #fff;
+	border-top: 4px solid #3eb249;
+	border-bottom-color: #eee;
+}
+.jqm-demos .jqm-header h2 {
+	padding: .4em 0 .1em;
+	margin: 0 3em;
+}
+.jqm-demos .jqm-header h2 a {
+	display: inline-block;
+	text-decoration: none;
+	min-height: 40px;
+}
+.jqm-demos .jqm-header h2 img {
+	display: block;
+	width: 140px;
+	height: auto;
+}
+.jqm-demos .jqm-header h2 > img {
+	display: inline-block;
+}
+.jqm-demos .jqm-header p {
+	position: absolute;
+	bottom: -2em;
+	left: 1em;
+	margin: 0;
+	color: #666;
+	font-family: '微软雅黑', sans-serif;
+	font-weight: 300;
+	text-transform: uppercase;
+}
+.jqm-demos .jqm-header .ui-btn {
+	width: 2em;
+	height: 2em;
+	background: none;
+	border: 0;
+	top: 50%;
+	margin-top: -1em;
+	-webkit-border-radius: .3125em;
+	border-radius: .3125em;
+	opacity: .4;
+	filter: Alpha(Opacity=40);
+}
+/* Lists */
+.jqm-demos .jqm-search .jqm-list {
+	margin: 0 -1em 1em;
+}
+.jqm-demos .jqm-list .ui-btn,
+.jqm-demos .jqm-list .ui-btn:visited,
+.jqm-demos .jqm-list .ui-li-divider {
+	font-family: '微软雅黑', sans-serif;
+	font-weight: 300;
+	text-shadow: none !important;
+}
+.jqm-demos .jqm-list .ui-btn:hover,
+.jqm-demos .jqm-list .ui-btn:active {
+	color: #3388cc;
+}
+.jqm-demos .jqm-list .ui-btn.ui-btn-active {
+	color: #fff;
+}
+.jqm-demos .jqm-list .ui-li-divider {
+	color: #3eb249;
+}
+
+/* Navmenu */
+.jqm-navmenu-panel .ui-listview > li .ui-collapsible-heading {
+	margin: 0;
+}
+.jqm-navmenu-panel .ui-collapsible.ui-li-static {
+	padding: 0;
+	border: none !important;
+}
+.jqm-navmenu-panel .ui-collapsible + li > .ui-btn,
+.jqm-navmenu-panel .ui-collapsible + .ui-collapsible > .ui-collapsible-heading > .ui-btn,
+.jqm-navmenu-panel .ui-panel-inner > .ui-listview > li.ui-first-child .ui-btn {
+	border-top: none !important;
+}
+.jqm-navmenu-panel .ui-listview .ui-listview .ui-btn {
+	padding-left: 1.5em;
+	color: #999;
+	font-size:14px;
+}
+.jqm-navmenu-panel .ui-listview .ui-listview .ui-btn.ui-btn-active {
+	color: #fff;
+}
+.jqm-navmenu-panel .ui-btn:after {
+	opacity: .4;
+	filter: Alpha(Opacity=40);
+}
+.jqm-demos .jqm-navmenu-panel.jqm-panel-page-nav {
+	display: none;
+	position: absolute;
+	top: 178px;
+	left: 12px;
+}
+.jqm-demos .jqm-navmenu-panel.jqm-panel-page-nav ul li:first-child a{
+	border-top: none;
+}
+@media (min-width: 60em) {
+	.jqm-demos .jqm-header h2 {
+		padding: 1em 0 .7em;
+		margin: 0 1em 0 3%;
+		text-align: left;
+	}
+	.jqm-demos .jqm-header h2 img {
+		width: 275px;
+		height: 78px;
+	}
+	.jqm-demos .jqm-header p {
+		bottom: auto;
+		left: auto;
+		top: 50%;
+		right: 15%;
+		font-size: 1.2em;
+		margin-top: -.625em;
+	}
+	.jqm-demos .jqm-navmenu-link {
+		display: none;
+	}
+	.jqm-demos .jqm-search-link {
+		right: 3%;
+	}
+	.jqm-demos .jqm-footer p {
+		float: right;
+		margin: 1.5em 3% 1.5em 1.5em;
+	}
+	.jqm-demos .jqm-footer p:first-child {
+		float: left;
+		margin: 1.25em 1.25em 1.25em 3%;
+	}
+	.jqm-demos .jqm-navmenu-panel {
+		visibility: visible;
+		position: relative;
+		left: 0;
+		float: left;
+		width:180px;
+		background: none;
+		-webkit-transition: none !important;
+		-moz-transition: none !important;
+		transition: none !important;
+		-webkit-transform: none !important;
+		-moz-transform: none !important;
+		transform: none !important;
+		-webkit-box-shadow: none;
+		-moz-box-shadow: none;
+		box-shadow: none;
+	}
+	.jqm-demos.jqm-panel-page .jqm-navmenu-panel {
+		display: none;
+	}
+	html .jqm-demos.jqm-panel-page .jqm-navmenu-panel.jqm-panel-page-nav {
+		display: block;
+	}
+	.jqm-demos .jqm-content {
+		width: 67%;
+		padding-top: 2em;
+		padding-left: 5%;
+		padding-right: 3%;
+		float: right;
+	}
+    .jqm-demos .jqm-content.jqm-fullwidth {
+		width: auto;
+		padding-left: 15%;
+		padding-right: 15%;
+		float: none;
+	}
+	.jqm-navmenu-panel .ui-collapsible,
+	.jqm-navmenu-panel .ui-collapsible-content,
+	.jqm-navmenu-panel .ui-btn {
+		background: none !important;
+		border-color: #ddd !important;
+	}
+	.jqm-navmenu-panel .ui-btn.ui-btn-active {
+		color: #3388cc !important;
+	}
+	.jqm-navmenu-panel .ui-btn::after {
+		opacity: 0;
+		-webkit-transition: opacity 500ms ease;
+		-moz-transition: opacity 500ms ease;
+		transition: opacity 500ms ease;
+	}
+	.jqm-navmenu-panel .ui-btn:hover::after {
+		opacity: .4;
+	}
+	.jqm-search-panel {
+		width: 26em;
+		right: -26em;
+		z-index: 1003; /* Puts the panel on top of the dismiss modal which is not adjusted to custom width */
+	}
+	.jqm-search-panel.ui-panel-animate.ui-panel-position-right {
+		-webkit-transform: translate3d(26em,0,0);
+		-moz-transform: translate3d(26em,0,0);
+		transform: translate3d(26em,0,0);
+	}
+	.ui-panel-dismiss-open.ui-panel-dismiss-position-right {
+		left: -17em;
+		right: 17em;
+	}
+}
+@media (min-width: 35em) {
+	.jqm-block-content {
+		min-height: 18em;
+	}
+}

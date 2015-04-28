@@ -7,7 +7,7 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- Stock Start -->
 		<action name="stock_list" class="com.qkj.ware.action.StockAction" method="list">
-			<result>/jsp/ware/stock/StockList.jsp</result>
+			<result>/WEB-INF/jsp/ware/stock/StockList.jsp</result>
 		</action>
 		<action name="stock_relist" class="com.qkj.ware.action.StockAction" method="relist">
 			<result type="redirectAction">
@@ -16,7 +16,7 @@
 			</result>
 		</action>
 		<action name="stock_load" class="com.qkj.ware.action.StockAction" method="load">
-			<result>/jsp/ware/stock/StockEdit.jsp</result>
+			<result>/WEB-INF/jsp/ware/stock/StockEdit.jsp</result>
 		</action>
 		<action name="stock_add" class="com.qkj.ware.action.StockAction" method="add">
 			<result type="redirectAction">

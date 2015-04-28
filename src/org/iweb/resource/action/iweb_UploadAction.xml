@@ -7,14 +7,14 @@
 		<!-- <default-interceptor-ref name="myStackUpload" /> -->
 		<default-interceptor-ref name="defaultStack" />
 		<action name="put" class="org.iweb.fileupload.action.UploadAction" method="put">
-			<result>/jsp/upload/put.jsp</result>
+			<result>/WEB-INF/jsp/upload/put.jsp</result>
 		</action>
 		<!-- UploadClass Start -->
 		<action name="uclass_list" class="org.iweb.fileupload.action.UploadClassAction" method="list">
-			<result>/jsp/upload/UploadClassList.jsp</result>
+			<result>/WEB-INF/jsp/upload/UploadClassList.jsp</result>
 		</action>
 		<action name="uclass_load" class="org.iweb.fileupload.action.UploadClassAction" method="load">
-			<result>/jsp/upload/UploadClassEdit.jsp</result>
+			<result>/WEB-INF/jsp/upload/UploadClassEdit.jsp</result>
 		</action>
 		<action name="uclass_add" class="org.iweb.fileupload.action.UploadClassAction" method="add">
 			<result type="redirectAction">
@@ -53,10 +53,10 @@
 		<!-- UploadClass End -->
 		<!-- UploadFile Start -->
 		<action name="file_list" class="org.iweb.fileupload.action.UploadFileAction" method="list">
-			<result>/jsp/upload/UploadFileList.jsp</result>
+			<result>/WEB-INF/jsp/upload/UploadFileList.jsp</result>
 		</action>
 		<action name="file_load" class="org.iweb.fileupload.action.UploadFileAction" method="load">
-			<result>/jsp/upload/UploadFileEdit.jsp</result>
+			<result>/WEB-INF/jsp/upload/UploadFileEdit.jsp</result>
 		</action>
 		<action name="file_add" class="org.iweb.fileupload.action.UploadFileAction" method="add">
 			<result type="redirectAction">

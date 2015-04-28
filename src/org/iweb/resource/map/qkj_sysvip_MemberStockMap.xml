@@ -17,7 +17,7 @@
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ m.uuid=#uuid# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="dealer"><![CDATA[ m.dealer=#dealer# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="product"><![CDATA[ m.product=#product# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="product_name"><![CDATA[ p.`title` LIKE CONCAT('%',#product_name#,'%') ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="stock"><![CDATA[ m.stock=#stock# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="check_date"><![CDATA[ m.check_date=#check_date# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="add_time"><![CDATA[ m.add_time=#add_time# ]]></isNotEmpty>
@@ -34,7 +34,7 @@
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ m.uuid=#uuid# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="dealer"><![CDATA[ m.dealer=#dealer# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="product"><![CDATA[ m.product=#product# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="product_name"><![CDATA[ p.`title` LIKE CONCAT('%',#product_name#,'%') ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="stock"><![CDATA[ m.stock=#stock# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="check_date"><![CDATA[ m.check_date=#check_date# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="add_time"><![CDATA[ m.add_time=#add_time# ]]></isNotEmpty>

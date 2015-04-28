@@ -6,20 +6,45 @@
 	<package name="qkjmanage_active" extends="default" namespace="/qkjmanage">
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- Active Start -->
+		<action name="perWork_list" class="com.qkj.manage.action.PerWorkAction" method="list">
+			<result>/WEB-INF/jsp/qkjmanage/Personal/PerWorkList.jsp</result>
+		</action>
 		<action name="active_addProduct" class="com.qkj.manage.action.ActiveAction" method="addPro">
-			<result>/jsp/qkjmanage/AddPro.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/AddPro.jsp</result>
 		</action>
 		<action name="active_history" class="com.qkj.manage.action.ActiveAction" method="history">
-			<result>/jsp/qkjmanage/ActiveHistory.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/ActiveHistory.jsp</result>
 		</action>
 		<action name="active_list" class="com.qkj.manage.action.ActiveAction" method="list">
-			<result>/jsp/qkjmanage/ActiveList.jsp</result>
+			<result name="success">/WEB-INF/jsp/qkjmanage/ActiveList.jsp</result>
+			<result name="perSuccess"  type="redirectAction">
+				<param name="actionName">perWork_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+		<action name="active_nextList" class="com.qkj.manage.action.ActiveAction" method="nextList">
+			<result type="redirectAction">
+				<param name="actionName">active_load</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="minUid">${minUid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="active_nextListClose" class="com.qkj.manage.action.ActiveAction" method="nextList">
+			<result type="redirectAction">
+				<param name="actionName">active_closeLoad</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="minUid">${minUid}</param>
+				<param name="message">${message}</param>
+			</result>
 		</action>
 		<action name="active_load" class="com.qkj.manage.action.ActiveAction" method="load">
-			<result>/jsp/qkjmanage/ActiveEdit.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/ActiveEdit.jsp</result>
 		</action>
 		<action name="active_view" class="com.qkj.manage.action.ActiveAction" method="loadView">
-			<result>/jsp/qkjmanage/ActiveView.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/ActiveView.jsp</result>
 		</action>
 		<action name="active_add" class="com.qkj.manage.action.ActiveAction" method="add">
 			<result type="redirectAction">
@@ -80,6 +105,7 @@
 				<param name="actionName">active_load</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -91,6 +117,7 @@
 				<param name="actionName">active_load</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -100,6 +127,7 @@
 				<param name="actionName">active_load</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -110,6 +138,7 @@
 				<param name="actionName">active_load</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -119,6 +148,7 @@
 				<param name="actionName">active_load</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -128,6 +158,7 @@
 				<param name="actionName">active_load</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -137,6 +168,7 @@
 				<param name="actionName">active_load</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -148,6 +180,7 @@
 				<param name="actionName">active_load</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -157,6 +190,7 @@
 				<param name="actionName">active_load</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -167,6 +201,7 @@
 				<param name="actionName">active_load</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -177,6 +212,7 @@
 				<param name="actionName">active_load</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -187,6 +223,7 @@
 				<param name="actionName">active_load</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -197,16 +234,17 @@
 				<param name="actionName">active_load</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
 
 		<!-- 以下开始为结案流程 -->
 		<action name="active_closeLoad" class="com.qkj.manage.action.ActiveAction" method="closeLoad">
-			<result>/jsp/qkjmanage/ActiveEdit_Close.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/ActiveEdit_Close.jsp</result>
 		</action>
 		<action name="active_closeView" class="com.qkj.manage.action.ActiveAction" method="closeViewLoad">
-			<result>/jsp/qkjmanage/ActiveView_Close.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/ActiveView_Close.jsp</result>
 		</action>
 		<!-- 结案单修改 -->
 		<action name="mdyCloseActive" class="com.qkj.manage.action.ActiveAction" method="mdyCloseActive">
@@ -214,6 +252,7 @@
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -257,6 +296,7 @@
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -266,6 +306,7 @@
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -275,6 +316,7 @@
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -284,6 +326,7 @@
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -293,6 +336,7 @@
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -302,6 +346,7 @@
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -312,6 +357,7 @@
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -322,6 +368,7 @@
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -332,6 +379,7 @@
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -342,6 +390,7 @@
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -352,6 +401,7 @@
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -362,6 +412,7 @@
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -372,6 +423,7 @@
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -382,6 +434,7 @@
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -422,6 +475,13 @@
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="active_reinforce" class="com.qkj.manage.action.ActiveAction" method="reinforce">
+			<result type="redirectAction">
+				<param name="actionName">active_list</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>

@@ -1,16 +1,19 @@
 package org.iweb.sys.cache;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.iweb.sys.JSONUtil;
 import org.iweb.sys.ToolsUtil;
 
 public class SysCacheSimpleLocation implements SysCache {
 	private static Map<String, Object> cacheMap;
 
 	static {
-		cacheMap = new HashMap<>();
+		cacheMap = Collections.synchronizedMap(new LinkedHashMap<String, Object>());
 	}
 
 	@Override
@@ -25,7 +28,41 @@ public class SysCacheSimpleLocation implements SysCache {
 
 	@Override
 	public Object get(String key) {
-		return cacheMap.get(key);
+		if (ToolsUtil.isEmpty(key)) return null;
+		if ("*".equals(key.substring(key.length() - 1))) {
+			ArrayList<Object> l = new ArrayList<>();
+			key = key.substring(0, key.length() - 1);
+			for (Iterator<Map.Entry<String, Object>> it = cacheMap.entrySet().iterator(); it.hasNext();) {
+				Map.Entry<String, Object> entry = it.next();
+				if (entry.getKey().startsWith(key)) {
+					l.add(entry.getValue());
+				}
+			}
+			return l;
+		} else {
+			return cacheMap.get(key);
+		}
+	}
+
+	/**
+	 * 只针对存储JSON的缓存
+	 */
+	@Override
+	public Object get(String key, Class<?> cls) {
+		if (ToolsUtil.isEmpty(key)) return null;
+		if ("*".equals(key.substring(key.length() - 1))) {
+			ArrayList<Object> l = new ArrayList<>();
+			key = key.substring(0, key.length() - 1);
+			for (Iterator<Map.Entry<String, Object>> it = cacheMap.entrySet().iterator(); it.hasNext();) {
+				Map.Entry<String, Object> entry = it.next();
+				if (entry.getKey().startsWith(key)) {
+					l.add(JSONUtil.toObject((String) entry.getValue(), cls));
+				}
+			}
+			return l;
+		} else {
+			return JSONUtil.toObject((String) cacheMap.get(key), cls);
+		}
 	}
 
 	@Override

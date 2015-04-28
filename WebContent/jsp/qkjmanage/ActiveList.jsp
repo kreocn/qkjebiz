@@ -21,6 +21,9 @@ cursor: pointer;
 		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_ADD')">
 			<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="active_load"><s:param name="viewFlag">add</s:param></s:url>">添加申请单</a></span>
 		</s:if>
+		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_REINFORCE')">
+			<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="active_reinforce"></s:url>">补充数据</a></span>
+		</s:if>
 	</div>
 	<s:form id="serachForm" name="serachForm" action="active_list"  method="get" namespace="/qkjmanage" theme="simple">
  	<div class="label_con">

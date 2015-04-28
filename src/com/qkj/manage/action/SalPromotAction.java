@@ -25,6 +25,25 @@ public class SalPromotAction extends ActionSupport implements ActionAttr {
 	private String checkstatus;
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;促销活动";
 	private int salstate;
+	// 个人工作标识
+	private String perWorkF;
+	private static String perWorkFlag=null;
+
+	public String getPerWorkF() {
+		return perWorkF;
+	}
+
+	public void setPerWorkF(String perWorkF) {
+		this.perWorkF = perWorkF;
+	}
+
+	public static String getPerWorkFlag() {
+		return perWorkFlag;
+	}
+
+	public static void setPerWorkFlag(String perWorkFlag) {
+		SalPromotAction.perWorkFlag = perWorkFlag;
+	}
 
 	public int getSalstate() {
 		return salstate;
@@ -123,7 +142,12 @@ public class SalPromotAction extends ActionSupport implements ActionAttr {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
 		}
-		return SUCCESS;
+		if(perWorkFlag==null || perWorkFlag.equals("null")){
+			return "success";
+		}else{
+			perWorkFlag=null;
+			return "perSuccess";
+		}
 	}
 
 	public String relist() throws Exception {
@@ -131,6 +155,11 @@ public class SalPromotAction extends ActionSupport implements ActionAttr {
 	}
 
 	public String load() throws Exception {
+		if((perWorkF==null || perWorkF.equals("null")) && perWorkFlag==null){
+			perWorkFlag=null;
+		}else{
+			perWorkFlag="perWork";
+		}
 		try {
 			if (null == viewFlag) {
 				this.setSalPromot(null);
@@ -183,7 +212,7 @@ public class SalPromotAction extends ActionSupport implements ActionAttr {
 				salPromot.setPriority(0);
 			}
 			if (salPromot.getRebate() == null) {
-				salPromot.setRebate(0);
+				salPromot.setRebate(0.0);
 			}
 			dao.add(salPromot);
 		} catch (Exception e) {

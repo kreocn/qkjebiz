@@ -11,13 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.ServletActionContext;
+import org.iweb.common.logic.CommonLogic;
 import org.iweb.sys.ActionAttr;
 import org.iweb.sys.ContextHelper;
-import org.iweb.sys.MD5Plus;
 import org.iweb.sys.Parameters;
 import org.iweb.sys.ToolsUtil;
 import org.iweb.sys.dao.UserRoleDAO;
 import org.iweb.sys.domain.UserRole;
+import org.iweb.sys.encrypt.EncryptMD5;
 import org.iweb.sysvip.dao.MemberAddressDAO;
 import org.iweb.sysvip.dao.MemberDAO;
 import org.iweb.sysvip.domain.Member;
@@ -28,6 +29,7 @@ import com.opensymphony.xwork2.ActionSupport;
 public class MemberAction extends ActionSupport implements ActionAttr {
 	private static final long serialVersionUID = 1L;
 	private static Log log = LogFactory.getLog(MemberAction.class);
+	private EncryptMD5 md5 = new EncryptMD5();
 	private Map<String, Object> map = new HashMap<String, Object>();
 	private MemberDAO dao = new MemberDAO();
 	private UserRoleDAO role_dao = new UserRoleDAO();
@@ -190,22 +192,21 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 				// 如果类型为空,则设定为普通会员
 				member.setUser_type("1387114067130001");
 			}
+			member.setUuid(CommonLogic.getNextMemberID());
 			// 此为管理员添加会员
 			String passwords = ToolsUtil.getRandomCode(6);
-			member.setPasswords(MD5Plus.encrypt(passwords));// 设定密码为6位随机数,并进行MD5加密
+			member.setPasswords(md5.encrypt(passwords));// 设定密码为6位随机数,并进行MD5加密
 			// 执行短信发送流程
 			System.out.println("此应该为短信发送,密码为:" + passwords);
-
 			member.setIs_mobile_check(1);
 			member.setReg_type(1);
 			member.setReg_time(new Date());
-			String uuid = (String) dao.add(member);
-
-			memberAddress.setMember_id(uuid);
+			dao.add(member);
+			memberAddress.setMember_id(member.getUuid());
 			memberAddress.setDefaultaddress(1);
 			MemberAddressDAO mdao = new MemberAddressDAO();
 			mdao.add(memberAddress);
-			log.info("成功添加了会员,会员号为:" + uuid);
+			log.info("成功添加了会员,会员号为:" + member.getUuid());
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!add 数据添加失败:", e);
 			throw new Exception(this.getClass().getName() + "!add 数据添加失败:", e);
@@ -218,7 +219,7 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 		try {
 			member.setLast_login_time(new Date());
 			if (!ToolsUtil.isEmpty(member.getPasswords())) {
-				member.setPasswords(MD5Plus.encrypt(member.getPasswords()));
+				member.setPasswords(md5.encrypt(member.getPasswords()));
 			} else {
 				member.setPasswords(null);
 			}
@@ -267,18 +268,42 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
-	
+
 	public String get_Member() throws Exception {
-		boolean flag=true;
+		boolean flag = true;
 		try {
 			HttpServletResponse response = ServletActionContext.getResponse();
 			HttpServletRequest request = ServletActionContext.getRequest();
-			String mid=request.getParameter("params");
+			String mid = request.getParameter("params");
 			map.clear();
 			map.put("uuid", mid);
 			this.setMembers(dao.list(map));
-			if(members.size()!=1){
-				flag=false;
+			if (members.size() != 1) {
+				flag = false;
+			}
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
+			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
+		}
+		ServletActionContext.getResponse().getWriter().print(flag);
+		return null;
+	}
+	
+	public String get_MemberMobile() throws Exception {
+		boolean flag = true;
+		try {
+			HttpServletResponse response = ServletActionContext.getResponse();
+			HttpServletRequest request = ServletActionContext.getRequest();
+			String mid = request.getParameter("params");
+			String puid=request.getParameter("puid");
+			map.clear();
+			map.put("mobile", mid);
+			if(puid!=null){
+				map.put("puid", puid);
+			}
+			this.setMembers(dao.list(map));
+			if (members.size() >0) {
+				flag = false;
 			}
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);

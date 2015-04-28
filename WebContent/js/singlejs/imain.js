@@ -44,7 +44,7 @@ $(document).ready(function(){
 	});
 
 	loadDefaultPage();
-	CommonUtil.scrollIframeForIOS("mainFrame");
+	//CommonUtil.scrollIframeForIOS("mainFrame");
 
 	$(".ui-layout-west").blur(function(){
 	// menuHide();

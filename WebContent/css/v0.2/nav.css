@@ -1,0 +1,19 @@
+@charset "utf-8";
+.jqm-demos .jqm-navmenu-panel .ui-panel-inner{margin:0!important;}
+/*.jqm-navmenu-panel .ui-listview .ui-btn{padding-left:1.25em!important;}
+.ui-btn{font-size:0.875em!important; font-weight:bold!important;}
+.ui-icon-carat-r{font-size:0.875em!important; text-indent:1.6em;font-weight:normal!important; color:#333!important;}*/
+.ui-icon-carat-r{color:#666!important;}
+body{font-family:"微软雅黑";}
+.ui-btn-icon-right{padding-right:0!important;}
+.ui-panel{width:100%!important; min-height:100%; background:#fff; border-color:#ddd; text-shadow:0 1px 0 #f3f3f3; position: absolute;top: 0;display: block;}
+.ui-btn-icon-notext.ui-btn-left{left:.625em!important; top:0!important;}
+.ui-mobile [data-role=page], .ui-mobile [data-role=dialog], .ui-page{display:block; width:14%!important; position:static; float:left; min-height:0;}
+.ui-overlay-a, .ui-page-theme-a, .ui-page-theme-a .ui-panel-wrapper{text-shadow:none; background-color:#fff;}
+.ui-mobile .ui-page{min-height:0px!important;}
+@media screen and (orientation:landscape){
+	.ui-mobile .ui-page{min-height:0px!important;}
+	.ui-mobile [data-role=page], .ui-mobile [data-role=dialog], .ui-page{display:block; width:3%;}
+}
+.ui-mobile, .ui-mobile body{height:100%!important;}
+.btn_css{height:25px; line-height:25px; background:#f00; color:#fff; padding:0 8px; border-radius:5px; border:0; cursor:pointer; display:inline-block;}

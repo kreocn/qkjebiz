@@ -144,7 +144,7 @@ display: none;
 					<s:if test="-1==status"><span class="message_error">已作废|(${check_user_name})</span></s:if>
 					<s:if test="0==status">新申请</s:if>
 					<s:if test="5==status"><span class="message_error">已退回(${check_user_name})</span></s:if>
-					<s:if test="%{apply_dept==1 || apply_dept.substring(0,3)!='210' || status>=20}">
+					<s:if test="%{apply_dept==1 || apply_dept.substring(0,2)!='30' || status>=20}">
 					<s:if test="10==status"><span class="message_warning">待审核</span></s:if>
 					<s:if test="20==status">
 					<s:if test="0==sp_check_status || 5==sp_check_status"><span class="message_pass">经理/大区已审</span></s:if>

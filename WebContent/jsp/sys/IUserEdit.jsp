@@ -46,9 +46,13 @@ function view(obj) {
 }
 </script>
 </head>
-
 <body>
- <div class="main" >
+<!--top顶部-->
+<s:action name="top" namespace="/manage" executeResult="true" />
+<!--left菜单-->
+<s:action name="left" namespace="/manage" executeResult="true" />
+<div class="tab_right">
+ <div class="tab_warp  input-a" >
 	<div class="dq_step">${path}</div>
 	<s:form id="formEdit" name="form1" cssClass="validForm" action="iuser_save" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
 		<div class="label_con">
@@ -168,6 +172,7 @@ function view(obj) {
 		  </tr>
 		</table>
 	</s:form>
+</div>
 </div>
 </body>
 </html>

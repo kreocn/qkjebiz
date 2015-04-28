@@ -40,6 +40,7 @@
 			<a href="javascript:;" onclick="reCache('sys');">重新缓存系统参数</a>
 			<a href="javascript:;" onclick="reCache('role');">重新缓存角色数据</a>
            	<a href="javascript:;" onclick="reCache('dept');">重新缓存部门数据</a>
+           	<a href="javascript:;" onclick="reCache('menu');">重新缓存菜单数据</a>
            	<a href="javascript:;" onclick="reCache('prod-tree');">重新缓存产品树数据</a>
            	<a href="javascript:;" onclick="reCache('all');">重置所有缓存</a>
            </div>
@@ -50,12 +51,16 @@
            <div class="label_ltit">&nbsp;</div>
            <div id="info_message" class="label_rwbenx cr"></div>
 	</div>
+	</div>
+	</s:if>
+</div>
 <script type="text/javascript">
 var reCache = function(CacheMode){
 	var cacheInfo = '';
 	if(CacheMode=='sys') cacheInfo='【系统参数】';
 	else if(CacheMode=='role') cacheInfo='【角色数据】';
 	else if(CacheMode=='dept') cacheInfo='【部门数据】';
+	else if(CacheMode=='menu') cacheInfo='【菜单数据】';
 	else if(CacheMode=='prod-tree') cacheInfo='【产品树数据】';
 	else if(CacheMode=='all') cacheInfo='【全部数据】';
 	var ajax = new Common_Ajax();
@@ -71,8 +76,5 @@ var reCache = function(CacheMode){
 	ajax.sendAjax();
 };
 </script>
-	</div>
-	</s:if>
-</div>
 </body>
 </html>

@@ -1,16 +1,18 @@
 package com.qkj.manage.dao;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.iweb.sys.AbstractDAO;
 
 public class ActiveDAO extends AbstractDAO {
-
 	public List list(Map<String, Object> map) {
 		setCountMapid("qkjmanage_getActivesCounts");
 		return super.list("qkjmanage_getActives", map);
+	}
+
+	public List nextList(Map<String, Object> map) {
+		return super.list("qkjmanage_getNextActive", map);
 	}
 
 	public List listHis(Map<String, Object> map) {

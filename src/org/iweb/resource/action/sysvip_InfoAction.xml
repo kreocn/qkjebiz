@@ -7,10 +7,10 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- Info Start -->
 		<action name="info_loadTips" class="org.iweb.sysvip.action.InfoAction" method="loadTips">
-			<result>/jsp/sysvip/InfoTipsEdit.jsp</result>
+			<result>/WEB-INF/jsp/sysvip/InfoTipsEdit.jsp</result>
 		</action>
 		<action name="info_listTips" class="org.iweb.sysvip.action.InfoAction" method="listTips">
-			<result>/jsp/sysvip/InfoTipsList.jsp</result>
+			<result>/WEB-INF/jsp/sysvip/InfoTipsList.jsp</result>
 		</action>
 		<action name="info_TipsPass" class="org.iweb.sysvip.action.InfoAction" method="TipsPass">
 			<result type="redirectAction">
@@ -26,10 +26,10 @@
 		</action>
 
 		<action name="info_loadMsgs" class="org.iweb.sysvip.action.InfoAction" method="loadMsgs">
-			<result>/jsp/sysvip/InfoMsgEdit.jsp</result>
+			<result>/WEB-INF/jsp/sysvip/InfoMsgEdit.jsp</result>
 		</action>
 		<action name="info_listMsgs" class="org.iweb.sysvip.action.InfoAction" method="listMsgs">
-			<result>/jsp/sysvip/InfoMsgList.jsp</result>
+			<result>/WEB-INF/jsp/sysvip/InfoMsgList.jsp</result>
 		</action>
 		<action name="info_MsgReply" class="org.iweb.sysvip.action.InfoAction" method="MsgReply">
 			<result type="redirectAction">

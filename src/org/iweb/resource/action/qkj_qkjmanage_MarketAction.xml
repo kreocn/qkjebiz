@@ -7,7 +7,7 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- MemberCellar Start -->
 		<action name="market_list" class="com.qkj.manage.action.MarketAction" method="list">
-			<result>/jsp/qkjmanage/market/MarketList.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/market/MarketList.jsp</result>
 		</action>
 		<action name="market_writejs" class="com.qkj.manage.action.MarketAction" method="writejs">
 			<result type="redirectAction">
@@ -16,8 +16,8 @@
 			</result>
 		</action>
 		<action name="market_load" class="com.qkj.manage.action.MarketAction" method="load">
-			<result name="Success">/jsp/qkjmanage/market/MarketEdit.jsp</result>
-			<result name="addSuccess">/jsp/qkjmanage/market/net2.jsp</result>
+			<result name="Success">/WEB-INF/jsp/qkjmanage/market/MarketEdit.jsp</result>
+			<result name="addSuccess">/WEB-INF/jsp/qkjmanage/market/net2.jsp</result>
 		</action>
 		
 		<action name="market_add" class="com.qkj.manage.action.MarketAction" method="add">
@@ -39,7 +39,7 @@
 		</action>
 		
 		<action name="market_saveab" class="com.qkj.manage.action.MarketAction" method="saveab">
-			<result>/jsp/qkjmanage/market/net2.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/market/net2.jsp</result>
 		</action>
 		
 		<action name="market_saveay" class="com.qkj.manage.action.MarketAction" method="saveay">

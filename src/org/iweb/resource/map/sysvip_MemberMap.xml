@@ -16,14 +16,15 @@
 			AND m.uuid = c.member_id
 		]]>
 		<isNotNull prepend="AND" property="uuid"><![CDATA[ m.uuid=#uuid# ]]></isNotNull>
+		<isNotNull prepend="AND" property="puid"><![CDATA[ m.uuid!=#puid# ]]></isNotNull>
 		<isNotNull prepend="AND" property="title"><![CDATA[ m.title=#title# ]]></isNotNull>
 		<isNotNull prepend="AND" property="mobile"><![CDATA[ m.mobile=#mobile# ]]></isNotNull>
 		<isNotNull prepend="AND" property="email"><![CDATA[ m.email Like #email# ]]></isNotNull>
 		<isNotNull prepend="AND" property="member_name"><![CDATA[ m.member_name Like #member_name# ]]></isNotNull>
 		<isNotNull prepend="AND" property="manager"><![CDATA[ m.manager=#manager# ]]></isNotNull>
 		<isNotEmpty prepend="AND" property="dept_code">
-				<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ m.dept_code=#dept_code# ]]></isNotEqual>
-				<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ m.dept_code LIKE CONCAT(#dept_code#,'%') ]]></isEqual>
+			<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ m.dept_code=#dept_code# ]]></isNotEqual>
+			<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ m.dept_code LIKE CONCAT(#dept_code#,'%') ]]></isEqual>
 		</isNotEmpty>
 		<isNotNull prepend="AND" property="dept_codes">
 			<![CDATA[ m.dept_code In ]]>
@@ -58,8 +59,8 @@
 		<isNotNull prepend="AND" property="member_name"><![CDATA[ m.member_name Like #member_name# ]]></isNotNull>
 		<isNotNull prepend="AND" property="manager"><![CDATA[ m.manager=#manager# ]]></isNotNull>
 		<isNotEmpty prepend="AND" property="dept_code">
-				<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ m.dept_code=#dept_code# ]]></isNotEqual>
-				<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ m.dept_code LIKE CONCAT(#dept_code#,'%') ]]></isEqual>
+			<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ m.dept_code=#dept_code# ]]></isNotEqual>
+			<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ m.dept_code LIKE CONCAT(#dept_code#,'%') ]]></isEqual>
 		</isNotEmpty>
 		<isNotNull prepend="AND" property="dept_codes">
 			<![CDATA[ m.dept_code In ]]>
@@ -77,9 +78,6 @@
 		</dynamic>
 	</select>
 	<insert id="sysvip_addMember" parameterClass="member">
-		<selectKey resultClass="java.lang.String" keyProperty="uuid">
-			Select getnextid('SYS_MEMBER_ID','q',6) as uuid
-		</selectKey>
 		<![CDATA[ 
 			Insert Into s_vip_member(uuid,passwords,title,mobile,is_mobile_check,email,is_email_check,member_name,user_type,reg_time,reg_type,dept_code,manager,contact)
 			Values (#uuid#,#passwords#,#title#,#mobile#,#is_mobile_check#,#email#,#is_email_check#,#member_name#,#user_type#,#reg_time#,#reg_type#,#dept_code#,#manager#,#contact#)

@@ -28,12 +28,12 @@
 			</result>
 		</action>
 		<action name="privilege_list" class="org.iweb.sys.action.UserPrivilegeAction" method="list">
-			<result>/jsp/sys/UserPrivilegeList.jsp</result>
+			<result>/WEB-INF/jsp/sys/UserPrivilegeList.jsp</result>
 		</action>
 		<!-- UserPrivilege End -->
 		<!-- UserRole Start -->
 		<action name="role_list" class="org.iweb.sys.action.UserRoleAction" method="list">
-			<result>/jsp/sys/SysRoleList.jsp</result>
+			<result>/WEB-INF/jsp/sys/SysRoleList.jsp</result>
 		</action>
 		<action name="role_add" class="org.iweb.sys.action.UserRoleAction" method="add">
 			<result type="redirectAction">
@@ -50,10 +50,10 @@
 			</result>
 		</action>
 		<action name="role_load" class="org.iweb.sys.action.UserRoleAction" method="load">
-			<result>/jsp/sys/SysRoleEdit.jsp</result>
+			<result>/WEB-INF/jsp/sys/SysRoleEdit.jsp</result>
 		</action>
 		<action name="role_prvg_load" class="org.iweb.sys.action.UserRoleAction" method="roleprvgLoad">
-			<result>/jsp/sys/RolePrvgEdit.jsp</result>
+			<result>/WEB-INF/jsp/sys/RolePrvgEdit.jsp</result>
 		</action>
 		<action name="role_prvg_save" class="org.iweb.sys.action.UserRoleAction" method="roleprvgSave">
 			<result type="redirectAction">
@@ -72,10 +72,10 @@
 		<!-- UserRole End -->
 		<!-- User Group Start -->
 		<action name="userrole_list" class="org.iweb.sys.action.UserRoleAction" method="listGroup">
-			<result>/jsp/sys/UserRoleList.jsp</result>
+			<result>/WEB-INF/jsp/sys/UserRoleList.jsp</result>
 		</action>
 		<action name="userrole_load_add" class="org.iweb.sys.action.UserRoleAction" method="loadAddGroup">
-			<result>/jsp/sys/UserRoleEdit.jsp</result>
+			<result>/WEB-INF/jsp/sys/UserRoleEdit.jsp</result>
 		</action>
 		<action name="role_addsave" class="org.iweb.sys.action.UserRoleAction" method="addSaveGroup">
 			<result type="redirectAction">
@@ -84,7 +84,7 @@
 			</result>
 		</action>
 		<action name="userrole_load_mdy" class="org.iweb.sys.action.UserRoleAction" method="loadMdyGroup">
-			<result>/jsp/sys/UserRoleEdit.jsp</result>
+			<result>/WEB-INF/jsp/sys/UserRoleEdit.jsp</result>
 		</action>
 		<action name="role_mdysave" class="org.iweb.sys.action.UserRoleAction" method="mdySaveGroup">
 			<result type="redirectAction">
@@ -102,7 +102,7 @@
 		<!-- User Group End -->
 		<!-- Department Start -->
 		<action name="dept_list" class="org.iweb.sys.action.DepartmentAction" method="list">
-			<result>/jsp/sys/DepartmentList.jsp</result>
+			<result>/WEB-INF/jsp/sys/DepartmentList.jsp</result>
 		</action>
 		<action name="dept_add" class="org.iweb.sys.action.DepartmentAction" method="add">
 			<result type="redirectAction">
@@ -125,10 +125,10 @@
 		<!-- Department End -->
 		<!-- User Start -->
 		<action name="user_list" class="org.iweb.sys.action.UserAction" method="list">
-			<result>/jsp/sys/UserList.jsp</result>
+			<result>/WEB-INF/jsp/sys/UserList.jsp</result>
 		</action>
 		<action name="user_load" class="org.iweb.sys.action.UserAction" method="load">
-			<result>/jsp/sys/UserEdit.jsp</result>
+			<result>/WEB-INF/jsp/sys/UserEdit.jsp</result>
 		</action>
 		<action name="user_add" class="org.iweb.sys.action.UserAction" method="add">
 			<result type="redirectAction">
@@ -158,7 +158,7 @@
 		</action>
 
 		<action name="iuser_load" class="org.iweb.sys.action.UserAction" method="iload">
-			<result>/jsp/sys/IUserEdit.jsp</result>
+			<result>/WEB-INF/jsp/sys/IUserEdit.jsp</result>
 		</action>
 		<action name="iuser_save" class="org.iweb.sys.action.UserAction" method="isave">
 			<result type="redirectAction">
@@ -177,7 +177,7 @@
 		<!-- User End -->
 		<!-- Sys Param Start -->
 		<action name="sys_param" class="org.iweb.sys.action.SysParamAction">
-			<result>/jsp/sys/SysParam.jsp</result>
+			<result>/WEB-INF/jsp/sys/SysParam.jsp</result>
 		</action>
 		<action name="sys_param_save" class="org.iweb.sys.action.SysParamAction" method="save">
 			<result type="redirectAction">
@@ -188,10 +188,10 @@
 		<!-- Sys Param End -->
 		<!-- Position Start -->
 		<action name="position_list" class="org.iweb.sys.action.PositionAction" method="list">
-			<result>/jsp/sys/PositionList.jsp</result>
+			<result>/WEB-INF/jsp/sys/PositionList.jsp</result>
 		</action>
 		<action name="position_load" class="org.iweb.sys.action.PositionAction" method="load">
-			<result>/jsp/sys/PositionEdit.jsp</result>
+			<result>/WEB-INF/jsp/sys/PositionEdit.jsp</result>
 		</action>
 		<action name="position_add" class="org.iweb.sys.action.PositionAction" method="add">
 			<result type="redirectAction">
@@ -214,16 +214,16 @@
 		<!-- Position End -->
 		<!-- SYS Select Start -->
 		<action name="dept_select_all" class="org.iweb.sys.action.SysSelectAction" method="dept_select_all">
-			<result>/jsp/sys/DeptSelect.jsp</result>
+			<result>/WEB-INF/jsp/sys/DeptSelect.jsp</result>
 		</action>
 		<action name="dept_select_limit" class="org.iweb.sys.action.SysSelectAction" method="dept_select_limit">
-			<result>/jsp/sys/DeptSelect.jsp</result>
+			<result>/WEB-INF/jsp/sys/DeptSelect.jsp</result>
 		</action>
 		<action name="dept_permit_select" class="org.iweb.sys.action.SysSelectAction" method="dept_permit_select">
-			<result>/jsp/sys/DeptPermitSelect.jsp</result>
+			<result>/WEB-INF/jsp/sys/DeptPermitSelect.jsp</result>
 		</action>
 		<action name="dept_select_all_v02" class="org.iweb.sys.action.SysSelectAction" method="dept_select_all">
-			<result>/jsp/sys/DeptPermitSelect.jsp</result>
+			<result>/WEB-INF/jsp/sys/DeptPermitSelect.jsp</result>
 		</action>
 		<!-- SYS Select End -->
 	</package>

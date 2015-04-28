@@ -50,13 +50,14 @@ function Common_Ajax(result_div_id){
 	_success : function(data, textStatus){},
 	_checkData : function(data){
 		if (typeof (data) == "undefined") {
-			alert("获取数据异常!");
+			//alert("获取数据异常!");
 			return false;
 		} else if (typeof (data.value) != "undefined") {
 			var datavalue = data.value;
-			if (datavalue.substr(0, 6) == 'ERROR:') {
-				alert(datavalue);
-			}
+			if (datavalue == 'NOLOGIN') alert("登录超时.");
+			else if (datavalue == 'NODATA') alert("没有数据");
+			else if (datavalue == 'NOPERMIT') alert('权限不足');
+			else if (datavalue.substr(0, 6) == 'ERROR:') alert(datavalue);
 		}
 		return true;
 	},
@@ -65,7 +66,7 @@ function Common_Ajax(result_div_id){
 	},
 	_error : function(jqXHR, textStatus, errorThrown){
 		// if (showmsg) $('#' + result_div_id + " #ajax_load_message").text("获取数据异常!" + textStatus + ":" + errorThrown);
-		alert("获取数据错误!" + textStatus + ":" + errorThrown);
+		//alert("获取数据错误!" + textStatus + ":" + errorThrown);
 	},
 	_complete : function(){
 		selfobj.config._loading_end();
@@ -103,6 +104,7 @@ function Common_Ajax(result_div_id){
 		error : this.config._error,
 		complete : this.config._complete });
 	};
+	/* 增加数据校验 */
 	this.sendAjax2 = function(){
 		this.setParameter();
 		$.ajax({ type : 'post',

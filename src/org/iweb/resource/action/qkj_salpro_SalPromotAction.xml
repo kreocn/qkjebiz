@@ -7,7 +7,14 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- SalPromot Start -->
 		<action name="salPromot_list" class="com.qkj.manage.action.SalPromotAction" method="list">
-			<result>/jsp/qkjmanage/salpro/SalPromotList.jsp</result>
+			<result name="success">/WEB-INF/jsp/qkjmanage/salpro/SalPromotList.jsp</result>
+			<result name="perSuccess"  type="redirectAction">
+				<param name="actionName">perWork_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+		<action name="perWork_list" class="com.qkj.manage.action.PerWorkAction" method="list">
+			<result>/WEB-INF/jsp/qkjmanage/Personal/PerWorkList.jsp</result>
 		</action>
 		<action name="salPromot_relist" class="com.qkj.manage.action.SalPromotAction" method="relist">
 			<result type="redirectAction">
@@ -16,8 +23,12 @@
 			</result>
 		</action>
 		<action name="salPromot_load" class="com.qkj.manage.action.SalPromotAction" method="load">
-			<result name="SUCCESS">/jsp/qkjmanage/salpro/SalPromotEdit.jsp</result>
-			<result name="VIEWSUCCESS">/jsp/qkjmanage/salpro/SalPromotView.jsp</result>
+			<result name="SUCCESS">/WEB-INF/jsp/qkjmanage/salpro/SalPromotEdit.jsp</result>
+			<result name="VIEWSUCCESS">/WEB-INF/jsp/qkjmanage/salpro/SalPromotView.jsp</result>
+		</action>
+		<action name="salPromot_loadt" class="com.qkj.manage.action.SalPromotAction" method="load">
+			<result name="SUCCESS">/WEB-INF/jsp/qkjmanage/salpro/SalPromotEdit.jsp</result>
+			<result name="VIEWSUCCESS">/WEB-INF/jsp/qkjmanage/salpro/SalPromotViewT.jsp</result>
 		</action>
 		<action name="salPromot_add" class="com.qkj.manage.action.SalPromotAction" method="add">
 			<result type="redirectAction">
