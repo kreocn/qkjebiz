@@ -2,6 +2,7 @@ package org.iweb.sys.action;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -306,7 +307,20 @@ public class UserLoginAction extends ActionSupport {
 			session.setAttribute(Parameters.UserLoginInfo_Session_Str, ulf);
 			// 特殊操作,初始化部门
 			ContextHelper.getUserLoginInfo().setPermit_depts(DeptLogic.getPermitDept());
-
+			Map<String, String> newMap = new HashMap<String, String>();
+			Set<String> dset = new HashSet<>();
+			newMap=ContextHelper.getUserLoginInfo().getUser_prvg_map();
+			Set<String> set = newMap.keySet(); 
+			for (String s:set) {
+			String s1[]=(String[]) JSONUtil.toObject(newMap.get(s), String[].class);// 转换成数组
+			for(int i=0;i<s1.length;i++){
+				dset.add(s1[i]);
+			}
+			//ContextHelper.getUserLoginInfo().setPermit_depts2((List<String>) map.get(s));
+			}
+			List<String> dlist = new ArrayList<>();
+			dlist.addAll(dset);
+			//ContextHelper.getUserLoginInfo().setPermit_depts(dlist);
 			// 写入CKFinder的权限,需配置crossContext="true",主动写入ckframe的application
 			if (session.getServletContext().getContext("/ckframe") != null) {
 				if ("admin".equals(ulf.getTitle()) || "系统管理员".equals(ulf.getPosition_name()) || "ck_admin".equals(ulf.getFilesystem_root())) {
@@ -331,6 +345,7 @@ public class UserLoginAction extends ActionSupport {
 		HashMap<String, String> ud_dept_map = new HashMap<String, String>();
 		UserRoleDAO da=new UserRoleDAO();
 		List<RolePrvg> role_p_list=new ArrayList<>();
+		boolean flag;
 		if (uds.size()>0) {
 			{// 设置角色列表（角色部门）
 				map.clear();
@@ -350,29 +365,36 @@ public class UserLoginAction extends ActionSupport {
 										roles_prvg=role_p_list.get(h);
 										if(userDept.getSubover()==1){//包含子部门
 											String str = (String) CacheFactory.getCacheInstance().get(SysDBCacheLogic.CACHE_DEPT_PREFIX_SUB + userDept.getDept_code());
-											if(ud_dept_map.containsKey(roles_prvg.getPrivilege_id())){
+											if(ud_dept_map.containsKey(roles_prvg.getPrivilege_id()) ){
+												
 												String v=ud_dept_map.get(roles_prvg.getPrivilege_id());
-												String[] d = (String[]) JSONUtil.toObject(userDept.getDept_code(), String[].class);// 转换成数组
+												//String[] d = (String[]) JSONUtil.toObject(userDept.getDept_code(), String[].class);// 转换成数组
 												String[] s = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
 												String[] a= (String[]) JSONUtil.toObject(v, String[].class);// 转换成数组
-												String[] all1=(String[]) ArrayUtils.addAll(s, a);
-												String[] all=(String[]) ArrayUtils.addAll(all1, d);
+												flag=ToolsUtil.isIn(userDept.getDept_code(), a);// 判断在不在数组中
+												if(flag==false){
+													String[] all1=(String[]) ArrayUtils.addAll(s, a);
+													String[] all=(String[]) ArrayUtils.add(all1, userDept.getDept_code());
+													ud_dept_map.put(roles_prvg.getPrivilege_id(), JSONUtil.toJsonString(all));
+												}
 												
-												ud_dept_map.put(roles_prvg.getPrivilege_id(), JSONUtil.toJsonString(all));
 											}else{
-												String[] d = (String[]) JSONUtil.toObject(userDept.getDept_code(), String[].class);// 转换成数组
+												//String[] d = (String[]) JSONUtil.toObject(userDept.getDept_code(), String[].class);// 转换成数组
 												String[] s = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
-												String[] all=(String[]) ArrayUtils.addAll(s, d);
+												String[] all=(String[]) ArrayUtils.add(s, userDept.getDept_code());
 												ud_dept_map.put(roles_prvg.getPrivilege_id(), JSONUtil.toJsonString(all));
 											}
 											
 										}else{
 											if(ud_dept_map.containsKey(roles_prvg.getPrivilege_id())){
 												String v=ud_dept_map.get(roles_prvg.getPrivilege_id());
-												String[] s = (String[]) JSONUtil.toObject(userDept.getDept_code(), String[].class);// 转换成数组
 												String[] a= (String[]) JSONUtil.toObject(v, String[].class);// 转换成数组
-												String[] all=(String[]) ArrayUtils.addAll(s, a);
-												ud_dept_map.put(roles_prvg.getPrivilege_id(),JSONUtil.toJsonString(all));
+												flag=ToolsUtil.isIn(userDept.getDept_code(), a);// 判断在不在数组中
+												if(flag==false){
+													String[] all=(String[]) ArrayUtils.add(a, userDept.getDept_code());
+													ud_dept_map.put(roles_prvg.getPrivilege_id(),JSONUtil.toJsonString(all));
+												}
+												
 											}else{
 												ud_dept_map.put(roles_prvg.getPrivilege_id(), userDept.getDept_code());
 											}
@@ -392,6 +414,7 @@ public class UserLoginAction extends ActionSupport {
 
 			
 		}
+		//ContextHelper.getUserLoginInfo().setPermit_depts(DeptLogic.getPermitDept());
 		return ud_dept_map;
 		
 	}

@@ -1,5 +1,6 @@
 package org.iweb.sys.action;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,20 +75,17 @@ public class SysSelectAction extends ActionSupport {
 		//ContextHelper.isPermits(new String[]{"SYS_SELECT_DEPT_LIMIT_LIST","SYS_SELECT_DEPT_LIST_ALL"}, false);
 		//ContextHelper.isPermit("SYS_SELECT_DEPT_LIMIT_LIST");
 		//Integer permitType = ContextHelper.getPermitType("SYS_SELECT_DEPT_LIMIT_LIST");
+		ContextHelper.isPermit("SYS_MANAGER_DEPT_LIST");
 		boolean flag=ContextHelper.checkPermit2("SYS_SELECT_DEPT_LIST_ALL", null);
+		List<Department> dd=new ArrayList<>();
 		try {
 			DepartmentDAO dao = new DepartmentDAO();
 			if (ContextHelper.isAdmin() || flag == true) {
 				this.setDepts(dao.list(null));
 			} else{
-				UserLoginInfo ulf = ContextHelper.getUserLoginInfo();
-				 Set<String> set = ulf.getUser_prvg_map().keySet(); 
-				  for (String s:set) {
-				   String dept[]=(String[]) JSONUtil.toObject(map.get(s).toString(), String[].class);// 转换成数组
-				   map.clear();
-				   map.put("dept_codes", dept);
-				   this.depts.addAll(dao.list(map));
-				  }
+				map.clear();
+				map.put("check_code", ContextHelper.getUserLoginInfo().getDept_code());
+				this.setDepts(dao.list(map));
 			}
 			/*else if (permitType == 1) {
 				// 则只显示自己对应的下级部门及直属上级部门
