@@ -209,8 +209,10 @@ public class UserLoginAction extends ActionSupport {
 		}
 
 		HashMap<String, Object> map = new HashMap<String, Object>();
-
-		if (!ToolsUtil.isEmpty(ulf.getUser_roles())) {
+		map.clear();
+		map.put("user_id", user.getUuid());
+		this.setUserDepts(udDao.list(map));
+		if (!ToolsUtil.isEmpty(ulf.getUser_roles()) || userDepts.size()>0) {
 			{// 设置角色列表
 				map.clear();
 				try {
@@ -263,13 +265,12 @@ public class UserLoginAction extends ActionSupport {
 			}
 			
 			// 多部门多权限
-			map.clear();
-			map.put("user_id", user.getUuid());
-			this.setUserDepts(udDao.list(map));
 			ulf.setUser_prvg_map((HashMap<String, String>) setUserLoginInfo(userDepts));
+			
+			
 		}
 
-		if (!ToolsUtil.isEmpty(ulf.getUser_type())) {
+ 		if (!ToolsUtil.isEmpty(ulf.getUser_type())) {
 			{// 设置权限列表--会员中心权限
 				map.clear();
 				List<RolePrvg> role_p_list;
