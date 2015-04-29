@@ -132,8 +132,9 @@
 		</action>
 		<action name="user_add" class="org.iweb.sys.action.UserAction" method="add">
 			<result type="redirectAction">
-				<param name="actionName">user_list</param>
-				<param name="message">${message}</param>
+				<param name="actionName">user_load</param>
+				<param name="user.uuid">${user.uuid}</param>
+				<param name="viewFlag">mdy</param>
 			</result>
 		</action>
 		<action name="user_save" class="org.iweb.sys.action.UserAction" method="save">

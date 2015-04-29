@@ -307,7 +307,7 @@ public class UserLoginAction extends ActionSupport {
 			session.setAttribute(Parameters.UserLoginInfo_Session_Str, ulf);
 			// 特殊操作,初始化部门
 			ContextHelper.getUserLoginInfo().setPermit_depts(DeptLogic.getPermitDept());
-			Map<String, String> newMap = new HashMap<String, String>();
+			/*Map<String, String> newMap = new HashMap<String, String>();
 			Set<String> dset = new HashSet<>();
 			newMap=ContextHelper.getUserLoginInfo().getUser_prvg_map();
 			Set<String> set = newMap.keySet(); 
@@ -316,11 +316,13 @@ public class UserLoginAction extends ActionSupport {
 			for(int i=0;i<s1.length;i++){
 				dset.add(s1[i]);
 			}
-			//ContextHelper.getUserLoginInfo().setPermit_depts2((List<String>) map.get(s));
+			ContextHelper.getUserLoginInfo().setPermit_depts2((List<String>) map.get(s));
 			}
 			List<String> dlist = new ArrayList<>();
 			dlist.addAll(dset);
-			//ContextHelper.getUserLoginInfo().setPermit_depts(dlist);
+			ContextHelper.getUserLoginInfo().setPermit_depts(dlist);*/
+			
+			
 			// 写入CKFinder的权限,需配置crossContext="true",主动写入ckframe的application
 			if (session.getServletContext().getContext("/ckframe") != null) {
 				if ("admin".equals(ulf.getTitle()) || "系统管理员".equals(ulf.getPosition_name()) || "ck_admin".equals(ulf.getFilesystem_root())) {

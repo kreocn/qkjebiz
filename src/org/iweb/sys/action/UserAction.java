@@ -223,6 +223,10 @@ public class UserAction extends ActionSupport {
 				} else {
 					this.setUserRoles(null);
 				}
+				
+				map.clear();
+				map.put("user_id", user.getUuid());
+				this.setUserDepts(udDao.list(map));
 
 			} else {
 				this.setUser(null);
@@ -248,9 +252,7 @@ public class UserAction extends ActionSupport {
 
 			PositionDAO pdao = new PositionDAO();
 			this.setPositions(pdao.list(null));
-			map.clear();
-			map.put("user_id", user.getUuid());
-			this.setUserDepts(udDao.list(map));
+			
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!load 读取数据错误:" + ToolsUtil.getStackTrace(e));
 			throw new Exception(this.getClass().getName() + "!load 读取数据错误:" + ToolsUtil.getStackTraceHTML(e));

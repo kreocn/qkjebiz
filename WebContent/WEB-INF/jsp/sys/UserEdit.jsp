@@ -60,6 +60,23 @@
 	<legend>多部门多权限</legend>
 	<!--<span class="shaddress">--------------------收货地址--------------------</span>-->
 	
+	<s:if test="'add'==viewFlag">
+		 <div class="label_main">
+		 	<!--
+		 	<p class="lb_yjtit bn">
+			<a href="<s:url namespace="/sysvip" action="memberAddress_load"><s:param name="viewFlag">add</s:param><s:param name="memberAddress.member_id" value="member.uuid" /></s:url>" >添加收货地址</a>
+		 	</p>
+		 	-->
+			<s:if test="%{user.uuid!=null}">
+				<a href="<s:url namespace="/sys" action="user_dept_load"><s:param name="viewFlag">add</s:param><s:param name="userDept.user_id" value="user.uuid"></s:param></s:url>" >添加部门及权限</a>
+				</s:if>
+				<s:else>
+				<font color="red">请先保存基本信息再添加权限</font>
+				</s:else>
+        </div>
+		
+	</s:if>
+	
 	<s:if test="'mdy'==viewFlag">
 		 <div class="label_main">
 		 	<!--
