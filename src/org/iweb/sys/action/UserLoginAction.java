@@ -266,8 +266,6 @@ public class UserLoginAction extends ActionSupport {
 			
 			// 多部门多权限
 			ulf.setUser_prvg_map((HashMap<String, String>) setUserLoginInfo(userDepts));
-			System.out.println(ulf.getUser_prvg_map());
-			
 			
 		}
 
