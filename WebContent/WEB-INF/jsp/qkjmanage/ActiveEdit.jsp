@@ -114,7 +114,7 @@
 				<p class="more_j">更多操作</p>
 				<div class="mcz_list subHide">
 					<a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a>
-					<c:if test="${'mdy' == viewFlag && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_HISTORY',null)==true}">
+					<c:if test="${'mdy' == viewFlag && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_HISTORY',active.apply_dept)==true}">
 						<!-- <a class="input-gray" href="<s:url namespace="/qkjmanage" action="active_history"><s:param name="active.uuid" value="active.uuid" /></s:url>">查看操作记录</a> -->
 						<a href="javascript:;" onclick="openCustomerView(${active.uuid});">查看操作记录</a>
 					</c:if>
@@ -274,7 +274,7 @@
 			        </div>
 			        <div class="label_hang">
 			            <div class="label_rwben">
-			            	<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVE_MDYTYPE',null)==true}">
+			            	<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVE_MDYTYPE',active.apply_dept)==true}">
 								<s:submit  value="修改类型" action="mdyActiveType"/>
 							</c:if>
 			            </div>
@@ -351,7 +351,7 @@
 							<div class="lb_lgsfy">
 								<p class="lb_yjtit">
 									公司预计费用
-									<c:if test="${active.status==0 && it:checkPermit('QKJ_QKJMANAGE_ACTIVEPRODUCT_ADD',null)==true}">
+									<c:if test="${active.status==0 && it:checkPermit('QKJ_QKJMANAGE_ACTIVEPRODUCT_ADD',active.apply_dept)==true}">
 											<s:url id="ladingAddProductsUrl" action="qkjm_addProducts" namespace="qkjmanage">
 												<s:param name="uuidKey">active.uuid</s:param>
 												<s:param name="uuidValue" value="active.uuid" />
@@ -366,7 +366,7 @@
 										<input type="button" id="product" onclick="window.location.href='${ladingAddProductsUrl}';" value="添加酒品" />
 										<!--<input type="button" id="product" onclick="noedit();" value="添加酒品" />-->
 									</c:if>
-									<c:if test="${active.status==0 && it:checkPermit('QKJ_QKJMANAGE_ACTIVEPOSM_ADD',null)==true}">
+									<c:if test="${active.status==0 && it:checkPermit('QKJ_QKJMANAGE_ACTIVEPOSM_ADD',active.apply_dept)==true}">
 										<input type="button" id="addPosm" value="添加物料" />
 									</c:if>
 								</p>
@@ -388,7 +388,7 @@
 												<td class="nw">${num}</td>
 												<td class="nw">￥${total_price}</td>
 												<td>
-													<c:if test="${active.status==0 && it:checkPermit('QKJ_QKJMANAGE_ACTIVEPRODUCT_DEL',null)==true}">
+													<c:if test="${active.status==0 && it:checkPermit('QKJ_QKJMANAGE_ACTIVEPRODUCT_DEL',active.apply_dept)==true}">
 														<a href="<s:url action="activeProduct_del"><s:param name="activeProduct.uuid" value="%{uuid}" /><s:param name="activeProduct.active_id" value="%{active.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
 													</c:if>
 												</td>
@@ -411,7 +411,7 @@
 												<td class="nw">${num}</td>
 												<td class="nw">￥${total_price}</td>
 												<td>
-													<c:if test="${active.status==0 && it:checkPermit('QKJ_QKJMANAGE_ACTIVEPRODUCT_DEL',null)==true}">
+													<c:if test="${active.status==0 && it:checkPermit('QKJ_QKJMANAGE_ACTIVEPRODUCT_DEL',active.apply_dept)==true}">
 														<a href="<s:url action="activeProduct_del"><s:param name="activeProduct.uuid" value="%{uuid}" /><s:param name="activeProduct.active_id" value="%{active.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
 													</c:if>
 												</td>
@@ -432,7 +432,7 @@
 												<td>${note}</td>
 												<td class="nw">￥${total_price}</td>
 												<td class="nw">
-													<c:if test="${active.status==0 && it:checkPermit('QKJ_QKJMANAGE_ACTIVEPOSM_DEL',null)==true}">
+													<c:if test="${active.status==0 && it:checkPermit('QKJ_QKJMANAGE_ACTIVEPOSM_DEL',active.apply_dept)==true}">
 														<a href="<s:url action="activePosm_del"><s:param name="activePosm.uuid" value="%{uuid}" /><s:param name="activePosm.active_id" value="%{active.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
 													</c:if>
 												</td>
@@ -446,7 +446,7 @@
 							<div class="lb_gsfy">
 								<p class="lb_yjtit">
 									参与客户&预计费用
-									<c:if test="${active.status==0 && it:checkPermit('QKJ_QKJMANAGE_ACTIVEMEMCOST_ADD',null)==true}">
+									<c:if test="${active.status==0 && it:checkPermit('QKJ_QKJMANAGE_ACTIVEMEMCOST_ADD',active.apply_dept)==true}">
 										<input type="button" id="addMember" value="添加客户" />
 									</c:if>
 								</p>
@@ -467,7 +467,7 @@
 												<td>${note}</td>
 												<td class="nw">￥${total_price}</td>
 												<td class="nw">
-													<c:if test="${active.status==0 && it:checkPermit('QKJ_QKJMANAGE_ACTIVEMEMCOST_DEL',null)==true}">
+													<c:if test="${active.status==0 && it:checkPermit('QKJ_QKJMANAGE_ACTIVEMEMCOST_DEL',active.apply_dept)==true}">
 														<a href="<s:url action="activeMemcost_del"><s:param name="activeMemcost.uuid" value="%{uuid}" /><s:param name="activeMemcost.active_id" value="%{active.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
 													</c:if>
 												</td>
@@ -673,17 +673,17 @@
 						<div class="label_ltit">相关操作:</div>
 						<div class="label_rwbenx">
 							<font color="red"><span id="messages"></span></font>
-							<c:if test="${null == active && 'add' == viewFlag && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_ADD',null)==true}">
+							<c:if test="${null == active && 'add' == viewFlag && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_ADD',active.apply_dept)==true}">
 								<s:submit id="add" name="add" value="下一步&填写费用明细" action="active_add" cssClass="input-blue" />
 							</c:if>
 							<s:if test="null != active && 'mdy' == viewFlag && active.status==0">
-								<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVE_MDY',null)==true}">
+								<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVE_MDY',active.apply_dept)==true}">
 									<s:submit name="save" value="保存" action="active_save" cssClass="input-blue" />
 								</c:if>
-								<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVE_STATUS0',null)==true}">
+								<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVE_STATUS0',active.apply_dept)==true}">
 									<s:submit id="mdyStatus0" name="mdyStatus0" value="报审" action="mdyStatus0" onclick="return isOp('确定执行此操作?');" cssClass="input-yellow" />
 								</c:if>
-								<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVE_DEL',null)==true}">
+								<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVE_DEL',active.apply_dept)==true}">
 									<s:submit id="delete" name="delete" value="删除" action="active_del" onclick="return isDel();" cssClass="input-red" />
 								</c:if>
 							</s:if>
@@ -692,18 +692,18 @@
 				<s:submit id="mdyStatus1" name="mdyStatus1" value="申请通过-可以执行" action="mdyStatus1" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
 				</s:if>
 				</s:elseif> --%>
-							<c:if test="${(active.status==1 || active.status==2) && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_STATUS_1',null)==true}">
+							<c:if test="${(active.status==1 || active.status==2) && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_STATUS_1',active.apply_dept)==true}">
 								<s:submit id="active_mdyStatus_1" name="active_mdyStatus_1" value="作废" action="active_mdyStatus_1" onclick="return isOp('确定执行此操作?');" cssClass="input-red" />
 							</c:if>
-							<c:if test="${'mdy' == viewFlag && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_APPROVE',null)==true}">
+							<c:if test="${'mdy' == viewFlag && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_APPROVE',active.apply_dept)==true}">
 								<input type="button" value="审阅" onclick="openApprove();" />
 							</c:if>
-							<c:if test="${'mdy' == viewFlag && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_HISTORY',null)==true}">
+							<c:if test="${'mdy' == viewFlag && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_HISTORY',active.apply_dept)==true}">
 								<input type="button" value="查看操作记录" class="input-gray" onclick="openCustomerView(${active.uuid});" />
 							
 							</c:if>
 							<input type="button" value="返回" class="input-gray" onclick="linkurl('<s:url action="active_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');" />
-							<c:if test="${(active.status==1 || active.status==2) && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_TH',null)==true}">
+							<c:if test="${(active.status==1 || active.status==2) && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_TH',active.apply_dept)==true}">
 								<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="退回" action="mdyActiveSDStatusT" onclick="return isOp('确定执行此操作?将退回到未审核状态');" />
 							</c:if>
 							<c:if test="${40<=active.sd_status}">
@@ -717,15 +717,15 @@
 						<div class="label_hang">
 							<div class="label_ltit">销售审核:</div>
 							<div class="label_rwbenx">
-								<c:if test="${10==active.sd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS10',null)==true}">
+								<c:if test="${10==active.sd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS10',active.apply_dept)==true}">
 									<s:submit id="mdyActiveSDStatus10" name="mdyActiveSDStatus10" cssClass="input-green" value="经理/大区-审核通过" action="mdyActiveSDStatus10" onclick="return isOp('确定执行此操作?');" />
 									<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
-								<c:if test="${30==active.sd_status && 30==active.smd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS30',null)==true}">
+								<c:if test="${30==active.sd_status && 30==active.smd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS30',active.apply_dept)==true}">
 									<s:submit id="mdyActiveSDStatus30" name="mdyActiveSDStatus30" cssClass="input-green" value="运营总监-审核通过" action="mdyActiveSDStatus30" onclick="return isOp('确定执行此操作?');" />
 									<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
-								<c:if test="${40==active.sd_status && active.smd_status>=40 && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS40',null)==true}">
+								<c:if test="${40==active.sd_status && active.smd_status>=40 && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS40',active.apply_dept)==true}">
 									<s:submit id="mdyActiveSDStatus40" name="mdyActiveSDStatus40" cssClass="input-green" value="业务副总-审核通过" action="mdyActiveSDStatus40" onclick="return isOp('确定执行此操作?');" />
 									<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
@@ -753,19 +753,19 @@
 						<div class="label_hang">
 							<div class="label_ltit">销管审核:</div>
 							<div class="label_rwbenx">
-								<c:if test="${10==active.smd_status && 30==active.sd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SMDSTATUS10',null)==true}">
+								<c:if test="${10==active.smd_status && 30==active.sd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SMDSTATUS10',active.apply_dept)==true}">
 									<s:submit id="mdyActiveSMDStatus10" name="mdyActiveSMDStatus10" cssClass="input-green" value="销管经理-审核通过" action="mdyActiveSMDStatus10" onclick="return isOp('确定执行此操作?');" />
 									<s:submit id="mdyActiveSMDStatus5" name="mdyActiveSMDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSMDStatus5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
-								<c:if test="${30==active.smd_status && active.sd_status==40 && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SMDSTATUS50',null)==true}">
+								<c:if test="${30==active.smd_status && active.sd_status==40 && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SMDSTATUS50',active.apply_dept)==true}">
 									<s:submit id="mdyActiveSMDStatus50" name="mdyActiveSMDStatus50" cssClass="input-green" value="销管部经理-审核通过" action="mdyActiveSMDStatus50" onclick="return isOp('确定执行此操作?');" />
 									<s:submit id="mdyActiveSMDStatus5" name="mdyActiveSMDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSMDStatus5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
-								<c:if test="${40==active.smd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SMDSTATUS40',null)==true}">
+								<c:if test="${40==active.smd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SMDSTATUS40',active.apply_dept)==true}">
 									<s:submit id="mdyActiveSMDStatus40" name="mdyActiveSMDStatus40" cssClass="input-green" value="销管副总-审核通过" action="mdyActiveSMDStatus40" onclick="return isOp('确定执行此操作?');" />
 									<s:submit id="mdyActiveSMDStatus5" name="mdyActiveSMDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSMDStatus5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
-								<c:if test="${active.smd_status==50 && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS50',null)==true}">
+								<c:if test="${active.smd_status==50 && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS50',active.apply_dept)==true}">
 									<s:submit id="mdyActiveSDStatus50" name="mdyActiveSDStatus50" cssClass="input-green" value="总经理-审核通过" action="mdyActiveSDStatus50" onclick="return isOp('确定执行此操作?');" />
 									<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
@@ -796,12 +796,12 @@
 							<div class="label_ltit">财务审核:</div>
 							<div class="label_rwbenx">
 								<c:if test="%{(active.apply_dept.substring(0,2)=='21' || active.apply_dept.substring(0,2)=='30') && active.smd_status!=50}}">
-									<c:if test="${null != active && active.sd_status>=40 && 10!=active.fd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_FDSTATUS10',null)==true}">
+									<c:if test="${null != active && active.sd_status>=40 && 10!=active.fd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_FDSTATUS10',active.apply_dept)==true}">
 										<s:submit id="mdyActiveFDSTATUS10" name="mdyActiveFDSTATUS10" cssClass="input-green" value="财务-审核通过" action="mdyActiveFDSTATUS10" onclick="return isOp('确定执行此操作?');" />
 										<s:submit id="mdyActiveFDStatus5" name="mdyActiveFDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveFDStatus" onclick="return isOp('确定执行此操作?');" />
 									</c:if>
 								</c:if>
-								<c:if test="${(50==active.smd_status || 60==active.smd_status) && 10!=active.fd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_FDSTATUS10',null)==true}">
+								<c:if test="${(50==active.smd_status || 60==active.smd_status) && 10!=active.fd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_FDSTATUS10',active.apply_dept)==true}">
 									<s:submit id="mdyActiveFDSTATUS10" name="mdyActiveFDSTATUS10" cssClass="input-green" value="财务-审核通过" action="mdyActiveFDSTATUS10" onclick="return isOp('确定执行此操作?');" />
 									<s:submit id="mdyActiveFDStatus5" name="mdyActiveFDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveFDStatus" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
@@ -874,7 +874,7 @@
 					</div>
 					<div class="label_hang label_button tac">
 						<s:hidden name="activeProduct.active_id" value="%{active.uuid}" />
-						<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVEPRODUCT_ADD',null)==true}">
+						<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVEPRODUCT_ADD',active.apply_dept)==true}">
 							<s:submit id="activeProduct_add" name="activeProduct_add" value="确定" action="activeProduct_add" />
 						</c:if>
 					</div>
@@ -908,7 +908,7 @@
 					</div>
 					<div class="label_hang label_button tac">
 						<s:hidden name="activePosm.active_id" value="%{active.uuid}" />
-						<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVEPOSM_ADD',null)==true}">
+						<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVEPOSM_ADD',active.apply_dept)==true}">
 							<s:submit id="add" name="add" value="确定" action="activePosm_add" />
 						</c:if>
 					</div>
@@ -958,7 +958,7 @@
 					</div>
 					<div class="label_hang label_button tac">
 						<s:hidden id="activeMemcost_active_id" name="activeMemcost.active_id" value="%{active.uuid}" />
-						<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVEMEMCOST_ADD',null)==true}">
+						<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVEMEMCOST_ADD',active.apply_dept)==true}">
 							<input id="addMe" type="button" value="确定" />
 							<font id="addMemcost" color="red"></font>
 						</c:if>
@@ -998,11 +998,11 @@
 					<textarea name="approve.advice" rows="3"></textarea>
 				</div>
 				<div class="label_main tac" style="padding: 5px 0;">
-					<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVE_APPROVE',null)==true}">
+					<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVE_APPROVE',active.apply_dept)==true}">
 						<input type="submit" name="approve_pass" value="审阅通过" onclick="return addApproveCheck(10);" />
 						<input type="submit" name="approve_fail" value="审阅不通过" onclick="return addApproveCheck(5);" />
 					</c:if>
-					<c:if test="${'true'==isApprover && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_APPROVEDELLAST',null)==true}">
+					<c:if test="${'true'==isApprover && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_APPROVEDELLAST',active.apply_dept)==true}">
 						<s:submit name="active_approveDel" value="撤销最后一次审阅" action="active_approveDel" onclick="return isOp('确定进行此操作?');" />
 					</c:if>
 				</div>
