@@ -340,7 +340,15 @@ public class UserLoginAction extends ActionSupport {
 								dset.add(s1[i]);
 							}
 						} else {
-							dset.add(value);
+							String s1[] = (String[]) JSONUtil.toObject(newMap.get(s), String[].class);// 转换成数组
+							if(s1!=null){
+								for (int i = 0; i < s1.length; i++) {
+									dset.add(s1[i]);
+								}
+							}else{
+								dset.add(value);
+							}
+							
 						}
 					}
 				}

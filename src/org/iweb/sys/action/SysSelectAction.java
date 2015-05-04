@@ -134,7 +134,7 @@ public class SysSelectAction extends ActionSupport {
 	}
 
 	public String dept_permit_select() throws Exception {
-		//ContextHelper.isPermit("GLOBAL_PRVG_DEPT_FUNCTION");
+		ContextHelper.isPermit("GLOBAL_PRVG_DEPT_FUNCTION");
 		try {
 			DepartmentDAO dao = new DepartmentDAO();
 			map.clear();
