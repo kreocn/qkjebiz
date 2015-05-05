@@ -20,6 +20,7 @@ import org.iweb.sys.MD5Plus;
 import org.iweb.sys.Parameters;
 import org.iweb.sys.ToolsUtil;
 import org.iweb.sys.cache.CacheFactory;
+import org.iweb.sys.cache.SysCache;
 import org.iweb.sys.cache.SysDBCacheLogic;
 import org.iweb.sys.dao.DepartmentDAO;
 import org.iweb.sys.dao.UserDAO;
@@ -318,6 +319,7 @@ public class UserLoginAction extends ActionSupport {
 			Set<String> dset = new HashSet<>();
 			newMap = ContextHelper.getUserLoginInfo().getUser_prvg_map();
 			List<Department> delist = new ArrayList<>();
+			int f=1;
 			try {
 				DepartmentDAO dao = new DepartmentDAO();
 				if (ContextHelper.isAdmin() || flag == true) {
@@ -329,11 +331,26 @@ public class UserLoginAction extends ActionSupport {
 							dset.add(de.getDept_code());
 						}
 					}
-
 				} else {
 					Set<String> set = newMap.keySet();
 					for (String s : set) {
 						String value = newMap.get(s);
+						if(s.equals("GLOBAL_PRVG_DEPT_FUNCTION")){
+							String s1[] = (String[]) JSONUtil.toObject(newMap.get(s), String[].class);// 转换成数组
+							if(s1!=null){
+								for (int i = 0; i < s1.length; i++) {
+									if(s1[i].equals("0.1")){
+										f=0;
+										break;
+									}
+								}
+							}else{
+								if(value.equals("0.1")){
+									f=0;
+									break;
+								}
+							}
+						}
 						if (value.contains(",")) {
 							String s1[] = (String[]) JSONUtil.toObject(newMap.get(s), String[].class);// 转换成数组
 							for (int i = 0; i < s1.length; i++) {
@@ -352,9 +369,13 @@ public class UserLoginAction extends ActionSupport {
 						}
 					}
 				}
-				List<String> dlist = new ArrayList<>();
-				dlist.addAll(dset);
-				ContextHelper.getUserLoginInfo().setPermit_depts(dlist);
+				if(f==1){
+					List<String> dlist = new ArrayList<>();
+					dlist.addAll(dset);
+					ContextHelper.getUserLoginInfo().setPermit_depts(dlist);
+				}else{
+					ContextHelper.getUserLoginInfo().setPermit_depts(null);
+				}
 			} catch (Exception e) {
 				log.error(this.getClass().getName() + "!list 读取数据错误:" + ToolsUtil.getStackTrace(e));
 				// throw new Exception(this.getClass().getName() + "!list 读取数据错误:" + ToolsUtil.getStackTraceHTML(e));
@@ -403,42 +424,47 @@ public class UserLoginAction extends ActionSupport {
 									for (int h = 0; h < role_p_list.size(); h++) {
 										RolePrvg roles_prvg = new RolePrvg();
 										roles_prvg = role_p_list.get(h);
-										if (userDept.getSubover() == 1) {// 包含子部门
-											String str = (String) CacheFactory.getCacheInstance().get(SysDBCacheLogic.CACHE_DEPT_PREFIX_SUB + userDept.getDept_code());
-											if (ud_dept_map.containsKey(roles_prvg.getPrivilege_id())) {
+										if(roles_prvg.getFunction()!=null&&roles_prvg.getFunction().equals("0.1")){//个人
+											ud_dept_map.put(roles_prvg.getPrivilege_id(), "0.1");
+										}else{
+											if (userDept.getSubover() == 1) {// 包含子部门
+												String str = (String) CacheFactory.getCacheInstance().get(SysDBCacheLogic.CACHE_DEPT_PREFIX_SUB + userDept.getDept_code());
+												if (ud_dept_map.containsKey(roles_prvg.getPrivilege_id())) {
 
-												String v = ud_dept_map.get(roles_prvg.getPrivilege_id());
-												// String[] d = (String[]) JSONUtil.toObject(userDept.getDept_code(), String[].class);// 转换成数组
-												String[] s = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
-												String[] a = (String[]) JSONUtil.toObject(v, String[].class);// 转换成数组
-												flag = ToolsUtil.isIn(userDept.getDept_code(), a);// 判断在不在数组中
-												if (flag == false) {
-													String[] all1 = (String[]) ArrayUtils.addAll(s, a);
-													String[] all = (String[]) ArrayUtils.add(all1, userDept.getDept_code());
+													String v = ud_dept_map.get(roles_prvg.getPrivilege_id());
+													// String[] d = (String[]) JSONUtil.toObject(userDept.getDept_code(), String[].class);// 转换成数组
+													String[] s = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
+													String[] a = (String[]) JSONUtil.toObject(v, String[].class);// 转换成数组
+													flag = ToolsUtil.isIn(userDept.getDept_code(), a);// 判断在不在数组中
+													if (flag == false) {
+														String[] all1 = (String[]) ArrayUtils.addAll(s, a);
+														String[] all = (String[]) ArrayUtils.add(all1, userDept.getDept_code());
+														ud_dept_map.put(roles_prvg.getPrivilege_id(), JSONUtil.toJsonString(all));
+													}
+
+												} else {
+													// String[] d = (String[]) JSONUtil.toObject(userDept.getDept_code(), String[].class);// 转换成数组
+													String[] s = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
+													String[] all = (String[]) ArrayUtils.add(s, userDept.getDept_code());
 													ud_dept_map.put(roles_prvg.getPrivilege_id(), JSONUtil.toJsonString(all));
 												}
 
 											} else {
-												// String[] d = (String[]) JSONUtil.toObject(userDept.getDept_code(), String[].class);// 转换成数组
-												String[] s = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
-												String[] all = (String[]) ArrayUtils.add(s, userDept.getDept_code());
-												ud_dept_map.put(roles_prvg.getPrivilege_id(), JSONUtil.toJsonString(all));
-											}
+												if (ud_dept_map.containsKey(roles_prvg.getPrivilege_id())) {
+													String v = ud_dept_map.get(roles_prvg.getPrivilege_id());
+													String[] a = (String[]) JSONUtil.toObject(v, String[].class);// 转换成数组
+													flag = ToolsUtil.isIn(userDept.getDept_code(), a);// 判断在不在数组中
+													if (flag == false) {
+														String[] all = (String[]) ArrayUtils.add(a, userDept.getDept_code());
+														ud_dept_map.put(roles_prvg.getPrivilege_id(), JSONUtil.toJsonString(all));
+													}
 
-										} else {
-											if (ud_dept_map.containsKey(roles_prvg.getPrivilege_id())) {
-												String v = ud_dept_map.get(roles_prvg.getPrivilege_id());
-												String[] a = (String[]) JSONUtil.toObject(v, String[].class);// 转换成数组
-												flag = ToolsUtil.isIn(userDept.getDept_code(), a);// 判断在不在数组中
-												if (flag == false) {
-													String[] all = (String[]) ArrayUtils.add(a, userDept.getDept_code());
-													ud_dept_map.put(roles_prvg.getPrivilege_id(), JSONUtil.toJsonString(all));
+												} else {
+													ud_dept_map.put(roles_prvg.getPrivilege_id(), userDept.getDept_code());
 												}
-
-											} else {
-												ud_dept_map.put(roles_prvg.getPrivilege_id(), userDept.getDept_code());
 											}
 										}
+										
 									}
 								}
 
@@ -455,6 +481,7 @@ public class UserLoginAction extends ActionSupport {
 		}
 		// ContextHelper.getUserLoginInfo().setPermit_depts(DeptLogic.getPermitDept());
 		return ud_dept_map;
+		
 
 	}
 

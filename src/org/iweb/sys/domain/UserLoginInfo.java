@@ -34,7 +34,7 @@ public class UserLoginInfo {
 	private String dept_cname;
 
 	private List<String> permit_depts;
-	private List<String> permit_depts2;
+	
 
 	private List<UserRole> user_roles_list;
 	// private Set<String> user_prov_set;
@@ -45,16 +45,20 @@ public class UserLoginInfo {
 	private HashMap<String, String> user_prvg_map;
 	private HashMap<String, String> user_function_map;
 	private HashMap<String, Integer> user_dept_type;// 是否包含子部门
+	
+	private HashMap<String, String> permit_depts2;
 
 	private String sex_name;
 	private String status_name;
 	private String position_name;
 
-	public List<String> getPermit_depts2() {
+	
+
+	public HashMap<String, String> getPermit_depts2() {
 		return permit_depts2;
 	}
 
-	public void setPermit_depts2(List<String> permit_depts2) {
+	public void setPermit_depts2(HashMap<String, String> permit_depts2) {
 		this.permit_depts2 = permit_depts2;
 	}
 
