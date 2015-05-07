@@ -319,7 +319,6 @@ public class UserLoginAction extends ActionSupport {
 			Set<String> dset = new HashSet<>();
 			newMap = ContextHelper.getUserLoginInfo().getUser_prvg_map();
 			List<Department> delist = new ArrayList<>();
-			int f=1;
 			try {
 				DepartmentDAO dao = new DepartmentDAO();
 				if (ContextHelper.isAdmin() || flag == true) {
@@ -335,22 +334,6 @@ public class UserLoginAction extends ActionSupport {
 					Set<String> set = newMap.keySet();
 					for (String s : set) {
 						String value = newMap.get(s);
-						if(s.equals("GLOBAL_PRVG_DEPT_FUNCTION")){
-							String s1[] = (String[]) JSONUtil.toObject(newMap.get(s), String[].class);// 转换成数组
-							if(s1!=null){
-								for (int i = 0; i < s1.length; i++) {
-									if(s1[i].equals("0.1")){
-										f=0;
-										break;
-									}
-								}
-							}else{
-								if(value.equals("0.1")){
-									f=0;
-									break;
-								}
-							}
-						}
 						if (value.contains(",")) {
 							String s1[] = (String[]) JSONUtil.toObject(newMap.get(s), String[].class);// 转换成数组
 							for (int i = 0; i < s1.length; i++) {
@@ -358,24 +341,20 @@ public class UserLoginAction extends ActionSupport {
 							}
 						} else {
 							String s1[] = (String[]) JSONUtil.toObject(newMap.get(s), String[].class);// 转换成数组
-							if(s1!=null){
+							if (s1 != null) {
 								for (int i = 0; i < s1.length; i++) {
 									dset.add(s1[i]);
 								}
-							}else{
+							} else {
 								dset.add(value);
 							}
-							
+
 						}
 					}
 				}
-				if(f==1){
-					List<String> dlist = new ArrayList<>();
-					dlist.addAll(dset);
-					ContextHelper.getUserLoginInfo().setPermit_depts(dlist);
-				}else{
-					ContextHelper.getUserLoginInfo().setPermit_depts(null);
-				}
+				List<String> dlist = new ArrayList<>();
+				dlist.addAll(dset);
+				ContextHelper.getUserLoginInfo().setPermit_depts(dlist);
 			} catch (Exception e) {
 				log.error(this.getClass().getName() + "!list 读取数据错误:" + ToolsUtil.getStackTrace(e));
 				// throw new Exception(this.getClass().getName() + "!list 读取数据错误:" + ToolsUtil.getStackTraceHTML(e));
@@ -424,9 +403,7 @@ public class UserLoginAction extends ActionSupport {
 									for (int h = 0; h < role_p_list.size(); h++) {
 										RolePrvg roles_prvg = new RolePrvg();
 										roles_prvg = role_p_list.get(h);
-										if(roles_prvg.getFunction()!=null&&roles_prvg.getFunction().equals("0.1")){//个人
-											ud_dept_map.put(roles_prvg.getPrivilege_id(), "0.1");
-										}else{
+										if (userDept.getDepsubover() == 1) {// 有部门管理权限
 											if (userDept.getSubover() == 1) {// 包含子部门
 												String str = (String) CacheFactory.getCacheInstance().get(SysDBCacheLogic.CACHE_DEPT_PREFIX_SUB + userDept.getDept_code());
 												if (ud_dept_map.containsKey(roles_prvg.getPrivilege_id())) {
@@ -463,8 +440,11 @@ public class UserLoginAction extends ActionSupport {
 													ud_dept_map.put(roles_prvg.getPrivilege_id(), userDept.getDept_code());
 												}
 											}
+										} else {// 没有部门管理权限，则说明为个人
+											// ud_dept_map.put(roles_prvg.getPrivilege_id(), "0.1");
+											ud_dept_map.put(roles_prvg.getPrivilege_id(), "0.1" + "#" + userDept.getDept_code());
 										}
-										
+
 									}
 								}
 
@@ -481,7 +461,6 @@ public class UserLoginAction extends ActionSupport {
 		}
 		// ContextHelper.getUserLoginInfo().setPermit_depts(DeptLogic.getPermitDept());
 		return ud_dept_map;
-		
 
 	}
 

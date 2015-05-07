@@ -11,6 +11,7 @@
 <style type="text/css">
 .input-a select{height:auto;}
 .even{background:#fff;}
+.checkbox{height: 18px;width: 18px;}
 </style>
 </head>
 <body>
@@ -57,15 +58,23 @@
 		       </div>
 			</div>
 			<div class="label_hang">
+		         <div class="label_ltit">部门权限:</div>
+		         <div class="label_rwben2">
+		         <div class="label_rwb">
+		         <input id="fatherSub" type="checkbox" name="userDept.depsubover" value="1"  class="checkbox"
+		         <s:if test="%{userDept.depsubover==1}">checked="checked"</s:if>
+		         />
+		         </div>
+		         </div>
+	       	</div>
+			<div class="label_hang">
 		         <div class="label_ltit">子部门权限:</div>
 		         <div class="label_rwben2">
 		         <div class="label_rwb">
-		         <s:if test="'add' == viewFlag">
-		         <s:radio name="userDept.subover" list="#{1:'是',0:'否'}" listKey="key" listValue="value" value="0"/>
-		         </s:if>
-		         <s:else>
-		         <s:radio name="userDept.subover" list="#{1:'是',0:'否'}" listKey="key" listValue="value"/>
-		         </s:else>
+		         <input id="sonSub" type="checkbox" name="userDept.subover" value="1"  class="checkbox"
+		         <s:if test="%{userDept.subover==1}">checked="checked"</s:if>
+		         <s:if test="%{userDept.depsubover==0}"> style="display: none;"</s:if>
+		         />
 		         </div>
 		         </div>
 	       	</div>
@@ -127,6 +136,17 @@ $(function(){
 	$.fn.xhuploadinit();
 	$("#marketimgid").xhupload();
 	addTransferSelect("aroles","uroles");
+});
+
+$("#fatherSub").click(function(){
+	if($("#fatherSub").is(':checked')) {
+		document.getElementById("sonSub").style.display="block";
+		document.getElementById("sonSub").value=1;
+	}else{
+		document.getElementById("sonSub").style.display="none";
+		document.getElementById("sonSub").value=0;
+	}
+	
 });
 
 

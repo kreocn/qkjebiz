@@ -1,7 +1,9 @@
 package org.iweb.sys.action;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -138,10 +140,51 @@ public class SysSelectAction extends ActionSupport {
 		try {
 			DepartmentDAO dao = new DepartmentDAO();
 			map.clear();
-			if (ContextHelper.getUserLoginInfo().getPermit_depts() == null)
+			if (ContextHelper.getUserLoginInfo().getPermit_depts() == null){
 				map.put("dept_code", ContextHelper.getUserLoginDept()); // 能选到自己的部门
-			else
-				map.put("dept_codes", ContextHelper.getUserLoginPermitDepts());
+			}
+			else{
+				String str=ContextHelper.getUserLoginPermitDepts().toString();
+				//String s1[] = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
+				str = str.replaceAll("\\[", "");  
+				str=str.replace("\\]", "");
+				str=str.replace("]", "");
+				String s2[]=str.split(",");
+				if(str.contains("#")){
+					Set<String> dset = new HashSet<>();
+					Set<String> dsetall = new HashSet<>();
+					if(s2!=null){
+						for(int i=0;i<s2.length;i++){
+							if(s2[i].contains("#")){
+								dset.add(s2[i].substring(s2[i].indexOf("#")+1,s2[i].length()).trim());
+							}else{
+								if(dset.size()>0){
+									if(!dsetall.contains(s2[i].trim()+",") && !dsetall.contains(s2[i].trim()+"]")){
+										dsetall.add(s2[i].trim());
+									}
+								}else{
+									dsetall.add(s2[i].trim());
+								}
+							}
+							
+						}
+					}else{
+						String code=str.substring(str.indexOf("#")+1,str.length());
+						dset.add(code.trim());
+					}
+					List<String> dlist = new ArrayList<>();
+					if(dset.size()>0){
+						dlist.addAll(dset);
+					}
+					if(dsetall.size()>0){
+						dlist.addAll(dsetall);
+					}
+					map.put("dept_codes", dlist);
+				}else{
+					map.put("dept_codes", ContextHelper.getUserLoginPermitDepts());
+				}
+			}
+				
 			if(check_code!=null){
 				map.remove("dept_code");
 				map.remove("dept_codes");

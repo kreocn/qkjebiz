@@ -27,10 +27,24 @@
 			<isNotEmpty prepend="AND" property="out_flag"><![CDATA[ l.out_flag=#out_flag# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="rebates_flag"><![CDATA[ l.rebates_flag=#rebates_flag# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="manager"><![CDATA[ m.manager=#manager# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="dept_codes">
-				<![CDATA[ m.dept_code In ]]>
+
+			<isNotEmpty prepend="AND" property="dept_codes" open="(" close=")">
+			<![CDATA[ m.dept_code In ]]>
 				<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
+				<isNotEmpty prepend="OR" property="apply_perdepts">
+							<![CDATA[ m.dept_code In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ m.manager=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
 			</isNotEmpty>
+			<isEmpty property="dept_code">
+				<isNotEmpty prepend="AND" property="apply_perdepts">
+						<![CDATA[ m.dept_code In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ m.manager=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
+			</isEmpty>
+
 			<isNotEmpty prepend="AND" property="dept_chekCodes">
 				<![CDATA[  l.dis_dept In ]]>
 				<iterate property="dept_chekCodes" open="(" close=")" conjunction=" , "> #dept_chekCodes[]#</iterate>
@@ -54,10 +68,24 @@
 			<isNotEmpty prepend="AND" property="out_flag"><![CDATA[ l.out_flag=#out_flag# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="rebates_flag"><![CDATA[ l.rebates_flag=#rebates_flag# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="manager"><![CDATA[ m.manager=#manager# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="dept_codes">
-				<![CDATA[ m.dept_code In ]]>
+
+			<isNotEmpty prepend="AND" property="dept_codes" open="(" close=")">
+			<![CDATA[ m.dept_code In ]]>
 				<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
+				<isNotEmpty prepend="OR" property="apply_perdepts">
+							<![CDATA[ m.dept_code In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ m.manager=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
 			</isNotEmpty>
+			<isEmpty property="dept_code">
+				<isNotEmpty prepend="AND" property="apply_perdepts">
+						<![CDATA[ m.dept_code In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ m.manager=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
+			</isEmpty>
+
 			<isNotEmpty prepend="AND" property="dept_chekCodes">
 				<![CDATA[  l.dis_dept In ]]>
 				<iterate property="dept_chekCodes" open="(" close=")" conjunction=" , "> #dept_chekCodes[]#</iterate>

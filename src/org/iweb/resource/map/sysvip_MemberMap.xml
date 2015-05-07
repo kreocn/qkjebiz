@@ -26,10 +26,24 @@
 			<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ m.dept_code=#dept_code# ]]></isNotEqual>
 			<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ m.dept_code LIKE CONCAT(#dept_code#,'%') ]]></isEqual>
 		</isNotEmpty>
-		<isNotNull prepend="AND" property="dept_codes">
+
+		<isNotEmpty prepend="AND" property="dept_codes" open="(" close=")">
 			<![CDATA[ m.dept_code In ]]>
 			<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
-		</isNotNull>
+			<isNotEmpty prepend="OR" property="apply_perdepts">
+							<![CDATA[ m.dept_code In ]]>
+				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ m.manager=#apply_userDouble# ]]></isNotEmpty>
+			</isNotEmpty>
+		</isNotEmpty>
+		<isEmpty property="dept_codes">
+			<isNotEmpty prepend="AND" property="apply_perdepts">
+						<![CDATA[ m.dept_code In ]]>
+				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ m.manager=#apply_userDouble# ]]></isNotEmpty>
+			</isNotEmpty>
+		</isEmpty>
+
 		<isNotEmpty prepend="AND" property="uuid_autoc"><![CDATA[ m.uuid LIKE CONCAT(#uuid_autoc#,'%') ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="mobile_autoc"><![CDATA[ m.mobile LIKE CONCAT(#mobile_autoc#,'%') ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="member_name_autoc"><![CDATA[ m.member_name LIKE CONCAT('%',#member_name_autoc#,'%') ]]></isNotEmpty>
@@ -62,10 +76,24 @@
 			<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ m.dept_code=#dept_code# ]]></isNotEqual>
 			<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ m.dept_code LIKE CONCAT(#dept_code#,'%') ]]></isEqual>
 		</isNotEmpty>
-		<isNotNull prepend="AND" property="dept_codes">
+
+		<isNotEmpty prepend="AND" property="dept_codes" open="(" close=")">
 			<![CDATA[ m.dept_code In ]]>
 			<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
-		</isNotNull>
+			<isNotEmpty prepend="OR" property="apply_perdepts">
+							<![CDATA[ m.dept_code In ]]>
+				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ m.manager=#apply_userDouble# ]]></isNotEmpty>
+			</isNotEmpty>
+		</isNotEmpty>
+		<isEmpty property="dept_codes">
+			<isNotEmpty prepend="AND" property="apply_perdepts">
+						<![CDATA[ m.dept_code In ]]>
+				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ m.manager=#apply_userDouble# ]]></isNotEmpty>
+			</isNotEmpty>
+		</isEmpty>
+
 		<isNotEmpty prepend="AND" property="uuid_autoc"><![CDATA[ m.uuid LIKE CONCAT(#uuid_autoc#,'%') ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="mobile_autoc"><![CDATA[ m.mobile LIKE CONCAT(#mobile_autoc#,'%') ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="member_name_autoc"><![CDATA[ m.member_name LIKE CONCAT('%',#member_name_autoc#,'%') ]]></isNotEmpty>

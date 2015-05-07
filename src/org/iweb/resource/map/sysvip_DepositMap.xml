@@ -19,10 +19,24 @@
 		<isNotEmpty prepend="AND" property="fd_check"><![CDATA[ d.fd_check=#fd_check# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="add_user"><![CDATA[ d.add_user=#add_user# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="dept_code"><![CDATA[ au.dept_code=#dept_code# ]]></isNotEmpty>
-		<isNotEmpty prepend="AND" property="dept_codes">
+		
+		<isNotEmpty prepend="AND" property="dept_codes" open="(" close=")">
 			<![CDATA[ au.dept_code In ]]>
 			<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
+			<isNotEmpty prepend="OR" property="apply_perdepts">
+				<![CDATA[ au.dept_code In ]]>
+				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ d.add_user=#apply_userDouble# ]]></isNotEmpty>
+			</isNotEmpty>
 		</isNotEmpty>
+		
+		<isEmpty  property="dept_codes">
+			<isNotEmpty prepend="AND" property="apply_perdepts">
+				<![CDATA[ au.dept_code In ]]>
+				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ d.add_user=#apply_userDouble# ]]></isNotEmpty>
+			</isNotEmpty>
+		</isEmpty>
 		<![CDATA[ Order By d.pay_date DESC ]]>
 	</select>
 	<select id="sysvip_getDepositsCounts" resultClass="int" parameterClass="java.util.Map">
@@ -40,10 +54,24 @@
 		<isNotEmpty prepend="AND" property="fd_check"><![CDATA[ d.fd_check=#fd_check# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="add_user"><![CDATA[ d.add_user=#add_user# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="dept_code"><![CDATA[ au.dept_code=#dept_code# ]]></isNotEmpty>
-		<isNotEmpty prepend="AND" property="dept_codes">
+		
+		<isNotEmpty prepend="AND" property="dept_codes" open="(" close=")">
 			<![CDATA[ au.dept_code In ]]>
 			<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
+			<isNotEmpty prepend="OR" property="apply_perdepts">
+				<![CDATA[ au.dept_code In ]]>
+				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ d.add_user=#apply_userDouble# ]]></isNotEmpty>
+			</isNotEmpty>
 		</isNotEmpty>
+		
+		<isEmpty  property="dept_codes">
+			<isNotEmpty prepend="AND" property="apply_perdepts">
+				<![CDATA[ au.dept_code In ]]>
+				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ d.add_user=#apply_userDouble# ]]></isNotEmpty>
+			</isNotEmpty>
+		</isEmpty>
 	</select>
 	<insert id="sysvip_addDeposit" parameterClass="deposit">
 		<![CDATA[ 

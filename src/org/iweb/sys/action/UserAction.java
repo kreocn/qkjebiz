@@ -316,7 +316,7 @@ public class UserAction extends ActionSupport {
 		}
 		return SUCCESS;
 	}
-
+	
 	public String add() throws Exception {
 		ContextHelper.isPermit("SYS_MANAGER_USER_ADD");
 		try {

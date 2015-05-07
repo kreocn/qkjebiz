@@ -20,10 +20,25 @@
 				<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ l.leave_dept=#leave_dept#]]></isNotEqual>
 				<isEqual property="is_sub_dept" compareValue="true"><![CDATA[  l.leave_dept LIKE CONCAT(#leave_dept#,'%') ]]></isEqual>
 			</isNotEmpty>
-			<isNotEmpty prepend="AND" property="leave_depts">
-				<![CDATA[ l.leave_dept In ]]>
+			
+			<isNotEmpty prepend="AND" property="leave_depts" open="(" close=")">
+			<![CDATA[ l.leave_dept In ]]>
 				<iterate property="leave_depts" open="(" close=")" conjunction=" , "> #leave_depts[]#</iterate>
+				<isNotEmpty prepend="OR" property="apply_perdepts">
+							<![CDATA[ l.leave_dept In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ l.leave_user=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
 			</isNotEmpty>
+
+			<isEmpty property="leave_depts">
+				<isNotEmpty prepend="AND" property="apply_perdepts">
+						<![CDATA[ l.leave_dept In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ l.leave_user=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
+			</isEmpty>
+		
 			<isNotEmpty prepend="AND" property="leave_user"><![CDATA[ l.leave_user=#leave_user# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="leave_start"><![CDATA[ l.leave_start=#leave_start# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="leave_end"><![CDATA[ l.leave_end=#leave_end# ]]></isNotEmpty>
@@ -46,10 +61,24 @@
 				<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ l.leave_dept=#leave_dept#]]></isNotEqual>
 				<isEqual property="is_sub_dept" compareValue="true"><![CDATA[  l.leave_dept LIKE CONCAT(#leave_dept#,'%') ]]></isEqual>
 			</isNotEmpty>
-			<isNotEmpty prepend="AND" property="leave_depts">
-				<![CDATA[ l.leave_dept In ]]>
+			
+			<isNotEmpty prepend="AND" property="leave_depts" open="(" close=")">
+			<![CDATA[ l.leave_dept In ]]>
 				<iterate property="leave_depts" open="(" close=")" conjunction=" , "> #leave_depts[]#</iterate>
+				<isNotEmpty prepend="OR" property="apply_perdepts">
+							<![CDATA[ l.leave_dept In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ l.leave_user=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
 			</isNotEmpty>
+			<isEmpty property="leave_depts">
+				<isNotEmpty prepend="AND" property="apply_perdepts">
+						<![CDATA[ l.leave_dept In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ l.leave_user=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
+			</isEmpty>
+			
 			<isNotEmpty prepend="AND" property="leave_user"><![CDATA[ l.leave_user=#leave_user# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="leave_start"><![CDATA[ l.leave_start=#leave_start# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="leave_end"><![CDATA[ l.leave_end=#leave_end# ]]></isNotEmpty>

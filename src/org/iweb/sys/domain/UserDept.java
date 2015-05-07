@@ -9,14 +9,23 @@ public class UserDept {
 	private String dept_code;
 	private String position;
 	private Integer subover;
+	private Integer depsubover;
 	private String roles;
 	private String prvgs;
 	private Date lm_time;
 
 	private String dept_cname;
 	private String position_name;
-	
+
 	private List<UserRole> user_roles_list;
+
+	public Integer getDepsubover() {
+		return depsubover;
+	}
+
+	public void setDepsubover(Integer depsubover) {
+		this.depsubover = depsubover;
+	}
 
 	public List<UserRole> getUser_roles_list() {
 		return user_roles_list;

@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -71,7 +72,51 @@ public class ContextHelper {
 		if (ContextHelper.getUserLoginInfo().getPermit_depts() == null) {
 			m.put(user_column, ContextHelper.getUserLoginUuid());
 			m.put(dept_column, Arrays.asList(new String[] { ContextHelper.getUserLoginInfo().getDept_code() }));
-		} else m.put(dept_column, ContextHelper.getUserLoginPermitDepts());
+		} else{
+			String str=ContextHelper.getUserLoginPermitDepts().toString();
+			//String s1[] = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
+			str = str.replaceAll("\\[", "");  
+			str=str.replace("\\]", "");
+			str=str.replace("]", "");
+			String s2[]=str.split(",");
+			if(str.contains("#")){
+				Set<String> dset = new HashSet<>();
+				Set<String> dsetall = new HashSet<>();
+				if(s2!=null){
+					for(int i=0;i<s2.length;i++){
+						if(s2[i].contains("#")){
+							dset.add(s2[i].substring(s2[i].indexOf("#")+1,s2[i].length()).trim());
+						}else{
+							if(dset.size()>0){
+								if(!dsetall.contains(s2[i].trim()+",") && !dsetall.contains(s2[i].trim()+"]")){
+									dsetall.add(s2[i].trim());
+								}
+							}else{
+								dsetall.add(s2[i].trim());
+							}
+						}
+						
+					}
+				}else{
+					String code=str.substring(str.indexOf("#")+1,str.length());
+					dset.add(code.trim());
+				}
+				if(dset.size()>0){//dset中的部门为个人权限
+					m.put("apply_userDouble", ContextHelper.getUserLoginUuid());
+					List<String> dlist = new ArrayList<>();
+					dlist.addAll(dset);
+					m.put("apply_perdepts", dlist);
+				}
+				if(dsetall.size()>0){
+					List<String> dlistall = new ArrayList<>();
+					dlistall.addAll(dsetall);
+					m.put(dept_column,  dlistall);
+				}
+				
+			}else{
+				m.put(dept_column, ContextHelper.getUserLoginPermitDepts());
+			}
+		}
 	}
 
 	/**

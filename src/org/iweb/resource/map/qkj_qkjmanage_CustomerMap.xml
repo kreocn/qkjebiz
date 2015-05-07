@@ -24,10 +24,26 @@
 				<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ c.dept_code LIKE CONCAT(#dept_code#,'%') ]]></isEqual>
 			</isNotEmpty>
 			<isNotEmpty prepend="AND" property="manager"><![CDATA[ c.manager=#manager# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="dept_codes">
+			
+			<isNotEmpty prepend="AND" property="dept_codes" open="(" close=")">
 			<![CDATA[ c.dept_code In ]]>
 				<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
+				<isNotEmpty prepend="OR" property="apply_perdepts">
+							<![CDATA[ c.dept_code In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ c.manager=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
 			</isNotEmpty>
+			<isEmpty property="dept_codes">
+				<isNotEmpty prepend="AND" property="apply_perdepts">
+						<![CDATA[ c.dept_code In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ c.manager=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
+			</isEmpty>
+			
+			
+			
 			<isEqual property="is_recode" compareValue="true"><![CDATA[ and cr.recode_count>2 ]]></isEqual>
 		</dynamic>
 		<![CDATA[ Order By c.uuid Desc ]]>
@@ -50,10 +66,22 @@
 				<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ c.dept_code LIKE CONCAT(#dept_code#,'%') ]]></isEqual>
 			</isNotEmpty>
 			<isNotEmpty prepend="AND" property="manager"><![CDATA[ c.manager=#manager# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="dept_codes">
+			<isNotEmpty prepend="AND" property="dept_codes" open="(" close=")">
 			<![CDATA[ c.dept_code In ]]>
 				<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
+				<isNotEmpty prepend="OR" property="apply_perdepts">
+							<![CDATA[ c.dept_code In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ c.manager=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
 			</isNotEmpty>
+			<isEmpty property="dept_codes">
+				<isNotEmpty prepend="AND" property="apply_perdepts">
+						<![CDATA[ c.dept_code In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ c.manager=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
+			</isEmpty>
 			<isEqual property="is_recode" compareValue="true"><![CDATA[ and cr.recode_count>2 ]]></isEqual>
 		</dynamic>
 	</select>

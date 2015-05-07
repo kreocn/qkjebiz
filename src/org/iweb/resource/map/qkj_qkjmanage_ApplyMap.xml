@@ -20,10 +20,24 @@
 				<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ a.apply_dept=#apply_dept#]]></isNotEqual>
 				<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ a.apply_dept LIKE CONCAT(#apply_dept#,'%') ]]></isEqual>
 			</isNotEmpty>
-			<isNotEmpty prepend="AND" property="apply_depts">
-				<![CDATA[ a.apply_dept In ]]>
+			
+			<isNotEmpty prepend="AND" property="apply_depts" open="(" close=")">
+			<![CDATA[ a.apply_dept In ]]>
 				<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
+				<isNotEmpty prepend="OR" property="apply_perdepts">
+							<![CDATA[ a.apply_dept In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ a.apply_user=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
 			</isNotEmpty>
+			<isEmpty property="apply_depts">
+				<isNotEmpty prepend="AND" property="apply_perdepts">
+						<![CDATA[ a.apply_dept In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ a.apply_user=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
+			</isEmpty>
+			
 			<isNotEmpty prepend="AND" property="apply_user"><![CDATA[ a.apply_user=#apply_user# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="apply_time_begin"><![CDATA[ a.apply_time>=#apply_time_begin# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="apply_time_end"><![CDATA[ a.apply_time<=DATE_ADD(#apply_time_end#,INTERVAL 1 day) ]]></isNotEmpty>
@@ -50,10 +64,24 @@
 				<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ apply_dept=#apply_dept#]]></isNotEqual>
 				<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ apply_dept LIKE CONCAT(#apply_dept#,'%') ]]></isEqual>
 			</isNotEmpty>
-			<isNotEmpty prepend="AND" property="apply_depts">
-				<![CDATA[ apply_dept In ]]>
+			
+			<isNotEmpty prepend="AND" property="apply_depts" open="(" close=")">
+			<![CDATA[ apply_dept In ]]>
 				<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
+				<isNotEmpty prepend="OR" property="apply_perdepts">
+							<![CDATA[ apply_dept In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ apply_user=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
 			</isNotEmpty>
+			<isEmpty property="apply_depts">
+				<isNotEmpty prepend="AND" property="apply_perdepts">
+						<![CDATA[ apply_dept In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ apply_user=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
+			</isEmpty>
+			
 			<isNotEmpty prepend="AND" property="apply_user"><![CDATA[ apply_user=#apply_user# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="apply_time_begin"><![CDATA[ apply_time>=#apply_time_begin# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="apply_time_end"><![CDATA[ apply_time<=DATE_ADD(#apply_time_end#,INTERVAL 1 day) ]]></isNotEmpty>

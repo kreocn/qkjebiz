@@ -21,9 +21,9 @@
 			<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ c.dept_code=#dept_code# ]]></isNotEqual>
 			<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ c.dept_code LIKE CONCAT(#dept_code#,'%') ]]></isEqual>
 		</isNotEmpty>
-		<isNotEmpty prepend="AND" property="dept_codes">
+		<isNotEmpty prepend="AND" property="dept_codes" open="(" close=")">
 			<![CDATA[ c.dept_code In ]]>
-			<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
+				<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
 		</isNotEmpty>
 		<isEmpty property="order_type"><![CDATA[ Order By r.uuid Desc ]]>	</isEmpty>
 		<isNotEmpty property="order_type">
@@ -47,10 +47,10 @@
 			<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ c.dept_code=#dept_code# ]]></isNotEqual>
 			<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ c.dept_code LIKE CONCAT(#dept_code#,'%') ]]></isEqual>
 		</isNotEmpty>
-		<isNotEmpty prepend="AND" property="dept_codes">
+		<isNotEmpty prepend="AND" property="dept_codes" open="(" close=")">
 			<![CDATA[ c.dept_code In ]]>
-			<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
-		</isNotEmpty>
+				<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
+			</isNotEmpty>
 	</select>
 	<insert id="qkjmanage_addCustomerRecode" parameterClass="customerRecode">
 		<![CDATA[ 

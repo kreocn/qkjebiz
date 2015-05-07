@@ -38,10 +38,25 @@
 		<isNotEmpty prepend="AND" property="fd_status"><![CDATA[ a.fd_status=#fd_status# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="close_fd_status"><![CDATA[ a.close_fd_status=#close_fd_status# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="close_nd_status"><![CDATA[ a.close_nd_status=#close_nd_status# ]]></isNotEmpty>
-		<isNotEmpty prepend="AND" property="apply_depts">
-				<![CDATA[ a.apply_dept In ]]>
+
+		<isNotEmpty prepend="AND" property="apply_depts" open="(" close=")">
+			<![CDATA[ a.apply_dept In ]]>
 			<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
+			<isNotEmpty prepend="OR" property="apply_perdepts">
+				<![CDATA[ a.apply_dept In ]]>
+				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ a.apply_user=#apply_userDouble# ]]></isNotEmpty>
+			</isNotEmpty>
 		</isNotEmpty>
+		
+		<isEmpty  property="apply_depts">
+			<isNotEmpty prepend="AND" property="apply_perdepts">
+				<![CDATA[ a.apply_dept In ]]>
+				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ a.apply_user=#apply_userDouble# ]]></isNotEmpty>
+			</isNotEmpty>
+		</isEmpty>
+		
 		<isNotEmpty prepend="AND" property="close_sd_status"><![CDATA[ a.close_sd_status=#close_sd_status# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="close_smd_status"><![CDATA[ a.close_smd_status=#close_smd_status# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="status"><![CDATA[ a.status=#status# ]]></isNotEmpty>
@@ -96,10 +111,23 @@
 		<isNotEmpty prepend="AND" property="fd_status"><![CDATA[ a.fd_status=#fd_status# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="close_fd_status"><![CDATA[ a.close_fd_status=#close_fd_status# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="close_nd_status"><![CDATA[ a.close_nd_status=#close_nd_status# ]]></isNotEmpty>
-		<isNotEmpty prepend="AND" property="apply_depts">
-				<![CDATA[ a.apply_dept In ]]>
+		<isNotEmpty prepend="AND" property="apply_depts" open="(" close=")">
+			<![CDATA[ a.apply_dept In ]]>
 			<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
+			<isNotEmpty prepend="OR" property="apply_perdepts">
+				<![CDATA[ a.apply_dept In ]]>
+				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ a.apply_user=#apply_userDouble# ]]></isNotEmpty>
+			</isNotEmpty>
 		</isNotEmpty>
+		<isEmpty  property="apply_depts">
+			<isNotEmpty prepend="AND" property="apply_perdepts">
+				<![CDATA[ a.apply_dept In ]]>
+				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ a.apply_user=#apply_userDouble# ]]></isNotEmpty>
+			</isNotEmpty>
+		</isEmpty>
+		
 		<isNotEmpty prepend="AND" property="close_sd_status"><![CDATA[ a.close_sd_status=#close_sd_status# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="close_smd_status"><![CDATA[ a.close_smd_status=#close_smd_status# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="status"><![CDATA[ a.status=#status# ]]></isNotEmpty>
