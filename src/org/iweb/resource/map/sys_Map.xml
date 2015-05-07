@@ -258,10 +258,6 @@
 		<isNotNull prepend="AND" property="mobile"><![CDATA[ u.mobile like #mobile# ]]></isNotNull>
 		<isNotNull prepend="AND" property="status"><![CDATA[ u.status=#status# ]]></isNotNull>
 		<isNotNull prepend="AND" property="dept_code"><![CDATA[ u.dept_code=#dept_code# ]]></isNotNull>
-		<isNotNull prepend="AND" property="dept_codes">
-			<![CDATA[ u.dept_code In ]]>
-			<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
-		</isNotNull>
 		
 		<isNotEmpty prepend="AND" property="dept_codes" open="(" close=")">
 			<![CDATA[ u.dept_code In ]]>
