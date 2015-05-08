@@ -6,8 +6,13 @@ import java.util.Map;
 import org.iweb.sys.AbstractDAO;
 
 public class ActiveDAO extends AbstractDAO {
+	public ActiveDAO() {
+		super.setDb_num(0);
+		System.out.println("#############1:"+super.getDb_num());
+	}
 	
 	public List list(Map<String, Object> map) {
+		System.out.println("#############2:"+super.getDb_num());
 		setCountMapid("qkjmanage_getActivesCounts");
 		return super.list("qkjmanage_getActives", map);
 	}

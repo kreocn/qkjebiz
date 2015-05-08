@@ -5,7 +5,10 @@ import java.util.Date;
 public class Product {
 	private Integer uuid;// (int)主键ID
 	private String prod_code;// 产品统一编码
-	private String bar_code;
+	private String bar_code;//青海条形码
+	private String bar_code_box;//青海条形码箱子
+	private String bar_code_tibet;//西藏条形码
+	private String bar_code_tibet_box;//西藏条形码箱子
 	private Integer brand;// (varchar)系列/类型/品牌
 	private String title;// (varchar)品名
 	private String spec;// (varchar)规格(500ml)
@@ -25,7 +28,6 @@ public class Product {
 	private Integer status;// 是否启用
 	private String lm_user;// (varchar)
 	private Date lm_time;// (timestamp)
-
 	private String brand_name;
 
 	public String getBar_code() {
@@ -210,6 +212,30 @@ public class Product {
 
 	public void setBrand_name(String brand_name) {
 		this.brand_name = brand_name;
+	}
+
+	public String getBar_code_box() {
+		return bar_code_box;
+	}
+
+	public String getBar_code_tibet() {
+		return bar_code_tibet;
+	}
+
+	public String getBar_code_tibet_box() {
+		return bar_code_tibet_box;
+	}
+
+	public void setBar_code_box(String bar_code_box) {
+		this.bar_code_box = bar_code_box;
+	}
+
+	public void setBar_code_tibet(String bar_code_tibet) {
+		this.bar_code_tibet = bar_code_tibet;
+	}
+
+	public void setBar_code_tibet_box(String bar_code_tibet_box) {
+		this.bar_code_tibet_box = bar_code_tibet_box;
 	}
 
 }
