@@ -46,7 +46,7 @@ public class UserLoginInfo {
 	private HashMap<String, String> user_function_map;
 	private HashMap<String, Integer> user_dept_type;// 是否包含子部门
 	
-	private HashMap<String, String> permit_depts2;
+	private HashMap<String, String> permit_depts2;//默认部门
 
 	private String sex_name;
 	private String status_name;

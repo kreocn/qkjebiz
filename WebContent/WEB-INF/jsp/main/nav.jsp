@@ -24,4 +24,49 @@
 </header>
 <!--left菜单-->
 <div id="ht_left_menu" class="ht_left subHide"></div>
-<footer><p class="botmsg">当前登录信息：${dept_name}&nbsp;&nbsp;${user_name}</p></footer>
+<footer><p class="botmsg">当前登录信息：${dept_name}&nbsp;&nbsp;${user_name}&nbsp;&nbsp;<a href="javascript:;" onclick="openCustomerView();">修改提交部门</a></p></footer>
+
+
+<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.ui.datepicker-zh.js" />"></script>
+<script type="text/javascript">
+var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
+
+$(function(){
+	CommonUtil.pickrow('table1');
+	CommonUtil.pickrowAll('table1','uuidcheck');
+	$("#customerRecode_recode_time").datepicker();
+	$("#customerRecode_next_date").datepicker();
+	
+	if($("#userdept_codeid").val()!='') {
+		loadManagers($("#userdept_codeid").val());
+	}
+	
+	createCustomerView();
+ });
+
+
+var sobj02;
+var createCustomerView = function() {
+	//http://localhost:8888/qkjmanage/customer_load?viewFlag=mdy&customer.uuid=3
+	var w_width = $(window).width();
+	var w_height = $(window).height();
+	sobj02 = new DialogIFrame({
+		src:'',
+		title:"修改默认提交部门",
+		width:w_width*0.45,
+		height:w_height*0.55
+	});
+	sobj02.selfAction = function(val1,val2) {};
+	sobj02.create();
+	//sobj02.open();
+};
+
+var openCustomerView = function() {
+	
+	var iframeId = sobj02.getConid() + "iframe";
+	$("#"+iframeId).attr("src","/sys/user_DeptList");
+	sobj02.open();
+};
+
+
+</script>

@@ -256,14 +256,14 @@ public class UserLoginAction extends ActionSupport {
 						 * }
 						 */
 
-						if (f_map.containsKey(role_p_list.get(i).getPrivilege_id()) && !ToolsUtil.isEmpty(f_map.get(role_p_list.get(i).getPrivilege_id()))) {
+						/*if (f_map.containsKey(role_p_list.get(i).getPrivilege_id()) && !ToolsUtil.isEmpty(f_map.get(role_p_list.get(i).getPrivilege_id()))) {
 							String tmp = f_map.get(role_p_list.get(i).getPrivilege_id());
 							f_map.put(role_p_list.get(i).getPrivilege_id(), tmp + "," + role_p_list.get(i).getFunction());
 						} else {
 							f_map.put(role_p_list.get(i).getPrivilege_id(), role_p_list.get(i).getFunction());
 						}
 
-						log.info(ulf.getTitle() + ":" + role_p_list.get(i).getPrivilege_id() + "(" + role_p_list.get(i).getType() + ":" + role_p_list.get(i).getFunction() + ")");
+						log.info(ulf.getTitle() + ":" + role_p_list.get(i).getPrivilege_id() + "(" + role_p_list.get(i).getType() + ":" + role_p_list.get(i).getFunction() + ")");*/
 					}
 					// ulf.setUser_prvg_map(p_map);
 					// ulf.setUser_function_map(f_map);
@@ -273,6 +273,19 @@ public class UserLoginAction extends ActionSupport {
 			// 多部门多权限
 			ulf.setUser_prvg_map((HashMap<String, String>) setUserLoginInfo(userDepts));
 			ulf.setUser_function_map(ulf.getUser_prvg_map());
+			if(userDepts.size()>0){
+				HashMap<String, String> p_map = new HashMap<String, String>();
+				for(int i=0;i<userDepts.size();i++){
+					UserDept u=new UserDept();
+					u=userDepts.get(i);
+					if(u.getDept_code().equals(ulf.getDept_code())){//默认部门
+						p_map.put(u.getDept_code(), u.getDept_cname()+"#1");
+					}else{
+						p_map.put(u.getDept_code(), u.getDept_cname()+"#0");
+					}
+				}
+				ulf.setPermit_depts2(p_map);
+			}
 		}
 
 		if (!ToolsUtil.isEmpty(ulf.getUser_type())) {

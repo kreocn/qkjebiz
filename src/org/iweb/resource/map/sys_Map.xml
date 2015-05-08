@@ -259,7 +259,7 @@
 		<isNotNull prepend="AND" property="status"><![CDATA[ u.status=#status# ]]></isNotNull>
 		<isNotNull prepend="AND" property="dept_code"><![CDATA[ u.dept_code=#dept_code# ]]></isNotNull>
 		
-		<isNotEmpty prepend="AND" property="dept_codes" open="(" close=")">
+		<!-- <isNotEmpty prepend="AND" property="dept_codes" open="(" close=")">
 			<![CDATA[ u.dept_code In ]]>
 			<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_code[]#</iterate>
 			<isNotEmpty prepend="OR" property="apply_perdepts">
@@ -267,7 +267,7 @@
 				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
 				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ u.uuid=#apply_userDouble# ]]></isNotEmpty>
 			</isNotEmpty>
-		</isNotEmpty>
+		</isNotEmpty> -->
 		
 		<isEmpty  property="dept_codes">
 			<isNotEmpty prepend="AND" property="apply_perdepts">
@@ -311,6 +311,15 @@
 				filesystem_root=#filesystem_root#,
 				lm_user=#lm_user#,
 				lm_time=#lm_time#
+			Where uuid=#uuid#
+		]]>
+	</update>
+	
+	<update id="sys_mdyUserMDept" parameterClass="user">
+		<![CDATA[
+			Update s_sys_user
+			Set 
+				dept_code=#dept_code#
 			Where uuid=#uuid#
 		]]>
 	</update>
