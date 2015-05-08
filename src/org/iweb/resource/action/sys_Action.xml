@@ -132,8 +132,9 @@
 		</action>
 		<action name="user_add" class="org.iweb.sys.action.UserAction" method="add">
 			<result type="redirectAction">
-				<param name="actionName">user_list</param>
-				<param name="message">${message}</param>
+				<param name="actionName">user_load</param>
+				<param name="user.uuid">${user.uuid}</param>
+				<param name="viewFlag">mdy</param>
 			</result>
 		</action>
 		<action name="user_save" class="org.iweb.sys.action.UserAction" method="save">
@@ -224,6 +225,38 @@
 		</action>
 		<action name="dept_select_all_v02" class="org.iweb.sys.action.SysSelectAction" method="dept_select_all">
 			<result>/WEB-INF/jsp/sys/DeptPermitSelect.jsp</result>
+		</action>
+		
+		<action name="user_dept_load" class="org.iweb.sys.action.UserDeptAction" method="load">
+			<result>/WEB-INF/jsp/sys/UserPowerEdit.jsp</result>
+		</action>
+		
+		<action name="user_dept_add" class="org.iweb.sys.action.UserDeptAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">user_load</param>
+				<param name="user.uuid">${userDept.user_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="user_dept_save" class="org.iweb.sys.action.UserDeptAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">user_load</param>
+				<param name="user.uuid">${userDept.user_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="user_dept_del" class="org.iweb.sys.action.UserDeptAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">user_load</param>
+				<param name="user.uuid">${userDept.user_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="user_dept_list" class="org.iweb.sys.action.UserDeptAction" method="list">
+			<result>/WEB-INF/jsp/sys/UserPrivilegeList.jsp</result>
 		</action>
 		<!-- SYS Select End -->
 	</package>

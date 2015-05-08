@@ -55,6 +55,69 @@
 		       <div class="label_ltit">职务:</div>
 		       <div class="label_rwbenx"><s:select name="user.position" list="positions" listKey="uuid" listValue="position_name" headerKey="" headerValue="--请选择--" cssClass="validate[required]"/></div>
 			</div>
+			
+			<fieldset class="clear">
+	<legend>多部门多权限</legend>
+	<!--<span class="shaddress">--------------------收货地址--------------------</span>-->
+	
+	<s:if test="'add'==viewFlag">
+		 <div class="label_main">
+		 	<!--
+		 	<p class="lb_yjtit bn">
+			<a href="<s:url namespace="/sysvip" action="memberAddress_load"><s:param name="viewFlag">add</s:param><s:param name="memberAddress.member_id" value="member.uuid" /></s:url>" >添加收货地址</a>
+		 	</p>
+		 	-->
+			<s:if test="%{user.uuid!=null}">
+				<a href="<s:url namespace="/sys" action="user_dept_load"><s:param name="viewFlag">add</s:param><s:param name="userDept.user_id" value="user.uuid"></s:param></s:url>" >添加部门及权限</a>
+				</s:if>
+				<s:else>
+				<font color="red">请先保存基本信息再添加权限</font>
+				</s:else>
+        </div>
+		
+	</s:if>
+	
+	<s:if test="'mdy'==viewFlag">
+		 <div class="label_main">
+		 	<!--
+		 	<p class="lb_yjtit bn">
+			<a href="<s:url namespace="/sysvip" action="memberAddress_load"><s:param name="viewFlag">add</s:param><s:param name="memberAddress.member_id" value="member.uuid" /></s:url>" >添加收货地址</a>
+		 	</p>
+		 	-->
+			<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+			<tr>
+				<th>所属部门</th>
+				<th>职务</th>
+				<th>子部门管理权限</th>
+				<th>更新时间</th>
+				<th><a href="<s:url namespace="/sys" action="user_dept_load"><s:param name="viewFlag">add</s:param><s:param name="userDept.user_id" value="user.uuid"></s:param></s:url>" >添加部门及权限</a></th>
+			</tr>
+			<s:iterator value="userDepts" status="sta">
+			  <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>">
+				<td>${dept_cname }</td>
+				<td>${position_name }</td>
+				<td>
+				<s:if test="%{subover==0}">
+				无子部门管理权限
+				</s:if>
+				<s:else>
+				有子部门管理权限
+				</s:else>
+				</td>
+				<td>${it:formatDate(lm_time,'yyyy-MM-dd hh:mm:ss')}</td>
+				<td>
+			    	[<a href="<s:url namespace="/sys" action="user_dept_load"><s:param name="viewFlag">mdy</s:param><s:param name="userDept.uuid" value="uuid"></s:param></s:url>">修改</a>]
+			    	[<a href="<s:url namespace="/sys" action="user_dept_del"><s:param name="userDept.uuid" value="uuid" /><s:param name="userDept.user_id" value="user_id"/></s:url>" onclick="return isDel();">删除</a>]
+			    </td>
+			  </tr>
+			</s:iterator>
+			</table>
+        </div>
+		
+	</s:if>
+	</fieldset>
+	
+	
 			<div class="label_hang">
 		       <div class="label_ltit">部门:</div>
 		       <div class="label_rwben2">

@@ -8,7 +8,6 @@ import org.iweb.sys.domain.RolePrvg;
 import org.iweb.sys.domain.UserPrivilege;
 
 public class UserPrivilegeDAO extends AbstractDAO {
-
 	public void add(Object parameters) {
 		super.add("sys_addPrivileges", parameters);
 	}

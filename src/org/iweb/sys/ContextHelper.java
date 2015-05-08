@@ -4,16 +4,23 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.security.auth.login.LoginException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.ServletActionContext;
+import org.iweb.sys.cache.CacheFactory;
+import org.iweb.sys.cache.SysDBCacheLogic;
+import org.iweb.sys.domain.RolePrvg;
 import org.iweb.sys.domain.UserLoginInfo;
 import org.iweb.sys.exception.PermitException;
+
+import com.fasterxml.jackson.annotation.JsonFormat.Value;
 
 /**
  * HttpServlet相关的工具类
@@ -147,12 +154,12 @@ public class ContextHelper {
 	/**
 	 * 为方便的得到用户所拥有的权限列表而写的方法
 	 */
-	public static HashMap<String, Integer> getUserLoginPermits() {
+	public static HashMap<String, String> getUserLoginPermits() {
 		try {
-			if (ContextHelper.getUserLoginInfo().getUser_prvg_map() != null) return (HashMap<String, Integer>) (ContextHelper.getUserLoginInfo().getUser_prvg_map());
-			else return new HashMap<String, Integer>();
+			if (ContextHelper.getUserLoginInfo().getUser_prvg_map() != null) return (HashMap<String, String>) (ContextHelper.getUserLoginInfo().getUser_prvg_map());
+			else return new HashMap<String, String>();
 		} catch (Exception e) {
-			return new HashMap<String, Integer>();
+			return new HashMap<String, String>();
 		}
 	}
 
@@ -274,6 +281,22 @@ public class ContextHelper {
 		return isAdmin() || (ulf.getStatus() == 1 && ulf.getUser_prvg_map().containsKey(p_id));
 	}
 
+	/*
+	 * sunshanshan
+	 */
+	public static boolean checkPermit2(String p_id, String dept_code) {
+		UserLoginInfo ulf = ContextHelper.getUserLoginInfo();
+		boolean flag = false;
+		if(dept_code==null || dept_code.equals("")){
+			flag=ulf.getUser_prvg_map().containsKey(p_id);
+		}else{
+			String value=ulf.getUser_prvg_map().get(p_id);
+			String[] s = (String[]) JSONUtil.toObject(value, String[].class);// 转换成数组
+			flag=ToolsUtil.isIn(dept_code, s);// 判断在不在数组中
+		}
+		return isAdmin() || flag;
+	}
+
 	/**
 	 * 封装权限判断,如果无此权限,则抛出名为"无此操作权限"的PermitException异常(此异常会跳出"无此操作权限"的提示,并后退)
 	 * 
@@ -310,6 +333,24 @@ public class ContextHelper {
 	}
 
 	/**
+	 * 多权限多部门判断,判断p_id[]是否符合通过标准
+	 * sunshanshan
+	 * 
+	 * @param p_id
+	 * @param flag
+	 *            多权限判断标准 true = && | false == ||
+	 * @return
+	 */
+	public static boolean checkPermits(String[] p_id, boolean flag, String dept_code) {
+		UserLoginInfo ulf = ContextHelper.getUserLoginInfo();
+		boolean _p = flag ? true : false;
+		for (int i = 0; i < p_id.length; i++) {
+			_p = flag ? _p && checkPermit2(p_id[i], dept_code) : _p || checkPermit2(p_id[i], dept_code);
+		}
+		return isAdmin() || (ulf.getStatus() == 1 && _p);// ulf.getStatus()==1 是管理员
+	}
+
+	/**
 	 * 多权限判断封装
 	 * 
 	 * @param p_id
@@ -333,9 +374,16 @@ public class ContextHelper {
 	 */
 	public static boolean checkPermit(String p_ids, String dept_code) {
 		try {
-			if (p_ids.indexOf("&&") >= 0) return checkPermits(p_ids.split("&&"), true);
-			else if (p_ids.indexOf("||") >= 0) return checkPermits(p_ids.split("\\|\\|"), false);
-			else return checkPermit(p_ids);
+		if (dept_code == null || dept_code.equals("")) {
+				if (p_ids.indexOf("&&") >= 0) return checkPermits(p_ids.split("&&"), true);
+				else if (p_ids.indexOf("||") >= 0) return checkPermits(p_ids.split("\\|\\|"), false);
+				else return checkPermit(p_ids);
+			} else {
+				if (p_ids.indexOf("&&") >= 0) return checkPermits(p_ids.split("&&"), true,dept_code);
+				else if (p_ids.indexOf("||") >= 0) return checkPermits(p_ids.split("\\|\\|"), false,dept_code);
+				else return checkPermit2(p_ids, dept_code);
+			}
+
 		} catch (Exception e) {
 			return false;
 		}
@@ -347,10 +395,10 @@ public class ContextHelper {
 	 * @param p_id
 	 * @return
 	 */
-	public static Integer getPermitType(String p_id) {
+/*	public static Integer getPermitType(String p_id) {
 		UserLoginInfo ulf = ContextHelper.getUserLoginInfo();
 		return isAdmin() ? 2 : ulf.getUser_prvg_map().get(p_id);
-	}
+	}*/
 
 	/**
 	 * 得到权限功能

@@ -421,5 +421,46 @@
 		</isNotNull>
 		<![CDATA[ Order By MENU_PRIORITY,LM_TIME 	]]>
 	</select>
+	
+	<typeAlias alias="userDept" type="org.iweb.sys.domain.UserDept" />
+	
+	<select id="sys_getUsesrDept" resultClass="userDept" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT ud.*,d.`dept_cname` dept_cname,p.`POSITION_NAME` position_name FROM s_sys_userdept ud 
+			LEFT JOIN s_sys_department d ON (ud.`dept_code`=d.`dept_code`)
+			LEFT JOIN s_cfg_position p ON (ud.`position` = p.UUID)
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="uuid"><![CDATA[ ud.uuid=#uuid# ]]></isNotNull>
+			<isNotNull prepend="AND" property="user_id"><![CDATA[ ud.user_id=#user_id# ]]></isNotNull>
+		</dynamic>
+		<![CDATA[ ORDER BY uuid ]]>
+	</select>
+	
+	<insert id="sys_addUserDept" parameterClass="userDept">
+		<![CDATA[ 
+			INSERT INTO s_sys_userdept (user_id,dept_code,position,subover,roles,prvgs,lm_time) VALUES(#user_id#,#dept_code#,#position#,#subover#,#roles#,#prvgs#,#lm_time#)
+		]]>
+	</insert>
+	
+	<update id="sys_mdyUserDept" parameterClass="userDept">
+		<![CDATA[
+			Update s_sys_userdept p
+			Set dept_code = #dept_code#,
+				position=#position#,
+				subover = #subover#,
+				roles = #roles#,
+				prvgs = #prvgs#,
+				lm_time = #lm_time#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<delete id="sys_delUserDept" parameterClass="userDept">
+	<![CDATA[
+		Delete From s_sys_userdept Where uuid=#uuid#
+	]]>
+	</delete>
+	
 	<!-- SYS_MENU End -->
 </sqlMap>
