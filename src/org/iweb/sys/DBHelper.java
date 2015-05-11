@@ -20,7 +20,6 @@ public class DBHelper {
 
 	private final static String[] configs = { "WEB-INF/classes/sql-map-config.xml", "WEB-INF/classes/sql-map-config02.xml" };
 	private static SqlMapClient[] sqlMaps;
-	private static SqlMapClient sqlMap;
 	private static int targetDB = 0;
 
 	// 批量操作时,一次性提交的数目
@@ -40,7 +39,7 @@ public class DBHelper {
 				is.close();
 				log.info("SqlMap配置文件[" + rootPath + configs[i] + "]加载成功!");
 			} catch (Exception e) {
-				// sqlMap = null;
+				// sqlMaps[targetDB] = null;
 				log.fatal("SqlMap配置文件加载失败,系统将可能正常运行!", e);
 			}
 		}
@@ -48,19 +47,20 @@ public class DBHelper {
 	}
 
 	private DBHelper() {
-		sqlMap = sqlMaps[targetDB];
+		targetDB = 0;
 	}
 
 	private DBHelper(int db_num) {
 		targetDB = db_num;
-		sqlMap = sqlMaps[targetDB];
 	}
 
 	public synchronized static DBHelper getInstance() {
+		targetDB = 0;
 		return getInstance(0);
 	}
 
 	public synchronized static DBHelper getInstance(int db_num) {
+		targetDB = db_num;
 		if (dbs[db_num] == null) {
 			dbs[db_num] = new DBHelper(db_num);
 		}
@@ -87,8 +87,8 @@ public class DBHelper {
 	public List getResultList(String map_id, Object parameters) throws Exception {
 		// Map<String, Object> parameters
 		List list;
-		if (null != parameters) list = sqlMap.queryForList(map_id, parameters);
-		else list = sqlMap.queryForList(map_id);
+		if (null != parameters) list = sqlMaps[targetDB].queryForList(map_id, parameters);
+		else list = sqlMaps[targetDB].queryForList(map_id);
 		return list;
 	}
 
@@ -98,17 +98,17 @@ public class DBHelper {
 
 	public Map getResultMap(String map_id, Object parameters, String keyProperty, String valueProperty) throws Exception {
 		Map map;
-		map = sqlMap.queryForMap(map_id, parameters, keyProperty, valueProperty);
+		map = sqlMaps[targetDB].queryForMap(map_id, parameters, keyProperty, valueProperty);
 		return map;
 	}
 
 	public List getResultListByPage(String map_id, Object parameters, int Page_Size, int Current_Page) throws Exception {
-		List list = sqlMap.queryForList(map_id, parameters, Page_Size * (Current_Page - 1), Page_Size);
+		List list = sqlMaps[targetDB].queryForList(map_id, parameters, Page_Size * (Current_Page - 1), Page_Size);
 		return list;
 	}
 
 	public Object getResultObject(String map_id, Object parameters) throws Exception {
-		Object obj = sqlMap.queryForObject(map_id, parameters);
+		Object obj = sqlMaps[targetDB].queryForObject(map_id, parameters);
 		return obj;
 	}
 
@@ -119,7 +119,7 @@ public class DBHelper {
 
 	public int statmate(String map_id, Object parameters) throws Exception {
 		try {
-			return sqlMap.update(map_id, parameters);
+			return sqlMaps[targetDB].update(map_id, parameters);
 		} catch (Exception e) {
 			throw new Exception("数据库操作异常(statmate)!", e);
 		}
@@ -128,7 +128,7 @@ public class DBHelper {
 	public Object insert(String map_id, Object parameters) throws Exception {
 		Object obj = null;
 		try {
-			obj = sqlMap.insert(map_id, parameters);
+			obj = sqlMaps[targetDB].insert(map_id, parameters);
 		} catch (Exception e) {
 			throw new Exception("数据库操作异常(insert)!", e);
 		}
@@ -163,27 +163,27 @@ public class DBHelper {
 			for (int i = 0, n = map_id_list.size(); i < n; i++) {
 				t = i;
 				if (flag) {
-					sqlMap.startTransaction();
-					sqlMap.startBatch();
+					sqlMaps[targetDB].startTransaction();
+					sqlMaps[targetDB].startBatch();
 					flag = false;
 				}
-				sqlMap.delete(map_id_list.get(i), parameter_list.get(i));
+				sqlMaps[targetDB].delete(map_id_list.get(i), parameter_list.get(i));
 				log.info("Batch(" + i + ")!:" + map_id_list.get(i) + ";parameter:" + ToolsUtil.dumpObject(parameter_list.get(i)));
 				if (isUseBatchNum && (i + 1) % batchNum == 0) {
-					sqlMap.executeBatch();
-					sqlMap.commitTransaction();
+					sqlMaps[targetDB].executeBatch();
+					sqlMaps[targetDB].commitTransaction();
 					log.info("ExecuteBatch!");
 					flag = true;
 				}
 			}
-			sqlMap.executeBatch();
-			sqlMap.commitTransaction();
+			sqlMaps[targetDB].executeBatch();
+			sqlMaps[targetDB].commitTransaction();
 			log.info("Bacth Statmeter Successful! \nTotal Operate Number:" + map_id_list.size());
 		} catch (Exception e) {
 			log.error("Bacth Statmeter Failed!Transaction Will Be RollBack!!parameter:" + ToolsUtil.dumpObject(parameter_list.get(t)), e);
 		} finally {
 			try {
-				sqlMap.endTransaction();
+				sqlMaps[targetDB].endTransaction();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -192,22 +192,22 @@ public class DBHelper {
 	}
 
 	public void startTransaction() throws Exception {
-		sqlMap.startTransaction();
+		sqlMaps[targetDB].startTransaction();
 	}
 
 	public void commitTransaction() throws Exception {
-		sqlMap.commitTransaction();
+		sqlMaps[targetDB].commitTransaction();
 	}
 
 	public void endTransaction() throws Exception {
-		sqlMap.endTransaction();
+		sqlMaps[targetDB].endTransaction();
 	}
 
 	public void startBatch() throws Exception {
-		sqlMap.startBatch();
+		sqlMaps[targetDB].startBatch();
 	}
 
 	public void executeBatch() throws Exception {
-		sqlMap.executeBatch();
+		sqlMaps[targetDB].executeBatch();
 	}
 }

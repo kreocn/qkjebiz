@@ -49,8 +49,7 @@ public class UserDAO extends AbstractDAO {
 	}
 
 	public int checkMember(User user) {
-		if (ToolsUtil.isEmpty(user.getTitle()) && ToolsUtil.isEmpty(user.getMobile())
-				&& ToolsUtil.isEmpty(user.getEmail())) {
+		if (ToolsUtil.isEmpty(user.getTitle()) && ToolsUtil.isEmpty(user.getMobile()) && ToolsUtil.isEmpty(user.getEmail())) {
 			return -1;
 		} else {
 			return (int) super.get("sys_checkMember", user);
