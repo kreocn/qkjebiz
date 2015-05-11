@@ -24,7 +24,7 @@
 			<isNotEmpty prepend="AND" property="apply_depts" open="(" close=")">
 			<![CDATA[ a.apply_dept In ]]>
 				<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
-				<isNotEmpty prepend="OR" property="apply_perdepts">
+				<isNotEmpty prepend="OR" property="apply_perdepts" open="(" close=")">
 							<![CDATA[ a.apply_dept In ]]>
 					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
 					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ a.apply_user=#apply_userDouble# ]]></isNotEmpty>

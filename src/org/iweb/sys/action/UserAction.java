@@ -25,6 +25,7 @@ import org.iweb.sys.domain.Department;
 import org.iweb.sys.domain.Position;
 import org.iweb.sys.domain.User;
 import org.iweb.sys.domain.UserDept;
+import org.iweb.sys.domain.UserLoginInfo;
 import org.iweb.sys.domain.UserRole;
 import org.iweb.sys.exception.PermitException;
 
@@ -366,7 +367,42 @@ public class UserAction extends ActionSupport {
 	}
 
 	public String saveDept() {
-		return null;
+		user.setUuid(ContextHelper.getUserLoginUuid());
+		dao.saveDept(user);
+		map.clear();
+		map.put("dept_code", user.getDept_code());
+		Department dept=new Department();
+		List<Department> des=new ArrayList<>();
+		des=dao2.list(map);
+		if(des.size()>0){
+			dept=des.get(0);
+		}
+		UserLoginInfo ulf = new UserLoginInfo();
+		ulf=ContextHelper.getUserLoginInfo();
+		ulf.setDept_code(user.getDept_code());
+		ulf.setDept_cname(dept.getDept_cname());
+		Map<String, String> newMap = new HashMap<String, String>();
+		HashMap<String, String> p_map = new HashMap<String, String>();
+		newMap = ulf.getPermit_depts2();
+		
+		Set<String> set = newMap.keySet();
+		if(newMap.size()>0){
+			for (String s : set) {
+				String value = newMap.get(s);
+				if(s.equals(user.getDept_code())){
+					p_map.put(s, dept.getDept_cname()+"#1");
+				}else{
+					p_map.put(s, value.substring(0,value.indexOf("#"))+"#0");
+				}
+			}
+			ulf.setPermit_depts2(p_map);
+		}
+		
+		ContextHelper.getRequest().getSession().removeAttribute(Parameters.MemberLoginInfo_Session_Str);
+		ContextHelper.getRequest().getSession().setAttribute(Parameters.MemberLoginInfo_Session_Str, ulf);
+		System.out.println(ContextHelper.getUserLoginUuid());
+		this.setMessage("修改成功！请刷新页面");
+		return SUCCESS;
 	}
 
 	public String deptList() {

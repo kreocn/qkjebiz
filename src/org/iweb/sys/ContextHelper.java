@@ -109,6 +109,7 @@ public class ContextHelper {
 				}
 				if(dsetall.size()>0){
 					List<String> dlistall = new ArrayList<>();
+					dsetall.removeAll(dset);
 					dlistall.addAll(dsetall);
 					m.put(dept_column,  dlistall);
 				}
