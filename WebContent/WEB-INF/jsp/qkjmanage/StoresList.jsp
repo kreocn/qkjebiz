@@ -12,6 +12,7 @@
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery.rating.pack.js" />"></script>
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery.MetaData.js" />"></script>
 <script type="text/javascript" src="<s:url value="/include/jQuery/jquery-ui-1.10.3.custom.min.js" />"></script>
+<script type="text/javascript" src="<s:url value="/js/common_ajax2.0.js" />"></script>
 <style type="text/css">
 .tiaoma_ltit {
 	float:left;text-align: right; font-size:30px;margin-left:40px;margin-top:30px;
@@ -87,7 +88,6 @@ background: none repeat scroll 0 0 #363636;
 <div id="dialog" title="重复条码选择" style="display:none">
   <p>这是一个默认的对话框，用于显示信息。对话框窗口可以移动，调整尺寸，默认可通过 'x' 图标关闭。</p>
 </div>
-
 </body>
 <script >
 $("#dianji").click(function(){
@@ -99,7 +99,8 @@ var firstnum=true;
 var show = new Array(); 
 $("#storessubmit").click(function(){
  var code=$(".tiaomainput").val();
- $.ajax({
+if(code!=""&&code!=null){
+	 $.ajax({
      type:"post",
      url:"/qkjebiz/qkjmanage/add_sotres_list",
      data:{code:code},
@@ -127,12 +128,33 @@ $("#storessubmit").click(function(){
         	              fortr(list);
         	 }
              num++;
+         	}else{
+         		alert("请输入正确的条码")
          	}
          firstnum=true;
      }
- });
-});
 
+ }); 
+/*  var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
+ var ajax=new Common_Ajax();
+ alert(ajax_url_action);
+ ajax.config.action_url=ajax_url_action;
+ ajax.config._success=function(data,textStatus){
+	 alert("213123123123");
+	 alert(data);
+	 var list = data.list;
+	 var product_id=list[0].id;
+	 alert(product_id);
+ };
+ ajax.addParameter("privilege_id", "QKJ_QKJMANAGE_STORES");
+ ajax.addParameter("code", code);
+ ajax.addParameter("dbNum","1");
+ ajax.sendAjax();
+  */
+}else{
+	alert("请输入正确的条码")
+}
+});
 function mylist(list){
 	var msg=list.id.split(",");
 	var procode=msg[1];
