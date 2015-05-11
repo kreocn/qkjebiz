@@ -33,6 +33,15 @@ public class JsonAjaxAction extends ActionSupport {
 	private Object ajax_result;
 
 	private String work;
+	private Integer dbnum;
+
+	public Integer getDbnum() {
+		return dbnum;
+	}
+
+	public void setDbnum(Integer dbnum) {
+		this.dbnum = dbnum;
+	}
 
 	public String getPrivilege_id() {
 		return privilege_id;
@@ -160,6 +169,11 @@ public class JsonAjaxAction extends ActionSupport {
 		} else {
 			// 如果有privilege_id,则从privilege_id中读出map_id来查询数据库
 			log.info("获取privilege_id成功:" + privilege_id);
+
+			// 获取使用哪个数据源
+			if (!(dbnum == null || dbnum == 0)) {
+				dao.setDb_num(dbnum);
+			}
 
 			// 有权限ID,就必定要登录LOGTIMEOUT NOPERMIT NODATA
 			if (!ContextHelper.checkLoginStatus()) {
