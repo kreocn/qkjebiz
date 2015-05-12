@@ -19,12 +19,16 @@
 							<span style="font-size:14px;">${dept_cname }</span>
 					</div>
 			</s:iterator>
-					<div><font color="red">${message }</font></div>
 					<div class="label_hang label_button tac input-a">
 							<s:submit id="save" name="save" value="保存" action="user_saveDept" cssClass="input-blue"/>
 					</div>
 	</s:form>
-
+	<div class="label_main">
+			<div class="label_hang">
+					<div class="label_ltit"></div>
+					<div class="label_rwbenx" style="font-size: 14px;"><font color="red">${message }</font></div>
+			</div>
+	</div>
 </div>
 </body>
 </html>
