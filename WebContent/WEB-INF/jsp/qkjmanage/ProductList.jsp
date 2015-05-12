@@ -16,9 +16,6 @@
  	<div class="tab_warp main" >
 	<div class="dq_step">
 		${path}
-		<c:if test="${it:checkPermit('QKJ_QKJMANAGE_PRODUCT_SELECT',null)==true}">
-			<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="proType_lista"></s:url>" >更新产品树</a></span>
-		</c:if>
 		<c:if test="${it:checkPermit('QKJ_QKJMANAGE_PRODUCT_ADD',null)==true}">
 			<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="product_load"><s:param name="viewFlag">add</s:param></s:url>" >添加产品</a></span>
 		</c:if>
