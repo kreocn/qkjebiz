@@ -24,7 +24,7 @@
 </header>
 <!--left菜单-->
 <div id="ht_left_menu" class="ht_left subHide"></div>
-<footer><p class="botmsg">当前登录信息：${dept_name}&nbsp;&nbsp;${user_name}&nbsp;&nbsp;<a href="javascript:;" onclick="openUserDept();" style="color: #fff;">修改提交部门</a></p></footer>
+<footer><p class="botmsg">当前登录信息：${dept_name}&nbsp;&nbsp;${user_name}&nbsp;&nbsp;<a href="javascript:;" onclick="openUserDept();" style="color: #fff;">当前部门</a></p></footer>
 
 
 <script type="text/javascript">
@@ -40,9 +40,9 @@ var createUserDept = function() {
 	var w_height = $(window).height();
 	sobj02Dep = new DialogIFrame({
 		src:'',
-		title:"修改默认提交部门",
-		width:w_width*0.45,
-		height:w_height*0.55
+		title:"修改当前部门",
+		width:w_width*0.20,
+		height:w_height*0.60
 	});
 	sobj02Dep.selfAction = function(val1,val2) {};
 	sobj02Dep.create();
