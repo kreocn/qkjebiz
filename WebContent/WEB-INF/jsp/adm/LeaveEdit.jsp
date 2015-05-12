@@ -12,7 +12,6 @@
 </style>
 </head>
 <s:action name="ref_head" namespace="/manager" executeResult="true" />
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-ui-timepicker-addon.js" />"></script>
 <body>
 <!--  0出差 1请假 2加班 3换休 -->
 <s:action name="nav" namespace="/manage" executeResult="true" />

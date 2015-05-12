@@ -42,7 +42,7 @@ var createUserDept = function() {
 		src:'',
 		title:"修改当前部门",
 		width:w_width*0.20,
-		height:w_height*0.60
+		height:w_height*0.65
 	});
 	sobj02Dep.selfAction = function(val1,val2) {};
 	sobj02Dep.create();

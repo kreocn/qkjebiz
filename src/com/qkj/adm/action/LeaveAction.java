@@ -195,7 +195,6 @@ public class LeaveAction extends ActionSupport implements ActionAttr {
 				map.put("int_id", leave.getUuid());
 				map.put("approve_type", 2);
 				this.setApproves(apdao.list(map));
-				System.out.println(perWorkFlag+"aaaaaaaaaaaaaaaaaaaaaaaa");
 				/* 检查当前用户是否已经审阅 */
 				if (apdao.userIsIn(approves, ContextHelper.getUserLoginUuid())) this.setIsApprover("true");
 				else this.setIsApprover("false");

@@ -14,18 +14,13 @@
 	<div style="height:10px;"></div>
 	<s:form id="addMemberFormTag" name="form_addMemberForm" cssClass="validFormDialog" action="user_saveDept" namespace="/sys" method="post" theme="simple">
 		<s:iterator value="userMDepts" status="sta">
-		<div class="label_main">
-					<div class="label_hang">
-							<input type="radio"  name="user.dept_code" value="<s:property value="dept_code" />"  class="regular-radio"
-							<s:if test="%{deptFlag==1}">
-							checked="checked" </s:if>
-							>
-							${dept_cname }
+					<div class="label_hang clear">
+							<input type="radio"  name="user.dept_code" value="<s:property value="dept_code" />"  class="reg_radio" <s:if test="%{deptFlag==1}"> checked="checked" </s:if>>
+							<span style="font-size:14px;">${dept_cname }</span>
 					</div>
-			</div>
 			</s:iterator>
 					<div><font color="red">${message }</font></div>
-					<div class="label_hang label_button tac">
+					<div class="label_hang label_button tac input-a">
 							<s:submit id="save" name="save" value="保存" action="user_saveDept" cssClass="input-blue"/>
 					</div>
 	</s:form>
