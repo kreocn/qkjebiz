@@ -61,5 +61,5 @@
 <#include "/${parameters.templateDir}/simple/scripting-events.ftl" />
 <#include "/${parameters.templateDir}/simple/common-attributes.ftl" />
 />
-<label for="${parameters.id?html}${itemKeyStr?html}"></label>${itemValue}<#rt/>
+<label for="${parameters.id?html}${itemKeyStr?html}"></label><label for="${parameters.id?html}${itemKeyStr?html}">${itemValue}</label><#rt/>
 </@s.iterator>

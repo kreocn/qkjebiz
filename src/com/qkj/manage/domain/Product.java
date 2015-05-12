@@ -6,6 +6,9 @@ public class Product {
 	private Integer uuid;// (int)主键ID
 	private String prod_code;// 产品统一编码
 	private String bar_code;
+	private String bar_code_box;
+	private String bar_code_tibet;
+	private String bar_code_tibet_box;
 	private Integer brand;// (varchar)系列/类型/品牌
 	private String title;// (varchar)品名
 	private String spec;// (varchar)规格(500ml)
@@ -27,6 +30,30 @@ public class Product {
 	private Date lm_time;// (timestamp)
 
 	private String brand_name;
+
+	public String getBar_code_box() {
+		return bar_code_box;
+	}
+
+	public void setBar_code_box(String bar_code_box) {
+		this.bar_code_box = bar_code_box;
+	}
+
+	public String getBar_code_tibet() {
+		return bar_code_tibet;
+	}
+
+	public void setBar_code_tibet(String bar_code_tibet) {
+		this.bar_code_tibet = bar_code_tibet;
+	}
+
+	public String getBar_code_tibet_box() {
+		return bar_code_tibet_box;
+	}
+
+	public void setBar_code_tibet_box(String bar_code_tibet_box) {
+		this.bar_code_tibet_box = bar_code_tibet_box;
+	}
 
 	public String getBar_code() {
 		return bar_code;
