@@ -15,13 +15,13 @@
 <script type="text/javascript" src="<s:url value="/js/common_ajax2.0.js" />"></script>
 <style type="text/css">
 .tiaoma_ltit {
-	float:left;text-align: right; font-size:30px;margin-left:40px;margin-top:30px;
+	float:left;margin:10px 0;
 }
   .tiaomainput {
                border:1px solid;
               -khtml-border-radius:10px;
                border-radius:5px;
-               height:30px;
+               line-height:25px;
                width:200px;
             }
 .tiaomareset{
@@ -32,26 +32,10 @@ background: none repeat scroll 0 0 #363636;
     cursor: pointer;
     font-size: 14px;
     font-weight: bold;
-    height: 33px;
-    line-height: 22px;
     padding: 0 10px;
-    width: initial;}
-    
-    
-    
-    
-    
-    .input-red  {
-	font-size: 14px; color: #fffff0; background: #363636; border-radius: 5px; line-height: 22px; height: 22px; border: 1px solid #363636;
-	font-weight: bold; padding: 0 10px; cursor: pointer; width: initial;
-}
-
-.input-red  {
-	display: inline-block; vertical-align: middle; white-space: nowrap; word-break: break-all;
-}
-    
-    
-    
+    width: initial;
+     line-height:23px;
+ }
 </style>
 </head>
 
@@ -60,7 +44,7 @@ background: none repeat scroll 0 0 #363636;
 <s:action name="nav" namespace="/manage" executeResult="true" />
 <div class="tab_right">
 				<div class="tiaoma_hang">
-				       <div class="tiaoma_ltit">条形码	:<input class="tiaomainput"  name="customer.uuid"  title="客户编号" />
+				       <div class="tiaoma_ltit">条形码：<input class="tiaomainput"  name="customer.uuid"  title="客户编号" />
 				      <input class="tiaomareset" type="reset" value="添加" id="storessubmit"> </div>
 				</div>
 				<div>
@@ -100,57 +84,53 @@ var show = new Array();
 $("#storessubmit").click(function(){
  var code=$(".tiaomainput").val();
 if(code!=""&&code!=null){
-	 $.ajax({
+	 /* $.ajax({
      type:"post",
      url:"/qkjebiz/qkjmanage/add_sotres_list",
      data:{code:code},
      //async: false,
      cache: false,
      success:function(data){
-         if(data){
-        	 var list = data.list;
-        	 if(list.length>1){
-        		 $('#dialog').css('display', 'display');
-        		   $( "#dialog" ).dialog();
-        		   $( "#dialog" ).empty();
-        	    	for (var i = 0; i < list.length; i++) {
-        	    		     var repeatshow = new Array();
-        	    		     var product_id=list[i].id;
-        	    		     var procode = list[i].procode;
-        	    		     var barcode=list[i].barcode;
-        	    	         var title = list[i].title;
-        	    	         var spec = list[i].spec;
-        	    	         var dealerprice = list[i].dealerprice;
-        	    		    repeatshow.push('<p><a id="'+product_id+','+procode+','+barcode+','+title+','+spec+','+dealerprice+'"  href="javascript:void(0)" onclick="javascript:mylist(this)" value="'+dealerprice+','+spec+','+title+'">'+title+'</a></p>') ;
-        	    		    $("#dialog").append(repeatshow.join(""));
-        	    	}
-        	 }else{
-        	              fortr(list);
-        	 }
-             num++;
-         	}else{
-         		alert("请输入正确的条码")
-         	}
-         firstnum=true;
+      
      }
 
- }); 
-/*  var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
+ });  */
+ var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
  var ajax=new Common_Ajax();
- alert(ajax_url_action);
  ajax.config.action_url=ajax_url_action;
  ajax.config._success=function(data,textStatus){
-	 alert("213123123123");
-	 alert(data);
-	 var list = data.list;
-	 var product_id=list[0].id;
-	 alert(product_id);
+	   if(data){
+      	 if(data.length>1){
+      		 $('#dialog').css('display', 'display');
+      		   $( "#dialog" ).dialog();
+      		   $( "#dialog" ).empty();
+      	    	for (var i = 0; i < data.length; i++) {
+      	    		     var repeatshow = new Array();
+      	    		     var product_id=data[i].uuid;
+      	    		     var procode = data[i].prod_code;
+      	    		     var barcode=data[i].bar_code;
+      	    	         var title = data[i].title;
+      	    	         var spec = data[i].spec;
+      	    	         var dealerprice = data[i].dealer_price;
+      	    		    repeatshow.push('<p><a id="'+product_id+','+procode+','+barcode+','+title+','+spec+','+dealerprice+'"  href="javascript:void(0)" onclick="javascript:mylist(this)" value="'+dealerprice+','+spec+','+title+'">'+title+'</a></p>') ;
+      	    		    $("#dialog").append(repeatshow.join(""));
+      	    	}
+      	 }else if(data.length==0){
+      		alert("请输入正确的条码")
+      	 }
+      	 else{ fortr(data);
+      	 }
+           num++;
+       	}else{
+       		alert("请输入正确的条码")
+       	}
+       firstnum=true;
  };
  ajax.addParameter("privilege_id", "QKJ_QKJMANAGE_STORES");
- ajax.addParameter("code", code);
- ajax.addParameter("dbNum","1");
+ ajax.addParameter("parameters", "code="+code);
+ ajax.addParameter("dbnum","1");
  ajax.sendAjax();
-  */
+
 }else{
 	alert("请输入正确的条码")
 }
@@ -202,8 +182,7 @@ function ondeltr(data){
 	$("#"+data.id).parents("tr").remove();
 }
 function fortr(list){
-	
-	 var procode = list[0].procode;
+	 var procode = list[0].prod_code;
 		$("#qkj_list").find("tr").each(function(){
 			$(this).find("td").each(function(){
 			if($(this).text()==procode){
@@ -225,12 +204,12 @@ function fortr(list){
 			})
 			if(firstnum==true){
   	for (var i = 0; i < list.length; i++) {
-  		var product_id=list[i].id;
-	    var procode = list[i].procode;
-	    var barcode=list[i].barcode;
+  		var product_id=list[i].uuid;
+	    var procode = list[i].prod_code;
+	    var barcode=list[i].bar_code;
          var title = list[i].title;
          var spec = list[i].spec;
-         var dealerprice = list[i].dealerprice;
+         var dealerprice = list[i].dealer_price;
          show.push('<tr>');
          show.push('<input type="hidden" name=storesorderitem['+num+'].product_id value="'+product_id+'"/>')
          show.push('<td ><input type="hidden" name=storesorderitem['+num+'].prod_code value="'+procode+'"/>'+ procode +'</td>') ;
