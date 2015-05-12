@@ -31,7 +31,19 @@
 				</s:if>
 				<div class="label_hang">
 				       <div class="label_ltit">条形码:</div>
-				       <div class="label_rwben2"><span class="label_rwb"><s:textfield name="product.bar_code" title="条形码" cssClass="validate[maxSize[26]]" /></span></div>
+				       <div class="label_rwben"><span class="label_rwb"><s:textfield name="product.bar_code" title="条形码" cssClass="validate[maxSize[32]]" /></span></div>
+				</div>
+				<div class="label_hang">
+				       <div class="label_ltit">条形码(箱):</div>
+				       <div class="label_rwben"><span class="label_rwb"><s:textfield name="product.bar_code_box" title="条形码(箱)" cssClass="validate[maxSize[32]]" /></span></div>
+				</div>
+				<div class="label_hang">
+				       <div class="label_ltit">条形码(西藏):</div>
+				       <div class="label_rwben"><span class="label_rwb"><s:textfield name="product.bar_code_tibet" title="条形码(西藏)" cssClass="validate[maxSize[32]]" /></span></div>
+				</div>
+				<div class="label_hang">
+				       <div class="label_ltit">条形码(西藏箱):</div>
+				       <div class="label_rwben"><span class="label_rwb"><s:textfield name="product.bar_code_tibet_box" title="条形码(西藏箱)" cssClass="validate[maxSize[32]]" /></span></div>
 				</div>
 				<div class="label_hang">
 				       <div class="label_ltit">物料统一编码:</div>
