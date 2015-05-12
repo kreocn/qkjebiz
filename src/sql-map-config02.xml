@@ -7,7 +7,7 @@
 			<!-- 正式环境 DataSource Proxool -->
 			<!-- <property name="DataSource" value="java:/comp/env/qkj/mysql_druid_BJ01" /> -->
 			<!-- 测试环境 DataSource Proxool -->
-			<property name="DataSource" value="java:/comp/env/qkj/mysql_druid_local203" />
+			<!-- <property name="DataSource" value="java:/comp/env/qkj/mysql_druid_local203" /> -->
 			<!-- 本机Tomcat本机测试环境 DataSource(ERP LOCAL TEST)&测试服务器 Proxool -->
 			<!-- <property name="DataSource" value="java:/comp/env/qkj/mysqlLocalCJ_druid" /> -->
 		</dataSource>

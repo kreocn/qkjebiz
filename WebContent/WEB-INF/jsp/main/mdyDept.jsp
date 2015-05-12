@@ -16,24 +16,11 @@
 		<s:iterator value="userMDepts" status="sta">
 		<div class="label_main">
 					<div class="label_hang">
-						<div class="label_ltit"></div>
-						<div class="label_rwben label_rwb">
+							<input type="radio"  name="user.dept_code" value="<s:property value="dept_code" />"  class="regular-radio"
 							<s:if test="%{deptFlag==1}">
-							<s:radio name="member.is_mobile_check" title="手机验证"  list="#{0:'未验证',1:'已验证'}" value="1" cssClass="regular-radio" />
-							<span class="label_rwb nw"><input type=radio name=user.dept_code value="<s:property value="dept_code" />" checked="checked" class="regular-radio"></span>
-							</s:if>
-							<s:else>
-							<span class="label_rwb nw"><input type=radio name=user.dept_code value="<s:property value="dept_code" />" class="regular-radio"></span>
-							</s:else>
+							checked="checked" </s:if>
+							>
 							${dept_cname }
-						</div>
-					</div>
-					<div class="label_hang">
-						<div class="label_ltit">会员手机:</div>
-						<div class="label_rwben2">
-							<span class="label_rwb label_rwbx"><s:textfield id="memMobile" name="member.mobile" title="会员手机" cssClass="validate[required,custom[mobile]]" /></span>
-							<span class="label_rwb nw"><s:radio name="member.is_mobile_check" title="手机验证"  list="#{0:'未验证',1:'已验证'}" value="1" cssClass="regular-radio" /></span>
-						</div>
 					</div>
 			</div>
 			</s:iterator>
