@@ -1,7 +1,6 @@
 package org.iweb.sys.action;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -11,12 +10,8 @@ import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.iweb.sys.ContextHelper;
-import org.iweb.sys.JSONUtil;
-import org.iweb.sys.ToolsUtil;
 import org.iweb.sys.dao.DepartmentDAO;
 import org.iweb.sys.domain.Department;
-import org.iweb.sys.domain.UserLoginInfo;
-import org.iweb.sys.logic.DeptLogic;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -147,8 +142,9 @@ public class SysSelectAction extends ActionSupport {
 			} else {
 				String str = ContextHelper.getUserLoginPermitDepts().toString();
 				// String s1[] = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
-				str = str.replaceAll("\\[", "");  
-				str=str.replace("]", "");
+				str = str.replaceAll("\\[", "");
+				str = str.replace("\\]", "");
+				str = str.replace("]", "");
 				String s2[] = str.split(",");
 				if (str.contains("#")) {
 					Set<String> dset = new HashSet<>();
@@ -158,7 +154,13 @@ public class SysSelectAction extends ActionSupport {
 							if (s2[i].contains("#")) {
 								dset.add(s2[i].substring(s2[i].indexOf("#") + 1, s2[i].length()).trim());
 							} else {
-								dsetall.add(s2[i].trim());
+								if (dset.size() > 0) {
+									if (!dsetall.contains(s2[i].trim() + ",") && !dsetall.contains(s2[i].trim() + "]")) {
+										dsetall.add(s2[i].trim());
+									}
+								} else {
+									dsetall.add(s2[i].trim());
+								}
 							}
 
 						}
@@ -175,15 +177,7 @@ public class SysSelectAction extends ActionSupport {
 					}
 					map.put("dept_codes", dlist);
 				} else {
-					Set<String> dsetall = new HashSet<>();
-					List<String> dlist = new ArrayList<>();
-					if (s2 != null) {
-						for(int i = 0; i < s2.length; i++){
-							dlist.add(s2[i]);
-						}
-					}
-					//dlist.addAll(dsetall);
-					map.put("dept_codes", dlist);
+					map.put("dept_codes", ContextHelper.getUserLoginPermitDepts());
 				}
 			}
 
@@ -192,11 +186,6 @@ public class SysSelectAction extends ActionSupport {
 				map.remove("dept_codes");
 			}
 			this.setDepts(dao.list(map));
-			for(int i=0;i<depts.size();i++){
-				Department d=new Department();
-				d=depts.get(i);
-				System.out.println(d.getDept_code()+d.getDept_cname());
-			}
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!dept_permit_select 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!dept_permit_select 读取数据错误:", e);

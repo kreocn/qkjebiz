@@ -176,6 +176,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 			this.setCurrPage(Integer.parseInt((ToolsUtil.isEmpty(map.get(Parameters.Current_Page_Str)) ? "1" : map.get(Parameters.Current_Page_Str)).toString()));
 			this.setApplys(dao.list(map));
 			this.setRecCount(dao.getResultCount());
+			System.out.println(applys.size());
 			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;至事由列表";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);

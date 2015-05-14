@@ -145,7 +145,7 @@ public class LeaveAction extends ActionSupport implements ActionAttr {
 		try {
 			map.clear();
 			if (leave == null) leave = new Leave();
-			ContextHelper.setSearchDeptPermit4Search(map, "leave_depts", "leave_user");
+			ContextHelper.setSearchDeptPermit4Search("QKJ_ADM_LEAVE_LIST",map, "leave_depts", "leave_user");
 			ContextHelper.SimpleSearchMap4Page("QKJ_ADM_LEAVE_LIST", map, leave, viewFlag);
 			this.setPageSize(ContextHelper.getPageSize(map));
 			this.setCurrPage(ContextHelper.getCurrPage(map));

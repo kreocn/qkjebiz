@@ -3,7 +3,6 @@ package org.iweb.sys.action;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -20,7 +19,6 @@ import org.iweb.sys.MD5Plus;
 import org.iweb.sys.Parameters;
 import org.iweb.sys.ToolsUtil;
 import org.iweb.sys.cache.CacheFactory;
-import org.iweb.sys.cache.SysCache;
 import org.iweb.sys.cache.SysDBCacheLogic;
 import org.iweb.sys.dao.DepartmentDAO;
 import org.iweb.sys.dao.UserDAO;
@@ -31,11 +29,8 @@ import org.iweb.sys.domain.RolePrvg;
 import org.iweb.sys.domain.User;
 import org.iweb.sys.domain.UserDept;
 import org.iweb.sys.domain.UserLoginInfo;
-import org.iweb.sys.domain.UserRole;
-import org.iweb.sys.logic.DeptLogic;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.sun.org.apache.bcel.internal.generic.ARRAYLENGTH;
 
 public class UserLoginAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
@@ -278,11 +273,14 @@ public class UserLoginAction extends ActionSupport {
 				for (int i = 0; i < userDepts.size(); i++) {
 					UserDept u = new UserDept();
 					u = userDepts.get(i);
-					if (u.getDept_code().equals(ulf.getDept_code())) {// 默认部门
-						p_map.put(u.getDept_code(), u.getDept_cname() + "#1");
-					} else {
-						p_map.put(u.getDept_code(), u.getDept_cname() + "#0");
+					if(u.getRoles().contains("2015051316370953")){
+						if (u.getDept_code().equals(ulf.getDept_code())) {// 默认部门
+							p_map.put(u.getDept_code(), u.getDept_cname() + "#1");
+						} else {
+							p_map.put(u.getDept_code(), u.getDept_cname() + "#0");
+						}
 					}
+					
 				}
 				ulf.setPermit_depts2(p_map);
 			}
@@ -348,12 +346,20 @@ public class UserLoginAction extends ActionSupport {
 					for (String s : set) {
 						String value = newMap.get(s);
 						if (value.contains(",")) {
-							String s1[] = value.split(",");// 转换成数组
+							String s1[] = (String[]) JSONUtil.toObject(newMap.get(s), String[].class);// 转换成数组
 							for (int i = 0; i < s1.length; i++) {
 								dset.add(s1[i]);
 							}
 						} else {
+							String s1[] = (String[]) JSONUtil.toObject(newMap.get(s), String[].class);// 转换成数组
+							if (s1 != null) {
+								for (int i = 0; i < s1.length; i++) {
+									dset.add(s1[i]);
+								}
+							} else {
 								dset.add(value);
+							}
+
 						}
 					}
 				}
