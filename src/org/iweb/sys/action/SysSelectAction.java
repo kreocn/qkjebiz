@@ -10,8 +10,10 @@ import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.iweb.sys.ContextHelper;
+import org.iweb.sys.JSONUtil;
 import org.iweb.sys.dao.DepartmentDAO;
 import org.iweb.sys.domain.Department;
+import org.iweb.sys.domain.UserLoginInfo;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -31,10 +33,19 @@ public class SysSelectAction extends ActionSupport {
 	// 为空时表示以{dept_code}为起始部门,
 	// 当dept_mode=0时,则代表以{dept_code的父部门}作为起始部门,如dept_code的父部门为空,则此参数无效
 	private Integer dept_mode;
+	private String user_pri;
 
 	// 起始部门代码,为以后集团化运营打下基础
 	private String dept_code;
 	private String check_code;// 订单发货部门
+
+	public String getUser_pri() {
+		return user_pri;
+	}
+
+	public void setUser_pri(String user_pri) {
+		this.user_pri = user_pri;
+	}
 
 	public List<Department> getDepts() {
 		return depts;
@@ -140,45 +151,115 @@ public class SysSelectAction extends ActionSupport {
 			if (ContextHelper.getUserLoginInfo().getPermit_depts() == null) {
 				map.put("dept_code", ContextHelper.getUserLoginDept()); // 能选到自己的部门
 			} else {
-				String str = ContextHelper.getUserLoginPermitDepts().toString();
-				// String s1[] = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
-				str = str.replaceAll("\\[", "");
-				str = str.replace("\\]", "");
-				str = str.replace("]", "");
-				String s2[] = str.split(",");
-				if (str.contains("#")) {
-					Set<String> dset = new HashSet<>();
-					Set<String> dsetall = new HashSet<>();
-					if (s2 != null) {
-						for (int i = 0; i < s2.length; i++) {
-							if (s2[i].contains("#")) {
-								dset.add(s2[i].substring(s2[i].indexOf("#") + 1, s2[i].length()).trim());
-							} else {
-								if (dset.size() > 0) {
-									if (!dsetall.contains(s2[i].trim() + ",") && !dsetall.contains(s2[i].trim() + "]")) {
+				if(user_pri!=null&& !user_pri.equals("")){
+					dept_permit_select2(user_pri);
+				}else{
+					String str = ContextHelper.getUserLoginPermitDepts().toString();
+					// String s1[] = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
+					str = str.replaceAll("\\[", "");
+					str = str.replace("\\]", "");
+					str = str.replace("]", "");
+					String s2[] = str.split(",");
+					if (str.contains("#")) {
+						Set<String> dset = new HashSet<>();
+						Set<String> dsetall = new HashSet<>();
+						if (s2 != null) {
+							for (int i = 0; i < s2.length; i++) {
+								if (s2[i].contains("#")) {
+									dset.add(s2[i].substring(s2[i].indexOf("#") + 1, s2[i].length()).trim());
+								} else {
+									if (dset.size() > 0) {
+										if (!dsetall.contains(s2[i].trim() + ",") && !dsetall.contains(s2[i].trim() + "]")) {
+											dsetall.add(s2[i].trim());
+										}
+									} else {
 										dsetall.add(s2[i].trim());
 									}
-								} else {
-									dsetall.add(s2[i].trim());
 								}
-							}
 
+							}
+						} else {
+							String code = str.substring(str.indexOf("#") + 1, str.length());
+							dset.add(code.trim());
+						}
+						List<String> dlist = new ArrayList<>();
+						if (dset.size() > 0) {
+							dlist.addAll(dset);
+						}
+						if (dsetall.size() > 0) {
+							dlist.addAll(dsetall);
+						}
+						map.put("dept_codes", dlist);
+					} else {
+						map.put("dept_codes", ContextHelper.getUserLoginPermitDepts());
+					}
+				}
+			}
+
+			if (check_code != null) {
+				map.remove("dept_code");
+				map.remove("dept_codes");
+			}
+			this.setDepts(dao.list(map));
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!dept_permit_select 读取数据错误:", e);
+			throw new Exception(this.getClass().getName() + "!dept_permit_select 读取数据错误:", e);
+		}
+		return SUCCESS;
+	}
+	
+	
+	public String dept_permit_select2(String p_id) throws Exception {
+		// ContextHelper.isPermit("GLOBAL_PRVG_DEPT_FUNCTION");
+		try {
+			DepartmentDAO dao = new DepartmentDAO();
+			map.clear();
+			if (ContextHelper.getUserLoginInfo().getPermit_depts() == null) {
+				map.put("dept_code", ContextHelper.getUserLoginDept()); // 能选到自己的部门
+			} else {
+				UserLoginInfo ulf = ContextHelper.getUserLoginInfo();
+				// String str = ulf.getUser_prvg_map().get(p_id);
+				// String s1[] = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
+				Set<String> dset = new HashSet<>();
+				Set<String> dsetall = new HashSet<>();
+
+				String value = ulf.getUser_prvg_map().get(p_id);
+				if (value.contains(",")) {
+					String s1[] = (String[]) JSONUtil.toObject(value, String[].class);// 转换成数组
+					for (int i = 0; i < s1.length; i++) {
+						if (s1[i].contains("#")) {
+							dset.add(s1[i].substring(s1[i].indexOf("#") + 1, s1[i].length()).trim());
+						} else {
+							dsetall.add(s1[i].trim());
+						}
+					}
+				} else {
+					String s1[] = (String[]) JSONUtil.toObject(value, String[].class);// 转换成数组
+					if (s1 != null) {
+						for (int i = 0; i < s1.length; i++) {
+							if (s1[i].contains("#")) {
+								dset.add(s1[i].substring(s1[i].indexOf("#") + 1, s1[i].length()).trim());
+							} else {
+								dsetall.add(s1[i].trim());
+							}
 						}
 					} else {
-						String code = str.substring(str.indexOf("#") + 1, str.length());
-						dset.add(code.trim());
+						if (value.contains("#")) {
+							dset.add(value.substring(value.indexOf("#") + 1, value.length()).trim());
+						} else {
+							dsetall.add(value);
+						}
 					}
-					List<String> dlist = new ArrayList<>();
-					if (dset.size() > 0) {
-						dlist.addAll(dset);
-					}
-					if (dsetall.size() > 0) {
-						dlist.addAll(dsetall);
-					}
-					map.put("dept_codes", dlist);
-				} else {
-					map.put("dept_codes", ContextHelper.getUserLoginPermitDepts());
+
 				}
+				List<String> dlist = new ArrayList<>();
+				if (dset.size() > 0) {
+					dlist.addAll(dset);
+				}
+				if (dsetall.size() > 0) {
+					dlist.addAll(dsetall);
+				}
+				map.put("dept_codes", dlist);
 			}
 
 			if (check_code != null) {
