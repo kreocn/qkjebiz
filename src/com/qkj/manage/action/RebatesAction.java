@@ -153,7 +153,7 @@ public class RebatesAction extends ActionSupport {
 			map.clear();
 			if (rebates == null)
 				rebates = new Rebates();
-			ContextHelper.setSearchDeptPermit4Search(map, "dept_codes", "manager");
+			ContextHelper.setSearchDeptPermit4Search("QKJ_QKJMANAGE_REBATES_LIST",map, "dept_codes", "manager");
 			ContextHelper.SimpleSearchMap4Page("QKJ_QKJMANAGE_REBATES_LIST", map, rebates, viewFlag);
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 			this.setRebatess(dao.list(map));

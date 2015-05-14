@@ -129,7 +129,7 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 		try {
 			map.clear();
 			if (member == null) member = new Member();
-			ContextHelper.setSearchDeptPermit4Search(map, "dept_codes", "manager");
+			ContextHelper.setSearchDeptPermit4Search("SYSVIP_MEMBER_LIST",map, "dept_codes", "manager");
 			ContextHelper.SimpleSearchMap4Page("SYSVIP_MEMBER_LIST", map, member, viewFlag);
 
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));

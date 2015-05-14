@@ -348,20 +348,12 @@ public class UserLoginAction extends ActionSupport {
 					for (String s : set) {
 						String value = newMap.get(s);
 						if (value.contains(",")) {
-							String s1[] = (String[]) JSONUtil.toObject(newMap.get(s), String[].class);// 转换成数组
+							String s1[] = value.split(",");// 转换成数组
 							for (int i = 0; i < s1.length; i++) {
 								dset.add(s1[i]);
 							}
 						} else {
-							String s1[] = (String[]) JSONUtil.toObject(newMap.get(s), String[].class);// 转换成数组
-							if (s1 != null) {
-								for (int i = 0; i < s1.length; i++) {
-									dset.add(s1[i]);
-								}
-							} else {
 								dset.add(value);
-							}
-
 						}
 					}
 				}
@@ -418,12 +410,14 @@ public class UserLoginAction extends ActionSupport {
 										roles_prvg = role_p_list.get(h);
 										if (userDept.getDepsubover() == 1) {// 有部门管理权限
 											if (userDept.getSubover() == 1) {// 包含子部门
-												String str = (String) CacheFactory.getCacheInstance().get(SysDBCacheLogic.CACHE_DEPT_PREFIX_SUB + userDept.getDept_code());
+												String str  = (String) CacheFactory.getCacheInstance().get(SysDBCacheLogic.CACHE_DEPT_PREFIX_SUB + userDept.getDept_code());
 												System.out.println(str);
 												if (ud_dept_map.containsKey(roles_prvg.getPrivilege_id())
 														&& !ToolsUtil.isEmpty(ud_dept_map.containsKey(roles_prvg.getPrivilege_id()))) {
 													String tmp = ud_dept_map.get(roles_prvg.getPrivilege_id());
 													if (str != null && !str.equals("") && str.length() > 0) {
+														str = str.replaceAll("\\[", "");  
+														str=str.replace("]", "");
 														ud_dept_map.put(roles_prvg.getPrivilege_id(), tmp + "," + userDept.getDept_code().trim() + "," + str);
 													} else {
 														ud_dept_map.put(roles_prvg.getPrivilege_id(), tmp + "," + userDept.getDept_code().trim());
@@ -431,6 +425,8 @@ public class UserLoginAction extends ActionSupport {
 
 												} else {
 													if (str != null && !str.equals("") && str.length() > 0) {
+														str = str.replaceAll("\\[", "");  
+														str=str.replace("]", "");
 														ud_dept_map.put(roles_prvg.getPrivilege_id(), userDept.getDept_code().trim() + "," + str);
 													} else {
 														ud_dept_map.put(roles_prvg.getPrivilege_id(), userDept.getDept_code().trim());
@@ -470,7 +466,11 @@ public class UserLoginAction extends ActionSupport {
 
 		}
 		// ContextHelper.getUserLoginInfo().setPermit_depts(DeptLogic.getPermitDept());
-		System.out.println(ud_dept_map);
+		Set<String> set = ud_dept_map.keySet();
+		for (String s : set) {
+			String value = ud_dept_map.get(s);
+			log.info("多权限"+s+":"+value);
+		}
 		return ud_dept_map;
 
 	}

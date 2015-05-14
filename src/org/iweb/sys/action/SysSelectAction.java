@@ -39,7 +39,7 @@ public class SysSelectAction extends ActionSupport {
 
 	// 起始部门代码,为以后集团化运营打下基础
 	private String dept_code;
-	private String check_code;//订单发货部门
+	private String check_code;// 订单发货部门
 
 	public List<Department> getDepts() {
 		return depts;
@@ -74,44 +74,46 @@ public class SysSelectAction extends ActionSupport {
 	}
 
 	public String dept_select_limit() throws Exception {
-		//ContextHelper.isPermits(new String[]{"SYS_SELECT_DEPT_LIMIT_LIST","SYS_SELECT_DEPT_LIST_ALL"}, false);
-		//ContextHelper.isPermit("SYS_SELECT_DEPT_LIMIT_LIST");
-		//Integer permitType = ContextHelper.getPermitType("SYS_SELECT_DEPT_LIMIT_LIST");
+		// ContextHelper.isPermits(new String[]{"SYS_SELECT_DEPT_LIMIT_LIST","SYS_SELECT_DEPT_LIST_ALL"}, false);
+		// ContextHelper.isPermit("SYS_SELECT_DEPT_LIMIT_LIST");
+		// Integer permitType = ContextHelper.getPermitType("SYS_SELECT_DEPT_LIMIT_LIST");
 		ContextHelper.isPermit("SYS_MANAGER_DEPT_LIST");
-		boolean flag=ContextHelper.checkPermit2("SYS_SELECT_DEPT_LIST_ALL", null);
-		List<Department> dd=new ArrayList<>();
+		boolean flag = ContextHelper.checkPermit2("SYS_SELECT_DEPT_LIST_ALL", null);
+		List<Department> dd = new ArrayList<>();
 		try {
 			DepartmentDAO dao = new DepartmentDAO();
 			if (ContextHelper.isAdmin() || flag == true) {
 				this.setDepts(dao.list(null));
-			} else{
+			} else {
 				map.clear();
 				map.put("check_code", ContextHelper.getUserLoginInfo().getDept_code());
 				this.setDepts(dao.list(map));
 			}
-			/*else if (permitType == 1) {
-				// 则只显示自己对应的下级部门及直属上级部门
-				if (dept_mode == 0) { // 以{dept_code的父部门}作为起始部门
-					map.clear();
-					map.put("dept_code", ContextHelper.getUserLoginInfo().getDept_code());
-					this.setDepts(dao.list(map));
-					String p_dept = ((Department) this.getDepts().get(0)).getParent_dept();
-					if (ToolsUtil.isEmpty(p_dept)) { // 如父部门为空,则还是以本身作为起始
-						this.setDepts(ToolsUtil.getTreeNode(dao.list(null), "dept_code", "parent_dept", ContextHelper
-								.getUserLoginInfo().getDept_code(), 2, true));
-					} else {
-						this.setDepts(ToolsUtil.getTreeNode(dao.list(null), "dept_code", "parent_dept", p_dept, 2, true));
-					}
-				} 
-				else { // 以自身部门为起始部门
-					this.setDepts(ToolsUtil.getTreeNode(dao.list(null), "dept_code", "parent_dept", ContextHelper
-							.getUserLoginInfo().getDept_code(), 3, true));
-				}
-			} else if (permitType == 0) {
-				map.clear();
-				map.put("dept_code", ContextHelper.getUserLoginInfo().getDept_code());
-				this.setDepts(dao.list(map));
-			}*/
+			/*
+			 * else if (permitType == 1) {
+			 * // 则只显示自己对应的下级部门及直属上级部门
+			 * if (dept_mode == 0) { // 以{dept_code的父部门}作为起始部门
+			 * map.clear();
+			 * map.put("dept_code", ContextHelper.getUserLoginInfo().getDept_code());
+			 * this.setDepts(dao.list(map));
+			 * String p_dept = ((Department) this.getDepts().get(0)).getParent_dept();
+			 * if (ToolsUtil.isEmpty(p_dept)) { // 如父部门为空,则还是以本身作为起始
+			 * this.setDepts(ToolsUtil.getTreeNode(dao.list(null), "dept_code", "parent_dept", ContextHelper
+			 * .getUserLoginInfo().getDept_code(), 2, true));
+			 * } else {
+			 * this.setDepts(ToolsUtil.getTreeNode(dao.list(null), "dept_code", "parent_dept", p_dept, 2, true));
+			 * }
+			 * }
+			 * else { // 以自身部门为起始部门
+			 * this.setDepts(ToolsUtil.getTreeNode(dao.list(null), "dept_code", "parent_dept", ContextHelper
+			 * .getUserLoginInfo().getDept_code(), 3, true));
+			 * }
+			 * } else if (permitType == 0) {
+			 * map.clear();
+			 * map.put("dept_code", ContextHelper.getUserLoginInfo().getDept_code());
+			 * this.setDepts(dao.list(map));
+			 * }
+			 */
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!limit_dept_select 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!limit_dept_select 读取数据错误:", e);
@@ -136,60 +138,65 @@ public class SysSelectAction extends ActionSupport {
 	}
 
 	public String dept_permit_select() throws Exception {
-		//ContextHelper.isPermit("GLOBAL_PRVG_DEPT_FUNCTION");
+		// ContextHelper.isPermit("GLOBAL_PRVG_DEPT_FUNCTION");
 		try {
 			DepartmentDAO dao = new DepartmentDAO();
 			map.clear();
-			if (ContextHelper.getUserLoginInfo().getPermit_depts() == null){
+			if (ContextHelper.getUserLoginInfo().getPermit_depts() == null) {
 				map.put("dept_code", ContextHelper.getUserLoginDept()); // 能选到自己的部门
-			}
-			else{
-				String str=ContextHelper.getUserLoginPermitDepts().toString();
-				//String s1[] = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
+			} else {
+				String str = ContextHelper.getUserLoginPermitDepts().toString();
+				// String s1[] = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
 				str = str.replaceAll("\\[", "");  
-				str=str.replace("\\]", "");
 				str=str.replace("]", "");
-				String s2[]=str.split(",");
-				if(str.contains("#")){
+				String s2[] = str.split(",");
+				if (str.contains("#")) {
 					Set<String> dset = new HashSet<>();
 					Set<String> dsetall = new HashSet<>();
-					if(s2!=null){
-						for(int i=0;i<s2.length;i++){
-							if(s2[i].contains("#")){
-								dset.add(s2[i].substring(s2[i].indexOf("#")+1,s2[i].length()).trim());
-							}else{
-								if(dset.size()>0){
-									if(!dsetall.contains(s2[i].trim()+",") && !dsetall.contains(s2[i].trim()+"]")){
-										dsetall.add(s2[i].trim());
-									}
-								}else{
-									dsetall.add(s2[i].trim());
-								}
+					if (s2 != null) {
+						for (int i = 0; i < s2.length; i++) {
+							if (s2[i].contains("#")) {
+								dset.add(s2[i].substring(s2[i].indexOf("#") + 1, s2[i].length()).trim());
+							} else {
+								dsetall.add(s2[i].trim());
 							}
-							
+
 						}
-					}else{
-						String code=str.substring(str.indexOf("#")+1,str.length());
+					} else {
+						String code = str.substring(str.indexOf("#") + 1, str.length());
 						dset.add(code.trim());
 					}
 					List<String> dlist = new ArrayList<>();
-					if(dset.size()>0){
+					if (dset.size() > 0) {
 						dlist.addAll(dset);
 					}
-					if(dsetall.size()>0){
+					if (dsetall.size() > 0) {
 						dlist.addAll(dsetall);
 					}
 					map.put("dept_codes", dlist);
-				}else{
-					map.put("dept_codes", ContextHelper.getUserLoginPermitDepts());
+				} else {
+					Set<String> dsetall = new HashSet<>();
+					List<String> dlist = new ArrayList<>();
+					if (s2 != null) {
+						for(int i = 0; i < s2.length; i++){
+							dlist.add(s2[i]);
+						}
+					}
+					//dlist.addAll(dsetall);
+					map.put("dept_codes", dlist);
 				}
 			}
-				
-			if(check_code!=null){
+
+			if (check_code != null) {
 				map.remove("dept_code");
 				map.remove("dept_codes");
 			}
 			this.setDepts(dao.list(map));
+			for(int i=0;i<depts.size();i++){
+				Department d=new Department();
+				d=depts.get(i);
+				System.out.println(d.getDept_code()+d.getDept_cname());
+			}
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!dept_permit_select 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!dept_permit_select 读取数据错误:", e);

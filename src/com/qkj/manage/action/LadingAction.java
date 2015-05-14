@@ -169,7 +169,7 @@ public class LadingAction extends ActionSupport {
 			if (lading == null) {
 				lading = new Lading();
 			}
-			ContextHelper.setSearchDeptPermit4Search(map, "dept_codes", "manager");
+			ContextHelper.setSearchDeptPermit4Search("QKJ_QKJMANAGE_LADING_LIST",map, "dept_codes", "manager");
 			ContextHelper.SimpleSearchMap4Page("QKJ_QKJMANAGE_LADING_LIST", map, lading, viewFlag);
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 			this.setLadings(dao.list(map));
@@ -190,7 +190,7 @@ public class LadingAction extends ActionSupport {
 			if (lading == null) {
 				lading = new Lading();
 			}
-			ContextHelper.setSearchDeptPermit4Search(map, "dept_chekCodes", "chekCodes");
+			ContextHelper.setSearchDeptPermit4Search("QKJ_QKJMANAGE_LADING_LIST",map, "dept_chekCodes", "chekCodes");
 			ContextHelper.SimpleSearchMap4Page("QKJ_QKJMANAGE_LADING_LIST", map, lading, viewFlag);
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 			this.setLadings(dao.list(map));

@@ -170,7 +170,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 					apply.setSp_check_status(null);
 				}
 			}
-			ContextHelper.setSearchDeptPermit4Search(map, "apply_depts", "apply_user");
+			ContextHelper.setSearchDeptPermit4Search("QKJ_QKJMANAGE_APPLY_LIST",map, "apply_depts", "apply_user");
 			ContextHelper.SimpleSearchMap4Page("QKJ_QKJMANAGE_APPLY_LIST", map, apply, viewFlag);
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 			this.setCurrPage(Integer.parseInt((ToolsUtil.isEmpty(map.get(Parameters.Current_Page_Str)) ? "1" : map.get(Parameters.Current_Page_Str)).toString()));
