@@ -119,6 +119,27 @@ public class ContextHelper {
 			}
 		}
 	}
+	
+	public static void setSearchDeptPermit4Search(String p_id,Map<String, Object> m, String dept_column, String user_column) {
+		if (ContextHelper.getUserLoginInfo().getPermit_depts() == null) {
+			m.put(user_column, ContextHelper.getUserLoginUuid());
+			m.put(dept_column, Arrays.asList(new String[] { ContextHelper.getUserLoginInfo().getDept_code() }));
+		} else{
+			Set<String> dset = new HashSet<>();
+			Set<String> dsetall = new HashSet<>();
+			UserLoginInfo ulf = ContextHelper.getUserLoginInfo();
+			String value=ulf.getUser_prvg_map().get(p_id);
+			if(value.contains("#")){//权限中存在个人权限
+				String code=value.substring(value.indexOf("#")+1,value.length());
+				if(code!=null){
+					
+				}
+			}else{
+				String[] s = (String[]) JSONUtil.toObject(value, String[].class);// 转换成数组
+				
+			}
+		}
+	}
 
 	/**
 	 * 把http request里传入的参数直接赋给一个JavaBean的实例,request和JavaBean里的参数名大小写不区分
@@ -337,8 +358,16 @@ public class ContextHelper {
 			flag=ulf.getUser_prvg_map().containsKey(p_id);
 		}else{
 			String value=ulf.getUser_prvg_map().get(p_id);
-			String[] s = (String[]) JSONUtil.toObject(value, String[].class);// 转换成数组
-			flag=ToolsUtil.isIn(dept_code, s);// 判断在不在数组中
+			if(value.contains("#")){//权限中存在个人权限
+				String code=value.substring(value.indexOf("#")+1,value.length());
+				if(code!=null && dept_code.equals(code) ){
+					flag=true;
+				}
+			}else{
+				String[] s = (String[]) JSONUtil.toObject(value, String[].class);// 转换成数组
+				flag=ToolsUtil.isIn(dept_code, s);// 判断在不在数组中
+			}
+			
 		}
 		return isAdmin() || flag;
 	}
