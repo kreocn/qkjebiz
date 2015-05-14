@@ -385,6 +385,7 @@ public class UserLoginAction extends ActionSupport {
 
 	}
 
+	
 	private Map<String, String> setUserLoginInfo(List<UserDept> uds) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		HashMap<String, String> ud_dept_map = new HashMap<String, String>();
@@ -410,45 +411,44 @@ public class UserLoginAction extends ActionSupport {
 										roles_prvg = role_p_list.get(h);
 										if (userDept.getDepsubover() == 1) {// 有部门管理权限
 											if (userDept.getSubover() == 1) {// 包含子部门
-												String str  = (String) CacheFactory.getCacheInstance().get(SysDBCacheLogic.CACHE_DEPT_PREFIX_SUB + userDept.getDept_code());
-												System.out.println(str);
-												if (ud_dept_map.containsKey(roles_prvg.getPrivilege_id())
-														&& !ToolsUtil.isEmpty(ud_dept_map.containsKey(roles_prvg.getPrivilege_id()))) {
-													String tmp = ud_dept_map.get(roles_prvg.getPrivilege_id());
-													if (str != null && !str.equals("") && str.length() > 0) {
-														str = str.replaceAll("\\[", "");  
-														str=str.replace("]", "");
-														ud_dept_map.put(roles_prvg.getPrivilege_id(), tmp + "," + userDept.getDept_code().trim() + "," + str);
-													} else {
-														ud_dept_map.put(roles_prvg.getPrivilege_id(), tmp + "," + userDept.getDept_code().trim());
+												String str = (String) CacheFactory.getCacheInstance().get(SysDBCacheLogic.CACHE_DEPT_PREFIX_SUB + userDept.getDept_code());
+												if (ud_dept_map.containsKey(roles_prvg.getPrivilege_id())) {
+
+													String v = ud_dept_map.get(roles_prvg.getPrivilege_id());
+													// String[] d = (String[]) JSONUtil.toObject(userDept.getDept_code(), String[].class);// 转换成数组
+													String[] s = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
+													String[] a = (String[]) JSONUtil.toObject(v, String[].class);// 转换成数组
+													flag = ToolsUtil.isIn(userDept.getDept_code(), a);// 判断在不在数组中
+													if (flag == false) {
+														String[] all1 = (String[]) ArrayUtils.addAll(s, a);
+														String[] all = (String[]) ArrayUtils.add(all1, userDept.getDept_code());
+														ud_dept_map.put(roles_prvg.getPrivilege_id(), JSONUtil.toJsonString(all));
 													}
 
 												} else {
-													if (str != null && !str.equals("") && str.length() > 0) {
-														str = str.replaceAll("\\[", "");  
-														str=str.replace("]", "");
-														ud_dept_map.put(roles_prvg.getPrivilege_id(), userDept.getDept_code().trim() + "," + str);
-													} else {
-														ud_dept_map.put(roles_prvg.getPrivilege_id(), userDept.getDept_code().trim());
-													}
+													// String[] d = (String[]) JSONUtil.toObject(userDept.getDept_code(), String[].class);// 转换成数组
+													String[] s = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
+													String[] all = (String[]) ArrayUtils.add(s, userDept.getDept_code());
+													ud_dept_map.put(roles_prvg.getPrivilege_id(), JSONUtil.toJsonString(all));
 												}
+
 											} else {
 												if (ud_dept_map.containsKey(roles_prvg.getPrivilege_id())) {
-													String tmp = ud_dept_map.get(roles_prvg.getPrivilege_id());
-													ud_dept_map.put(roles_prvg.getPrivilege_id(), tmp + "," + userDept.getDept_code().trim());
+													String v = ud_dept_map.get(roles_prvg.getPrivilege_id());
+													String[] a = (String[]) JSONUtil.toObject(v, String[].class);// 转换成数组
+													flag = ToolsUtil.isIn(userDept.getDept_code(), a);// 判断在不在数组中
+													if (flag == false) {
+														String[] all = (String[]) ArrayUtils.add(a, userDept.getDept_code());
+														ud_dept_map.put(roles_prvg.getPrivilege_id(), JSONUtil.toJsonString(all));
+													}
+
 												} else {
-													ud_dept_map.put(roles_prvg.getPrivilege_id(), userDept.getDept_code().trim());
+													ud_dept_map.put(roles_prvg.getPrivilege_id(), userDept.getDept_code());
 												}
 											}
 										} else {// 没有部门管理权限，则说明为个人
 											// ud_dept_map.put(roles_prvg.getPrivilege_id(), "0.1");
-											if (ud_dept_map.containsKey(roles_prvg.getPrivilege_id())) {
-												String tmp = ud_dept_map.get(roles_prvg.getPrivilege_id());
-												ud_dept_map.put(roles_prvg.getPrivilege_id(), tmp + "," + "0.1" + "#" + userDept.getDept_code().trim());
-											} else {
-												ud_dept_map.put(roles_prvg.getPrivilege_id(), "0.1" + "#" + userDept.getDept_code().trim());
-											}
-
+											ud_dept_map.put(roles_prvg.getPrivilege_id(), "0.1" + "#" + userDept.getDept_code());
 										}
 
 									}
