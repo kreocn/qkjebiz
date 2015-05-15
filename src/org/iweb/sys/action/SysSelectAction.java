@@ -148,54 +148,58 @@ public class SysSelectAction extends ActionSupport {
 		try {
 			DepartmentDAO dao = new DepartmentDAO();
 			map.clear();
-			if (ContextHelper.getUserLoginInfo().getPermit_depts() == null) {
-				map.put("dept_code", ContextHelper.getUserLoginDept()); // 能选到自己的部门
-			} else {
-				if(user_pri!=null&& !user_pri.equals("")){
-					dept_permit_select2(user_pri);
-				}else{
-					String str = ContextHelper.getUserLoginPermitDepts().toString();
-					// String s1[] = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
-					str = str.replaceAll("\\[", "");
-					str = str.replace("\\]", "");
-					str = str.replace("]", "");
-					String s2[] = str.split(",");
-					if (str.contains("#")) {
-						Set<String> dset = new HashSet<>();
-						Set<String> dsetall = new HashSet<>();
-						if (s2 != null) {
-							for (int i = 0; i < s2.length; i++) {
-								if (s2[i].contains("#")) {
-									dset.add(s2[i].substring(s2[i].indexOf("#") + 1, s2[i].length()).trim());
-								} else {
-									if (dset.size() > 0) {
-										if (!dsetall.contains(s2[i].trim() + ",") && !dsetall.contains(s2[i].trim() + "]")) {
+			boolean flag = ContextHelper.checkPermit2("SYS_SELECT_DEPT_LIST_ALL", null);
+			if (ContextHelper.isAdmin() || flag == true) {
+			}else{
+				if (ContextHelper.getUserLoginInfo().getPermit_depts() == null) {
+					map.put("dept_code", ContextHelper.getUserLoginDept()); // 能选到自己的部门
+				} else {
+					if(user_pri!=null&& !user_pri.equals("")){
+						dept_permit_select2(user_pri);
+					}else{
+						String str = ContextHelper.getUserLoginPermitDepts().toString();
+						// String s1[] = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
+						str = str.replaceAll("\\[", "");
+						str = str.replace("\\]", "");
+						str = str.replace("]", "");
+						String s2[] = str.split(",");
+						if (str.contains("#")) {
+							Set<String> dset = new HashSet<>();
+							Set<String> dsetall = new HashSet<>();
+							if (s2 != null) {
+								for (int i = 0; i < s2.length; i++) {
+									if (s2[i].contains("#")) {
+										dset.add(s2[i].substring(s2[i].indexOf("#") + 1, s2[i].length()).trim());
+									} else {
+										if (dset.size() > 0) {
+											if (!dsetall.contains(s2[i].trim() + ",") && !dsetall.contains(s2[i].trim() + "]")) {
+												dsetall.add(s2[i].trim());
+											}
+										} else {
 											dsetall.add(s2[i].trim());
 										}
-									} else {
-										dsetall.add(s2[i].trim());
 									}
-								}
 
+								}
+							} else {
+								String code = str.substring(str.indexOf("#") + 1, str.length());
+								dset.add(code.trim());
 							}
+							List<String> dlist = new ArrayList<>();
+							if (dset.size() > 0) {
+								dlist.addAll(dset);
+							}
+							if (dsetall.size() > 0) {
+								dlist.addAll(dsetall);
+							}
+							map.put("dept_codes", dlist);
 						} else {
-							String code = str.substring(str.indexOf("#") + 1, str.length());
-							dset.add(code.trim());
+							map.put("dept_codes", ContextHelper.getUserLoginPermitDepts());
 						}
-						List<String> dlist = new ArrayList<>();
-						if (dset.size() > 0) {
-							dlist.addAll(dset);
-						}
-						if (dsetall.size() > 0) {
-							dlist.addAll(dsetall);
-						}
-						map.put("dept_codes", dlist);
-					} else {
-						map.put("dept_codes", ContextHelper.getUserLoginPermitDepts());
 					}
 				}
 			}
-
+			
 			if (check_code != null) {
 				map.remove("dept_code");
 				map.remove("dept_codes");

@@ -39,6 +39,7 @@ public class UserLoginAction extends ActionSupport {
 	private UserDept userDept;
 	private List<UserDept> userDepts;
 	private Map<String, Object> map = new HashMap<String, Object>();
+	private HashMap<String, String> f_map = new HashMap<String, String>();
 	private UserDAO dao = new UserDAO();
 	private UserDeptDAO udDao = new UserDeptDAO();
 
@@ -242,45 +243,27 @@ public class UserLoginAction extends ActionSupport {
 					map.put("roles", roles);
 					map.put("no_tree_view", "A");
 					role_p_list = (new UserRoleDAO()).listRolePrvg(map);
-
-					for (int i = 0, n = role_p_list.size(); i < n; i++) {
-						/*
-						 * if (!(p_map.containsKey(role_p_list.get(i).getPrivilege_id()) && (p_map.get(role_p_list.get(i).getPrivilege_id()) > role_p_list.get(i).getType()))) { //
-						 * 如已经存在此权限,则从高原则
-						 * p_map.put(role_p_list.get(i).getPrivilege_id(), role_p_list.get(i).getType());
-						 * }
-						 */
-
-						if (f_map.containsKey(role_p_list.get(i).getPrivilege_id()) && !ToolsUtil.isEmpty(f_map.get(role_p_list.get(i).getPrivilege_id()))) {
-							String tmp = f_map.get(role_p_list.get(i).getPrivilege_id());
-							f_map.put(role_p_list.get(i).getPrivilege_id(), tmp + "," + role_p_list.get(i).getFunction());
-						} else {
-							f_map.put(role_p_list.get(i).getPrivilege_id(), role_p_list.get(i).getFunction());
-						}
-
-						log.info(ulf.getTitle() + ":" + role_p_list.get(i).getPrivilege_id() + "(" + role_p_list.get(i).getType() + ":" + role_p_list.get(i).getFunction() + ")");
-					}
-					// ulf.setUser_prvg_map(p_map);
-					ulf.setUser_function_map(f_map);
 				}
 			}
 
 			// 多部门多权限
 			ulf.setUser_prvg_map((HashMap<String, String>) setUserLoginInfo(userDepts));
-			// ulf.setUser_function_map(ulf.getUser_prvg_map());
+			if (f_map != null) {
+				ulf.setUser_function_map(f_map);
+			}
 			if (userDepts.size() > 0) {
 				HashMap<String, String> p_map = new HashMap<String, String>();
 				for (int i = 0; i < userDepts.size(); i++) {
 					UserDept u = new UserDept();
 					u = userDepts.get(i);
-					if(u.getRoles().contains("2015051316370953")){
+					if (u.getRoles().contains("2015051316370953")) {
 						if (u.getDept_code().equals(ulf.getDept_code())) {// 默认部门
 							p_map.put(u.getDept_code(), u.getDept_cname() + "#1");
 						} else {
 							p_map.put(u.getDept_code(), u.getDept_cname() + "#0");
 						}
 					}
-					
+
 				}
 				ulf.setPermit_depts2(p_map);
 			}
@@ -391,7 +374,6 @@ public class UserLoginAction extends ActionSupport {
 
 	}
 
-	
 	private Map<String, String> setUserLoginInfo(List<UserDept> uds) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		HashMap<String, String> ud_dept_map = new HashMap<String, String>();
@@ -421,7 +403,6 @@ public class UserLoginAction extends ActionSupport {
 												if (ud_dept_map.containsKey(roles_prvg.getPrivilege_id())) {
 
 													String v = ud_dept_map.get(roles_prvg.getPrivilege_id());
-													// String[] d = (String[]) JSONUtil.toObject(userDept.getDept_code(), String[].class);// 转换成数组
 													String[] s = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
 													String[] a = (String[]) JSONUtil.toObject(v, String[].class);// 转换成数组
 													flag = ToolsUtil.isIn(userDept.getDept_code(), a);// 判断在不在数组中
@@ -432,7 +413,6 @@ public class UserLoginAction extends ActionSupport {
 													}
 
 												} else {
-													// String[] d = (String[]) JSONUtil.toObject(userDept.getDept_code(), String[].class);// 转换成数组
 													String[] s = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
 													String[] all = (String[]) ArrayUtils.add(s, userDept.getDept_code());
 													ud_dept_map.put(roles_prvg.getPrivilege_id(), JSONUtil.toJsonString(all));
@@ -453,8 +433,26 @@ public class UserLoginAction extends ActionSupport {
 												}
 											}
 										} else {// 没有部门管理权限，则说明为个人
-											// ud_dept_map.put(roles_prvg.getPrivilege_id(), "0.1");
-											ud_dept_map.put(roles_prvg.getPrivilege_id(), "0.1" + "#" + userDept.getDept_code());
+											if (ud_dept_map.containsKey(roles_prvg.getPrivilege_id())) {
+												String v = ud_dept_map.get(roles_prvg.getPrivilege_id());
+												String[] a = (String[]) JSONUtil.toObject(v, String[].class);// 转换成数组
+												flag = ToolsUtil.isIn(userDept.getDept_code(), a);// 判断在不在数组中
+												if (flag == false) {
+													String[] all = (String[]) ArrayUtils.add(a, "0.1" + "#" + userDept.getDept_code());
+													ud_dept_map.put(roles_prvg.getPrivilege_id(), JSONUtil.toJsonString(all));
+												}
+											} else {
+												ud_dept_map.put(roles_prvg.getPrivilege_id(), "0.1" + "#" + userDept.getDept_code());
+											}
+
+										}
+
+										// 新闻权限
+										if (f_map.containsKey(roles_prvg.getPrivilege_id()) && !ToolsUtil.isEmpty(roles_prvg.getPrivilege_id())) {
+											String tmp = f_map.get(roles_prvg.getPrivilege_id());
+											f_map.put(roles_prvg.getPrivilege_id(), tmp + "," + roles_prvg.getFunction());
+										} else {
+											f_map.put(roles_prvg.getPrivilege_id(), roles_prvg.getFunction());
 										}
 
 									}
@@ -475,7 +473,7 @@ public class UserLoginAction extends ActionSupport {
 		Set<String> set = ud_dept_map.keySet();
 		for (String s : set) {
 			String value = ud_dept_map.get(s);
-			log.info("多权限"+s+":"+value);
+			log.info("多权限" + s + ":" + value);
 		}
 		return ud_dept_map;
 
