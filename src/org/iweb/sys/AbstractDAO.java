@@ -10,14 +10,12 @@ import org.apache.commons.logging.LogFactory;
 public abstract class AbstractDAO {
 
 	protected static Log log = LogFactory.getLog(AbstractDAO.class);
-
 	private int resultCount = 0;
-
 	private int db_num = 0;
-
 	private boolean isCount = true;
-
 	private boolean isShowParameter = true;
+	private List<String> map_ids;
+	private List<Object> parameters;
 
 	public int getDb_num() {
 		return db_num;
@@ -292,6 +290,38 @@ public abstract class AbstractDAO {
 	 */
 	protected void batchStatment(String map_id, List<Object> parameters, Boolean isUseBatchNum) {
 		batchStatment(String2List(map_id, parameters.size()), parameters, isUseBatchNum);
+	}
+
+	/**
+	 * Simple Transaction Use:initTransaction() addTransactionOperate(map_id, parameter) excuteTransaction()
+	 */
+	protected void initTransaction() {
+		map_ids = new ArrayList<String>();
+		parameters = new ArrayList<Object>();
+	}
+
+	/**
+	 * Simple Transaction Use:initTransaction() addTransactionOperate(map_id, parameter) excuteTransaction()
+	 */
+	protected void addTransactionOperate(String map_id, Object parameter) {
+		map_ids.add(map_id);
+		parameters.add(parameter);
+	}
+
+	/**
+	 * Simple Transaction Use:initTransaction() addTransactionOperate(map_id, parameter) excuteTransaction()
+	 */
+	protected void excuteTransaction() {
+		excuteTransaction(false);
+	}
+
+	/**
+	 * Simple Transaction Use:initTransaction() addTransactionOperate(map_id, parameter) excuteTransaction()
+	 */
+	protected void excuteTransaction(Boolean isUseBatchNum) {
+		if (map_ids != null && map_ids.size() > 0) {
+			batchStatment(map_ids, parameters, isUseBatchNum);
+		}
 	}
 
 	/**

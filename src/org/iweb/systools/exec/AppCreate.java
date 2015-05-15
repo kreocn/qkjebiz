@@ -97,28 +97,50 @@ public abstract class AppCreate {
 		log.info("开始初始化数据库信息");
 		DBConfig dc = DBConfig.getInstance(getDBType());
 		Conn conn = dc.getConn();
-		String column_sql = "SELECT c.COLUMN_NAME,c.COLUMN_DEFAULT,c.IS_NULLABLE,c.DATA_TYPE," + "c.NUMERIC_SCALE,c.COLUMN_COMMENT,	"
-				+ "IFNULL(c.CHARACTER_MAXIMUM_LENGTH,c.NUMERIC_PRECISION) AS MAX_LENGTH " + "FROM information_schema.`COLUMNS` c WHERE c.TABLE_SCHEMA = '" + app.getDb_name()
-				+ "' " + "AND c.TABLE_NAME = '" + app.getTable_name() + "'";
-		System.out.println(column_sql);
-		ResultSet rs = conn.getResult(column_sql);
-		String t_col;
-		while (rs.next()) {
-			t_col = Lower(rs.getString("COLUMN_NAME"));
-			TableColumn tc = app.getTcs().get(t_col);
-			System.out.println("===(1):" + ToolsUtil.dumpObject(tc));
-			tc.setType(Lower(rs.getString("DATA_TYPE")));
-			tc.setMax(rs.getInt("MAX_LENGTH"));
-			tc.setNote(rs.getString("COLUMN_COMMENT"));
-			tc.setDval(rs.getString("COLUMN_DEFAULT"));
-			tc.setScale(rs.getInt("NUMERIC_SCALE"));
-			tc.setNullable("NO".equals(rs.getString("IS_NULLABLE")) ? 1 : 0);
-			// tc.setHmax("UTF-8".equals(encode) ? tc.getMax() / 3 : tc.getMax() / 2);
-			tc.setHmax(tc.getMax());
-			tc.setJtype(dc.getJavaType(tc.getType()));
-			System.out.println("===(2):" + ToolsUtil.dumpObject(tc));
+		if (getDBType() == DBConfig.DBTYPE_MYSQL) {
+			String column_sql = "SELECT c.COLUMN_NAME,c.COLUMN_DEFAULT,c.IS_NULLABLE,c.DATA_TYPE," + "c.NUMERIC_SCALE,c.COLUMN_COMMENT,	"
+					+ "IFNULL(c.CHARACTER_MAXIMUM_LENGTH,c.NUMERIC_PRECISION) AS MAX_LENGTH " + "FROM information_schema.`COLUMNS` c WHERE c.TABLE_SCHEMA = '" + app.getDb_name()
+					+ "' " + "AND c.TABLE_NAME = '" + app.getTable_name() + "'";
+			System.out.println(column_sql);
+			ResultSet rs = conn.getResult(column_sql);
+			String t_col;
+			while (rs.next()) {
+				t_col = Lower(rs.getString("COLUMN_NAME"));
+				TableColumn tc = app.getTcs().get(t_col);
+				System.out.println("===(1):" + ToolsUtil.dumpObject(tc));
+				tc.setType(Lower(rs.getString("DATA_TYPE")));
+				tc.setMax(rs.getInt("MAX_LENGTH"));
+				tc.setNote(rs.getString("COLUMN_COMMENT"));
+				tc.setDval(rs.getString("COLUMN_DEFAULT"));
+				tc.setScale(rs.getInt("NUMERIC_SCALE"));
+				tc.setNullable("NO".equals(rs.getString("IS_NULLABLE")) ? 1 : 0);
+				// tc.setHmax("UTF-8".equals(encode) ? tc.getMax() / 3 : tc.getMax() / 2);
+				tc.setHmax(tc.getMax());
+				tc.setJtype(dc.getJavaType(tc.getType()));
+				System.out.println("===(2):" + ToolsUtil.dumpObject(tc));
+			}
+			rs.close();
+		} else if (getDBType() == DBConfig.DBTYPE_SQLITE) {
+			// PRAGMA table_info ('r_gas_storage')
+			String column_sql = "PRAGMA table_info ('" + app.getTable_name() + "')";
+			System.out.println(column_sql);
+			ResultSet rs = conn.getResult(column_sql);
+			String t_col;
+			while (rs.next()) {
+				t_col = Lower(rs.getString("name"));
+				TableColumn tc = app.getTcs().get(t_col);
+				tc.setType(Lower(rs.getString("type")));
+				tc.setNote(rs.getString("name"));
+				tc.setMax(32);
+				// tc.setScale(rs.getInt("NUMERIC_SCALE"));
+				tc.setDval(rs.getString("dflt_value"));
+				tc.setNullable(rs.getInt("notnull"));
+				tc.setHmax(65535);
+				tc.setJtype(dc.getJavaType(tc.getType()));
+				System.out.println("===(2):" + ToolsUtil.dumpObject(tc));
+			}
+			rs.close();
 		}
-		rs.close();
 		log.info("数据库配置设置完成");
 	}
 
@@ -208,17 +230,17 @@ public abstract class AppCreate {
 			}
 			if (tc.getStype() == 5 || tc.getStype() == 6) {
 				jspedit_noedit_area.append("<div class='label_hang'><div class='label_ltit'>").append(tc.getTitle()).append(":</div><div class='label_rwben'>")
-						.append(tc.getFormField(tags.get("class_alias"), 0)).append("</div></div>");
+						.append(tc.getFormField(tags.get("class_alias"), 0)).append("</div></div>").append("\n");
 
 			} else if (tc.getStype() == 4) {
 				jspedit_hidden_area.append(tc.getFormField(tags.get("class_alias"), 0)).append("\n");
 			} else if (tc.getStype() == 8) {
 				jspedit_edit_area.append("</div><div class='label_main'><div class='label_hang'><div class='label_ltit'>").append(form_title)
 						.append(":</div><div class='label_rwbenx'></div></div></div><div class='label_main'><div class='note_area'>")
-						.append(tc.getFormField(tags.get("class_alias"), 0)).append("</div></div><div class='label_main'>");
+						.append(tc.getFormField(tags.get("class_alias"), 0)).append("</div></div><div class='label_main'>").append("\n");
 			} else {
 				jspedit_edit_area.append("<div class='label_hang'><div class='label_ltit'>").append(form_title).append(":</div><div class='label_rwben'>")
-						.append(tc.getFormField(tags.get("class_alias"), 0)).append("</div></div>");
+						.append(tc.getFormField(tags.get("class_alias"), 0)).append("</div></div>").append("\n");
 			}
 		}
 		// 循环后操作

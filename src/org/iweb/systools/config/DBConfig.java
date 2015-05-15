@@ -4,13 +4,16 @@
 package org.iweb.systools.config;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.iweb.systools.conn.Conn;
 import org.iweb.systools.conn.ConnMySQL;
 import org.iweb.systools.conn.ConnOracle;
+import org.iweb.systools.conn.ConnSQLite;
 import org.iweb.systools.exec.AppCreate;
 
 /**
@@ -23,6 +26,7 @@ public class DBConfig {
 	protected static Log log = LogFactory.getLog(AppCreate.class);
 	public final static int DBTYPE_MYSQL = 1;
 	public final static int DBTYPE_ORACLE = 2;
+	public final static int DBTYPE_SQLITE = 3;
 
 	private int dbType;
 	private static DBConfig dbConfig;
@@ -91,6 +95,15 @@ public class DBConfig {
 			m = new HashMap<>();
 			m.put("other", "String");
 			this.setStype(m);
+		} else if (dbType == DBConfig.DBTYPE_SQLITE) {
+			this.setConn(ConnSQLite.getInstance());
+			m = new HashMap<>();
+			m.put("integer", "Integer");
+			m.put("int", "Integer");
+			m.put("real", "Double");
+			m.put("text", "String");
+			m.put("other", "String");
+			this.setStype(m);
 		} else {
 			this.setConn(null);
 			this.setStype(null);
@@ -99,9 +112,15 @@ public class DBConfig {
 	}
 
 	public String getJavaType(String sqlType) {
-		if (this.getStype().containsKey(sqlType))
-			return this.getStype().get(sqlType);
-		else
-			return this.getStype().get("other");
+		// if (this.getStype().containsKey(sqlType)) return this.getStype().get(sqlType);
+		// else return this.getStype().get("other");
+		String jtype = "";
+		Set<String> keys = this.getStype().keySet();
+		for (Iterator<String> it = keys.iterator(); it.hasNext();) {
+			String key = it.next();
+			if (sqlType.toLowerCase().startsWith(key)) jtype = this.getStype().get(key);
+		}
+		if ("".equals(jtype)) jtype = this.getStype().get("other");
+		return jtype;
 	}
 }
