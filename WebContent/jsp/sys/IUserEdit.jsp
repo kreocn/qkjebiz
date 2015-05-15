@@ -54,7 +54,7 @@ function view(obj) {
 <div class="tab_right">
  <div class="tab_warp  input-a" >
 	<div class="dq_step">${path}</div>
-	<s:form id="formEdit" name="form1" cssClass="validForm" action="iuser_save" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
+	<s:form id="formEdit" name="form1" cssClass="validForm" action="iuser_save" namespace="/sys" onsubmit="return validator(this);" method="post" theme="simple">
 		<div class="label_con">
  			<div class="label_main">
  				<div class="label_hang">
