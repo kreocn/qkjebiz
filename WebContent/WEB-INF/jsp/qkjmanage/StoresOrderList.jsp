@@ -7,7 +7,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <style type="text/css">
-
 .tab_warp th {
 	 background: #059c77;
      color: #fff; 
@@ -20,7 +19,6 @@
      width:110px;
 }
 </style>
-
 <title>门店产品列表--<s:text name="APP_NAME" /></title>
 <s:action name="ref_head" namespace="/manager" executeResult="true" />
 </head>
@@ -53,6 +51,7 @@
 					<tr id="coltr">
 						<th class="td1">编号</th>
 						<th class="td3">统一编码</th>
+						<th class="td3">条形码</th>
 						<th class="td1">系列</th>
 						<th class="td2">品名</th>
 						<th class="td5">规格</th>
@@ -61,13 +60,14 @@
 					</tr>
 					<s:iterator value="products" status="sta">
 						<tr id="showtr${uuid}">
-							<td class="td1">${uuid}</td>
+							<td class="td1" id="uuid">${uuid}</td>
 							<td class="td3">${prod_code}</td>
+							<td class="td1"id="bar_code">${bar_code}</td>
 							<td class="td1">${brand_name}</td>
 							<td class="td2">${title}</td>
 							<td class="td5">${spec}</td>
-							<td class="caname" style="widit: 100px">${market_price}</td>
-							<td class="td4 op-area"><a class="input-blue" href="<s:url namespace="/qkjmanage" action="product_load"><s:param name="viewFlag">mdy</s:param><s:param name="product.uuid" value="uuid"></s:param></s:url>">确认修改</a></td>
+							<td class="caname" style="widit: 100px" id="price">${market_price}</td>
+							<td class="td4 op-area"><a id="${uuid}" class="input-blue" uuid="${uuid}" onclick="javascript:addprice(this)">确认修改</a></td>
 						</tr>
 					</s:iterator>
 				</table>
@@ -77,10 +77,19 @@
 	</div>
 	<s:action name="ref_foot" namespace="/manager" executeResult="true" />
 	<script type="text/javascript" src="<s:url value="/js/jqueryPlugins/select3/jquery.cityselect.js" />">
-
-
 </script>
 	<script type="text/javascript">
+	$(function(){
+		$("#mmtype").citySelect({
+			url:'<s:url value="/js/jqueryPlugins/select3/mm.js" />',
+			prov:"${assets.typea}",
+			city:"${assets.typeb}",
+			dist:" ${assets.typec}",
+			nodata:"none",
+			required:false
+		});
+		printPagination("listpage",'${currPage}','${recCount}','${pageSize}');
+	 });
 $(function () {  
     //获取class为caname的元素   
     $(".caname").click(function () {  
@@ -94,13 +103,45 @@ $(function () {
         //文本框失去焦点后提交内容，重新变为文本   
         input.blur(function () {  
             var newtxt = $(this).val();  
-            //判断文本有没有修改   
-                td.html(newtxt);  
+            //判断文本有没有修改
+            if (newtxt != txt) {  
                 td.css("color","red");
+            }
+            td.html(newtxt);  
         })
     })
 });
-        
+function addprice(data){
+	var productid =$("#"+data.id).parent().parent("#showtr"+data.id).find("#uuid").text();
+	var price =$("#"+data.id).parent().parent("#showtr"+data.id).find("#price").text();
+	var barcode =$("#"+data.id).parent().parent("#showtr"+data.id).find("#bar_code").text();
+	var userid='${sessionScope.userlogininfosessionstr.uuid}';
+	/*
+	 var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
+	 var ajax=new Common_Ajax();
+	 ajax.config.action_url=ajax_url_action;
+	 ajax.config._success=function(data,textStatus){
+	 }
+	 ajax.addParameter("privilege_id", "QKJ_QKJMANAGE_STORES_ORDER");
+	 ajax.addParameter("parameters", "productid="+productid+",price="+price+",userid="+userid);
+	 ajax.addParameter("dbnum","1");
+	 ajax.addParameter("work", "update");
+	 ajax.sendAjax();
+	 */
+	var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
+	 var ajax=new Common_Ajax();
+	 ajax.config.action_url=ajax_url_action;
+	 ajax.config._success=function(data,textStatus){
+		 alert(data);
+	 }
+	 //ajax.addParameter("privilege_id", "QKJ_QKJMANAGE_STORES_ORDER");
+	// ajax.addParameter("parameters", "productid="+productid+",price="+price+",userid="+userid);
+	 //ajax.addParameter("dbnum","1");
+	 ajax.addParameter("work", "Stores");
+	 ajax.addParameter("parameters", "productid="+productid+"&price="+price+"&userid="+userid+"&barcode="+barcode);
+	 ajax.addParameter("dbnum","1");
+	 ajax.sendAjax();
+}
 </script>
 </body>
 </html>

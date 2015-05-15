@@ -45,7 +45,10 @@ background: none repeat scroll 0 0 #363636;
 <div class="tab_right">
 				<div class="tiaoma_hang">
 				       <div class="tiaoma_ltit">条形码：<input class="tiaomainput"  name="customer.uuid"  title="客户编号" />
-				      <input class="tiaomareset" type="reset" value="添加" id="storessubmit"> </div>
+				      <input class="tiaomareset" type="reset" value="添加" id="storessubmit"> 
+				    
+				      </div>
+				       <span ><a class="tiaomareset" style="float: right;margin-top: 10px;" href="/qkjmanage/stores_order_update.action">修改订单</a></span>
 				</div>
 				<div>
 				<div class="tab_warp" >
@@ -99,6 +102,7 @@ if(code!=""&&code!=null){
  var ajax=new Common_Ajax();
  ajax.config.action_url=ajax_url_action;
  ajax.config._success=function(data,textStatus){
+	 alert(data)
 	   if(data){
       	 if(data.length>1){
       		 $('#dialog').css('display', 'display');
@@ -111,12 +115,12 @@ if(code!=""&&code!=null){
       	    		     var barcode=data[i].bar_code;
       	    	         var title = data[i].title;
       	    	         var spec = data[i].spec;
-      	    	         var dealerprice = data[i].dealer_price;
-      	    		    repeatshow.push('<p><a id="'+product_id+','+procode+','+barcode+','+title+','+spec+','+dealerprice+'"  href="javascript:void(0)" onclick="javascript:mylist(this)" value="'+dealerprice+','+spec+','+title+'">'+title+'</a></p>') ;
+      	    	         var marketprice = data[i].market_price;
+      	    		    repeatshow.push('<p><a id="'+product_id+','+procode+','+barcode+','+title+','+spec+','+marketprice+'"  href="javascript:void(0)" onclick="javascript:mylist(this)" value="'+marketprice+','+spec+','+title+'">'+title+'</a></p>') ;
       	    		    $("#dialog").append(repeatshow.join(""));
       	    	}
       	 }else if(data.length==0){
-      		alert("请输入正确的条码")
+      		alert("请输入正确的条码");
       	 }
       	 else{ fortr(data);
       	 }
@@ -124,11 +128,11 @@ if(code!=""&&code!=null){
        	}else{
        		alert("请输入正确的条码")
        	}
-       firstnum=true;
+       firstnum=true; 
  };
- ajax.addParameter("privilege_id", "QKJ_QKJMANAGE_STORES");
+
  ajax.addParameter("parameters", "code="+code);
- ajax.addParameter("dbnum","1");
+ ajax.addParameter("work","StoresOrder");
  ajax.sendAjax();
 
 }else{
@@ -178,7 +182,6 @@ if(firstnum==true){
 	firstnum=true;
 };
 function ondeltr(data){
-	
 	$("#"+data.id).parents("tr").remove();
 }
 function fortr(list){
@@ -209,7 +212,7 @@ function fortr(list){
 	    var barcode=list[i].bar_code;
          var title = list[i].title;
          var spec = list[i].spec;
-         var dealerprice = list[i].dealer_price;
+         var marketprice = list[i].market_price;
          show.push('<tr>');
          show.push('<input type="hidden" name=storesorderitem['+num+'].product_id value="'+product_id+'"/>')
          show.push('<td ><input type="hidden" name=storesorderitem['+num+'].prod_code value="'+procode+'"/>'+ procode +'</td>') ;
@@ -217,8 +220,8 @@ function fortr(list){
          show.push('<td>天佑德</td>');
          show.push('<td><input type="hidden" name=storesorderitem['+num+'].title  value="'+title+'"/>'+ title +'</td>');
          show.push('<td><input type="hidden" name=storesorderitem['+num+'].spec  value="'+spec+'"/>'+ spec +'</td>') ;
-         show.push('<td><input type="hidden" name=storesorderitem['+num+'].product_price  value="'+dealerprice+'"/>'+ dealerprice +'</td>') ;
-         show.push('<td><input type="hidden" name=storesorderitem['+num+'].order_total_price  value="'+dealerprice+'"/>'+ dealerprice +'</td>') ;
+         show.push('<td><input type="hidden" name=storesorderitem['+num+'].product_price  value="'+marketprice+'"/>'+ marketprice +'</td>') ;
+         show.push('<td><input type="hidden" name=storesorderitem['+num+'].order_total_price  value="'+marketprice+'"/>'+ marketprice +'</td>') ;
          show.push('<td><input type="hidden" name=storesorderitem['+num+'].order_num  value="1"/>1</td>') ;
          show.push(' <td><a id="rmtr'+num+'" onclick="javascript:ondeltr(this)" href="javascript:void(0)" class="input-red">删除</a></td>') ;
          show.push('</tr>');

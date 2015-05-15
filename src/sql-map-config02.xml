@@ -16,4 +16,6 @@
 	<!-- 以下为自定义的MAP文件 -->
 	<sqlMap resource="org/iweb/resource/map/sys_Map.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_StoresMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_StoresProductMap.xml" />
+
 </sqlMapConfig>

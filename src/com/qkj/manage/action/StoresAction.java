@@ -24,9 +24,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.ServletActionContext;
 import org.iweb.sys.ContextHelper;
 import org.iweb.sys.Parameters;
-import org.iweb.sys.ToolsUtil;
 import org.iweb.sys.domain.UserLoginInfo;
-import org.iweb.systools.exec.SYSUserDeptCreate;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -34,18 +32,61 @@ import com.qkj.manage.dao.StoresDao;
 import com.qkj.manage.domain.Product;
 import com.qkj.manage.domain.StoresOrder;
 import com.qkj.manage.domain.StoresOrderItem;
-
-
-
 public class StoresAction  extends ActionSupport{
+	private static final long serialVersionUID = 1L;
 	private String code;
 	private StoresDao dao=new StoresDao();
 	private List<Product> product;
 	private List<StoresOrderItem> storesorderitem;
+	private StoresOrder sotresorder;
+	private String id;
+	private int recCount;
+	private int pageSize;
+	private List<StoresOrder> storesorderlist;
 	private Map<String, Object> map = new HashMap<String, Object>();
 	private static Log log = LogFactory.getLog(StoresAction.class);
 	private String result;
 	private String data;
+
+
+	private String storesid;
+	private Double price;
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+	public String getStoresid() {
+		return storesid;
+	}
+
+	public void setStoresid(String storesid) {
+		this.storesid = storesid;
+	}
+
+	public StoresOrder getSotresorder() {
+		return sotresorder;
+	}
+
+	public void setSotresorder(StoresOrder sotresorder) {
+		this.sotresorder = sotresorder;
+	}
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+	public List<StoresOrder> getStoresorderlist() {
+		return storesorderlist;
+	}
+
+	public void setStoresorderlist(List<StoresOrder> storesorderlist) {
+		this.storesorderlist = storesorderlist;
+	}
 	public List<StoresOrderItem> getStoresorderitem() {
 		return storesorderitem;
 	}
@@ -92,7 +133,21 @@ public class StoresAction  extends ActionSupport{
 	public void setCode(String code) {
 		this.code = code;
 	}
+	public int getRecCount() {
+		return recCount;
+	}
 
+	public int getPageSize() {
+		return pageSize;
+	}
+
+	public void setRecCount(int recCount) {
+		this.recCount = recCount;
+	}
+
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
 	public String list() throws Exception {
 		return SUCCESS;
 	}
@@ -127,9 +182,9 @@ public class StoresAction  extends ActionSupport{
 	}
 	public String insertOrder(){
 		List<StoresOrderItem> sotr=storesorderitem;
-		    Collection nuCon = new Vector();
-		    nuCon.add(null);
-		    sotr.removeAll(nuCon);
+		Collection nuCon = new Vector();
+		nuCon.add(null);
+		sotr.removeAll(nuCon);
 		Double price=0.00;
 		StoresOrder sto=new StoresOrder();
 		UserLoginInfo ulf = new UserLoginInfo();
@@ -137,9 +192,9 @@ public class StoresAction  extends ActionSupport{
 		HttpServletRequest request = (HttpServletRequest) context.get(ServletActionContext.HTTP_REQUEST);  
 		HttpServletResponse response = (HttpServletResponse) context.get(ServletActionContext.HTTP_RESPONSE);  
 		ulf=(UserLoginInfo) request.getSession().getAttribute(Parameters.UserLoginInfo_Session_Str);
-		
+
 		for (StoresOrderItem storesorderitem : sotr) {
-			price=sum(price, storesorderitem.getProduct_price());
+			price=price+(storesorderitem.getProduct_price()*storesorderitem.getOrder_num());
 		}
 		DecimalFormat df =new DecimalFormat("#####0.00");
 		SimpleDateFormat   formatter=new SimpleDateFormat   ("yyyy-MM-dd   HH:mm:ss");  
@@ -154,17 +209,10 @@ public class StoresAction  extends ActionSupport{
 		for (StoresOrderItem storesorderitem : sotr) {
 			storesorderitem.setOrder_total_price((double)storesorderitem.getOrder_total_price());
 			storesorderitem.setOrder_id(id+"");
-		   String title=storesorderitem.getTitle();
-		   try {
-			title=new String(title.getBytes("iso-8859-1"),"utf-8");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			String title=storesorderitem.getTitle();
+			storesorderitem.setTitle(title);
 		}
-		   storesorderitem.setTitle(title);
-		
-		}
-		 dao.add(storesorderitem);
+		dao.add(storesorderitem);
 		return SUCCESS;
 	}
 	public static void writerJsonObject(Object obj,HttpServletResponse response) throws IOException{ 
@@ -190,4 +238,45 @@ public class StoresAction  extends ActionSupport{
 		BigDecimal bd2 = new BigDecimal(Double.toString(d2));
 		return bd1.add(bd2).doubleValue();
 	} 
+	public String update() throws Exception {
+		UserLoginInfo ulf = new UserLoginInfo();
+		ActionContext context = ActionContext.getContext();  
+		HttpServletRequest request = (HttpServletRequest) context.get(ServletActionContext.HTTP_REQUEST);  
+		HttpServletResponse response = (HttpServletResponse) context.get(ServletActionContext.HTTP_RESPONSE);  
+		ulf=(UserLoginInfo) request.getSession().getAttribute(Parameters.UserLoginInfo_Session_Str);
+		map.clear();
+		map.putAll(ContextHelper.getDefaultRequestMap4Page());
+		this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
+		map.put("userid", ulf.getUuid());
+		this.setStoresorderlist(dao.listOrder(map));
+		this.setRecCount(dao.listOrder(map).size());
+		return SUCCESS;
+	}
+	public String updateDetails() throws Exception {
+		map.clear();
+		map.put("id", this.getId());
+		this.setStoresorderlist(dao.listOrder(map));
+		for (int i = 0; i < storesorderlist.size(); i++) {
+			sotresorder=storesorderlist.get(i);
+		}
+		this.setStoresorderitem(dao.listOrderItem(map));
+		return SUCCESS;
+	}
+
+	public String itemDelete() throws Exception {
+		map.clear();
+		map.put("id",this.getId());
+		dao.delete(map);
+		map.clear();
+		map.put("id", this.getStoresid());
+		this.setStoresorderlist(dao.listOrder(map));
+		price=storesorderlist.get(0).getTotal_price()-this.getPrice();
+		map.put("id", this.getStoresid());
+		map.put("price", this.getPrice());
+		dao.saveOrderItem(map);
+		sotresorder=storesorderlist.get(0);
+		storesorderlist.get(0).setTotal_price(this.getPrice());
+		this.setStoresorderitem(dao.listOrderItem(map));	
+		return SUCCESS;
+	}
 }

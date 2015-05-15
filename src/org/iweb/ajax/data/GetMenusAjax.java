@@ -69,5 +69,4 @@ public class GetMenusAjax extends Ajax {
 		}
 		return menus;
 	}
-
 }
