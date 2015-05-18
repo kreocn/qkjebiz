@@ -235,7 +235,6 @@ public class MarketAction extends ActionSupport implements ActionAttr {
 	public String saveay() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_MARKET_MDY");
 		try {
-			System.out.println(market.getUuid()+"aa"+market.getAbs());
 			dao.saveay(market);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!save 数据更新失败:", e);

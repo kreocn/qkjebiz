@@ -145,7 +145,7 @@ public class LeaveAction extends ActionSupport implements ActionAttr {
 		try {
 			map.clear();
 			if (leave == null) leave = new Leave();
-			ContextHelper.setSearchDeptPermit4Search(map, "leave_depts", "leave_user");
+			ContextHelper.setSearchDeptPermit4Search("QKJ_ADM_LEAVE_LIST",map, "leave_depts", "leave_user");
 			ContextHelper.SimpleSearchMap4Page("QKJ_ADM_LEAVE_LIST", map, leave, viewFlag);
 			this.setPageSize(ContextHelper.getPageSize(map));
 			this.setCurrPage(ContextHelper.getCurrPage(map));
@@ -195,7 +195,6 @@ public class LeaveAction extends ActionSupport implements ActionAttr {
 				map.put("int_id", leave.getUuid());
 				map.put("approve_type", 2);
 				this.setApproves(apdao.list(map));
-				System.out.println(perWorkFlag+"aaaaaaaaaaaaaaaaaaaaaaaa");
 				/* 检查当前用户是否已经审阅 */
 				if (apdao.userIsIn(approves, ContextHelper.getUserLoginUuid())) this.setIsApprover("true");
 				else this.setIsApprover("false");

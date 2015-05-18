@@ -54,7 +54,7 @@
         <#include "/${parameters.templateDir}/simple/scripting-events.ftl" />
         <#include "/${parameters.templateDir}/simple/common-attributes.ftl" />
 />
-<label for="${parameters.name?html}-${itemCount}" class="checkboxLabel"></label>${itemValue?html}
+<label for="${parameters.name?html}-${itemCount}" class="checkboxLabel"></label><label for="${parameters.name?html}-${itemCount}" class="checkboxLabel">${itemValue?html}</label>
     </@s.iterator>
 <#else>
   &nbsp;

@@ -84,7 +84,7 @@ public class MemberCapitalRescoreAction extends ActionSupport {
 			map.clear();
 			if (memberCapitalRescore == null)
 				memberCapitalRescore = new MemberCapitalRescore();
-			ContextHelper.setSearchDeptPermit4Search(map, "dept_codes", "manager");
+			ContextHelper.setSearchDeptPermit4Search("QKJ_SYSVIP_MEMBERCAPITALRESCORE_LIST",map, "dept_codes", "manager");
 			ContextHelper.SimpleSearchMap4Page("QKJ_SYSVIP_MEMBERCAPITALRESCORE_LIST", map, memberCapitalRescore,
 					viewFlag);
 

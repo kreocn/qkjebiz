@@ -496,7 +496,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		map.clear();
 		this.setViewFlag("relist");
 		if (active == null) active = new Active();
-		ContextHelper.setSearchDeptPermit4Search(map, "apply_depts", "apply_user");
+		ContextHelper.setSearchDeptPermit4Search("QKJ_QKJMANAGE_ACTIVE_LIST",map, "apply_depts", "apply_user");
 		ContextHelper.SimpleSearchMap4Page("QKJ_QKJMANAGE_ACTIVE_LIST", map, active, viewFlag);
 
 		if (up == 1) {
@@ -542,7 +542,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		try {
 			map.clear();
 			if (active == null) active = new Active();
-			ContextHelper.setSearchDeptPermit4Search(map, "apply_depts", "apply_user");
+			ContextHelper.setSearchDeptPermit4Search("QKJ_QKJMANAGE_ACTIVE_LIST",map, "apply_depts", "apply_user");
 			ContextHelper.SimpleSearchMap4Page("QKJ_QKJMANAGE_ACTIVE_LIST", map, active, viewFlag);
 			if (flag != null && flag.equals("0")) {
 				map.put("flag", "有");

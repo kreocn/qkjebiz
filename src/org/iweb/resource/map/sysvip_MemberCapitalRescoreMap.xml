@@ -19,10 +19,24 @@
 		<isNotEmpty prepend="AND" property="status"><![CDATA[ r.status=#status# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="manager"><![CDATA[ m.manager=#manager# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="dept_code"><![CDATA[ m.dept_code=#dept_code# ]]></isNotEmpty>
-		<isNotEmpty prepend="AND" property="dept_codes">
+
+		<isNotEmpty prepend="AND" property="dept_codes" open="(" close=")">
 			<![CDATA[ m.dept_code In ]]>
 			<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
+			<isNotEmpty prepend="OR" property="apply_perdepts">
+							<![CDATA[ m.dept_code In ]]>
+				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ m.manager=#apply_userDouble# ]]></isNotEmpty>
+			</isNotEmpty>
 		</isNotEmpty>
+		<isEmpty property="dept_codes">
+			<isNotEmpty prepend="AND" property="apply_perdepts">
+						<![CDATA[ m.dept_code In ]]>
+				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ m.manager=#apply_userDouble# ]]></isNotEmpty>
+			</isNotEmpty>
+		</isEmpty>
+
 	</select>
 	<select id="sysvip_getMemberCapitalRescoresCounts" resultClass="int" parameterClass="java.util.Map">
 		<![CDATA[ 
@@ -36,10 +50,23 @@
 		<isNotEmpty prepend="AND" property="status"><![CDATA[ r.status=#status# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="manager"><![CDATA[ m.manager=#manager# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="dept_code"><![CDATA[ m.dept_code=#dept_code# ]]></isNotEmpty>
-		<isNotEmpty prepend="AND" property="dept_codes">
+
+		<isNotEmpty prepend="AND" property="dept_codes" open="(" close=")">
 			<![CDATA[ m.dept_code In ]]>
 			<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
+			<isNotEmpty prepend="OR" property="apply_perdepts">
+							<![CDATA[ m.dept_code In ]]>
+				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ m.manager=#apply_userDouble# ]]></isNotEmpty>
+			</isNotEmpty>
 		</isNotEmpty>
+		<isEmpty property="dept_codes">
+			<isNotEmpty prepend="AND" property="apply_perdepts">
+						<![CDATA[ m.dept_code In ]]>
+				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ m.manager=#apply_userDouble# ]]></isNotEmpty>
+			</isNotEmpty>
+		</isEmpty>
 	</select>
 	<insert id="sysvip_addMemberCapitalRescore" parameterClass="memberCapitalRescore">
 		<![CDATA[ 

@@ -143,6 +143,17 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
+		<action name="user_saveDept" class="org.iweb.sys.action.UserAction" method="saveDept">
+			<result type="redirectAction">
+				<param name="actionName">user_DeptList</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="user_DeptList" class="org.iweb.sys.action.UserAction" method="deptList">
+			<result>/WEB-INF/jsp/main/mdyDept.jsp</result>
+		</action>
+		
 		<action name="user_del" class="org.iweb.sys.action.UserAction" method="del">
 			<result type="redirectAction">
 				<param name="actionName">user_list</param>

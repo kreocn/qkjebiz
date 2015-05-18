@@ -56,23 +56,45 @@ var DialogIFrame = function(config){
 };
 
 var sobj01;
-var selectDept = function(dcode_id, dname_id, isLoad, p_m,b_m){
-	sobj01 = new DialogIFrame({ src : '/sys/dept_permit_select?objname=sobj01',
-	title : "选择部门",
-	width : 200,
-	height : 400 });
-	sobj01.selfAction = function(val1, val2){
-		$("#" + dcode_id).val(val1);
-		$("#" + dname_id).val(val2);
-		if (isLoad) {
-			if(b_m==1){
-				loadManagers(val1, p_m,'1');
-			}else{
-				loadManagers(val1, p_m);
-			}
-			
-		}
-	};
+var selectDept = function(dcode_id, dname_id, isLoad, p_m,b_m,u_pid){
+	if(u_pid!=null && u_pid!=""){
+		sobj01 = new DialogIFrame({ src : '/sys/dept_permit_select?objname=sobj01&user_pri='+u_pid,
+			title : "选择部门",
+			width : 200,
+			height : 400 });
+			sobj01.selfAction = function(val1, val2){
+				$("#" + dcode_id).val(val1);
+				$("#" + dname_id).val(val2);
+				if (isLoad) {
+					if(b_m==1){
+						loadManagers(val1, p_m,'1');
+					}else{
+						loadManagers(val1, p_m);
+					}
+					
+				}
+			};	
+		
+	}else{
+		sobj01 = new DialogIFrame({ src : '/sys/dept_permit_select?objname=sobj01',
+			title : "选择部门",
+			width : 200,
+			height : 400 });
+			sobj01.selfAction = function(val1, val2){
+				$("#" + dcode_id).val(val1);
+				$("#" + dname_id).val(val2);
+				if (isLoad) {
+					if(b_m==1){
+						loadManagers(val1, p_m,'1');
+					}else{
+						loadManagers(val1, p_m);
+					}
+					
+				}
+			};	
+		
+	}
+	
 	sobj01.create();
 	sobj01.open();
 };
