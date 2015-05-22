@@ -26,6 +26,7 @@ import org.iweb.sys.ContextHelper;
 import org.iweb.sys.Parameters;
 import org.iweb.sys.domain.UserLoginInfo;
 
+import com.aliyun.openservices.ots.protocol.OtsProtocol.StartTransactionRequest;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.qkj.manage.dao.StoresDao;
@@ -42,6 +43,8 @@ public class StoresAction  extends ActionSupport{
 	private String id;
 	private int recCount;
 	private int pageSize;
+	private int num;
+  
 	private List<StoresOrder> storesorderlist;
 	private Map<String, Object> map = new HashMap<String, Object>();
 	private static Log log = LogFactory.getLog(StoresAction.class);
@@ -51,6 +54,23 @@ public class StoresAction  extends ActionSupport{
 
 	private String storesid;
 	private Double price;
+	private Double totalPirce;
+	public Double getTotalPirce() {
+		return totalPirce;
+	}
+
+	public void setTotalPirce(Double totalPirce) {
+		this.totalPirce = totalPirce;
+	}
+
+	public int getNum() {
+		return num;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
+	}
+
 	public Double getPrice() {
 		return price;
 	}
@@ -149,6 +169,13 @@ public class StoresAction  extends ActionSupport{
 		this.pageSize = pageSize;
 	}
 	public String list() throws Exception {
+		UserLoginInfo ulf = new UserLoginInfo();
+		ActionContext context = ActionContext.getContext();  
+		HttpServletRequest request = (HttpServletRequest) context.get(ServletActionContext.HTTP_REQUEST);  
+		HttpServletResponse response = (HttpServletResponse) context.get(ServletActionContext.HTTP_RESPONSE);  
+		ulf=(UserLoginInfo) request.getSession().getAttribute(Parameters.UserLoginInfo_Session_Str);
+		map.put("userid", ulf.getUuid());
+		storesorderlist=dao.listWeek(map);
 		return SUCCESS;
 	}
 	public String addlist() throws Exception {
@@ -264,19 +291,48 @@ public class StoresAction  extends ActionSupport{
 	}
 
 	public String itemDelete() throws Exception {
-		map.clear();
+		System.out.println(num);
+		if(num==0){
+	    map.clear();
 		map.put("id",this.getId());
 		dao.delete(map);
 		map.clear();
 		map.put("id", this.getStoresid());
 		this.setStoresorderlist(dao.listOrder(map));
-		price=storesorderlist.get(0).getTotal_price()-this.getPrice();
+		price=storesorderlist.get(0).getTotal_price()-this.getTotalPirce();
 		map.put("id", this.getStoresid());
 		map.put("price", this.getPrice());
-		dao.saveOrderItem(map);
+		dao.saveOrderItemPrice(map);
 		sotresorder=storesorderlist.get(0);
 		storesorderlist.get(0).setTotal_price(this.getPrice());
-		this.setStoresorderitem(dao.listOrderItem(map));	
+		this.setStoresorderitem(dao.listOrderItem(map));
+		}
+		else if(num!=0){
+		    map.clear();
+			map.put("id",this.getId());
+			map.put("num",this.getNum());
+			map.put("price", this.getTotalPirce()-(((this.getTotalPirce()/this.getPrice())-this.getNum())
+					*this.getPrice()));
+			dao.saveOrderItem(map);
+			map.clear();
+			map.put("id", this.getStoresid());
+			this.setStoresorderlist(dao.listOrder(map));
+			Double num=(((this.getTotalPirce()/this.getPrice())-this.getNum()));
+			price=storesorderlist.get(0).getTotal_price()-(num*this.getPrice());
+			map.put("id", this.getStoresid());
+			map.put("price", this.getPrice());
+			dao.saveOrderItemPrice(map);
+			sotresorder=storesorderlist.get(0);
+			storesorderlist.get(0).setTotal_price(this.getPrice());
+			this.setStoresorderitem(dao.listOrderItem(map));
+			}
 		return SUCCESS;
 	}
+	public String delete() throws Exception {
+		
+	    map.clear();
+		map.put("orderid",this.getId());
+		dao.deleteItemandorder(map);
+		return SUCCESS;
+		}
 }

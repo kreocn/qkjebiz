@@ -1,7 +1,4 @@
 package com.qkj.manage.domain;
-
-import javafx.scene.chart.PieChart.Data;
-
 public class StoresOrderItem {
 private int id;
 private String order_id;

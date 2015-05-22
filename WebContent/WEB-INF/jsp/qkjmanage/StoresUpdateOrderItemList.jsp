@@ -74,11 +74,11 @@
 						    <td class="td1" >${id}</td>
 							<td class="td2" >${title}</td>
 							<td class="td3">${product_price}</td>
-							<td class="td4"  ><input id="hiddennum" name="${order_num}" type="hidden" value="${id}"><input id="spinner${id}" value="${order_num}"/></td>
+							<td class="td4"  ><input id="hiddennum" name="${order_num}" type="hidden" value="${id}"/><input id="spinner${id}" value="${order_num}"/></td>
 							<td class="td5">${order_total_price}</td>
 							<td class="td6">${bar_code}</td>
 							<td class="td7">${spec}</td>
-							<td class="td4 op-area"><a  class="input-blue"  onclick="deleteorder(${id},${sotresorder.id},${product_price})">删除</a></td>
+							<td class="td4 op-area"><a  class="input-blue"  onclick="deleteorder(${id},${sotresorder.id},${order_total_price},${product_price})">删除</a></td>
 							<%-- href="/qkjmanage/stores_order_item_delete.action?id=${id}&storesid=${sotresorder.id}&price=${product_price}"
 						 --%>
 						 </tr>
@@ -92,7 +92,7 @@
 	<script type="text/javascript">
 	 $(function() {
 		    $('#orderTable tr').each(function (){    
-	    	    var id=$(this).children('td').find("#hiddennum").val();
+	    	    var id=$(this).children('td').find("input").val();
 	    	     var spinner = $("#spinner"+id).spinner();
 	 		     var a= $(this).children('td').find("#hiddennum").attr("name");
 	 		    $("#spinner"+id).spinner({
@@ -104,13 +104,14 @@
 	 });
 	 
 	 
-	 
 	</script>
 	<script type="text/javascript">
-	function deleteorder(id,storesorder_id,price){
-		var num=$("#tr"+id).find("#hiddennum").attr("name");
-		$("#tr"+id).find(".input-blue").attr("href","/qkjmanage/stores_order_item_delete.action?id="+id+"&storesid="+storesorder_id+"&price="+price+"&num="+num+"");
-		$("#tr"+id).find(".input-blue").click();
+	function deleteorder(id,storesorder_id,totalPrice,price){
+		
+		 var num=$( "#spinner"+id ).spinner( "value" );
+		
+		$("#tr"+id).find(".input-blue").attr("href","/qkjmanage/stores_order_item_delete.action?id="+id+"&storesid="+storesorder_id+"&totalPirce="+totalPrice+"&num="+num+"&price="+price+"");
+		$("#tr"+id).find(".input-blue").click(); 
 	}
 	</script>
 </body>

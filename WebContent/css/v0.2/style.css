@@ -925,8 +925,10 @@ footer {
 .more_j {
 	float: right; background: url("../../images/icon/more_j.png") no-repeat right 50%; padding-right: 16px; cursor: pointer; display: none;
 }
-
+.tab_txm{width:39%;float:left;margin-right: 10px;}
+.tab_txm2{width:60%;float:left;}
 @media screen and (max-width:1180px) {
+	.tab_txm,.tab_txm2{width:100%;}
 	.yesnull,.nonull,.success,.nosuc,.daisuc {
 		margin-top: 6px;
 	}
@@ -956,7 +958,7 @@ footer {
 	}
 }
 
-@media screen and (max-width:1000px) { .
+@media screen and (max-width:1000px) { 
 	.zhuangtai {
 		margin-bottom: 5px;
 	}
