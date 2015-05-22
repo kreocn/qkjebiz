@@ -136,6 +136,9 @@
 		<![CDATA[ 
 			Insert Into qkj_t_outstock(ordernum,date,store_id,operator_id,dept_code,dept_name,take_id,note,total_price,add_user,add_timer,lm_user,lm_timer,reason,send,manager_check,manager_check_user,manager_check_time,coo_check,coo_check_user,coo_check_time,borrowStore_id)
 			Values (#ordernum#,#date#,#store_id#,#operator_id#,#dept_code#,#dept_name#,#take_id#,#note#,#total_price#,#add_user#,#add_timer#,#lm_user#,#lm_timer#,#reason#,#send#,#manager_check#,#manager_check_user#,#manager_check_time#,#coo_check#,#coo_check_user#,#coo_check_time#,#borrowStore_id#)
+			
+			Insert Into qkj_t_outstock(ordernum,date,store_id,reason,member_id,member_mebile,member_name,                                          operator_id,dept_code,dept_name,take_id,note,total_price,add_user,add_timer,lm_user,lm_timer,reason,send,manager_check,manager_check_user,manager_check_time,coo_check,coo_check_user,coo_check_time,borrowStore_id)
+			Values (#ordernum#,#date#,#store_id#,#operator_id#,#dept_code#,#dept_name#,#take_id#,#note#,#total_price#,#add_user#,#add_timer#,#lm_user#,#lm_timer#,#reason#,#send#,#manager_check#,#manager_check_user#,#manager_check_time#,#coo_check#,#coo_check_user#,#coo_check_time#,#borrowStore_id#)
 		]]>
 	</insert>
 	<update id="outStock_mdyOutStock" parameterClass="outStock">
