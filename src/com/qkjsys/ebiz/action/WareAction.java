@@ -12,6 +12,9 @@ import org.iweb.sys.Parameters;
 import org.iweb.sys.ToolsUtil;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.qkj.ware.action.warepower;
+import com.qkj.ware.dao.WarepowerDAO;
+import com.qkj.ware.domain.Warepowers;
 import com.qkjsys.ebiz.dao.WareDAO;
 import com.qkjsys.ebiz.domain.Ware;
 
@@ -23,12 +26,30 @@ public class WareAction extends ActionSupport {
 
 	private Ware ware;
 	private List<Ware> wares;
+	private List<Warepowers> wps;
+	private Warepowers wp;
 	private String message;
 	private String viewFlag;
 	private int recCount;
 	private int pageSize;
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;仓库权限管理";
 	
+	public List<Warepowers> getWps() {
+		return wps;
+	}
+
+	public void setWps(List<Warepowers> wps) {
+		this.wps = wps;
+	}
+
+	public Warepowers getWp() {
+		return wp;
+	}
+
+	public void setWp(Warepowers wp) {
+		this.wp = wp;
+	}
+
 	public String getPath() {
 		return path;
 	}
@@ -95,10 +116,43 @@ public class WareAction extends ActionSupport {
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 			this.setWares(dao.list(map));
 			this.setRecCount(dao.getResultCount());
+			WarepowerDAO wpd=new WarepowerDAO();
+			if(ware!=null){
+				map.clear();
+				map.put("ware_id", ware.getUuid());
+				this.setWps(wpd.list(map));
+			}
+			
 			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;仓库列表";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
+		}
+		return SUCCESS;
+	}
+	
+	/**
+	 * 20150519 sunshanshan
+	 * 仓库权限管理
+	 * @return
+	 * @throws Exception
+	 */
+	public String ware_power() throws Exception {
+		ContextHelper.isPermit("QKJ_EBIZ_WARE_LIST");
+		try {
+			map.clear();
+			WarepowerDAO wpd=new WarepowerDAO();
+			String warename="";
+			if(ware!=null){
+				map.clear();
+				map.put("ware_id", ware.getUuid());
+				this.setWps(wpd.list(map));
+				warename=ware.getWare_name();
+			}
+			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;仓库"+warename+"权限列表";
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!ware_power 读取数据错误:", e);
+			throw new Exception(this.getClass().getName() + "!ware_power 读取数据错误:", e);
 		}
 		return SUCCESS;
 	}

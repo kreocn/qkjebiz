@@ -16,11 +16,7 @@
 			</result>
 		</action>
 		<action name="outStock_load" class="com.qkj.ware.action.OutStockAction" method="load">
-			<result name="success">/WEB-INF/jsp/ware/outStock/OutStockEdit.jsp</result>
-			<result name="add">/WEB-INF/jsp/ware/outStock/OutNext.jsp</result>
-			<result name="next">/WEB-INF/jsp/ware/outStock/OutNext.jsp</result>
-			<result name="sale">/WEB-INF/jsp/ware/outStock/OutSaleDetail.jsp</result>
-			<result name="other">/WEB-INF/jsp/ware/outStock/OutDetail.jsp</result>
+			<result>/WEB-INF/jsp/ware/outStock/OutStockEdit.jsp</result>
 		</action>
 		<action name="outStock_add" class="com.qkj.ware.action.OutStockAction" method="add">
 			<result type="redirectAction">
@@ -54,31 +50,7 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
-		<action name="outStock_chack" class="com.qkj.ware.action.OutStockAction" method="chack">
-			<result type="redirectAction">
-				<param name="actionName">outStock_load</param>
-				<param name="outStock.uuid">${outStock.uuid}</param>
-				<param name="viewFlag">mdy</param>
-				<param name="message">${message}</param>
-			</result>
-		</action>
-		<action name="outStock_chackManage" class="com.qkj.ware.action.OutStockAction" method="chackManage">
-			<result type="redirectAction">
-				<param name="actionName">outStock_load</param>
-				<param name="outStock.uuid">${outStock.uuid}</param>
-				<param name="viewFlag">mdy</param>
-				<param name="message">${message}</param>
-			</result>
-		</action>
-		<action name="outStock_chackCoo" class="com.qkj.ware.action.OutStockAction" method="chackCoo">
-			<result type="redirectAction">
-				<param name="actionName">outStock_load</param>
-				<param name="outStock.uuid">${outStock.uuid}</param>
-				<param name="viewFlag">mdy</param>
-				<param name="message">${message}</param>
-			</result>
-		</action>
-		
+
 		<action name="outStock_sure" class="com.qkj.ware.action.OutStockAction" method="sure">
 			<result type="redirectAction">
 				<param name="actionName">outStock_load</param>
@@ -87,11 +59,11 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
-		
+
 		<action name="outStock_view" class="com.qkj.ware.action.OutStockAction" method="load">
 			<result>/WEB-INF/jsp/ware/outStock/outStockView.jsp</result>
 		</action>
-		
+
 		<action name="outStock_cencle" class="com.qkj.ware.action.OutStockAction" method="cencle">
 			<result type="redirectAction">
 				<param name="actionName">outStock_list</param>
@@ -99,15 +71,7 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
-		
-		<action name="outStock_borrow" class="com.qkj.ware.action.OutStockAction" method="borrow">
-			<result type="redirectAction">
-				<param name="actionName">outStock_list</param>
-				<param name="viewFlag">relist</param>
-				<param name="message">${message}</param>
-			</result>
-		</action>
-		
+
 		<action name="outStock_note" class="com.qkj.ware.action.OutStockAction" method="note">
 			<result type="redirectAction">
 				<param name="actionName">outStock_load</param>
@@ -116,6 +80,6 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
-		<!-- OutStock End chackManage-->
+		<!-- OutStock End chackManage -->
 	</package>
 </struts>

@@ -1,10 +1,15 @@
 package com.qkj.ware.action;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.struts2.ServletActionContext;
 import org.iweb.sys.ContextHelper;
 import org.iweb.sys.ToolsUtil;
 import org.iweb.sys.domain.User;
@@ -22,6 +27,7 @@ public class WarepowerAction extends ActionSupport {
 	private WarepowerDAO dao = new WarepowerDAO();
 
 	private Warepowers warepower;
+	private Ware ware;
 	private List<Warepowers> warepowers;
 	private List<Ware> wares;
 	private List<User> users;
@@ -33,6 +39,14 @@ public class WarepowerAction extends ActionSupport {
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;仓库权限管理";
 	
 	
+	public Ware getWare() {
+		return ware;
+	}
+
+	public void setWare(Ware ware) {
+		this.ware = ware;
+	}
+
 	public String getPath() {
 		return path;
 	}
@@ -173,42 +187,12 @@ public class WarepowerAction extends ActionSupport {
 	public String add() throws Exception {
 		ContextHelper.isPermit("QKJ_WARE_WAREPOWER_ADD");
 		try {
-			//warepower.setLm_user(ContextHelper.getUserLoginUuid());
-			//warepower.setLm_time(new Date());
-			String code=null;
-			String user_id=null;
-			String codename=null;
-			String son="0";
-			if((warepower.getDept_code()==null||warepower.getDept_code().equals(""))&&(warepower.getUsername()==null||warepower.getUsername().equals(""))){
-				this.setMessage("部门和用户不能全为空！");
-			}else{
-				if((warepower.getDept_code()!=null&&!warepower.getDept_code().equals(""))){
-					code=warepower.getDept_code();
-					codename=warepower.getDept_name();
-				}
-				if(warepower.getUsername()!=null&&!warepower.getUsername().equals("")){
-					user_id=warepower.getUsername();
-				}
-				if(warepower.getSon()!=null&&warepower.getSon()!=""){
-					son=warepower.getSon();
-				}
-				
-				if (!(warepowers == null || warepowers.size() == 0)) {
-					for (int i = 0, n = warepowers.size(); i < n; i++) {
-						warepower = warepowers.get(i);
-						if(warepower.getPrvg()==null||warepower.getPrvg().equals("")){
-							continue;
-						}
-						warepower.setUsername(user_id);
-						warepower.setDept_code(code);
-						warepower.setDept_name(codename);
-						warepower.setSon(son);
-						dao.add(warepower);
-					}
-				}
+			if(warepower.getSon()==null || warepower.getSon().equals("")){
+				warepower.setSon("0");
 			}
-			
-			
+			warepower.setWare_id(ware.getUuid());
+			warepower.setWare_name(ware.getWare_name());
+			dao.add(warepower);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!add 数据添加失败:", e);
 			throw new Exception(this.getClass().getName() + "!add 数据添加失败:", e);
@@ -221,8 +205,17 @@ public class WarepowerAction extends ActionSupport {
 		try {
 			//warepower.setLm_user(ContextHelper.getUserLoginUuid());
 			//warepower.setLm_time(new Date());
+			if(warepower.getSon()==null || warepower.getSon().equals("")){
+				warepower.setSon("0");
+			}
+			warepower.setWare_id(ware.getUuid());
 			dao.save(warepower);
-		
+			WareDAO wd=new WareDAO();
+			map.clear();map.put("uuid", ware.getUuid());
+			this.setWares(wd.list(map));
+			if(wares.size()>0){
+				this.setWare(wares.get(0));
+			}
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
@@ -240,5 +233,29 @@ public class WarepowerAction extends ActionSupport {
 			throw new Exception(this.getClass().getName() + "!del 数据删除失败:", e);
 		}
 		return SUCCESS;
+	}
+	
+	
+	public String checkUser() throws Exception {
+		boolean flag = true;
+		try {
+			HttpServletResponse response = ServletActionContext.getResponse();
+			HttpServletRequest request = ServletActionContext.getRequest();
+			String userid = request.getParameter("userid");
+			String wareid=request.getParameter("wareid");
+			map.clear();
+			map.put("username", userid);
+			map.put("ware_id", wareid);
+			List<Warepowers> ps=new ArrayList<>();
+			ps=dao.list(map);
+			if(ps.size()>0){
+				flag = false;
+			}
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
+			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
+		}
+		ServletActionContext.getResponse().getWriter().print(flag);
+		return null;
 	}
 }

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -15,11 +16,11 @@
  	<div class="tab_warp main" >
 	<div class="dq_step">
 		${path}
-		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_ADD')">
+		<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_ADD',null)==true && it:checkWarePermit(null,'in')==true}">
 			<span class="opb lb op-area">
 			<a href="<s:url namespace="/inStock" action="inStock_load"><s:param name="viewFlag">add</s:param></s:url>" >添加入库单</a>
 			</span>
-		</s:if>
+		</c:if>
 	</div>
 	<!-- 条件查询 -->
 	<s:form id="serachForm" name="serachForm" action="inStock_list"  method="get" namespace="/inStock" theme="simple">
@@ -53,7 +54,7 @@
         	<div class="label_hang">
             <div class="label_ltit">单据性质:</div>
             <div class="label_rwben label_rwb">
-            	<select id="membermanagerid" cssClass="selectKick" name="inStock.reason" title="状态">
+            	<select id="membermanagerid" class="selectKick" name="inStock.reason" title="状态">
 					<option value="-1">---请选择---</option>
 					<option value="0">正常入库</option>
 					<option value="1">正常退货</option>
@@ -65,7 +66,7 @@
         	<div class="label_hang">
             <div class="label_ltit">状态:</div>
             <div class="label_rwben label_rwb">
-            	<select id="membermanagerid" cssClass="selectKick" name="inStock.send" title="状态">
+            	<select id="membermanagerid" class="selectKick" name="inStock.send" title="状态">
 					<option value="-1">---请选择---</option>
 					<option value="0">正常订单</option>
 					<option value="1">取消订单</option>
@@ -109,15 +110,17 @@
 				(<s:if test="send==0">正常订单</s:if><s:if test="send==1">已取消订单</s:if>)
 			    </td>
 				<td class="td4 op-area">
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_MDY') && @com.qkj.ware.action.warepower@checkPermit(store_id,'add')">
-					<a class="input-blue" href="<s:url namespace="/inStock" action="inStock_load"><s:param name="viewFlag">mdy</s:param><s:param name="inStock.uuid" value="uuid"></s:param></s:url>">修改</a>
-			    	</s:if>
-			    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_DEL') && @com.qkj.ware.action.warepower@checkPermit(store_id,'add') && confirm==null">
-			    	<a class="input-red" href="<s:url namespace="/inStock" action="inStock_del"><s:param name="inStock.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
-			    	</s:if>	 
-			    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_PUTSEAL') && confirm==1 && @com.qkj.ware.action.warepower@checkPermit(store_id,'add')">
-			    	<a class="input-gray" href="<s:url namespace="/inStock" action="inStock_view"><s:param name="viewFlag">view</s:param><s:param name="inStock.uuid" value="uuid"></s:param></s:url>">查看/打印</a>
-			    	</s:if>	  
+					<c:if test="${it:checkWarePermit(store_id,'in')==true }">
+						<c:if test="${ it:checkPermit('QKJ_WARE_INSTOCK_MDY',null)==true}">
+							<a class="input-blue" href="<s:url namespace="/inStock" action="inStock_load"><s:param name="viewFlag">mdy</s:param><s:param name="inStock.uuid" value="uuid"></s:param></s:url>">修改</a>
+						</c:if>
+						<c:if test="${ it:checkPermit('QKJ_WARE_INSTOCK_DEL',null)==true}">
+							<a class="input-red" href="<s:url namespace="/inStock" action="inStock_del"><s:param name="inStock.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
+						</c:if>
+					</c:if>
+					<s:if test="confirm==1">
+						<a class="input-gray" href="<s:url namespace="/inStock" action="inStock_view"><s:param name="viewFlag">view</s:param><s:param name="inStock.uuid" value="uuid"></s:param></s:url>">查看/打印</a>
+					</s:if>
 		    	</td>
 		    	<td class="td0 op-area"><a href="javascript:;" onClick="showDetail('showtr${uuid}');" class="input-nostyle">查看</a></td>
 	  		</tr>

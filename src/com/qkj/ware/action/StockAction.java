@@ -1,4 +1,5 @@
 package com.qkj.ware.action;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,10 +10,10 @@ import org.iweb.sys.ContextHelper;
 import org.iweb.sys.ToolsUtil;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.qkj.manage.dao.ProductDAO;
 import com.qkj.manage.domain.Product;
 import com.qkj.ware.dao.StockDAO;
 import com.qkj.ware.domain.Stock;
+import com.qkj.ware.domain.Warepowers;
 import com.qkjsys.ebiz.dao.WareDAO;
 import com.qkjsys.ebiz.domain.Ware;
 
@@ -25,6 +26,7 @@ public class StockAction extends ActionSupport {
 	private Stock stock;
 	private List<Stock> stocks;
 	private List<Ware> wares;
+	private List<Warepowers> wps;
 	private List<Product> products;
 	private String message;
 	private String viewFlag;
@@ -32,10 +34,17 @@ public class StockAction extends ActionSupport {
 	private int pageSize;
 	private int currPage;
 	private List<Stock> inproducts;
-	private String t=null;
 	
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;库存管理";
 	
+	public List<Warepowers> getWps() {
+		return wps;
+	}
+
+	public void setWps(List<Warepowers> wps) {
+		this.wps = wps;
+	}
+
 	public String getPath() {
 		return path;
 	}
@@ -44,13 +53,6 @@ public class StockAction extends ActionSupport {
 		this.path = path;
 	}
 
-	public String getT() {
-		return t;
-	}
-
-	public void setT(String t) {
-		this.t = t;
-	}
 
 	public List<Stock> getInproducts() {
 		return inproducts;
@@ -135,8 +137,8 @@ public class StockAction extends ActionSupport {
 
 	public String list() throws Exception {
 		ContextHelper.isPermit("QKJ_WARE_STOCK_LIST");
-		String u = ContextHelper.getUserLoginUuid();
-		String code=ContextHelper.getUserLoginDept();
+		WareDAO wd = new WareDAO();
+		Map<String, Object> mapware = new HashMap<String, Object>();
 		try {
 			map.clear();
 			if (stock != null)
@@ -144,33 +146,25 @@ public class StockAction extends ActionSupport {
 				map.putAll(ContextHelper.getDefaultRequestMap4Page());
 				this.setPageSize(ContextHelper.getPageSize(map));
 				this.setCurrPage(ContextHelper.getCurrPage(map));		
-				if(ContextHelper.isAdmin()){//管理员
-					if(stock!=null&&stock.getGroupQ()!=0){//统计商品在所有仓库的数量
-						map.put("product_id", stock.getGroupQ());
-						this.setStocks(dao.listByGroup(map));
-						t="1";
-					}else{
-						this.setStocks(dao.list(map));
+				this.setWps(warepower.checkWarePower());
+				if(wps!=null && wps.size()>0){
+					List<Integer> ud_list = new ArrayList<>();
+					for(int i=0;i<wps.size();i++){
+						if(wps.get(i).getPrvg().contains("4")){//有查询权限
+							ud_list.add(wps.get(i).getWare_id());
+						}
 					}
-					
-				}else{
-					if(stock!=null&&stock.getGroupQ()!=0){//统计商品在所有仓库的数量
-						map.put("product_id", stock.getGroupQ());
-						map.put("username",u);
-						map.put("dept_code", code);
-						this.setStocks(dao.listPowerByGroup(map));
-						t="1";
-					}else{
-						map.put("username",u);
-						map.put("dept_code", code);
-						this.setStocks(dao.listByPower(map));
-					}
+					map.put("storeids", ud_list);
+					mapware.put("uuids", ud_list);
 				}
-				this.setInproducts(stocks);
-				ProductDAO pdao = new ProductDAO();
-				this.setProducts(pdao.list(null));
+				this.setStocks(dao.list(map));
+				this.setWares(wd.list(mapware));
 				
-				wareByPower(u, code);
+				this.setInproducts(stocks);
+				
+				//ProductDAO pdao = new ProductDAO();
+				//this.setProducts(pdao.list(null));
+				
 				
 				this.setRecCount(dao.getResultCount());
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;库存列表";
@@ -179,21 +173,6 @@ public class StockAction extends ActionSupport {
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
 		}
 		return SUCCESS;
-	}
-
-	private void wareByPower(String u, String code) {
-		WareDAO wd=new WareDAO();
-		if(ContextHelper.isAdmin()){//管理员
-			map.clear();
-			map.put("type", "0");//非藏酒库
-			this.setWares(wd.list(map));
-		}else{
-			map.clear();
-			map.put("username",u);
-			map.put("dept_code", code);
-			map.put("sel", 1);
-			this.setWares(wd.listByPower(map));
-		}
 	}
 	
 	public String relist() throws Exception {

@@ -25,6 +25,12 @@
 			<isNotEmpty prepend="AND" property="send"><![CDATA[ i.send=#send# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="date_start"><![CDATA[ i.date>=#date_start# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="date_end"><![CDATA[ i.date<=DATE_ADD(#date_end#,INTERVAL 1 day) ]]></isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="storeids">
+			<![CDATA[ i.store_id In ]]>
+				<iterate property="storeids" open="(" close=")" conjunction=" , "> #storeids[]#</iterate>
+			</isNotEmpty>
+			
 
 		</dynamic>
 		<![CDATA[ Order By i.add_timer Desc LIMIT 0, 500 ]]>

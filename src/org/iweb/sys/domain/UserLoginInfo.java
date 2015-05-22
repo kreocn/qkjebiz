@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import com.qkj.ware.domain.Warepowers;
+
 public class UserLoginInfo {
 	private String uuid;
 	private String title;
@@ -37,6 +39,7 @@ public class UserLoginInfo {
 	
 
 	private List<UserRole> user_roles_list;
+	private List<Warepowers> wps;
 	// private Set<String> user_prov_set;
 
 	private HashMap<String, Integer> member_prvg_map;
@@ -53,6 +56,14 @@ public class UserLoginInfo {
 	private String position_name;
 
 	
+
+	public List<Warepowers> getWps() {
+		return wps;
+	}
+
+	public void setWps(List<Warepowers> wps) {
+		this.wps = wps;
+	}
 
 	public HashMap<String, String> getPermit_depts2() {
 		return permit_depts2;

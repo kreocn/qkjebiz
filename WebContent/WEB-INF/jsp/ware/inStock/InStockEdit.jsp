@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -118,7 +119,7 @@ font-size: 14px;
 	        <div class="label_hang">
 	            <div class="label_ltit">单据性质:</div>
 	            <div class="label_rwben label_rwb">
-	            	<select id="membermanagerid" cssClass="selectKick" name="inStock.reason" title="状态">
+	            	<select id="membermanagerid" class="selectKick" name="inStock.reason" title="状态">
 								<option value="0"
 								<s:if test="%{inStock.reason==0}">
 								 selected="selected"
@@ -150,7 +151,7 @@ font-size: 14px;
 	            <div class="label_ltit">入库仓库:</div>
 	            <div class="label_rwben2">
 			       <span class="label_rwb">
-	            	<select id="membermanagerid" cssClass="selectKick" name="inStock.store_id" title="入库仓库" >
+	            	<select id="membermanagerid" class="selectKick" name="inStock.store_id" title="入库仓库" >
 						<s:iterator value="wares" status="sta" var="x">
 						<option value="<s:property value="uuid" />" 
 						<s:if test="#x.uuid==inStock.store_id">
@@ -185,7 +186,7 @@ font-size: 14px;
 						<th>单价</th>
 						<th>订单数量</th>
 						<th>实际价格</th>
-						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_ADD') && null==inStock.confirm && @com.qkj.ware.action.warepower@checkPermit(inStock.store_id,'add')">
+						<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_ADD',null)==true && it:checkWarePermit(inStock.store_id,'in')==true && inStock.confirm==null }">
 						<th>
 						<s:url id="ladingAddProductsUrl" action="qkjm_addProducts" namespace="/qkjmanage">
 												<s:param name="uuidKey">inStock.uuid</s:param>
@@ -201,7 +202,7 @@ font-size: 14px;
 											<input type="button" id="product" onclick="window.location.href='${ladingAddProductsUrl}';" value="添加酒品" />
 						<!-- <a id="addItem" onclick="commain();" >添加入库明细</a> -->
 						</th>
-						</s:if>
+						</c:if>
 					</tr>
 					<s:iterator value="inDetails" status="sta">
 									<tr>
@@ -214,9 +215,9 @@ font-size: 14px;
 									</td>
 									<td class="nw"><s:property value="total" /></td>
 									<td>
-								   	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_INDETAIL_INDETAIL_DEL') && @com.qkj.ware.action.warepower@checkPermit(inStock.store_id,'add')  && null==inStock.confirm">
+									<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_DEL',null)==true && it:checkWarePermit(inStock.store_id,'in')==true && inStock.confirm==null }">
 								   	[<a href="<s:url namespace="/inStock" action="inDetail_del"><s:param name="inDetail.uuid" value="uuid" /><s:param name="inDetail.lading_id" value="lading_id" /></s:url>" onclick="return isDel();">删除</a>]
-								   	</s:if>	   
+								   	</c:if>
 								    </td>
 									</tr>
 					</s:iterator>
@@ -233,22 +234,27 @@ font-size: 14px;
             <div class="label_rwbenx">
             <span id="message"><s:property value="message" /></span>
             	<s:if test="null == inStock && 'add' == viewFlag">
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_ADD')">
+					<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_ADD',null)==true}">
 					<s:submit id="add" name="add" value="保存&填写明细" action="inStock_add" cssClass="input-blue"/>
-					</s:if>
+					</c:if>
 				</s:if>
-				<s:elseif test="null != inStock && 'mdy' == viewFlag && @com.qkj.ware.action.warepower@checkPermit(inStock.store_id,'add')">
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_MDY') && null==inStock.confirm">
-					<s:submit id="save" name="save" value="保存" action="inStock_save" cssClass="input-blue"/>
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_SURE') && inDetails.size()>0">
-					<s:submit value="确认" action="inStock_sure" onclick="return isOp('是否确认?\n确认后将不能更改!');" cssClass="input-yellow"></s:submit>
-					</s:if>
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_DEL')  && null==inStock.confirm && inStock.confirm==null">
-				
-					<s:submit id="delete" name="delete" value="删除" action="inStock_del"  cssClass="input-red"/>
-					</s:if>
-					</s:if>
+				<s:elseif test="'mdy' == viewFlag">
+					<c:if test="${it:checkWarePermit(null,'in')==true}">
+						<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_MDY',null)==true}">
+							<s:submit id="save" name="save" value="保存" action="inStock_save" cssClass="input-blue"/>
+						</c:if>
+						<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_DEL',null)==true && inStock.confirm==null }">
+							<s:submit id="delete" name="delete" value="删除" action="inStock_del"  cssClass="input-red"/>
+						</c:if>
+						<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_SURE',null)==true && inDetails.size()>0}">
+							<s:submit value="确认" action="inStock_sure" onclick="return isOp('是否确认?\n确认后将不能更改!');" cssClass="input-yellow"></s:submit>
+						</c:if>
+					</c:if>
+					<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_CENCLE',null)==true &&  inStock.send==0 && inStock.confirm!=null}">
+						<s:submit cssClass="input-red" id="cencle" name="cencle" value="取消订单" action="inStock_cencle" onclick="return isOp('确认取消?');" />
+					</c:if>
 				</s:elseif>
+				
 				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_CENCLE') && @com.qkj.ware.action.warepower@checkPermit(inStock.store_id,'add')  && inStock.confirm!=null && inStock.send!=1">
 					<s:submit cssClass="input-red" id="cencle" name="cencle" value="取消订单" action="inStock_cencle" onclick="return isOp('确认取消?');" />
 					</s:if>
@@ -261,65 +267,6 @@ font-size: 14px;
 </div>
 </div>
 
-
-<!--盘点仓库 -->
-<div id="addItemForm" title="添加明细">
-<s:form id="form_addItem" name="form_addItem" action="inDetail_add" namespace="/inDetail" onsubmit="return validator(this);" method="post" theme="simple">
-	<table>
-		  <tr>
-		   	<td>
-		   	<div class="label_main input-a">
-				<div id="addItemForm" class="label_con" title="请选择入库商品">	
-					<div class="label_hang">
-			            <div class="label_ltit">商品:</div>
-			            <div class="label_rwben2">
-			            	<span class="label_rwb">
-			            	<select id="membermanagerid" name="inDetail.product_id" title="产品">
-								<option>--请选择--</option>
-								<s:iterator value="products" status="sta">
-								<option data='<s:property value="market_price" />#<s:property value="group_price" />#<s:property value="dealer_price" />#<s:property value="agree_price_1" />#<s:property value="agree_price_2" />#<s:property value="agree_price_3" />' data_case='<s:property value="case_spec" />' value='<s:property value="uuid" />'><s:property value="title" /></option>
-								</s:iterator>
-							</select>	
-							</span>
-			            </div>
-			        </div>																		
-					
-			        <div class="label_hang">
-		            <div class="label_ltit">单价:</div>
-		            <div class="label_rwben2">
-		            <div class="label_rwb"><s:textfield name="inDetail.price" title="单价" dataType="number"  /></div>
-		            </div>
-	       		</div>
-	       		<div class="label_hang">
-		            <div class="label_ltit">数量:</div>
-		            <div class="label_rwben2">
-		            <div class="label_rwb">
-						<s:textfield id="num" name="inDetail.num" title="数量" dataType="integer" cssClass="validate[required]" />
-						<span id="ladingItemnumCase"></span>
-					</div>
-		            </div>
-	       		</div>	
-	       		<div class="label_hang">
-		            <div class="label_ltit">合计:</div>
-		            <div class="label_rwben2">
-		            <div class="label_rwb"><s:textfield name="inDetail.total" title="合计" dataType="number" /></div>
-		            </div>
-	       		</div>																				
-			        <div class="label_hang label_button tac">																				
-			         <s:hidden name="inDetail.lading_id" title="提货单ID" value="%{inStock.uuid}" />
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_ADD')">
-					<s:submit id="add" name="add" value="确定" action="inDetail_add" onclick="return flag();" />
-					</s:if>
-					<input type="button" value="关闭" onclick="closeAddForm();" class="input-gray" />															
-			        </div>
-			       </div>																				
-				</div>
-			</td>
-		 	</tr>
-	</table>	
-	<s:hidden name="viewFlag" value="add" />
-</s:form>
-</div>
 <s:action name="ref_foot" namespace="/manager" executeResult="true" />
 </body>
 <script type="text/javascript">

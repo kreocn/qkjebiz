@@ -31,6 +31,9 @@ import org.iweb.sys.domain.UserDept;
 import org.iweb.sys.domain.UserLoginInfo;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.qkj.ware.dao.WarepowerDAO;
+import com.qkj.ware.domain.Warepowers;
+import com.qkjsys.ebiz.domain.Ware;
 
 public class UserLoginAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
@@ -245,7 +248,14 @@ public class UserLoginAction extends ActionSupport {
 					role_p_list = (new UserRoleDAO()).listRolePrvg(map);
 				}
 			}
-
+			//仓库权限
+			List<Warepowers> wps=new ArrayList<>();
+			WarepowerDAO wpd=new WarepowerDAO();
+			map.clear();
+			map.put("username", user.getUuid());
+			wps=wpd.list(map);
+			ulf.setWps(wps);
+			
 			// 多部门多权限
 			ulf.setUser_prvg_map((HashMap<String, String>) setUserLoginInfo(userDepts));
 			if (f_map != null) {

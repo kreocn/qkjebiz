@@ -13,7 +13,10 @@
 			<isNotEmpty prepend="AND" property="product_id"><![CDATA[ s.product_id=#product_id# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="store_id"><![CDATA[ s.store_id=#store_id# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="quantity"><![CDATA[ s.quantity=#quantity# ]]></isNotEmpty>
-			
+			<isNotEmpty prepend="AND" property="storeids">
+			<![CDATA[ s.store_id In ]]>
+				<iterate property="storeids" open="(" close=")" conjunction=" , "> #storeids[]#</iterate>
+			</isNotEmpty>
 
 		</dynamic>
 	</select>
