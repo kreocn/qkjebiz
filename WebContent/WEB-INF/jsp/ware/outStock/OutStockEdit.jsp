@@ -70,6 +70,11 @@
 	            	</span>
 	            </div>
 	        </div>
+	        
+	        <div class="label_hang">
+				       <div class="label_ltit">产品系列:</div>
+				       <div class="label_rwben"><s:select id="membermanagerid" cssClass="validate[required]" name="product.brand" title="产品类型"  headerKey="" headerValue="--请选择--" list="proTypes" listKey="uuid" listValue="name" /></div>
+				</div>
         </div>
         
         <div id="state0" style="display: none;"><!-- 销售出库，填加会员信息，要审核 -->
