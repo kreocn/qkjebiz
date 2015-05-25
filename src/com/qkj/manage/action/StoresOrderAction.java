@@ -34,6 +34,7 @@ public class StoresOrderAction   extends ActionSupport{
 	public void setProducts(List<Product> products) {
 		this.products = products;
 	}
+	
 	private List<Product> products;
 	private List<StoresOrderCustom> storesOrderCustoms=new ArrayList<StoresOrderCustom>();
 	private Map<String, Object> map = new HashMap<String, Object>();
@@ -63,7 +64,7 @@ public class StoresOrderAction   extends ActionSupport{
 		try {
 			map.clear();
 			if (product != null)
-				map.putAll(ToolsUtil.getMapByBean(product));
+			map.putAll(ToolsUtil.getMapByBean(product));
 			map.putAll(ContextHelper.getDefaultRequestMap4Page());
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 			this.setProducts(dao.listdb1(map));
@@ -75,12 +76,11 @@ public class StoresOrderAction   extends ActionSupport{
 			ulf=(UserLoginInfo) request.getSession().getAttribute(Parameters.UserLoginInfo_Session_Str);
 			map.put("userid", ulf.getUuid());
 			storesOrderCustoms=storesorderdao.list(map);
-			
 			for (int i = 0; i < this.products.size(); i++) {
 				for (int j = 0; j < storesOrderCustoms.size(); j++) {
 					int productid=Integer.parseInt(storesOrderCustoms.get(j).getProduct_id());
 					if(products.get(i).getUuid()==productid){
-						products.get(i).setMarket_price(storesOrderCustoms.get(j).getPrice());
+						products.get(i).setUpdate_price(storesOrderCustoms.get(j).getPrice());
 					}
 				}
 			}

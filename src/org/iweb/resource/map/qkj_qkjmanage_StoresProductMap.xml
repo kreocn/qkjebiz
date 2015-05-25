@@ -31,10 +31,11 @@
 	</select>
 		 <select  id ="qkjStores_getStoresOrder"  resultClass="storesOrderCustom" parameterClass ="java.util.Map" >  
     <![CDATA[
-    select * from qkj_t_order_custom q where user_id=#userid# 
+    select * from qkj_t_order_custom q where user_id=#userid#
     	]]>
-    <isNotEmpty prepend="AND" property="product_id"><![CDATA[ q.product_id=#productid# ]]></isNotEmpty>
-  <isNotEmpty prepend="AND" property="bar_code"><![CDATA[ q.bar_code=#barcode# ]]></isNotEmpty>
+    	
+    <isNotEmpty prepend="AND" property="productid"><![CDATA[ q.product_id=#productid# ]]></isNotEmpty>
+  <isNotEmpty prepend="AND" property="barcode"><![CDATA[ q.bar_code=#barcode# ]]></isNotEmpty>
 </select >
 <insert  id ="qkjStores_addStoresOrder"  parameterClass ="java.util.Map" >
 insert into qkj_t_order_custom(product_id,user_id,price,bar_code) values (#productid#,#userid#,#price#,#barcode#)

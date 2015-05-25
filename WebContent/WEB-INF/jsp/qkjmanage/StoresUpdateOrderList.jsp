@@ -27,23 +27,24 @@
 	<s:action name="nav" namespace="/manage" executeResult="true" />
 	<div class="tab_right">
 		<div class="tab_warp main">
+			<div class="dq_step">	<a href="/manager/default">首页</a>&nbsp;&gt;&nbsp;查看订单</div>
 			<div class="tab_warp">
 				<table>
 					<tr id="coltr">
-						<th class="td1">编号</th>
+			
 						<th class="td3">用户名称</th>
 						<th class="td3">订单总价</th>
 						<th class="td1">添加时间</th>
-						<th class="td2">修改时间</th>
+						
 						<th class="td4">操作</th>
 					</tr>
 					<s:iterator value="storesorderlist" status="sta">
 						<tr>
-						    <td class="td1" >${id}</td>
+						
 							<td class="td2" >${user_name}</td>
 							<td class="td3">${total_price}</td>
 							<td class="td4">${add_time}</td>
-							<td class="td5">${lmtime}</td>
+							
 							<td class="td4 op-area"><a  class="input-blue"  href="/qkjmanage/stores_order_update_details.action?id=${id}" >查看详情</a><a  class="input-blue" href="/qkjmanage/stores_order_delete.action?id=${id}"  >删除</a></td>
 						</tr>
 					</s:iterator>

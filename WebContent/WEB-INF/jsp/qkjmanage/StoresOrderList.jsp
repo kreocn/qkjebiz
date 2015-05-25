@@ -27,21 +27,21 @@
 	<s:action name="nav" namespace="/manage" executeResult="true" />
 	<div class="tab_right">
 		<div class="tab_warp main">
-			<div class="dq_step">${path}</div>
-			<s:form id="serachForm" name="serachForm" action="product_list" method="get" namespace="/qkjmanage" theme="simple">
+			<div class="dq_step">	<a href="/manager/default">首页</a>&nbsp;&gt;&nbsp;门店自定义支付</div>
+			<s:form id="serachForm" name="serachForm" action="stores_order_list" method="get" namespace="/qkjmanage" theme="simple">
 				<div class="label_con">
 					<div class="label_main">
 						<div class="label_hang">
 							<div class="label_ltit">品名:</div>
 							<div class="label_rwben">
-								<s:textfield name="product.title" title="品名" dataLength="0,85" controlName="品名" />
+								<s:textfield id="auto_prod_name" name="product.title" cssClass="selectAll iI iI-s" />
+		                         	
 							</div>
 						</div>
 						<div class="label_hang label_button tac">
 							<s:checkbox id="search_mcondition" name="search_mcondition" fieldValue="true" value="true" cssClass="regular-checkbox" />
 							<label for="search_mcondition"></label>更多条件
 							<s:submit value="搜索" />
-							<s:reset value="重置" />
 						</div>
 					</div>
 				</div>
@@ -49,24 +49,26 @@
 			<div class="tab_warp">
 				<table>
 					<tr id="coltr">
-						<th class="td1">编号</th>
-						<th class="td3">统一编码</th>
-						<th class="td3">条形码</th>
+						<th class="td1" style="display: none;">编号</th>
+				
+						<th class="td3" style="display: none;">条形码</th>
 						<th class="td1">系列</th>
 						<th class="td2">品名</th>
 						<th class="td5">规格</th>
-						<th >价格</th>
+						<th >修改后价格(点击修改)</th>
+						<th >原价</th>
 						<th class="td4">操作</th>
 					</tr>
 					<s:iterator value="products" status="sta">
 						<tr id="showtr${uuid}">
-							<td class="td1" id="uuid">${uuid}</td>
-							<td class="td3">${prod_code}</td>
-							<td class="td1"id="bar_code">${bar_code}</td>
+							<td class="td1" id="uuid" style="display: none;">${uuid}</td>
+				
+							<td class="td1" id="bar_code" style="display: none;">${bar_code}</td>
 							<td class="td1">${brand_name}</td>
 							<td class="td2">${title}</td>
 							<td class="td5">${spec}</td>
-							<td class="caname" style="widit: 100px" id="price">${market_price}</td>
+							<td class="caname" style="widit: 100px" id="price">${update_price}</td>
+							<td class="caname" style="widit: 100px"	>${market_price}</td>
 							<td class="td4 op-area"><a id="${uuid}" class="input-blue" uuid="${uuid}" onclick="javascript:addprice(this)">确认修改</a></td>
 						</tr>
 					</s:iterator>
@@ -76,6 +78,7 @@
 		</div>
 	</div>
 	<s:action name="ref_foot" namespace="/manager" executeResult="true" />
+	<script type="text/javascript" src="<c:url value="/js/func/select_products.js" />"></script>
 	<script type="text/javascript" src="<s:url value="/js/jqueryPlugins/select3/jquery.cityselect.js" />">
 </script>
 	<script type="text/javascript">
@@ -142,6 +145,9 @@ function addprice(data){
 	 ajax.addParameter("dbnum","1");
 	 ajax.sendAjax();
 }
+$(function(){
+	SimpleLoadProducts(function(){},"noparam=true");
+ });
 </script>
 </body>
 </html>
