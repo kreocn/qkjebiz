@@ -1,13 +1,16 @@
 package com.qkj.manage.action;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.iweb.sys.ActionAttr;
@@ -106,36 +109,39 @@ public class MarketAction extends ActionSupport implements ActionAttr {
 		String p=IWebConfig.getConfigMap().get("WebAbsolutePath");
 		OutputStreamWriter out =new OutputStreamWriter(new FileOutputStream(p+"/js/Info.js"),"UTF-8");
 		this.setMarkets(dao.list(null));
-		String info=null;
-		info="var bmap = new Map();"+'\n';
-        out.write(info);
+		StringBuilder info=new StringBuilder();
+		//String info=null;
+		info.append("var bmap = new Map();\n");
+        //out.write(info);
         if(markets.size()>0){
         	for(int i=0;i<markets.size();i++){
         		market=markets.get(i);
-        		info="bmap.put('qkj"+market.getUuid()+"', { x : "+market.getAbs()+", y : "+market.getYaxis()+", name : '"+market.getName()+"', area : '"+market.getArea()+"', lead : '"+market.getLead()+"', msg : '"+market.getAddress()+"<br />";
+        		info.append("bmap.put('qkj"+market.getUuid()+"', { x : "+market.getAbs()+", y : "+market.getYaxis()+", name : '"+market.getName()+"', area : '"+market.getArea()+"', lead : '"+market.getLead()+"', msg : '"+market.getAddress()+"<br />");
         		if(market.getPeople()!=null && !market.getPeople().equals("")){
-        			info+="联系人："+market.getPeople()+"<br />联系电话："+market.getPhone()+"',img : '";
+        			info.append("联系人："+market.getPeople()+"<br />联系电话："+market.getPhone()+"',img : '");
         		}else{
-        			info+="联系电话："+market.getPhone()+"',img : '";
+        			info.append("联系电话："+market.getPhone()+"',img : '");
         		}
         		if(market.getImg()!=null && !market.getImg().equals("")){
-        			info+=market.getImg()+"' });"+'\n';
+        			info.append(market.getImg()+"' });"+'\n');
         		}else{
-        			info+="'"+" });"+'\n';
+        			info.append("'"+" });"+'\n');
         		}
-        		out.write(info);
+        		//out.write(info);
         	}
         }
-        info="var areas = [ '西北', '华北', '东北', '华东', '中南', '西南' ];";
-        out.write(info);
+        info.append("var areas = [ '西北', '华北', '东北', '华东', '中南', '西南' ];");
+        //out.write(info);
         out.flush();
  	    out.close();
  	    
+ 	    ;
+ 	    Long s=(long) info.length();
  	    ObjectMetadata meta = new ObjectMetadata();
 		File f = new File(p+"/js/Info.js");
 		// InputStream in = new FileInputStream(f);
 		meta.setContentLength(f.length());
-		OSSUtil_IMG.uploadFile("qkjbj01", "CacheFiles/Marketing_network_map_info.js", f, meta);
+		OSSUtil_IMG.uploadFile("CacheFiles/Marketing_network_map_info.js", IOUtils.toInputStream(info), s);
 		
 		return SUCCESS;
 	}
