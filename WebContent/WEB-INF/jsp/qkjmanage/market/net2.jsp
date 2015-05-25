@@ -73,7 +73,7 @@ function searchmap() {
 
 function showInfo(e){
  if(confirm("确定获取："+e.point.lng+","+e.point.lat+"此坐标？")){
-	location.href="/qkjmanage/market_saveay?market.uuid="+${market.uuid}+"& market.abs="+e.point.lng+"& market.yaxis="+e.point.lat;
+	location.href="/qkjmanage/market_saveay?market.uuid="+${market.uuid}+"&market.abs="+e.point.lng+"&market.yaxis="+e.point.lat;
  }else{
      return false;
  }
