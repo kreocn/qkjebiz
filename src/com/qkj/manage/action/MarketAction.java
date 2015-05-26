@@ -2,6 +2,7 @@ package com.qkj.manage.action;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
@@ -39,8 +40,7 @@ public class MarketAction extends ActionSupport implements ActionAttr {
 	private String flag;
 
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;网络营销管理";
-	
-	
+
 	public String getFlag() {
 		return flag;
 	}
@@ -80,6 +80,7 @@ public class MarketAction extends ActionSupport implements ActionAttr {
 	public void setViewFlag(String viewFlag) {
 		this.viewFlag = viewFlag;
 	}
+
 	public Market getMarket() {
 		return market;
 	}
@@ -103,73 +104,68 @@ public class MarketAction extends ActionSupport implements ActionAttr {
 	public void setPath(String path) {
 		this.path = path;
 	}
-	
-	public String writejs() throws Exception{
+
+	public String writejs() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_MARKET");
-		String p=IWebConfig.getConfigMap().get("WebAbsolutePath");
-		OutputStreamWriter out =new OutputStreamWriter(new FileOutputStream(p+"/js/Info.js"),"UTF-8");
 		this.setMarkets(dao.list(null));
-		StringBuilder info=new StringBuilder();
-		//String info=null;
+		StringBuilder info = new StringBuilder();
 		info.append("var bmap = new Map();\n");
-        //out.write(info);
-        if(markets.size()>0){
-        	for(int i=0;i<markets.size();i++){
-        		market=markets.get(i);
-        		info.append("bmap.put('qkj"+market.getUuid()+"', { x : "+market.getAbs()+", y : "+market.getYaxis()+", name : '"+market.getName()+"', area : '"+market.getArea()+"', lead : '"+market.getLead()+"', msg : '"+market.getAddress()+"<br />");
-        		if(market.getPeople()!=null && !market.getPeople().equals("")){
-        			info.append("联系人："+market.getPeople()+"<br />联系电话："+market.getPhone()+"',img : '");
-        		}else{
-        			info.append("联系电话："+market.getPhone()+"',img : '");
-        		}
-        		if(market.getImg()!=null && !market.getImg().equals("")){
-        			info.append(market.getImg()+"' });"+'\n');
-        		}else{
-        			info.append("'"+" });"+'\n');
-        		}
-        		//out.write(info);
-        	}
-        }
-        info.append("var areas = [ '西北', '华北', '东北', '华东', '中南', '西南' ];");
-        //out.write(info);
-        out.flush();
- 	    out.close();
- 	    
- 	    ;
- 	    Long s=(long) info.length();
- 	    ObjectMetadata meta = new ObjectMetadata();
-		File f = new File(p+"/js/Info.js");
-		// InputStream in = new FileInputStream(f);
-		meta.setContentLength(f.length());
-		OSSUtil_IMG.uploadFile("CacheFiles/Marketing_network_map_info.js", IOUtils.toInputStream(info), s);
-		
+		if (markets.size() > 0) {
+			for (int i = 0; i < markets.size(); i++) {
+				market = markets.get(i);
+				Double x = market.getAbs();
+				Double y = market.getYaxis();
+				if (x == null || y == null) continue;
+				info.append("bmap.put('qkj" + market.getUuid() + "', { x : " + market.getAbs() + ", y : " + market.getYaxis() + ", name : '" + market.getName() + "', area : '"
+						+ market.getArea() + "', lead : '" + market.getLead() + "', msg : '" + market.getAddress() + "<br />");
+				if (market.getPeople() != null && !market.getPeople().equals("")) {
+					info.append("联系人：" + market.getPeople() + "<br />联系电话：" + market.getPhone() + "',img : '");
+				} else {
+					info.append("联系电话：" + market.getPhone() + "',img : '");
+				}
+				if (market.getImg() != null && !market.getImg().equals("")) {
+					info.append(market.getImg() + "' });" + '\n');
+				} else {
+					info.append("'" + " });" + '\n');
+				}
+			}
+		}
+		info.append("var areas = [ '西北', '华北', '东北', '华东', '中南', '西南' ];");
+
+		byte[] b = info.toString().getBytes();
+		InputStream in = new ByteArrayInputStream(b);
+		try {
+			OSSUtil_IMG.uploadFile("CacheFiles/Marketing_network_map_info.js", in, (long) b.length);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		return SUCCESS;
 	}
-	
+
 	public String list() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_MARKET");
-		String code=ContextHelper.getUserLoginDept();
+		String code = ContextHelper.getUserLoginDept();
 		try {
-				map.clear();
-				if (market != null)
-					map.putAll(ToolsUtil.getMapByBean(market));
-				map.putAll(ContextHelper.getDefaultRequestMap4Page());
-				this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
-				if (ContextHelper.isAdmin()) {// 管理员
-					
-				}else{
-					map.put("deptcode", code);
-				}
-				
-				this.setMarkets(dao.list(map));
-				this.setRecCount(dao.getResultCount());
+			map.clear();
+			if (market != null) map.putAll(ToolsUtil.getMapByBean(market));
+			map.putAll(ContextHelper.getDefaultRequestMap4Page());
+			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
+			if (ContextHelper.isAdmin()) {// 管理员
+
+			} else {
+				map.put("deptcode", code);
+			}
+
+			this.setMarkets(dao.list(map));
+			this.setRecCount(dao.getResultCount());
 			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;网络营销管理";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
 		}
-			
-			return SUCCESS;
+
+		return SUCCESS;
 	}
 
 	public String load() throws Exception {
@@ -189,12 +185,12 @@ public class MarketAction extends ActionSupport implements ActionAttr {
 					this.setMarket(null);
 				}
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/market_list?viewFlag=relist'>网络营销管理</a>&nbsp;&gt;&nbsp;修改信息";
-				if(flag!=null && flag.equals("1")){
+				if (flag != null && flag.equals("1")) {
 					return "addSuccess";
-				}else{
+				} else {
 					return "Success";
 				}
-				
+
 			} else {
 				this.setMarket(null);
 				setMessage("无操作类型!");
@@ -205,7 +201,6 @@ public class MarketAction extends ActionSupport implements ActionAttr {
 			throw new Exception(this.getClass().getName() + "!load 读取数据错误:", e);
 		}
 	}
-
 
 	public String add() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_MARKET_ADD");
@@ -232,12 +227,12 @@ public class MarketAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
-	
-	public String saveab()throws Exception {
+
+	public String saveab() throws Exception {
 		market.setUuid(market.getUuid());
 		return SUCCESS;
 	}
-	
+
 	public String saveay() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_MARKET_MDY");
 		try {

@@ -50,19 +50,19 @@
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="apply_dept"><![CDATA[ apply_dept=#apply_dept# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="apply_depts" open="(" close=")">
-			<![CDATA[ t.apply_dept In ]]>
+			<![CDATA[ apply_dept In ]]>
 				<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
 				<isNotEmpty prepend="OR" property="apply_perdepts">
-							<![CDATA[ t.apply_dept In ]]>
+							<![CDATA[ apply_dept In ]]>
 					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
-					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ t.apply_user=#apply_userDouble# ]]></isNotEmpty>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ apply_user=#apply_userDouble# ]]></isNotEmpty>
 				</isNotEmpty>
 			</isNotEmpty>
 			<isEmpty property="apply_depts">
 				<isNotEmpty prepend="AND" property="apply_perdepts">
-						<![CDATA[ t.apply_dept In ]]>
+						<![CDATA[ apply_dept In ]]>
 					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
-					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ t.apply_user=#apply_userDouble# ]]></isNotEmpty>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ apply_user=#apply_userDouble# ]]></isNotEmpty>
 				</isNotEmpty>
 			</isEmpty>
 			<isNotEmpty prepend="AND" property="apply_user"><![CDATA[ apply_user=#apply_user# ]]></isNotEmpty>
