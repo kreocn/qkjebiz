@@ -27,7 +27,10 @@
 	<!-- 顶部和左侧菜单导航 -->
 	<s:action name="nav" namespace="/manage" executeResult="true" />
 	<div class="tab_right">
-		<div class="tab_warp main">
+ 	<div class="dq_step">
+		<a href="/manager/default">首页</a>&nbsp;&gt;&nbsp;<a href="/qkjmanage/stores_order_findOrder">查看订单</a>&nbsp;&gt;&nbsp;订单明细
+		
+	</div>		<div class="tab_warp main">
 		<div class="label_con">
 				<div class="label_main">
 						<div class='label_hang'>
@@ -88,6 +91,7 @@
 			</div>
 		</div>
 	</div>
+		</div>
 	<s:action name="ref_foot" namespace="/manager" executeResult="true" />
 	<script type="text/javascript">
 	 $(function() {

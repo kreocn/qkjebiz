@@ -46,6 +46,15 @@ var LoadProductsAutoComplete = function(){
 		select : function(event, ui){
 			$("#auto_prod_id").val(ui.item.vitem.uuid);
 			$("#tiaomainput").val(ui.item.vitem.bar_code);
+			if(ui.item.vitem.bar_code!=""){
+				$("#tiaomainput").val(ui.item.vitem.bar_code);
+			}else if(ui.item.vitem.bar_code_box!=""){
+				$("#tiaomainput").val(ui.item.vitem.bar_code_box);
+			}else if(ui.item.vitem.bar_code_tibet!=null){
+				$("#tiaomainput").val(ui.item.vitem.bar_code_tibet);
+			}else if(ui.item.vitem.bar_code_tibet_box!=null){
+				$("#tiaomainput").val(ui.item.vitem.bar_code_tibet_box);
+			}
 			// $("#auto_prod_name").data("vitem", vitem);
 			selfobj.config._successCallback(event, ui);
 		},

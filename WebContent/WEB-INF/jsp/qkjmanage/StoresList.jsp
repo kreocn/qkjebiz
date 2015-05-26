@@ -16,7 +16,6 @@
 <div class="tab_right input-a">
  	<div class="dq_step">
 		<a href="/manager/default">首页</a>&nbsp;&gt;&nbsp;门店支付
-		
 	</div>
 	<div class="label_main">		
          <div class="label_hang">

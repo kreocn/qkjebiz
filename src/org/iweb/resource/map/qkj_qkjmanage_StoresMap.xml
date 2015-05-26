@@ -11,8 +11,11 @@
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="code"><![CDATA[ p.bar_code=#code# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="user_id"><![CDATA[ p.user_id=#userid# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="title"><![CDATA[ p.title Like '%' + #title# +  '%']]></isNotEmpty>
+				<isNotEmpty prepend="OR" property="code"><![CDATA[ p.bar_code_tibet_box=#code# ]]></isNotEmpty>
+					<isNotEmpty prepend="OR" property="code"><![CDATA[ p.bar_code_tibet=#code# ]]></isNotEmpty>
+						<isNotEmpty prepend="OR" property="code"><![CDATA[ p.bar_code_box=#code# ]]></isNotEmpty>
+			              <isNotEmpty prepend="AND" property="userid"><![CDATA[ p.user_id=#userid# ]]></isNotEmpty>
+			             <isNotEmpty prepend="AND" property="title"><![CDATA[ p.title Like '%' + #title# +  '%']]></isNotEmpty>
 		</dynamic>
 	</select>
 

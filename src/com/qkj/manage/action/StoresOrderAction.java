@@ -41,7 +41,6 @@ public class StoresOrderAction   extends ActionSupport{
 	private static Log log = LogFactory.getLog(StoresOrderAction.class);
 	private int recCount;
 	private int pageSize;
-	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;产品列表";
 	public Product getProduct() {
 		return product;
 	}
@@ -60,6 +59,7 @@ public class StoresOrderAction   extends ActionSupport{
 	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
 	}
+	// 
 	public String list() throws Exception {
 		try {
 			map.clear();
@@ -85,7 +85,7 @@ public class StoresOrderAction   extends ActionSupport{
 				}
 			}
 			this.setRecCount(dao.getResultCount());
-			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;产品列表";
+		
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);

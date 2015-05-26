@@ -9,14 +9,14 @@
 		<action name="stores_list" class="com.qkj.manage.action.StoresAction" method="list">
 			<result>/WEB-INF/jsp/qkjmanage/StoresList.jsp</result>
 		</action>
-		<action name="add_sotres_list" class="com.qkj.manage.action.StoresAction" method="addlist">
-		</action>
+	<!-- 	<action name="add_sotres_list" class="com.qkj.manage.action.StoresAction" method="addlist">
+		</action> -->
 		<action name="insert_sotres_order" class="com.qkj.manage.action.StoresAction" method="insertOrder">
 			<result type="redirectAction">
 				<param name="actionName">stores_list</param>
 			</result>
 		</action>
-		<action name="stores_order_update" class="com.qkj.manage.action.StoresAction" method="update">
+		<action name="stores_order_findOrder" class="com.qkj.manage.action.StoresAction" method="findOrder">
 		<result>/WEB-INF/jsp/qkjmanage/StoresUpdateOrderList.jsp</result>
 		</action>
 		<action name="stores_order_update_details" class="com.qkj.manage.action.StoresAction" method="updateDetails">
@@ -27,7 +27,7 @@
 		</action>
 		<action name="stores_order_delete" class="com.qkj.manage.action.StoresAction" method="delete">
 	   	<result type="redirectAction">
-				<param name="actionName">stores_order_update</param>
+				<param name="actionName">stores_order_findOrder</param>
 			</result>
 		</action>
 		<!-- Customer End -->

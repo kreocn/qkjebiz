@@ -168,6 +168,7 @@ public class StoresAction  extends ActionSupport{
 	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
 	}
+	//门店支付 >添加订单 >首页
 	public String list() throws Exception {
 		UserLoginInfo ulf = new UserLoginInfo();
 		ActionContext context = ActionContext.getContext();  
@@ -178,7 +179,8 @@ public class StoresAction  extends ActionSupport{
 		storesorderlist=dao.listWeek(map);
 		return SUCCESS;
 	}
-	public String addlist() throws Exception {
+
+	/*public String addlist() throws Exception {
 		try {
 			map.clear();
 			map.put("code", code);
@@ -206,7 +208,8 @@ public class StoresAction  extends ActionSupport{
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
 		}
 		return null;
-	}
+	}*/
+	//门店支付>添加订单>添加订单
 	public String insertOrder(){
 		List<StoresOrderItem> sotr=storesorderitem;
 		Collection nuCon = new Vector();
@@ -242,30 +245,13 @@ public class StoresAction  extends ActionSupport{
 		dao.add(storesorderitem);
 		return SUCCESS;
 	}
-	public static void writerJsonObject(Object obj,HttpServletResponse response) throws IOException{ 
-		PrintWriter out = null;
-		try {
-			//response.setCharacterEncoding("UTF-8");
-			response.setContentType("application/json;charset=UTF-8");
-			out = response.getWriter(); 
-			JSONObject jobj = JSONObject.fromObject(obj);
-			out.write(jobj.toString());
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally{
-			if(out!=null){
-				out.flush();
-				out.close();
-				out = null;
-			}
-		}
-	} 
 	public double sum(double d1,double d2){
 		BigDecimal bd1 = new BigDecimal(Double.toString(d1));
 		BigDecimal bd2 = new BigDecimal(Double.toString(d2));
 		return bd1.add(bd2).doubleValue();
 	} 
-	public String update() throws Exception {
+	//门店支付>查看订单
+	public String findOrder() throws Exception {
 		UserLoginInfo ulf = new UserLoginInfo();
 		ActionContext context = ActionContext.getContext();  
 		HttpServletRequest request = (HttpServletRequest) context.get(ServletActionContext.HTTP_REQUEST);  
@@ -279,6 +265,7 @@ public class StoresAction  extends ActionSupport{
 		this.setRecCount(dao.listOrder(map).size());
 		return SUCCESS;
 	}
+	//门店支付>查看订单>订单详情
 	public String updateDetails() throws Exception {
 		map.clear();
 		map.put("id", this.getId());
@@ -289,7 +276,7 @@ public class StoresAction  extends ActionSupport{
 		this.setStoresorderitem(dao.listOrderItem(map));
 		return SUCCESS;
 	}
-
+//门店支付>查看订单>订单详情>删除
 	public String itemDelete() throws Exception {
 		System.out.println(num);
 		if(num==0){
@@ -328,6 +315,7 @@ public class StoresAction  extends ActionSupport{
 			}
 		return SUCCESS;
 	}
+	//门店支付>查看订单>删除
 	public String delete() throws Exception {
 		
 	    map.clear();
