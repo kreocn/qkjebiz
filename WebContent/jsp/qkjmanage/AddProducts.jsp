@@ -15,7 +15,7 @@
 <div class="main">
 	<div class="dq_step">
 		<span class="opb lb op-area">
-		<a href="${backUrl}${uuidKey}=${uuidValue}">返回</a>
+		<a href="${backUrl}${uuidKey}=${uuidValue}">返回A</a>
 		</span>
 	</div>
 	<div id="addProductForm" class="label_con idialog" title="添加产品" align="center">
@@ -27,7 +27,9 @@
 		    <div class="label_ltit">类型:</div>
 		    <div class="label_rwben15">
 		    	<select id="selectType" name="selectType">
-		    		<s:if test="onlyType==0 || onlyType==null"><option value="0">产品</option></s:if>
+		    		<s:if test="onlyType==0 || onlyType==null"><option value="0">互助白酒</option></s:if>
+		    		<s:if test="onlyType==2 || onlyType==null"><option value="2">西藏白酒</option></s:if>
+		    		<s:if test="onlyType==3 || onlyType==null"><option value="3">红酒</option></s:if>
 		    		<s:if test="onlyType==1 || onlyType==null"><option value="1">促销物料</option></s:if>
 		    	</select>
 		    </div>
