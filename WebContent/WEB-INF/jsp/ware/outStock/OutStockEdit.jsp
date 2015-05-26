@@ -40,41 +40,25 @@
 	     </div>
 	     <div class="label_main">
 	        <div class="label_hang">
-	            <div class="label_ltit">出库仓库:</div>
-	            <div class="label_rwben2">
-			       <span class="label_rwb">
-			       <select id="membermanagerid" class="selectKick" name="outStock.store_id"
-								title="出库仓库">
-									<s:iterator value="wares" status="sta" var="x">
-										<option value="<s:property value="uuid" />"/>
-										<s:property value="ware_name" />
-									</s:iterator>
-					</select>
-	            	</span>
-	            </div>
-	        </div>
+				       <div class="label_ltit">出库仓库:</div>
+				       <div class="label_rwben2">
+					       <span class="label_rwb">
+					       <s:select id="membermanagerid" cssClass="validate[required]" name="outStock.store_id" title="出库仓库"   list="wares" listKey="uuid" listValue="ware_name" />
+					       </span>
+				       </div>
+			</div>
+				
         </div>
         
         <div class="label_main">
 	        <div class="label_hang">
 	            <div class="label_ltit">状态:</div>
 	            <div class="label_rwben2">
-			       <span class="label_rwb">
-			       <select class="selectKick" id="out" name="outStock.reason" title="状态" onchange="checkState();">
-									<option value="0">销售出库</option>
-									<option value="3">报损</option>
-									<option value="1">招待用酒</option>
-									<option value="4">赠酒</option>
-									<option value="5">其它</option>
-					</select>
-	            	</span>
+		            <span class="label_rwb">
+		            	<s:select id="out" onchange="checkState();" name="outStock.reason" cssClass="selectKick" list="#{0:'销售出库',3:'报损',1:'招待用酒',4:'赠酒',5:'其它'}" />
+					</span>
 	            </div>
 	        </div>
-	        
-	        <div class="label_hang">
-				       <div class="label_ltit">产品系列:</div>
-				       <div class="label_rwben"><s:select id="membermanagerid" cssClass="validate[required]" name="product.brand" title="产品类型"  headerKey="" headerValue="--请选择--" list="proTypes" listKey="uuid" listValue="name" /></div>
-				</div>
         </div>
         
         <div id="state0" style="display: none;"><!-- 销售出库，填加会员信息，要审核 -->
@@ -152,6 +136,62 @@
 		     </div>
         </div>
         
+        <s:if test="'mdy'==viewFlag">
+        	<fieldset>
+			<legend>出库明细</legend>
+			 <div class="label_main">
+					<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+					<tr>
+						<th>编号</th>
+						<th>产品名称</th>
+						<th>单价</th>
+						<th>订单数量</th>
+						<th>实际价格</th>
+						<c:if test="${it:checkWarePermit(null,'out')==true &&  it:checkPermit('QKJ_WARE_OUTSTOCK_ADD',null)==true}">
+						<th>
+						<s:url id="ladingAddProductsUrl" action="qkjm_addProducts" namespace="/qkjmanage">
+												<s:param name="uuidKey">outStock.uuid</s:param>
+												<s:param name="uuidValue" value="outStock.uuid" />
+												<s:param name="backUrl">/outStock/outStock_load?viewFlag=mdy&</s:param>
+												<s:param name="actionUrl">/outStock/outDetail_add</s:param>
+												<s:param name="keyName">outDetail.lading_id</s:param>
+												<s:param name="prodName">outDetail.product_id</s:param>
+												<s:param name="perName">outDetail.price</s:param>
+												<s:param name="numName">outDetail.num</s:param>
+												<s:param name="totalName">outDetail.totel</s:param>
+							</s:url>
+											<input type="button" id="product" onclick="window.location.href='${ladingAddProductsUrl}';" value="添加酒品" />
+						<!-- <a id="addItem" onclick="commain();" >添加出库明细</a> -->
+						</th>
+						</c:if>
+					</tr>
+					<s:iterator value="outDetails" status="sta">
+									<tr>
+									<td class="nw"><s:property value="uuid" /></td>
+									<td class="nw"><s:property value="product_name" /></td>
+									<td class="nw"><s:property value="price" /></td>
+									<td class="nw">
+										<s:property value="num" />(<s:property value="%{(num/(case_spec*1.0)).toString().substring(0,3)}" />件)
+									</td>
+									<td class="nw"><s:property value="totel" /></td>
+									<td>
+									<c:if test="${it:checkPermit('QKJ_WARE_OUTSTOCK_DEL',null)==true}">
+										[<a href="<s:url namespace="/outStock" action="outDetail_del"><s:param name="outDetail.uuid" value="uuid" /><s:param name="outDetail.lading_id" value="lading_id" /></s:url>" onclick="return isDel();">删除</a>]
+									</c:if>
+								    </td>
+									</tr>
+					</s:iterator>
+					</table>
+					<p class="lb_gstit">合计</p>
+	                <p class="lb_jwei"><s:property value="outStock.total_price" />
+	                <s:if test="%{message!=null&&message==1}">
+					<font color="red">库存不足！</font>
+					</s:if>
+	                </p>
+		        </div>
+			</fieldset>
+        </s:if>
+        
         <div class="label_main">
         <div class="label_hang">
             <div class="label_ltit">其它说明:</div>
@@ -172,16 +212,24 @@
 					<s:submit id="add" name="add" value="保存&填写明细" action="outStock_add" cssClass="input-blue"/>
 				</c:if>
 			</s:if> 
-			<s:elseif test="'mdy'=viewFlag">
+			<s:if test="'mdy'==viewFlag">
 				<c:if test="${it:checkWarePermit(null,'out')==true}">
 					<c:if test="${it:checkPermit('QKJ_WARE_OUTSTOCK_MDY',null)==true}">
-						<s:submit id="save" name="save" value="保存" action="outStock_sale" cssClass="input-blue"/>
+						<s:submit id="save" name="save" value="保存" action="outStock_save" cssClass="input-blue"/>
+					</c:if>
+					<c:if test="${it:checkPermit('QKJ_WARE_OUTSTOCK_SURE',null)==true && 2==outStock.send}">
+						<s:if test="%{outDetails.size>0}">
+						<s:submit value="经手人确认" action="outStock_sure" onclick="return isOp('是否确认?\n确认后将不能更改!');" cssClass="input-yellow"></s:submit>
+						</s:if>
+					</c:if>
+					<c:if test="${it:checkPermit('QKJ_WARE_OUTSTOCK_CENCLE',null)==true && 4==outStock.send}">
+						<s:submit id="cencle" name="cencle" value="取消订单" action="outStock_cencle" onclick="return isOp('确认取消?');" cssClass="input-red"/>
 					</c:if>
 					<c:if test="${it:checkPermit('QKJ_WARE_OUTSTOCK_DEL',null)==true}">
 						<s:submit id="delete" name="delete" value="删除" cssClass="input-red" action="outStock_del" onclick="return isDel();" />
 					</c:if>
 				</c:if>
-			</s:elseif>
+			</s:if>
 			<input type="button" value="返回" class="input-gray" onclick="linkurl('<s:url action="outStock_list" namespace="/outStock"><s:param name="viewFlag">relist</s:param></s:url>');" />
             </div>
 		</div>
@@ -201,16 +249,20 @@ function checkState(){
 	var state= $("#out ").val();
 	if(state==0){
 		$("#state0").show();//
+		$('order_user_mobile').attr("disabled",false)
 		$("#state3").hide();
 		$("#state145").hide();
+		$('state145').attr("disabled",true)
 	}else if(state==3){
 		$("#state3").show();//
 		$("#state0").hide();
 		$("#state145").hide();
 	}else{
 		$("#state145").show();//
+		$('state145').attr("disabled",false)
 		$("#state0").hide();
 		$("#state3").hide();
+		$('state0').attr("disabled",true)
 	}
 }
 </script>

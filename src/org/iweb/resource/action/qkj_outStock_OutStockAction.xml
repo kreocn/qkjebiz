@@ -42,14 +42,6 @@
 			</result>
 		</action>
 		<!-- 新增 -->
-		<action name="outStock_sale" class="com.qkj.ware.action.OutStockAction" method="sale">
-			<result type="redirectAction">
-				<param name="actionName">outStock_load</param>
-				<param name="outStock.uuid">${outStock.uuid}</param>
-				<param name="viewFlag">mdy</param>
-				<param name="message">${message}</param>
-			</result>
-		</action>
 
 		<action name="outStock_sure" class="com.qkj.ware.action.OutStockAction" method="sure">
 			<result type="redirectAction">

@@ -523,26 +523,6 @@ public class OutStockAction extends ActionSupport {
 	}
 	
 	
-	public String sale() throws Exception {
-		ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_MDY");
-		try {
-			if(outStock.getReason()==1){
-				outStock.setMember_id(outStock.getMember_name());
-			}
-			if(outStock.getBsreason()!=null){
-				dao.updatebs(outStock);
-			}else{
-				dao.updateStockSale(outStock);
-			}
-			
-		} catch (Exception e) {
-			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
-			throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
-		}
-		return SUCCESS;
-	}
-	
-	
 	//确认
 		public String sure() throws Exception {
 			ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_ADD");

@@ -1,4 +1,5 @@
 package com.qkj.ware.action;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,22 +23,38 @@ public class OutDetailAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
 	private static Log log = LogFactory.getLog(OutDetailAction.class);
 	private Map<String, Object> map = new HashMap<String, Object>();
-	private OutDetailDAO dao=new OutDetailDAO();
+	private OutDetailDAO dao = new OutDetailDAO();
 
 	private OutDetail outDetail;
 	private OutDetailH outDetailh;
 	private OutStock outStock;
 	private Stock stock;
 	private List<OutDetail> outDetails;
+	private List<Stock> stocks;
 	private OutStock newoutdStock;
 	private String message;
 	private String viewFlag;
 	private int recCount;
 	private int pageSize;
 	private int currPage;
-	
+	private String ans="false";
 	
 
+	public String getAns() {
+		return ans;
+	}
+
+	public void setAns(String ans) {
+		this.ans = ans;
+	}
+
+	public List<Stock> getStocks() {
+		return stocks;
+	}
+
+	public void setStocks(List<Stock> stocks) {
+		this.stocks = stocks;
+	}
 
 	public OutDetailH getOutDetailh() {
 		return outDetailh;
@@ -94,7 +111,7 @@ public class OutDetailAction extends ActionSupport {
 	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
 	}
-	
+
 	public int getCurrPage() {
 		return currPage;
 	}
@@ -102,7 +119,6 @@ public class OutDetailAction extends ActionSupport {
 	public void setCurrPage(int currPage) {
 		this.currPage = currPage;
 	}
-	
 
 	public OutStock getNewoutdStock() {
 		return newoutdStock;
@@ -119,8 +135,6 @@ public class OutDetailAction extends ActionSupport {
 	public void setOutStock(OutStock outStock) {
 		this.outStock = outStock;
 	}
-	
-	
 
 	public Stock getStock() {
 		return stock;
@@ -134,11 +148,10 @@ public class OutDetailAction extends ActionSupport {
 		ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_LIST");
 		try {
 			map.clear();
-			if (outDetail != null)
-				map.putAll(ToolsUtil.getMapByBean(outDetail));
+			if (outDetail != null) map.putAll(ToolsUtil.getMapByBean(outDetail));
 			map.putAll(ContextHelper.getDefaultRequestMap4Page());
 			this.setPageSize(ContextHelper.getPageSize(map));
-			this.setCurrPage(ContextHelper.getCurrPage(map));		
+			this.setCurrPage(ContextHelper.getCurrPage(map));
 			this.setOutDetails(dao.list(map));
 			this.setRecCount(dao.getResultCount());
 		} catch (Exception e) {
@@ -147,7 +160,7 @@ public class OutDetailAction extends ActionSupport {
 		}
 		return SUCCESS;
 	}
-	
+
 	public String relist() throws Exception {
 		return SUCCESS;
 	}
@@ -178,38 +191,36 @@ public class OutDetailAction extends ActionSupport {
 
 	public String add() throws Exception {
 		ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_ADD");
+		OutStockDAO od=new OutStockDAO();
 		try {
-			//判断库存是否足够
-			StockDAO stockdao=new StockDAO();
-			map.clear();
-			map.put("uuid", outDetail.getProduct_id());//出库祥表的product_id是库存id
-			this.setStock((Stock)stockdao.fingByPro(map));
-			int quan=(stock.getQuantity()-stock.getFreezeNum())-outDetail.getNum();
-			stock.setQuantity(quan);
-			if(quan>=0){
-				//stockdao.save(stock);
+			if(this.getAns().equals("false")){
+				// 判断库存
+				boolean flag=true;//false,库存数据小于出库数量
+				this.setOutStock((OutStock) od.get(outDetail.getLading_id()));//查询出库主表获得出库仓库
 				
-				//修改出库主表
-				OutStockDAO sdao=new OutStockDAO();
-				this.setNewoutdStock((OutStock)sdao.get(outDetail.getLading_id()));
-				if(newoutdStock.getReason()!=3){//不是报损
-					double num=0;
-					if(newoutdStock.getTotal_price()==null){
-						num=0;
-					}else{
-						num=newoutdStock.getTotal_price();
+				StockDAO sd = new StockDAO();
+				map.clear();
+				map.put("product_id", outDetail.getProduct_id());
+				map.put("store_id", outStock.getStore_id());
+				this.setStocks(sd.list(map));//查询出库仓库是否有此商品
+				if(stocks.size()>0){
+					this.setStock(stocks.get(0));
+					if(stock.getQuantity()<outDetail.getNum()){//库存小于出库数量
+						flag=false;
 					}
-					double num2=outDetail.getTotel();
-					outStock=new OutStock();
-					outStock.setTotal_price(num+num2);//总价
-					outStock.setUuid(newoutdStock.getUuid());
-					sdao.saveTotal(outStock);
+				}else{//此仓库没有要出库的商品
+					flag=false;
 				}
-				//填加祥表
-				dao.add(outDetail);
 				
-			}else{
-				setMessage("1");
+				if(flag==true){//添加详表并修改主表
+					dao.add(outDetail);
+					od.saveTotal(outStock.getTotal_price()+outDetail.getTotel());
+				}else{//提示是否添加
+					this.setMessage("2");
+				}
+			}else{//即使库存小于出库数量也添加
+				dao.add(outDetail);
+				od.saveTotal(outStock.getTotal_price()+outDetail.getTotel());
 			}
 			
 		} catch (Exception e) {
@@ -222,8 +233,8 @@ public class OutDetailAction extends ActionSupport {
 	public String save() throws Exception {
 		ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_MDY");
 		try {
-			//outDetail.setLm_user(ContextHelper.getUserLoginUuid());
-			//outDetail.setLm_time(new Date());
+			// outDetail.setLm_user(ContextHelper.getUserLoginUuid());
+			// outDetail.setLm_time(new Date());
 			dao.save(outDetail);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
@@ -235,29 +246,29 @@ public class OutDetailAction extends ActionSupport {
 	public String del() throws Exception {
 		ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_DEL");
 		try {
-			this.setOutDetail((OutDetail)dao.get(outDetail.getUuid()));
-			OutDetailHDAO hd=new OutDetailHDAO();
+			this.setOutDetail((OutDetail) dao.get(outDetail.getUuid()));
+			OutDetailHDAO hd = new OutDetailHDAO();
 			this.setOutDetailh(outDetail);
-			hd.add(outDetailh);//填加历史
+			hd.add(outDetailh);// 填加历史
 			setMessage("删除成功!ID=" + outDetail.getUuid());
-			//修改库存
-			StockDAO stockdao=new StockDAO();
-			stock=(Stock)stockdao.get(outDetail.getProduct_id());
-			stock.setQuantity(stock.getQuantity()+outDetail.getNum());
+			// 修改库存
+			StockDAO stockdao = new StockDAO();
+			stock = (Stock) stockdao.get(outDetail.getProduct_id());
+			stock.setQuantity(stock.getQuantity() + outDetail.getNum());
 			stockdao.save(stock);
-			//修改出库主表的总价格
-			OutStockDAO insdao=new OutStockDAO();
+			// 修改出库主表的总价格
+			OutStockDAO insdao = new OutStockDAO();
 			map.clear();
 			map.put("uuid", outDetail.getLading_id());
-			outStock=(OutStock)insdao.list(map).get(0);
-			outStock.setTotal_price(outStock.getTotal_price()-outDetail.getTotel());
-			if(outStock.getReason()!=3){
+			outStock = (OutStock) insdao.list(map).get(0);
+			outStock.setTotal_price(outStock.getTotal_price() - outDetail.getTotel());
+			if (outStock.getReason() != 3) {
 				insdao.save(outStock);
 			}
-			//删除祥表
-			
+			// 删除祥表
+
 			dao.delete(outDetail);
-			
+
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!del 数据删除失败:", e);
 			throw new Exception(this.getClass().getName() + "!del 数据删除失败:", e);
@@ -267,14 +278,13 @@ public class OutDetailAction extends ActionSupport {
 
 	private void setOutDetailh(OutDetail outDetail2) {
 		// TODO Auto-generated method stub
-		outDetailh=new OutDetailH();
+		outDetailh = new OutDetailH();
 		outDetailh.setLading_id(outDetail2.getLading_id());
 		outDetailh.setNum(outDetail2.getNum());
 		outDetailh.setPrice(outDetail2.getPrice());
 		outDetailh.setProduct_id(outDetail2.getProduct_id());
 		outDetailh.setTotel(outDetail2.getTotel());
-		
+
 	}
 
-	
 }
