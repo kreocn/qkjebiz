@@ -304,24 +304,7 @@ public class OutStockAction extends ActionSupport {
 		try {
 			Date d = new Date();
 			String u = ContextHelper.getUserLoginUuid();
-			if(outStock.getReason().equals(0)){
-				//outStock.setOrdernum(ToolsUtil.getCommonUUID("XC"));
-				outStock.setBorrowStore_id(0);
-			}else if(outStock.getReason().equals(1)){
-				//outStock.setOrdernum(ToolsUtil.getCommonUUID("ZC"));
-				outStock.setBorrowStore_id(0);
-			}else if(outStock.getReason().equals(2)){//借货
-				//outStock.setOrdernum(ToolsUtil.getCommonUUID("JC"));
-			}else if(outStock.getReason().equals(3)){
-				//outStock.setOrdernum(ToolsUtil.getCommonUUID("SC"));
-				outStock.setBorrowStore_id(0);
-			}else{
-				//outStock.setOrdernum(ToolsUtil.getCommonUUID("ZC"));
-				outStock.setBorrowStore_id(0);
-			}
 			outStock.setTake_id(u);
-			outStock.setTotal_price(0.0);
-			outStock.setMember_price(0.0);
 			outStock.setSend(2);
 			outStock.setAdd_user(u);
 			outStock.setAdd_timer(d);

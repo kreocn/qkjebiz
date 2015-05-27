@@ -249,20 +249,16 @@ function checkState(){
 	var state= $("#out ").val();
 	if(state==0){
 		$("#state0").show();//
-		$('order_user_mobile').attr("disabled",false)
 		$("#state3").hide();
 		$("#state145").hide();
-		$('state145').attr("disabled",true)
 	}else if(state==3){
 		$("#state3").show();//
 		$("#state0").hide();
 		$("#state145").hide();
 	}else{
 		$("#state145").show();//
-		$('state145').attr("disabled",false)
 		$("#state0").hide();
 		$("#state3").hide();
-		$('state0').attr("disabled",true)
 	}
 }
 </script>
