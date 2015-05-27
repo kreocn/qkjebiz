@@ -32,7 +32,7 @@ public class InStockDAO extends AbstractDAO {
 		return super.delete("inStock_delInStock", parameters);
 	}
 	
-	public int mdyTotalPrice(String lading_id) {
+	public int mdyTotalPrice(Integer lading_id) {
 		return super.save("qkjmanage_mdyTotalPrice", lading_id);
 	}
 	

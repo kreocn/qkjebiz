@@ -304,6 +304,7 @@ public class OutStockAction extends ActionSupport {
 		try {
 			Date d = new Date();
 			String u = ContextHelper.getUserLoginUuid();
+			
 			outStock.setTake_id(u);
 			outStock.setSend(2);
 			outStock.setAdd_user(u);
@@ -324,9 +325,6 @@ public class OutStockAction extends ActionSupport {
 	public String save() throws Exception {
 		ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_MDY");
 		try {
-			if(outStock.getReason()==1){
-				outStock.setMember_id(outStock.getMember_name());
-			}
 			Date d = new Date();
 			String u = ContextHelper.getUserLoginUuid();
 			outStock.setLm_user(u);
@@ -508,7 +506,7 @@ public class OutStockAction extends ActionSupport {
 	
 	//确认
 		public String sure() throws Exception {
-			ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_ADD");
+			ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_SURE");
 			String u = ContextHelper.getUserLoginUuid();
 			try {
 				//修改库存

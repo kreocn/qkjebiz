@@ -5,9 +5,9 @@
 	<typeAlias alias="outDetail" type="com.qkj.ware.domain.OutDetail" />
 	<select id="outDetail_getOutDetails" resultClass="outDetail" parameterClass="java.util.Map">
 		<![CDATA[ 
-			SELECT i.*,p.`title` product_name, p.`case_spec` case_spec FROM qkj_t_outdetail i 
+				SELECT i.*,p.`title` product_name, p.`case_spec` case_spec FROM qkj_t_outdetail i 
 			LEFT JOIN qkj_r_stock s ON(i.`product_id`=s.`uuid`) 
-			LEFT JOIN qkj_t_product p ON(s.`product_id`=p.`uuid`)
+			LEFT JOIN qkj_t_product p ON(i.`product_id`=p.`uuid`)
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ i.uuid=#uuid# ]]></isNotEmpty>

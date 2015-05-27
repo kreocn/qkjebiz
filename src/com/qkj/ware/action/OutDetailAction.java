@@ -37,8 +37,8 @@ public class OutDetailAction extends ActionSupport {
 	private int recCount;
 	private int pageSize;
 	private int currPage;
-	private String ans="false";
-	
+	private String ans = "false";
+	private static OutDetail outD;
 
 	public String getAns() {
 		return ans;
@@ -191,54 +191,52 @@ public class OutDetailAction extends ActionSupport {
 
 	public String add() throws Exception {
 		ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_ADD");
-		OutStockDAO od=new OutStockDAO();
+		OutStockDAO od = new OutStockDAO();
 		try {
-			if(this.getAns().equals("false")){
+			if (this.getAns().equals("false")) {
 				// 判断库存
-				boolean flag=true;//false,库存数据小于出库数量
-				this.setOutStock((OutStock) od.get(outDetail.getLading_id()));//查询出库主表获得出库仓库
-				
+				boolean flag = true;// false,库存数据小于出库数量
+				this.setOutStock((OutStock) od.get(outDetail.getLading_id()));// 查询出库主表获得出库仓库
+
 				StockDAO sd = new StockDAO();
 				map.clear();
 				map.put("product_id", outDetail.getProduct_id());
 				map.put("store_id", outStock.getStore_id());
-				this.setStocks(sd.list(map));//查询出库仓库是否有此商品
-				if(stocks.size()>0){
+				this.setStocks(sd.list(map));// 查询出库仓库是否有此商品
+				if (stocks.size() > 0) {
 					this.setStock(stocks.get(0));
-					if(stock.getQuantity()<outDetail.getNum()){//库存小于出库数量
-						flag=false;
+					if (stock.getQuantity() < outDetail.getNum()) {// 库存小于出库数量
+						flag = false;
 					}
-				}else{//此仓库没有要出库的商品
-					flag=false;
+				} else {// 此仓库没有要出库的商品
+					flag = false;
 				}
-				
-				if(flag==true){//添加详表并修改主表
+
+				if (flag == true) {// 添加详表并修改主表
 					dao.add(outDetail);
-					od.saveTotal(outStock.getTotal_price()+outDetail.getTotel());
-				}else{//提示是否添加
+					outStock.setUuid(outStock.getUuid());
+					outStock.setTotal_price(outStock.getTotal_price() + outDetail.getTotel());
+					od.saveTotal(outStock);
+				} else {// 提示是否添加
 					this.setMessage("2");
+					this.outD = outDetail;
 				}
-			}else{//即使库存小于出库数量也添加
+			} else {// 即使库存小于出库数量也添加
+				outDetail = new OutDetail();
+				outDetail.setLading_id(outD.getLading_id());
+				outDetail.setNum(outD.getNum());
+				outDetail.setPrice(outD.getPrice());
+				outDetail.setProduct_id(outD.getProduct_id());
+				outDetail.setTotel(outD.getTotel());
 				dao.add(outDetail);
-				od.saveTotal(outStock.getTotal_price()+outDetail.getTotel());
+				outStock.setUuid(outStock.getUuid());
+				outStock.setTotal_price(outStock.getTotal_price() + outDetail.getTotel());
+				od.saveTotal(outStock);
 			}
-			
+
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!add 数据添加失败:", e);
 			throw new Exception(this.getClass().getName() + "!add 数据添加失败:", e);
-		}
-		return SUCCESS;
-	}
-
-	public String save() throws Exception {
-		ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_MDY");
-		try {
-			// outDetail.setLm_user(ContextHelper.getUserLoginUuid());
-			// outDetail.setLm_time(new Date());
-			dao.save(outDetail);
-		} catch (Exception e) {
-			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
-			throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
 		}
 		return SUCCESS;
 	}
@@ -250,25 +248,15 @@ public class OutDetailAction extends ActionSupport {
 			OutDetailHDAO hd = new OutDetailHDAO();
 			this.setOutDetailh(outDetail);
 			hd.add(outDetailh);// 填加历史
-			setMessage("删除成功!ID=" + outDetail.getUuid());
-			// 修改库存
-			StockDAO stockdao = new StockDAO();
-			stock = (Stock) stockdao.get(outDetail.getProduct_id());
-			stock.setQuantity(stock.getQuantity() + outDetail.getNum());
-			stockdao.save(stock);
 			// 修改出库主表的总价格
 			OutStockDAO insdao = new OutStockDAO();
 			map.clear();
 			map.put("uuid", outDetail.getLading_id());
 			outStock = (OutStock) insdao.list(map).get(0);
 			outStock.setTotal_price(outStock.getTotal_price() - outDetail.getTotel());
-			if (outStock.getReason() != 3) {
-				insdao.save(outStock);
-			}
 			// 删除祥表
-
 			dao.delete(outDetail);
-
+			setMessage("删除成功!ID=" + outDetail.getUuid());
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!del 数据删除失败:", e);
 			throw new Exception(this.getClass().getName() + "!del 数据删除失败:", e);

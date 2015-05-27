@@ -20,6 +20,7 @@
 		</span>
 	</div>
 	<s:form id="editForm" name="editForm" cssClass="validForm" action="outStock_add" namespace="/outStock" method="post" theme="simple">
+	<s:hidden name="outStock.uuid" value="%{outStock.uuid}"></s:hidden>
 	<div class="label_con">
 		<div class="label_main">
 	       		<div class="label_hang">
@@ -110,13 +111,13 @@
 	       		<div class="label_hang">
 		            <div class="label_ltit">收货人:</div>
 		            <div class="label_rwb">
-		            <s:textfield name="outStock.member_name" title="姓名" cssClass="validate[required,maxSize[85]]"/>
+		            <s:textfield id="mname" name="outStock.member_name" title="姓名" cssClass="validate[required,maxSize[85]]"/>
 		            </div>
 	       		</div>
 	       		<div class="label_hang">
 		            <div class="label_ltit">联系方式:</div>
 		            <div class="label_rwb">
-		            <s:textfield name="outStock.member_mebile" title="手机"/>
+		            <s:textfield id="mebile" name="outStock.member_mebile" title="手机"/>
 		            </div>
 	       		</div>
 	       		<div class="label_hang">
@@ -130,7 +131,7 @@
 		        <div class="label_hang">
 		            <div class="label_ltit">配送地点:</div>
 		            <div class="label_rwbenx">
-		            	<s:textarea name="outStock.member_adress" title="配送地点" rows="4" cssClass="label_hang_linput validate[required,maxSize[128]]"></s:textarea>
+		            	<s:textarea id="address2" name="outStock.member_adress" title="配送地点" rows="4" cssClass="label_hang_linput validate[required,maxSize[128]]"></s:textarea>
 		            </div>
 		        </div>
 		     </div>
@@ -243,14 +244,30 @@
 <script type="text/javascript">
 $(function(){
 	checkState();
+	addDe();
  });
  
+ function addDe(){
+	 var me=${message};
+	 if(me=="2"){
+		 if(confirm("库存不足，是否继续？")){
+			 location.href="/outStock/outDetail_add?ans=true";
+		}
+	 }
+ }
 function checkState(){
 	var state= $("#out ").val();
 	if(state==0){
 		$("#state0").show();//
 		$("#state3").hide();
 		$("#state145").hide();
+		document.getElementById("mname").disabled=true;
+		document.getElementById("mebile").disabled=true;
+		document.getElementById("address2").disabled=true;
+		
+		document.getElementById("order_user_mobile").disabled=false;
+		document.getElementById("order_user_name").disabled=false;
+		document.getElementById("address").disabled=false;
 	}else if(state==3){
 		$("#state3").show();//
 		$("#state0").hide();
@@ -259,6 +276,14 @@ function checkState(){
 		$("#state145").show();//
 		$("#state0").hide();
 		$("#state3").hide();
+		
+		document.getElementById("mname").disabled=false;
+		document.getElementById("mebile").disabled=false;
+		document.getElementById("address2").disabled=false;
+		
+		document.getElementById("order_user_mobile").disabled=true;
+		document.getElementById("order_user_name").disabled=true;
+		document.getElementById("address").disabled=true;
 	}
 }
 </script>

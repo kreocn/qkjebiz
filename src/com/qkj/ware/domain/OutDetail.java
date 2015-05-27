@@ -4,7 +4,7 @@ import java.util.*;
 
 public class OutDetail {
 	private Integer uuid;// (int)
-	private String lading_id;// (varchar)
+	private Integer lading_id;// (varchar)
 	private Integer product_id;// (int)
 	private Integer num;// (int)
 	private Double price;// (decimal)
@@ -22,11 +22,11 @@ public class OutDetail {
 		this.uuid = uuid;
 	}
 
-	public String getLading_id() {
+	public Integer getLading_id() {
 		return lading_id;
 	}
 
-	public void setLading_id(String lading_id) {
+	public void setLading_id(Integer lading_id) {
 		this.lading_id = lading_id;
 	}
 

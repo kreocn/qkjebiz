@@ -134,8 +134,8 @@
 	
 	<insert id="outStock_addOutStock" parameterClass="outStock">
 		<![CDATA[ 
-			Insert Into qkj_t_outstock(ordernum,date,store_id,reason,member_id,member_mebile,member_name, member_adress,bsreason, operator_id,dept_code,dept_name,take_id,note,total_price,add_user,add_timer,lm_user,lm_timer,send,borrowStore_id)
-			Values (#ordernum#,#date#,#store_id#, #reason#,#member_id#,#member_mebile#,#member_name#,#member_adress#,#bsreason#, #operator_id#,#dept_code#,#dept_name#,#take_id#,#note#,#total_price#,#add_user#,#add_timer#,#lm_user#,#lm_timer#,#send#,#borrowStore_id#)
+			Insert Into qkj_t_outstock(ordernum,date,store_id,reason,member_id,member_mebile,member_name, member_adress,bsreason, operator_id,dept_code,dept_name,take_id,note,add_user,add_timer,lm_user,lm_timer,send,borrowStore_id,member_price)
+			Values (#ordernum#,#date#,#store_id#, #reason#,#member_id#,#member_mebile#,#member_name#,#member_adress#,#bsreason#, #operator_id#,#dept_code#,#dept_name#,#take_id#,#note#,#add_user#,#add_timer#,#lm_user#,#lm_timer#,#send#,#borrowStore_id#,#member_price#)
 		]]>
 	</insert>
 	<update id="outStock_mdyOutStock" parameterClass="outStock">
@@ -144,22 +144,14 @@
 			Set date=#date#,
 			bsreason=#bsreason#,
 			ordernum=#ordernum#,
-			
+			store_id=#store_id#,
 			operator_id=#operator_id#,
-			dept_name=#dept_name#,
-			dept_code=#dept_code#,
 			note=#note#,
 			total_price=#total_price#,
 			lm_user=#lm_user#,
 			lm_timer=#lm_timer#,
 			reason=#reason#,
 			send=#send#,
-			manager_check=#manager_check#,
-			manager_check_user=#manager_check_user#,
-			manager_check_time=#manager_check_time#,
-			coo_check=#coo_check#,
-			coo_check_user=#coo_check_user#,
-			coo_check_time=#coo_check_time#,
 			member_id=#member_id#,
 			member_mebile=#member_mebile#,
 			member_name=#member_name#,
@@ -180,20 +172,6 @@
 			Update qkj_t_outstock
 			Set 
 			total_price=#total_price#
-			Where uuid = #uuid#
-		]]>
-	</update>
-	<update id="outStock_mdyOutStockSale" parameterClass="outStock">
-		<![CDATA[
-			Update qkj_t_outstock
-			Set 
-			total_price=#total_price#,
-			
-			member_id=#member_id#,
-			member_mebile=#member_mebile#,
-			member_name=#member_name#,
-			member_adress=#member_adress#,
-			member_price=#member_price#
 			Where uuid = #uuid#
 		]]>
 	</update>
@@ -228,8 +206,6 @@
 			Where uuid = #uuid#
 		]]>
 	</update>
-	
-	
 	
 	<update id="outStock_mdyNote" parameterClass="outStock">
 		<![CDATA[
