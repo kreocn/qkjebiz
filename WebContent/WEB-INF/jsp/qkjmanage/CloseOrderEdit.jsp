@@ -328,11 +328,11 @@
 								<c:if test="${closeOrder.check_state>=1 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_APPROVE',null)==true}">
 								<input type="button" value="审阅" onclick="openApprove();" class="input-yellow" />
 								</c:if>
-								<c:if test="${closeOrder.check_state==1 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK10',null)==true}">
+								<!--<c:if test="${closeOrder.check_state==1 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK10',null)==true}">
 									<s:submit id="mdyStatus10" name="mdyStatus10" value="主管/办事处经理审核通过" action="closeOrder_check10" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
 									<s:submit id="mdyStatus5" name="mdyStatus5" cssClass="input-red" value="审核不通过" action="closeOrder_check5" onclick="return isOp('确定执行此操作?');" />
-								</c:if>
-								<c:if test="${closeOrder.check_state==20 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK20',null)==true}">
+								</c:if>-->
+								<c:if test="${closeOrder.check_state==1 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK20',null)==true}">
 									<s:submit id="mdyStatus20" name="mdyStatus20" value="经理/大区审核通过" action="closeOrder_check20" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
 									<s:submit id="mdyStatus5" name="mdyStatus5" cssClass="input-red" value="审核不通过" action="closeOrder_check5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
