@@ -1,15 +1,19 @@
 package com.qkjsys.ebiz.action;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.iweb.sys.ContextHelper;
 import org.iweb.sys.Parameters;
 import org.iweb.sys.ToolsUtil;
+import org.iweb.sys.dao.DepartmentDAO;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.qkj.ware.action.warepower;
@@ -127,6 +131,18 @@ public class WareAction extends ActionSupport {
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
+		}
+		return SUCCESS;
+	}
+	
+	public String ware_select() throws Exception {
+		// ContextHelper.isPermit("GLOBAL_PRVG_DEPT_FUNCTION");
+		try {
+			this.setWares(dao.list(null));
+			System.out.println(wares.size());
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!ware_select 读取数据错误:", e);
+			throw new Exception(this.getClass().getName() + "!ware_select 读取数据错误:", e);
 		}
 		return SUCCESS;
 	}

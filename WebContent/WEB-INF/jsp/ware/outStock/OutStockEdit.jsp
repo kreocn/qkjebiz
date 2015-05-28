@@ -21,6 +21,7 @@
 	</div>
 	<s:form id="editForm" name="editForm" cssClass="validForm" action="outStock_add" namespace="/outStock" method="post" theme="simple">
 	<s:hidden name="outStock.uuid" value="%{outStock.uuid}"></s:hidden>
+	<s:hidden name="outStock.send" value="%{outStock.send}"></s:hidden>
 	<div class="label_con">
 		<div class="label_main">
 	       		<div class="label_hang">
@@ -56,7 +57,7 @@
 	            <div class="label_ltit">状态:</div>
 	            <div class="label_rwben2">
 		            <span class="label_rwb">
-		            	<s:select id="out" onchange="checkState();" name="outStock.reason" cssClass="selectKick" list="#{0:'销售出库',3:'报损',1:'招待用酒',4:'赠酒',5:'其它'}" />
+		            	<s:select id="out" onchange="checkState();" name="outStock.reason" cssClass="selectKick" list="#{0:'销售出库',3:'报损',1:'招待用酒',4:'赠酒',6:'调货出库',5:'其它'}" />
 					</span>
 	            </div>
 	        </div>
@@ -106,6 +107,23 @@
 		     </div>
         </div>
         
+        <div id="state6" style="display: none;"><!-- 报损 -->
+        	<div class="label_main">
+		        <div class="label_hang">
+		            <div class="label_ltit">调入仓库:</div>
+		            <div class="label_rwben2">
+		            	<span class="label_rwb">
+						<s:textfield title="仓库名称" id="userdept_nameid" name="outStock.borrowStore_name" readonly="true"  cssClass="validate[required,maxSize[85]]"/>
+						<s:hidden title="仓库编码" id="userdept_codeid" name="outStock.borrowStore_id" readonly="true" />
+						</span>
+						<span class="lb nw">
+						<img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectWarevar('userdept_codeid','userdept_nameid');" />
+						</span>
+		            </div>
+		        </div>
+		     </div>
+        </div>
+        
         <div id="state145" style="display: none;"><!-- 其它出库，不审核，但要 填写目的地，收货人，联系方式，基本费用-->
         	<div class="label_main">
 	       		<div class="label_hang">
@@ -148,7 +166,7 @@
 						<th>单价</th>
 						<th>订单数量</th>
 						<th>实际价格</th>
-						<c:if test="${it:checkWarePermit(null,'out')==true &&  it:checkPermit('QKJ_WARE_OUTSTOCK_ADD',null)==true}">
+						<c:if test="${it:checkWarePermit(null,'out')==true &&  it:checkPermit('QKJ_WARE_OUTSTOCK_ADD',null)==true && outStock.send!=4}">
 						<th>
 						<s:url id="ladingAddProductsUrl" action="qkjm_addProducts" namespace="/qkjmanage">
 												<s:param name="uuidKey">outStock.uuid</s:param>
@@ -175,11 +193,11 @@
 										<s:property value="num" />(<s:property value="%{(num/(case_spec*1.0)).toString().substring(0,3)}" />件)
 									</td>
 									<td class="nw"><s:property value="totel" /></td>
+									<c:if test="${it:checkPermit('QKJ_WARE_OUTSTOCK_DEL',null)==true && outStock.send!=4}">
 									<td>
-									<c:if test="${it:checkPermit('QKJ_WARE_OUTSTOCK_DEL',null)==true}">
 										[<a href="<s:url namespace="/outStock" action="outDetail_del"><s:param name="outDetail.uuid" value="uuid" /><s:param name="outDetail.lading_id" value="lading_id" /></s:url>" onclick="return isDel();">删除</a>]
-									</c:if>
 								    </td>
+								    </c:if>
 									</tr>
 					</s:iterator>
 					</table>
@@ -215,7 +233,7 @@
 			</s:if> 
 			<s:if test="'mdy'==viewFlag">
 				<c:if test="${it:checkWarePermit(null,'out')==true}">
-					<c:if test="${it:checkPermit('QKJ_WARE_OUTSTOCK_MDY',null)==true}">
+					<c:if test="${it:checkPermit('QKJ_WARE_OUTSTOCK_MDY',null)==true && outStock.send!=4}">
 						<s:submit id="save" name="save" value="保存" action="outStock_save" cssClass="input-blue"/>
 					</c:if>
 					<c:if test="${it:checkPermit('QKJ_WARE_OUTSTOCK_SURE',null)==true && 2==outStock.send}">
@@ -226,7 +244,7 @@
 					<c:if test="${it:checkPermit('QKJ_WARE_OUTSTOCK_CENCLE',null)==true && 4==outStock.send}">
 						<s:submit id="cencle" name="cencle" value="取消订单" action="outStock_cencle" onclick="return isOp('确认取消?');" cssClass="input-red"/>
 					</c:if>
-					<c:if test="${it:checkPermit('QKJ_WARE_OUTSTOCK_DEL',null)==true}">
+					<c:if test="${it:checkPermit('QKJ_WARE_OUTSTOCK_DEL',null)==true && outStock.send!=4}">
 						<s:submit id="delete" name="delete" value="删除" cssClass="input-red" action="outStock_del" onclick="return isDel();" />
 					</c:if>
 				</c:if>
@@ -247,44 +265,59 @@ $(function(){
 	addDe();
  });
  
- function addDe(){
-	 var me=${message};
-	 if(me=="2"){
-		 if(confirm("库存不足，是否继续？")){
-			 location.href="/outStock/outDetail_add?ans=true";
-		}
-	 }
- }
+
 function checkState(){
 	var state= $("#out ").val();
 	if(state==0){
 		$("#state0").show();//
 		$("#state3").hide();
 		$("#state145").hide();
-		document.getElementById("mname").disabled=true;
-		document.getElementById("mebile").disabled=true;
-		document.getElementById("address2").disabled=true;
-		
-		document.getElementById("order_user_mobile").disabled=false;
-		document.getElementById("order_user_name").disabled=false;
-		document.getElementById("address").disabled=false;
+		$("#state6").hide();
+		orderDis();
 	}else if(state==3){
 		$("#state3").show();//
 		$("#state0").hide();
 		$("#state145").hide();
+		$("#state6").hide();orderDis2();
+	}else if(state==6){//调出仓库
+		$("#state3").hide();//
+		$("#state0").hide();
+		$("#state145").hide();
+		$("#state6").show();//
+		orderDis2();
 	}else{
 		$("#state145").show();//
 		$("#state0").hide();
 		$("#state3").hide();
-		
-		document.getElementById("mname").disabled=false;
+		$("#state6").hide();
+		orderDis2();
+	}
+}
+
+function addDe(){
+	 var me=${detailS};
+	 if(me==2){
+		 if(confirm("库存不足，是否继续？")){
+			 location.href="/outStock/outDetail_add?ans=1";
+		}
+	 }
+}
+
+function orderDis(){
+	 document.getElementById("order_user_mobile").disabled=false;
+	document.getElementById("order_user_name").disabled=false;
+	document.getElementById("address").disabled=false;
+	document.getElementById("mname").disabled=true;
+	document.getElementById("mebile").disabled=true;
+	document.getElementById("address2").disabled=true;
+}
+function orderDis2(){
+	 document.getElementById("mname").disabled=false;
 		document.getElementById("mebile").disabled=false;
 		document.getElementById("address2").disabled=false;
-		
 		document.getElementById("order_user_mobile").disabled=true;
 		document.getElementById("order_user_name").disabled=true;
 		document.getElementById("address").disabled=true;
-	}
 }
 </script>
 <script type="text/javascript">

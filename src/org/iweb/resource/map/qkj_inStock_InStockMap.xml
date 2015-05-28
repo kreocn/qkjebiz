@@ -149,7 +149,7 @@
 	</delete>
 	
 	<!-- 额外方法 -->
-	<update id="qkjmanage_mdyTotalPrice" parameterClass="string">
+	<update id="qkjmanage_mdyTotalPrice" parameterClass="Integer">
 		<![CDATA[
 			UPDATE qkj_t_instock
 			SET total_price=(

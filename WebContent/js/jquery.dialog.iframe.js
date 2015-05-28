@@ -55,51 +55,66 @@ var DialogIFrame = function(config){
 	};
 };
 
+var sobj02;
+var selectWarevar = function(dcode_id, dname_id){
+		sobj02 = new DialogIFrame({ src : '/sysebiz/ware_select?objname=sobj02',
+		title : "选择仓库",
+		width : 200,
+		height : 400 });
+		sobj02.selfAction = function(val1, val2){
+			$("#" + dcode_id).val(val1);
+			$("#" + dname_id).val(val2);
+		};
+
+	sobj02.create();
+	sobj02.open();
+};
+
 var sobj01;
-var selectDept = function(dcode_id, dname_id, isLoad, p_m,b_m,u_pid){
-	if(u_pid!=null && u_pid!=""){
-		sobj01 = new DialogIFrame({ src : '/sys/dept_permit_select?objname=sobj01&user_pri='+u_pid,
-			title : "选择部门",
-			width : 200,
-			height : 400 });
-			sobj01.selfAction = function(val1, val2){
-				$("#" + dcode_id).val(val1);
-				$("#" + dname_id).val(val2);
-				if (isLoad) {
-					if(b_m==1){
-						loadManagers(val1, p_m,'1');
-					}else{
-						loadManagers(val1, p_m);
-					}
-					
+var selectDept = function(dcode_id, dname_id, isLoad, p_m, b_m, u_pid){
+	if (u_pid != null && u_pid != "") {
+		sobj01 = new DialogIFrame({ src : '/sys/dept_permit_select?objname=sobj01&user_pri=' + u_pid,
+		title : "选择部门",
+		width : 200,
+		height : 400 });
+		sobj01.selfAction = function(val1, val2){
+			$("#" + dcode_id).val(val1);
+			$("#" + dname_id).val(val2);
+			if (isLoad) {
+				if (b_m == 1) {
+					loadManagers(val1, p_m, '1');
+				} else {
+					loadManagers(val1, p_m);
 				}
-			};	
-		
-	}else{
+
+			}
+		};
+
+	} else {
 		sobj01 = new DialogIFrame({ src : '/sys/dept_permit_select?objname=sobj01',
-			title : "选择部门",
-			width : 200,
-			height : 400 });
-			sobj01.selfAction = function(val1, val2){
-				$("#" + dcode_id).val(val1);
-				$("#" + dname_id).val(val2);
-				if (isLoad) {
-					if(b_m==1){
-						loadManagers(val1, p_m,'1');
-					}else{
-						loadManagers(val1, p_m);
-					}
-					
+		title : "选择部门",
+		width : 200,
+		height : 400 });
+		sobj01.selfAction = function(val1, val2){
+			$("#" + dcode_id).val(val1);
+			$("#" + dname_id).val(val2);
+			if (isLoad) {
+				if (b_m == 1) {
+					loadManagers(val1, p_m, '1');
+				} else {
+					loadManagers(val1, p_m);
 				}
-			};	
-		
+
+			}
+		};
+
 	}
-	
+
 	sobj01.create();
 	sobj01.open();
 };
 
-var loadManagers = function(dept_code, curr_apply_user,b_m){
+var loadManagers = function(dept_code, curr_apply_user, b_m){
 	var ajax = new Common_Ajax('ajax_member_message');
 	ajax.config.action_url = ajax_url;
 	ajax.config._success = function(data, textStatus){
@@ -110,11 +125,10 @@ var loadManagers = function(dept_code, curr_apply_user,b_m){
 			var l = $(data).length;
 			if (l == 1) { // 如果只有一个结果,那么直接选中
 				uc.addOption($(data)[0].user_name, $(data)[0].uuid);
-				if(b_m==1){
+				if (b_m == 1) {
 					uc.setSelectedValue($(data)[0].uuid);
-				}else{
-				}
-				
+				} else {}
+
 			} else if (l > 1) {
 				$.each(data, function(i, n){
 					uc.addOption(n.user_name, n.uuid);

@@ -5,12 +5,12 @@
 	<typeAlias alias="outStock" type="com.qkj.ware.domain.OutStock" />
 	<select id="outStock_getOutStocks" resultClass="outStock" parameterClass="java.util.Map">
 		<![CDATA[ 
-			SELECT i.*,addu.`USER_NAME` add_user_name,lmu.`USER_NAME` lm_user_name,w.`ware_name` ware_name,mdu.`USER_NAME` manager_check_user_name,cdu.`USER_NAME` coo_check_user_name,o.`USER_NAME` operator_name,t.`USER_NAME` take_name  FROM qkj_t_outstock i 
+			SELECT i.*,addu.`USER_NAME` add_user_name,lmu.`USER_NAME` lm_user_name,w.`ware_name` ware_name,wb.`ware_name` borrowStore_name,mdu.`USER_NAME` manager_check_user_name,o.`USER_NAME` operator_name,t.`USER_NAME` take_name  FROM qkj_t_outstock i 
 			LEFT JOIN s_sys_user addu ON (i.add_user=addu.`UUID`) 
 			LEFT JOIN s_sys_user lmu ON (i.lm_user=lmu.`UUID`)
 			LEFT JOIN qkj_t_warehouse w ON(i.`store_id`=w.`uuid`)
+			LEFT JOIN qkj_t_warehouse wb ON(i.`borrowStore_id`=wb.`uuid`)
 			LEFT JOIN s_sys_user mdu ON(i.`manager_check_user`=mdu.`UUID`)
-			LEFT JOIN s_sys_user cdu ON(i.`coo_check_user`=cdu.`UUID`)
 			LEFT JOIN s_sys_user o ON (i.`operator_id`=o.`UUID`)
 			LEFT JOIN s_sys_user t ON (i.`take_id`=t.`UUID`)
 		]]>
@@ -39,38 +39,6 @@
 		<![CDATA[ Order By i.add_timer Desc LIMIT 0, 500 ]]>
 	</select>
 	
-	<select id="outStock_getpower" resultClass="outStock" parameterClass="java.util.Map">
-		<![CDATA[ 
-			SELECT DISTINCT i.`uuid`,i.*,addu.`USER_NAME` add_user_name,lmu.`USER_NAME` lm_user_name,w.`ware_name` ware_name,mdu.`USER_NAME` manager_check_user_name,cdu.`USER_NAME` coo_check_user_name,o.`USER_NAME` operator_name,t.`USER_NAME` take_name  FROM qkj_t_outstock i 
-			LEFT JOIN s_sys_user addu ON (i.add_user=addu.`UUID`) 
-			LEFT JOIN s_sys_user lmu ON (i.lm_user=lmu.`UUID`)
-			LEFT JOIN qkj_t_warehouse w ON(i.`store_id`=w.`uuid`)
-			LEFT JOIN s_sys_user mdu ON(i.`manager_check_user`=mdu.`UUID`)
-			LEFT JOIN s_sys_user cdu ON(i.`coo_check_user`=cdu.`UUID`)
-			LEFT JOIN s_sys_user o ON (i.`operator_id`=o.`UUID`)
-			LEFT JOIN s_sys_user t ON (i.`take_id`=t.`UUID`)
-			LEFT JOIN qkj_t_stockpower  s ON(s.`ware_id`=i.`store_id`)
-			WHERE 
-			 s.`username`=#username#  AND s.`prvg` LIKE '%4%'
-		]]>
-			<isNotEmpty prepend="AND" property="ordernum"><![CDATA[ i.ordernum=#ordernum# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ i.uuid=#uuid# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="date"><![CDATA[ i.date=#date# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="send"><![CDATA[ i.send=#send# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="reason"><![CDATA[ i.reason=#reason# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="boflag"><![CDATA[ i.boflag=#boflag# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="store_id"><![CDATA[ i.store_id=#store_id# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="operator_id"><![CDATA[ i.operator_id=#operator_id# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="take_id"><![CDATA[ i.take_id=#take_id# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="total_price"><![CDATA[ i.total_price=#total_price# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="add_user"><![CDATA[ i.add_user=#add_user# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="manager_check_user"><![CDATA[ i.manager_check_user=#manager_check_user# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="date_start"><![CDATA[ i.date>=#date_start# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="date_end"><![CDATA[ i.date<=DATE_ADD(#date_end#,INTERVAL 1 day) ]]></isNotEmpty>
-			
-
-		<![CDATA[ GROUP BY i.`uuid` Order By i.add_timer Desc LIMIT 0, 500 ]]>
-	</select>
 	
 	<select id="outStock_getOutStocksCounts" resultClass="int" parameterClass="java.util.Map">
 		<![CDATA[ 
@@ -81,41 +49,6 @@
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="send"><![CDATA[ send=#send# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="reason"><![CDATA[reason=#reason# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="boflag"><![CDATA[ boflag=#boflag# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="ordernum"><![CDATA[ ordernum=#ordernum# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="date"><![CDATA[ date=#date# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="store_id"><![CDATA[ store_id=#store_id# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="operator_id"><![CDATA[ operator_id=#operator_id# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="take_id"><![CDATA[ take_id=#take_id# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="total_price"><![CDATA[ total_price=#total_price# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="add_user"><![CDATA[ add_user=#add_user# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="manager_check_user"><![CDATA[ manager_check_user=#manager_check_user# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="date_start"><![CDATA[ date>=#date_start# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="date_end"><![CDATA[ date<=DATE_ADD(#date_end#,INTERVAL 1 day) ]]></isNotEmpty>
-			
-		</dynamic>
-	</select>
-	<select id="outStock_getOutStocksCountsByPower" resultClass="int" parameterClass="java.util.Map">
-		<![CDATA[ 
-			SELECT COUNT(*) FROM (
-			SELECT DISTINCT i.`uuid`,i.store_id store_id,i.operator_id operator_id,addu.`USER_NAME` add_user_name,lmu.`USER_NAME` lm_user_name,w.`ware_name` ware_name,mdu.`USER_NAME` manager_check_user_name,cdu.`USER_NAME` coo_check_user_name,o.`USER_NAME` operator_name,t.`USER_NAME` take_name  FROM qkj_t_outstock i 
-			LEFT JOIN s_sys_user addu ON (i.add_user=addu.`UUID`) 
-			LEFT JOIN s_sys_user lmu ON (i.lm_user=lmu.`UUID`)
-			LEFT JOIN qkj_t_warehouse w ON(i.`store_id`=w.`uuid`)
-			LEFT JOIN s_sys_user mdu ON(i.`manager_check_user`=mdu.`UUID`)
-			LEFT JOIN s_sys_user cdu ON(i.`coo_check_user`=cdu.`UUID`)
-			LEFT JOIN s_sys_user o ON (i.`operator_id`=o.`UUID`)
-			LEFT JOIN s_sys_user t ON (i.`take_id`=t.`UUID`)
-			LEFT JOIN qkj_t_stockpower  s ON(s.`ware_id`=i.`store_id`)
-			WHERE 
-			 s.`username`=#username#  AND s.`prvg` LIKE '%4%'
-			) a
-		]]>
-		<dynamic prepend="WHERE">
-		<isNotEmpty prepend="AND" property="order"><![CDATA[ send!=#send# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="send"><![CDATA[ send=#send# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="reason"><![CDATA[ reason=#reason# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="boflag"><![CDATA[ boflag=#boflag# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="ordernum"><![CDATA[ ordernum=#ordernum# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="date"><![CDATA[ date=#date# ]]></isNotEmpty>
@@ -156,6 +89,7 @@
 			member_mebile=#member_mebile#,
 			member_name=#member_name#,
 			member_adress=#member_adress#,
+			borrowStore_id=#borrowStore_id#,
 			member_price=#member_price#
 			Where uuid = #uuid#
 		]]>
@@ -202,7 +136,6 @@
 			manager_check=#manager_check#,
 			manager_check_user=#manager_check_user#,
 			manager_check_time=#manager_check_time#,
-			coo_check=#coo_check#
 			Where uuid = #uuid#
 		]]>
 	</update>

@@ -20,9 +20,6 @@ public class OutStock {
 	private Integer manager_check;// (int)渠道/运营经理确认   1:已确认
 	private String manager_check_user;// (varchar)
 	private Date manager_check_time;// (datetime)确认时间
-	private Integer coo_check;// (int)运营总监确认
-	private String coo_check_user;// (varchar)
-	private Date coo_check_time;// (datetime)确认时间
 	private String bsreason;
 	private Integer borrowStore_id; 
 
@@ -40,11 +37,19 @@ public class OutStock {
 	private String lm_user_name;
 	private String ware_name;
 	private String manager_check_user_name;
-	private String coo_check_user_name;
 	private String operator_name;
 	private String take_name;
 	private Date date_start;
 	private Date date_end;
+	private String borrowStore_name;
+
+	public String getBorrowStore_name() {
+		return borrowStore_name;
+	}
+
+	public void setBorrowStore_name(String borrowStore_name) {
+		this.borrowStore_name = borrowStore_name;
+	}
 
 	public Date getDate() {
 		return date;
@@ -166,30 +171,6 @@ public class OutStock {
 		this.manager_check_time = manager_check_time;
 	}
 
-	public Integer getCoo_check() {
-		return coo_check;
-	}
-
-	public void setCoo_check(Integer coo_check) {
-		this.coo_check = coo_check;
-	}
-
-	public String getCoo_check_user() {
-		return coo_check_user;
-	}
-
-	public void setCoo_check_user(String coo_check_user) {
-		this.coo_check_user = coo_check_user;
-	}
-
-	public Date getCoo_check_time() {
-		return coo_check_time;
-	}
-
-	public void setCoo_check_time(Date coo_check_time) {
-		this.coo_check_time = coo_check_time;
-	}
-
 	public String getAdd_user() {
 		return add_user;
 	}
@@ -286,13 +267,6 @@ public class OutStock {
 		this.manager_check_user_name = manager_check_user_name;
 	}
 
-	public String getCoo_check_user_name() {
-		return coo_check_user_name;
-	}
-
-	public void setCoo_check_user_name(String coo_check_user_name) {
-		this.coo_check_user_name = coo_check_user_name;
-	}
 
 	public String getDept_name() {
 		return dept_name;

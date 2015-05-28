@@ -13,6 +13,15 @@ public class OutDetail {
 	// 以下为非数据库字段
 	private String product_name;
 	private Integer case_spec;
+	private String flag;
+
+	public String getFlag() {
+		return flag;
+	}
+
+	public void setFlag(String flag) {
+		this.flag = flag;
+	}
 
 	public Integer getUuid() {
 		return uuid;

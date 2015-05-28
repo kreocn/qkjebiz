@@ -37,14 +37,15 @@ public class OutDetailAction extends ActionSupport {
 	private int recCount;
 	private int pageSize;
 	private int currPage;
-	private String ans = "false";
+	private int ans = 0;
+
 	private static OutDetail outD;
 
-	public String getAns() {
+	public int getAns() {
 		return ans;
 	}
 
-	public void setAns(String ans) {
+	public void setAns(int ans) {
 		this.ans = ans;
 	}
 
@@ -193,7 +194,7 @@ public class OutDetailAction extends ActionSupport {
 		ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_ADD");
 		OutStockDAO od = new OutStockDAO();
 		try {
-			if (this.getAns().equals("false")) {
+			if (this.getAns() == 0) {
 				// 判断库存
 				boolean flag = true;// false,库存数据小于出库数量
 				this.setOutStock((OutStock) od.get(outDetail.getLading_id()));// 查询出库主表获得出库仓库
@@ -218,10 +219,10 @@ public class OutDetailAction extends ActionSupport {
 					outStock.setTotal_price(outStock.getTotal_price() + outDetail.getTotel());
 					od.saveTotal(outStock);
 				} else {// 提示是否添加
-					this.setMessage("2");
+					outDetail.setFlag("2");
 					this.outD = outDetail;
 				}
-			} else {// 即使库存小于出库数量也添加
+			} else if (this.getAns() == 1) {// 即使库存小于出库数量也添加
 				outDetail = new OutDetail();
 				outDetail.setLading_id(outD.getLading_id());
 				outDetail.setNum(outD.getNum());
@@ -229,6 +230,7 @@ public class OutDetailAction extends ActionSupport {
 				outDetail.setProduct_id(outD.getProduct_id());
 				outDetail.setTotel(outD.getTotel());
 				dao.add(outDetail);
+				this.setOutStock((OutStock) od.get(outDetail.getLading_id()));// 查询出库主表获得出库仓库
 				outStock.setUuid(outStock.getUuid());
 				outStock.setTotal_price(outStock.getTotal_price() + outDetail.getTotel());
 				od.saveTotal(outStock);

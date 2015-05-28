@@ -151,7 +151,7 @@
 						<c:if test="${ it:checkPermit('QKJ_WARE_OUTSTOCK_MDY',null)==true}">
 							<a class="input-blue" href="<s:url namespace="/outStock" action="outStock_load"><s:param name="viewFlag">mdy</s:param><s:param name="outStock.uuid" value="uuid"></s:param></s:url>">修改</a>
 						</c:if>
-						<c:if test="${ it:checkPermit('QKJ_WARE_OUTSTOCK_DEL',null)==true}">
+						<c:if test="${ it:checkPermit('QKJ_WARE_OUTSTOCK_DEL',null)==true && send!=4}">
 							<a class="input-red" href="<s:url namespace="/outStock" action="outStock_del"><s:param name="outStock.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
 						</c:if>
 					</c:if>
