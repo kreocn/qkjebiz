@@ -212,8 +212,8 @@ if(firstnum==true){
     show.push('<td class="td1" style="display:none"> <input type="hidden" name="storesorderitem['+num+'].bar_code" value="'+msg[2]+'"/>'+ msg[2] +'</td>');
     show.push('<td class="td1" style="display:none"><input type="hidden" name="storesorderitem['+num+'].brand"   value="'+msg[6]+'"/>'+ msg[6] +'</td>');
     show.push('<td class="td1"><input type="hidden" name="storesorderitem['+num+'].title" value="'+msg[3]+'"/>'+ msg[3] +'</td>');
-    show.push('<td class="td1" style="display:none"><input type="hidden" id="price'+msg[0]+'" name="storesorderitem['+num+'].spec"  value="'+msg[4]+'"/>'+ msg[4] +'</td>') ;
-    show.push('<td class="td1"><input type="hidden" name="storesorderitem['+num+'].product_price"  value="'+msg[5]+'"/>'+ msg[5] +'</td>') ;
+    show.push('<td class="td1" style="display:none"><input type="hidden"  name="storesorderitem['+num+'].spec"  value="'+msg[4]+'"/>'+ msg[4] +'</td>') ;
+    show.push('<td class="td1"><input  type="hidden" id="price'+msg[0]+'" name="storesorderitem['+num+'].product_price"  value="'+msg[5]+'"/>'+ msg[5] +'</td>') ;
     show.push('<td class="td1"><input type="button" id="jisuanadd'+msg[0]+'" value="+" /> <input type="text" style="width:40px" id="jisuannum'+msg[0]+'" name="storesorderitem['+num+'].order_num" value="'+casenum+'" /> <input type="button" id="jisuanjian'+msg[0]+'" value="-" /></td>') ;
     show.push('<td class="td1" id="jisuanprice'+msg[0]+'"><input type="hidden" name="storesorderitem['+num+'].order_total_price"  value="'+msg[5]*casenum+'"/>'+ msg[5]*casenum +'</td>') ;
     show.push(' <td class="td1 op-area"><a id="rmtr'+num+'" onclick="javascript:ondeltr(this)" href="javascript:void(0)" class="input-red">删除</a></td>') ;
@@ -224,6 +224,8 @@ if(firstnum==true){
    $("#jisuanadd"+msg[0]).click(function(){
     	  var n=$("#jisuannum"+msg[0]).val();
     	  var num=parseInt(n)+1;
+    	
+    	
     	 $("#jisuanprice"+msg[0]).find("input").val($("#price"+msg[0]).val()*num);
     	 $("#jisuanprice"+msg[0]).text($("#price"+msg[0]).val()*num);
     	 if(num==0){alert("cc");}
