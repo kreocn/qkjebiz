@@ -229,7 +229,7 @@ if(firstnum==true){
     	 if(num==0){alert("cc");}
     	  $("#jisuannum"+msg[0]).val(num);
     	});
-    	$("#jisuanjian").click(function(){
+    	$("#jisuanjian"+msg[0]).click(function(){
     	  var n=$("#jisuannum"+msg[0]).val();
     	  var num=parseInt(n)-1;
     	 $("#jisuanprice"+msg[0]).find("input").val($("#price"+msg[0]).val()*num);
@@ -299,7 +299,7 @@ function fortr(list){
        	 if(num==0){alert("cc");}
        	  $("#jisuannum"+product_id).val(num);
        	});
-       	$("#jisuanjian").click(function(){
+       	$("#jisuanjian"+product_id).click(function(){
        	  var n=$("#jisuannum"+product_id).val();
        	  var num=parseInt(n)-1;
        	 $("#jisuanprice"+product_id).find("input").val($("#price"+product_id).val()*num);
