@@ -25,6 +25,10 @@ import org.iweb.sysvip.domain.Member;
 import org.iweb.sysvip.domain.MemberAddress;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.qkj.manage.dao.CustomerDAO;
+import com.qkj.manage.dao.CustomerRecodeDAO;
+import com.qkj.manage.domain.Customer;
+import com.qkj.manage.domain.CustomerRecode;
 
 public class MemberAction extends ActionSupport implements ActionAttr {
 	private static final long serialVersionUID = 1L;
@@ -33,8 +37,26 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 	private Map<String, Object> map = new HashMap<String, Object>();
 	private MemberDAO dao = new MemberDAO();
 	private UserRoleDAO role_dao = new UserRoleDAO();
-
+	private Customer customer;
 	private Member member;
+	private CustomerDAO cdao = new CustomerDAO();
+	private List<CustomerRecode> customerRecodes;
+	public List<CustomerRecode> getCustomerRecodes() {
+		return customerRecodes;
+	}
+
+	public void setCustomerRecodes(List<CustomerRecode> customerRecodes) {
+		this.customerRecodes = customerRecodes;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
 	private List<Member> members;
 	private List<UserRole> roles;
 
@@ -171,6 +193,38 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 				MemberAddressDAO mdao = new MemberAddressDAO();
 				map.put("member_id", member.getUuid());
 				this.setMemberAddresses(mdao.list(map));
+				
+				load1();
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/sysvip/member_list?viewFlag=relist'>会员列表</a>&nbsp;&gt;&nbsp;修改会员信息";
 			} else {
 				this.setMember(null);
@@ -184,6 +238,66 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
+	
+	
+	
+	public String 	load1() throws Exception {
+		try {
+			if (null == viewFlag) {
+				this.setCustomer(null);
+				setMessage("你没有选择任何操作!");
+			} else if ("add".equals(viewFlag)) {
+				// this.setCustomer(null);
+				customer = new Customer();
+				customer.setDept_code(ContextHelper.getUserLoginDept());
+				customer.setDept_name(ContextHelper.getUserLoginDeptName());
+				customer.setManager(ContextHelper.getUserLoginUuid());
+				customer.setStage(0);
+			} else if ("mdy".equals(viewFlag)) {
+				map.clear();
+				map.put("c_id", member.getC_id());
+				if (null == map.get("c_id")) this.setCustomer(null);
+				else this.setCustomer((Customer) cdao.list(map).get(0));
+				if (!ToolsUtil.isEmpty(customer.getDistribution())) {
+					customer.setDistributions(customer.getDistribution().split(","));
+				}
+
+				if (!ToolsUtil.isEmpty(customer.getFailed_reason())) {
+					customer.setFailed_reasons(customer.getFailed_reason().split(","));
+				}
+
+				CustomerRecodeDAO cdao = new CustomerRecodeDAO();
+				map.clear();
+				map.put("customer_id", customer.getUuid());
+				map.put("order_type", "uuidAsc");
+				customerRecodes = cdao.list(map);
+				
+			} else {
+				this.setCustomer(null);
+				setMessage("无操作类型!");
+			}
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!load 读取数据错误:", e);
+			throw new Exception(this.getClass().getName() + "!load 读取数据错误:", e);
+		}
+		return null;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	public String add() throws Exception {
 		ContextHelper.isPermit("SYSVIP_MEMBER_ADD");
@@ -197,6 +311,8 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 			String passwords = ToolsUtil.getRandomCode(6);
 			member.setPasswords(md5.encrypt(passwords));// 设定密码为6位随机数,并进行MD5加密
 			// 执行短信发送流程
+			
+			
 			System.out.println("此应该为短信发送,密码为:" + passwords);
 			member.setIs_mobile_check(1);
 			member.setReg_type(1);
@@ -207,6 +323,17 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 			MemberAddressDAO mdao = new MemberAddressDAO();
 			mdao.add(memberAddress);
 			log.info("成功添加了会员,会员号为:" + member.getUuid());
+			customer.setAdd_time(new Date());
+			customer.setAdd_user(ContextHelper.getUserLoginUuid());
+			customer.setDistribution(ToolsUtil.Array2String(customer.getDistributions() == null ? new String[] {}
+					: customer.getDistributions(), ","));
+			customer.setFailed_reason(ToolsUtil.Array2String(customer.getFailed_reasons() == null ? new String[] {}
+					: customer.getFailed_reasons(), ","));
+			cdao.add(customer);
+
+			
+			
+			
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!add 数据添加失败:", e);
 			throw new Exception(this.getClass().getName() + "!add 数据添加失败:", e);
@@ -272,7 +399,7 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 	public String get_Member() throws Exception {
 		boolean flag = true;
 		try {
-			HttpServletResponse response = ServletActionContext.getResponse();
+		
 			HttpServletRequest request = ServletActionContext.getRequest();
 			String mid = request.getParameter("params");
 			map.clear();
@@ -285,7 +412,8 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
 		}
-		ServletActionContext.getResponse().getWriter().print(flag);
+		HttpServletResponse response = ServletActionContext.getResponse();
+		response.getWriter().print(flag);
 		return null;
 	}
 	

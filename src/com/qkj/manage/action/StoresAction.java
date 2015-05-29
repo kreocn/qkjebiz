@@ -50,8 +50,6 @@ public class StoresAction  extends ActionSupport{
 	private static Log log = LogFactory.getLog(StoresAction.class);
 	private String result;
 	private String data;
-
-
 	private String storesid;
 	private Double price;
 	private Double totalPirce;
@@ -274,6 +272,7 @@ public class StoresAction  extends ActionSupport{
 			sotresorder=storesorderlist.get(i);
 		}
 		this.setStoresorderitem(dao.listOrderItem(map));
+	
 		return SUCCESS;
 	}
 //门店支付>查看订单>订单详情>删除

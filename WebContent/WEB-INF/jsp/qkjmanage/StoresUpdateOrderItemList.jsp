@@ -34,7 +34,7 @@
 		<div class="label_con">
 				<div class="label_main">
 						<div class='label_hang'>
-							<div class='label_ltit'>主键:</div>
+							<div class='label_ltit'>编号:</div>
 							<div class='label_rwben'>${sotresorder.id}<s:hidden name="closeOrder.uuid" />
 							</div>
 						</div>
@@ -65,6 +65,7 @@
 					<tr id="coltr">
 						<th class="td1">商品编号</th>
 						<th class="td3">商品名称</th>
+						<th class="td3">商品类型</th>
 						<th class="td3">单价</th>
 						<th class="td3">数量</th>
 						<th class="td1">总价</th>
@@ -76,6 +77,7 @@
 						<tr id="tr${id}">
 						    <td class="td1" >${id}</td>
 							<td class="td2" >${title}</td>
+							<td class="td3">${brand_name}</td>
 							<td class="td3">${product_price}</td>
 							<td class="td4"  ><input id="hiddennum" name="${order_num}" type="hidden" value="${id}"/><input id="spinner${id}" value="${order_num}"/></td>
 							<td class="td5">${order_total_price}</td>
@@ -106,14 +108,10 @@
 	 		    $("#spinner"+id).attr("readOnly",true);
 	    	            });
 	 });
-	 
-	 
 	</script>
 	<script type="text/javascript">
 	function deleteorder(id,storesorder_id,totalPrice,price){
-		
 		 var num=$( "#spinner"+id ).spinner( "value" );
-		
 		$("#tr"+id).find(".input-blue").attr("href","/qkjmanage/stores_order_item_delete.action?id="+id+"&storesid="+storesorder_id+"&totalPirce="+totalPrice+"&num="+num+"&price="+price+"");
 		$("#tr"+id).find(".input-blue").click(); 
 	}

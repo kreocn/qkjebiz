@@ -45,7 +45,7 @@
 							<td class="td3">${total_price}</td>
 							<td class="td4">${add_time}</td>
 							
-							<td class="td4 op-area"><a  class="input-blue"  href="/qkjmanage/stores_order_update_details.action?id=${id}" >查看详情</a><a  class="input-blue" href="/qkjmanage/stores_order_delete.action?id=${id}"  >删除</a></td>
+							<td class="td4 op-area"><a  class="input-blue"  href="/qkjmanage/stores_order_update_details.action?id=${id}" >查看详情</a> <a  class="input-red" href="/qkjmanage/stores_order_delete.action?id=${id}"  >删除</a></td>
 						</tr>
 					</s:iterator>
 				</table>

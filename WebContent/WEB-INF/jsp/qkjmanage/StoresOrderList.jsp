@@ -135,7 +135,7 @@ function addprice(data){
 	 var ajax=new Common_Ajax();
 	 ajax.config.action_url=ajax_url_action;
 	 ajax.config._success=function(data,textStatus){
-		 alert(data);
+		
 	 }
 	 //ajax.addParameter("privilege_id", "QKJ_QKJMANAGE_STORES_ORDER");
 	// ajax.addParameter("parameters", "productid="+productid+",price="+price+",userid="+userid);

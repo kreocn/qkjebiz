@@ -32,10 +32,10 @@
 
 	<insert id="qkjStores_addProducts" parameterClass="java.util.List">  
     <![CDATA[
-        insert into qkj_t_order_item(bar_code,order_id,prod_code,product_price,spec,title,order_total_price,order_num,product_id) values  
+        insert into qkj_t_order_item(bar_code,order_id,prod_code,product_price,spec,title,order_total_price,order_num,product_id,brand) values  
     ]]>
 		<iterate conjunction=",">
-        <![CDATA[(#parameters[].bar_code#,#parameters[].order_id#,#parameters[].prod_code#,#parameters[].product_price#,#parameters[].spec#,#parameters[].title#,#parameters[].order_total_price#,#parameters[].order_num#,#parameters[].product_id#)  
+        <![CDATA[(#parameters[].bar_code#,#parameters[].order_id#,#parameters[].prod_code#,#parameters[].product_price#,#parameters[].spec#,#parameters[].title#,#parameters[].order_total_price#,#parameters[].order_num#,#parameters[].product_id#,#parameters[].brand#)  
         ]]>
 		</iterate>
 	</insert>
@@ -62,7 +62,7 @@
 		select count(*) from qkj_t_order where user_id=#userid#
 	</select>
 	<select id="qkjStores_Order_update_item_list" parameterClass="java.util.Map" resultClass="StoresOrderItem">
-		select * from qkj_t_order_item where order_id=#id#
+		select i.*,p.name AS brand_name from qkj_t_order_item i LEFT JOIN qkj_t_protype p ON (i.brand=p.id) where order_id=#id#
 	</select>
 	<!-- Product End -->
 	<delete id="qkjStores_OrderItemDelete" parameterClass="java.util.Map">
