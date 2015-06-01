@@ -117,8 +117,8 @@
 	
 	<insert id="inStock_addInStock" parameterClass="inStock">
 		<![CDATA[ 
-			Insert Into qkj_t_instock(uuid,ordernum,date,store_id,operator_id,take_id,note,add_user,add_timer,lm_user,lm_timer,reason)
-			Values (#uuid#,#ordernum#,#date#,#store_id#,#operator_id#,#take_id#,#note#,#add_user#,#add_timer#,#lm_user#,#lm_timer#,#reason#)
+			Insert Into qkj_t_instock(uuid,ordernum,date,store_id,operator_id,take_id,note,add_user,add_timer,lm_user,lm_timer,reason,goreason)
+			Values (#uuid#,#ordernum#,#date#,#store_id#,#operator_id#,#take_id#,#note#,#add_user#,#add_timer#,#lm_user#,#lm_timer#,#reason#,#goreason#)
 		]]>
 		<selectKey resultClass="int" keyProperty="uuid">
 		<![CDATA[ 
@@ -178,6 +178,15 @@
 			Set 
 			send=#send#
 			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<update id="inStock_mdyGodUid" parameterClass="inStock">
+		<![CDATA[
+			Update qkj_t_instock
+			Set 
+			goflag=#goflag#
+			Where goldUuid = #goldUuid#
 		]]>
 	</update>
 	<!-- InStock End -->

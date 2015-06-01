@@ -55,6 +55,15 @@ font-size: 14px;
 					<s:if test="%{inStock.reason==1}">正常退货</s:if>
 					<s:if test="%{inStock.reason==2 }">损坏退货</s:if>
 					<s:if test="%{inStock.reason==3 }">其它</s:if>
+					<s:if test="%{inStock.reason==4 }">调货入库</s:if>
+		            </div>
+	       		</div>
+	       		
+	       		<div class="label_hang">
+		            <div class="label_ltit">来源:</div>
+		            <div class="label_rwben">
+					<s:if test="%{inStock.goreason==1}">调货出库单</s:if>
+					<s:else>手动填加</s:else>
 		            </div>
 	       		</div>
 	       		<div class="label_hang">
@@ -239,25 +248,24 @@ font-size: 14px;
 					</c:if>
 				</s:if>
 				<s:elseif test="'mdy' == viewFlag">
+					<s:if test="inStock.goflag==1"><font color="red">对方取消发货</font></s:if>
+					<s:else>
 					<c:if test="${it:checkWarePermit(null,'in')==true}">
-						<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_MDY',null)==true}">
+						<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_MDY',null)==true && inStock.confirm==null}">
 							<s:submit id="save" name="save" value="保存" action="inStock_save" cssClass="input-blue"/>
 						</c:if>
 						<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_DEL',null)==true && inStock.confirm==null }">
 							<s:submit id="delete" name="delete" value="删除" action="inStock_del"  cssClass="input-red"/>
 						</c:if>
-						<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_SURE',null)==true && inDetails.size()>0}">
+						<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_SURE',null)==true && inDetails.size()>0 && inStock.confirm!=1}">
 							<s:submit value="确认" action="inStock_sure" onclick="return isOp('是否确认?\n确认后将不能更改!');" cssClass="input-yellow"></s:submit>
 						</c:if>
 					</c:if>
 					<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_CENCLE',null)==true &&  inStock.send==0 && inStock.confirm!=null}">
 						<s:submit cssClass="input-red" id="cencle" name="cencle" value="取消订单" action="inStock_cencle" onclick="return isOp('确认取消?');" />
 					</c:if>
+					</s:else>
 				</s:elseif>
-				
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_CENCLE') && @com.qkj.ware.action.warepower@checkPermit(inStock.store_id,'add')  && inStock.confirm!=null && inStock.send!=1">
-					<s:submit cssClass="input-red" id="cencle" name="cencle" value="取消订单" action="inStock_cencle" onclick="return isOp('确认取消?');" />
-					</s:if>
 				<input type="button" value="返回" class="input-gray" onclick="linkurl('<s:url action="inStock_list" namespace="/inStock"><s:param name="viewFlag">relist</s:param></s:url>');" />
             </div>
 		</div>

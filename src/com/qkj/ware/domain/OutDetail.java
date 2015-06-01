@@ -8,7 +8,7 @@ public class OutDetail {
 	private Integer product_id;// (int)
 	private Integer num;// (int)
 	private Double price;// (decimal)
-	private Integer totel;// (int)
+	private Double totel;// (int)
 
 	// 以下为非数据库字段
 	private String product_name;
@@ -63,11 +63,11 @@ public class OutDetail {
 		this.price = price;
 	}
 
-	public Integer getTotel() {
+	public Double getTotel() {
 		return totel;
 	}
 
-	public void setTotel(Integer totel) {
+	public void setTotel(Double totel) {
 		this.totel = totel;
 	}
 

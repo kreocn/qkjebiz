@@ -236,7 +236,7 @@
 					<c:if test="${it:checkPermit('QKJ_WARE_OUTSTOCK_MDY',null)==true && outStock.send!=4}">
 						<s:submit id="save" name="save" value="保存" action="outStock_save" cssClass="input-blue"/>
 					</c:if>
-					<c:if test="${it:checkPermit('QKJ_WARE_OUTSTOCK_SURE',null)==true && 2==outStock.send}">
+					<c:if test="${it:checkPermit('QKJ_WARE_OUTSTOCK_SURE',null)==true && outStock.send==2}">
 						<s:if test="%{outDetails.size>0}">
 						<s:submit value="经手人确认" action="outStock_sure" onclick="return isOp('是否确认?\n确认后将不能更改!');" cssClass="input-yellow"></s:submit>
 						</s:if>

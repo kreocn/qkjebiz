@@ -32,6 +32,7 @@ public class InStockAction extends ActionSupport {
 	private static Log log = LogFactory.getLog(InStockAction.class);
 	private Map<String, Object> map = new HashMap<String, Object>();
 	private InStockDAO dao = new InStockDAO();
+	private InDetailDAO idao = new InDetailDAO();
 
 	private InStock inStock;
 	private Warepowers warep;
@@ -51,7 +52,7 @@ public class InStockAction extends ActionSupport {
 	private int currPage;
 	private Stock newStock;
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;入库管理";
-	
+
 	public List<Warepowers> getWps() {
 		return wps;
 	}
@@ -208,13 +209,13 @@ public class InStockAction extends ActionSupport {
 			map.putAll(ContextHelper.getDefaultRequestMap4Page());
 			this.setPageSize(ContextHelper.getPageSize(map));
 			this.setCurrPage(ContextHelper.getCurrPage(map));
-			
+
 			this.setWps(warepower.checkWarePower());
 			mapware.clear();
-			if(wps!=null && wps.size()>0){
+			if (wps != null && wps.size() > 0) {
 				List<Integer> ud_list = new ArrayList<>();
-				for(int i=0;i<wps.size();i++){
-					if(wps.get(i).getPrvg().contains("1")){//有入库权限则有入库单查询权限
+				for (int i = 0; i < wps.size(); i++) {
+					if (wps.get(i).getPrvg().contains("1")) {// 有入库权限则有入库单查询权限
 						ud_list.add(wps.get(i).getWare_id());
 					}
 				}
@@ -248,12 +249,10 @@ public class InStockAction extends ActionSupport {
 				ProductDAO pdao = new ProductDAO();
 				this.setProducts(pdao.list(null));
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/inStock/inStock_list'>入库列表</a>&nbsp;&gt;&nbsp;增加入库";
-			} else if ("mdy".equals(viewFlag) || "view".equals(viewFlag)
-					|| "print".equals(viewFlag)) {
+			} else if ("mdy".equals(viewFlag) || "view".equals(viewFlag) || "print".equals(viewFlag)) {
 				map.clear();
 				map.put("uuid", inStock.getUuid());
-				if (null == map.get("uuid"))
-					this.setInStock(null);
+				if (null == map.get("uuid")) this.setInStock(null);
 				else {
 					this.setInStock((InStock) dao.list(map).get(0));
 					getWare();
@@ -279,10 +278,10 @@ public class InStockAction extends ActionSupport {
 		Map<String, Object> mapware = new HashMap<String, Object>();
 		this.setWps(warepower.checkWarePower());
 		mapware.clear();
-		if(wps!=null && wps.size()>0){
+		if (wps != null && wps.size() > 0) {
 			List<Integer> ud_list = new ArrayList<>();
-			for(int i=0;i<wps.size();i++){
-				if(wps.get(i).getPrvg().contains("1")){//有入库权限则有入库单查询权限
+			for (int i = 0; i < wps.size(); i++) {
+				if (wps.get(i).getPrvg().contains("1")) {// 有入库权限则有入库单查询权限
 					ud_list.add(wps.get(i).getWare_id());
 				}
 			}
@@ -381,8 +380,6 @@ public class InStockAction extends ActionSupport {
 		return SUCCESS;
 	}
 
-
-
 	// 确认
 	public String sure() throws Exception {
 		ContextHelper.isPermit("QKJ_WARE_INSTOCK_ADD");
@@ -410,8 +407,7 @@ public class InStockAction extends ActionSupport {
 					// 填加库存信息(己有修改库存，没有填加)
 					newStock = new Stock();
 					if (stock != null) {
-						stock.setQuantity(stock.getQuantity()
-								+ inDetail.getNum());
+						stock.setQuantity(stock.getQuantity() + inDetail.getNum());
 						stockdao.save(stock);
 					} else {
 						int pro = inDetail.getProduct_id();
@@ -436,4 +432,5 @@ public class InStockAction extends ActionSupport {
 		}
 		return SUCCESS;
 	}
+
 }

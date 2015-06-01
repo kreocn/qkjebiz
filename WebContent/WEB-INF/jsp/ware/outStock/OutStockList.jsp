@@ -145,6 +145,8 @@
 					</s:if>
 					<s:if test="%{reason==5 }">其它
 					</s:if>
+					<s:if test="%{reason==6 }">调货出库
+					</s:if>
 				</td>
 				<td class="td4 op-area">
 					<c:if test="${it:checkWarePermit(store_id,'out')==true }">

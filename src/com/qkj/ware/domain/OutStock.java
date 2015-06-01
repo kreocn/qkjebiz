@@ -31,6 +31,7 @@ public class OutStock {
 	private String dept_name;
 	private String dept_code;
 	private Integer boflag;//0未还1已还
+	private Integer goldUuid;
 
 	// 以下为非数据库字段
 	private String add_user_name;
@@ -45,6 +46,14 @@ public class OutStock {
 
 	public String getBorrowStore_name() {
 		return borrowStore_name;
+	}
+
+	public Integer getGoldUuid() {
+		return goldUuid;
+	}
+
+	public void setGoldUuid(Integer goldUuid) {
+		this.goldUuid = goldUuid;
 	}
 
 	public void setBorrowStore_name(String borrowStore_name) {

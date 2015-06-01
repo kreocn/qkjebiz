@@ -12,11 +12,15 @@ import org.iweb.sys.ContextHelper;
 import org.iweb.sys.ToolsUtil;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.qkj.manage.dao.ProductDAO;
+import com.qkj.manage.domain.Product;
+import com.qkj.ware.dao.InStockDAO;
 import com.qkj.ware.dao.OutDetailDAO;
 import com.qkj.ware.dao.OutDetailHDAO;
 import com.qkj.ware.dao.OutStockDAO;
 import com.qkj.ware.dao.OutStockHDAO;
 import com.qkj.ware.dao.StockDAO;
+import com.qkj.ware.domain.InStock;
 import com.qkj.ware.domain.OutDetail;
 import com.qkj.ware.domain.OutDetailH;
 import com.qkj.ware.domain.OutStock;
@@ -280,30 +284,6 @@ public class OutStockAction extends ActionSupport {
 
 	}
 
-	/*
-	 * private void wareByPower(String u, String code) {
-	 * WareDAO wd=new WareDAO();
-	 * if(ContextHelper.isAdmin()){//管理员
-	 * map.clear();
-	 * map.put("bug","bug");
-	 * map.put("type", "0");//非藏酒库
-	 * this.setWares(wd.list(map));
-	 * this.setBorrowwares(wares);
-	 * }else{
-	 * map.clear();
-	 * map.put("username",u);
-	 * map.put("dept_code", code);
-	 * map.put("del", 1);
-	 * map.put("bug","bug");
-	 * this.setWares(wd.listByPower(map));
-	 * //借货仓库
-	 * map.clear();
-	 * map.put("bug","bug");
-	 * this.setBorrowwares(wd.list(map));
-	 * }
-	 * }
-	 */
-
 	public String add() throws Exception {
 		ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_ADD");
 		try {
@@ -350,53 +330,8 @@ public class OutStockAction extends ActionSupport {
 	 */
 	public String sure() throws Exception {
 		ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_SURE");
-		String u = ContextHelper.getUserLoginUuid();
-		StockDAO stockdao = new StockDAO();
-		try {
-			dao.startTransaction();
-			// 修改库存
-			this.setOutStock((OutStock) dao.get(outStock.getUuid()));
-			OutDetailDAO odd = new OutDetailDAO();
-			map.clear();
-			map.put("lading_id", outStock.getUuid());
-			this.setOutDetails(odd.list(map));
-			if (outDetails.size() > 0) {
-				for (int i = 0; i < outDetails.size(); i++) {
-					this.setOutDetail(outDetails.get(i));
-					map.clear();
-					map.put("product_id", outDetail.getProduct_id());
-					map.put("store_id", outStock.getStore_id());
-					this.setStocks(stockdao.list(map));// 查询出库仓库是否有此商品
-					if (stocks.size() > 0) {
-						this.setStock(stocks.get(0));
-						map.clear();
-						map.put("quantity", stock.getQuantity() - outDetail.getNum());
-						map.put("uuid", stock.getUuid());
-						stockdao.updateTotleById(map);
-					} else {// 填加为负数据库存
-						stock = new Stock();
-						stock.setProduct_id(outDetail.getProduct_id());
-						stock.setStore_id(outStock.getStore_id());
-						stock.setQuantity(0 - outDetail.getNum());
-						stock.setFreezeNum(0);
-						stockdao.add(stock);
-					}
-
-				}
-			}
-			// 修改确认状态
-			outStock.setSend(4);
-			outStock.setManager_check(1);// 确认
-			outStock.setManager_check_user(u);// 确认人
-			outStock.setManager_check_time(new Date());// 确认时间
-			dao.updateCheck(outStock);
-			dao.commitTransaction();
-		} catch (Exception e) {
-			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
-			throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
-		} finally {
-			dao.endTransaction();
-		}
+		this.setOutStock((OutStock) dao.get(outStock.getUuid()));
+		dao.sure(outStock);
 		return SUCCESS;
 	}
 
@@ -410,6 +345,8 @@ public class OutStockAction extends ActionSupport {
 		ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_CENCLE");
 		try {
 			dao.startTransaction();
+			InStockDAO id=new InStockDAO();
+			InStock in=new InStock();
 			OutDetailDAO odao = new OutDetailDAO();
 			// 修改单据状态
 			outStock.setSend(5);
@@ -434,8 +371,12 @@ public class OutStockAction extends ActionSupport {
 						stockdao.updateTotleById(map);
 					}
 				}
-
 			}
+			//修改对应入库单状态（调货）取消发货
+			in.setGoldUuid(outStock.getUuid());
+			in.setGoflag(1);
+			id.saveGodUid(in);
+			
 			dao.commitTransaction();
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!del 数据删除失败:", e);
@@ -489,7 +430,6 @@ public class OutStockAction extends ActionSupport {
 		outDetailh.setNum(outDetail2.getNum());
 		outDetailh.setPrice(outDetail2.getPrice());
 		outDetailh.setProduct_id(outDetail2.getProduct_id());
-		outDetailh.setTotel(outDetail2.getTotel());
 
 	}
 

@@ -22,6 +22,9 @@ public class InStock {
 	private String conname;// (varchar)确认人
 	private Date contime;// (date)确认时间
 	private Integer send;
+	private Integer goreason;
+	private Integer goldUuid;
+	private Integer goflag;
 
 	// 数据库外
 	private String add_user_name;
@@ -35,8 +38,30 @@ public class InStock {
 	private Date date_end;
 	private String conname_u;
 
-	
-	
+	public Integer getGoflag() {
+		return goflag;
+	}
+
+	public void setGoflag(Integer goflag) {
+		this.goflag = goflag;
+	}
+
+	public Integer getGoldUuid() {
+		return goldUuid;
+	}
+
+	public void setGoldUuid(Integer goldUuid) {
+		this.goldUuid = goldUuid;
+	}
+
+	public Integer getGoreason() {
+		return goreason;
+	}
+
+	public void setGoreason(Integer goreason) {
+		this.goreason = goreason;
+	}
+
 	public String getConname_u() {
 		return conname_u;
 	}
@@ -244,8 +269,5 @@ public class InStock {
 	public void setDate_end(Date date_end) {
 		this.date_end = date_end;
 	}
-	
-	
-	
-	
+
 }

@@ -30,6 +30,33 @@ public class Product {
 	private Date lm_time;// (timestamp)
 
 	private String brand_name;
+	private Integer num;
+	private Double dprice;
+	private Double dtotle;
+
+	public Double getDprice() {
+		return dprice;
+	}
+
+	public void setDprice(Double dprice) {
+		this.dprice = dprice;
+	}
+
+	public Double getDtotle() {
+		return dtotle;
+	}
+
+	public void setDtotle(Double dtotle) {
+		this.dtotle = dtotle;
+	}
+
+	public Integer getNum() {
+		return num;
+	}
+
+	public void setNum(Integer num) {
+		this.num = num;
+	}
 
 	public String getBar_code_box() {
 		return bar_code_box;

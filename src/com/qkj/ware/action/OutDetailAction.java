@@ -232,6 +232,9 @@ public class OutDetailAction extends ActionSupport {
 				dao.add(outDetail);
 				this.setOutStock((OutStock) od.get(outDetail.getLading_id()));// 查询出库主表获得出库仓库
 				outStock.setUuid(outStock.getUuid());
+				if(outStock.getTotal_price()==null){
+					outStock.setTotal_price(0.00);
+				}
 				outStock.setTotal_price(outStock.getTotal_price() + outDetail.getTotel());
 				od.saveTotal(outStock);
 			}
@@ -273,7 +276,6 @@ public class OutDetailAction extends ActionSupport {
 		outDetailh.setNum(outDetail2.getNum());
 		outDetailh.setPrice(outDetail2.getPrice());
 		outDetailh.setProduct_id(outDetail2.getProduct_id());
-		outDetailh.setTotel(outDetail2.getTotel());
 
 	}
 
