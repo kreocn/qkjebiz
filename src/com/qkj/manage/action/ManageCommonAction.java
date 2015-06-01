@@ -131,4 +131,9 @@ public class ManageCommonAction extends ActionSupport implements ActionAttr {
 		return SUCCESS;
 	}
 
+	public String product() throws Exception {
+		// ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVEPOSMCLOSE_DEL");
+		return SUCCESS;
+	}
+
 }

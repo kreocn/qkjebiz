@@ -29,6 +29,20 @@
 				       <div class="label_rwben"><s:property value="product.uuid" /><s:hidden name="product.uuid" /></div>
 				</div>
 				</s:if>
+			</div>
+			<div class="label_main">
+				<div class="label_hang">
+				       <div class="label_ltit">产品系列:</div>
+				       <div class="label_rwben2">
+				       	<select name="product.brand" title="产品类型" class="validate[required]"><s:iterator value="proTypes" status="sta">
+				       			<option value="${uuid}" <s:if test="uuid==product.brand">selected="selected"</s:if>>${type_name}-${name}</option>
+				       	</s:iterator></select>
+				       </div>
+				</div>
+				<div class="label_hang">
+				       <div class="label_ltit">品名:</div>
+				       <div class="label_rwben"><s:textfield name="product.title" title="品名" cssClass="validate[required,maxSize[85]]" /></div>
+				</div>
 				<div class="label_hang">
 				       <div class="label_ltit">条形码:</div>
 				       <div class="label_rwben"><span class="label_rwb"><s:textfield name="product.bar_code" title="条形码" cssClass="validate[maxSize[32]]" /></span></div>
@@ -38,25 +52,11 @@
 				       <div class="label_rwben"><span class="label_rwb"><s:textfield name="product.bar_code_box" title="条形码(箱)" cssClass="validate[maxSize[32]]" /></span></div>
 				</div>
 				<div class="label_hang">
-				       <div class="label_ltit">条形码(西藏):</div>
-				       <div class="label_rwben"><span class="label_rwb"><s:textfield name="product.bar_code_tibet" title="条形码(西藏)" cssClass="validate[maxSize[32]]" /></span></div>
-				</div>
-				<div class="label_hang">
-				       <div class="label_ltit">条形码(西藏箱):</div>
-				       <div class="label_rwben"><span class="label_rwb"><s:textfield name="product.bar_code_tibet_box" title="条形码(西藏箱)" cssClass="validate[maxSize[32]]" /></span></div>
-				</div>
-				<div class="label_hang">
 				       <div class="label_ltit">物料统一编码:</div>
 				       <div class="label_rwben"><s:textfield name="product.prod_code" title="产品统一编码" cssClass="validate[required,maxSize[16]]" /></div>
 				</div>
-				<div class="label_hang">
-				       <div class="label_ltit">产品系列:</div>
-				       <div class="label_rwben"><s:select id="membermanagerid" cssClass="validate[required]" name="product.brand" title="产品类型"  headerKey="" headerValue="--请选择--" list="proTypes" listKey="uuid" listValue="name" /></div>
 				</div>
-				<div class="label_hang">
-				       <div class="label_ltit">品名:</div>
-				       <div class="label_rwben"><s:textfield name="product.title" title="品名" cssClass="validate[required,maxSize[85]]" /></div>
-				</div>
+			<div class="label_main">
 				<div class="label_hang">
 				       <div class="label_ltit">规格:</div>
 				       <div class="label_rwben"><s:textfield name="product.spec" title="规格(500ml)" cssClass="validate[required,maxSize[85]]" /></div>
@@ -81,6 +81,8 @@
 				       <div class="label_ltit">档次:</div>
 				       <div class="label_rwben"><s:select name="product.grade" title="档次" cssClass="validate[required]" headerKey="" headerValue="--请选择--" list="#{1:'低端',2:'中端',3:'中高端',4:'高端'}" /></div>
 				</div>
+			</div>
+			<div class="label_main">
 				<div class="label_hang">
 				       <div class="label_ltit">市场价:</div>
 				       <div class="label_rwben"><s:textfield name="product.market_price" title="市场价" cssClass="validate[required,custom[number]]"/></div>
@@ -94,10 +96,6 @@
 				       <div class="label_rwben"><s:textfield name="product.dealer_price" title="出厂价" cssClass="validate[required,custom[number]]" /></div>
 				</div>
 				<div class="label_hang">
-				       <div class="label_ltit">返利标准(%):</div>
-				       <div class="label_rwben"><s:textfield name="product.group_rebates" title="返利标准" cssClass="validate[required,custom[number]]" cssStyle="width:76%;"  />&nbsp;%</div>
-				</div>
-				<div class="label_hang">
 				       <div class="label_ltit">协议价1:</div>
 				       <div class="label_rwben"><s:textfield name="product.agree_price_1" title="协议价1" cssClass="validate[custom[number]]" /></div>
 				</div>
@@ -109,6 +107,12 @@
 				       <div class="label_ltit">协议价3:</div>
 				       <div class="label_rwben"><s:textfield name="product.agree_price_3" title="协议价3" cssClass="validate[custom[number]]" /></div>
 				</div>
+				<div class="label_hang">
+				       <div class="label_ltit">返利标准(%):</div>
+				       <div class="label_rwben"><s:textfield name="product.group_rebates" title="返利标准" cssClass="validate[required,custom[number]]" cssStyle="width:76%;"  />&nbsp;%</div>
+				</div>
+			</div>
+			<div class="label_main">
 				<div class="label_hang">
 				       <div class="label_ltit">是否启用:</div>
 				       <div class="label_rwben"><s:select name="product.status" title="产品系列" cssClass="validate[required]"  list="#{0:'启用',1:'禁用'}" /></div>

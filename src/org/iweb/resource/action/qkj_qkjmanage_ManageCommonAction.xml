@@ -8,5 +8,8 @@
 		<action name="qkjm_addProducts" class="com.qkj.manage.action.ManageCommonAction" method="products">
 			<result>/WEB-INF/jsp/qkjmanage/AddProducts.jsp</result>
 		</action>
+		<action name="qkjm_addProduct" class="com.qkj.manage.action.ManageCommonAction" method="product">
+			<result>/WEB-INF/jsp/qkjmanage/AddProduct.jsp</result>
+		</action>
 	</package>
 </struts>
