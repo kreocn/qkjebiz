@@ -190,7 +190,7 @@
 		]]>
 		<dynamic prepend="WHERE">
 		<isNotEmpty prepend="AND" property="status"><![CDATA[ h.status=#status# ]]></isNotEmpty>
-		<isNotEmpty prepend="AND" property="proendtime"><![CDATA[ h.`close_endtime`>=#proendtime# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="proendtime"><![CDATA[ #proendtime#>=h.`startime` AND h.`close_endtime`>=#proendtime# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="closetime"><![CDATA[ #closetime#>=h.`startime` AND #closetime#<=h.endtime ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="sal_id">
 		<![CDATA[ h.uuid not In ]]>

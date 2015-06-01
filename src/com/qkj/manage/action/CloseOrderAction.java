@@ -421,7 +421,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 
 				}
 
-				if (closeOrder != null && closeOrder.getMember_id() != null) this.setSalPromots(sal.salProPower(closeOrder.getMember_id(), closeOrder.getClose_time(), dlist));// 可选的促销活动
+				if (closeOrder != null && closeOrder.getMember_id() != null) this.setSalPromots(sal.salProPower(closeOrder.getMember_id(),null, dlist));// 可选的促销活动
 				
 				/*if(closeOrder != null && closeOrder.getType()==2){
 					map.clear();
