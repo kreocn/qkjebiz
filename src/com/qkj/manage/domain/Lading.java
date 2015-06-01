@@ -30,10 +30,22 @@ public class Lading {
 	private Integer out_flag; // 出货标记(0:未出货 1:已出货)
 	private Integer rebates_flag; // 返利标记 0未返利 1已返利
 	private String promotions;// 促销ID
-	private String dis_dept;//发货部门
+	private String dis_dept;// 发货部门
+
+	private Integer goflag;
 
 	// 以下为非数据库字段
+
 	private String fd_check_user_name;
+
+	public Integer getGoflag() {
+		return goflag;
+	}
+
+	public void setGoflag(Integer goflag) {
+		this.goflag = goflag;
+	}
+
 	private String applicant_name;
 	private String add_user_name;
 	private String lm_user_name;
@@ -350,6 +362,5 @@ public class Lading {
 	public void setDis_dept_name(String dis_dept_name) {
 		this.dis_dept_name = dis_dept_name;
 	}
-	
-	
+
 }

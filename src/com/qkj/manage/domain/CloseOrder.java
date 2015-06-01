@@ -44,6 +44,7 @@ public class CloseOrder {
 	private String ship_phone;// 物流单号
 	private String remark;
 	private String close_note;
+	private Integer goflag;
 
 	// 以下为非数据库字段
 	private String member_name;
@@ -76,6 +77,14 @@ public class CloseOrder {
 	private Date time60;
 	private Date time70;
 	private Date time80;
+
+	public Integer getGoflag() {
+		return goflag;
+	}
+
+	public void setGoflag(Integer goflag) {
+		this.goflag = goflag;
+	}
 
 	public String getClose_note() {
 		return close_note;

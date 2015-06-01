@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -24,7 +24,7 @@
 			<div class="label_hang">
             <div class="label_ltit">商品名称:</div>
             <div class="label_rwben label_rwb">
-            	<s:select id="membermanagerid" cssClass="selectKick" name="stock.product_id" title="状态" headerKey="" headerValue="--请选择--" list="products" listKey="uuid" listValue="title" />
+            	<s:select id="membermanagerid" cssClass="selectKick" name="stock.product_id" title="状态" headerKey="" headerValue="--请选择--" list="inproducts" listKey="product_id" listValue="product_name" />
             </div>
        		</div>
         	<div class="label_hang">

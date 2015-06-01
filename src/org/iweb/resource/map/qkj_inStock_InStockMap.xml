@@ -5,15 +5,18 @@
 	<typeAlias alias="inStock" type="com.qkj.ware.domain.InStock" />
 	<select id="inStock_getInStocks" resultClass="inStock" parameterClass="java.util.Map">
 		<![CDATA[ 
-			SELECT i.*,addu.`USER_NAME` add_user_name,lmu.`USER_NAME` lm_user_name,g.`USER_NAME` operator_name, t.`USER_NAME` take_name,s.`USER_NAME` conname_u FROM 
+			SELECT i.*,addu.`USER_NAME` add_user_name,lmu.`USER_NAME` lm_user_name,g.`USER_NAME` operator_name, t.`USER_NAME` take_name,s.`USER_NAME` conname_u,w.`ware_name` ware_name,wb.`ware_name` goldId_name FROM 
 			qkj_t_instock i LEFT JOIN s_sys_user addu ON (i.add_user=addu.`UUID`) 
 			LEFT JOIN s_sys_user lmu ON (i.lm_user=lmu.`UUID`)
 			LEFT JOIN s_sys_user g ON(g.`UUID`=i.`operator_id`)
 			LEFT JOIN s_sys_user t ON(t.`UUID`=i.`take_id`)
 			LEFT JOIN s_sys_user s ON (i.`conname`=s.`UUID`)
+			LEFT JOIN qkj_t_warehouse w ON(i.`store_id`=w.`uuid`)
+			LEFT JOIN qkj_t_warehouse wb ON(i.`goldId`=wb.`uuid`)
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ i.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="goldUuid"><![CDATA[ i.goldUuid=#goldUuid# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="ordernum"><![CDATA[ i.ordernum=#ordernum# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="date"><![CDATA[ i.date=#date# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="store_id"><![CDATA[ i.store_id=#store_id# ]]></isNotEmpty>
@@ -25,6 +28,12 @@
 			<isNotEmpty prepend="AND" property="send"><![CDATA[ i.send=#send# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="date_start"><![CDATA[ i.date>=#date_start# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="date_end"><![CDATA[ i.date<=DATE_ADD(#date_end#,INTERVAL 1 day) ]]></isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="storeids">
+			<![CDATA[ i.store_id In ]]>
+				<iterate property="storeids" open="(" close=")" conjunction=" , "> #storeids[]#</iterate>
+			</isNotEmpty>
+			
 
 		</dynamic>
 		<![CDATA[ Order By i.add_timer Desc LIMIT 0, 500 ]]>
@@ -108,11 +117,16 @@
 		</dynamic>
 	</select>
 	
+	<select id="inStock_getInStocksSpilt" resultClass="inStock" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT * FROM qkj_t_instock s WHERE s.`uuid`=#uuid# OR s.`splitUuid`=#uuid#
+		]]>
+	</select>
 	
 	<insert id="inStock_addInStock" parameterClass="inStock">
 		<![CDATA[ 
-			Insert Into qkj_t_instock(uuid,ordernum,date,store_id,operator_id,take_id,note,total_price,add_user,add_timer,lm_user,lm_timer,reason)
-			Values (#uuid#,#ordernum#,#date#,#store_id#,#operator_id#,#take_id#,#note#,#total_price#,#add_user#,#add_timer#,#lm_user#,#lm_timer#,#reason#)
+			Insert Into qkj_t_instock(uuid,ordernum,date,store_id,operator_id,take_id,note,add_user,add_timer,lm_user,lm_timer,reason,goreason,goldId,goldUuid,goflag,splitUuid,split)
+			Values (#uuid#,#ordernum#,#date#,#store_id#,#operator_id#,#take_id#,#note#,#add_user#,#add_timer#,#lm_user#,#lm_timer#,#reason#,#goreason#,#goldId#,#goldUuid#,#goflag#,#splitUuid#,#split#)
 		]]>
 		<selectKey resultClass="int" keyProperty="uuid">
 		<![CDATA[ 
@@ -125,7 +139,7 @@
 			Update qkj_t_instock
 			Set 
 			ordernum=#ordernum#,
-			
+			goldId=#goldId#,
 			operator_id=#operator_id#,
 			take_id=#take_id#,
 			note=#note#,
@@ -143,7 +157,7 @@
 	</delete>
 	
 	<!-- 额外方法 -->
-	<update id="qkjmanage_mdyTotalPrice" parameterClass="string">
+	<update id="qkjmanage_mdyTotalPrice" parameterClass="Integer">
 		<![CDATA[
 			UPDATE qkj_t_instock
 			SET total_price=(
@@ -171,6 +185,43 @@
 			Update qkj_t_instock
 			Set 
 			send=#send#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<update id="inStock_mdyGodUid" parameterClass="inStock">
+		<![CDATA[
+			Update qkj_t_instock
+			Set 
+			goflag=#goflag#
+			Where goldUuid = #goldUuid#
+		]]>
+	</update>
+	
+	<update id="inStock_mdyGodFlog" parameterClass="inStock">
+		<![CDATA[
+			Update qkj_t_instock
+			Set 
+			goflag=#goflag#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<update id="inStock_mdyGodUuid" parameterClass="inStock">
+		<![CDATA[
+			Update qkj_t_instock
+			Set 
+			goldUuid=#goldUuid#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<update id="inStock_mdyRemark" parameterClass="inStock">
+		<![CDATA[
+			Update qkj_t_instock
+			Set 
+			store_id=#store_id#,
+			remark=#remark#
 			Where uuid = #uuid#
 		]]>
 	</update>

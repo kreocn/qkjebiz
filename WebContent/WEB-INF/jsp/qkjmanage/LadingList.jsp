@@ -72,6 +72,10 @@
 					<s:if test='10==status'><span title="${it:formatDate(check_time,'yyyy-MM-dd HH:mm:ss')}" class="cy">待确认(${check_user_name})</span></s:if>
 					<s:if test='20==status'><span title="${it:formatDate(check_time,'yyyy-MM-dd HH:mm:ss')}" class="cg">已确认(${check_user_name})</span></s:if>
 					<s:if test='30==status'><span  title="${it:formatDate(check_time,'yyyy-MM-dd HH:mm:ss')}" class="cg">已发货</span></s:if>
+					<s:if test='0==goflag'>未出库</s:if>
+					<s:if test='1==goflag'>确认出库</s:if>
+					<s:if test='2==goflag'>部分出库</s:if>
+					<s:if test='3==goflag'>取消出库</s:if>
 				</td>
 				<td class="td4 op-area">
 					<a class="input-blue" href="<s:url namespace="/qkjmanage" action="lading_load"><s:param name="viewFlag">mdy</s:param><s:param name="lading.uuid" value="uuid"></s:param></s:url>">修改</a>

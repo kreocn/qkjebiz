@@ -30,7 +30,36 @@ public class Product {
 	private String lm_user;// (varchar)
 	private Date lm_time;// (timestamp)
 	private String brand_name;
-   private Double update_price;
+
+	private Integer num;
+	private Double dprice;
+	private Double dtotle;
+
+	public Double getDprice() {
+		return dprice;
+	}
+
+	public void setDprice(Double dprice) {
+		this.dprice = dprice;
+	}
+
+	public Double getDtotle() {
+		return dtotle;
+	}
+
+	public void setDtotle(Double dtotle) {
+		this.dtotle = dtotle;
+	}
+
+	public Integer getNum() {
+		return num;
+	}
+
+	public void setNum(Integer num) {
+		this.num = num;
+	}
+
+	private Double update_price;
 	public String getUnit() {
 		return unit;
 	}
@@ -39,12 +68,12 @@ public class Product {
 		this.unit = unit;
 	}
 	public Double getUpdate_price() {
-	return update_price;
-}
+		return update_price;
+	}
 
-public void setUpdate_price(Double update_price) {
-	this.update_price = update_price;
-}
+	public void setUpdate_price(Double update_price) {
+		this.update_price = update_price;
+	}
 
 	public String getBar_code_box() {
 		return bar_code_box;

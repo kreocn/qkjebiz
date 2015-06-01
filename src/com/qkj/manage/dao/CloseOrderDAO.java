@@ -56,6 +56,10 @@ public class CloseOrderDAO extends AbstractDAO {
 		return super.save("qkjmanage_mdyPassStatus", parameters);
 	}
 	
+	public int mdyGoFlag(Object parameters){
+		return super.save("qkjmanage_mdyGoFlag", parameters);
+	}
+	
 	public List allsign(Map<String, Object> map) {
 		return super.list("qkjmanage_getallclosesign", map);
 	}

@@ -1,6 +1,6 @@
 package com.qkj.ware.domain;
 
-import java.util.*;
+import java.util.Date;
 
 public class InStock {
 	private Integer uuid;// (varchar)
@@ -22,10 +22,19 @@ public class InStock {
 	private String conname;// (varchar)确认人
 	private Date contime;// (date)确认时间
 	private Integer send;
+	private Integer goreason;
+	private Integer goldUuid;
+	private Integer goflag;
+	private Integer goldId;
+	private Integer splitUuid;
+	private Integer split;
+	private String remark;
 
 	// 数据库外
 	private String add_user_name;
 	private String lm_user_name;
+	private Integer store_idR;
+	private Integer splitNum;
 
 	// 以下为非数据库字段
 	private String prvg;
@@ -34,9 +43,97 @@ public class InStock {
 	private Date date_start;
 	private Date date_end;
 	private String conname_u;
+	private String goldId_name;
+	private String ware_name;
 
-	
-	
+	public Integer getStore_idR() {
+		return store_idR;
+	}
+
+	public void setStore_idR(Integer store_idR) {
+		this.store_idR = store_idR;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public Integer getSplitNum() {
+		return splitNum;
+	}
+
+	public void setSplitNum(Integer splitNum) {
+		this.splitNum = splitNum;
+	}
+
+	public Integer getSplitUuid() {
+		return splitUuid;
+	}
+
+	public void setSplitUuid(Integer splitUuid) {
+		this.splitUuid = splitUuid;
+	}
+
+	public Integer getSplit() {
+		return split;
+	}
+
+	public void setSplit(Integer split) {
+		this.split = split;
+	}
+
+	public String getWare_name() {
+		return ware_name;
+	}
+
+	public void setWare_name(String ware_name) {
+		this.ware_name = ware_name;
+	}
+
+	public String getGoldId_name() {
+		return goldId_name;
+	}
+
+	public void setGoldId_name(String goldId_name) {
+		this.goldId_name = goldId_name;
+	}
+
+	public Integer getGoldId() {
+		return goldId;
+	}
+
+	public void setGoldId(Integer goldId) {
+		this.goldId = goldId;
+	}
+
+	public Integer getGoflag() {
+		return goflag;
+	}
+
+	public void setGoflag(Integer goflag) {
+		this.goflag = goflag;
+	}
+
+	public Integer getGoldUuid() {
+		return goldUuid;
+	}
+
+	public void setGoldUuid(Integer goldUuid) {
+		this.goldUuid = goldUuid;
+	}
+
+	public Integer getGoreason() {
+		return goreason;
+	}
+
+	public void setGoreason(Integer goreason) {
+		this.goreason = goreason;
+	}
+
 	public String getConname_u() {
 		return conname_u;
 	}
@@ -244,8 +341,5 @@ public class InStock {
 	public void setDate_end(Date date_end) {
 		this.date_end = date_end;
 	}
-	
-	
-	
-	
+
 }

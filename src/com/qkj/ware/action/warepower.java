@@ -13,6 +13,7 @@ import org.iweb.sys.domain.UserLoginInfo;
 
 import com.qkj.sche.dao.ScheduleDAO;
 import com.qkj.sche.domain.Schedule;
+import com.qkj.ware.domain.Warepowers;
 import com.qkjsys.ebiz.dao.WareDAO;
 import com.qkjsys.ebiz.domain.Ware;
 
@@ -216,5 +217,57 @@ public class warepower {
 		return 1;
 	}
 
+	/**
+	 * 20150521
+	 * sunshanshan
+	 * 仓库权限列表
+	 */
+	public static List<Warepowers> checkWarePower(){
+		List<Warepowers> wps=new ArrayList<>();
+		if(ContextHelper.isAdmin()){
+			wps=null;
+		}else{
+			wps=ContextHelper.getUserLoginInfo().getWps();
+		}
+		return wps;
+	}
+	
+	public static boolean checkWarePermit(Integer ware_id, String flag) {
+		Boolean iden=false;
+		List<Warepowers> wps=new ArrayList<>();
+		if(ContextHelper.isAdmin()){
+			iden=true;
+		}else{
+			wps=ContextHelper.getUserLoginInfo().getWps();
+			if(wps.size()>0){
+				if(ware_id==null || ware_id==0){//添加出、入库单时没有仓库id
+					for(int i=0;i<wps.size();i++){
+							if(flag.equals("in") && wps.get(i).getPrvg().contains("1")){//入库标识
+								iden=true;break;
+							}else if(flag.equals("out")  && wps.get(i).getPrvg().contains("2")){//出库标识
+								iden=true;break;
+							}else if(flag.equals("select")  && wps.get(i).getPrvg().contains("4")){//查询标识
+								iden=true;break;
+							}
+							
+					}
+				}else{
+					for(int i=0;i<wps.size();i++){
+						if(wps.get(i).getWare_id().intValue()==ware_id.intValue()){
+							if(flag.equals("in") && wps.get(i).getPrvg().contains("1")){//入库标识
+								iden=true;break;
+							}else if(flag.equals("out")  && wps.get(i).getPrvg().contains("2")){//出库标识
+								iden=true;break;
+							}else if(flag.equals("select")  && wps.get(i).getPrvg().contains("4")){//查询标识
+								iden=true;break;
+							}
+						}
+					}
+				}
+				
+			}
+		}
+		return iden;
+	}
 
 }
