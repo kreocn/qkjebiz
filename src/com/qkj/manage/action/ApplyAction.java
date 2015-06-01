@@ -308,6 +308,9 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 				} else if (apply.getStatus_sp() == 20) {
 					apply.setSp_check_status(0);
 					apply.setStatus(apply.getStatus_sp());
+				} else if (apply.getStatus_sp() == 35) {
+					apply.setSp_check_status(0);
+					apply.setStatus(null);
 				} else {
 					apply.setStatus(apply.getStatus_sp());
 					apply.setSp_check_status(null);

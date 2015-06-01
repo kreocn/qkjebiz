@@ -100,6 +100,12 @@ cursor: pointer;
 							<s:select id="nd_check_state" name="closeOrder.nd_check_state" cssClass="selectKick" list="#{0:'未确认',5:'退回',10:'已审'}" headerKey="" headerValue="--请选择--" />
 						</div>
 					</div>
+					<div class="label_hang">
+						<div class="label_ltit">类型:</div>
+						<div class="label_rwben label_rwb">
+							<s:select id="nd_check_state" name="closeOrder.typeO" cssClass="selectKick" list="#{0:'促销活动',2:'至事由'}" headerKey="" headerValue="--请选择--" />
+						</div>
+					</div>
 					<div class="label_hang tac">
 						<s:checkbox id="search_mcondition" name="search_mcondition" fieldValue="true" value="true" cssClass="regular-checkbox" />
 						<label for="search_mcondition"></label>更多条件
@@ -120,6 +126,7 @@ cursor: pointer;
 					<th class="td1">单据状态</th>
 					<th class="td2">销售状态</th>
 					<th class="td2">销管状态</th>
+					<th class="td3">类型</th>
 					<th class="td4">操作</th>
 					<th class="td0">查看</th>
 				</tr>
@@ -197,6 +204,12 @@ background-color: #FFF;
 										<font class="message_pass">总经理已审</font></s:if>
 										<s:if test="smd_status==70">
 										<font class="message_pass">董事已审</font></s:if>
+						</td>
+						
+						<td class="td3 nw">
+						<s:if test="type==0">促销活动</s:if>
+						<s:if test="type==1">工业旅游</s:if>
+						<s:if test="type==2">至事由</s:if>
 						</td>
 						<td class="td4 op-area">
 							<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_MDY',null)==true}">

@@ -290,6 +290,7 @@ s
 									</s:if>
 									<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
 										<tr>
+											<th>编号</th>
 											<th>事</th>
 											<th>申请时间</th>
 											
@@ -297,6 +298,9 @@ s
 										<!-- lading.promotions -->
 										<s:iterator value="applysed" status="sta">
 											<tr>
+												<td class="nw">
+												${uuid }
+												</td>
 												<td class="nw">
 												<a  href="<s:url namespace="/qkjmanage" action="apply_loadt"><s:param name="viewFlag">mdy</s:param><s:param name="apply.uuid" value="uuid"></s:param><s:param name="closeOrder.uuid" value="closeOrder.uuid" /></s:url>">${title}</a>
 												</td>

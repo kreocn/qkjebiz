@@ -20,6 +20,7 @@ public class CloseOrder {
 	private String add_user;// (varchar)填加人
 	private Date add_time;// (datetime)填加时间
 	private Integer type;
+	private Integer typeO;
 	private Integer apply_id;
 	private String m_name;
 
@@ -92,6 +93,14 @@ public class CloseOrder {
 	private Date time80;
 
 	
+	public Integer getTypeO() {
+		return typeO;
+	}
+
+	public void setTypeO(Integer typeO) {
+		this.typeO = typeO;
+	}
+
 	public String getM_name() {
 		return m_name;
 	}
