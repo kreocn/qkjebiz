@@ -92,7 +92,7 @@
 							<td class="td6">${bar_code}</td>
 							<td class="td7">${spec}</td>
 							<c:if test="${it:checkPermit('QKJ_QKJMANAGE_STORES_FIND_ORDER_DEL',null)==true}"> 
-							<td class="td4 op-area"><a  class="input-blue"  onclick="deleteorder(${id},${sotresorder.id},${order_total_price},${product_price})">保存</a></td>
+							<td class="td4 op-area"><a  class="input-blue"   onclick="del(${id},${sotresorder.id},${order_total_price},${product_price})">保存</a></td>
 							</c:if>
 							<%-- href="/qkjmanage/stores_order_item_delete.action?id=${id}&storesid=${sotresorder.id}&price=${product_price}"
 						 --%>
@@ -120,10 +120,10 @@
 	 });
 	</script>
 	<script type="text/javascript">
-	function deleteorder(id,storesorder_id,totalPrice,price){
-		 var num=$( "#spinner"+id ).spinner( "value" );
-		$("#tr"+id).find(".input-blue").attr("href","/qkjmanage/stores_order_item_delete.action?id="+id+"&storesid="+storesorder_id+"&totalPirce="+totalPrice+"&num="+num+"&price="+price+"");
-		$("#tr"+id).find(".input-blue").click(); 
+	function del(id,storesorder_id,totalPrice,price){
+		       	 var num=$( "#spinner"+id ).spinner( "value" );
+		 		$("#tr"+id).find(".input-blue").attr("href","/qkjmanage/stores_order_item_delete.action?id="+id+"&storesid="+storesorder_id+"&totalPirce="+totalPrice+"&num="+num+"&price="+price+"");
+		 		$("#tr"+id).find(".input-blue").click(); 
 	}
 	</script>
 </body>
