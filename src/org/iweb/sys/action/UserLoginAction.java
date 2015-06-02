@@ -3,7 +3,6 @@ package org.iweb.sys.action;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -21,18 +20,17 @@ import org.iweb.sys.Parameters;
 import org.iweb.sys.ToolsUtil;
 import org.iweb.sys.cache.CacheFactory;
 import org.iweb.sys.cache.SysDBCacheLogic;
+import org.iweb.sys.dao.DepartmentDAO;
 import org.iweb.sys.dao.UserDAO;
 import org.iweb.sys.dao.UserDeptDAO;
 import org.iweb.sys.dao.UserRoleDAO;
+import org.iweb.sys.domain.Department;
 import org.iweb.sys.domain.RolePrvg;
 import org.iweb.sys.domain.User;
 import org.iweb.sys.domain.UserDept;
 import org.iweb.sys.domain.UserLoginInfo;
-import org.iweb.sys.domain.UserRole;
-import org.iweb.sys.logic.DeptLogic;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.sun.org.apache.bcel.internal.generic.ARRAYLENGTH;
 
 public class UserLoginAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
@@ -41,8 +39,9 @@ public class UserLoginAction extends ActionSupport {
 	private UserDept userDept;
 	private List<UserDept> userDepts;
 	private Map<String, Object> map = new HashMap<String, Object>();
+	private HashMap<String, String> f_map = new HashMap<String, String>();
 	private UserDAO dao = new UserDAO();
-	private UserDeptDAO udDao=new UserDeptDAO();
+	private UserDeptDAO udDao = new UserDeptDAO();
 
 	public UserDept getUserDept() {
 		return userDept;
@@ -103,7 +102,7 @@ public class UserLoginAction extends ActionSupport {
 			List l = dao.listCheck(map);
 			if (l.size() == 1) {
 				this.setUser((User) l.get(0));
-				
+
 				if ("true".equals(IWebConfig.getConfigMap().get("isPasswordEncrypt")) ? MD5Plus.compare(r_passwords, this.getUser().getPasswords()) : r_passwords.equals(this
 						.getUser().getPasswords())) {
 					setUserLoginInfo(user, 0);
@@ -212,7 +211,7 @@ public class UserLoginAction extends ActionSupport {
 		map.clear();
 		map.put("user_id", user.getUuid());
 		this.setUserDepts(udDao.list(map));
-		if (!ToolsUtil.isEmpty(ulf.getUser_roles()) || userDepts.size()>0) {
+		if (!ToolsUtil.isEmpty(ulf.getUser_roles()) || userDepts.size() > 0) {
 			{// 设置角色列表
 				map.clear();
 				try {
@@ -244,32 +243,33 @@ public class UserLoginAction extends ActionSupport {
 					map.put("roles", roles);
 					map.put("no_tree_view", "A");
 					role_p_list = (new UserRoleDAO()).listRolePrvg(map);
-
-					for (int i = 0, n = role_p_list.size(); i < n; i++) {
-					/*	if (!(p_map.containsKey(role_p_list.get(i).getPrivilege_id()) && (p_map.get(role_p_list.get(i).getPrivilege_id()) > role_p_list.get(i).getType()))) { // 如已经存在此权限,则从高原则
-							p_map.put(role_p_list.get(i).getPrivilege_id(), role_p_list.get(i).getType());
-						}*/
-
-						if (f_map.containsKey(role_p_list.get(i).getPrivilege_id()) && !ToolsUtil.isEmpty(f_map.get(role_p_list.get(i).getPrivilege_id()))) {
-							String tmp = f_map.get(role_p_list.get(i).getPrivilege_id());
-							f_map.put(role_p_list.get(i).getPrivilege_id(), tmp + "," + role_p_list.get(i).getFunction());
-						} else {
-							f_map.put(role_p_list.get(i).getPrivilege_id(), role_p_list.get(i).getFunction());
-						}
-
-						log.info(ulf.getTitle() + ":" + role_p_list.get(i).getPrivilege_id() + "(" + role_p_list.get(i).getType() + ":" + role_p_list.get(i).getFunction() + ")");
-					}
-					//ulf.setUser_prvg_map(p_map);
-					ulf.setUser_function_map(f_map);
 				}
 			}
-			
+
 			// 多部门多权限
 			ulf.setUser_prvg_map((HashMap<String, String>) setUserLoginInfo(userDepts));
-			
+			if (f_map != null) {
+				ulf.setUser_function_map(f_map);
+			}
+			if (userDepts.size() > 0) {
+				HashMap<String, String> p_map = new HashMap<String, String>();
+				for (int i = 0; i < userDepts.size(); i++) {
+					UserDept u = new UserDept();
+					u = userDepts.get(i);
+					if (u.getRoles().contains("2015051316370953")) {
+						if (u.getDept_code().equals(ulf.getDept_code())) {// 默认部门
+							p_map.put(u.getDept_code(), u.getDept_cname() + "#1");
+						} else {
+							p_map.put(u.getDept_code(), u.getDept_cname() + "#0");
+						}
+					}
+
+				}
+				ulf.setPermit_depts2(p_map);
+			}
 		}
 
- 		if (!ToolsUtil.isEmpty(ulf.getUser_type())) {
+		if (!ToolsUtil.isEmpty(ulf.getUser_type())) {
 			{// 设置权限列表--会员中心权限
 				map.clear();
 				List<RolePrvg> role_p_list;
@@ -306,23 +306,54 @@ public class UserLoginAction extends ActionSupport {
 		if (login_type == 0) {
 			session.setAttribute(Parameters.UserLoginInfo_Session_Str, ulf);
 			// 特殊操作,初始化部门
-			ContextHelper.getUserLoginInfo().setPermit_depts(DeptLogic.getPermitDept());
-			/*Map<String, String> newMap = new HashMap<String, String>();
+			// ContextHelper.getUserLoginInfo().setPermit_depts(DeptLogic.getPermitDept());
+
+			boolean flag = ContextHelper.checkPermit2("SYS_SELECT_DEPT_LIST_ALL", null);
+			Map<String, String> newMap = new HashMap<String, String>();
 			Set<String> dset = new HashSet<>();
-			newMap=ContextHelper.getUserLoginInfo().getUser_prvg_map();
-			Set<String> set = newMap.keySet(); 
-			for (String s:set) {
-			String s1[]=(String[]) JSONUtil.toObject(newMap.get(s), String[].class);// 转换成数组
-			for(int i=0;i<s1.length;i++){
-				dset.add(s1[i]);
+			newMap = ContextHelper.getUserLoginInfo().getUser_prvg_map();
+			List<Department> delist = new ArrayList<>();
+			try {
+				DepartmentDAO dao = new DepartmentDAO();
+				if (ContextHelper.isAdmin() || flag == true) {
+					delist = dao.list(null);
+					if (delist.size() > 0) {
+						for (int i = 0; i < delist.size(); i++) {
+							Department de = new Department();
+							de = delist.get(i);
+							dset.add(de.getDept_code());
+						}
+					}
+				} else {
+					Set<String> set = newMap.keySet();
+					for (String s : set) {
+						String value = newMap.get(s);
+						if (value.contains(",")) {
+							String s1[] = (String[]) JSONUtil.toObject(newMap.get(s), String[].class);// 转换成数组
+							for (int i = 0; i < s1.length; i++) {
+								dset.add(s1[i]);
+							}
+						} else {
+							String s1[] = (String[]) JSONUtil.toObject(newMap.get(s), String[].class);// 转换成数组
+							if (s1 != null) {
+								for (int i = 0; i < s1.length; i++) {
+									dset.add(s1[i]);
+								}
+							} else {
+								dset.add(value);
+							}
+
+						}
+					}
+				}
+				List<String> dlist = new ArrayList<>();
+				dlist.addAll(dset);
+				ContextHelper.getUserLoginInfo().setPermit_depts(dlist);
+			} catch (Exception e) {
+				log.error(this.getClass().getName() + "!list 读取数据错误:" + ToolsUtil.getStackTrace(e));
+				// throw new Exception(this.getClass().getName() + "!list 读取数据错误:" + ToolsUtil.getStackTraceHTML(e));
 			}
-			ContextHelper.getUserLoginInfo().setPermit_depts2((List<String>) map.get(s));
-			}
-			List<String> dlist = new ArrayList<>();
-			dlist.addAll(dset);
-			ContextHelper.getUserLoginInfo().setPermit_depts(dlist);*/
-			
-			
+
 			// 写入CKFinder的权限,需配置crossContext="true",主动写入ckframe的application
 			if (session.getServletContext().getContext("/ckframe") != null) {
 				if ("admin".equals(ulf.getTitle()) || "系统管理员".equals(ulf.getPosition_name()) || "ck_admin".equals(ulf.getFilesystem_root())) {
@@ -342,83 +373,110 @@ public class UserLoginAction extends ActionSupport {
 		}
 
 	}
-	private Map<String,String> setUserLoginInfo(List<UserDept> uds){
+
+	private Map<String, String> setUserLoginInfo(List<UserDept> uds) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		HashMap<String, String> ud_dept_map = new HashMap<String, String>();
-		UserRoleDAO da=new UserRoleDAO();
-		List<RolePrvg> role_p_list=new ArrayList<>();
+		UserRoleDAO da = new UserRoleDAO();
+		List<RolePrvg> role_p_list = new ArrayList<>();
 		boolean flag;
-		if (uds.size()>0) {
+		if (uds.size() > 0) {
 			{// 设置角色列表（角色部门）
 				map.clear();
 				try {
-					//获得用户所有角色
-					if(uds.size()>0){
-						for(int i=0;i<uds.size();i++){
-							userDept=uds.get(i);
-							if(userDept.getRoles()!=null&&!userDept.getRoles().equals("")){
-								String[] roles=userDept.getRoles().split(",");
+					// 获得用户所有角色
+					if (uds.size() > 0) {
+						for (int i = 0; i < uds.size(); i++) {
+							userDept = uds.get(i);
+							if (userDept.getRoles() != null && !userDept.getRoles().equals("")) {
+								String[] roles = userDept.getRoles().split(",");
 								map.put("roles", roles);
 								map.put("no_tree_view", "A");
 								role_p_list = (new UserRoleDAO()).listRolePrvg(map);
-								if(role_p_list.size()>0){
-									for(int h=0;h<role_p_list.size();h++){
-										RolePrvg roles_prvg=new RolePrvg();
-										roles_prvg=role_p_list.get(h);
-										if(userDept.getSubover()==1){//包含子部门
-											String str = (String) CacheFactory.getCacheInstance().get(SysDBCacheLogic.CACHE_DEPT_PREFIX_SUB + userDept.getDept_code());
-											if(ud_dept_map.containsKey(roles_prvg.getPrivilege_id()) ){
-												
-												String v=ud_dept_map.get(roles_prvg.getPrivilege_id());
-												//String[] d = (String[]) JSONUtil.toObject(userDept.getDept_code(), String[].class);// 转换成数组
-												String[] s = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
-												String[] a= (String[]) JSONUtil.toObject(v, String[].class);// 转换成数组
-												flag=ToolsUtil.isIn(userDept.getDept_code(), a);// 判断在不在数组中
-												if(flag==false){
-													String[] all1=(String[]) ArrayUtils.addAll(s, a);
-													String[] all=(String[]) ArrayUtils.add(all1, userDept.getDept_code());
+								if (role_p_list.size() > 0) {
+									for (int h = 0; h < role_p_list.size(); h++) {
+										RolePrvg roles_prvg = new RolePrvg();
+										roles_prvg = role_p_list.get(h);
+										if (userDept.getDepsubover() == 1) {// 有部门管理权限
+											if (userDept.getSubover() == 1) {// 包含子部门
+												String str = (String) CacheFactory.getCacheInstance().get(SysDBCacheLogic.CACHE_DEPT_PREFIX_SUB + userDept.getDept_code());
+												if (ud_dept_map.containsKey(roles_prvg.getPrivilege_id())) {
+
+													String v = ud_dept_map.get(roles_prvg.getPrivilege_id());
+													String[] s = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
+													String[] a = (String[]) JSONUtil.toObject(v, String[].class);// 转换成数组
+													flag = ToolsUtil.isIn(userDept.getDept_code(), a);// 判断在不在数组中
+													if (flag == false) {
+														String[] all1 = (String[]) ArrayUtils.addAll(s, a);
+														String[] all = (String[]) ArrayUtils.add(all1, userDept.getDept_code());
+														ud_dept_map.put(roles_prvg.getPrivilege_id(), JSONUtil.toJsonString(all));
+													}
+
+												} else {
+													String[] s = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
+													String[] all = (String[]) ArrayUtils.add(s, userDept.getDept_code());
 													ud_dept_map.put(roles_prvg.getPrivilege_id(), JSONUtil.toJsonString(all));
 												}
-												
-											}else{
-												//String[] d = (String[]) JSONUtil.toObject(userDept.getDept_code(), String[].class);// 转换成数组
-												String[] s = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
-												String[] all=(String[]) ArrayUtils.add(s, userDept.getDept_code());
-												ud_dept_map.put(roles_prvg.getPrivilege_id(), JSONUtil.toJsonString(all));
-											}
-											
-										}else{
-											if(ud_dept_map.containsKey(roles_prvg.getPrivilege_id())){
-												String v=ud_dept_map.get(roles_prvg.getPrivilege_id());
-												String[] a= (String[]) JSONUtil.toObject(v, String[].class);// 转换成数组
-												flag=ToolsUtil.isIn(userDept.getDept_code(), a);// 判断在不在数组中
-												if(flag==false){
-													String[] all=(String[]) ArrayUtils.add(a, userDept.getDept_code());
-													ud_dept_map.put(roles_prvg.getPrivilege_id(),JSONUtil.toJsonString(all));
+
+											} else {
+												if (ud_dept_map.containsKey(roles_prvg.getPrivilege_id())) {
+													String v = ud_dept_map.get(roles_prvg.getPrivilege_id());
+													String[] a = (String[]) JSONUtil.toObject(v, String[].class);// 转换成数组
+													flag = ToolsUtil.isIn(userDept.getDept_code(), a);// 判断在不在数组中
+													if (flag == false) {
+														String[] all = (String[]) ArrayUtils.add(a, userDept.getDept_code());
+														ud_dept_map.put(roles_prvg.getPrivilege_id(), JSONUtil.toJsonString(all));
+													}
+
+												} else {
+													ud_dept_map.put(roles_prvg.getPrivilege_id(), userDept.getDept_code());
 												}
-												
-											}else{
-												ud_dept_map.put(roles_prvg.getPrivilege_id(), userDept.getDept_code());
 											}
+										} else {// 没有部门管理权限，则说明为个人
+											if (ud_dept_map.containsKey(roles_prvg.getPrivilege_id())) {
+												String v = ud_dept_map.get(roles_prvg.getPrivilege_id());
+												String[] a = (String[]) JSONUtil.toObject(v, String[].class);// 转换成数组
+												flag = ToolsUtil.isIn(userDept.getDept_code(), a);// 判断在不在数组中
+												if (flag == false) {
+													String[] all = (String[]) ArrayUtils.add(a, "0.1" + "#" + userDept.getDept_code());
+													ud_dept_map.put(roles_prvg.getPrivilege_id(), JSONUtil.toJsonString(all));
+												}
+											} else {
+												ud_dept_map.put(roles_prvg.getPrivilege_id(), "0.1" + "#" + userDept.getDept_code());
+											}
+
 										}
+
+										// 新闻权限
+										if (f_map.containsKey(roles_prvg.getPrivilege_id()) && !ToolsUtil.isEmpty(roles_prvg.getPrivilege_id())) {
+											String tmp = f_map.get(roles_prvg.getPrivilege_id());
+											f_map.put(roles_prvg.getPrivilege_id(), tmp + "," + roles_prvg.getFunction());
+										} else {
+											f_map.put(roles_prvg.getPrivilege_id(), roles_prvg.getFunction());
+										}
+
 									}
 								}
-								
+
 							}
-							
+
 						}
 					}
-					
+
 				} catch (Exception e) {
-					
+
 				}
 			}
 
-			
 		}
-		//ContextHelper.getUserLoginInfo().setPermit_depts(DeptLogic.getPermitDept());
+		// ContextHelper.getUserLoginInfo().setPermit_depts(DeptLogic.getPermitDept());
+		Set<String> set = ud_dept_map.keySet();
+		for (String s : set) {
+			String value = ud_dept_map.get(s);
+			log.info("多权限" + s + ":" + value);
+		}
 		return ud_dept_map;
-		
+
 	}
 
 	/**

@@ -158,7 +158,7 @@ public class OrderAction extends ActionSupport {
 			if (order == null) {
 				order = new Order();
 			}
-			ContextHelper.setSearchDeptPermit4Search(map, "dept_codes", "manager");
+			ContextHelper.setSearchDeptPermit4Search("QKJCJ_SYSEBIZ_ORDER_LIST",map, "dept_codes", "manager");
 			ContextHelper.SimpleSearchMap4Page("QKJCJ_SYSEBIZ_ORDER_LIST", map, order, viewFlag);
 
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));

@@ -215,7 +215,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 		try {
 			map.clear();
 			if (closeOrder == null) closeOrder = new CloseOrder();
-			ContextHelper.setSearchDeptPermit4Search(map, "apply_depts", "add_user");
+			ContextHelper.setSearchDeptPermit4Search("QKJ_QKJMANAGE_CLOSEORDER_LIST",map, "apply_depts", "add_user");
 			ContextHelper.SimpleSearchMap4Page("QKJ_QKJMANAGE_CLOSEORDER_LIST", map, closeOrder, viewFlag);
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 			this.setCloseOrders(dao.list(map));

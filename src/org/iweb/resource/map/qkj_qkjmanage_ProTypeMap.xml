@@ -5,7 +5,10 @@
 	<typeAlias alias="proType" type="com.qkj.manage.domain.ProType" />
 	<select id="qkjmanage_getProTypes" resultClass="proType" parameterClass="java.util.Map">
 		<![CDATA[ 
-			SELECT t.*,u.`USER_NAME` lm_user_name FROM qkj_t_protype t LEFT JOIN s_sys_user u ON t.`lm_user`=u.`UUID`
+			SELECT t.*,u.`USER_NAME` lm_user_name ,
+			CASE(t.`type`) WHEN 0 THEN '互助白酒' WHEN 1 THEN '促销物料' WHEN 2 THEN '西藏白酒' WHEN 3 THEN '红酒' ELSE '其他' END AS type_name
+			FROM qkj_t_protype t 
+			LEFT JOIN s_sys_user u ON t.`lm_user`=u.`UUID`
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ t.uuid=#uuid# ]]></isNotEmpty>

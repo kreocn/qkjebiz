@@ -259,7 +259,6 @@ public class ScheAction extends ActionSupport {
 				setMessage("你没有选择任何操作!");
 				return "SUCCESS";
 			} else if ("add".equals(viewFlag)) {
-				System.out.println("load                                       add");
 				if(sche.getType().equals("0")){
 					path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/sche/schedule_leftList?sche.type=0'>公告列表</a>&nbsp;&gt;&nbsp;增加公告";
 				}

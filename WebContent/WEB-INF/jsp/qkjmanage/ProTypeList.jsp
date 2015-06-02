@@ -63,7 +63,9 @@
 	  		<tr id="showtr${uuid}">
 	  			<td class="td1 nw"><s:property value="uuid" /></td>
 				<td class="td1 nw">
-					<s:if test="type==0">产品</s:if>
+					<s:if test="type==0">互助白酒</s:if>
+					<s:if test="type==2">西藏白酒</s:if>
+					<s:if test="type==3">红酒</s:if>
 					<s:if test="type==1">促销物料</s:if>
 				</td>
 			   	<td class="td1 nw"><s:property value="name" /></td>

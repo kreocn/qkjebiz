@@ -364,7 +364,6 @@
 												<s:param name="totalName">activeProduct.total_price</s:param>
 											</s:url>
 										<input type="button" id="product" onclick="window.location.href='${ladingAddProductsUrl}';" value="添加酒品" />
-										<!--<input type="button" id="product" onclick="noedit();" value="添加酒品" />-->
 									</c:if>
 									<c:if test="${active.status==0 && it:checkPermit('QKJ_QKJMANAGE_ACTIVEPOSM_ADD',null)==true}">
 										<input type="button" id="addPosm" value="添加物料" />
@@ -695,7 +694,7 @@
 							<c:if test="${(active.status==1 || active.status==2) && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_STATUS_1',null)==true}">
 								<s:submit id="active_mdyStatus_1" name="active_mdyStatus_1" value="作废" action="active_mdyStatus_1" onclick="return isOp('确定执行此操作?');" cssClass="input-red" />
 							</c:if>
-							<c:if test="${'mdy' == viewFlag && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_APPROVE',null)==true}">
+							<c:if test="${'mdy' == viewFlag && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_APPROVE',active.apply_dept)==true}">
 								<input type="button" value="审阅" onclick="openApprove();" />
 							</c:if>
 							<c:if test="${'mdy' == viewFlag && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_HISTORY',null)==true}">
@@ -717,15 +716,15 @@
 						<div class="label_hang">
 							<div class="label_ltit">销售审核:</div>
 							<div class="label_rwbenx">
-								<c:if test="${10==active.sd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS10',null)==true}">
+								<c:if test="${10==active.sd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS10',active.apply_dept)==true}">
 									<s:submit id="mdyActiveSDStatus10" name="mdyActiveSDStatus10" cssClass="input-green" value="经理/大区-审核通过" action="mdyActiveSDStatus10" onclick="return isOp('确定执行此操作?');" />
 									<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
-								<c:if test="${30==active.sd_status && 30==active.smd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS30',null)==true}">
+								<c:if test="${30==active.sd_status && 30==active.smd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS30',active.apply_dept)==true}">
 									<s:submit id="mdyActiveSDStatus30" name="mdyActiveSDStatus30" cssClass="input-green" value="运营总监-审核通过" action="mdyActiveSDStatus30" onclick="return isOp('确定执行此操作?');" />
 									<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
-								<c:if test="${40==active.sd_status && active.smd_status>=40 && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS40',null)==true}">
+								<c:if test="${40==active.sd_status && active.smd_status>=40 && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS40',active.apply_dept)==true}">
 									<s:submit id="mdyActiveSDStatus40" name="mdyActiveSDStatus40" cssClass="input-green" value="业务副总-审核通过" action="mdyActiveSDStatus40" onclick="return isOp('确定执行此操作?');" />
 									<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
@@ -753,19 +752,19 @@
 						<div class="label_hang">
 							<div class="label_ltit">销管审核:</div>
 							<div class="label_rwbenx">
-								<c:if test="${10==active.smd_status && 30==active.sd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SMDSTATUS10',null)==true}">
+								<c:if test="${10==active.smd_status && 30==active.sd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SMDSTATUS10',active.apply_dept)==true}">
 									<s:submit id="mdyActiveSMDStatus10" name="mdyActiveSMDStatus10" cssClass="input-green" value="销管经理-审核通过" action="mdyActiveSMDStatus10" onclick="return isOp('确定执行此操作?');" />
 									<s:submit id="mdyActiveSMDStatus5" name="mdyActiveSMDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSMDStatus5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
-								<c:if test="${30==active.smd_status && active.sd_status==40 && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SMDSTATUS50',null)==true}">
+								<c:if test="${30==active.smd_status && active.sd_status==40 && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SMDSTATUS50',active.apply_dept)==true}">
 									<s:submit id="mdyActiveSMDStatus50" name="mdyActiveSMDStatus50" cssClass="input-green" value="销管部经理-审核通过" action="mdyActiveSMDStatus50" onclick="return isOp('确定执行此操作?');" />
 									<s:submit id="mdyActiveSMDStatus5" name="mdyActiveSMDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSMDStatus5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
-								<c:if test="${40==active.smd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SMDSTATUS40',null)==true}">
+								<c:if test="${40==active.smd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SMDSTATUS40',active.apply_dept)==true}">
 									<s:submit id="mdyActiveSMDStatus40" name="mdyActiveSMDStatus40" cssClass="input-green" value="销管副总-审核通过" action="mdyActiveSMDStatus40" onclick="return isOp('确定执行此操作?');" />
 									<s:submit id="mdyActiveSMDStatus5" name="mdyActiveSMDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSMDStatus5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
-								<c:if test="${active.smd_status==50 && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS50',null)==true}">
+								<c:if test="${active.smd_status==50 && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS50',active.apply_dept)==true}">
 									<s:submit id="mdyActiveSDStatus50" name="mdyActiveSDStatus50" cssClass="input-green" value="总经理-审核通过" action="mdyActiveSDStatus50" onclick="return isOp('确定执行此操作?');" />
 									<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
@@ -796,12 +795,12 @@
 							<div class="label_ltit">财务审核:</div>
 							<div class="label_rwbenx">
 								<c:if test="%{(active.apply_dept.substring(0,2)=='21' || active.apply_dept.substring(0,2)=='30') && active.smd_status!=50}}">
-									<c:if test="${null != active && active.sd_status>=40 && 10!=active.fd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_FDSTATUS10',null)==true}">
+									<c:if test="${null != active && active.sd_status>=40 && 10!=active.fd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_FDSTATUS10',active.apply_dept)==true}">
 										<s:submit id="mdyActiveFDSTATUS10" name="mdyActiveFDSTATUS10" cssClass="input-green" value="财务-审核通过" action="mdyActiveFDSTATUS10" onclick="return isOp('确定执行此操作?');" />
 										<s:submit id="mdyActiveFDStatus5" name="mdyActiveFDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveFDStatus" onclick="return isOp('确定执行此操作?');" />
 									</c:if>
 								</c:if>
-								<c:if test="${(50==active.smd_status || 60==active.smd_status) && 10!=active.fd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_FDSTATUS10',null)==true}">
+								<c:if test="${(50==active.smd_status || 60==active.smd_status) && 10!=active.fd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_FDSTATUS10',active.apply_dept)==true}">
 									<s:submit id="mdyActiveFDSTATUS10" name="mdyActiveFDSTATUS10" cssClass="input-green" value="财务-审核通过" action="mdyActiveFDSTATUS10" onclick="return isOp('确定执行此操作?');" />
 									<s:submit id="mdyActiveFDStatus5" name="mdyActiveFDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveFDStatus" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
@@ -1255,28 +1254,6 @@ var openCustomerView = function(customer_uuid) {
 	sobj02.open();
 };
 </script>
-<script type="text/javascript">
-						var edit = false;
-						$(function(){
-							$("#editForm :input").change(function(){
-								edit = true;
-							});
-						});
-						
-						function noedit(){
-							//.var
-							if(edit==false){
-								location.href="/qkjmanage/active_addProduct?active.uuid="+${active.uuid};
-							}else{
-								if(confirm("您有未保存的信息,确认添加吗?确认后将丢失一部分信息。")){
-									location.href="/qkjmanage/active_addProduct?active.uuid="+${active.uuid};
-									}else{
-									 return false;
-									}
-							}
-							
-						}
-						</script>
 	</div>
 	<!-- HIDDEN AREA END -->
 </body>

@@ -29,7 +29,9 @@
 		    <div class="label_ltit">类型:</div>
 		    <div class="label_rwben15">
 		    	<select id="selectType" name="selectType">
-		    		<s:if test="onlyType==0 || onlyType==null"><option value="0">产品</option></s:if>
+		    		<s:if test="onlyType==0 || onlyType==null"><option value="0">互助白酒</option></s:if>
+		    		<s:if test="onlyType==2 || onlyType==null"><option value="2">西藏白酒</option></s:if>
+		    		<s:if test="onlyType==3 || onlyType==null"><option value="3">红酒</option></s:if>
 		    		<s:if test="onlyType==1 || onlyType==null"><option value="1">促销物料</option></s:if>
 		    	</select>
 		    </div>
@@ -37,9 +39,7 @@
 	</div>
 	<div class="label_main">
 		<div class="label_ltit">&nbsp;</div>
-		<div class="label_rwben2 cr tal">
-		品鉴酒移到[促销物料]里了
-		</div>
+		<div class="label_rwben2 cr tal">在西藏,海拔叫做高原...</div>
 	</div>
 	
 	<div class="label_main">
@@ -62,9 +62,7 @@
 	</div>
 	<div class="label_main">
 		<div class="label_ltit">&nbsp;</div>
-		<div class="label_rwben2 cr tal">
-		海拔系列产品移到[天佑德海拔系列]里了
-		</div>
+		<div class="label_rwben2 cr tal"><!-- 海拔系列产品移到[天佑德海拔系列]里了 --></div>
 	</div>
 	
 	<div id="per_price_select_area" class="label_main">

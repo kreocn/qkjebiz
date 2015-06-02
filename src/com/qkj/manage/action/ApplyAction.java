@@ -170,12 +170,13 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 					apply.setSp_check_status(null);
 				}
 			}
-			ContextHelper.setSearchDeptPermit4Search(map, "apply_depts", "apply_user");
+			ContextHelper.setSearchDeptPermit4Search("QKJ_QKJMANAGE_APPLY_LIST",map, "apply_depts", "apply_user");
 			ContextHelper.SimpleSearchMap4Page("QKJ_QKJMANAGE_APPLY_LIST", map, apply, viewFlag);
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 			this.setCurrPage(Integer.parseInt((ToolsUtil.isEmpty(map.get(Parameters.Current_Page_Str)) ? "1" : map.get(Parameters.Current_Page_Str)).toString()));
 			this.setApplys(dao.list(map));
 			this.setRecCount(dao.getResultCount());
+			System.out.println(applys.size());
 			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;至事由列表";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);

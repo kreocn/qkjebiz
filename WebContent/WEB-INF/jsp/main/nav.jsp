@@ -24,4 +24,37 @@
 </header>
 <!--left菜单-->
 <div id="ht_left_menu" class="ht_left subHide"></div>
-<footer><p class="botmsg">当前登录信息：${dept_name}&nbsp;&nbsp;${user_name}</p></footer>
+<footer><p class="botmsg">当前登录信息：${dept_name}&nbsp;&nbsp;${user_name}&nbsp;&nbsp;<a href="javascript:;" onclick="openUserDept();" style="color: #fff;">当前部门</a></p></footer>
+
+
+<script type="text/javascript">
+$(function(){
+	createUserDept();
+ });
+
+
+var sobj02Dep;
+var createUserDept = function() {
+	//http://localhost:8888/qkjmanage/customer_load?viewFlag=mdy&customer.uuid=3
+	var w_width = $(window).width();
+	var w_height = $(window).height();
+	sobj02Dep = new DialogIFrame({
+		src:'',
+		title:"修改当前部门",
+		width:w_width*0.20,
+		height:w_height*0.65
+	});
+	sobj02Dep.selfAction = function(val1,val2) {};
+	sobj02Dep.create();
+	//sobj02Dep.open();
+	
+};
+
+var openUserDept = function() {
+	var iframeId = sobj02Dep.getConid() + "iframe";
+	$("#"+iframeId).attr("src","/sys/user_DeptList");
+	sobj02Dep.open();
+};
+
+
+</script>

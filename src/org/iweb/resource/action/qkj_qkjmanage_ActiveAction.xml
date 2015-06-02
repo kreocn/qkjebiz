@@ -9,9 +9,6 @@
 		<action name="perWork_list" class="com.qkj.manage.action.PerWorkAction" method="list">
 			<result>/WEB-INF/jsp/qkjmanage/Personal/PerWorkList.jsp</result>
 		</action>
-		<action name="active_addProduct" class="com.qkj.manage.action.ActiveAction" method="addPro">
-			<result>/WEB-INF/jsp/qkjmanage/AddPro.jsp</result>
-		</action>
 		<action name="active_history" class="com.qkj.manage.action.ActiveAction" method="history">
 			<result>/WEB-INF/jsp/qkjmanage/ActiveHistory.jsp</result>
 		</action>

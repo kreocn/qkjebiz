@@ -30,8 +30,8 @@ public class CheckSkip {
 		skipSteps.add(new SkipStep("2302", 1, 2, 3)); // 申请 2大区 3跳过销管经理
 		skipSteps.add(new SkipStep("2302", 1, 12, 13));// 结案 12大区 13跳过销管经理
 		// 新疆
-		skipSteps.add(new SkipStep("22030", 1, 2, 3)); // 申请 2大区 3跳过销管经理
-		skipSteps.add(new SkipStep("22030", 1, 12, 13));// 结案 12大区 13跳过销管经理
+		skipSteps.add(new SkipStep("2203", 1, 2, 3)); // 申请 2大区 3跳过销管经理
+		skipSteps.add(new SkipStep("2203", 1, 12, 13));// 结案 12大区 13跳过销管经理
 	}
 
 	private Step step = new Step();

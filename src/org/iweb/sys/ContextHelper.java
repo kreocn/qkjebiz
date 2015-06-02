@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -71,7 +72,117 @@ public class ContextHelper {
 		if (ContextHelper.getUserLoginInfo().getPermit_depts() == null) {
 			m.put(user_column, ContextHelper.getUserLoginUuid());
 			m.put(dept_column, Arrays.asList(new String[] { ContextHelper.getUserLoginInfo().getDept_code() }));
-		} else m.put(dept_column, ContextHelper.getUserLoginPermitDepts());
+		} else {
+			boolean flag = ContextHelper.checkPermit2("SYS_SELECT_DEPT_LIST_ALL", null);
+			if (ContextHelper.isAdmin() || flag == true) {
+			} else {
+				String str = ContextHelper.getUserLoginPermitDepts().toString();
+				// String s1[] = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
+				str = str.replaceAll("\\[", "");
+				str = str.replace("]", "");
+				String s2[] = str.split(",");
+				if (str.contains("#")) {
+					Set<String> dset = new HashSet<>();
+					Set<String> dsetall = new HashSet<>();
+					if (s2 != null) {
+						for (int i = 0; i < s2.length; i++) {
+							if (s2[i].contains("#")) {
+								dset.add(s2[i].substring(s2[i].indexOf("#") + 1, s2[i].length()).trim());
+							} else {
+								if (dset.size() > 0) {
+									if (!dsetall.contains(s2[i].trim() + ",") && !dsetall.contains(s2[i].trim() + "]")) {
+										dsetall.add(s2[i].trim());
+									}
+								} else {
+									dsetall.add(s2[i].trim());
+								}
+							}
+
+						}
+					} else {
+						String code = str.substring(str.indexOf("#") + 1, str.length());
+						dset.add(code.trim());
+					}
+					if (dset.size() > 0) {// dset中的部门为个人权限
+						m.put("apply_userDouble", ContextHelper.getUserLoginUuid());
+						List<String> dlist = new ArrayList<>();
+						dlist.addAll(dset);
+						m.put("apply_perdepts", dlist);
+					}
+					if (dsetall.size() > 0) {
+						List<String> dlistall = new ArrayList<>();
+						dsetall.removeAll(dset);
+						dlistall.addAll(dsetall);
+						m.put(dept_column, dlistall);
+					}
+
+				} else {
+					m.put(dept_column, ContextHelper.getUserLoginPermitDepts());
+				}
+			}
+
+		}
+	}
+
+	public static void setSearchDeptPermit4Search(String p_id, Map<String, Object> m, String dept_column, String user_column) {
+		if (ContextHelper.getUserLoginInfo().getPermit_depts() == null) {
+			m.put(user_column, ContextHelper.getUserLoginUuid());
+			m.put(dept_column, Arrays.asList(new String[] { ContextHelper.getUserLoginInfo().getDept_code() }));
+		} else {
+			boolean flag = ContextHelper.checkPermit2("SYS_SELECT_DEPT_LIST_ALL", null);
+			if (ContextHelper.isAdmin() || flag == true) {
+			} else {
+				UserLoginInfo ulf = ContextHelper.getUserLoginInfo();
+				// String str = ulf.getUser_prvg_map().get(p_id);
+				// String s1[] = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
+				Set<String> dset = new HashSet<>();
+				Set<String> dsetall = new HashSet<>();
+
+				String value = ulf.getUser_prvg_map().get(p_id);
+				if (value.contains(",")) {
+					String s1[] = (String[]) JSONUtil.toObject(value, String[].class);// 转换成数组
+					for (int i = 0; i < s1.length; i++) {
+						if (s1[i].contains("#")) {
+							dset.add(s1[i].substring(s1[i].indexOf("#") + 1, s1[i].length()).trim());
+						} else {
+							dsetall.add(s1[i].trim());
+						}
+					}
+				} else {
+					String s1[] = (String[]) JSONUtil.toObject(value, String[].class);// 转换成数组
+					if (s1 != null) {
+						for (int i = 0; i < s1.length; i++) {
+							if (s1[i].contains("#")) {
+								dset.add(s1[i].substring(s1[i].indexOf("#") + 1, s1[i].length()).trim());
+							} else {
+								dsetall.add(s1[i].trim());
+							}
+						}
+					} else {
+						if (value.contains("#")) {
+							dset.add(value.substring(value.indexOf("#") + 1, value.length()).trim());
+						} else {
+							dsetall.add(value);
+						}
+					}
+
+				}
+
+				if (dset.size() > 0) {// dset中的部门为个人权限
+					m.put("apply_userDouble", ContextHelper.getUserLoginUuid());
+					List<String> dlist = new ArrayList<>();
+					dlist.addAll(dset);
+					m.put("apply_perdepts", dlist);
+				}
+				if (dsetall.size() > 0) {
+					List<String> dlistall = new ArrayList<>();
+					dsetall.removeAll(dset);
+					dlistall.addAll(dsetall);
+					m.put(dept_column, dlistall);
+				}
+			}
+
+		}
 	}
 
 	/**
@@ -287,12 +398,20 @@ public class ContextHelper {
 	public static boolean checkPermit2(String p_id, String dept_code) {
 		UserLoginInfo ulf = ContextHelper.getUserLoginInfo();
 		boolean flag = false;
-		if(dept_code==null || dept_code.equals("")){
-			flag=ulf.getUser_prvg_map().containsKey(p_id);
-		}else{
-			String value=ulf.getUser_prvg_map().get(p_id);
-			String[] s = (String[]) JSONUtil.toObject(value, String[].class);// 转换成数组
-			flag=ToolsUtil.isIn(dept_code, s);// 判断在不在数组中
+		if (dept_code == null || dept_code.equals("")) {
+			flag = ulf.getUser_prvg_map().containsKey(p_id);
+		} else {
+			String value = ulf.getUser_prvg_map().get(p_id);
+			if (value!=null && value.contains("#")) {// 权限中存在个人权限
+				String code = value.substring(value.indexOf("#") + 1, value.length());
+				if (code != null && dept_code.equals(code)) {
+					flag = true;
+				}
+			} else {
+				String[] s = (String[]) JSONUtil.toObject(value, String[].class);// 转换成数组
+				flag = ToolsUtil.isIn(dept_code, s);// 判断在不在数组中
+			}
+
 		}
 		return isAdmin() || flag;
 	}
@@ -374,13 +493,13 @@ public class ContextHelper {
 	 */
 	public static boolean checkPermit(String p_ids, String dept_code) {
 		try {
-		if (dept_code == null || dept_code.equals("")) {
+			if (dept_code == null || dept_code.equals("")) {
 				if (p_ids.indexOf("&&") >= 0) return checkPermits(p_ids.split("&&"), true);
 				else if (p_ids.indexOf("||") >= 0) return checkPermits(p_ids.split("\\|\\|"), false);
 				else return checkPermit(p_ids);
 			} else {
-				if (p_ids.indexOf("&&") >= 0) return checkPermits(p_ids.split("&&"), true,dept_code);
-				else if (p_ids.indexOf("||") >= 0) return checkPermits(p_ids.split("\\|\\|"), false,dept_code);
+				if (p_ids.indexOf("&&") >= 0) return checkPermits(p_ids.split("&&"), true, dept_code);
+				else if (p_ids.indexOf("||") >= 0) return checkPermits(p_ids.split("\\|\\|"), false, dept_code);
 				else return checkPermit2(p_ids, dept_code);
 			}
 
@@ -395,10 +514,12 @@ public class ContextHelper {
 	 * @param p_id
 	 * @return
 	 */
-/*	public static Integer getPermitType(String p_id) {
-		UserLoginInfo ulf = ContextHelper.getUserLoginInfo();
-		return isAdmin() ? 2 : ulf.getUser_prvg_map().get(p_id);
-	}*/
+	/*
+	 * public static Integer getPermitType(String p_id) {
+	 * UserLoginInfo ulf = ContextHelper.getUserLoginInfo();
+	 * return isAdmin() ? 2 : ulf.getUser_prvg_map().get(p_id);
+	 * }
+	 */
 
 	/**
 	 * 得到权限功能

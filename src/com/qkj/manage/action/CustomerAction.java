@@ -118,7 +118,7 @@ public class CustomerAction extends ActionSupport {
 				customer.setDept_code(ContextHelper.getUserLoginDept());
 				customer.setDept_name(ContextHelper.getUserLoginDeptName());
 			}
-			ContextHelper.setSearchDeptPermit4Search(map, "dept_codes", "manager");
+			ContextHelper.setSearchDeptPermit4Search("QKJ_QKJMANAGE_CUSTOMER_LIST",map, "dept_codes", "manager");
 			ContextHelper.SimpleSearchMap4Page("QKJ_QKJMANAGE_CUSTOMER_LIST", map, customer, viewFlag);
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 			this.setCurrPage(Integer.parseInt((ToolsUtil.isEmpty(map.get(Parameters.Current_Page_Str)) ? "1" : map

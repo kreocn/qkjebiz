@@ -496,7 +496,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		map.clear();
 		this.setViewFlag("relist");
 		if (active == null) active = new Active();
-		ContextHelper.setSearchDeptPermit4Search(map, "apply_depts", "apply_user");
+		ContextHelper.setSearchDeptPermit4Search("QKJ_QKJMANAGE_ACTIVE_LIST",map, "apply_depts", "apply_user");
 		ContextHelper.SimpleSearchMap4Page("QKJ_QKJMANAGE_ACTIVE_LIST", map, active, viewFlag);
 
 		if (up == 1) {
@@ -542,7 +542,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		try {
 			map.clear();
 			if (active == null) active = new Active();
-			ContextHelper.setSearchDeptPermit4Search(map, "apply_depts", "apply_user");
+			ContextHelper.setSearchDeptPermit4Search("QKJ_QKJMANAGE_ACTIVE_LIST",map, "apply_depts", "apply_user");
 			ContextHelper.SimpleSearchMap4Page("QKJ_QKJMANAGE_ACTIVE_LIST", map, active, viewFlag);
 			if (flag != null && flag.equals("0")) {
 				map.put("flag", "有");
@@ -741,6 +741,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 			active.setAdd_user(ContextHelper.getUserLoginUuid());
 			active.setApply_dept(ContextHelper.getUserLoginDept());
 			active.setApply_user(ContextHelper.getUserLoginUuid());
+			active.setStatus(0);
 			active.setUuid((Integer) dao.add(active));
 			addProcess("ACTIVE_ADD", "新增活动");
 		} catch (Exception e) {
@@ -1611,6 +1612,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyStatus2() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_STATUS2");
 		try {
+			active.setStatus(3);
 			dao.startActiveCloseFlow(active);
 			addProcess("ACTIVE_START_CLOSE", "活动开始结案");
 		} catch (Exception e) {

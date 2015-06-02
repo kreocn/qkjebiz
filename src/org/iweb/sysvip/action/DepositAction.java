@@ -96,7 +96,7 @@ public class DepositAction extends ActionSupport {
 			if (deposit == null) {
 				deposit = new Deposit();
 			}
-			ContextHelper.setSearchDeptPermit4Search(map, "dept_codes", "add_user");
+			ContextHelper.setSearchDeptPermit4Search("VIP_SYSVIP_DEPOSIT_LIST",map, "dept_codes", "add_user");
 			ContextHelper.SimpleSearchMap4Page("VIP_SYSVIP_DEPOSIT_LIST", map, deposit, viewFlag);
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 			this.setDeposits(dao.list(map));

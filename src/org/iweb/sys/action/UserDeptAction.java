@@ -230,6 +230,12 @@ public class UserDeptAction extends ActionSupport {
 		try {
 			userDept.setLm_time(new Date());
 			userDept.setRoles(ToolsUtil.Array2String(uroles == null ? new String[] {} : uroles, ","));
+			if(userDept.getSubover()==null){
+				userDept.setSubover(0);
+			}
+			if(userDept.getDepsubover()==null){
+				userDept.setDepsubover(0);
+			}
 			dao.add(userDept);
 		} catch (Exception e) {
 			// setMessage("数据更新失败!" + e.getMessage());
@@ -243,6 +249,12 @@ public class UserDeptAction extends ActionSupport {
 		try {
 			userDept.setLm_time(new Date());
 			userDept.setRoles(ToolsUtil.Array2String(uroles == null ? new String[] {} : uroles, ","));
+			if(userDept.getSubover()==null){
+				userDept.setSubover(0);
+			}
+			if(userDept.getDepsubover()==null){
+				userDept.setDepsubover(0);
+			}
 			dao.save(userDept);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!save 数据更新失败:" + ToolsUtil.getStackTrace(e));

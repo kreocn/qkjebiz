@@ -11,6 +11,15 @@ public class ProType {
 
 	// 以下为非数据库字段
 	private String lm_user_name;
+	private String type_name;
+
+	public String getType_name() {
+		return type_name;
+	}
+
+	public void setType_name(String type_name) {
+		this.type_name = type_name;
+	}
 
 	public Integer getType() {
 		return type;

@@ -25,6 +25,7 @@ public class AutoCompleteAjax extends Ajax {
 	static {
 		sqlmap.put("QKJCJ_SYSEBIZ_AJAXLOAD_MEMBER", "sysvip_getMembers");
 		sqlmap.put("QKJCJ_SYS_AJAXLOAD_USER", "sys_getUser");
+		//sqlmap.put("QKJCJ_SYS_AJAXLOAD_USER","sys_getUsesrDept");
 		sqlmap.put("QKJCJ_SYSEBIZ_AJAXLOAD_MEMBERCELLAR", "sysebiz_getMemberCellars4Add");
 		sqlmap.put("QKJ_QKJMANAGE_STORES", "qkjStores_getProductsSelect");
 		// 业务系统中,取得Member所用
