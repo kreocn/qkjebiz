@@ -313,28 +313,29 @@
 						</div>
 					</s:if>
 					</s:if>
-					
+			
+			<s:if test="'mdy' == viewFlag">
 							<s:if test="apply.status>=10">
 								<div class="label_main">
 						<div class="label_hang" >
-							<div class="label_ltit"  style="color:#008000;">预计费用总计：</div>
+							<div class="label_ltit"  style="color:#008000;">预计费用总1计：</div>
 							<div class="label_rwbenx">
 								<font style="color:#008000;font-weight:800">${apply.total_price}</font>
 							</div>
 						</div>
 					</div>
 					</s:if>
-						<s:else>
+						<s:else >
 									<div class="label_main">
 						<div class="label_hang">
 							<div class="label_ltit">预计费用总计：</div>
 							<div class="label_rwbenx">
-								<s:textfield id="apply_total_price" name="apply.total_price"  value="%{apply.total_price}" />
+								<s:textfield id="apply_total_price" name="apply.total_price"  value="%{apply.total_price}"   cssClass="validate[required,custom[number]]" />
 							</div>
 						</div>
 					</div>
 						</s:else>
-					
+	</s:if>
 					
 					<s:if test="'mdy' == viewFlag">
 						<div class="label_main">
