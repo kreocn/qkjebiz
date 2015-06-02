@@ -26,7 +26,7 @@ public class AutoCompleteAjax extends Ajax {
 		sqlmap.put("QKJCJ_SYSEBIZ_AJAXLOAD_MEMBER", "sysvip_getMembers");
 		sqlmap.put("QKJCJ_SYS_AJAXLOAD_USER", "sys_getUser");
 		sqlmap.put("QKJCJ_SYSEBIZ_AJAXLOAD_MEMBERCELLAR", "sysebiz_getMemberCellars4Add");
-		sqlmap.put("QKJCJ_QKJMANAGE_STORES_AJAXLOAD_SELECT", "qkjStores_getProductsSelect");
+		sqlmap.put("QKJ_QKJMANAGE_STORES", "qkjStores_getProductsSelect");
 		// 业务系统中,取得Member所用
 		sqlmap.put("QKJ_QKJMANAGER_AJAXLOAD_MEMBER", "sysvip_getMembers");
 		log.info("AutoCompleteAjax sqlmap 初始化完成!");
@@ -68,7 +68,7 @@ public class AutoCompleteAjax extends Ajax {
 				} else if ("QKJ_QKJMANAGER_AJAXLOAD_MEMBER".equals(this.getPrivilege_id()) && !parameter.containsKey("uuid")) {
 					// 如果没有包含uuid参数,则直接返回无数据
 					return "NODATA";
-				} else if ("QKJCJ_QKJMANAGE_STORES_AJAXLOAD_SELECT".equals(this.getPrivilege_id())) {
+				} else if ("QKJ_QKJMANAGE_STORES".equals(this.getPrivilege_id())) {
 					dao.setDb_num(1);
 				}
 				return dao.list(sqlmap.get(this.getPrivilege_id()), parameter);

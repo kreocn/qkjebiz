@@ -40,7 +40,7 @@ var LoadProductsAutoComplete = function(){
 				}));
 			};
 			ajax.addParameter("work", "AutoComplete");
-			ajax.addParameter("parameters", _extraParam + "privilege_id=QKJCJ_QKJMANAGE_STORES_AJAXLOAD_SELECT&title=" + encodeURI(request.term));
+			ajax.addParameter("parameters", _extraParam + "privilege_id=QKJ_QKJMANAGE_STORES&title=" + encodeURI(request.term));
 			ajax.sendAjax();
 		},
 		select : function(event, ui){
