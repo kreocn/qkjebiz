@@ -507,7 +507,7 @@ function kselect(){
 	if(parseInt(num)==4){//西北业务副总
 		jnull();
 		document.getElementById("sd_status").options[6].selected = true; 
-		document.getElementById("smd_sta").options[0].selected = true;
+		document.getElementById("smd_sta").options[5].selected = true;
 		$("#userdept_codeid").val("220");
 		$("#userdept_nameid").val("西北运营中心");
 		document.getElementById("apply_is_sub_dept").checked=true;
@@ -549,7 +549,7 @@ function kselect(){
 	}
 	if(parseInt(num)==11){//北京财
 		jnull();
-		document.getElementById("sd_status").options[5].selected = true; 
+		document.getElementById("sd_status").options[6].selected = true; 
 		document.getElementById("smd_sta").options[0].selected = true; 
 		document.getElementById("fdsta").options[1].selected = true; 
 		$("#userdept_codeid").val("3");
@@ -659,7 +659,7 @@ function kselect(){
 	}
 	if(parseInt(num)==31){//省外财
 		snull();
-		document.getElementById("clsdsta").options[5].selected = true; 
+		document.getElementById("clsdsta").options[6].selected = true; 
 		document.getElementById("clsmdsta").options[0].selected = true; 
 		document.getElementById("clfd").options[1].selected = true;
 		$("#userdept_codeid").val("211");
@@ -668,7 +668,7 @@ function kselect(){
 	}
 	if(parseInt(num)==32){//北京财
 		snull();
-		document.getElementById("clsdsta").options[5].selected = true; 
+		document.getElementById("clsdsta").options[6].selected = true; 
 		document.getElementById("clsmdsta").options[0].selected = true; 
 		document.getElementById("clfd").options[1].selected = true; 
 		$("#userdept_codeid").val("3");
