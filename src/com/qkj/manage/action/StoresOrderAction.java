@@ -61,6 +61,7 @@ public class StoresOrderAction   extends ActionSupport{
 	}
 	// 
 	public String list() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_STORES_ORDER");
 		try {
 			map.clear();
 			if (product != null)
@@ -74,7 +75,8 @@ public class StoresOrderAction   extends ActionSupport{
 			HttpServletRequest request = (HttpServletRequest) context.get(ServletActionContext.HTTP_REQUEST);  
 			HttpServletResponse response = (HttpServletResponse) context.get(ServletActionContext.HTTP_RESPONSE);  
 			ulf=(UserLoginInfo) request.getSession().getAttribute(Parameters.UserLoginInfo_Session_Str);
-			map.put("userid", ulf.getUuid());
+	
+			map.put("logindept",ContextHelper.getUserLoginDept());
 			storesOrderCustoms=storesorderdao.list(map);
 			for (int i = 0; i < this.products.size(); i++) {
 				for (int j = 0; j < storesOrderCustoms.size(); j++) {

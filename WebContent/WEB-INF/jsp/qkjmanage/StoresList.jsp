@@ -107,9 +107,6 @@
 
 
 
-
-
-
 var num=0;
 var firstnum=true;
 var show = new Array(); 
@@ -155,7 +152,6 @@ if(code!=""&&code!=null){
       	 }
       	 else{ fortr(data);
       	 }
-           num++;
        	}else{
        		alert("请输入正确的条码")
        	}
@@ -221,26 +217,29 @@ if(firstnum==true){
    $("#qkj_list").append(show.join(""));
    $( "#dialog" ).dialog('close');
    show=new Array();
+   var iNum=num;
    $("#jisuanadd"+msg[0]).click(function(){
     	  var n=$("#jisuannum"+msg[0]).val();
-    	  var num=parseInt(n)+1;
-    	
-    	
-    	 $("#jisuanprice"+msg[0]).find("input").val($("#price"+msg[0]).val()*num);
-    	 $("#jisuanprice"+msg[0]).text($("#price"+msg[0]).val()*num);
-    	 if(num==0){alert("cc");}
-    	  $("#jisuannum"+msg[0]).val(num);
+    	  var jinum=parseInt(n)+1;
+    	 	 $("#jisuanprice"+msg[0]).empty();
+           	 $("#jisuanprice"+msg[0]).append('<input type="hidden" name="storesorderitem['+iNum+'].order_total_price"  value="'+$("#price"+msg[0]).val()*jinum+'"/>'+$("#price"+msg[0]).val()*jinum);
+    	 if(jinum==0){alert("cc");}
+    	  $("#jisuannum"+msg[0]).val(jinum);
     	});
     	$("#jisuanjian"+msg[0]).click(function(){
+    		
     	  var n=$("#jisuannum"+msg[0]).val();
-    	  var num=parseInt(n)-1;
-    	 $("#jisuanprice"+msg[0]).find("input").val($("#price"+msg[0]).val()*num);
-    	 $("#jisuanprice"+msg[0]).text($("#price"+msg[0]).val()*num);
-    	 if(num==0){alert("不能为0!"); return}
-    	  $("#jisuannum"+msg[0]).val(num);
+    	  var jinum=parseInt(n)-1;
+    	  if(jinum!=0){
+    	 	 $("#jisuanprice"+msg[0]).empty();
+           	 $("#jisuanprice"+msg[0]).append('<input type="hidden" name="storesorderitem['+iNum+'].order_total_price"  value="'+$("#price"+msg[0]).val()*jinum+'"/>'+$("#price"+msg[0]).val()*jinum);
+    	  }
+           	 if(jinum==0){alert("不能为0!"); return}
+    	  $("#jisuannum"+msg[0]).val(jinum);
     	  });
 }
 	firstnum=true;
+    num++;
 };
 function ondeltr(data){
 	$("#"+data.id).parents("tr").remove();
@@ -293,23 +292,28 @@ function fortr(list){
          show.push('</tr>');
         $("#qkj_list").append(show.join(""));
          show=new Array();
+         var iNum=num;
          $("#jisuanadd"+product_id).click(function(){
+        	
        	  var n=$("#jisuannum"+product_id).val();
-       	  var num=parseInt(n)+1;
-       	 $("#jisuanprice"+product_id).find("input").val($("#price"+product_id).val()*num);
-       	 $("#jisuanprice"+product_id).text($("#price"+product_id).val()*num);
-       	 if(num==0){alert("cc");}
-       	  $("#jisuannum"+product_id).val(num);
+       	  var jinum=parseInt(n)+1;
+       	 $("#jisuanprice"+product_id).empty();
+       	 $("#jisuanprice"+product_id).append('<input type="hidden" name="storesorderitem['+iNum+'].order_total_price"  value="'+$("#price"+product_id).val()*jinum+'"/>'+$("#price"+product_id).val()*jinum);
+       	 if(jinum==0){alert("cc");}
+       	  $("#jisuannum"+product_id).val(jinum);
        	});
        	$("#jisuanjian"+product_id).click(function(){
+       	
        	  var n=$("#jisuannum"+product_id).val();
-       	  var num=parseInt(n)-1;
-       	 $("#jisuanprice"+product_id).find("input").val($("#price"+product_id).val()*num);
-       	 $("#jisuanprice"+product_id).text($("#price"+product_id).val()*num);
-       	 if(num==0){alert("不能为0!"); return}
-       	  $("#jisuannum"+product_id).val(num);
+       	  var jinum=parseInt(n)-1;
+      	if(jinum!=0){
+       	  $("#jisuanprice"+product_id).empty();
+       	 $("#jisuanprice"+product_id).append('<input type="hidden" name="storesorderitem['+iNum+'].order_total_price"  value="'+$("#price"+product_id).val()*jinum+'"/>'+$("#price"+product_id).val()*jinum);
+       		}
+       		if(jinum==0){alert("不能为0!"); return}
+       	  $("#jisuannum"+product_id).val(jinum);
        	  });
-
+        num++;
 }
 }
 /* $("#sumbit_order").click(function(){

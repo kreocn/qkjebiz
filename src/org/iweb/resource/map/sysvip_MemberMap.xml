@@ -79,8 +79,8 @@
 	</select>
 	<insert id="sysvip_addMember" parameterClass="member">
 		<![CDATA[ 
-			Insert Into s_vip_member(uuid,passwords,title,mobile,is_mobile_check,email,is_email_check,member_name,user_type,reg_time,reg_type,dept_code,manager,contact)
-			Values (#uuid#,#passwords#,#title#,#mobile#,#is_mobile_check#,#email#,#is_email_check#,#member_name#,#user_type#,#reg_time#,#reg_type#,#dept_code#,#manager#,#contact#)
+			Insert Into s_vip_member(uuid,passwords,title,mobile,is_mobile_check,email,is_email_check,member_name,user_type,reg_time,reg_type,dept_code,manager,contact,is_customers)
+			Values (#uuid#,#passwords#,#title#,#mobile#,#is_mobile_check#,#email#,#is_email_check#,#member_name#,#user_type#,#reg_time#,#reg_type#,#dept_code#,#manager#,#contact#,#is_customers#)
 		]]>
 	</insert>
 	<update id="sysvip_mdyMember" parameterClass="member">

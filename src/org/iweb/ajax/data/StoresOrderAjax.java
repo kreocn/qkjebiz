@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
+import org.iweb.sys.ContextHelper;
 import org.iweb.sys.Parameters;
 import org.iweb.sys.domain.UserLoginInfo;
 
@@ -34,7 +35,7 @@ public class StoresOrderAjax extends Ajax{
 	HttpServletResponse response = (HttpServletResponse) context.get(ServletActionContext.HTTP_RESPONSE);  
 	ulf=(UserLoginInfo) request.getSession().getAttribute(Parameters.UserLoginInfo_Session_Str);
     map.clear();
-    map.put("userid", ulf.getUuid());
+    map.put("logindept", ContextHelper.getUserLoginDept());
     map.put("barcode", parameter.get("code").toString());
 	this.souList=sod.list(map);
 	for (int i = 0; i < proList.size(); i++) {

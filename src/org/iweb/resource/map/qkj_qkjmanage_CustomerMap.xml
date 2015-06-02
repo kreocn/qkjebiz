@@ -13,6 +13,7 @@
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ c.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="muuid"><![CDATA[ c.member_id=#muuid# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="stage"><![CDATA[ c.stage=#stage# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="failed_reason"><![CDATA[ c.failed_reason LIKE CONCAT('%',#failed_reason#,'%') ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="source"><![CDATA[ c.source=#source# ]]></isNotEmpty>
@@ -59,8 +60,8 @@
 	</select>
 	<insert id="qkjmanage_addCustomer" parameterClass="customer">
 		<![CDATA[ 
-			Insert Into qkjm_r_customer(dept_code,stage,failed_reason,source,cus_name,phone,email,sale_province,sale_city,sale_area,m_province,m_city,m_area,m_post,m_street,trade,mind,financial,distribution,remark,add_time,add_user,i_product,first_pay,n_product,doubt,qa,manager,con_name,qq,fax,mobile,contract_end,rating,cus_back,cus_now,ware_square,ware_type,vehicle_num,in_wholesaler,in_shop,out_wholesaler,out_shop,sale_type)
-			Values (#dept_code#,#stage#,#failed_reason#,#source#,#cus_name#,#phone#,#email#,#sale_province#,#sale_city#,#sale_area#,#m_province#,#m_city#,#m_area#,#m_post#,#m_street#,#trade#,#mind#,#financial#,#distribution#,#remark#,#add_time#,#add_user#,#i_product#,#first_pay#,#n_product#,#doubt#,#qa#,#manager#,#con_name#,#qq#,#fax#,#mobile#,#contract_end#,#rating#,#cus_back#,#cus_now#,#ware_square#,#ware_type#,#vehicle_num#,#in_wholesaler#,#in_shop#,#out_wholesaler#,#out_shop#,#sale_type#)
+			Insert Into qkjm_r_customer(dept_code,stage,failed_reason,source,cus_name,phone,email,sale_province,sale_city,sale_area,m_province,m_city,m_area,m_post,m_street,trade,mind,financial,distribution,remark,add_time,add_user,i_product,first_pay,n_product,doubt,qa,manager,con_name,qq,fax,mobile,contract_end,rating,cus_back,cus_now,ware_square,ware_type,vehicle_num,in_wholesaler,in_shop,out_wholesaler,out_shop,sale_type,member_id)
+			Values (#dept_code#,#stage#,#failed_reason#,#source#,#cus_name#,#phone#,#email#,#sale_province#,#sale_city#,#sale_area#,#m_province#,#m_city#,#m_area#,#m_post#,#m_street#,#trade#,#mind#,#financial#,#distribution#,#remark#,#add_time#,#add_user#,#i_product#,#first_pay#,#n_product#,#doubt#,#qa#,#manager#,#con_name#,#qq#,#fax#,#mobile#,#contract_end#,#rating#,#cus_back#,#cus_now#,#ware_square#,#ware_type#,#vehicle_num#,#in_wholesaler#,#in_shop#,#out_wholesaler#,#out_shop#,#sale_type#,#member_id#)
 		]]>
 	</insert>
 	<update id="qkjmanage_mdyCustomer" parameterClass="customer">
@@ -70,8 +71,8 @@
 				stage=#stage#,
 				failed_reason=#failed_reason#,
 				source=#source#,
-				cus_name=#cus_name#,
-				phone=#phone#,
+				
+			
 				email=#email#,
 				sale_province=#sale_province#,
 				sale_city=#sale_city#,
@@ -94,7 +95,7 @@
 				doubt=#doubt#,
 				qa=#qa#,
 				manager=#manager#,
-				con_name=#con_name#,
+		
 				qq=#qq#,
 				fax=#fax#,
 				mobile=#mobile#,

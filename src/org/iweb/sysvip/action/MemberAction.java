@@ -193,38 +193,11 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 				MemberAddressDAO mdao = new MemberAddressDAO();
 				map.put("member_id", member.getUuid());
 				this.setMemberAddresses(mdao.list(map));
+				if(member.getIs_customers().equals("1")){
+					load1();
+				}
 				
-				load1();
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
+	
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/sysvip/member_list?viewFlag=relist'>会员列表</a>&nbsp;&gt;&nbsp;修改会员信息";
 			} else {
 				this.setMember(null);
@@ -255,23 +228,21 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 				customer.setStage(0);
 			} else if ("mdy".equals(viewFlag)) {
 				map.clear();
-				map.put("c_id", member.getC_id());
-				if (null == map.get("c_id")) this.setCustomer(null);
+				map.put("muuid", member.getUuid());
+				System.out.println(member.getUuid());
+				if (null == map.get("muuid")) this.setCustomer(null);
 				else this.setCustomer((Customer) cdao.list(map).get(0));
 				if (!ToolsUtil.isEmpty(customer.getDistribution())) {
 					customer.setDistributions(customer.getDistribution().split(","));
 				}
-
 				if (!ToolsUtil.isEmpty(customer.getFailed_reason())) {
 					customer.setFailed_reasons(customer.getFailed_reason().split(","));
 				}
-
 				CustomerRecodeDAO cdao = new CustomerRecodeDAO();
 				map.clear();
 				map.put("customer_id", customer.getUuid());
 				map.put("order_type", "uuidAsc");
 				customerRecodes = cdao.list(map);
-				
 			} else {
 				this.setCustomer(null);
 				setMessage("无操作类型!");
@@ -282,20 +253,6 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 		}
 		return null;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 
@@ -317,21 +274,29 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 			member.setIs_mobile_check(1);
 			member.setReg_type(1);
 			member.setReg_time(new Date());
-			dao.add(member);
+			 dao.add(member);
 			memberAddress.setMember_id(member.getUuid());
 			memberAddress.setDefaultaddress(1);
+			
 			MemberAddressDAO mdao = new MemberAddressDAO();
 			mdao.add(memberAddress);
 			log.info("成功添加了会员,会员号为:" + member.getUuid());
+			
+			if(member.getIs_customers().equals("1")){
+			
+			customer.setMember_id(member.getUuid());
+			customer.setManager(member.getManager());
+			customer.setDept_code(member.getDept_code());
 			customer.setAdd_time(new Date());
+			customer.setCus_name(member.getMember_name());
+			customer.setPhone(member.getMobile());
 			customer.setAdd_user(ContextHelper.getUserLoginUuid());
 			customer.setDistribution(ToolsUtil.Array2String(customer.getDistributions() == null ? new String[] {}
 					: customer.getDistributions(), ","));
 			customer.setFailed_reason(ToolsUtil.Array2String(customer.getFailed_reasons() == null ? new String[] {}
 					: customer.getFailed_reasons(), ","));
 			cdao.add(customer);
-
-			
+			}
 			
 			
 		} catch (Exception e) {
@@ -341,6 +306,21 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 		return SUCCESS;
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public String save() throws Exception {
 		ContextHelper.isPermit("SYSVIP_MEMBER_MDY");
 		try {
@@ -351,12 +331,38 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 				member.setPasswords(null);
 			}
 			dao.save(member);
+			
+			customer.setDept_code(member.getDept_code());
+			customersave();
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
 		}
 		return SUCCESS;
 	}
+	
+	public String customersave() throws Exception {
+	/*	ContextHelper.isPermit("QKJ_QKJMANAGE_CUSTOMER_MDY");*/
+		try {
+			customer.setDistribution(ToolsUtil.Array2String(customer.getDistributions() == null ? new String[] {}
+					: customer.getDistributions(), ","));
+			customer.setFailed_reason(ToolsUtil.Array2String(customer.getFailed_reasons() == null ? new String[] {}
+					: customer.getFailed_reasons(), ","));
+			customer.setLm_user(ContextHelper.getUserLoginUuid());
+			customer.setLm_time(new Date());
+			cdao.save(customer);
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+	
+	
+	
+	
+	
+	
 
 	public String del() throws Exception {
 		ContextHelper.isPermit("SYSVIP_MEMBER_DEL");
@@ -440,4 +446,11 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 		ServletActionContext.getResponse().getWriter().print(flag);
 		return null;
 	}
+	
+	
+	
+	
+	
+	
+	
 }

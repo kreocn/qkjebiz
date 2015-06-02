@@ -84,6 +84,7 @@
 	</delete>
 	
 		<select id="qkjStores_getOrderWeek" parameterClass="java.util.Map" resultClass="StoresOrder">
-		select * from dbo.qkj_t_order WHERE (DATEPART(wk, add_time) = DATEPART(wk, GETDATE())) AND (DATEPART(yy, add_time) = DATEPART(yy, GETDATE())) and user_id=#userid#
+		
+		select * from dbo.qkj_t_order WHERE datediff(day,[add_time],getdate())=0 and user_id=#userid#
 	</select>
 </sqlMap>

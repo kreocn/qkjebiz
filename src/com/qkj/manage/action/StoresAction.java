@@ -168,6 +168,8 @@ public class StoresAction  extends ActionSupport{
 	}
 	//门店支付 >添加订单 >首页
 	public String list() throws Exception {
+		
+		ContextHelper.isPermit("QKJ_QKJMANAGE_STORES");
 		UserLoginInfo ulf = new UserLoginInfo();
 		ActionContext context = ActionContext.getContext();  
 		HttpServletRequest request = (HttpServletRequest) context.get(ServletActionContext.HTTP_REQUEST);  
@@ -209,6 +211,7 @@ public class StoresAction  extends ActionSupport{
 	}*/
 	//门店支付>添加订单>添加订单
 	public String insertOrder(){
+		ContextHelper.isPermit("QKJ_QKJMANAGE_STORES");
 		List<StoresOrderItem> sotr=storesorderitem;
 		Collection nuCon = new Vector();
 		nuCon.add(null);
@@ -250,6 +253,7 @@ public class StoresAction  extends ActionSupport{
 	} 
 	//门店支付>查看订单
 	public String findOrder() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_STORES_FIND_ORDER");
 		UserLoginInfo ulf = new UserLoginInfo();
 		ActionContext context = ActionContext.getContext();  
 		HttpServletRequest request = (HttpServletRequest) context.get(ServletActionContext.HTTP_REQUEST);  
@@ -265,6 +269,7 @@ public class StoresAction  extends ActionSupport{
 	}
 	//门店支付>查看订单>订单详情
 	public String updateDetails() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_STORES_FIND_ORDER");
 		map.clear();
 		map.put("id", this.getId());
 		this.setStoresorderlist(dao.listOrder(map));
@@ -277,7 +282,7 @@ public class StoresAction  extends ActionSupport{
 	}
 //门店支付>查看订单>订单详情>删除
 	public String itemDelete() throws Exception {
-		System.out.println(num);
+		ContextHelper.isPermit("QKJ_QKJMANAGE_STORES_FIND_ORDER_DEL");
 		if(num==0){
 	    map.clear();
 		map.put("id",this.getId());
@@ -316,7 +321,7 @@ public class StoresAction  extends ActionSupport{
 	}
 	//门店支付>查看订单>删除
 	public String delete() throws Exception {
-		
+		ContextHelper.isPermit("QKJ_QKJMANAGE_STORES_FIND_ORDER_DEL");
 	    map.clear();
 		map.put("orderid",this.getId());
 		dao.deleteItemandorder(map);

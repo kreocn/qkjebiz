@@ -3,7 +3,7 @@ package com.qkj.manage.domain;
 public class StoresOrderCustom {
 private int id;
 private String product_id;
-private String user_id;
+private String login_dept;
 private Double price;
 private String bar_code;
 public String getBar_code() {
@@ -18,9 +18,7 @@ public int getId() {
 public String getProduct_id() {
 	return product_id;
 }
-public String getUser_id() {
-	return user_id;
-}
+
 public Double getPrice() {
 	return price;
 }
@@ -30,10 +28,14 @@ public void setId(int id) {
 public void setProduct_id(String product_id) {
 	this.product_id = product_id;
 }
-public void setUser_id(String user_id) {
-	this.user_id = user_id;
-}
+
 public void setPrice(Double price) {
 	this.price = price;
+}
+public String getLogin_dept() {
+	return login_dept;
+}
+public void setLogin_dept(String login_dept) {
+	this.login_dept = login_dept;
 }
 }

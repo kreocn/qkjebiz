@@ -55,9 +55,11 @@
 						<th class="td1">系列</th>
 						<th class="td2">品名</th>
 						<th class="td5">规格</th>
-						<th >修改后价格(点击修改)</th>
+						<th>修改后价格<c:if test="${it:checkPermit('QKJ_QKJMANAGE_STORES_ORDER_UPDATE',null)==true}">(点击修改)	</c:if></th>
 						<th >原价</th>
+							<c:if test="${it:checkPermit('QKJ_QKJMANAGE_STORES_ORDER_UPDATE',null)==true}">
 						<th class="td4">操作</th>
+						</c:if>
 					</tr>
 					<s:iterator value="products" status="sta">
 						<tr id="showtr${uuid}">
@@ -67,9 +69,11 @@
 							<td class="td1">${brand_name}</td>
 							<td class="td2">${title}</td>
 							<td class="td5">${spec}</td>
-							<td class="caname" style="widit: 100px" id="price">${update_price}</td>
-							<td class="caname" style="widit: 100px"	>${market_price}</td>
+							<td       <c:if test="${it:checkPermit('QKJ_QKJMANAGE_STORES_ORDER_UPDATE',null)==true}"> class="caname"  </c:if> style="widit: 100px"  id="price">${update_price}</td>
+							<td >${market_price}</td>
+					        <c:if test="${it:checkPermit('QKJ_QKJMANAGE_STORES_ORDER_UPDATE',null)==true}">
 							<td class="td4 op-area"><a id="${uuid}" class="input-blue" uuid="${uuid}" onclick="javascript:addprice(this)">确认修改</a></td>
+					        </c:if>
 						</tr>
 					</s:iterator>
 				</table>

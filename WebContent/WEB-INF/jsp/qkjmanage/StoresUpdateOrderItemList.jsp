@@ -71,7 +71,10 @@
 						<th class="td1">总价</th>
 						<th class="td2">条形码</th>
 						<th class="td4">规格</th>
+						 <c:if test="${it:checkPermit('QKJ_QKJMANAGE_STORES_FIND_ORDER_DEL',null)==true}"> 
+						
 						<th class="td4">操作</th>
+						</c:if>
 					</tr>
 					<s:iterator value="storesorderitem" status="sta">
 						<tr id="tr${id}">
@@ -79,11 +82,18 @@
 							<td class="td2" >${title}</td>
 							<td class="td3">${brand_name}</td>
 							<td class="td3">${product_price}</td>
-							<td class="td4"  ><input id="hiddennum" name="${order_num}" type="hidden" value="${id}"/><input id="spinner${id}" value="${order_num}"/></td>
+							<td class="td4"  >		<c:if test=""> </c:if>
+							<c:choose>  
+    <c:when test="${it:checkPermit('QKJ_QKJMANAGE_STORES_FIND_ORDER_DEL',null)==true}"><input id="hiddennum" name="${order_num}" type="hidden" value="${id}"/><input id="spinner${id}" value="${order_num}"/></c:when>  
+    <c:when test="${it:checkPermit('QKJ_QKJMANAGE_STORES_FIND_ORDER_DEL',null)==false}">${order_num}</c:when>  
+                           </c:choose> 
+							</td>
 							<td class="td5">${order_total_price}</td>
 							<td class="td6">${bar_code}</td>
 							<td class="td7">${spec}</td>
-							<td class="td4 op-area"><a  class="input-blue"  onclick="deleteorder(${id},${sotresorder.id},${order_total_price},${product_price})">删除</a></td>
+							<c:if test="${it:checkPermit('QKJ_QKJMANAGE_STORES_FIND_ORDER_DEL',null)==true}"> 
+							<td class="td4 op-area"><a  class="input-blue"  onclick="deleteorder(${id},${sotresorder.id},${order_total_price},${product_price})">保存</a></td>
+							</c:if>
 							<%-- href="/qkjmanage/stores_order_item_delete.action?id=${id}&storesid=${sotresorder.id}&price=${product_price}"
 						 --%>
 						 </tr>
