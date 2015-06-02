@@ -318,7 +318,7 @@
 							<s:if test="apply.status>=10">
 								<div class="label_main">
 						<div class="label_hang" >
-							<div class="label_ltit"  style="color:#008000;">预计费用总1计：</div>
+							<div class="label_ltit"  style="color:#008000;">预计费用总计：</div>
 							<div class="label_rwbenx">
 								<font style="color:#008000;font-weight:800">${apply.total_price}</font>
 							</div>
