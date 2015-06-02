@@ -23,10 +23,10 @@
 		            <div class="label_ltit">报表时间:</div>
 		            <div class="label_rwben2">
 		            	<span class="label_rwb nw">
-						<input  class="datepicker iI iI-f" type="text" name="sem.pass_time_start" title="从" value="${it:formatDate(active.pass_time_start,'yyyy-MM-dd')}" />
+						<input  class="datepicker iI iI-f" type="text" name="sem.pass_time_start" title="从" value="${it:formatDate(sem.pass_time_start,'yyyy-MM-dd')}" />
 						</span>
 						<span class="label_rwb nw">
-						<input  class="datepicker iI iI-t" type="text" name="sem.pass_time_end" title="到" value="${it:formatDate(active.pass_time_end,'yyyy-MM-dd')}" />
+						<input  class="datepicker iI iI-t" type="text" name="sem.pass_time_end" title="到" value="${it:formatDate(sem.pass_time_end,'yyyy-MM-dd')}" />
 		            	</span>
 		            </div>
 		        </div>
@@ -34,13 +34,13 @@
 				<div class="label_hang">
 				       <div class="label_ltit">查询依据:</div>
 				       <div class="label_rwbenx">
-				       <s:select  name="sem.checkState" cssClass="selectKick" list="#{0:'总监审核通过',1:'活动通过'}"  headerKey="" headerValue="--请选择--" />
+				       <s:select  name="sem.checkState" cssClass="selectKick" list="#{0:'总监审核通过',1:'活动通过'}" />
 				       </div>
 				</div>
 				<div class="label_hang">
 				       <div class="label_ltit">类别:</div>
 				       <div class="label_rwbenx">
-				       <s:select  name="sem.type" cssClass="selectKick" list="#{0:'活动申请',1:'活动结案',2:'至事由'}"  headerKey="" headerValue="--请选择--" />
+				       <s:select  name="sem.type" cssClass="selectKick" list="#{0:'活动申请',1:'活动结案',2:'至事由'}"/>
 				       </div>
 				</div>
 				
@@ -73,18 +73,17 @@
 				<th class="td1">部门代码</th>
 				<th class="td1">部门名称</th>
 				<th class="td1">数量(个)</th>
-				<th class="td3">类型</th>
+				
 				<th class="td0">查看</th>
 						
 			</tr>
-			<s:iterator value="applys" status="sta">
-			<tr id="showtr${uuid}">
-				
-				<td class="td1 nw">${apply_dept}</td>
+			<s:iterator value="sems" status="sta">
+			<tr id="showtr${apply_dept}">
+				<td class="td1 nw">${dept_code}</td>
 				<td class="td1 nw">${dept_cname}</td>
 				<td class="td1 nw">${cout}</td>
-				<td class="td3 nw">${type}</td>
-				<td class="td0 op-area"><a onClick="showDetail('showtr${uuid}');" href="javascript:;" class="input-nostyle">查看</a></td>
+				
+				<td class="td0 op-area"><a onClick="showDetail('showtr${apply_dept}');" href="javascript:;" class="input-nostyle">查看</a></td>
 			</tr>
 			</s:iterator>
 	    </table>

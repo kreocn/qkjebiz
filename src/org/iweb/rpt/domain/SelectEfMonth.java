@@ -3,8 +3,8 @@ package org.iweb.rpt.domain;
 import java.util.Date;
 
 public class SelectEfMonth {
-	private Integer count;
-	
+	private Integer cout;
+
 	private Date yearMonth;
 	private Integer checkState;
 	private Integer type;
@@ -12,14 +12,13 @@ public class SelectEfMonth {
 	private String dept_cname;
 	private Date pass_time_start;
 	private Date pass_time_end;
-	
 
-	public Integer getCount() {
-		return count;
+	public Integer getCout() {
+		return cout;
 	}
 
-	public void setCount(Integer count) {
-		this.count = count;
+	public void setCout(Integer cout) {
+		this.cout = cout;
 	}
 
 	public Date getPass_time_start() {
@@ -77,7 +76,5 @@ public class SelectEfMonth {
 	public void setDept_cname(String dept_cname) {
 		this.dept_cname = dept_cname;
 	}
-
-
 
 }

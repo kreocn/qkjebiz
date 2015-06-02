@@ -68,12 +68,10 @@ public class CheckEffMonthlyStatAction extends ActionSupport {
 	public String execute() throws Exception {
 		ContextHelper.isPermit("REPORT_CHECKEFF_MONTHLY");
 		try {
-			if (sem == null) sem = new SelectEfMonth();
-			ContextHelper.SimpleSearchMap4Page("REPORT_CHECKEFF_MONTHLY", map, sem, viewFlag);
-			
 			if(sem!=null){
 				String sql=initSQL();
 				this.setSems(dao.selectEfMapList(sql));
+				System.out.println(sems.size());
 			}
 			
 		} catch (Exception e) {
@@ -118,14 +116,27 @@ public class CheckEffMonthlyStatAction extends ActionSupport {
 	 String initSQL() {
 		StringBuffer sql = new StringBuffer();
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-	    String start=sdf.format(sem.getPass_time_start());
-	    String end=sdf.format(sem.getPass_time_end());
+		 String start="";
+		 String end="";
+		if(sem.getPass_time_start()!=null){
+			 start=sdf.format(sem.getPass_time_start());
+		}
+		if(sem.getPass_time_end()!=null){
+			   end=sdf.format(sem.getPass_time_end());
+		}
+	   
+	 
 	    
 		if(sem.getType()==0){//活动申请
-			sql.append("SELECT d.`dept_code`, d.`dept_cname`,b.cout,'活动申请' AS TYPE FROM (SELECT t.`apply_dept`,COUNT(1) cout FROM (")
-			.append("SELECT DISTINCT p.`biz_id`").append(" FROM qkjm_h_process p WHERE p.`process_id` = 1")
-			.append(" AND p.`biz_time` BETWEEN '").append(start).append("' AND '")
-			.append(end).append("'");
+			sql.append("SELECT d.`dept_code`, d.`dept_cname`,b.cout,0 AS TYPE FROM (SELECT t.`apply_dept`,COUNT(1) cout FROM (")
+			.append("SELECT DISTINCT p.`biz_id`").append(" FROM qkjm_h_process p WHERE p.`process_id` = 1");
+			if(sem.getPass_time_start()!=null){
+				sql.append(" AND p.`biz_time`>='").append(start).append("'");
+			}
+			if(sem.getPass_time_end()!=null){
+				sql.append(" AND p.`biz_time`<=	'").append(end).append("'");
+			}
+			
 			if(sem.getCheckState()==0){//总监
 				sql.append("  AND p.`biz_sign` = 'ACTIVE_MDY_SDSTATUS' ").append(" AND p.`biz_status02` = 40 AND p.`biz_status03` = 30");
 				sql.append(" AND EXISTS (SELECT 1 FROM qkjm_r_active a WHERE a.`uuid` = p.`biz_id` AND a.`status` >=1 AND a.`sd_status` >= 40)");
@@ -133,14 +144,21 @@ public class CheckEffMonthlyStatAction extends ActionSupport {
 				sql.append(" AND p.`biz_sign` = 'ACTIVE_APPLY_PASS'");
 				sql.append(" AND EXISTS (SELECT 1 FROM qkjm_r_active a WHERE a.`uuid` = p.`biz_id` AND a.`status` >=2)");
 			}
-			sql.append(" ) a,qkjm_r_active t WHERE a.biz_id = t.`uuid`  AND t.`apply_dept` LIKE '").append(sem.getDept_code()).append("%'");
+			sql.append(" ) a,qkjm_r_active t WHERE a.biz_id = t.`uuid` ");
+			if(sem.getDept_code()!=null && !sem.getDept_code().equals("")){
+				sql.append(" AND t.`apply_dept` LIKE '").append(sem.getDept_code()).append("%'");
+			}
 			sql.append(" GROUP BY t.apply_dept ORDER BY t.`apply_dept` )b,s_sys_department d WHERE b.apply_dept = d.`dept_code`");
 		}
 		if(sem.getType()==1){//活动结案
-			sql.append("SELECT d.`dept_code`, d.`dept_cname`,b.cout,'活动结案' AS TYPE FROM (SELECT t.`apply_dept`,COUNT(1) cout FROM (")
-			.append("SELECT DISTINCT p.`biz_id`").append(" FROM qkjm_h_process p WHERE p.`process_id` = 1")
-			.append(" AND p.`biz_time` BETWEEN '").append(start).append("' AND '")
-			.append(end).append("'");
+			sql.append("SELECT d.`dept_code`, d.`dept_cname`,b.cout,1 AS TYPE FROM (SELECT t.`apply_dept`,COUNT(1) cout FROM (")
+			.append("SELECT DISTINCT p.`biz_id`").append(" FROM qkjm_h_process p WHERE p.`process_id` = 1");
+			if(sem.getPass_time_start()!=null){
+				sql.append(" AND p.`biz_time`>='").append(start).append("'");
+			}
+			if(sem.getPass_time_end()!=null){
+				sql.append(" AND p.`biz_time`<=	'").append(end).append("'");
+			}
 			if(sem.getCheckState()==0){//总监
 				sql.append("  AND p.`biz_sign` = 'ACTIVE_CLOSE_SDSTATUS' ").append(" AND p.`biz_status04`=40 AND p.`biz_status05` = 30");
 				sql.append(" AND EXISTS (SELECT 1 FROM qkjm_r_active a WHERE a.`uuid` = p.`biz_id` AND a.`status` >=4 AND a.`close_sd_status` >= 40)");
@@ -148,15 +166,22 @@ public class CheckEffMonthlyStatAction extends ActionSupport {
 				sql.append(" AND p.`biz_sign` = 'ACTIVE_CLOSE_PASS'");
 				sql.append(" AND EXISTS (SELECT 1 FROM qkjm_r_active a WHERE a.`uuid` = p.`biz_id` AND a.`status` >=5)");
 			}
-			sql.append(" ) a,qkjm_r_active t WHERE a.biz_id = t.`uuid`  AND t.`apply_dept` LIKE '").append(sem.getDept_code()).append("%'");
+			sql.append(" ) a,qkjm_r_active t WHERE a.biz_id = t.`uuid` ");
+			if(sem.getDept_code()!=null && !sem.getDept_code().equals("")){
+				sql.append(" AND t.`apply_dept` LIKE '").append(sem.getDept_code()).append("%'");
+			}
 			sql.append(" GROUP BY t.apply_dept ORDER BY t.`apply_dept` )b,s_sys_department d WHERE b.apply_dept = d.`dept_code`");
 			
 		}
 		if(sem.getType()==2){//至事由
-			sql.append("SELECT d.`dept_code`,d.`dept_cname`,b.cout,'至事由' AS TYPE FROM (SELECT t.`apply_dept`,COUNT(1) cout FROM (")
-			.append("SELECT DISTINCT p.`biz_id`").append(" FROM qkjm_h_process p WHERE p.`process_id` = 2")
-			.append(" AND p.`biz_time` BETWEEN '").append(start).append("' AND '")
-			.append(end).append("'");
+			sql.append("SELECT d.`dept_code`,d.`dept_cname`,b.cout,2 AS TYPE FROM (SELECT t.`apply_dept`,COUNT(1) cout FROM (")
+			.append("SELECT DISTINCT p.`biz_id`").append(" FROM qkjm_h_process p WHERE p.`process_id` = 2");
+			if(sem.getPass_time_start()!=null){
+				sql.append(" AND p.`biz_time`>='").append(start).append("'");
+			}
+			if(sem.getPass_time_end()!=null){
+				sql.append(" AND p.`biz_time`<=	'").append(end).append("'");
+			}
 			if(sem.getCheckState()==0){//总监
 				sql.append("  AND p.`biz_sign` = 'APPLY_CHANGE_STATUS' ").append(" AND p.`biz_status01`=30");
 				sql.append(" AND EXISTS (SELECT 1 FROM qkjm_r_apply a WHERE a.`uuid` = p.`biz_id` AND a.`status` >=30)");
@@ -164,7 +189,10 @@ public class CheckEffMonthlyStatAction extends ActionSupport {
 				sql.append(" AND p.`biz_sign` = 'ACTIVE_CLOSE_PASS'");
 				sql.append(" AND EXISTS (SELECT 1 FROM qkjm_r_active a WHERE a.`uuid` = p.`biz_id` AND a.`status` >=5)");
 			}
-			sql.append(" ) a,qkjm_r_apply t WHERE a.biz_id = t.`uuid`  AND t.`apply_dept` LIKE '").append(sem.getDept_code()).append("%'");
+			sql.append(" ) a,qkjm_r_active t WHERE a.biz_id = t.`uuid` ");
+			if(sem.getDept_code()!=null && !sem.getDept_code().equals("")){
+				sql.append(" AND t.`apply_dept` LIKE '").append(sem.getDept_code()).append("%'");
+			}
 			sql.append(" GROUP BY t.apply_dept ORDER BY t.`apply_dept` )b,s_sys_department d WHERE b.apply_dept = d.`dept_code`");
 			
 		}
