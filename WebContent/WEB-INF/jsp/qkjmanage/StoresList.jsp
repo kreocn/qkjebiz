@@ -150,6 +150,7 @@
 								$('#dialog').css('display', 'block');
 								$("#dialog").dialog();
 								$("#dialog").empty();
+								keyOff();
 								keyOn();
 								var tiaomainput=$("#tiaomainput").val();
 								for (var i = 0; i < data.length; i++) {
@@ -283,6 +284,7 @@
 		}
 		firstnum = true;
 		num++;
+		$("#dialog").empty();
 	};
 	function ondeltr(data){
 		$("#" + data.id).parents("tr").remove();
@@ -490,36 +492,46 @@ function keyOn() {
 			 if(e.which==49){
 			 $("a[wiid=0]").click();
 				keyOff();
+				$("#dialog").empty();
 		 }
 		 else if(e.which==50){
 			 $("a[wiid=1]").click();
 				keyOff();
+				$("#dialog").empty();
 		 }
 		 else if(e.which==51){
 			 $("a[wiid=2]").click();
 				keyOff();
+				$("#dialog").empty();
 		 } else if(e.which==52){
 			 $("a[wiid=3]").click();
 				keyOff();
+				$("#dialog").empty();
 		 } else if(e.which==53){
 			 $("a[wiid=4]").click();
 				keyOff();
+				$("#dialog").empty();
 		 }else if(e.which==54){
 			 $("a[wiid=5]").click();
 				keyOff();
+				$("#dialog").empty();
 		 }
 		 else if(e.which==55){
 			 $("a[wiid=6]").click();
 				keyOff();
+				$("#dialog").empty();
 		 }else if(e.which==56){
 			 $("a[wiid=7]").click();
 				keyOff();
+				$("#dialog").empty();
 		 }else if(e.which==57){
 			 $("a[wiid=8]").click();
 				keyOff();
+				$("#dialog").empty();
 		 }else if(e.which==58){
 			 $("a[wiid=9]").click();
 				keyOff();
+				$("#dialog").empty();
 		 }
 			 
 		 }
@@ -528,10 +540,7 @@ function keyOn() {
 function keyOff() {
 	$(document).off("keypress");
 }
-
-	
  $("#saohuo").click(function(){
-	
 	    if( $("#saohuo").val()=="扫货模式"){
 	    	$("#saohuo").val("关闭扫货")
 		$(document).on("mouseover",function(e) {
@@ -547,6 +556,8 @@ function keyOff() {
 	    }
  })
 </script>
+
+
 
 
 
