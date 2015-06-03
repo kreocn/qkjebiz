@@ -25,6 +25,7 @@ public class InStock {
 	private Integer goreason;
 	private Integer goldUuid;
 	private Integer goflag;
+	private Integer goldId;
 
 	// 数据库外
 	private String add_user_name;
@@ -37,6 +38,32 @@ public class InStock {
 	private Date date_start;
 	private Date date_end;
 	private String conname_u;
+	private String goldId_name;
+	private String ware_name;
+
+	public String getWare_name() {
+		return ware_name;
+	}
+
+	public void setWare_name(String ware_name) {
+		this.ware_name = ware_name;
+	}
+
+	public String getGoldId_name() {
+		return goldId_name;
+	}
+
+	public void setGoldId_name(String goldId_name) {
+		this.goldId_name = goldId_name;
+	}
+
+	public Integer getGoldId() {
+		return goldId;
+	}
+
+	public void setGoldId(Integer goldId) {
+		this.goldId = goldId;
+	}
 
 	public Integer getGoflag() {
 		return goflag;

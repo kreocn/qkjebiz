@@ -48,16 +48,6 @@ font-size: 14px;
 		            <s:date name="inStock.date" format="yyyy-MM-dd" />
 		            </div>
 	       		</div>
-	       		<div class="label_hang">
-		            <div class="label_ltit">单据性质:</div>
-		            <div class="label_rwben">
-		            <s:if test="%{inStock.reason==0}">正常入库</s:if>
-					<s:if test="%{inStock.reason==1}">正常退货</s:if>
-					<s:if test="%{inStock.reason==2 }">损坏退货</s:if>
-					<s:if test="%{inStock.reason==3 }">其它</s:if>
-					<s:if test="%{inStock.reason==4 }">调货入库</s:if>
-		            </div>
-	       		</div>
 	       		
 	       		<div class="label_hang">
 		            <div class="label_ltit">来源:</div>
@@ -124,55 +114,46 @@ font-size: 14px;
 	            </div>
 	        </div>
 	     </div>
-	    <div class="label_main">
-	        <div class="label_hang">
-	            <div class="label_ltit">单据性质:</div>
-	            <div class="label_rwben label_rwb">
-	            	<select id="membermanagerid" class="selectKick" name="inStock.reason" title="状态">
-								<option value="0"
-								<s:if test="%{inStock.reason==0}">
-								 selected="selected"
-								</s:if>
-								>正常入库</option>
-								<option value="1"
-								 <s:if test="%{inStock.reason==1}">
-								 selected="selected"
-								</s:if>
-								>正常退货</option>
-								<option value="2" 
-								<s:if test="%{inStock.reason==2 }">
-								selected="selected"
-								</s:if>
-								>损坏退货</option>
-								<option value="3" 
-								<s:if test="%{inStock.reason==3 }">
-								selected="selected"
-								</s:if>
-								>其它</option>
-						</select>
-	            </div>
-	        </div>
-	     </div>
 	     
         </s:else>
         <div class="label_main">
 	        <div class="label_hang">
-	            <div class="label_ltit">入库仓库:</div>
+	            <div class="label_ltit">单据性质:</div>
 	            <div class="label_rwben2">
-			       <span class="label_rwb">
-	            	<select id="membermanagerid" class="selectKick" name="inStock.store_id" title="入库仓库" >
-						<s:iterator value="wares" status="sta" var="x">
-						<option value="<s:property value="uuid" />" 
-						<s:if test="#x.uuid==inStock.store_id">
-						selected="selected"
-						</s:if>
-						/><s:property value="ware_name" />
-						</s:iterator>
-					</select>
-	            	</span>
+		            <span class="label_rwb">
+		            	<s:select id="out" onchange="checkState();" name="inStock.reason" cssClass="selectKick" list="#{0:'正常入库',1:'正常退货',2:'损坏退货',4:'调货入库',3:'其它'}" />
+					</span>
 	            </div>
 	        </div>
+	     </div>
+        <div class="label_main">
+	        <div class="label_hang">
+	            <div class="label_ltit">入库仓库:</div>
+	            <div class="label_rwben2">
+					       <span class="label_rwb">
+					       <s:select id="membermanagerid" cssClass="validate[required]" name="inStock.store_id" title="出库仓库"   list="wares" listKey="uuid" listValue="ware_name" />
+					       </span>
+				       </div>
+	        </div>
         </div>
+        
+        <div id="state6" style="display: none;">
+        	<div class="label_main">
+		        <div class="label_hang">
+		            <div class="label_ltit">调出仓库:</div>
+		            <div class="label_rwben2">
+		            	<span class="label_rwb">
+						<s:textfield title="仓库名称" id="userdept_nameid" name="inStock.goldId_name" readonly="true"  cssClass="validate[required,maxSize[85]]"/>
+						<s:hidden title="仓库编码" id="userdept_codeid" name="inStock.goldId" readonly="true" />
+						</span>
+						<span class="lb nw">
+						<img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectWarevar('userdept_codeid','userdept_nameid');" />
+						</span>
+		            </div>
+		        </div>
+		     </div>
+        </div>
+        
         <div class="label_main">
         <div class="label_hang">
             <div class="label_ltit">入库原因:</div>
@@ -278,6 +259,19 @@ font-size: 14px;
 <s:action name="ref_foot" namespace="/manager" executeResult="true" />
 </body>
 <script type="text/javascript">
+$(function(){
+	checkState();
+ });
+function checkState(){
+	var state= $("#out ").val();
+	if(state==4){
+		$("#state6").show();
+	}else{
+		$("#state6").hide();
+		
+	}
+}
+ 
 function flag(){
 	var num=$("#num").val();
 	if(num==null||num==""){

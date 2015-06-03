@@ -5,15 +5,18 @@
 	<typeAlias alias="inStock" type="com.qkj.ware.domain.InStock" />
 	<select id="inStock_getInStocks" resultClass="inStock" parameterClass="java.util.Map">
 		<![CDATA[ 
-			SELECT i.*,addu.`USER_NAME` add_user_name,lmu.`USER_NAME` lm_user_name,g.`USER_NAME` operator_name, t.`USER_NAME` take_name,s.`USER_NAME` conname_u FROM 
+			SELECT i.*,addu.`USER_NAME` add_user_name,lmu.`USER_NAME` lm_user_name,g.`USER_NAME` operator_name, t.`USER_NAME` take_name,s.`USER_NAME` conname_u,w.`ware_name` ware_name,wb.`ware_name` goldId_name FROM 
 			qkj_t_instock i LEFT JOIN s_sys_user addu ON (i.add_user=addu.`UUID`) 
 			LEFT JOIN s_sys_user lmu ON (i.lm_user=lmu.`UUID`)
 			LEFT JOIN s_sys_user g ON(g.`UUID`=i.`operator_id`)
 			LEFT JOIN s_sys_user t ON(t.`UUID`=i.`take_id`)
 			LEFT JOIN s_sys_user s ON (i.`conname`=s.`UUID`)
+			LEFT JOIN qkj_t_warehouse w ON(i.`store_id`=w.`uuid`)
+			LEFT JOIN qkj_t_warehouse wb ON(i.`goldId`=wb.`uuid`)
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ i.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="goldUuid"><![CDATA[ i.goldUuid=#goldUuid# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="ordernum"><![CDATA[ i.ordernum=#ordernum# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="date"><![CDATA[ i.date=#date# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="store_id"><![CDATA[ i.store_id=#store_id# ]]></isNotEmpty>
@@ -117,8 +120,8 @@
 	
 	<insert id="inStock_addInStock" parameterClass="inStock">
 		<![CDATA[ 
-			Insert Into qkj_t_instock(uuid,ordernum,date,store_id,operator_id,take_id,note,add_user,add_timer,lm_user,lm_timer,reason,goreason)
-			Values (#uuid#,#ordernum#,#date#,#store_id#,#operator_id#,#take_id#,#note#,#add_user#,#add_timer#,#lm_user#,#lm_timer#,#reason#,#goreason#)
+			Insert Into qkj_t_instock(uuid,ordernum,date,store_id,operator_id,take_id,note,add_user,add_timer,lm_user,lm_timer,reason,goreason,goldId,goldUuid)
+			Values (#uuid#,#ordernum#,#date#,#store_id#,#operator_id#,#take_id#,#note#,#add_user#,#add_timer#,#lm_user#,#lm_timer#,#reason#,#goreason#,#goldId#,#goldUuid#)
 		]]>
 		<selectKey resultClass="int" keyProperty="uuid">
 		<![CDATA[ 
@@ -131,7 +134,7 @@
 			Update qkj_t_instock
 			Set 
 			ordernum=#ordernum#,
-			
+			goldId=#goldId#,
 			operator_id=#operator_id#,
 			take_id=#take_id#,
 			note=#note#,

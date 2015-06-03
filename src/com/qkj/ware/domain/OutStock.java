@@ -15,13 +15,13 @@ public class OutStock {
 	private Date add_timer;// (datetime)
 	private String lm_user;// (int)
 	private Date lm_timer;// (datetime)
-	private Integer reason;// (int)0销售用酒，1董事会用酒 ，借酒
+	private Integer reason;// (int)0销售用酒1招待用酒3报损4赠酒6调货出库5其它
 	private Integer send;// (int)2新单3待审核4结案5未出货6未返利
-	private Integer manager_check;// (int)渠道/运营经理确认   1:已确认
+	private Integer manager_check;// (int)渠道/运营经理确认 1:已确认
 	private String manager_check_user;// (varchar)
 	private Date manager_check_time;// (datetime)确认时间
 	private String bsreason;
-	private Integer borrowStore_id; 
+	private Integer borrowStore_id;
 
 	private String member_id;
 	private String member_mebile;
@@ -30,8 +30,9 @@ public class OutStock {
 	private Double member_price;
 	private String dept_name;
 	private String dept_code;
-	private Integer boflag;//0未还1已还
+	private Integer boflag;// 0未还1已还
 	private Integer goldUuid;
+	private Integer goreason;
 
 	// 以下为非数据库字段
 	private String add_user_name;
@@ -43,6 +44,14 @@ public class OutStock {
 	private Date date_start;
 	private Date date_end;
 	private String borrowStore_name;
+
+	public Integer getGoreason() {
+		return goreason;
+	}
+
+	public void setGoreason(Integer goreason) {
+		this.goreason = goreason;
+	}
 
 	public String getBorrowStore_name() {
 		return borrowStore_name;
@@ -276,7 +285,6 @@ public class OutStock {
 		this.manager_check_user_name = manager_check_user_name;
 	}
 
-
 	public String getDept_name() {
 		return dept_name;
 	}
@@ -340,9 +348,5 @@ public class OutStock {
 	public void setDate_end(Date date_end) {
 		this.date_end = date_end;
 	}
-	
-	
-	
-	
-	
+
 }

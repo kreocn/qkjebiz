@@ -330,37 +330,6 @@ public class InStockAction extends ActionSupport {
 		return SUCCESS;
 	}
 
-	public String cencle() throws Exception {
-		ContextHelper.isPermit("QKJ_WARE_INSTOCK_CENCLE");
-		try {
-			inStock.setSend(1);
-			dao.send(inStock);
-			// 删除详表
-			InDetailDAO idao = new InDetailDAO();
-			map.clear();
-			map.put("lading_id", inStock.getUuid());
-			this.setInDetails(idao.list(map));
-			if (inDetails != null) {
-				for (int i = 0; i < inDetails.size(); i++) {
-					this.setInDetail(inDetails.get(i));
-					map.clear();
-					map.put("product_id", inDetail.getProduct_id());
-					map.put("store_id", inStock.getStore_id());
-					StockDAO stockd = new StockDAO();
-					this.setStock((Stock) stockd.list(map).get(0));
-
-					stock.setQuantity(stock.getQuantity() - inDetail.getNum());
-					stockd.save(stock);// 改变库存
-
-				}
-			}
-		} catch (Exception e) {
-			log.error(this.getClass().getName() + "!del 数据删除失败:", e);
-			throw new Exception(this.getClass().getName() + "!del 数据删除失败:", e);
-		}
-		return SUCCESS;
-	}
-
 	public String del() throws Exception {
 		ContextHelper.isPermit("QKJ_WARE_INSTOCK_DEL");
 		try {
@@ -380,56 +349,29 @@ public class InStockAction extends ActionSupport {
 		return SUCCESS;
 	}
 
-	// 确认
+	/**
+	 * 确认订单20150603sun
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
 	public String sure() throws Exception {
 		ContextHelper.isPermit("QKJ_WARE_INSTOCK_ADD");
-		String u = ContextHelper.getUserLoginUuid();
-		try {
-			// 修改库存
-			this.setInStock((InStock) dao.get(inStock.getUuid()));
+		this.setInStock((InStock) dao.get(inStock.getUuid()));
+		dao.sure(inStock);
+		return SUCCESS;
+	}
 
-			InDetailDAO idao = new InDetailDAO();
-			map.clear();
-			map.put("lading_id", inStock.getUuid());
-			this.setInDetails(idao.list(map));
-
-			if (inDetails != null && inDetails.size() > 0) {
-				for (int i = 0; i < inDetails.size(); i++) {
-					inDetail = new InDetail();
-					this.setInDetail(inDetails.get(i));
-					// 查询库存同一仓库中是否有此商品
-					StockDAO stockdao = new StockDAO();
-					map.clear();
-					map.put("product_id", inDetail.getProduct_id());
-					map.put("store_id", inStock.getStore_id());
-					this.setStock((Stock) stockdao.fingByPro(map));
-
-					// 填加库存信息(己有修改库存，没有填加)
-					newStock = new Stock();
-					if (stock != null) {
-						stock.setQuantity(stock.getQuantity() + inDetail.getNum());
-						stockdao.save(stock);
-					} else {
-						int pro = inDetail.getProduct_id();
-						int num = inDetail.getNum();
-						int stor = inStock.getStore_id();
-						newStock.setProduct_id(pro);
-						newStock.setQuantity(num);
-						newStock.setStore_id(stor);
-						stockdao.add(newStock);
-					}
-				}
-			}
-
-			inStock.setConfirm(1);
-			inStock.setConname(u);
-			inStock.setContime(new Date());
-			dao.sure(inStock);
-
-		} catch (Exception e) {
-			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
-			throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
-		}
+	/**
+	 * 取消订单20150603sun
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String cencle() throws Exception {
+		ContextHelper.isPermit("QKJ_WARE_INSTOCK_CENCLE");
+		this.setInStock((InStock) dao.get(inStock.getUuid()));
+		dao.cencle(inStock);
 		return SUCCESS;
 	}
 

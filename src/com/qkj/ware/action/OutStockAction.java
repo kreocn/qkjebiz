@@ -343,46 +343,27 @@ public class OutStockAction extends ActionSupport {
 	 */
 	public String cencle() throws Exception {
 		ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_CENCLE");
-		try {
-			dao.startTransaction();
+		this.setOutStock((OutStock) dao.get(outStock.getUuid()));
+		if(outStock.getReason()==6){//调出仓库
+			List<InStock> ins=new ArrayList<>();
 			InStockDAO id=new InStockDAO();
-			InStock in=new InStock();
-			OutDetailDAO odao = new OutDetailDAO();
-			// 修改单据状态
-			outStock.setSend(5);
-			dao.updateSend(outStock);
-			// 修改库存
-			StockDAO stockdao = new StockDAO();
-			map.clear();
-			map.put("lading_id", outStock.getUuid());
-			this.setOutDetails(odao.list(map));
-			if (outDetails.size() > 0) {
-				for (int i = 0; i < outDetails.size(); i++) {
-					this.setOutDetail(outDetails.get(i));
-					map.clear();
-					map.put("product_id", outDetail.getProduct_id());
-					map.put("store_id", outStock.getStore_id());
-					this.setStocks(stockdao.list(map));// 查询出库仓库是否有此商品
-					if (stocks.size() > 0) {
-						this.setStock(stocks.get(0));
-						map.clear();
-						map.put("quantity", stock.getQuantity() + outDetail.getNum());
-						map.put("uuid", stock.getUuid());
-						stockdao.updateTotleById(map);
+			map.put("goldUuid", outStock.getUuid());
+			ins=id.list(map);
+			if(ins.size()>0){
+				boolean flag=true;
+				for(int i=0;i<ins.size();i++){
+					if(ins.get(i).getConfirm()!=null && ins.get(i).getConfirm()==1){//对方已经部分确认
+						this.setMessage("对方已经确认收货不能取消");
+						flag=false;
+						break;
 					}
 				}
+				if(flag==true){
+					dao.cencle(outStock);
+				}
 			}
-			//修改对应入库单状态（调货）取消发货
-			in.setGoldUuid(outStock.getUuid());
-			in.setGoflag(1);
-			id.saveGodUid(in);
-			
-			dao.commitTransaction();
-		} catch (Exception e) {
-			log.error(this.getClass().getName() + "!del 数据删除失败:", e);
-			throw new Exception(this.getClass().getName() + "!del 数据删除失败:", e);
-		} finally {
-			dao.endTransaction();
+		}else{
+			dao.cencle(outStock);
 		}
 		return SUCCESS;
 	}

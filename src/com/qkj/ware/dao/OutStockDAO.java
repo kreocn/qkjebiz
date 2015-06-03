@@ -12,20 +12,17 @@ import org.iweb.sys.ContextHelper;
 import com.qkj.manage.dao.ProductDAO;
 import com.qkj.manage.domain.Product;
 import com.qkj.ware.action.InStockAction;
+import com.qkj.ware.domain.InDetail;
+import com.qkj.ware.domain.InStock;
 import com.qkj.ware.domain.OutDetail;
 import com.qkj.ware.domain.OutStock;
 import com.qkj.ware.domain.Stock;
 
 public class OutStockDAO extends AbstractDAO {
-
+	private Map<String, Object> map = new HashMap<String, Object>();
 	public List list(Map<String, Object> map) {
 		setCountMapid("outStock_getOutStocksCounts");
 		return super.list("outStock_getOutStocks", map);
-	}
-
-	public List listPower(Map<String, Object> map) {
-		setCountMapid("outStock_getOutStocksCountsByPower");
-		return super.list("outStock_getpower", map);
 	}
 
 	public Object get(Object uuid) {
@@ -54,24 +51,9 @@ public class OutStockDAO extends AbstractDAO {
 		return super.save("outStock_mdySend", parameters);
 	}
 
-	// 销售出库填加会员信息
-	public int updateStockSale(Object parameters) {
-		return super.save("outStock_mdyOutStockSale", parameters);
-	}
-
 	// 送审
 	public int updateCheck(Object parameters) {
 		return super.save("outStock_mdyCheck", parameters);
-	}
-
-	// 经理审
-	public int updateCheckManage(Object parameters) {
-		return super.save("outStock_mdyCheckManage", parameters);
-	}
-
-	// 总监审
-	public int updateCheckCoo(Object parameters) {
-		return super.save("outStock_mdyCheckCoo", parameters);
 	}
 
 	// 备注
@@ -82,9 +64,18 @@ public class OutStockDAO extends AbstractDAO {
 	public int updatebs(Object parameters) {
 		return super.save("outStock_mdyOutStockBs", parameters);
 	}
+	
+	public int updateboflag(Object parameters) {
+		return super.save("outStock_mdyBoFlag", parameters);
+	}
 
+	/**
+	 * 订单确认
+	 * 
+	 * @param outStock
+	 * @return
+	 */
 	public int sure(OutStock outStock) {
-		Map<String, Object> map = new HashMap<String, Object>();
 		String u = ContextHelper.getUserLoginUuid();
 		StockDAO stockdao = new StockDAO();
 		Stock stock = new Stock();
@@ -149,7 +140,7 @@ public class OutStockDAO extends AbstractDAO {
 			// 如何是调出仓库自动生成对方的入库单
 			if (outStock.getReason() == 6) {
 				InStockDAO isa = new InStockDAO();
-				isa.addStock(outStock.getUuid(),outStock.getBorrowStore_id(), 4, 1, produs);
+				isa.addStock(outStock.getUuid(), outStock.getBorrowStore_id(), outStock.getStore_id(),4, 1, produs);
 			}
 
 			super.commitTransaction();
@@ -162,6 +153,103 @@ public class OutStockDAO extends AbstractDAO {
 		return 1;
 	}
 
+	/**
+	 * 取消订单
+	 * 
+	 * @return
+	 */
+	public int cencle(OutStock outStock) {
+		try {
+			OutDetail outDetail = new OutDetail();
+			List<OutDetail> outDetails = new ArrayList();
+			super.startTransaction();
+			OutDetailDAO odao = new OutDetailDAO();
+			List<Stock> stocks = new ArrayList();
+			Stock stock = new Stock();
+			// 修改单据状态
+			outStock.setSend(5);
+			updateSend(outStock);
+			// 修改库存
+			StockDAO stockdao = new StockDAO();
+			map.clear();
+			map.put("lading_id", outStock.getUuid());
+			outDetails=odao.list(map);
+			if (outDetails.size() > 0) {
+				for (int i = 0; i < outDetails.size(); i++) {
+					outDetail=outDetails.get(i);
+					map.clear();
+					map.put("product_id", outDetail.getProduct_id());
+					map.put("store_id", outStock.getStore_id());
+					stocks=stockdao.list(map);// 查询出库仓库是否有此商品
+					if (stocks.size() > 0) {
+						stock=stocks.get(0);
+						map.clear();
+						map.put("quantity", stock.getQuantity() + outDetail.getNum());
+						map.put("uuid", stock.getUuid());
+						stockdao.updateTotleById(map);
+					}
+				}
+			}
+			// 修改对应入库单状态（调货）取消发货
+			if (outStock.getReason() == 6) {
+				InStockDAO id = new InStockDAO();
+				InStock in = new InStock();
+				in.setGoldUuid(outStock.getUuid());
+				in.setGoflag(1);
+				id.saveGodUid(in);
+			}
+			super.commitTransaction();
+		}  catch (Exception e) {
+			// TODO: handle exception
+		} finally {
+			super.endTransaction();
+		}
+		return 1;
+	}
+	
+	public void addStock(Integer uuid, Integer store_id, Integer borrow_id,Integer reason, Integer goreason, List<Product> products) {
+		// TODO Auto-generated method stub
+			OutDetailDAO idao=new OutDetailDAO();
+			InStockDAO id=new InStockDAO();
+			Product p = new Product();
+			// 填加主表
+			OutStock outStock = new OutStock();
+			Date d = new Date();
+			String u = ContextHelper.getUserLoginUuid();
+			String num = id.getMoveOrderNo(1);
+			outStock.setOrdernum(num);
+			outStock.setDate(d);
+			outStock.setStore_id(store_id);
+			outStock.setNote("出库");
+			outStock.setAdd_user(u);
+			outStock.setLm_user(u);
+			outStock.setAdd_timer(new Date());
+			outStock.setLm_timer(new Date());
+			outStock.setReason(reason);
+			outStock.setGoldUuid(uuid);
+			outStock.setBorrowStore_id(borrow_id);
+			outStock.setGoreason(goreason);
+			add(outStock);
+			// 填加子表
+			Double totle=0.00;
+			if (products.size() > 0) {
+				for (int i = 0; i < products.size(); i++) {
+					p = products.get(i);
+					OutDetail outDetail = new OutDetail();
+					outDetail.setLading_id(outStock.getUuid());
+					outDetail.setProduct_id(p.getUuid());
+					outDetail.setNum(p.getNum());
+					outDetail.setPrice(p.getDprice());
+					outDetail.setTotel(p.getDtotle());
+					totle=outDetail.getTotel();
+					idao.add(outDetail);
+				}
+			}
+			// 修改主表的总价
+			outStock.setTotal_price(outStock.getTotal_price() +totle);
+			saveTotal(outStock);
+	}
+	
 	public int getResultCount() {
 		return super.getResultCount();
 	}
