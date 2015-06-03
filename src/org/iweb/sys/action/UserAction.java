@@ -3,13 +3,16 @@ package org.iweb.sys.action;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.iweb.sys.ContextHelper;
 import org.iweb.sys.IWebConfig;
+import org.iweb.sys.JSONUtil;
 import org.iweb.sys.MD5Plus;
 import org.iweb.sys.Parameters;
 import org.iweb.sys.ToolsUtil;
@@ -22,6 +25,7 @@ import org.iweb.sys.domain.Department;
 import org.iweb.sys.domain.Position;
 import org.iweb.sys.domain.User;
 import org.iweb.sys.domain.UserDept;
+import org.iweb.sys.domain.UserLoginInfo;
 import org.iweb.sys.domain.UserRole;
 import org.iweb.sys.exception.PermitException;
 
@@ -34,7 +38,7 @@ public class UserAction extends ActionSupport {
 	private UserDAO dao = new UserDAO();
 	private DepartmentDAO dao2 = new DepartmentDAO();
 	private UserRoleDAO dao3 = new UserRoleDAO();
-	private UserDeptDAO udDao=new UserDeptDAO();
+	private UserDeptDAO udDao = new UserDeptDAO();
 
 	private User user;
 	private List<User> users;
@@ -43,6 +47,7 @@ public class UserAction extends ActionSupport {
 	private List<Position> positions;
 	private List<UserRole> userRoles;
 	private List<UserDept> userDepts;
+	private List<User> userMDepts;
 
 	//
 	private String[] uroles;
@@ -56,6 +61,14 @@ public class UserAction extends ActionSupport {
 
 	private boolean overSub;
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;用户信息";
+
+	public List<User> getUserMDepts() {
+		return userMDepts;
+	}
+
+	public void setUserMDepts(List<User> userMDepts) {
+		this.userMDepts = userMDepts;
+	}
 
 	public List<UserDept> getUserDepts() {
 		return userDepts;
@@ -223,7 +236,7 @@ public class UserAction extends ActionSupport {
 				} else {
 					this.setUserRoles(null);
 				}
-				
+
 				map.clear();
 				map.put("user_id", user.getUuid());
 				this.setUserDepts(udDao.list(map));
@@ -252,7 +265,7 @@ public class UserAction extends ActionSupport {
 
 			PositionDAO pdao = new PositionDAO();
 			this.setPositions(pdao.list(null));
-			
+
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!load 读取数据错误:" + ToolsUtil.getStackTrace(e));
 			throw new Exception(this.getClass().getName() + "!load 读取数据错误:" + ToolsUtil.getStackTraceHTML(e));
@@ -350,6 +363,66 @@ public class UserAction extends ActionSupport {
 			log.error(this.getClass().getName() + "!save 数据更新失败:" + ToolsUtil.getStackTrace(e));
 			throw new Exception(this.getClass().getName() + "!save 数据更新失败:" + ToolsUtil.getStackTraceHTML(e));
 		}
+		return SUCCESS;
+	}
+
+	public String saveDept() {
+		user.setUuid(ContextHelper.getUserLoginUuid());
+		dao.saveDept(user);
+		map.clear();
+		map.put("dept_code", user.getDept_code());
+		Department dept=new Department();
+		List<Department> des=new ArrayList<>();
+		des=dao2.list(map);
+		if(des.size()>0){
+			dept=des.get(0);
+		}
+		UserLoginInfo ulf = new UserLoginInfo();
+		ulf=ContextHelper.getUserLoginInfo();
+		ulf.setDept_code(user.getDept_code());
+		ulf.setDept_cname(dept.getDept_cname());
+		Map<String, String> newMap = new HashMap<String, String>();
+		HashMap<String, String> p_map = new HashMap<String, String>();
+		newMap = ulf.getPermit_depts2();
+		
+		Set<String> set = newMap.keySet();
+		if(newMap.size()>0){
+			for (String s : set) {
+				String value = newMap.get(s);
+				if(s.equals(user.getDept_code())){
+					p_map.put(s, dept.getDept_cname()+"#1");
+				}else{
+					p_map.put(s, value.substring(0,value.indexOf("#"))+"#0");
+				}
+			}
+			ulf.setPermit_depts2(p_map);
+		}
+		
+		ContextHelper.getRequest().getSession().removeAttribute(Parameters.MemberLoginInfo_Session_Str);
+		ContextHelper.getRequest().getSession().setAttribute(Parameters.MemberLoginInfo_Session_Str, ulf);
+		System.out.println(ContextHelper.getUserLoginUuid());
+		this.setMessage("修改成功！请刷新页面");
+		return SUCCESS;
+	}
+
+	public String deptList() {
+		Map<String, String> newMap = new HashMap<String, String>();
+		newMap = ContextHelper.getUserLoginInfo().getPermit_depts2();
+		Set<String> set = newMap.keySet();
+		List<User> u =new ArrayList<>();
+		for (String s : set) {
+			User user=new User();
+			user.setDept_code(s);
+			String value = newMap.get(s);
+			user.setDept_cname(value.substring(0,value.indexOf("#")));
+			if(value.contains("#1")){
+				user.setDeptFlag("1");
+			}else{
+				user.setDeptFlag("0");
+			}
+			u.add(user);
+		}
+		this.setUserMDepts(u);
 		return SUCCESS;
 	}
 

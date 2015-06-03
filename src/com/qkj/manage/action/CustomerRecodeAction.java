@@ -87,7 +87,7 @@ public class CustomerRecodeAction extends ActionSupport {
 			map.clear();
 			if (customerRecode != null)
 				map.putAll(ToolsUtil.getMapByBean(customerRecode));
-			ContextHelper.setSearchDeptPermit4Search(map, "dept_codes", "manager");
+			ContextHelper.setSearchDeptPermit4Search("QKJ_QKJMANAGE_CUSTOMERRECODE_LIST",map, "dept_codes", "manager");
 			map.putAll(ContextHelper.getDefaultRequestMap4Page());
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 			this.setCustomerRecodes(dao.list(map));

@@ -27,10 +27,23 @@
 				<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ c.apply_dept=#apply_dept# ]]></isNotEqual>
 				<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ c.apply_dept LIKE CONCAT(#apply_dept#,'%') ]]></isEqual>
 		</isNotEmpty>
-		<isNotNull prepend="AND" property="apply_depts">
+		
+		<isNotEmpty prepend="AND" property="apply_depts" open="(" close=")">
 			<![CDATA[ c.apply_dept In ]]>
-			<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
-		</isNotNull>
+				<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
+				<isNotEmpty prepend="OR" property="apply_perdepts">
+							<![CDATA[ c.apply_dept In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ c.add_user=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
+			</isNotEmpty>
+			<isEmpty property="apply_depts">
+				<isNotEmpty prepend="AND" property="apply_perdepts">
+						<![CDATA[ c.apply_dept In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ c.add_user=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
+			</isEmpty>
 
 		</dynamic>
 		<![CDATA[ LIMIT 1000 ]]>
@@ -58,10 +71,23 @@
 				<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ c.apply_dept=#apply_dept# ]]></isNotEqual>
 				<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ c.apply_dept LIKE CONCAT(#apply_dept#,'%') ]]></isEqual>
 			</isNotEmpty>
-			<isNotNull prepend="AND" property="apply_depts">
-				<![CDATA[ c.apply_dept In ]]>
+			
+		<isNotEmpty prepend="AND" property="apply_depts" open="(" close=")">
+			<![CDATA[ c.apply_dept In ]]>
 				<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
-			</isNotNull>
+				<isNotEmpty prepend="OR" property="apply_perdepts">
+							<![CDATA[ c.apply_dept In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ c.add_user=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
+			</isNotEmpty>
+			<isEmpty property="apply_depts">
+				<isNotEmpty prepend="AND" property="apply_perdepts">
+						<![CDATA[ c.apply_dept In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ c.add_user=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
+			</isEmpty>
 		</dynamic>
 		<![CDATA[ LIMIT 1000 ]]>
 	</select>

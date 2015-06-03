@@ -137,7 +137,7 @@ public class TravelAction extends ActionSupport {
 		try {
 			map.clear();
 			if (travel == null) travel = new Travel();
-			ContextHelper.setSearchDeptPermit4Search(map, "apply_depts", "apply_user");
+			ContextHelper.setSearchDeptPermit4Search("QKJ_QKJMANAGE_TRAVEL_LIST",map, "apply_depts", "apply_user");
 			ContextHelper.SimpleSearchMap4Page("QKJ_QKJMANAGE_TRAVEL_LIST", map, travel, viewFlag);
 			this.setPageSize(ContextHelper.getPageSize(map));
 			this.setCurrPage(ContextHelper.getCurrPage(map));

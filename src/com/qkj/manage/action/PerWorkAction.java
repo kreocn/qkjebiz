@@ -141,7 +141,7 @@ public class PerWorkAction extends ActionSupport{
 		try {
 			map.clear();
 			if (perWork == null) perWork = new PerWork();
-			ContextHelper.setSearchDeptPermit4Search(map, "apply_depts", "apply_user");
+			ContextHelper.setSearchDeptPermit4Search("QKJ_PERSONAL_WORKLIST",map, "apply_depts", "apply_user");
 			ContextHelper.SimpleSearchMap4Page("QKJ_PERSONAL_WORKLIST", map, perWork, viewFlag);
 			this.setPageSize(ContextHelper.getPageSize(map));
 			this.setCurrPage(ContextHelper.getCurrPage(map));
@@ -167,7 +167,7 @@ public class PerWorkAction extends ActionSupport{
 		try {
 			map.clear();
 			if (perWork == null) perWork = new PerWork();
-			ContextHelper.setSearchDeptPermit4Search(map, "apply_depts", "apply_user");
+			ContextHelper.setSearchDeptPermit4Search("QKJ_PERSONAL_WORKPOWERLIST",map, "apply_depts", "apply_user");
 			ContextHelper.SimpleSearchMap4Page("QKJ_PERSONAL_WORKPOWERLIST", map, perWork, viewFlag);
 			this.setPageSize(ContextHelper.getPageSize(map));
 			this.setCurrPage(ContextHelper.getCurrPage(map));

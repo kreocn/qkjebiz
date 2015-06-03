@@ -165,7 +165,6 @@ public class CheckAction extends ActionSupport {
 			map.clear();
 			if (check != null){
 				map.putAll(ToolsUtil.getMapByBean(check));
-				System.out.println(check.getState());
 				state=check.getState();
 			}else{
 				map.clear();

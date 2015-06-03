@@ -18,10 +18,24 @@
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ t.uuid=#uuid# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="apply_dept"><![CDATA[ t.apply_dept=#apply_dept# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="apply_user"><![CDATA[ t.apply_user=#apply_user# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="apply_depts">
-				<![CDATA[ t.apply_dept In ]]>
+			
+			<isNotEmpty prepend="AND" property="apply_depts" open="(" close=")">
+			<![CDATA[ t.apply_dept In ]]>
 				<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
+				<isNotEmpty prepend="OR" property="apply_perdepts">
+							<![CDATA[ t.apply_dept In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ t.apply_user=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
 			</isNotEmpty>
+			<isEmpty property="apply_depts">
+				<isNotEmpty prepend="AND" property="apply_perdepts">
+						<![CDATA[ t.apply_dept In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ t.apply_user=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
+			</isEmpty>
+			
 			<isNotEmpty prepend="AND" property="check_status"><![CDATA[ t.check_status=#check_status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="acheck_status"><![CDATA[ t.acheck_status=#acheck_status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="travel_date_search"><![CDATA[ t.travel_date <= #travel_date_search# AND t.travel_date_end >= #travel_date_search# ]]></isNotEmpty>
@@ -35,10 +49,22 @@
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="apply_dept"><![CDATA[ apply_dept=#apply_dept# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="apply_depts">
-				<![CDATA[ apply_dept In ]]>
+			<isNotEmpty prepend="AND" property="apply_depts" open="(" close=")">
+			<![CDATA[ t.apply_dept In ]]>
 				<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
+				<isNotEmpty prepend="OR" property="apply_perdepts">
+							<![CDATA[ t.apply_dept In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ t.apply_user=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
 			</isNotEmpty>
+			<isEmpty property="apply_depts">
+				<isNotEmpty prepend="AND" property="apply_perdepts">
+						<![CDATA[ t.apply_dept In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ t.apply_user=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
+			</isEmpty>
 			<isNotEmpty prepend="AND" property="apply_user"><![CDATA[ apply_user=#apply_user# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="check_status"><![CDATA[ check_status=#check_status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="acheck_status"><![CDATA[ acheck_status=#acheck_status# ]]></isNotEmpty>

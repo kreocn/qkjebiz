@@ -68,7 +68,7 @@ max-width: 650px !important;
 				<s:hidden title="部门代码" id="userdept_codeid" name="leave.leave_dept" readonly="true" />
 				</span>
 				<span class="lb nw">
-				<img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true);" />
+				<img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true,null,null,'QKJ_ADM_LEAVE_LIST');" />
 				<s:checkbox id="leave_is_sub_dept" name="leave.is_sub_dept" cssClass="regular-checkbox" />
 				<label for="leave_is_sub_dept"></label>包含子部门
 				<span id="ajax_member_message"></span>

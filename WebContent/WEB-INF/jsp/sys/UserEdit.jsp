@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -52,12 +53,21 @@
 		       <div class="label_rwbenx"><s:textfield id="user.email" title="电子邮件" name="user.email" /></div>
 			</div>
 			<div class="label_hang">
-		       <div class="label_ltit">职务:</div>
-		       <div class="label_rwbenx"><s:select name="user.position" list="positions" listKey="uuid" listValue="position_name" headerKey="" headerValue="--请选择--" cssClass="validate[required]"/></div>
+		       <div class="label_ltit">默认提交部门:</div>
+		       <div class="label_rwben2">
+		       		<span class="label_rwb">
+					<s:textfield title="部门名称" id="userdept_nameid" name="user.dept_cname" readonly="true" />
+					<s:hidden title="部门代码" id="userdept_codeid" name="user.dept_code" readonly="true" />
+					</span>
+					<span class="lb nw">
+					<img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true);" />
+					</span>
+		       </div>
 			</div>
 			
+			
 			<fieldset class="clear">
-	<legend>多部门多权限</legend>
+	<legend>职务权限列表</legend>
 	<!--<span class="shaddress">--------------------收货地址--------------------</span>-->
 	
 	<s:if test="'add'==viewFlag">
@@ -88,6 +98,7 @@
 			<tr>
 				<th>所属部门</th>
 				<th>职务</th>
+				<th>部门管理权限</th>
 				<th>子部门管理权限</th>
 				<th>更新时间</th>
 				<th><a href="<s:url namespace="/sys" action="user_dept_load"><s:param name="viewFlag">add</s:param><s:param name="userDept.user_id" value="user.uuid"></s:param></s:url>" >添加部门及权限</a></th>
@@ -96,6 +107,14 @@
 			  <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>">
 				<td>${dept_cname }</td>
 				<td>${position_name }</td>
+				<td>
+				<s:if test="%{depsubover==0}">
+				无部门管理权限
+				</s:if>
+				<s:else>
+				有部门管理权限
+				</s:else>
+				</td>
 				<td>
 				<s:if test="%{subover==0}">
 				无子部门管理权限
@@ -117,7 +136,11 @@
 	</s:if>
 	</fieldset>
 	
-	
+			<!-- <div class="label_hang">
+		       <div class="label_ltit">职务:</div>
+		       <div class="label_rwbenx"><s:select name="user.position" list="positions" listKey="uuid" listValue="position_name" headerKey="" headerValue="--请选择--" cssClass="validate[required]"/></div>
+			</div>
+			
 			<div class="label_hang">
 		       <div class="label_ltit">部门:</div>
 		       <div class="label_rwben2">
@@ -156,7 +179,7 @@
 				     allowAddAllToRight="false"
 				     allowSelectAll="false" />
 		       </div>
-			</div>
+			</div> -->
 			<div class="label_hang clear">
 		       <div class="label_ltit">其他描述:</div>
 		       <div class="label_rwben"><s:textarea title="其他描述" id="user.descriptions" name="user.descriptions"  cssClass="label_hang_linput"/></div>

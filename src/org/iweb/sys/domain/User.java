@@ -38,9 +38,18 @@ public class User {
 	private String senior_name;
 	private String type_name;
 	private String position_name;
+	private String deptFlag;
 
 	// 以下为查询专用字段
 	private String[] positions;
+
+	public String getDeptFlag() {
+		return deptFlag;
+	}
+
+	public void setDeptFlag(String deptFlag) {
+		this.deptFlag = deptFlag;
+	}
 
 	public String getUser_sign() {
 		return user_sign;

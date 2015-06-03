@@ -124,7 +124,6 @@ public class WarepowerAction extends ActionSupport {
 			this.setPageSize(ContextHelper.getPageSize(map));
 			this.setCurrPage(ContextHelper.getCurrPage(map));		
 			this.setWarepowers(dao.list(map));
-			System.out.println(warepowers.size());
 			WareDAO wd=new WareDAO();
 			this.setWares(wd.list(null));
 			this.setRecCount(dao.getResultCount());

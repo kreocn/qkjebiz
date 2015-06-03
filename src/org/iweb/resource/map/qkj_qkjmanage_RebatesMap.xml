@@ -27,10 +27,24 @@
 		<isNotEmpty prepend="AND" property="out_flag"><![CDATA[ r.out_flag=#out_flag# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="fd_check"><![CDATA[ r.fd_check=#fd_check# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="manager"><![CDATA[ m.manager=#manager# ]]></isNotEmpty>
-		<isNotEmpty prepend="AND" property="dept_codes">
-				<![CDATA[ m.dept_code In ]]>
+
+		<isNotEmpty prepend="AND" property="dept_codes" open="(" close=")">
+			<![CDATA[ m.dept_code In ]]>
 			<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
+			<isNotEmpty prepend="OR" property="apply_perdepts">
+							<![CDATA[ m.dept_code In ]]>
+				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ m.manager=#apply_userDouble# ]]></isNotEmpty>
+			</isNotEmpty>
 		</isNotEmpty>
+		<isEmpty property="dept_codes">
+			<isNotEmpty prepend="AND" property="apply_perdepts">
+						<![CDATA[ m.dept_code In ]]>
+				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ m.manager=#apply_userDouble# ]]></isNotEmpty>
+			</isNotEmpty>
+		</isEmpty>
+			
 		<![CDATA[ ORDER  BY r.`status` ASC,r.apply_time DESC  ]]>
 	</select>
 	<select id="qkjmanage_getRebatessCounts" resultClass="int" parameterClass="java.util.Map">
@@ -47,10 +61,23 @@
 		<isNotEmpty prepend="AND" property="out_flag"><![CDATA[ r.out_flag=#out_flag# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="fd_check"><![CDATA[ r.fd_check=#fd_check# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="manager"><![CDATA[ m.manager=#manager# ]]></isNotEmpty>
-		<isNotEmpty prepend="AND" property="dept_codes">
-				<![CDATA[ m.dept_code In ]]>
+
+		<isNotEmpty prepend="AND" property="dept_codes" open="(" close=")">
+			<![CDATA[ m.dept_code In ]]>
 			<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
+			<isNotEmpty prepend="OR" property="apply_perdepts">
+							<![CDATA[ m.dept_code In ]]>
+				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ m.manager=#apply_userDouble# ]]></isNotEmpty>
+			</isNotEmpty>
 		</isNotEmpty>
+		<isEmpty property="dept_codes">
+			<isNotEmpty prepend="AND" property="apply_perdepts">
+						<![CDATA[ m.dept_code In ]]>
+				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ m.manager=#apply_userDouble# ]]></isNotEmpty>
+			</isNotEmpty>
+		</isEmpty>
 	</select>
 	<insert id="qkjmanage_addRebates" parameterClass="rebates">
 		<![CDATA[ 
