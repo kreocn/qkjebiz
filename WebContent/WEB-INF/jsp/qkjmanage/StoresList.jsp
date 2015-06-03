@@ -1,157 +1,202 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>门店支付首页<s:text name="APP_NAME" /></title>
 <s:action name="ref_head" namespace="/manager" executeResult="true" />
-<link rel="stylesheet" href="<s:url value="/include/jQuery/stylesheets/jquery.rating.css" />" />
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.rating.pack.js" />"></script>
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.MetaData.js" />"></script>
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-ui-1.10.3.custom.min.js" />"></script>
-<style type="text/css">
-.tiaoma_ltit {
-	float:left;text-align: right; font-size:30px;margin-left:40px;margin-top:30px;
-}
-  .tiaomainput {
-               border:1px solid;
-              -khtml-border-radius:10px;
-               border-radius:5px;
-               height:30px;
-               width:200px;
-            }
-.tiaomareset{
-background: none repeat scroll 0 0 #363636;
-    border: 1px solid #363636;
-    border-radius: 5px;
-    color: #fffff0;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: bold;
-    height: 33px;
-    line-height: 22px;
-    padding: 0 10px;
-    width: initial;}
-    
-    
-    
-    
-    
-    .input-red  {
-	font-size: 14px; color: #fffff0; background: #363636; border-radius: 5px; line-height: 22px; height: 22px; border: 1px solid #363636;
-	font-weight: bold; padding: 0 10px; cursor: pointer; width: initial;
-}
-
-.input-red  {
-	display: inline-block; vertical-align: middle; white-space: nowrap; word-break: break-all;
-}
-    
-    
-    
-</style>
 </head>
 
 <body>
- <!-- 顶部和左侧菜单导航 -->
-<s:action name="nav" namespace="/manage" executeResult="true" />
-<div class="tab_right">
-				<div class="tiaoma_hang">
-				       <div class="tiaoma_ltit">条形码	:<input class="tiaomainput"  name="customer.uuid"  title="客户编号" />
-				      <input class="tiaomareset" type="reset" value="添加" id="storessubmit"> </div>
+	<!-- 顶部和左侧菜单导航 -->
+	<s:action name="nav" namespace="/manage" executeResult="true" />
+	<div class="tab_right input-a">
+		<div class="dq_step">
+			<a href="/manager/default">首页</a>&nbsp;&gt;&nbsp;门店支付
+		</div>
+		<div class="label_main">
+			<div class="label_hang">
+				<div class="label_ltit">品名:</div>
+				<div class="label_rwbenx">
+					<s:textfield id="auto_prod_name" name="prodname" cssClass="selectAll iI iI-s" />
+					<input id="auto_prod_id" type="hidden" name="prodid" />
 				</div>
-				<div>
-				<div class="tab_warp" >
-	 	<s:form id="serachForm" name="serachForm" action="insert_sotres_order"  method="get" namespace="/qkjmanage" theme="simple">
-	 		<table id="qkj_list">
-		 		<tr id="coltr" >
-				    <th class="td1">统一编码</th>
-					<th class="td2">条形码</th>
-					<th class="td3">系列</th>
-					<th class="td4">品名</th>
-					<th class="td5">规格</th>
-					<th class="td6">单价</th>
-					<th class="td6">总价</th>
-					<th class="td7">数量</th>
-					<th class="td8">操作</th>
-			  	</tr>
-		  	</table>
-		  </div>
-		      <s:submit class="tiaomareset" type="reset" value="提交订单" id="sumbit_order"/> 
-		      </s:form>
-				</div>
-</div>
-<s:action name="ref_foot" namespace="/manager" executeResult="true" />
-<div id="dialog" title="重复条码选择" style="display:none">
-  <p>这是一个默认的对话框，用于显示信息。对话框窗口可以移动，调整尺寸，默认可通过 'x' 图标关闭。</p>
-</div>
+			</div>
+			<div class="label_hang">
+				<div class="label_ltit">条形码:</div>
+				<div class="label_rwbenx">
+					<s:textfield class="tiaomainput" name="customer.uuid" id="tiaomainput" />
+					&nbsp;<input type="reset" value="添加" id="storessubmit">
 
+				</div>
+			</div>
+		</div>
+		<!-- <div class="tiaoma_hang">
+	       <div class="tiaoma_ltit">条形码：<input class="tiaomainput"  name="customer.uuid"  title="客户编号" />				       
+		      <input class="tiaomareset" type="reset" value="添加" id="storessubmit"> 				      
+		      <s:textfield id="auto_prod_name" name="prodname" cssClass="selectAll iI iI-s" />
+	             <input id="auto_prod_id" type="hidden" name="prodid" />				    
+	      </div>
+	       <span><a class="tiaomareset" style="float: right;margin-top: 10px;" href="/qkjmanage/stores_order_update.action">修改订单</a></span>
+	</div>
+	<s:form id="serachForm" name="serachForm" action="insert_sotres_order"  method="get" namespace="/qkjmanage" theme="simple">
+		<div class="tab_warp" >
+			<table id="qkj_list">
+				<tr id="coltr" >
+			    <th class="td1">统一编码</th>
+				<th class="td2">条形码</th>
+				<th class="td3">系列</th>
+				<th class="td4">品名</th>
+				<th class="td5">规格</th>
+				<th class="td6">单价</th>
+				<th class="td6">总价</th>
+				<th class="td7">数量</th>
+				<th class="td8">操作</th>
+			 	</tr>
+			</table>
+		</div>
+	    <s:submit class="tiaomareset" type="reset" value="提交订单" id="sumbit_order"/> 
+	</s:form> -->
+		<s:form id="serachForm" name="serachForm" action="insert_sotres_order" method="get" namespace="/qkjmanage" theme="simple">
+			<div class="tab_warp">
+				<div class="tab_txm">
+					<table id="qkj_list">
+						<tr>
+							<th class="td1">品名</th>
+							<th class="td1">单价</th>
+							<th class="td1">数量</th>
+							<th class="td1">总价</th>
+							<th class="td1">操作</th>
+						</tr>
+					</table>
+					<div style="margin: 10px 0;">
+						<s:submit type="reset" value="提交订单" id="sumbit_order" cssClass="input-blue" />
+					</div>
+				</div>
+				<div class="tab_txm2">
+					<table>
+						<tr>
+							<th class="td1">订单时间</th>
+							<th class="td1">订单总价</th>
+
+							<th class="td1">操作</th>
+						</tr>
+						<s:iterator value="storesorderlist" status="sta">
+							<tr>
+								<td class="td1">${add_time}</td>
+								<td class="td1">${total_price}</td>
+								<td class="td1 op-area"><a class="input-blue" href="/qkjmanage/stores_order_update_details.action?id=${id}">查看详情</a></td>
+							</tr>
+						</s:iterator>
+					</table>
+				</div>
+
+			</div>
+		</s:form>
+	</div>
+	<s:action name="ref_foot" namespace="/manager" executeResult="true" />
+	<script type="text/javascript" src="<c:url value="/js/func/select_products.js" />"></script>
+	<div id="dialog" title="重复条码选择" style="display: none">
+		<p>这是一个默认的对话框，用于显示信息。对话框窗口可以移动，调整尺寸，默认可通过 'x' 图标关闭。</p>
+	</div>
 </body>
-<script >
-$("#dianji").click(function(){
-	 $('#dialog').css('display', 'display');
-	   $( "#dialog" ).dialog();
-});
+<script>
+
+
+
 var num=0;
 var firstnum=true;
 var show = new Array(); 
 $("#storessubmit").click(function(){
  var code=$(".tiaomainput").val();
- $.ajax({
+if(code!=""&&code!=null){
+	 /* $.ajax({
      type:"post",
      url:"/qkjebiz/qkjmanage/add_sotres_list",
      data:{code:code},
      //async: false,
      cache: false,
      success:function(data){
-         if(data){
-        	 var list = data.list;
-        	 if(list.length>1){
-        		 $('#dialog').css('display', 'display');
-        		   $( "#dialog" ).dialog();
-        		   $( "#dialog" ).empty();
-        	    	for (var i = 0; i < list.length; i++) {
-        	    		     var repeatshow = new Array();
-        	    		     var product_id=list[i].id;
-        	    		     var procode = list[i].procode;
-        	    		     var barcode=list[i].barcode;
-        	    	         var title = list[i].title;
-        	    	         var spec = list[i].spec;
-        	    	         var dealerprice = list[i].dealerprice;
-        	    		    repeatshow.push('<p><a id="'+product_id+','+procode+','+barcode+','+title+','+spec+','+dealerprice+'"  href="javascript:void(0)" onclick="javascript:mylist(this)" value="'+dealerprice+','+spec+','+title+'">'+title+'</a></p>') ;
-        	    		    $("#dialog").append(repeatshow.join(""));
-        	    	}
-        	 }else{
-        	              fortr(list);
-        	 }
-             num++;
-         	}
-         firstnum=true;
      }
- });
-});
+ });  */
+ var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
+ var ajax=new Common_Ajax();
+ ajax.config.action_url=ajax_url_action;
+ ajax.config._success=function(data,textStatus){
+	   if(data){
+      	 if(data.length>1){
+      		 $('#dialog').css('display', 'display');
+      		   $( "#dialog" ).dialog();
+      		   $( "#dialog" ).empty();
+      	    	for (var i = 0; i < data.length; i++) {
+      	    		     var repeatshow = new Array();
+      	    		     var product_id=data[i].uuid;
+      	    		     var procode = data[i].prod_code;
+      	    		     var barcode=data[i].bar_code;
+      	    		     var bar_code_box=data[i].bar_code_box;
+      	    		    var bar_code_tibet=data[i].bar_code_tibet;
+      	    		    var bar_code_tibet_box=data[i].bar_code_tibet_box;
+      	    	         var title = data[i].title;
+      	    	         var spec = data[i].spec;
+      	    	         var brand=data[i].brand;
+      	    	         var marketprice = data[i].market_price;
+      	    	         var case_spec=data[i].case_spec;
+      	    		     repeatshow.push('<p><a id="'+product_id+','+procode+','+barcode+','+title+','+spec+','+marketprice+','+brand+','+bar_code_box+','+bar_code_tibet+','+bar_code_tibet_box+','+case_spec+'" name="'+barcode+'"  href="javascript:void(0)" onclick="javascript:mylist(this)" value="'+marketprice+','+spec+','+title+'">'+title+'</a></p>') ;
+      	    		    $("#dialog").append(repeatshow.join(""));
+      	    	}
+      	 }else if(data.length==0){
+      		alert("请输入正确的条码");
+      	 }
+      	 else{ fortr(data);
+      	 }
+       	}else{
+       		alert("请输入正确的条码")
+       	}
+       firstnum=true; 
+ };
 
+ ajax.addParameter("parameters", "code="+code);
+ ajax.addParameter("work","StoresOrder");
+ ajax.sendAjax();
+
+}else{
+	alert("请输入正确的条码")
+}
+});
 function mylist(list){
 	var msg=list.id.split(",");
-	var procode=msg[1];
+	var bar_code=msg[2];
+	var bar_code_box=msg[7];
+	var bar_code_tibet=msg[8];
+	var bar_code_tibet_box=msg[9];
+	 var barcode=null;
+	 var casenum=1;
+	 var code=$(".tiaomainput").val();
+     var case_spec=msg[10];
+     barcode = bar_code;
+          if(bar_code_box==code){
+			casenum=case_spec;
+		}else if(bar_code_tibet==code){
+		}else if(bar_code_tibet_box==code){
+		     casenum=case_spec;
+		}
 	$("#qkj_list").find("tr").each(function(){
 		$(this).find("td").each(function(){
-		if($(this).text()==procode){
-			var numplus=$(this).next().next().next().next().next().next().next().text();
-			var price=$(this).next().next().next().next().next().text();
+		if(barcode.trim()==$(this).text().trim()){
+			var numplus=$(this).next().next().next().next().next().find("input[type=text]").val();
+			var price=$(this).next().next().next().next().text();
 			var totlprice=$(this).next().next().next().next().next().next().text();
-			var totalname=$(this).next().next().next().next().next().next().find("input").attr("name");
-			totlprice=(parseFloat(totlprice)+parseFloat(price)).toFixed(2);
+			totlprice=(parseFloat(totlprice)+parseFloat(price*casenum)).toFixed(2);
 			var totalName=$(this).next().next().next().next().next().next().find("input").attr("name");
 			$(this).next().next().next().next().next().next().empty();
 			$(this).next().next().next().next().next().next().append('<input type="hidden" name="'+totalName+'"  value="'+totlprice+'"/>'+totlprice+'');
-			var ordernumName=$(this).next().next().next().next().next().next().next().find("input").attr("name");
-			var ordernumcount=(Number(numplus)*1)+1;
-			$(this).next().next().next().next().next().next().next().empty();
-			$(this).next().next().next().next().next().next().next().append('<input type="hidden" name="'+ordernumName+'"  value="'+ordernumcount+'"/>'+ordernumcount+'');
-			$( "#dialog" ).dialog('close');
+
+			var ordernumcount=(Number(numplus)*1)+parseInt(casenum);
+			$(this).next().next().next().next().next().find("input[type=text]").val(ordernumcount)
+			   $( "#dialog" ).dialog('close');
 			firstnum=false;
 		}
 		})
@@ -159,74 +204,118 @@ function mylist(list){
 if(firstnum==true){	
 	var msg=list.id.split(",");
     show.push('<tr>');
-    show.push('<td><input type="hidden" name=storesorderitem['+num+'].product_id value="'+msg[0]+'"/><input type="hidden" name=storesorderitem['+num+'].prod_code value="'+msg[1]+'"/>'+ msg[1] +'</td>') ;
-    show.push('<td><input type="hidden" name=storesorderitem['+num+'].bar_code value="'+msg[2]+'"/>'+ msg[2] +'</td>');
-    show.push('<td>天佑德</td>');
-    show.push('<td><input type="hidden" name=storesorderitem['+num+'].title  value="'+msg[3]+'"/>'+ msg[3] +'</td>');
-    show.push('<td><input type="hidden" name=storesorderitem['+num+'].spec  value="'+msg[4]+'"/>'+ msg[4] +'</td>') ;
-    show.push('<td><input type="hidden" name=storesorderitem['+num+'].product_price  value="'+msg[5]+'"/>'+ msg[5] +'</td>') ;
-    show.push('<td><input type="hidden" name=storesorderitem['+num+'].order_total_price  value="'+msg[5]+'"/>'+ msg[5] +'</td>') ;
-    show.push('<td><input type="hidden" name=storesorderitem['+num+'].order_num  value="1"/>1</td>') ;
-    show.push(' <td><a id="rmtr'+num+'" onclick="javascript:ondeltr(this)" href="javascript:void(0)" class="input-red">删除</a></td>') ;
+    show.push('<td class="td1" style="display:none"><input type="hidden" name="storesorderitem['+num+'].product_id" value="'+msg[0]+'"/><input type="hidden" name=storesorderitem['+num+'].prod_code value="'+msg[1]+'"/>'+ msg[1] +'</td>') ;
+    show.push('<td class="td1" style="display:none"> <input type="hidden" name="storesorderitem['+num+'].bar_code" value="'+msg[2]+'"/>'+ msg[2] +'</td>');
+    show.push('<td class="td1" style="display:none"><input type="hidden" name="storesorderitem['+num+'].brand"   value="'+msg[6]+'"/>'+ msg[6] +'</td>');
+    show.push('<td class="td1"><input type="hidden" name="storesorderitem['+num+'].title" value="'+msg[3]+'"/>'+ msg[3] +'</td>');
+    show.push('<td class="td1" style="display:none"><input type="hidden"  name="storesorderitem['+num+'].spec"  value="'+msg[4]+'"/>'+ msg[4] +'</td>') ;
+    show.push('<td class="td1"><input  type="hidden" id="price'+msg[0]+'" name="storesorderitem['+num+'].product_price"  value="'+msg[5]+'"/>'+ msg[5] +'</td>') ;
+    show.push('<td class="td1"><input type="button" id="jisuanadd'+msg[0]+'" value="+" /> <input type="text" style="width:40px" id="jisuannum'+msg[0]+'" name="storesorderitem['+num+'].order_num" value="'+casenum+'" /> <input type="button" id="jisuanjian'+msg[0]+'" value="-" /></td>') ;
+    show.push('<td class="td1" id="jisuanprice'+msg[0]+'"><input type="hidden" name="storesorderitem['+num+'].order_total_price"  value="'+msg[5]*casenum+'"/>'+ msg[5]*casenum +'</td>') ;
+    show.push(' <td class="td1 op-area"><a id="rmtr'+num+'" onclick="javascript:ondeltr(this)" href="javascript:void(0)" class="input-red">删除</a></td>') ;
     show.push('</tr>');
    $("#qkj_list").append(show.join(""));
    $( "#dialog" ).dialog('close');
    show=new Array();
+   var iNum=num;
+   $("#jisuanadd"+msg[0]).click(function(){
+    	  var n=$("#jisuannum"+msg[0]).val();
+    	  var jinum=parseInt(n)+1;
+    	 	 $("#jisuanprice"+msg[0]).empty();
+           	 $("#jisuanprice"+msg[0]).append('<input type="hidden" name="storesorderitem['+iNum+'].order_total_price"  value="'+$("#price"+msg[0]).val()*jinum+'"/>'+$("#price"+msg[0]).val()*jinum);
+    	 if(jinum==0){alert("cc");}
+    	  $("#jisuannum"+msg[0]).val(jinum);
+    	});
+    	$("#jisuanjian"+msg[0]).click(function(){
+    		
+    	  var n=$("#jisuannum"+msg[0]).val();
+    	  var jinum=parseInt(n)-1;
+    	  if(jinum!=0){
+    	 	 $("#jisuanprice"+msg[0]).empty();
+           	 $("#jisuanprice"+msg[0]).append('<input type="hidden" name="storesorderitem['+iNum+'].order_total_price"  value="'+$("#price"+msg[0]).val()*jinum+'"/>'+$("#price"+msg[0]).val()*jinum);
+    	  }
+           	 if(jinum==0){alert("不能为0!"); return}
+    	  $("#jisuannum"+msg[0]).val(jinum);
+    	  });
 }
 	firstnum=true;
+    num++;
 };
 function ondeltr(data){
-	
 	$("#"+data.id).parents("tr").remove();
 }
 function fortr(list){
-	
-	 var procode = list[0].procode;
+	 var code=$(".tiaomainput").val();
+	 var casenum=1;
+	 var barcode = list[0].bar_code;
+	 if(list[0].bar_code_box==code){
+		casenum=list[0].case_spec;
+	}else if(list[0].bar_code_tibet==code){
+	}else if(list[0].bar_code_tibet_box==code){
+		casenum=list[0].case_spec;
+	}
 		$("#qkj_list").find("tr").each(function(){
 			$(this).find("td").each(function(){
-			if($(this).text()==procode){
-				var numplus=$(this).next().next().next().next().next().next().next().text();
-				var price=$(this).next().next().next().next().next().text();
-				var totlprice=$(this).next().next().next().next().next().next().text();
-				var totalname=$(this).next().next().next().next().next().next().find("input").attr("name");
-				totlprice=(parseFloat(totlprice)+parseFloat(price)).toFixed(2);
-				var totalName=$(this).next().next().next().next().next().next().find("input").attr("name");
-				$(this).next().next().next().next().next().next().empty();
-				$(this).next().next().next().next().next().next().append('<input type="hidden" name="'+totalName+'"  value="'+totlprice+'"/>'+totlprice+'');
-				var ordernumName=$(this).next().next().next().next().next().next().next().find("input").attr("name");
-				var ordernumcount=(Number(numplus)*1)+1;
-				$(this).next().next().next().next().next().next().next().empty();
-				$(this).next().next().next().next().next().next().next().append('<input type="hidden" name="'+ordernumName+'"  value="'+ordernumcount+'"/>'+ordernumcount+'');
-				firstnum=false;
+				if($(this).text().trim()==barcode.trim()){
+					var numplus=$(this).next().next().next().next().next().find("input[type=text]").val();
+					var price=$(this).next().next().next().next().text();
+					var totlprice=$(this).next().next().next().next().next().next().text();
+					totlprice=(parseFloat(totlprice)+parseFloat(price*casenum)).toFixed(2);
+					var totalName=$(this).next().next().next().next().next().next().find("input").attr("name");
+					$(this).next().next().next().next().next().next().empty();
+					$(this).next().next().next().next().next().next().append('<input type="hidden" name="'+totalName+'"  value="'+totlprice+'"/>'+totlprice+'');
+					var ordernumName=$(this).next().next().next().next().next().find("input").attr("name");
+					var ordernumcount=(Number(numplus)*1)+casenum;
+					$(this).next().next().next().next().next().find("input[type=text]").val(ordernumcount)
+					firstnum=false;
 			}
 			})
 			})
-			if(firstnum==true){
-  	for (var i = 0; i < list.length; i++) {
-  		var product_id=list[i].id;
-	    var procode = list[i].procode;
-	    var barcode=list[i].barcode;
-         var title = list[i].title;
-         var spec = list[i].spec;
-         var dealerprice = list[i].dealerprice;
+	if(firstnum==true){
+  		var product_id=list[0].uuid;
+	    var procode = list[0].prod_code;
+         var title = list[0].title;
+         var spec = list[0].spec;
+         var brand = list[0].brand;
+         var marketprice = list[0].market_price;
          show.push('<tr>');
-         show.push('<input type="hidden" name=storesorderitem['+num+'].product_id value="'+product_id+'"/>')
-         show.push('<td ><input type="hidden" name=storesorderitem['+num+'].prod_code value="'+procode+'"/>'+ procode +'</td>') ;
-         show.push('<td><input type="hidden" name=storesorderitem['+num+'].bar_code value="'+barcode+'"/>'+ barcode +'</td>');
-         show.push('<td>天佑德</td>');
-         show.push('<td><input type="hidden" name=storesorderitem['+num+'].title  value="'+title+'"/>'+ title +'</td>');
-         show.push('<td><input type="hidden" name=storesorderitem['+num+'].spec  value="'+spec+'"/>'+ spec +'</td>') ;
-         show.push('<td><input type="hidden" name=storesorderitem['+num+'].product_price  value="'+dealerprice+'"/>'+ dealerprice +'</td>') ;
-         show.push('<td><input type="hidden" name=storesorderitem['+num+'].order_total_price  value="'+dealerprice+'"/>'+ dealerprice +'</td>') ;
-         show.push('<td><input type="hidden" name=storesorderitem['+num+'].order_num  value="1"/>1</td>') ;
-         show.push(' <td><a id="rmtr'+num+'" onclick="javascript:ondeltr(this)" href="javascript:void(0)" class="input-red">删除</a></td>') ;
+         show.push('<input type="hidden" name="storesorderitem['+num+'].product_id" value="'+product_id+'"/>')
+         show.push('<td class="td1" style="display:none"><input type="hidden" name="storesorderitem['+num+'].prod_code" value="'+procode+'"/>'+ procode +'</td>') ;
+         show.push('<td class="td1" style="display:none"><input type="hidden" name="storesorderitem['+num+'].bar_code" value="'+barcode+'"/>'+ barcode +'</td>');
+         show.push('<td class="td1" style="display:none" ><input type="hidden"name="storesorderitem['+num+'].brand"  value="'+brand+'"/></td>');
+         show.push('<td class="td1" ><input type="hidden" name="storesorderitem['+num+'].title"  value="'+title+'"/>'+ title +'</td>');
+         show.push('<td class="td1" style="display:none"><input type="hidden" name="storesorderitem['+num+'].spec"  value="'+spec+'"/>'+ spec +'</td>') ;
+         show.push('<td class="td1"><input type="hidden" id="price'+product_id+'" name="storesorderitem['+num+'].product_price"  value="'+marketprice+'"/>'+ marketprice +'</td>') ;
+         show.push('<td class="td1"><input type="button" id="jisuanadd'+product_id+'" value="+" /> <input type="text" style="width:40px" id="jisuannum'+product_id+'" name="storesorderitem['+num+'].order_num" value="'+casenum+'" /> <input type="button" id="jisuanjian'+product_id+'" value="-" /></td>') ;
+         show.push('<td class="td1" id="jisuanprice'+product_id+'"><input type="hidden"  name="storesorderitem['+num+'].order_total_price"  value="'+marketprice*casenum+'"/>'+ marketprice*casenum +'</td>') ;
+         show.push(' <td class="td1 op-area"><a id="rmtr'+num+'" onclick="javascript:ondeltr(this)" href="javascript:void(0)" class="input-red">删除</a></td>') ;
          show.push('</tr>');
         $("#qkj_list").append(show.join(""));
          show=new Array();
+         var iNum=num;
+         $("#jisuanadd"+product_id).click(function(){
+        	
+       	  var n=$("#jisuannum"+product_id).val();
+       	  var jinum=parseInt(n)+1;
+       	 $("#jisuanprice"+product_id).empty();
+       	 $("#jisuanprice"+product_id).append('<input type="hidden" name="storesorderitem['+iNum+'].order_total_price"  value="'+$("#price"+product_id).val()*jinum+'"/>'+$("#price"+product_id).val()*jinum);
+       	 if(jinum==0){alert("cc");}
+       	  $("#jisuannum"+product_id).val(jinum);
+       	});
+       	$("#jisuanjian"+product_id).click(function(){
+       	
+       	  var n=$("#jisuannum"+product_id).val();
+       	  var jinum=parseInt(n)-1;
+      	if(jinum!=0){
+       	  $("#jisuanprice"+product_id).empty();
+       	 $("#jisuanprice"+product_id).append('<input type="hidden" name="storesorderitem['+iNum+'].order_total_price"  value="'+$("#price"+product_id).val()*jinum+'"/>'+$("#price"+product_id).val()*jinum);
+       		}
+       		if(jinum==0){alert("不能为0!"); return}
+       	  $("#jisuannum"+product_id).val(jinum);
+       	  });
+        num++;
 }
 }
-}
-
 /* $("#sumbit_order").click(function(){
 	var data = '{"persons":[	';
 	var num=1;
@@ -248,5 +337,27 @@ $("#qkj_list").find("tr").each(function(){
          }) 
       data += ']}';
     }); */
+
+    $(function(){
+    	SimpleLoadProducts(function(){},"noparam=true");
+     });
+
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </html>

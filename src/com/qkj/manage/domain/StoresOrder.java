@@ -4,10 +4,19 @@ import java.util.Date;
 public class StoresOrder {
 private int id;  //主键
 private String user_id;//用户id
-private String user_name;//用户id
+private String user_name;//用户名称
 private Double total_price;//订单总价
-private int fd_check;//订单状态
+private int fd_check=0;//订单状态
 private String add_time;//添加时间
+private Date lmtime;//修改时间
+public Date getLmtime() {
+	return lmtime;
+}
+
+public void setLmtime(Date lmtime) {
+	this.lmtime = lmtime;
+}
+
 private String lm_user;//修改用户
 public String getAdd_time() {
 	return add_time;

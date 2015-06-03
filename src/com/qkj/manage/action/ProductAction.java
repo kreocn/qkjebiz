@@ -110,7 +110,7 @@ public class ProductAction extends ActionSupport {
 		try {
 			map.clear();
 			if (product != null)
-				map.putAll(ToolsUtil.getMapByBean(product));
+			map.putAll(ToolsUtil.getMapByBean(product));
 			map.putAll(ContextHelper.getDefaultRequestMap4Page());
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 			this.setProducts(dao.list(map));

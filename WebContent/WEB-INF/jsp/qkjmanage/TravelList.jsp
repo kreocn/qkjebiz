@@ -16,7 +16,7 @@
  	<div class="tab_warp main" >
 	<div class="dq_step">
 		${path}
-		<c:if test="${it:checkPermit('QKJ_QKJMANAGE_PRODUCT_ADD',null)==true}">
+		<c:if test="${it:checkPermit('QKJ_QKJMANAGE_TRAVEL_ADD',null)==true}">
 			<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="travel_load"><s:param name="viewFlag">add</s:param></s:url>" >添加工业旅游申请</a></span>
 		</c:if>
 	</div>

@@ -29,6 +29,14 @@ public class Product {
 	private String lm_user;// (varchar)
 	private Date lm_time;// (timestamp)
 	private String brand_name;
+   private Double update_price;
+	public Double getUpdate_price() {
+	return update_price;
+}
+
+public void setUpdate_price(Double update_price) {
+	this.update_price = update_price;
+}
 
 	public String getBar_code_box() {
 		return bar_code_box;

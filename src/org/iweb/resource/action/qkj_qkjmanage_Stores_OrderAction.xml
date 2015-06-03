@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="qkjmanage_stores_order" extends="default" namespace="/qkjmanage">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- Customer Start -->
+		<action name="stores_order_list" class="com.qkj.manage.action.StoresOrderAction" method="list">
+				<result>/WEB-INF/jsp/qkjmanage/StoresOrderList.jsp</result>
+		</action>
+		<!-- Customer End -->
+	</package>
+</struts>

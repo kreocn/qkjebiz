@@ -4,34 +4,87 @@
 	<!-- Product Start -->
 	<typeAlias alias="StoresOrder" type="com.qkj.manage.domain.StoresOrder" />
 	<typeAlias alias="product" type="com.qkj.manage.domain.Product" />
-		<select id="qkjStores_getProducts" resultClass="product" parameterClass="java.util.Map">
+	<typeAlias alias="StoresOrderItem" type="com.qkj.manage.domain.StoresOrderItem" />
+	<select id="qkjStores_getProducts" resultClass="product" parameterClass="java.util.Map">
 		<![CDATA[ 
 			select * from qkj_t_product p
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="code"><![CDATA[ p.bar_code=#code# ]]></isNotEmpty>
+				<isNotEmpty prepend="OR" property="code"><![CDATA[ p.bar_code_tibet_box=#code# ]]></isNotEmpty>
+					<isNotEmpty prepend="OR" property="code"><![CDATA[ p.bar_code_tibet=#code# ]]></isNotEmpty>
+						<isNotEmpty prepend="OR" property="code"><![CDATA[ p.bar_code_box=#code# ]]></isNotEmpty>
+			              <isNotEmpty prepend="AND" property="userid"><![CDATA[ p.user_id=#userid# ]]></isNotEmpty>
+			             <isNotEmpty prepend="AND" property="title"><![CDATA[ p.title Like '%' + #title# +  '%']]></isNotEmpty>
 		</dynamic>
 	</select>
 
-		 <insert  id ="qkjStores_addProducts"  parameterClass ="java.util.List" >  
+   	<select id="qkjStores_getProductsSelect" resultClass="product" parameterClass="java.util.Map">
+		<![CDATA[ 
+			select top 15 * from qkj_t_product p
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="code"><![CDATA[ p.bar_code=#code# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="user_id"><![CDATA[ p.user_id=#userid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="title"><![CDATA[ p.title Like '%' + #title# +  '%']]></isNotEmpty>
+		</dynamic>
+	</select>
+
+	<insert id="qkjStores_addProducts" parameterClass="java.util.List">  
     <![CDATA[
-        insert into qkj_t_order_item(bar_code,order_id,prod_code,product_price,spec,title,order_total_price,order_num,product_id) values  
+        insert into qkj_t_order_item(bar_code,order_id,prod_code,product_price,spec,title,order_total_price,order_num,product_id,brand) values  
     ]]>
-   <iterate conjunction=",">
-        <![CDATA[(#parameters[].bar_code#,#parameters[].order_id#,#parameters[].prod_code#,#parameters[].product_price#,#parameters[].spec#,#parameters[].title#,#parameters[].order_total_price#,#parameters[].order_num#,#parameters[].product_id#)  
+		<iterate conjunction=",">
+        <![CDATA[(#parameters[].bar_code#,#parameters[].order_id#,#parameters[].prod_code#,#parameters[].product_price#,#parameters[].spec#,#parameters[].title#,#parameters[].order_total_price#,#parameters[].order_num#,#parameters[].product_id#,#parameters[].brand#)  
         ]]>
-    </iterate>
-</insert >
+		</iterate>
+	</insert>
 
 
-	 <insert  id ="qkjStores_addOrder"  parameterClass ="StoresOrder" >  
+	<insert id="qkjStores_addOrder" parameterClass="StoresOrder">  
     <![CDATA[
         insert into qkj_t_order(user_id,user_name,total_price,add_time) values 
         (#user_id#,#user_name#,#total_price#,#add_time#)  
     ]]>
-     <selectKey resultClass="int" type="post" keyProperty="id" >     
-        select @@IDENTITY as value     
-    </selectKey>
-</insert >
+		<selectKey resultClass="int" type="post" keyProperty="id">
+			select @@IDENTITY as value
+		</selectKey>
+	</insert>
+	<select id="qkjStores_Order_update_list" parameterClass="java.util.Map" resultClass="StoresOrder">
+		select * from qkj_t_order o
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="user_id"><![CDATA[ o.user_id=#userid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="id"><![CDATA[ o.id=#id# ]]></isNotEmpty>
+		</dynamic>
+	</select>
+
+	<select id="qkjStores_Order_update_listCount" parameterClass="java.util.Map" resultClass="StoresOrder">
+		select count(*) from qkj_t_order where user_id=#userid#
+	</select>
+	<select id="qkjStores_Order_update_item_list" parameterClass="java.util.Map" resultClass="StoresOrderItem">
+		select i.*,p.name AS brand_name from qkj_t_order_item i LEFT JOIN qkj_t_protype p ON (i.brand=p.id) where order_id=#id#
+	</select>
 	<!-- Product End -->
+	<delete id="qkjStores_OrderItemDelete" parameterClass="java.util.Map">
+		DELETE FROM qkj_t_order_item
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="id"><![CDATA[ id=#id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="orderid"><![CDATA[ order_id=#orderid# ]]></isNotEmpty>
+		</dynamic>
+	</delete>
+	<update id="qkjStores_orderPrice" parameterClass="java.util.Map">
+		update qkj_t_order set total_price=#price# where id=#id#
+	</update>
+	<update id="qkjStores_update_OrderItem" parameterClass="java.util.Map">
+		update qkj_t_order_item set order_num=#num#,order_total_price=#price# WHERE id = #id#
+	</update>
+	<delete id="qkjStores_delete_OrderAndItem" parameterClass="java.util.Map">
+		DELETE FROM qkj_t_order
+		WHERE id = #orderid#
+	</delete>
+	
+		<select id="qkjStores_getOrderWeek" parameterClass="java.util.Map" resultClass="StoresOrder">
+		
+		select * from dbo.qkj_t_order WHERE datediff(day,[add_time],getdate())=0 and user_id=#userid#
+	</select>
 </sqlMap>

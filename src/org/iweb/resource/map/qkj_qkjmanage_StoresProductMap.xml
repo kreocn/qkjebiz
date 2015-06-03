@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "sql-map-2.dtd">
+<sqlMap>
+	<typeAlias alias="storesOrderCustom" type="com.qkj.manage.domain.StoresOrderCustom" />
+    <typeAlias alias="product" type="com.qkj.manage.domain.Product" />
+	<select id="qkjmanage_getProducts" resultClass="product" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT p.*,t.name brand_name FROM qkj_t_product p LEFT JOIN qkj_t_protype t ON (p.brand=t.id)
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="id"><![CDATA[ p.id=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="brand"><![CDATA[ p.brand=#brand# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="title"><![CDATA[ p.title=#title# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="grade"><![CDATA[ p.grade=#grade# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="status"><![CDATA[ p.status=#status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="notype"><![CDATA[ t.type<>1 ]]></isNotEmpty>
+		</dynamic>
+		
+	</select>
+	<select id="qkjmanage_getProductsCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) From qkj_t_product
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="id"><![CDATA[ id=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="brand"><![CDATA[ brand=#brand# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="title"><![CDATA[ title=#title# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="grade"><![CDATA[ grade=#grade# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="status"><![CDATA[ status=#status# ]]></isNotEmpty>
+		</dynamic>
+	</select>
+		 <select  id ="qkjStores_getStoresOrder"  resultClass="storesOrderCustom" parameterClass ="java.util.Map" >  
+    <![CDATA[
+    select * from qkj_t_order_custom q where login_dept=#logindept#
+    	]]>
+    	
+    <isNotEmpty prepend="AND" property="productid"><![CDATA[ q.product_id=#productid# ]]></isNotEmpty>
+  <isNotEmpty prepend="AND" property="barcode"><![CDATA[ q.bar_code=#barcode# ]]></isNotEmpty>
+</select >
+<insert  id ="qkjStores_addStoresOrder"  parameterClass ="java.util.Map" >
+insert into qkj_t_order_custom(product_id,login_dept,price,bar_code) values (#productid#,#logindept#,#price#,#barcode#)
+</insert>
+
+<update  id ="qkjStores_SaveStoresOrder"  parameterClass ="java.util.Map" >
+UPDATE qkj_t_order_custom SET price = #price# WHERE product_id =#productid# and login_dept=#logindept#
+</update>
+</sqlMap>

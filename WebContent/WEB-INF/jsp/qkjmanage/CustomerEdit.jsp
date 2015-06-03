@@ -24,6 +24,9 @@
 	<div class="tab_warp main">
 	<div class="dq_step">
 		${path}
+		
+	
+		
 		<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="customer_list"><s:param name="viewFlag">relist</s:param></s:url>">客户列表</a></span>
 	</div>
 	<s:form id="formEdit" name="form1" cssClass="validForm" action="customer_add" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
@@ -379,6 +382,11 @@
 	    </tr>
 	</table>	
 </s:form>
+
+
+
+
+
 </div>
 <s:action name="ref_foot" namespace="/manager" executeResult="true" />
 <script type="text/javascript">
@@ -516,6 +524,7 @@ var showRecode = function(r_id) {
 	
 	$("#AddRecode").dialog("open");
 };
+
 </script>
 </body>
 </html>

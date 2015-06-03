@@ -26,9 +26,10 @@ public class MemberDAO extends AbstractDAO {
 
 	public void add(Object parameters) {
 		Member member = (Member) parameters;
-		super.add("sysvip_addMember", member);
+	super.add("sysvip_addMember", member);
 		MemberCapitalDAO mdao = new MemberCapitalDAO();
 		mdao.addCapital(member.getUuid());
+
 	}
 
 	public int save(Object parameters) {

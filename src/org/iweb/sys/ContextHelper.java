@@ -402,7 +402,7 @@ public class ContextHelper {
 			flag = ulf.getUser_prvg_map().containsKey(p_id);
 		} else {
 			String value = ulf.getUser_prvg_map().get(p_id);
-			if (value.contains("#")) {// 权限中存在个人权限
+			if (value!=null && value.contains("#")) {// 权限中存在个人权限
 				String code = value.substring(value.indexOf("#") + 1, value.length());
 				if (code != null && dept_code.equals(code)) {
 					flag = true;
