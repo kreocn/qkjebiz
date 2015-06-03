@@ -28,6 +28,12 @@ public class CommonDAO extends AbstractDAO {
 		return super.list("find_activenum", map);
 	}
 	
+	public List selectEfMapList(String sqltext) {
+		Map map = new HashMap();
+		map.put("sqltext", sqltext);
+		return super.list("find_selectEfM", map);
+	}
+	
 
 	/**
 	 * 结果集只有一行的情况下适用
