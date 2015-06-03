@@ -214,5 +214,6 @@
  		</div>
  	</div>
 </div>
+<s:action name="ref_foot" namespace="/manager" executeResult="true" />
 </body>
 </html>

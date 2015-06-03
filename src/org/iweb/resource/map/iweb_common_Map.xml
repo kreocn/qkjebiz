@@ -5,6 +5,7 @@
 	<typeAlias alias="uploadClass" type="org.iweb.fileupload.domain.UploadClass" />
 	<typeAlias alias="ativeTime" type="org.iweb.rpt.domain.ActiveTime" />
 	<typeAlias alias="ativeNum" type="org.iweb.rpt.domain.ActiveNum" />
+	<typeAlias alias="selectMonth" type="org.iweb.rpt.domain.SelectEfMonth" />
 	<select id="upload_getClass" resultClass="uploadClass" parameterClass="java.util.Map">
 		<![CDATA[ 
 			Select * From t_upload_class
@@ -342,4 +343,12 @@
 			<isNotNull prepend="AND" property="merger"><![CDATA[ merger=#merger# ]]></isNotNull>
 		</dynamic>
 	</select>
+	
+	<select id="find_selectEfM" resultClass="selectMonth" parameterClass="java.util.Map">
+		<![CDATA[ 
+			$sqltext$
+		]]>
+	</select>
+	
+	
 </sqlMap>
