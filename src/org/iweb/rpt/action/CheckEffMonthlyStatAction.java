@@ -187,9 +187,9 @@ public class CheckEffMonthlyStatAction extends ActionSupport {
 				sql.append(" AND EXISTS (SELECT 1 FROM qkjm_r_apply a WHERE a.`uuid` = p.`biz_id` AND a.`status` >=30)");
 			}else if(sem.getCheckState()==1){//通过
 				sql.append(" AND p.`biz_sign` = 'ACTIVE_CLOSE_PASS'");
-				sql.append(" AND EXISTS (SELECT 1 FROM qkjm_r_active a WHERE a.`uuid` = p.`biz_id` AND a.`status` >=5)");
+				sql.append(" AND EXISTS (SELECT 1 FROM qkjm_r_apply a WHERE a.`uuid` = p.`biz_id` AND a.`status` >=5)");
 			}
-			sql.append(" ) a,qkjm_r_active t WHERE a.biz_id = t.`uuid` ");
+			sql.append(" ) a,qkjm_r_apply t WHERE a.biz_id = t.`uuid` ");
 			if(sem.getDept_code()!=null && !sem.getDept_code().equals("")){
 				sql.append(" AND t.`apply_dept` LIKE '").append(sem.getDept_code()).append("%'");
 			}
