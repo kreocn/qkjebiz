@@ -13,28 +13,17 @@
 	
 		<select id="qkjmanage_getApplyPosms" resultClass="applyPosm" parameterClass="java.util.Map">
 		<![CDATA[ 
-			Select * From qkjm_r_apply_posm
+			Select * From qkjm_r_apply_posm where apply_id=#apply_id#
 		]]>
-		<dynamic prepend="WHERE">
-			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="apply_id"><![CDATA[ apply_id=#apply_id# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="title"><![CDATA[ title=#title# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="status"><![CDATA[ status=#status# ]]></isNotEmpty>
-		</dynamic>
+	
 	</select>
 	
 	
 	
 	<select id="qkjmanage_getApplyPosmsCounts" resultClass="int" parameterClass="java.util.Map">
 		<![CDATA[ 
-			Select Count(*) From qkjm_r_apply_posm
+			Select Count(*) From qkjm_r_apply_posm where apply_id=#apply_id#
 		]]>
-		<dynamic prepend="WHERE">
-			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="apply_id"><![CDATA[ apply_id=#apply_id# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="title"><![CDATA[ title=#title# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="status"><![CDATA[ status=#status# ]]></isNotEmpty>
-		</dynamic>
 	</select>
 		<delete id="qkjmanage_delApplyPosm" parameterClass="applyPosm">
 	<![CDATA[
