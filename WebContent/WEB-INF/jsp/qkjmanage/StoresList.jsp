@@ -73,7 +73,7 @@
 						</tr>
 					</table>
 					<div style="margin: 10px 0;">
-						<s:submit type="reset" value="提交订单" id="sumbit_order" cssClass="input-blue" />
+						<s:submit type="reset" value="提交订单" onclick="return nonull();" id="sumbit_order" cssClass="input-blue" />
 					</div>
 				</div>
 				<div class="tab_txm2">
@@ -112,7 +112,8 @@ var firstnum=true;
 var show = new Array(); 
 $("#storessubmit").click(function(){
  var code=$(".tiaomainput").val();
-if(code!=""&&code!=null){
+ var puuid=$("#auto_prod_id").val();
+if(code!=""&&code!=null||puuid!=null&&puuid!=""){
 	 /* $.ajax({
      type:"post",
      url:"/qkjebiz/qkjmanage/add_sotres_list",
@@ -158,7 +159,7 @@ if(code!=""&&code!=null){
        firstnum=true; 
  };
 
- ajax.addParameter("parameters", "code="+code);
+ ajax.addParameter("parameters", "code="+code+"&puuid="+puuid);
  ajax.addParameter("work","StoresOrder");
  ajax.sendAjax();
 
@@ -341,6 +342,19 @@ $("#qkj_list").find("tr").each(function(){
     $(function(){
     	SimpleLoadProducts(function(){},"noparam=true");
      });
+function nonull(){
+	var flgnull=0;
+	$("#qkj_list").find("tr").each(function(){
+		flgnull++;
+	})
+
+	if(flgnull>1){
+		return true;
+	}else{
+		alert("请添加商品后在提交！")
+	   return false;
+	}
+}
 
 </script>
 

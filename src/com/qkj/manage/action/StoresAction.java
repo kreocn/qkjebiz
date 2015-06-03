@@ -44,7 +44,7 @@ public class StoresAction  extends ActionSupport{
 	private int recCount;
 	private int pageSize;
 	private int num;
-  
+
 	private List<StoresOrder> storesorderlist;
 	private Map<String, Object> map = new HashMap<String, Object>();
 	private static Log log = LogFactory.getLog(StoresAction.class);
@@ -53,6 +53,7 @@ public class StoresAction  extends ActionSupport{
 	private String storesid;
 	private Double price;
 	private Double totalPirce;
+
 	public Double getTotalPirce() {
 		return totalPirce;
 	}
@@ -168,7 +169,7 @@ public class StoresAction  extends ActionSupport{
 	}
 	//门店支付 >添加订单 >首页
 	public String list() throws Exception {
-		
+
 		ContextHelper.isPermit("QKJ_QKJMANAGE_STORES");
 		UserLoginInfo ulf = new UserLoginInfo();
 		ActionContext context = ActionContext.getContext();  
@@ -213,37 +214,40 @@ public class StoresAction  extends ActionSupport{
 	public String insertOrder(){
 		ContextHelper.isPermit("QKJ_QKJMANAGE_STORES");
 		List<StoresOrderItem> sotr=storesorderitem;
-		Collection nuCon = new Vector();
-		nuCon.add(null);
-		sotr.removeAll(nuCon);
-		Double price=0.00;
-		StoresOrder sto=new StoresOrder();
-		UserLoginInfo ulf = new UserLoginInfo();
-		ActionContext context = ActionContext.getContext();  
-		HttpServletRequest request = (HttpServletRequest) context.get(ServletActionContext.HTTP_REQUEST);  
-		HttpServletResponse response = (HttpServletResponse) context.get(ServletActionContext.HTTP_RESPONSE);  
-		ulf=(UserLoginInfo) request.getSession().getAttribute(Parameters.UserLoginInfo_Session_Str);
+		if(sotr.size()>0){
+			Collection nuCon = new Vector();
+			nuCon.add(null);
+			sotr.removeAll(nuCon);
+			Double price=0.00;
+			StoresOrder sto=new StoresOrder();
+			UserLoginInfo ulf = new UserLoginInfo();
+			ActionContext context = ActionContext.getContext();  
+			HttpServletRequest request = (HttpServletRequest) context.get(ServletActionContext.HTTP_REQUEST);  
+			HttpServletResponse response = (HttpServletResponse) context.get(ServletActionContext.HTTP_RESPONSE);  
+			ulf=(UserLoginInfo) request.getSession().getAttribute(Parameters.UserLoginInfo_Session_Str);
 
-		for (StoresOrderItem storesorderitem : sotr) {
-			price=price+(storesorderitem.getProduct_price()*storesorderitem.getOrder_num());
+			for (StoresOrderItem storesorderitem : sotr) {
+				price=price+(storesorderitem.getProduct_price()*storesorderitem.getOrder_num());
+			}
+			DecimalFormat df =new DecimalFormat("#####0.00");
+			SimpleDateFormat   formatter=new SimpleDateFormat   ("yyyy-MM-dd   HH:mm:ss");  
+			Date   curDate   =   new   Date(System.currentTimeMillis());//获取当前时间       
+			String   date   =   formatter.format(curDate);  
+			price=price.valueOf(df.format(price));
+			sto.setTotal_price(price);
+			sto.setAdd_time(date);
+			sto.setUser_id(ulf.getUuid());
+			sto.setUser_name(ulf.getUser_name());
+			sto.setLogin_dept(ContextHelper.getUserLoginDept());
+			int id=(int) dao.addO(sto);
+			for (StoresOrderItem storesorderitem : sotr) {
+				storesorderitem.setOrder_total_price((double)storesorderitem.getOrder_total_price());
+				storesorderitem.setOrder_id(id+"");
+				String title=storesorderitem.getTitle();
+				storesorderitem.setTitle(title);
+			}
+			dao.add(storesorderitem);
 		}
-		DecimalFormat df =new DecimalFormat("#####0.00");
-		SimpleDateFormat   formatter=new SimpleDateFormat   ("yyyy-MM-dd   HH:mm:ss");  
-		Date   curDate   =   new   Date(System.currentTimeMillis());//获取当前时间       
-		String   date   =   formatter.format(curDate);  
-		price=price.valueOf(df.format(price));
-		sto.setTotal_price(price);
-		sto.setAdd_time(date);
-		sto.setUser_id(ulf.getUuid());
-		sto.setUser_name(ulf.getUser_name());
-		int id=(int) dao.addO(sto);
-		for (StoresOrderItem storesorderitem : sotr) {
-			storesorderitem.setOrder_total_price((double)storesorderitem.getOrder_total_price());
-			storesorderitem.setOrder_id(id+"");
-			String title=storesorderitem.getTitle();
-			storesorderitem.setTitle(title);
-		}
-		dao.add(storesorderitem);
 		return SUCCESS;
 	}
 	public double sum(double d1,double d2){
@@ -277,54 +281,136 @@ public class StoresAction  extends ActionSupport{
 			sotresorder=storesorderlist.get(i);
 		}
 		this.setStoresorderitem(dao.listOrderItem(map));
-	
+
 		return SUCCESS;
 	}
-//门店支付>查看订单>订单详情>删除
+	//门店支付>查看订单>订单详情>删除
 	public String itemDelete() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_STORES_FIND_ORDER_DEL");
 		if(num==0){
-	    map.clear();
-		map.put("id",this.getId());
-		dao.delete(map);
-		map.clear();
-		map.put("id", this.getStoresid());
-		this.setStoresorderlist(dao.listOrder(map));
-		price=storesorderlist.get(0).getTotal_price()-this.getTotalPirce();
-		map.put("id", this.getStoresid());
-		map.put("price", this.getPrice());
-		dao.saveOrderItemPrice(map);
-		sotresorder=storesorderlist.get(0);
-		storesorderlist.get(0).setTotal_price(this.getPrice());
-		this.setStoresorderitem(dao.listOrderItem(map));
-		}
-		else if(num!=0){
-		    map.clear();
+			map.clear();
 			map.put("id",this.getId());
-			map.put("num",this.getNum());
-			map.put("price", this.getTotalPirce()-(((this.getTotalPirce()/this.getPrice())-this.getNum())
-					*this.getPrice()));
-			dao.saveOrderItem(map);
+			dao.delete(map);
 			map.clear();
 			map.put("id", this.getStoresid());
 			this.setStoresorderlist(dao.listOrder(map));
-			Double num=(((this.getTotalPirce()/this.getPrice())-this.getNum()));
-			price=storesorderlist.get(0).getTotal_price()-(num*this.getPrice());
+			price=storesorderlist.get(0).getTotal_price()-this.getTotalPirce();
 			map.put("id", this.getStoresid());
 			map.put("price", this.getPrice());
 			dao.saveOrderItemPrice(map);
 			sotresorder=storesorderlist.get(0);
 			storesorderlist.get(0).setTotal_price(this.getPrice());
 			this.setStoresorderitem(dao.listOrderItem(map));
+		}
+		else if(num!=0){
+			map.clear();
+			map.put("id",this.getId());
+			map.put("num",this.getNum());
+
+
+			if(this.getTotalPirce()!=0.0){
+				map.put("price",mul(this.getTotalPirce(),mul(div(this.getTotalPirce(), this.getPrice()),this.getNum())));
+			}else{	
+				map.put("price",0.0);
 			}
+			dao.saveOrderItem(map);
+			map.clear();
+			map.put("id", this.getStoresid());
+			this.setStoresorderlist(dao.listOrder(map));
+			if(this.getTotalPirce()!=0.0){
+			num=(int) mul(div(this.getTotalPirce(),this.getPrice()),this.getNum());
+			}
+			if(this.getTotalPirce()==0.0){
+				num=0;
+			}
+			this.price=storesorderlist.get(0).getTotal_price()-(num*this.getPrice());
+			map.put("id", this.getStoresid());
+			map.put("price", this.getPrice());
+			dao.saveOrderItemPrice(map);
+			sotresorder=storesorderlist.get(0);
+			storesorderlist.get(0).setTotal_price(this.getPrice());
+			this.setStoresorderitem(dao.listOrderItem(map));
+		}
 		return SUCCESS;
 	}
 	//门店支付>查看订单>删除
 	public String delete() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_STORES_FIND_ORDER_DEL");
-	    map.clear();
+		map.clear();
 		map.put("orderid",this.getId());
 		dao.deleteItemandorder(map);
 		return SUCCESS;
-		}
-}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	/** 
+	 * * 两个Double数相加 * 
+	 *  
+	 * @param v1 * 
+	 * @param v2 * 
+	 * @return Double 
+	 */  
+	public static Object add(Object v1, Object v2) {  
+		BigDecimal b1 = new BigDecimal(v1.toString());  
+		BigDecimal b2 = new BigDecimal(v2.toString());  
+		return new Double(b1.add(b2).doubleValue());  
+	}  
+
+	/** 
+	 * * 两个Double数相减 * 
+	 *  
+	 * @param v1 * 
+	 * @param v2 * 
+	 * @return Double 
+	 */  
+	public static Object sub(Object v1, Object v2) {  
+		BigDecimal b1 = new BigDecimal(v1.toString());  
+		BigDecimal b2 = new BigDecimal(v2.toString());  
+		return new Double(b1.subtract(b2).doubleValue());  
+	}  
+
+	/** 
+	 * * 两个Double数相乘 * 
+	 *  
+	 * @param v1 * 
+	 * @param v2 * 
+	 * @return Double 
+	 */  
+	public static Object mul(Object v1, Object v2) {  
+		BigDecimal b1 = new BigDecimal(v1.toString());  
+		BigDecimal b2 = new BigDecimal(v2.toString());  
+		return new Double(b1.multiply(b2).doubleValue());  
+	}  
+
+	/** 
+	 * * 两个Double数相除 * 
+	 *  
+	 * @param v1 * 
+	 * @param v2 * 
+	 * @return Double 
+	 */  
+	public static Object div(Object v1, Object v2) {  
+		int DEF_DIV_SCALE = 2;  
+		BigDecimal b1 = new BigDecimal(v1.toString());  
+		BigDecimal b2 = new BigDecimal(v2.toString());  
+		return new Double(b2.divide(b1,DEF_DIV_SCALE, BigDecimal.ROUND_HALF_UP)  
+				.doubleValue());  
+	}  
+
+}  

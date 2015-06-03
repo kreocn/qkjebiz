@@ -10,12 +10,10 @@
 			select * from qkj_t_product p
 		]]>
 		<dynamic prepend="WHERE">
-			<isNotEmpty prepend="AND" property="code"><![CDATA[ p.bar_code=#code# ]]></isNotEmpty>
-				<isNotEmpty prepend="OR" property="code"><![CDATA[ p.bar_code_tibet_box=#code# ]]></isNotEmpty>
-					<isNotEmpty prepend="OR" property="code"><![CDATA[ p.bar_code_tibet=#code# ]]></isNotEmpty>
-						<isNotEmpty prepend="OR" property="code"><![CDATA[ p.bar_code_box=#code# ]]></isNotEmpty>
-			              <isNotEmpty prepend="AND" property="userid"><![CDATA[ p.user_id=#userid# ]]></isNotEmpty>
+				<isNotEmpty prepend="AND" property="code" open="(" close=")"><![CDATA[ p.bar_code=#code# OR p.bar_code_tibet_box=#code# or p.bar_code_tibet=#code# or p.bar_code_box=#code# ]]></isNotEmpty>
+			             <isNotEmpty prepend="AND" property="userid"><![CDATA[ p.user_id=#userid# ]]></isNotEmpty>
 			             <isNotEmpty prepend="AND" property="title"><![CDATA[ p.title Like '%' + #title# +  '%']]></isNotEmpty>
+			             <isNotEmpty prepend="AND" property="puuid"><![CDATA[ p.uuid=#puuid# ]]></isNotEmpty>
 		</dynamic>
 	</select>
 
@@ -43,8 +41,8 @@
 
 	<insert id="qkjStores_addOrder" parameterClass="StoresOrder">  
     <![CDATA[
-        insert into qkj_t_order(user_id,user_name,total_price,add_time) values 
-        (#user_id#,#user_name#,#total_price#,#add_time#)  
+        insert into qkj_t_order(user_id,user_name,total_price,add_time,login_dept) values 
+        (#user_id#,#user_name#,#total_price#,#add_time#,#login_dept#)  
     ]]>
 		<selectKey resultClass="int" type="post" keyProperty="id">
 			select @@IDENTITY as value
@@ -87,4 +85,9 @@
 		
 		select * from dbo.qkj_t_order WHERE datediff(day,[add_time],getdate())=0 and user_id=#userid#
 	</select>
+	
+		<delete id="qkjStores_deleteStoresOrderPrice" parameterClass="java.util.Map">
+		DELETE FROM qkj_t_order_custom
+		WHERE product_id = #productid# and login_dept=#logindept#
+	</delete>
 </sqlMap>

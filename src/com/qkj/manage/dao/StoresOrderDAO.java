@@ -20,6 +20,9 @@ public class StoresOrderDAO extends AbstractDAO{
 		super.setDb_num(1);
 		return super.save("qkjStores_SaveStoresOrder", parameters);
 	}
+	public void del(Object parameters){
+		super.delete("qkjStores_deleteStoresOrderPrice", parameters);
+	}
 	public int getResultCount() {
 	
 		return super.getResultCount();

@@ -9,6 +9,15 @@ private Double total_price;//订单总价
 private int fd_check=0;//订单状态
 private String add_time;//添加时间
 private Date lmtime;//修改时间
+private String login_dept;
+public String getLogin_dept() {
+	return login_dept;
+}
+
+public void setLogin_dept(String login_dept) {
+	this.login_dept = login_dept;
+}
+
 public Date getLmtime() {
 	return lmtime;
 }

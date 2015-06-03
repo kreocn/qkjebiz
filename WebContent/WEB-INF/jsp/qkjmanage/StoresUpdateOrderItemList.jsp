@@ -63,24 +63,24 @@
 					<legend>商品清单</legend>
 				<table id="orderTable">
 					<tr id="coltr">
-						<th class="td1">商品编号</th>
-						<th class="td3">商品名称</th>
-						<th class="td3">商品类型</th>
+							
+						<th class="td1">商品名称</th>
+					<th class="td2">规格</th>
 						<th class="td3">单价</th>
-						<th class="td3">数量</th>
-						<th class="td1">总价</th>
-						<th class="td2">条形码</th>
-						<th class="td4">规格</th>
+						<th class="td4">数量</th>
+						<th class="td5">总价</th>
+					
+						
 						 <c:if test="${it:checkPermit('QKJ_QKJMANAGE_STORES_FIND_ORDER_DEL',null)==true}"> 
 						
-						<th class="td4">操作</th>
+						<th class="td6">操作</th>
 						</c:if>
 					</tr>
 					<s:iterator value="storesorderitem" status="sta">
 						<tr id="tr${id}">
-						    <td class="td1" >${id}</td>
-							<td class="td2" >${title}</td>
-							<td class="td3">${brand_name}</td>
+						 
+							<td class="td1" >${title}</td>
+							<td class="td2">${spec}</td>
 							<td class="td3">${product_price}</td>
 							<td class="td4"  >		<c:if test=""> </c:if>
 							<c:choose>  
@@ -89,10 +89,10 @@
                            </c:choose> 
 							</td>
 							<td class="td5">${order_total_price}</td>
-							<td class="td6">${bar_code}</td>
-							<td class="td7">${spec}</td>
+						
+							
 							<c:if test="${it:checkPermit('QKJ_QKJMANAGE_STORES_FIND_ORDER_DEL',null)==true}"> 
-							<td class="td4 op-area"><a  class="input-blue"   onclick="del(${id},${sotresorder.id},${order_total_price},${product_price})">保存</a></td>
+							<td class="td6 op-area"><a  class="input-blue"   onclick="del(${id},${sotresorder.id},${order_total_price},${product_price})">修改</a></td>
 							</c:if>
 							<%-- href="/qkjmanage/stores_order_item_delete.action?id=${id}&storesid=${sotresorder.id}&price=${product_price}"
 						 --%>
