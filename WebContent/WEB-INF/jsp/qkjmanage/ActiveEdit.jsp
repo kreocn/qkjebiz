@@ -364,7 +364,6 @@
 												<s:param name="totalName">activeProduct.total_price</s:param>
 											</s:url>
 										<input type="button" id="product" onclick="window.location.href='${ladingAddProductsUrl}';" value="添加酒品" />
-										<!--<input type="button" id="product" onclick="noedit();" value="添加酒品" />-->
 									</c:if>
 									<c:if test="${active.status==0 && it:checkPermit('QKJ_QKJMANAGE_ACTIVEPOSM_ADD',null)==true}">
 										<input type="button" id="addPosm" value="添加物料" />
@@ -1255,28 +1254,6 @@ var openCustomerView = function(customer_uuid) {
 	sobj02.open();
 };
 </script>
-<script type="text/javascript">
-						var edit = false;
-						$(function(){
-							$("#editForm :input").change(function(){
-								edit = true;
-							});
-						});
-						
-						function noedit(){
-							//.var
-							if(edit==false){
-								location.href="/qkjmanage/active_addProduct?active.uuid="+${active.uuid};
-							}else{
-								if(confirm("您有未保存的信息,确认添加吗?确认后将丢失一部分信息。")){
-									location.href="/qkjmanage/active_addProduct?active.uuid="+${active.uuid};
-									}else{
-									 return false;
-									}
-							}
-							
-						}
-						</script>
 	</div>
 	<!-- HIDDEN AREA END -->
 </body>

@@ -33,7 +33,7 @@
 	       <div class="label_hang">
 		         <div class="label_ltit">类型:</div>
 		        <div class="label_rwben2">
-		         <div class="label_rwb"><s:select name="proType.type" title="类型" list="#{0:'产品',1:'促销物料'}" cssClass="validate[required]" /></div>
+		         <div class="label_rwb"><s:select name="proType.type" title="类型" list="#{0:'互助白酒',2:'西藏白酒',3:'红酒',1:'促销物料'}" cssClass="validate[required]" /></div>
 	       	</div>
 	 </div>
 	<div class="label_main">
@@ -81,6 +81,7 @@
             </div>
 		</div>
 		</div>
+	</div>
 	</div>
 	</s:form>
 </div>
