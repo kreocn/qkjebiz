@@ -17,6 +17,7 @@ import com.qkj.manage.domain.Product;
 import com.qkj.ware.dao.InDetailDAO;
 import com.qkj.ware.dao.InStockDAO;
 import com.qkj.ware.dao.InStockHDAO;
+import com.qkj.ware.dao.OutStockDAO;
 import com.qkj.ware.dao.StockDAO;
 import com.qkj.ware.domain.InDetail;
 import com.qkj.ware.domain.InDetailH;
@@ -300,6 +301,8 @@ public class InStockAction extends ActionSupport {
 				inStock.setStore_id(6);
 			} else {
 			}
+			inStock.setGoflag(0);
+			inStock.setGoreason(0);
 			inStock.setTake_id(u);
 			inStock.setOperator_id(u);
 			inStock.setLm_user(u);
@@ -310,6 +313,51 @@ public class InStockAction extends ActionSupport {
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!add 数据添加失败:", e);
 			throw new Exception(this.getClass().getName() + "!add 数据添加失败:", e);
+		}
+		return SUCCESS;
+	}
+
+	public String addOut() throws Exception {
+		ContextHelper.isPermit("QKJ_WARE_INSTOCK_ADD");
+		try {
+			// 如何是调入仓库自动生成对方的调出仓库单
+			dao.startTransaction();
+			ProductDAO pd = new ProductDAO();
+			Product pdi = new Product();
+			List<Product> produs = new ArrayList<>();
+			map.clear();
+			map.put("lading_id", inStock.getUuid());
+			inDetails = idao.list(map);
+			if (inDetails != null && inDetails.size() > 0) {
+				for (int i = 0; i < inDetails.size(); i++) {
+					inDetail = new InDetail();
+					inDetail = inDetails.get(i);
+					List<Product> pros = new ArrayList<>();
+					map.clear();
+					map.put("uuid", inDetail.getProduct_id());
+					pros = pd.list(map);
+					if (pros.size() > 0) {
+						pdi = pros.get(0);
+						pdi.setNum(inDetail.getNum());
+						pdi.setDprice(inDetail.getPrice());
+						pdi.setDtotle(inDetail.getTotal());
+						produs.add(pdi);
+					}
+				}
+			}
+			if (inStock.getReason() == 4) {
+				OutStockDAO isa = new OutStockDAO();
+				isa.addStock(inStock.getUuid(), inStock.getGoldId(), inStock.getStore_id(), 6, 1, produs);
+			}
+			//修改goflag2出库单生成成功
+			inStock.setGoflag(2);
+			dao.mdyGodFlog(inStock);
+			dao.commitTransaction();
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!add 数据添加失败:", e);
+			throw new Exception(this.getClass().getName() + "!add 数据添加失败:", e);
+		} finally {
+			dao.endTransaction();
 		}
 		return SUCCESS;
 	}

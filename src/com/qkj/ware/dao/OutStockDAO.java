@@ -68,6 +68,10 @@ public class OutStockDAO extends AbstractDAO {
 	public int updateboflag(Object parameters) {
 		return super.save("outStock_mdyBoFlag", parameters);
 	}
+	
+	public int mdygolduid(Object parameters) {
+		return super.save("outStock_mdyGoldUuid", parameters);
+	}
 
 	/**
 	 * 订单确认
@@ -140,7 +144,16 @@ public class OutStockDAO extends AbstractDAO {
 			// 如何是调出仓库自动生成对方的入库单
 			if (outStock.getReason() == 6) {
 				InStockDAO isa = new InStockDAO();
-				isa.addStock(outStock.getUuid(), outStock.getBorrowStore_id(), outStock.getStore_id(),4, 1, produs);
+				if(outStock.getGoreason()==null || outStock.getGoreason()==0){//出库单是手动填写的
+					isa.addStock(outStock.getUuid(), outStock.getBorrowStore_id(), outStock.getStore_id(),4, 1, produs);
+				}else{//出库单自动生成
+					//修改goflag3出库单确认出库
+					InStock inStock=new InStock();
+					inStock.setGoflag(3);
+					inStock.setUuid(outStock.getGoldUuid());
+					isa.mdyGodFlog(inStock);
+				}
+				
 			}
 
 			super.commitTransaction();
@@ -196,7 +209,7 @@ public class OutStockDAO extends AbstractDAO {
 				InStock in = new InStock();
 				in.setGoldUuid(outStock.getUuid());
 				in.setGoflag(1);
-				id.saveGodUid(in);
+				id.saveFlogbyGodUid(in);
 			}
 			super.commitTransaction();
 		}  catch (Exception e) {
@@ -229,7 +242,15 @@ public class OutStockDAO extends AbstractDAO {
 			outStock.setGoldUuid(uuid);
 			outStock.setBorrowStore_id(borrow_id);
 			outStock.setGoreason(goreason);
+			outStock.setSend(2);
 			add(outStock);
+			
+			//修改入库表goldUid
+			InStock is=new InStock();
+			InStockDAO isd=new InStockDAO();
+			is.setUuid(uuid);
+			is.setGoldUuid(outStock.getUuid());
+			isd.mdyGodUuid(is);
 			// 填加子表
 			Double totle=0.00;
 			if (products.size() > 0) {
@@ -246,7 +267,12 @@ public class OutStockDAO extends AbstractDAO {
 				}
 			}
 			// 修改主表的总价
-			outStock.setTotal_price(outStock.getTotal_price() +totle);
+			if(outStock.getTotal_price()!=null){
+				outStock.setTotal_price(outStock.getTotal_price() +totle);
+			}else{
+				outStock.setTotal_price(totle);
+			}
+		
 			saveTotal(outStock);
 	}
 	

@@ -26,6 +26,8 @@ import com.qkj.manage.domain.LadingPay;
 import com.qkj.manage.domain.LadingProductg;
 import com.qkj.manage.domain.Product;
 import com.qkj.manage.domain.SalPromot;
+import com.qkj.ware.dao.OutStockDAO;
+import com.qkj.ware.domain.InDetail;
 
 public class LadingAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
@@ -367,10 +369,42 @@ public class LadingAction extends ActionSupport {
 	public String saveLadingStatus10() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_LADING_STATUS10");
 		try {
+			dao.startTransaction();
 			saveLadingStatus(20);
+			//生成出库单
+			ProductDAO pd = new ProductDAO();
+			LadingItemDAO idao = new LadingItemDAO();
+			
+			Product pdi = new Product();
+			List<Product> produs = new ArrayList<>();
+			map.clear();
+			map.put("lading_id", lading.getUuid());
+			ladingItems = idao.list(map);
+			if (ladingItems != null && ladingItems.size() > 0) {
+				for (int i = 0; i < ladingItems.size(); i++) {
+					LadingItem ladingItem=new LadingItem();
+					ladingItem = ladingItems.get(i);
+					List<Product> pros = new ArrayList<>();
+					map.clear();
+					map.put("uuid", ladingItem.getProduct_id());
+					pros = pd.list(map);
+					if (pros.size() > 0) {
+						pdi = pros.get(0);
+						pdi.setNum(ladingItem.getNum());
+						pdi.setDprice(ladingItem.getPer_price());
+						pdi.setDtotle(ladingItem.getTotal_price());
+						produs.add(pdi);
+					}
+				}
+			}
+				OutStockDAO isa = new OutStockDAO();
+			//	isa.addStock(lading.getUuid(), inStock.getGoldId(), inStock.getStore_id(), 6, 1, produs);
+			dao.commitTransaction();
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!saveLadingStatus10 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!saveLadingStatus10 数据更新失败:", e);
+		}finally {
+			dao.endTransaction();
 		}
 		return SUCCESS;
 	}

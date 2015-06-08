@@ -289,7 +289,7 @@ public class OutStockAction extends ActionSupport {
 		try {
 			Date d = new Date();
 			String u = ContextHelper.getUserLoginUuid();
-
+			outStock.setGoreason(0);
 			outStock.setTake_id(u);
 			outStock.setSend(2);
 			outStock.setAdd_user(u);
@@ -347,12 +347,16 @@ public class OutStockAction extends ActionSupport {
 		if(outStock.getReason()==6){//调出仓库
 			List<InStock> ins=new ArrayList<>();
 			InStockDAO id=new InStockDAO();
-			map.put("goldUuid", outStock.getUuid());
+			if(outStock.getGoreason()==null || outStock.getGoreason()==0){
+				map.put("goldUuid", outStock.getUuid());
+			}else{
+				map.put("uuid", outStock.getGoldUuid());
+			}
 			ins=id.list(map);
 			if(ins.size()>0){
 				boolean flag=true;
 				for(int i=0;i<ins.size();i++){
-					if(ins.get(i).getConfirm()!=null && ins.get(i).getConfirm()==1){//对方已经部分确认
+					if(ins.get(i).getConfirm()!=null && ins.get(i).getConfirm()==1&& ins.get(i).getSend()!=1){//对方已经部分确认
 						this.setMessage("对方已经确认收货不能取消");
 						flag=false;
 						break;

@@ -55,8 +55,16 @@ public class InStockDAO extends AbstractDAO {
 		return super.save("inStock_mdySend", parameters);
 	}
 
-	public int saveGodUid(Object parameters) {
+	public int saveFlogbyGodUid(Object parameters) {
 		return super.save("inStock_mdyGodUid", parameters);
+	}
+	
+	public int mdyGodFlog(Object parameters) {
+		return super.save("inStock_mdyGodFlog", parameters);
+	}
+	
+	public int mdyGodUuid(Object parameters) {
+		return super.save("inStock_mdyGodUuid", parameters);
 	}
 
 	public int sure(InStock inStock) {
@@ -79,14 +87,14 @@ public class InStockDAO extends AbstractDAO {
 					List<Product> pros = new ArrayList<>();
 					map.clear();
 					map.put("uuid", inDetail.getProduct_id());
-					pros = pd.list(map);
+					/*pros = pd.list(map);
 					if (pros.size() > 0) {
 						pdi = pros.get(0);
 						pdi.setNum(inDetail.getNum());
 						pdi.setDprice(inDetail.getPrice());
 						pdi.setDtotle(inDetail.getTotal());
 						produs.add(pdi);
-					}
+					}*/
 
 					// 查询库存同一仓库中是否有此商品
 					StockDAO stockdao = new StockDAO();
@@ -116,11 +124,6 @@ public class InStockDAO extends AbstractDAO {
 			inStock.setContime(new Date());
 			mdySure(inStock);
 
-			// 如何是调入仓库自动生成对方的调出仓库单
-			if (inStock.getReason() == 4) {
-				OutStockDAO isa = new OutStockDAO();
-				isa.addStock(inStock.getUuid(), inStock.getGoldId(), inStock.getStore_id(), 4, 1, produs);
-			}
 			super.commitTransaction();
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -190,8 +193,17 @@ public class InStockDAO extends AbstractDAO {
 		inStock.setAdd_timer(d);
 		inStock.setGoldUuid(uuid);
 		inStock.setGoldId(goldId);
+		inStock.setGoflag(3);
 		add(inStock);
-		// 填加子表
+		
+		//修改出库表goldUid
+		OutStockDAO od=new OutStockDAO();
+		OutStock outs=new OutStock();
+		outs.setUuid(uuid);
+		outs.setGoldUuid(inStock.getUuid());
+		od.mdygolduid(outs);
+		
+		// 填加子表s
 		if (products.size() > 0) {
 			for (int i = 0; i < products.size(); i++) {
 				p = products.get(i);
@@ -224,9 +236,9 @@ public class InStockDAO extends AbstractDAO {
 		}
 		m = m.substring(0, m.length() - 4);
 		if (num == 1) {
-			m += "C";
+			m = "C"+m;
 		} else {
-			m += "R";
+			m = "R"+m;
 		}
 		m = m + "000" + m.substring(m.length() - 1, m.length());
 		System.out.println(m);

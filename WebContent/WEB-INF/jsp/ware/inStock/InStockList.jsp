@@ -114,7 +114,7 @@
 						<c:if test="${ it:checkPermit('QKJ_WARE_INSTOCK_MDY',null)==true}">
 							<a class="input-blue" href="<s:url namespace="/inStock" action="inStock_load"><s:param name="viewFlag">mdy</s:param><s:param name="inStock.uuid" value="uuid"></s:param></s:url>">修改</a>
 						</c:if>
-						<c:if test="${ it:checkPermit('QKJ_WARE_INSTOCK_DEL',null)==true}">
+						<c:if test="${ it:checkPermit('QKJ_WARE_INSTOCK_DEL',null)==true && confirm==null && (goflag==0 || goflag==null)}">
 							<a class="input-red" href="<s:url namespace="/inStock" action="inStock_del"><s:param name="inStock.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
 						</c:if>
 					</c:if>

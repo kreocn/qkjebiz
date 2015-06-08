@@ -34,7 +34,6 @@ font-size: 14px;
 			<s:hidden name="inStock.take_id"></s:hidden>
 			<s:hidden name="inStock.operator_id"></s:hidden>
 			<s:hidden name="inStock.date" title="入库时间" />
-			<s:hidden name="inStock.reason" value="%{inStock.reason}" />
         	<div class="label_main">
 	        	<div class="label_hang">
 		            <div class="label_ltit">入库单号:</div>
@@ -176,7 +175,7 @@ font-size: 14px;
 						<th>单价</th>
 						<th>订单数量</th>
 						<th>实际价格</th>
-						<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_ADD',null)==true && it:checkWarePermit(inStock.store_id,'in')==true && inStock.confirm==null }">
+						<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_ADD',null)==true && it:checkWarePermit(inStock.store_id,'in')==true && inStock.confirm==null &&(inStock.goflag==0 || inStock.goflag==null)}">
 						<th>
 						<s:url id="ladingAddProductsUrl" action="qkjm_addProducts" namespace="/qkjmanage">
 												<s:param name="uuidKey">inStock.uuid</s:param>
@@ -205,7 +204,7 @@ font-size: 14px;
 									</td>
 									<td class="nw"><s:property value="total" /></td>
 									<td>
-									<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_DEL',null)==true && it:checkWarePermit(inStock.store_id,'in')==true && inStock.confirm==null }">
+									<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_DEL',null)==true && it:checkWarePermit(inStock.store_id,'in')==true && inStock.confirm==null && (inStock.goflag==0 || inStock.goflag==null)}">
 								   	[<a href="<s:url namespace="/inStock" action="inDetail_del"><s:param name="inDetail.uuid" value="uuid" /><s:param name="inDetail.lading_id" value="lading_id" /></s:url>" onclick="return isDel();">删除</a>]
 								   	</c:if>
 								    </td>
@@ -232,14 +231,19 @@ font-size: 14px;
 					<s:if test="inStock.goflag==1"><font color="red">对方取消发货</font></s:if>
 					<s:else>
 					<c:if test="${it:checkWarePermit(null,'in')==true}">
+						<s:if test="inStock.goflag==0 || inStock.goflag==null">
 						<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_MDY',null)==true && inStock.confirm==null}">
 							<s:submit id="save" name="save" value="保存" action="inStock_save" cssClass="input-blue"/>
 						</c:if>
 						<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_DEL',null)==true && inStock.confirm==null }">
 							<s:submit id="delete" name="delete" value="删除" action="inStock_del"  cssClass="input-red"/>
 						</c:if>
-						<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_SURE',null)==true && inDetails.size()>0 && inStock.confirm!=1}">
-							<s:submit value="确认" action="inStock_sure" onclick="return isOp('是否确认?\n确认后将不能更改!');" cssClass="input-yellow"></s:submit>
+						</s:if>
+						<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_SURE',null)==true && inDetails.size()>0 && inStock.confirm!=1 && (inStock.reason!=4 || (inStock.reason==4 && inStock.goflag==3))}">
+							<s:submit value="确认入库" action="inStock_sure" onclick="return isOp('是否确认?\n确认后将不能更改!');" cssClass="input-yellow"></s:submit>
+						</c:if>
+						<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_ADD',null)==true && inDetails.size()>0 && inStock.confirm!=1&& inStock.reason==4 && inStock.goflag==0 && inStock.goreason==0}">
+							<s:submit value="生成调货出库单 " onclick="return isOp('是否确认?\n确认后将不能更改!');" action="inStock_addOut"   cssClass="input-yellow"></s:submit>
 						</c:if>
 					</c:if>
 					<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_CENCLE',null)==true &&  inStock.send==0 && inStock.confirm!=null}">

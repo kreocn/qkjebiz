@@ -70,6 +70,11 @@
 			Insert Into qkj_t_outstock(ordernum,date,store_id,reason,member_id,member_mebile,member_name, member_adress,bsreason, operator_id,dept_code,dept_name,take_id,note,add_user,add_timer,lm_user,lm_timer,send,borrowStore_id,member_price,goldUuid,goreason)
 			Values (#ordernum#,#date#,#store_id#, #reason#,#member_id#,#member_mebile#,#member_name#,#member_adress#,#bsreason#, #operator_id#,#dept_code#,#dept_name#,#take_id#,#note#,#add_user#,#add_timer#,#lm_user#,#lm_timer#,#send#,#borrowStore_id#,#member_price#,#goldUuid#,#goreason#)
 		]]>
+		<selectKey resultClass="int" keyProperty="uuid">
+		<![CDATA[ 
+			Select LAST_INSERT_ID()
+		]]>
+		</selectKey>
 	</insert>
 	<update id="outStock_mdyOutStock" parameterClass="outStock">
 		<![CDATA[
@@ -157,6 +162,15 @@
 			Set 
 			boflag=#boflag#
 			Where goldUuid = #goldUuid#
+		]]>
+	</update>
+	
+	<update id="outStock_mdyGoldUuid" parameterClass="outStock">
+		<![CDATA[
+			Update qkj_t_outstock
+			Set 
+			goldUuid=#goldUuid#
+			Where uuid = #uuid#
 		]]>
 	</update>
 	
