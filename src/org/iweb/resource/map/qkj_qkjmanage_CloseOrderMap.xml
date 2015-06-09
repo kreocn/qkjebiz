@@ -5,12 +5,14 @@
 	<typeAlias alias="closeOrder" type="com.qkj.manage.domain.CloseOrder" />
 	<select id="qkjmanage_getCloseOrders" resultClass="closeOrder" parameterClass="java.util.Map">
 		<![CDATA[ 
-			SELECT c.*,m.`MEMBER_NAME` member_name,au.`USER_NAME` add_user_name,lu.`LM_USER` lm_user_name,cu.`USER_NAME` check_user_name,nu.`USER_NAME` nd_check_user_name,d.`dept_cname` apply_dept_name FROM qkjm_r_closeorder c
+			SELECT c.*,m.`MEMBER_NAME` member_name,au.`USER_NAME` add_user_name,lu.`LM_USER` lm_user_name,cu.`USER_NAME` sd_user_name,nu.`USER_NAME` nd_check_user_name,d.`dept_cname` apply_dept_name,smd.`USER_NAME` smd_user_name,fd.`USER_NAME` fd_user_name FROM qkjm_r_closeorder c
 			LEFT JOIN s_vip_member m ON (c.`member_id`=m.`UUID`)
 			LEFT JOIN s_sys_user au ON(c.`add_user`=au.`UUID`)
 			LEFT JOIN s_sys_user lu ON(c.`lm_user`=lu.`UUID`)
-			LEFT JOIN s_sys_user cu ON(c.`check_user`=cu.`UUID`)
+			LEFT JOIN s_sys_user cu ON(c.`sd_user`=cu.`UUID`)
 			LEFT JOIN s_sys_user nu ON(c.`nd_check_user`=nu.`UUID`)
+			LEFT JOIN s_sys_user smd ON(c.`smd_user`=smd.`UUID`)
+			LEFT JOIN s_sys_user fd ON(c.`fd_check_user`=fd.`UUID`)
 			LEFT JOIN s_sys_department d ON (c.apply_dept = d.dept_code)
 		]]>
 		<dynamic prepend="WHERE">
@@ -19,9 +21,10 @@
 			<isNotEmpty prepend="AND" property="content"><![CDATA[ c.content=#content# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="member_id"><![CDATA[ c.member_id=#member_id# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="member_address"><![CDATA[ c.member_address=#member_address# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="check_user"><![CDATA[ c.check_user=#check_user# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="check_state"><![CDATA[ c.check_state=#check_state# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="nd_check_state"><![CDATA[ c.nd_check_state=#nd_check_state# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="state"><![CDATA[ c.state=#state# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="sd_state"><![CDATA[ c.sd_state=#sd_state# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="smd_status"><![CDATA[ c.smd_status=#smd_status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="theme"><![CDATA[ c.theme LIKE CONCAT('%',#theme#,'%') ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="apply_dept">
 				<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ c.apply_dept=#apply_dept# ]]></isNotEqual>
@@ -54,7 +57,6 @@
 			LEFT JOIN s_vip_member m ON (c.`member_id`=m.`UUID`)
 			LEFT JOIN s_sys_user au ON(c.`add_user`=au.`UUID`)
 			LEFT JOIN s_sys_user lu ON(c.`lm_user`=lu.`UUID`)
-			LEFT JOIN s_sys_user cu ON(c.`check_user`=cu.`UUID`)
 			LEFT JOIN s_sys_user nu ON(c.`nd_check_user`=nu.`UUID`)
 		]]>
 		<dynamic prepend="WHERE">
@@ -63,9 +65,10 @@
 			<isNotEmpty prepend="AND" property="content"><![CDATA[ c.content=#content# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="member_id"><![CDATA[ c.member_id=#member_id# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="member_address"><![CDATA[ c.member_address=#member_address# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="check_user"><![CDATA[ c.check_user=#check_user# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="check_state"><![CDATA[ c.check_state=#check_state# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="nd_check_state"><![CDATA[ c.nd_check_state=#nd_check_state# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="state"><![CDATA[ c.state=#state# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="sd_state"><![CDATA[ c.sd_state=#sd_state# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="smd_status"><![CDATA[ c.smd_status=#smd_status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="theme"><![CDATA[ c.theme LIKE CONCAT('%',#theme#,'%') ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="apply_dept">
 				<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ c.apply_dept=#apply_dept# ]]></isNotEqual>
@@ -93,8 +96,8 @@
 	</select>
 	<insert id="qkjmanage_addCloseOrder" parameterClass="closeOrder">
 		<![CDATA[ 
-			Insert Into qkjm_r_closeorder(close_time,content,theme,member_id,member_address,member_phone,add_user,add_time,lm_time,lm_user,apply_dept,close_num)
-			Values (#close_time#,#content#,#theme#,#member_id#,#member_address#,#member_phone#,#add_user#,#add_time#,#lm_time#,#lm_user#,#apply_dept#,#close_num#)
+			Insert Into qkjm_r_closeorder(close_time,content,theme,member_id,member_address,member_phone,add_user,add_time,lm_time,lm_user,apply_dept,close_num,state)
+			Values (#close_time#,#content#,#theme#,#member_id#,#member_address#,#member_phone#,#add_user#,#add_time#,#lm_time#,#lm_user#,#apply_dept#,#close_num#,#state#)
 		]]>
 		<selectKey resultClass="int" keyProperty="uuid">
 		<![CDATA[ Select LAST_INSERT_ID() ]]>
@@ -117,20 +120,66 @@
 		]]>
 	</update>
 
-	<update id="qkjmanage_mdyCloseCheck" parameterClass="closeOrder">
+	<update id="qkjmanage_mdyCloseOrderSDStatus" parameterClass="closeOrder">
 		<![CDATA[
 			Update qkjm_r_closeorder
 			Set 
-			check_state=#check_state#,
-			check_time=#check_time#,
-			check_user=#check_user#,
+			sd_state=#sd_state#,
+			sd_time=#sd_time#,
+			sd_user=#sd_user#,
 			lm_time=#lm_time#,
 			lm_user=#lm_user#
 			Where uuid = #uuid#
 		]]>
 	</update>
 
-	<update id="qkjmanage_mdyClosendCheck" parameterClass="closeOrder">
+	<update id="qkjmanage_mdyCloseOrderSMDStatus" parameterClass="closeOrder">
+		<![CDATA[
+			Update qkjm_r_closeorder
+			Set 
+			smd_status=#smd_status#,
+			smd_time=#smd_time#,
+			smd_user=#smd_user#,
+			lm_time=#lm_time#,
+			lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<update id="qkjmanage_mdyCloseOrderStatus" parameterClass="closeOrder">
+		<![CDATA[
+			Update qkjm_r_closeorder
+			Set 
+			state=#state#,
+			lm_time=#lm_time#,
+			lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<update id="qkjmanage_mdyPassStatus" parameterClass="closeOrder">
+		<![CDATA[
+			Update qkjm_r_closeorder
+			Set 
+			state=#state#
+			Where uuid = #uuid#
+		]]>
+	</update>
+
+	<update id="qkjmanage_mdyCloseOrderFDStatus" parameterClass="closeOrder">
+		<![CDATA[
+			Update qkjm_r_closeorder
+			Set 
+			fd_check_state=#fd_check_state#,
+			fd_check_time=#fd_check_time#,
+			fd_check_user=#fd_check_user#,
+			lm_time=#lm_time#,
+			lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<update id="qkjmanage_mdyCloseOrderNDStatus" parameterClass="closeOrder">
 		<![CDATA[
 			Update qkjm_r_closeorder
 			Set 
@@ -142,7 +191,6 @@
 			Where uuid = #uuid#
 		]]>
 	</update>
-
 
 	<update id="qkjmanage_mdyCloseOrdertotelPrice" parameterClass="integer">
 		<![CDATA[

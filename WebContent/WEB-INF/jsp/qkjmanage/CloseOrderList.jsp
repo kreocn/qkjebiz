@@ -60,7 +60,19 @@
 					<div class="label_hang">
 						<div class="label_ltit">单据状态:</div>
 						<div class="label_rwben label_rwb">
-							<s:select id="check_state" name="closeOrder.check_state" cssClass="selectKick" list="#{0:'新单',5:'退回',1:'待审核',30:'经理/大区已审',40:'总监已审',50:'财务已审',60:'副总已审',70:'总经理已审'}" headerKey="" headerValue="--请选择--" />
+							<s:select id="check_state" name="closeOrder.state" cssClass="selectKick" list="#{0:'新单',1:'审核中',2:'通过'}" headerKey="" headerValue="--请选择--" />
+						</div>
+					</div>
+					<div class="label_hang">
+						<div class="label_ltit">销售状态:</div>
+						<div class="label_rwben label_rwb">
+							<s:select id="check_state" name="closeOrder.sd_state" cssClass="selectKick" list="#{5:'退回',10:'待审核',30:'大区审核通过',40:'总监审核通过',50:'业务副总通过'}" headerKey="" headerValue="--请选择--" />
+						</div>
+					</div>
+					<div class="label_hang">
+						<div class="label_ltit">销管状态:</div>
+						<div class="label_rwben label_rwb">
+							<s:select id="check_state" name="closeOrder.smd_status" cssClass="selectKick" list="#{5:'退回',10:'已签收',30:'销管经理已审',40:'销管部经理已审',50:'销管副总通过',60:'总经理通过'}" headerKey="" headerValue="--请选择--" />
 						</div>
 					</div>
 					<div class="label_hang">
@@ -86,8 +98,9 @@
 					<th class="td1">申请人</th>
 					<th class="td5">主题</th>
 					<th class="td3">结案时间</th>
-					<th class="td1">单据审核状态</th>
-					<th class="td2">数据中心状态</th>
+					<th class="td1">单据状态</th>
+					<th class="td2">销售状态</th>
+					<th class="td2">销管状态</th>
 					<th class="td4">操作</th>
 					<th class="td0">查看</th>
 				</tr>
@@ -99,34 +112,39 @@
 						<td class="td5 longnote" title="${theme}">${it:subString(theme,18)}</td>
 						<td class="td3 nw">${it:formatDate(close_time,'yyyy-MM-dd')}</td>
 						<td class="td1 nw">
-						<s:if test="check_state==0">新单</s:if>
-									<s:if test="check_state==5">
-										<font class="message_error">审核退回</font>(${check_user_name})</s:if>
-									<s:if test="check_state==1">
+						<s:if test="state==0">新单</s:if>
+						<s:if test="state==1">审批中</s:if>
+						<s:if test="state==2">通过</s:if>
+						</td>
+						<td class="td2 nw" title="${sd_user_name} ${it:formatDate(sd_time,'yyyy-MM-dd HH:mm:ss')}">
+						<s:if test="sd_state==0">新单</s:if>
+									<s:if test="sd_state==5">
+										<font class="message_error">审核退回</font></s:if>
+									<s:if test="sd_state==10">
 										<font class="message_warning">待审核</font>
 									</s:if>
-									<s:if test="check_state==10">
-										<font class="message_pass">主管已审</font>(${check_user_name})</s:if>
-									<s:if test="check_state==20">
-										<font class="message_pass">主管/办事处经理已审</font>(${check_user_name})</s:if>
-									<s:if test="check_state==30">
-										<font class="message_pass">经理/大区已审</font>(${check_user_name})</s:if>
-									<s:if test="check_state==40">
-										<font class="message_pass">总监已审</font>(${check_user_name})</s:if>
-									<s:if test="check_state==50">
-										<font class="message_pass">财务已审</font>(${check_user_name})</s:if>
-									<s:if test="check_state==60">
-										<font class="message_pass">业务副总已审</font>(${check_user_name})</s:if>
-									<s:if test="check_state==70">
-										<font class="message_pass">总经理已审</font>(${check_user_name})</s:if>
-						
+									<s:if test="sd_state==30">
+										<font class="message_pass">大区已审</font></s:if>
+									<s:if test="sd_state==40">
+										<font class="message_pass">总监已审</font></s:if>
+									<s:if test="sd_state==50">
+										<font class="message_pass">副总已审</font></s:if>
 						</td>
-						<td class="td2 nw">
-						<s:if test="nd_check_state==0">未确认</s:if>
-									<s:if test="nd_check_state==5">
-										<font class="message_error">审核退回</font>(${nd_check_user_name})</s:if>
-									<s:if test="nd_check_state==10">
-										<font class="message_pass">已通过</font>(${nd_check_user_name})</s:if>
+						<td class="td2 nw" title="${smd_user_name} ${it:formatDate(smd_time,'yyyy-MM-dd HH:mm:ss')}">
+						<s:if test="smd_status==0">未签收</s:if>
+									<s:if test="smd_status==5">
+										<font class="message_error">审核退回</font></s:if>
+									<s:if test="smd_status==10">
+										<font class="message_warning">已签收</font>
+									</s:if>
+									<s:if test="smd_status==30">
+										<font class="message_pass">销管经理已审</font></s:if>
+									<s:if test="smd_status==40">
+										<font class="message_pass">销管部经理已审</font></s:if>
+									<s:if test="smd_status==50">
+										<font class="message_pass">销管副总已审</font></s:if>
+										<s:if test="smd_status==60">
+										<font class="message_pass">总经理已审</font></s:if>
 						</td>
 						<td class="td4 op-area">
 							<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_MDY',null)==true}">

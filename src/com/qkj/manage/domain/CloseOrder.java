@@ -16,9 +16,18 @@ public class CloseOrder {
 	private String apply_dept;
 	private String add_user;// (varchar)填加人
 	private Date add_time;// (datetime)填加时间
-	private Integer check_state;// (int)审核状态0：新单1：待审核，5：退回10：招商主管通过20：招商经理30大区40财务50总监60副总70总经理
-	private Date check_time;// (datetime)审核时间
-	private String check_user;// (varchar)操作人
+
+	private Integer state;
+	private Integer sd_state;
+	private String sd_user;
+	private Date sd_time;
+	private Integer smd_status;
+	private String smd_user;
+	private Date smd_time;
+	private Integer fd_check_state;
+	private String fd_check_user;
+	private Date fd_check_time;
+
 	private Integer nd_check_state;// (int)数据中心审核状态0：未审核5：退回10：通过
 	private Date nd_check_time;// (datetime)数据中心审核时间
 	private String nd_check_user;// (varchar)操作人
@@ -36,20 +45,56 @@ public class CloseOrder {
 	private String puser_name;
 	private String puser_sign;
 	private Date biz_time;
-	
+	private String sd_user_name;
+	private String smd_user_name;
+	private String fd_user_name;
+	private String nd_user_name;
+
 	private String sign20;
 	private String sign30;
 	private String sign40;
 	private String sign50;
 	private String sign60;
 	private String sign70;
-	
+
 	private Date time20;
 	private Date time30;
 	private Date time40;
 	private Date time50;
 	private Date time60;
 	private Date time70;
+
+	public String getSd_user_name() {
+		return sd_user_name;
+	}
+
+	public void setSd_user_name(String sd_user_name) {
+		this.sd_user_name = sd_user_name;
+	}
+
+	public String getSmd_user_name() {
+		return smd_user_name;
+	}
+
+	public void setSmd_user_name(String smd_user_name) {
+		this.smd_user_name = smd_user_name;
+	}
+
+	public String getFd_user_name() {
+		return fd_user_name;
+	}
+
+	public void setFd_user_name(String fd_user_name) {
+		this.fd_user_name = fd_user_name;
+	}
+
+	public String getNd_user_name() {
+		return nd_user_name;
+	}
+
+	public void setNd_user_name(String nd_user_name) {
+		this.nd_user_name = nd_user_name;
+	}
 
 	public Integer getUuid() {
 		return uuid;
@@ -137,30 +182,6 @@ public class CloseOrder {
 
 	public void setAdd_time(Date add_time) {
 		this.add_time = add_time;
-	}
-
-	public Integer getCheck_state() {
-		return check_state;
-	}
-
-	public void setCheck_state(Integer check_state) {
-		this.check_state = check_state;
-	}
-
-	public Date getCheck_time() {
-		return check_time;
-	}
-
-	public void setCheck_time(Date check_time) {
-		this.check_time = check_time;
-	}
-
-	public String getCheck_user() {
-		return check_user;
-	}
-
-	public void setCheck_user(String check_user) {
-		this.check_user = check_user;
 	}
 
 	public Integer getNd_check_state() {
@@ -393,6 +414,86 @@ public class CloseOrder {
 
 	public void setBiz_time(Date biz_time) {
 		this.biz_time = biz_time;
+	}
+
+	public Integer getState() {
+		return state;
+	}
+
+	public void setState(Integer state) {
+		this.state = state;
+	}
+
+	public Integer getSd_state() {
+		return sd_state;
+	}
+
+	public void setSd_state(Integer sd_state) {
+		this.sd_state = sd_state;
+	}
+
+	public String getSd_user() {
+		return sd_user;
+	}
+
+	public void setSd_user(String sd_user) {
+		this.sd_user = sd_user;
+	}
+
+	public Date getSd_time() {
+		return sd_time;
+	}
+
+	public void setSd_time(Date sd_time) {
+		this.sd_time = sd_time;
+	}
+
+	public Integer getSmd_status() {
+		return smd_status;
+	}
+
+	public void setSmd_status(Integer smd_status) {
+		this.smd_status = smd_status;
+	}
+
+	public String getSmd_user() {
+		return smd_user;
+	}
+
+	public void setSmd_user(String smd_user) {
+		this.smd_user = smd_user;
+	}
+
+	public Date getSmd_time() {
+		return smd_time;
+	}
+
+	public void setSmd_time(Date smd_time) {
+		this.smd_time = smd_time;
+	}
+
+	public Integer getFd_check_state() {
+		return fd_check_state;
+	}
+
+	public void setFd_check_state(Integer fd_check_state) {
+		this.fd_check_state = fd_check_state;
+	}
+
+	public String getFd_check_user() {
+		return fd_check_user;
+	}
+
+	public void setFd_check_user(String fd_check_user) {
+		this.fd_check_user = fd_check_user;
+	}
+
+	public Date getFd_check_time() {
+		return fd_check_time;
+	}
+
+	public void setFd_check_time(Date fd_check_time) {
+		this.fd_check_time = fd_check_time;
 	}
 
 }
