@@ -339,9 +339,10 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 				map.put("allsign", 1);
 				map.put("biz_id", closeOrder.getUuid());
 				this.setAllsigns(dao.allsign(map));
+				System.out.println(allsigns.size());
 				
 				this.setSign((CloseOrder) dao.sign(closeOrder.getUuid()));
-				
+				System.out.println(sign);
 				CloseOrderProDAO cdao=new CloseOrderProDAO();
 				map.clear();
 				map.put("order_id", closeOrder.getUuid());
@@ -365,7 +366,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 			closeOrder.setLm_time(new Date());
 			closeOrder.setState(0);
 			dao.add(closeOrder);
-			addProcess("CLOSEORDER_ADD", "新增结案提货单");
+			addProcess("CLOSEORDER_ADD", "新增结案提货单",ContextHelper.getUserLoginUuid());
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!add 数据添加失败:", e);
 			throw new Exception(this.getClass().getName() + "!add 数据添加失败:", e);
@@ -382,7 +383,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 			closeOrder.setLm_user(ContextHelper.getUserLoginUuid());
 			closeOrder.setLm_time(new Date());
 			dao.save(closeOrder);
-			addProcess("CLOSEORDER_MDY", "修改结案提货单");
+			addProcess("CLOSEORDER_MDY", "修改结案提货单",ContextHelper.getUserLoginUuid());
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
@@ -395,7 +396,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 		try {
 			dao.delete(closeOrder);
 			setMessage("删除成功!ID=" + closeOrder.getUuid());
-			addProcess("CLOSEORDER_ADD", "删除结案提货单");
+			addProcess("CLOSEORDER_ADD", "删除结案提货单",ContextHelper.getUserLoginUuid());
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!del 数据删除失败:", e);
 			throw new Exception(this.getClass().getName() + "!del 数据删除失败:", e);
@@ -698,7 +699,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_APPROVE");
 		try {
 			apdao.add(approve, 3, closeOrder.getUuid());
-			addProcess("CLOSE_APPROVE", "结案提货单-增加一条审阅信息");
+			addProcess("CLOSE_APPROVE", "结案提货单-增加一条审阅信息",ContextHelper.getUserLoginUuid());
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!approve 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!approve 数据更新失败:", e);
@@ -716,7 +717,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_APPROVEDELLAST");
 		try {
 			apdao.deleteLast(approve, 3,  closeOrder.getUuid());
-			addProcess("CLOSE_APPROVEDEL", "结案提货-删除一条审阅信息");
+			addProcess("CLOSE_APPROVEDEL", "结案提货-删除一条审阅信息",ContextHelper.getUserLoginUuid());
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!approveDel 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!approveDel 数据更新失败:", e);
@@ -846,7 +847,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 			closeOrder.setLm_user(ContextHelper.getUserLoginUuid());
 			closeOrder.setLm_time(new Date());
 			String note = "提货结案单--财务状态变更-" + noteflag;
-			addProcess("CLOSEORDER_MDY_FDSTATUS", note);
+			addProcess("CLOSEORDER_MDY_FDSTATUS", note,ContextHelper.getUserLoginUuid());
 			return dao.mdyCloseOrderFDStatus(closeOrder);
 		}  else {// 数据中心
 			if (smd_status == 5) {
@@ -861,7 +862,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 			closeOrder.setLm_user(ContextHelper.getUserLoginUuid());
 			closeOrder.setLm_time(new Date());
 			String note = "提货结案单--数据中心状态变更-" + noteflag;
-			addProcess("CLOSEORDER_MDY_NDCSTATUS", note);
+			addProcess("CLOSEORDER_MDY_NDCSTATUS", note,ContextHelper.getUserLoginUuid());
 			return dao.mdyCloseOrderNDStatus(closeOrder);
 		}
 
@@ -901,13 +902,6 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	 * @param p_note
 	 * @param userLogin
 	 */
-	private void addProcess(String p_sign, String p_note) {
-		ProcessDAO pdao = new ProcessDAO();
-		if (closeOrder != null) {
-			pdao.addProcess(4, closeOrder.getUuid(), p_sign, p_note, closeOrder.getState());
-		}
-	}
-	
 	private void addProcess(String p_sign, String p_note,String userLogin) {
 		ProcessDAO pdao = new ProcessDAO();
 		if (closeOrder != null) {/*单据状态，销售状态，销管状态，财务，数据中心*/
