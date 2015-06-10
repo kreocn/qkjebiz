@@ -55,8 +55,8 @@
 	</select>
 	<insert id="salpro_addSalPromot" parameterClass="salPromot">
 		<![CDATA[ 
-			Insert Into qkjm_r_salpromotion(sal_title,startime,endtime,sal_scop,sal_plan,add_user,add_time,lm_user,lm_time,rebate,priority,note,add_user_dept,sal_scopDept,sal_scopUs)
-			Values (#sal_title#,#startime#,#endtime#,#sal_scop#,#sal_plan#,#add_user#,#add_time#,#lm_user#,#lm_time#,#rebate#,#priority#,#note#,#add_user_dept#,#sal_scopDept#,#sal_scopUs#)
+			Insert Into qkjm_r_salpromotion(sal_title,startime,endtime,sal_scop,sal_plan,add_user,add_time,lm_user,lm_time,rebate,priority,note,add_user_dept,sal_scopDept,sal_scopUs,status)
+			Values (#sal_title#,#startime#,#endtime#,#sal_scop#,#sal_plan#,#add_user#,#add_time#,#lm_user#,#lm_time#,#rebate#,#priority#,#note#,#add_user_dept#,#sal_scopDept#,#sal_scopUs#,#status#)
 		]]>
 		<selectKey resultClass="int" keyProperty="uuid">
 		<![CDATA[ Select LAST_INSERT_ID() ]]>
@@ -81,15 +81,13 @@
 			Where uuid = #uuid#
 		]]>
 	</update>
-	<update id="salpro_mdyStatus1" parameterClass="salPromot">
+	<update id="salpro_mdyStatus" parameterClass="salPromot">
 		<![CDATA[
 			Update qkjm_r_salpromotion
 			Set 
 			status=#status#,
-			smd_status=#smd_status#,
 			lm_user=#lm_user#,
-			lm_time=#lm_time#,
-			note=#note#
+			lm_time=#lm_time#
 			Where uuid = #uuid#
 		]]>
 	</update>
@@ -97,13 +95,11 @@
 		<![CDATA[
 			Update qkjm_r_salpromotion
 			Set 
-			status=#status#,
 			smd_status=#smd_status#,
 			smd_user=#smd_user#,
 			smd_time=#smd_time#,
 			lm_user=#lm_user#,
-			lm_time=#lm_time#,
-			note=#note#
+			lm_time=#lm_time#
 			Where uuid = #uuid#
 		]]>
 	</update>
@@ -111,13 +107,24 @@
 		<![CDATA[
 			Update qkjm_r_salpromotion
 			Set 
-			status=#status#,
 			sd_status=#sd_status#,
 			sd_user=#sd_user#,
 			sd_time=#sd_time#,
 			lm_user=#lm_user#,
-			lm_time=#lm_time#,
-			note=#note#
+			lm_time=#lm_time#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<update id="salpro_mdyFdStatus" parameterClass="salPromot">
+		<![CDATA[
+			Update qkjm_r_salpromotion
+			Set 
+			fd_status=#fd_status#,
+			fd_user=#fd_user#,
+			fd_time=#fd_time#,
+			lm_user=#lm_user#,
+			lm_time=#lm_time#
 			Where uuid = #uuid#
 		]]>
 	</update>
