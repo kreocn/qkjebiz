@@ -60,6 +60,22 @@
 			</result>
 		</action>
 		
+		<action name="mdyCloseOrderSMDStatus*" class="com.qkj.manage.action.CloseOrderAction" method="mdyCloseOrderSMDStatus{1}">
+			<result type="redirectAction">
+				<param name="actionName">closeOrder_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="closeOrder_checkfd*" class="com.qkj.manage.action.CloseOrderAction" method="checkfd{1}">
+			<result type="redirectAction">
+				<param name="actionName">closeOrder_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
 		<action name="closeOrder_checknd*" class="com.qkj.manage.action.CloseOrderAction" method="checknd{1}">
 			<result type="redirectAction">
 				<param name="actionName">closeOrder_list</param>

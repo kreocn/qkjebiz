@@ -31,14 +31,31 @@ public class CloseOrderDAO extends AbstractDAO {
 		return super.delete("qkjmanage_delCloseOrder", parameters);
 	}
 	
-	public int check(Object parameters) {
-		return super.save("qkjmanage_mdyCloseCheck", parameters);
+	//销售
+	public int mdyCloseOrderSDStatus(Object parameters){
+		return super.save("qkjmanage_mdyCloseOrderSDStatus", parameters);
+	}
+	//销管
+	public int mdyCloseOrderSMDStatus(Object parameters){
+		return super.save("qkjmanage_mdyCloseOrderSMDStatus", parameters);
+	}
+	//单据状态
+	public int mdyCloseOrderStatus(Object parameters){
+		return super.save("qkjmanage_mdyCloseOrderStatus", parameters);
+	}
+	//财务
+	public int mdyCloseOrderFDStatus(Object parameters){
+		return super.save("qkjmanage_mdyCloseOrderFDStatus", parameters);
+	}
+	//数据中心
+	public int mdyCloseOrderNDStatus(Object parameters){
+		return super.save("qkjmanage_mdyCloseOrderNDStatus", parameters);
 	}
 	
-	public int checknd(Object parameters) {
-		return super.save("qkjmanage_mdyClosendCheck", parameters);
+	public int mdyPassStatus(Object parameters){
+		return super.save("qkjmanage_mdyPassStatus", parameters);
 	}
-
+	
 	public List allsign(Map<String, Object> map) {
 		return super.list("qkjmanage_getallclosesign", map);
 	}
