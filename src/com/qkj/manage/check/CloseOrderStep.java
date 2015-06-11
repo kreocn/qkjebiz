@@ -1,20 +1,11 @@
 package com.qkj.manage.check;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.iweb.sys.ContextHelper;
-import org.iweb.sysvip.dao.MemberCapitalDAO;
-import org.iweb.sysvip.domain.MemberCapital;
 
-import com.qkj.manage.dao.ActiveDAO;
-import com.qkj.manage.dao.ActiveMemcostDAO;
 import com.qkj.manage.dao.CloseOrderDAO;
 import com.qkj.manage.dao.ProcessDAO;
-import com.qkj.manage.domain.Active;
-import com.qkj.manage.domain.ActiveMemcost;
 import com.qkj.manage.domain.CloseOrder;
 
 public class CloseOrderStep {
@@ -28,6 +19,36 @@ public class CloseOrderStep {
 
 	public void setCloseOrder(CloseOrder closeOrder) {
 		this.closeOrder = closeOrder;
+	}
+	
+	/**
+	 * 报审
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public void check0(String userid) throws Exception {
+			CloseOrderCheckSkip s=new CloseOrderCheckSkip();
+			this.setCloseOrder(s.getCloserOrder());
+			mdyStatus(1);//待审核
+			// 同时进入销售部审核流程
+			mdyCloseOrderSDStatus(10,ContextHelper.getUserLoginUuid());
+			// 销售管理部默认为已签收
+			mdyCloseOrderSMDStatus(10,ContextHelper.getUserLoginUuid());
+			//财务
+			closeOrder.setFd_check_state(0);
+			closeOrder.setFd_check_user(ContextHelper.getUserLoginUuid());
+			closeOrder.setFd_check_time(new Date());
+			closeOrder.setLm_user(ContextHelper.getUserLoginUuid());
+			closeOrder.setLm_time(new Date());
+			dao.mdyCloseOrderFDStatus(closeOrder);
+			//数据中心
+			closeOrder.setNd_check_state(0);
+			closeOrder.setNd_check_time(new Date());
+			closeOrder.setNd_check_user(ContextHelper.getUserLoginUuid());
+			closeOrder.setLm_user(ContextHelper.getUserLoginUuid());
+			closeOrder.setLm_time(new Date());
+			dao.mdyCloseOrderNDStatus(closeOrder);
 	}
 
 	/**

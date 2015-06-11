@@ -22,6 +22,29 @@ public class SalProStep {
 	}
 
 	/**
+	 * 报审
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public void status1(String userid) throws Exception {
+		SalProCheckSkip s=new SalProCheckSkip();
+		this.setSalPro(s.getSalPro());
+			mdyStatus(1);// 待审核
+			// 同时进入销售部审核流程
+			mdyCloseOrderSDStatus(10, ContextHelper.getUserLoginUuid());
+			// 销售管理部默认为已签收
+			mdyCloseOrderSMDStatus(10, ContextHelper.getUserLoginUuid());
+			
+			salPro.setFd_status(0);
+			salPro.setFd_user(ContextHelper.getUserLoginUuid());
+			salPro.setFd_time(new Date());
+			salPro.setLm_user(ContextHelper.getUserLoginUuid());
+			salPro.setLm_time(new Date());
+			dao.savefdStatus(salPro);
+	}
+	
+	/**
 	 * 大区经理通过
 	 * 
 	 * @return

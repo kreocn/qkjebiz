@@ -394,7 +394,7 @@
 								</c:if>
 								
 								<c:if test="${40==closeOrder.sd_state && closeOrder.smd_status>=40  && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK50',closeOrder.apply_dept)==true}">
-									<s:submit id="mdyStatus50" name="mdyStatus50" value="业务副总审核通过" action="closeOrder_check50" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
+									<s:submit id="mdyStatus50" name="mdyStatus50" value="业务副总审核通过" action="closeOrder_check40" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
 									<s:submit id="mdyStatus5" name="mdyStatus5" cssClass="input-red" value="审核不通过" action="closeOrder_check5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
 							</s:if>

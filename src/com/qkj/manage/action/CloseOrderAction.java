@@ -415,13 +415,14 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	public String check0() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_CHECK0");
 		try {
-			mdyStatus(1);//待审核
+			/*mdyStatus(1);//待审核
 			// 同时进入销售部审核流程
 			mdyCloseOrderSDStatus(10,ContextHelper.getUserLoginUuid());
 			// 销售管理部默认为已签收
 			mdyCloseOrderSMDStatus(10,ContextHelper.getUserLoginUuid());
 			mdyCloseOrderFDStatus(1,0);
-			mdyCloseOrderFDStatus(2,0);
+			mdyCloseOrderFDStatus(2,0);*/
+			cocs.checkSkip(closeOrder,"check0");
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!check0 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!check0 数据更新失败:", e);

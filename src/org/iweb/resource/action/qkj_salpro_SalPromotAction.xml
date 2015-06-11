@@ -30,6 +30,11 @@
 			<result name="SUCCESS">/WEB-INF/jsp/qkjmanage/salpro/SalPromotEdit.jsp</result>
 			<result name="VIEWSUCCESS">/WEB-INF/jsp/qkjmanage/salpro/SalPromotViewT.jsp</result>
 		</action>
+		
+		<action name="salPromot_view" class="com.qkj.manage.action.SalPromotAction" method="view">
+			<result>/WEB-INF/jsp/qkjmanage/salpro/SalPromotView.jsp</result>
+		</action>
+		
 		<action name="salPromot_add" class="com.qkj.manage.action.SalPromotAction" method="add">
 			<result type="redirectAction">
 				<param name="actionName">salPromot_load</param>
@@ -63,7 +68,7 @@
 			</result>
 		</action>
 		<!-- 审核中 -->
-		<action name="salPromot_smdstatus*" class="com.qkj.manage.action.SalPromotAction" method="smdstatus{1}">
+		<action name="mdySMDStatus*" class="com.qkj.manage.action.SalPromotAction" method="mdyCloseOrderSMDStatus{1}">
 			<result type="redirectAction">
 				<param name="actionName">salPromot_load</param>
 				<param name="salPromot.uuid">${salPromot.uuid}</param>
@@ -71,7 +76,8 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
-		<action name="salPromot_smdstatus5" class="com.qkj.manage.action.SalPromotAction" method="smdstatus5">
+		
+		<action name="mdySDStatus*" class="com.qkj.manage.action.SalPromotAction" method="check{1}">
 			<result type="redirectAction">
 				<param name="actionName">salPromot_load</param>
 				<param name="salPromot.uuid">${salPromot.uuid}</param>
@@ -79,7 +85,8 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
-		<action name="salPromot_sdstatus30" class="com.qkj.manage.action.SalPromotAction" method="sdstatus30">
+		
+		<action name="mdyFDStatus*" class="com.qkj.manage.action.SalPromotAction" method="checkfd{1}">
 			<result type="redirectAction">
 				<param name="actionName">salPromot_load</param>
 				<param name="salPromot.uuid">${salPromot.uuid}</param>
@@ -87,7 +94,8 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
-		<action name="salPromot_sdstatus5" class="com.qkj.manage.action.SalPromotAction" method="sdstatus5">
+		
+		<action name="close_approve" class="com.qkj.manage.action.SalPromotAction" method="approve">
 			<result type="redirectAction">
 				<param name="actionName">salPromot_load</param>
 				<param name="salPromot.uuid">${salPromot.uuid}</param>
@@ -95,6 +103,15 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
+		<action name="close_approveDel" class="com.qkj.manage.action.SalPromotAction" method="approveDel">
+			<result type="redirectAction">
+				<param name="actionName">salPromot_load</param>
+				<param name="salPromot.uuid">${salPromot.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
 		<!-- SalPromot End -->
 	</package>
 </struts>

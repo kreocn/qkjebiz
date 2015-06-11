@@ -10,7 +10,6 @@ import org.iweb.sys.ToolsUtil;
 import org.iweb.sys.cache.CacheFactory;
 import org.iweb.sys.cache.SysDBCacheLogic;
 
-import com.qkj.manage.domain.CloseOrder;
 import com.qkj.manage.domain.SalPromot;
 
 public class SalProCheckSkip {
@@ -90,7 +89,7 @@ public class SalProCheckSkip {
 
 	private void specialStep(String st, CloseOrerSkipStep as) {
 		String userid = ContextHelper.getUserLoginUuid();
-		CloseOrderStep ca = new CloseOrderStep();
+		SalProStep ca = new SalProStep();
 		str = st;// 现在调用的步骤
 		skipstr = as.getSkip_step();// 跳过的步骤
 		try {
@@ -104,7 +103,7 @@ public class SalProCheckSkip {
 
 	private void normalStep(String st) {
 		String userid = ContextHelper.getUserLoginUuid();
-		CloseOrderStep ca = new CloseOrderStep();
+		SalProStep ca = new SalProStep();
 		str = st;// 现在调用的步骤
 		try {
 			ca.getClass().getMethod(str, new Class[] { String.class }).invoke(ca, new Object[] { userid });

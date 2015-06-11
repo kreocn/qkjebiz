@@ -1,5 +1,6 @@
 package com.qkj.manage.dao;
 import java.util.*;
+
 import org.iweb.sys.AbstractDAO;
 public class SalPromotDAO extends AbstractDAO {
 
@@ -32,6 +33,10 @@ public class SalPromotDAO extends AbstractDAO {
 	public int saveSdStatus(Object parameters) {
 		return super.save("salpro_mdySdStatus", parameters);
 	}
+	
+	public int savefdStatus(Object parameters) {
+		return super.save("salpro_mdyFdStatus", parameters);
+	}
 
 	public int delete(Object parameters) {
 		return super.delete("salpro_delSalPromot", parameters);
@@ -39,6 +44,16 @@ public class SalPromotDAO extends AbstractDAO {
 
 	public List listPower(Map<String, Object> map) {
 		return super.list("salpro_getSalPromotsPower", map);
+	}
+	
+	public List allsign(Map<String, Object> map) {
+		return super.list("qkjmanage_salProAllsign", map);
+	}
+	
+	public Object sign(Object uuid) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("biz_id", uuid);
+		return super.get("qkjmanage_getsalProsign", map);
 	}
 	
 	public int getResultCount() {

@@ -3,15 +3,18 @@
 <sqlMap>
 	<!-- SalPromot Start -->
 	<typeAlias alias="salPromot" type="com.qkj.manage.domain.SalPromot" />
+	<typeAlias alias="closeOrder" type="com.qkj.manage.domain.CloseOrder" />
 	<select id="salpro_getSalPromots" resultClass="salPromot" parameterClass="java.util.Map">
 		<![CDATA[ 
-			SELECT s.*,sdu.`USER_NAME` sd_name,smdu.`USER_NAME` smd_name,au.`USER_NAME` add_user_name,lu.`USER_NAME` lm_user_name, au.`DEPT_CODE` dept_code,d.`dept_cname` sal_scopDept_name,ad.`dept_cname` add_user_dept_name FROM qkjm_r_salpromotion s 
+				SELECT s.*,sdu.`USER_NAME` sd_name,smdu.`USER_NAME` smd_name,au.`USER_NAME` add_user_name,lu.`USER_NAME` lm_user_name, au.`DEPT_CODE` dept_code,d.`dept_cname` sal_scopDept_name,ad.`dept_cname` add_user_dept_name,fd.`USER_NAME` fd_name FROM qkjm_r_salpromotion s 
 			LEFT JOIN s_sys_user sdu ON(s.`sd_user`=sdu.`UUID`)
 			LEFT JOIN s_sys_user smdu ON(s.`smd_user`=smdu.`UUID`)
+			LEFT JOIN s_sys_user fd ON (s.`fd_user`=fd.`UUID`)
 			LEFT JOIN s_sys_user au ON (s.`add_user`=au.`UUID`)
 			LEFT JOIN s_sys_user lu ON(s.`lm_user`=lu.`UUID`)
 			LEFT JOIN s_sys_department d ON(d.`dept_code`=s.`sal_scopDept`)
 			LEFT JOIN s_sys_department ad ON(ad.`dept_code`=s.`add_user_dept`)
+			
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ s.uuid=#uuid# ]]></isNotEmpty>
@@ -27,8 +30,28 @@
 			<isNotEmpty prepend="AND" property="status"><![CDATA[ s.status=#status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="smd_status"><![CDATA[ s.smd_status=#smd_status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="sd_status"><![CDATA[ s.sd_status=#sd_status# ]]></isNotEmpty>
-
+			<isNotEmpty prepend="AND" property="fd_status"><![CDATA[ s.fd_status=#fd_status# ]]></isNotEmpty>
+			
 			<isNotEmpty prepend="AND" property="proendtime"><![CDATA[ s.`endtime`>=#proendtime# ]]></isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="apply_depts" open="(" close=")">
+			<![CDATA[ s.add_user_dept In ]]>
+			<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
+			<isNotEmpty prepend="OR" property="apply_perdepts">
+				<![CDATA[ s.add_user_dept In ]]>
+				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ s.add_user=#apply_userDouble# ]]></isNotEmpty>
+			</isNotEmpty>
+		</isNotEmpty>
+		
+		<isEmpty  property="apply_depts">
+			<isNotEmpty prepend="AND" property="apply_perdepts">
+				<![CDATA[ s.add_user_dept In ]]>
+				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ s.add_user=#apply_userDouble# ]]></isNotEmpty>
+			</isNotEmpty>
+		</isEmpty>
+		
 		</dynamic>
 		<![CDATA[ order by priority desc LIMIT 1000 ]]>
 	</select>
@@ -49,6 +72,25 @@
 			<isNotEmpty prepend="AND" property="status"><![CDATA[ status=#status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="smd_status"><![CDATA[ smd_status=#smd_status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="sd_status"><![CDATA[ sd_status=#sd_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="fd_status"><![CDATA[ fd_status=#fd_status# ]]></isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="apply_depts" open="(" close=")">
+			<![CDATA[ add_user_dept In ]]>
+			<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
+			<isNotEmpty prepend="OR" property="apply_perdepts">
+				<![CDATA[ add_user_dept In ]]>
+				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ add_user=#apply_userDouble# ]]></isNotEmpty>
+			</isNotEmpty>
+		</isNotEmpty>
+		
+		<isEmpty  property="apply_depts">
+			<isNotEmpty prepend="AND" property="apply_perdepts">
+				<![CDATA[ add_user_dept In ]]>
+				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ add_user=#apply_userDouble# ]]></isNotEmpty>
+			</isNotEmpty>
+		</isEmpty>
 
 		</dynamic>
 		<![CDATA[ LIMIT 1000 ]]>
@@ -150,5 +192,54 @@
 		<isNotEmpty prepend="AND" property="proendtime"><![CDATA[ h.`endtime`>=#proendtime# ]]></isNotEmpty>
 	</dynamic>
 	</select>
+	
+	<select id="qkjmanage_salProAllsign" resultClass="closeOrder" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT s.`biz_user` biz_user, u.`USER_NAME` puser_name,u.`user_sign` puser_sign,s.`biz_time` biz_time FROM qkjm_h_process s  
+			LEFT JOIN qkjm_r_salpromotion a ON (a.`uuid`=s.`biz_id`)
+			LEFT JOIN s_sys_user u ON (s.`biz_user`=u.`UUID`)
+			WHERE s.`process_id`=5
+		]]>
+		<isNotEmpty prepend="AND" property="allsign"><![CDATA[ 
+		 s.`biz_id`=#biz_id#
+			AND s.`biz_status01`>0 AND NOT  ISNULL(u.`user_sign`)
+			AND s.`biz_time`>(SELECT MAX(p.`biz_time`) biz_time FROM qkjm_h_process p WHERE p.process_id=5 AND p.biz_status01=0 AND p.`biz_id`=#biz_id# )
+		 ]]></isNotEmpty>
+		
+		<![CDATA[ GROUP BY s.`biz_user` ORDER BY s.`biz_time` DESC  ]]>
+		
+	</select>
+	
+	<select id="qkjmanage_getsalProsign" resultClass="closeOrder" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT 	MAX(sign50) sign50,MAX(time50) time50,MAX(sign40) sign40,MAX(time40) time40,MAX(sign60) sign60,MAX(time60) time60,MAX(sign70) sign70,MAX(time70) time70 FROM (
+SELECT u.`user_sign` sign50,s.`biz_time` time50,NULL sign40,NULL time40,NULL sign60,NULL time60,NULL sign70,NULL time70  FROM qkjm_h_process s  
+			LEFT JOIN qkjm_r_salpromotion a ON (a.`uuid`=s.`biz_id`)
+			LEFT JOIN s_sys_user u ON (s.`biz_user`=u.`UUID`)
+			WHERE s.`process_id`=5 AND s.`biz_status04`=10 AND s.`biz_sign`='SALPRO_MDY_FDSTATUS' AND NOT ISNULL(u.`user_sign`) AND s.`biz_id`=#biz_id# 
+			AND s.`biz_time`>(SELECT MAX(p.`biz_time`) biz_time FROM qkjm_h_process p WHERE p.process_id=5 AND p.biz_status01=0 AND p.`biz_id`=#biz_id#)
+UNION ALL 
+SELECT NULL sign50,NULL time50,u.`user_sign` sign40,s.`biz_time` time40,NULL sign60,NULL time60,NULL sign70,NULL time70 FROM qkjm_h_process s  
+			LEFT JOIN qkjm_r_salpromotion a ON (a.`uuid`=s.`biz_id`)
+			LEFT JOIN s_sys_user u ON (s.`biz_user`=u.`UUID`)
+			WHERE s.`process_id`=5 AND s.`biz_status03`=40 AND s.`biz_sign`='SALPRO_MDY_SMDSTATUS' AND NOT ISNULL(u.`user_sign`) AND s.`biz_id`=#biz_id# 
+			AND s.`biz_time`>(SELECT MAX(p.`biz_time`) biz_time FROM qkjm_h_process p WHERE p.process_id=5 AND p.biz_status01=0 AND p.`biz_id`=#biz_id#)
+UNION ALL 
+SELECT NULL sign50,NULL time50,NULL sign40,NULL time40, u.`user_sign` sign60,s.`biz_time` time60,NULL sign70,NULL time70 FROM qkjm_h_process s  
+			LEFT JOIN qkjm_r_salpromotion a ON (a.`uuid`=s.`biz_id`)
+			LEFT JOIN s_sys_user u ON (s.`biz_user`=u.`UUID`)
+			WHERE s.`process_id`=5 AND s.`biz_status03`=50 AND s.`biz_sign`='SALPRO_MDY_SMDSTATUS' AND NOT ISNULL(u.`user_sign`) AND s.`biz_id`=#biz_id# 
+			AND s.`biz_time`>(SELECT MAX(p.`biz_time`) biz_time FROM qkjm_h_process p WHERE p.process_id=5 AND p.biz_status01=0 AND p.`biz_id`=#biz_id#)
+UNION ALL 
+SELECT NULL sign50,NULL time50,NULL sign40,NULL time40, NULL sign60,NULL time60,u.`user_sign` sign70,s.`biz_time` time70 FROM qkjm_h_process s  
+			LEFT JOIN qkjm_r_salpromotion a ON (a.`uuid`=s.`biz_id`)
+			LEFT JOIN s_sys_user u ON (s.`biz_user`=u.`UUID`)
+			WHERE s.`process_id`=5 AND s.`biz_status03`=60 AND s.`biz_sign`='SALPRO_MDY_SMDSTATUS' AND NOT ISNULL(u.`user_sign`) AND s.`biz_id`=#biz_id# 
+			AND s.`biz_time`>(SELECT MAX(p.`biz_time`) biz_time FROM qkjm_h_process p WHERE p.process_id=5 AND p.biz_status01=0 AND p.`biz_id`=#biz_id#)
+			)a
+		]]>
+		
+	</select>
+	
 	<!-- SalPromot End -->
 </sqlMap>
