@@ -607,6 +607,19 @@ SELECT MAX(a.baotime) baotime,MAX(a.stars) stars,MAX(a.sing) sing,MAX(a.spass) s
 		]]>
 	</update>
 	<!-- ship info change -->
+		<select id="qkjmanage_getsvipActive" resultClass="active" parameterClass="java.util.Map">
+		<![CDATA[ 
+		select * from qkjm_r_active where uuid in( 
+SELECT
+	m.`active_id` 
+ FROM
+	qkjm_r_active_memcost m 
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="customer_id" close=")"><![CDATA[ m.member_id = #customer_id# ]]></isNotEmpty>
+		</dynamic>
+
+	</select>
 
 	<!-- Active End -->
 </sqlMap>

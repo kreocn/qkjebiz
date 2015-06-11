@@ -12,10 +12,23 @@
 		<action name="customerRecode_load" class="com.qkj.manage.action.CustomerRecodeAction" method="load">
 			<result>/WEB-INF/jsp/qkjmanage/CustomerRecodeEdit.jsp</result>
 		</action>
+		
+		<action name="customerRecode_addt" class="com.qkj.manage.action.CustomerRecodeAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">member_load</param>
+				<param name="customer.uuid">${customerRecode.customer_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		
+		
+		
 		<action name="customerRecode_add" class="com.qkj.manage.action.CustomerRecodeAction" method="add">
 			<result type="redirectAction">
-				<param name="actionName">customer_load</param>
-				<param name="customer.uuid">${customerRecode.customer_id}</param>
+				<param name="actionName">member_load</param>
+				<param name="customer_id">${customerRecode.customer_id}</param>
 				<param name="viewFlag">mdy</param>
 				<param name="message">${message}</param>
 			</result>
@@ -28,6 +41,16 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
+		
+		
+		
+		
+			<action name="member_load" class="org.iweb.sysvip.action.MemberAction" method="load">
+			<result>/WEB-INF/jsp/sysvip/MemberEdit.jsp</result>
+		</action>
+		
+		
+		
 		<action name="customerRecode_save" class="com.qkj.manage.action.CustomerRecodeAction" method="save">
 			<result type="redirectAction">
 				<param name="actionName">customerRecode_list</param>
@@ -36,8 +59,8 @@
 		</action>
 		<action name="customerRecode_del" class="com.qkj.manage.action.CustomerRecodeAction" method="del">
 			<result type="redirectAction">
-				<param name="actionName">customer_load</param>
-				<param name="customer.uuid">${customerRecode.customer_id}</param>
+				<param name="actionName">member_load</param>
+				<param name="customer_id">${customerRecode.customer_id}</param>
 				<param name="viewFlag">mdy</param>
 				<param name="message">${message}</param>
 			</result>

@@ -148,6 +148,9 @@
     <s:if test="'mdy'==viewFlag">
     <li><a href="#tabs-3">回访记录</a></li>
       </s:if>
+        <s:if test="'mdy'==viewFlag">
+         <li><a href="#tabs-4">活动记录</a></li>
+         </s:if>
   </ul>
 	 <div id="tabs-1">
     	<fieldset class="clear">
@@ -439,6 +442,7 @@
 				            <div class="label_rwben"><s:textarea name="customer.remark" title="备注" cssClass="label_hang_linput inputNote validate[maxSize[21845]]" /></div>
 						</div>
 					</div>
+
 					<div class="label_hline">
 						<div class="label_hang">
 				            <div class="label_ltit">相关操作:</div>
@@ -458,7 +462,9 @@
 										</c:if> --%>
 										<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CUSTOMERRECODE_ADD',null)==true}">
 										<input id="addRecode" type="button" value="增加回访记录" onclick="openAddRecode();" />
+
 										</c:if>
+											
 									</s:elseif>
 									<%-- <input type="button" class="input-gray" value="返回" onclick="linkurl('<s:url action="customer_relist" namespace="/qkjmanage" />');" /> --%>
 									<input id="print_button" type="button" onclick="window.print();" value="打印本页">
@@ -476,8 +482,145 @@
 			</div>
 		</div>
 	</div>
-	
-	<div id="AddRecode" title="增加回访记录" style="display: none;">
+  </div>
+     <s:if test="'mdy'==viewFlag">
+  <div id="tabs-3">
+  <fieldset class="clear">
+					<legend>回访记录</legend>
+					<table id="table1" width="100%" class="lb_jpin">
+						<tr>
+							<th>回访次数</th>
+							<th>回访日期</th>
+							<th>回访方式</th>
+							<th>受访人</th>
+							<th>下次回访时间</th>
+							<th>回访人</th>
+						<th>操作</th> 
+						</tr>
+						<s:iterator value="customerRecodes" status="sta">
+							<tr>
+								<td>第${sta.index+1}次</td>
+								<td>${it:formatDate(recode_time,'yyyy-MM-dd')}</td>
+								<td data="${type}">
+									<s:if test="0==type">主动电话拜访</s:if>
+									<s:if test="1==type">被动电话来访</s:if>
+									<s:if test="2==type">主动上门拜访</s:if>
+									<s:if test="3==type">被动上门来访</s:if>
+									<s:if test="4==type">会展会场来访</s:if>
+									<s:if test="5==type">网络、邮件、信息形式来访</s:if>
+									<s:if test="6==type">其他方式</s:if>
+								</td>
+								<td>${person}</td>
+								<td>${it:formatDate(next_date,'yyyy-MM-dd')}</td>
+								<td>${add_user_name}</td>
+								<td>
+									 <c:if test="${it:checkPermit('QKJ_QKJMANAGE_CUSTOMERRECODE_DEL',null)==true}">
+							    	[<a style="color:#0044BB;" href="<s:url namespace="/qkjmanage" action="customerRecode_del"><s:param name="customerRecode.uuid" value="uuid" /><s:param name="customerRecode.customer_id" value="customer_id" /></s:url>" onclick="return isDel();">删除</a>]
+							    	</c:if>
+							    	[<a style="color:#0044BB;" href="javascript:;" onclick="showRecode(${uuid});">查看详情</a>] 
+							    	<span id="content_${uuid}" class="tooltiptext" style="display:none"><s:property value="content" /></span>
+									<span id="promise_${uuid}" class="tooltiptext" style="display:none"><s:property value="promise" /></span>
+								</td>
+							</tr>
+						</s:iterator>
+					</table>
+				</fieldset>
+				<input id="addRecode" type="button" value="增加回访记录" onclick="openAddRecode();" />
+  </div>
+  </s:if>
+  
+  
+      <s:if test="'mdy'==viewFlag">
+    <div id="tabs-4">
+
+<fieldset class="clear">
+					<legend>活动记录</legend>
+					<table id="table1" width="100%" class="lb_jpin">
+						<tr>
+							<th>主题</th>
+							<th>目的	</th>
+							<th>活动开始时间</th>
+							<th>活动结束时间 </th>
+							<th>活动预期</th>
+							<th>活动状态</th>
+						</tr>
+						<s:iterator value="active" status="sta1">
+							<tr>
+								<td>${theme }</td>
+								<td>${purpose}</td>
+								<td>${it:formatDate(plan_start,'yyyy-MM-dd')}</td>
+								<td>${it:formatDate(plan_end,'yyyy-MM-dd')}</td>
+								<td>${expect}</td>
+								
+								<td data="${status}">
+									<s:if test="0==status">新申请</s:if>
+									<s:if test="1==status">申请审批中</s:if>
+									<s:if test="2==status">申请通过</s:if>
+									<s:if test="3==status">开始结案</s:if>
+									<s:if test="4==status">结案审批中</s:if>
+									<s:if test="5==status">结案通过</s:if>
+								
+								</td>
+								</tr>
+								</s:iterator>
+</table>
+						
+				</fieldset>
+
+
+
+
+
+
+</div>
+  </s:if>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</div>
+	<div class="label_main">
+        <div class="label_hang">
+            <div class="label_ltit">相关操作:</div>
+            <div class="label_rwbenx">
+            	<s:if test="'add' == viewFlag">
+					
+					<input id="svipadd" name="svipadd" type="button" value="确定" />
+				</s:if>
+				<s:elseif test="'mdy' == viewFlag">
+					<input id="svipsave" name="svipsave" type="button" value="保存" class="input-blue" />
+					<s:submit id="svipdelete" name="svipdelete" value="删除" action="member_del" cssClass="input-red" onclick="return isDel();" />
+				</s:elseif>
+				<input type="button" value="返回" onclick="linkurl('<s:url action="member_list" namespace="/sysvip" />');"  class="input-gray" />
+				<s:if test="'mdy' == viewFlag">
+					<c:if test="${it:checkPermit('QKJM_SYSVIP_MEMBERSTOCK_LIST',null)==true}">
+						<input type="button" value="生成会员库存盘点模板" onclick="linkurl('<s:url action="memberStock_out" namespace="/sysvip" ><s:param name="member.member_name" value="%{member.member_name}"></s:param><s:param name="member.uuid" value="%{member.uuid}"></s:param></s:url>');"  class="input-blue" />
+					</c:if>
+				</s:if>
+				<font id="addMobile" color="red"></font>
+				<span id="message"><s:property value="message" /></span>
+        	</div>
+    	</div>
+	</div>
+</div>
+</s:form>
+</div>
+</div>
+
+
+
+
+
+
+
+
+<div id="AddRecode" title="增加回访记录" style="display: none;">
+<s:form name="form_customerRecode_add" cssClass="validForm" action="customerRecode_add" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
 	<div class="ifromoperate" ></div>
 	<table class="ilisttable" width="100%">
 		<tr id="recode_index_tr" style="display: none;">
@@ -511,92 +654,18 @@
 		<tr id="customerRecode_bottonarea">
 			<td>&nbsp;</td>
 		    <td class="buttonarea">
-		    	<s:hidden name="customerRecode.customer_id" value="%{customer.uuid}" />
+		    	<s:hidden name="customerRecode.customer_id" value="%{member.uuid}" />
 		    	<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CUSTOMERRECODE_ADD',null)==true}">
 				<s:submit id="customerRecode_add" name="customerRecode_add" value="确定" action="customerRecode_add" />
 				</c:if>
-				<span id="message"><s:property value="message" /></span>
 			</td>
 	    </tr>
 	</table>	
-
-</div>
-  </div>
-      <s:if test="'mdy'==viewFlag">
-  
-  <div id="tabs-3">
-  <fieldset class="clear">
-					<legend>回访记录</legend>
-					<table id="table1" width="100%" class="lb_jpin">
-						<tr>
-							<th>回访次数</th>
-							<th>回访日期</th>
-							<th>回访方式</th>
-							<th>受访人</th>
-							<th>下次回访时间</th>
-							<th>回访人</th>
-						<!-- 	<th>操作</th> -->
-						</tr>
-						<s:iterator value="customerRecodes" status="sta">
-							<tr>
-								<td>第${sta.index+1}次</td>
-								<td>${it:formatDate(recode_time,'yyyy-MM-dd')}</td>
-								<td data="${type}">
-									<s:if test="0==type">主动电话拜访</s:if>
-									<s:if test="1==type">被动电话来访</s:if>
-									<s:if test="2==type">主动上门拜访</s:if>
-									<s:if test="3==type">被动上门来访</s:if>
-									<s:if test="4==type">会展会场来访</s:if>
-									<s:if test="5==type">网络、邮件、信息形式来访</s:if>
-									<s:if test="6==type">其他方式</s:if>
-								</td>
-								<td>${person}</td>
-								<td>${it:formatDate(next_date,'yyyy-MM-dd')}</td>
-								<td>${add_user_name}</td>
-								<td>
-									<%-- <c:if test="${it:checkPermit('QKJ_QKJMANAGE_CUSTOMERRECODE_DEL',null)==true}">
-							    	[<a href="<s:url namespace="/qkjmanage" action="customerRecode_del"><s:param name="customerRecode.uuid" value="uuid" /><s:param name="customerRecode.customer_id" value="customer_id" /></s:url>" onclick="return isDel();">删除</a>]
-							    	</c:if>
-							    	[<a href="javascript:;" onclick="showRecode(${uuid});">查看详情</a>] 
-							    	<span id="content_${uuid}" class="tooltiptext"><s:property value="content" /></span>
-									<span id="promise_${uuid}" class="tooltiptext"><s:property value="promise" /></span>--%>
-								</td>
-							</tr>
-						</s:iterator>
-					</table>
-				</fieldset>
-  
-  </div>
-  </s:if>
-</div>
-
-
-	<div class="label_main">
-        <div class="label_hang">
-            <div class="label_ltit">相关操作:</div>
-            <div class="label_rwbenx">
-            	<s:if test="'add' == viewFlag">
-					
-					<input id="svipadd" name="svipadd" type="button" value="确定" />
-				</s:if>
-				<s:elseif test="'mdy' == viewFlag">
-					<input id="svipsave" name="svipsave" type="button" value="保存" class="input-blue" />
-					<s:submit id="svipdelete" name="svipdelete" value="删除" action="member_del" cssClass="input-red" onclick="return isDel();" />
-				</s:elseif>
-				<input type="button" value="返回" onclick="linkurl('<s:url action="member_list" namespace="/sysvip" />');"  class="input-gray" />
-				<s:if test="'mdy' == viewFlag">
-					<c:if test="${it:checkPermit('QKJM_SYSVIP_MEMBERSTOCK_LIST',null)==true}">
-						<input type="button" value="生成会员库存盘点模板" onclick="linkurl('<s:url action="memberStock_out" namespace="/sysvip" ><s:param name="member.member_name" value="%{member.member_name}"></s:param><s:param name="member.uuid" value="%{member.uuid}"></s:param></s:url>');"  class="input-blue" />
-					</c:if>
-				</s:if>
-				<font id="addMobile" color="red"></font>
-        	</div>
-    	</div>
-	</div>
-</div>
+	
 </s:form>
 </div>
-</div>
+
+
 <s:action name="ref_foot" namespace="/manager" executeResult="true" />
 <script type="text/javascript">
 					var sa = new SArea($("#memberAddress\\.province") ,$("#memberAddress\\.city"),$("#memberAddress\\.area"));

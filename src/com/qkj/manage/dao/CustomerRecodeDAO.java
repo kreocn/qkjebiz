@@ -30,7 +30,10 @@ public class CustomerRecodeDAO extends AbstractDAO {
 	public int delete(Object parameters) {
 		return super.delete("qkjmanage_delCustomerRecode", parameters);
 	}
-
+	
+	public List listdelete(Map<String, Object> map) {
+		return super.list("qkjmanage_getdeletereturn",map);
+	}
 	public int getResultCount() {
 		return super.getResultCount();
 	}

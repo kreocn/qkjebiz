@@ -4,7 +4,10 @@ import java.util.Date;
 
 public class CustomerRecode {
 	private Integer uuid;// (int)主键ID
-	private Integer customer_id;// (int)回访客户ID
+
+	private String customer_id;// (int)回访客户ID
+	
+
 	private Date recode_time;// (date)拜访日期
 	private Integer type;// (int)回访方式
 	private String person;// (varchar)受访人
@@ -15,7 +18,6 @@ public class CustomerRecode {
 	private Date add_time;// (datetime)添加时间
 	private String lm_user;// (varchar)修改人
 	private Date lm_time;// (datetime)修改时间
-
 	// 以下为非数据库字段
 	private String add_user_name;
 	private String cus_name;
@@ -24,6 +26,15 @@ public class CustomerRecode {
 	private String dept_code;
 	private String dept_name;
 	private String is_sub_dept;// 查询字段,是否列出子部门
+	
+	
+	public String getCustomer_id() {
+		return customer_id;
+	}
+
+	public void setCustomer_id(String customer_id) {
+		this.customer_id = customer_id;
+	}
 
 	public String getIs_sub_dept() {
 		return is_sub_dept;
@@ -73,13 +84,7 @@ public class CustomerRecode {
 		this.uuid = uuid;
 	}
 
-	public Integer getCustomer_id() {
-		return customer_id;
-	}
 
-	public void setCustomer_id(Integer customer_id) {
-		this.customer_id = customer_id;
-	}
 
 	public Date getRecode_time() {
 		return recode_time;
