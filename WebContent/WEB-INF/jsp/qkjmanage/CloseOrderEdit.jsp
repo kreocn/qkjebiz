@@ -66,13 +66,15 @@
 							<div class='label_rwben'>${closeOrder.uuid}<s:hidden name="closeOrder.uuid" />
 							</div>
 						</div>
-						</s:if>
-					<div class="label_hang">
+						
+						<div class="label_hang">
 							<div class="label_ltit">单据编号:</div>
 							<div class="label_rwb">
 								<s:textfield name="closeOrder.close_num" title="单据编号"/>
 							</div>
 						</div>
+						</s:if>
+					
 					<s:if test="'mdy' == viewFlag">
 					<s:hidden name="closeOrder.apply_dept" value="%{closeOrder.apply_dept}"></s:hidden>
 						<div class='label_hang'>

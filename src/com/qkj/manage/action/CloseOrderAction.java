@@ -359,6 +359,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	public String add() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_ADD");
 		try {
+			closeOrder.setClose_num(close_num);//单据编号
 			closeOrder.setApply_dept(ContextHelper.getUserLoginDept());
 			closeOrder.setAdd_user(ContextHelper.getUserLoginUuid());
 			closeOrder.setAdd_time(new Date());
@@ -908,6 +909,16 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 		if (closeOrder != null) {/*单据状态，销售状态，销管状态，财务，数据中心*/
 			pdao.addProcess(4, closeOrder.getUuid(), p_sign, p_note, closeOrder.getState(),closeOrder.getSd_state(), closeOrder.getSmd_status(),closeOrder.getFd_check_state(),closeOrder.getNd_check_state(),userLogin);
 		}
+	}
+	
+	public String number(){
+		String num=null;
+		String dept=ContextHelper.getUserLoginDept();
+		map.clear();
+		map.put("apply_dept", dept);
+		int n=dao.list(map).size();
+		num=n+"";
+		return num;
 	}
 	
 }
