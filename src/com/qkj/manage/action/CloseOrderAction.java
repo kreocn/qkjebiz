@@ -19,12 +19,14 @@ import com.qkj.manage.check.CheckSkip;
 import com.qkj.manage.check.CloseOrderCheckSkip;
 import com.qkj.manage.dao.ApproveDAO;
 import com.qkj.manage.dao.CloseOrderDAO;
+import com.qkj.manage.dao.CloseOrderPosmDAO;
 import com.qkj.manage.dao.CloseOrderProDAO;
 import com.qkj.manage.dao.ProcessDAO;
 import com.qkj.manage.dao.SalPromotDAO;
 import com.qkj.manage.dao.SalPromotPower;
 import com.qkj.manage.domain.Approve;
 import com.qkj.manage.domain.CloseOrder;
+import com.qkj.manage.domain.CloseOrderPosm;
 import com.qkj.manage.domain.CloseOrderPro;
 import com.qkj.manage.domain.SalPromot;
 
@@ -33,11 +35,11 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	private static Log log = LogFactory.getLog(CloseOrderAction.class);
 	private Map<String, Object> map = new HashMap<String, Object>();
 	private CloseOrderDAO dao = new CloseOrderDAO();
-	private SalPromotDAO saldao=new SalPromotDAO();
+	private SalPromotDAO saldao = new SalPromotDAO();
 	private ApproveDAO apdao = new ApproveDAO();
-	private SalPromotPower sal=new SalPromotPower();
-	private CloseOrderCheckSkip cocs=new CloseOrderCheckSkip();
-	
+	private SalPromotPower sal = new SalPromotPower();
+	private CloseOrderCheckSkip cocs = new CloseOrderCheckSkip();
+
 	private CloseOrder closeOrder;
 	private List<CloseOrder> closeOrders;
 	private List<CloseOrder> allsigns;
@@ -45,6 +47,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	private List<SalPromot> salPromots;
 	private List<SalPromot> salPromotsed;
 	private List<CloseOrderPro> closeOrderPros;
+	private List<CloseOrderPosm> closePosms;
 	private CloseOrderPro closeOrderPro;
 	private String message;
 	private String viewFlag;
@@ -52,7 +55,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	private int pageSize;
 	private int currPage;
 	private String pro_id[];
-	
+
 	private Approve approve;
 	private List<Approve> approves;
 	private String isApprover;
@@ -60,8 +63,15 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;结案提货单";
 	// 个人工作标识
 	private String perWorkF;
-	private static String perWorkFlag=null;
-		
+	private static String perWorkFlag = null;
+
+	public List<CloseOrderPosm> getClosePosms() {
+		return closePosms;
+	}
+
+	public void setClosePosms(List<CloseOrderPosm> closePosms) {
+		this.closePosms = closePosms;
+	}
 
 	public String getPerWorkF() {
 		return perWorkF;
@@ -220,26 +230,26 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	}
 
 	public String list() throws Exception {
-		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_LIST");
 		try {
 			map.clear();
 			if (closeOrder == null) closeOrder = new CloseOrder();
-			ContextHelper.setSearchDeptPermit4Search("QKJ_QKJMANAGE_CLOSEORDER_LIST",map, "apply_depts", "add_user");
+			ContextHelper.setSearchDeptPermit4Search("QKJ_QKJMANAGE_CLOSEORDER_LIST", map, "apply_depts", "add_user");
 			ContextHelper.SimpleSearchMap4Page("QKJ_QKJMANAGE_CLOSEORDER_LIST", map, closeOrder, viewFlag);
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 			this.setCloseOrders(dao.list(map));
 			this.setRecCount(dao.getResultCount());
 			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;结案提货单列表";
-			
+
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
 		}
-		if(perWorkFlag==null || perWorkFlag.equals("null")){
+		if (perWorkFlag == null || perWorkFlag.equals("null")) {
 			return "success";
-		}else{
-			perWorkFlag=null;
+		} else {
+			perWorkFlag = null;
 			return "perSuccess";
 		}
 	}
@@ -249,11 +259,11 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	}
 
 	public String load() throws Exception {
-		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-		if((perWorkF==null || perWorkF.equals("null")) && perWorkFlag==null){
-			perWorkFlag=null;
-		}else{
-			perWorkFlag="perWork";
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		if ((perWorkF == null || perWorkF.equals("null")) && perWorkFlag == null) {
+			perWorkFlag = null;
+		} else {
+			perWorkFlag = "perWork";
 		}
 		try {
 			if (null == viewFlag) {
@@ -263,37 +273,42 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 				this.setCloseOrder(null);
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/closeOrder_relist'>结案提货单列表</a>&nbsp;&gt;&nbsp;增加结案提货单";
 			} else if ("mdy".equals(viewFlag)) {
-				String salid=null;
+				String salid = null;
 				if (!(closeOrder == null || closeOrder.getUuid() == null)) {
 					this.setCloseOrder((CloseOrder) dao.get(closeOrder.getUuid()));
-					salid=closeOrder.getSalPro_id();
+					salid = closeOrder.getSalPro_id();
 				} else {
 					this.setCloseOrder(null);
 				}
-				
-				List<SalPromot> salps=new ArrayList<>();
-				if(salid!=null){
-					String stringarray[]=salid.split(",");  
-					for(int i=0;i<stringarray.length;i++){
-						SalPromot sp=new SalPromot();
+
+				List<SalPromot> salps = new ArrayList<>();
+				if (salid != null) {
+					String stringarray[] = salid.split(",");
+					for (int i = 0; i < stringarray.length; i++) {
+						SalPromot sp = new SalPromot();
 						sp.setUuid(Integer.parseInt(stringarray[i]));
-						sp=(SalPromot) saldao.get(sp.getUuid());
+						sp = (SalPromot) saldao.get(sp.getUuid());
 						salps.add(sp);
 					}
-					this.setSalPromotsed(salps);//已经选择的促销活动
+					this.setSalPromotsed(salps);// 已经选择的促销活动
 				}
-				this.setSalPromots(sal.salProPower(closeOrder.getMember_id()));//可选的促销活动
-				
-				CloseOrderProDAO cdao=new CloseOrderProDAO();
+				this.setSalPromots(sal.salProPower(closeOrder.getMember_id()));// 可选的促销活动
+
+				CloseOrderProDAO cdao = new CloseOrderProDAO();
 				map.clear();
 				map.put("order_id", closeOrder.getUuid());
 				this.setCloseOrderPros(cdao.list(map));
 				
+				CloseOrderPosmDAO closedao=new CloseOrderPosmDAO();
+				map.clear();
+				map.put("closeOrder_id", closeOrder.getUuid());
+				this.setClosePosms(closedao.list(map));
+
 				map.clear();
 				map.put("int_id", closeOrder.getUuid());
 				map.put("approve_type", 3);
 				this.setApproves(apdao.list(map));
-				
+
 				/* 检查当前用户是否已经审阅 */
 				if (apdao.userIsIn(approves, ContextHelper.getUserLoginUuid())) this.setIsApprover("true");
 				else this.setIsApprover("false");
@@ -308,66 +323,66 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
-	
-	public String view() throws Exception{
-		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-		String salid=null;
-		List<SalPromot> salps=new ArrayList<>();
+
+	public String view() throws Exception {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String salid = null;
+		List<SalPromot> salps = new ArrayList<>();
 		try {
-				if (!(closeOrder == null || closeOrder.getUuid() == null)) {
-					this.setCloseOrder((CloseOrder) dao.get(closeOrder.getUuid()));
-					if(closeOrder.getSalPro_id()!=null){
-						salid=closeOrder.getSalPro_id();
-					}
-				} else {
-					this.setCloseOrder(null);
+			if (!(closeOrder == null || closeOrder.getUuid() == null)) {
+				this.setCloseOrder((CloseOrder) dao.get(closeOrder.getUuid()));
+				if (closeOrder.getSalPro_id() != null) {
+					salid = closeOrder.getSalPro_id();
 				}
-				
-				if(salid!=null){
-					String stringarray[]=salid.split(",");  
-					for(int i=0;i<stringarray.length;i++){
-						SalPromot sp=new SalPromot();
-						System.out.println(stringarray[i]);
-						sp.setUuid(Integer.parseInt(stringarray[i]));
-						sp=(SalPromot) saldao.get(sp.getUuid());
-						salps.add(sp);
-					}
-					
+			} else {
+				this.setCloseOrder(null);
+			}
+
+			if (salid != null) {
+				String stringarray[] = salid.split(",");
+				for (int i = 0; i < stringarray.length; i++) {
+					SalPromot sp = new SalPromot();
+					System.out.println(stringarray[i]);
+					sp.setUuid(Integer.parseInt(stringarray[i]));
+					sp = (SalPromot) saldao.get(sp.getUuid());
+					salps.add(sp);
 				}
-				this.setSalPromots(salps);
-				map.clear();
-				map.put("allsign", 1);
-				map.put("biz_id", closeOrder.getUuid());
-				this.setAllsigns(dao.allsign(map));
-				System.out.println(allsigns.size());
-				
-				this.setSign((CloseOrder) dao.sign(closeOrder.getUuid()));
-				System.out.println(sign);
-				CloseOrderProDAO cdao=new CloseOrderProDAO();
-				map.clear();
-				map.put("order_id", closeOrder.getUuid());
-				this.setCloseOrderPros(cdao.list(map));
-				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/closeOrder_relist'>结案提货单列表</a>&nbsp;&gt;&nbsp;结案提货单详情";
+
+			}
+			this.setSalPromots(salps);
+			map.clear();
+			map.put("allsign", 1);
+			map.put("biz_id", closeOrder.getUuid());
+			this.setAllsigns(dao.allsign(map));
+			System.out.println(allsigns.size());
+
+			this.setSign((CloseOrder) dao.sign(closeOrder.getUuid()));
+			System.out.println(sign);
+			CloseOrderProDAO cdao = new CloseOrderProDAO();
+			map.clear();
+			map.put("order_id", closeOrder.getUuid());
+			this.setCloseOrderPros(cdao.list(map));
+			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/closeOrder_relist'>结案提货单列表</a>&nbsp;&gt;&nbsp;结案提货单详情";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!view 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!view 读取数据错误:", e);
 		}
 		return SUCCESS;
 	}
-	
 
 	public String add() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_ADD");
 		try {
-			closeOrder.setClose_num(number());//单据编号
+			closeOrder.setClose_num(number());// 单据编号
 			closeOrder.setApply_dept(ContextHelper.getUserLoginDept());
 			closeOrder.setAdd_user(ContextHelper.getUserLoginUuid());
 			closeOrder.setAdd_time(new Date());
 			closeOrder.setLm_user(ContextHelper.getUserLoginUuid());
 			closeOrder.setLm_time(new Date());
 			closeOrder.setState(0);
+			closeOrder.setType(0);
 			dao.add(closeOrder);
-			addProcess("CLOSEORDER_ADD", "新增结案提货单",ContextHelper.getUserLoginUuid());
+			addProcess("CLOSEORDER_ADD", "新增结案提货单", ContextHelper.getUserLoginUuid());
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!add 数据添加失败:", e);
 			throw new Exception(this.getClass().getName() + "!add 数据添加失败:", e);
@@ -384,7 +399,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 			closeOrder.setLm_user(ContextHelper.getUserLoginUuid());
 			closeOrder.setLm_time(new Date());
 			dao.save(closeOrder);
-			addProcess("CLOSEORDER_MDY", "修改结案提货单",ContextHelper.getUserLoginUuid());
+			addProcess("CLOSEORDER_MDY", "修改结案提货单", ContextHelper.getUserLoginUuid());
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
@@ -397,16 +412,17 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 		try {
 			dao.delete(closeOrder);
 			setMessage("删除成功!ID=" + closeOrder.getUuid());
-			addProcess("CLOSEORDER_ADD", "删除结案提货单",ContextHelper.getUserLoginUuid());
+			addProcess("CLOSEORDER_ADD", "删除结案提货单", ContextHelper.getUserLoginUuid());
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!del 数据删除失败:", e);
 			throw new Exception(this.getClass().getName() + "!del 数据删除失败:", e);
 		}
 		return SUCCESS;
 	}
-	/*申请单状态 0:新申请 1:申请审批中 2:申请通过 */
+
+	/* 申请单状态 0:新申请 1:申请审批中 2:申请通过 */
 	/* 销售部-审核状态 0:初始状态 5:审核退回 10:待审核 30:大区经理审核通过 40:运营总监审核通过 50:业务副总审核通过 */
-	/* 销售管理部-审核状态 0:未签收 5:审核退回 10:已签收  30:销管经理已审 40:销管部经理已审 50:销管副总已审  60:总经理审核通过 */
+	/* 销售管理部-审核状态 0:未签收 5:审核退回 10:已签收 30:销管经理已审 40:销管部经理已审 50:销管副总已审 60:总经理审核通过 */
 	/**
 	 * 报审
 	 * 
@@ -416,23 +432,26 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	public String check0() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_CHECK0");
 		try {
-			/*mdyStatus(1);//待审核
-			// 同时进入销售部审核流程
-			mdyCloseOrderSDStatus(10,ContextHelper.getUserLoginUuid());
-			// 销售管理部默认为已签收
-			mdyCloseOrderSMDStatus(10,ContextHelper.getUserLoginUuid());
-			mdyCloseOrderFDStatus(1,0);
-			mdyCloseOrderFDStatus(2,0);*/
-			cocs.checkSkip(closeOrder,"check0");
+			/*
+			 * mdyStatus(1);//待审核
+			 * // 同时进入销售部审核流程
+			 * mdyCloseOrderSDStatus(10,ContextHelper.getUserLoginUuid());
+			 * // 销售管理部默认为已签收
+			 * mdyCloseOrderSMDStatus(10,ContextHelper.getUserLoginUuid());
+			 * mdyCloseOrderFDStatus(1,0);
+			 * mdyCloseOrderFDStatus(2,0);
+			 */
+			cocs.checkSkip(closeOrder, "check0");
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!check0 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!check0 数据更新失败:", e);
 		}
 		return SUCCESS;
 	}
-	
+
 	/**
 	 * 销售部退回
+	 * 
 	 * @return
 	 * @throws Exception
 	 */
@@ -440,70 +459,70 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_CHECK5");
 		try {
 			mdyStatus(0);
-			mdyCloseOrderSDStatus(5,ContextHelper.getUserLoginUuid());
-			mdyCloseOrderFDStatus(1,0);
-			mdyCloseOrderFDStatus(2,0);
+			mdyCloseOrderSDStatus(5, ContextHelper.getUserLoginUuid());
+			mdyCloseOrderFDStatus(1, 0);
+			mdyCloseOrderFDStatus(2, 0);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!check5 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!check5 数据更新失败:", e);
 		}
 		return SUCCESS;
 	}
-	
+
 	/**
 	 * 大区经理通过
+	 * 
 	 * @return
 	 * @throws Exception
 	 */
 	public String check20() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_CHECK20");
 		try {
-			//mdyCloseOrderSDStatus(30,userid);
-			cocs.checkSkip(closeOrder,"check20");
+			// mdyCloseOrderSDStatus(30,userid);
+			cocs.checkSkip(closeOrder, "check20");
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!check1 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!check1 数据更新失败:", e);
 		}
 		return SUCCESS;
 	}
-	
+
 	/**
 	 * 总监通过
+	 * 
 	 * @return
 	 * @throws Exception
 	 */
 	public String check30() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_CHECK30");
 		try {
-			//mdyCloseOrderSDStatus(40,userid);
-			cocs.checkSkip(closeOrder,"check30");
+			// mdyCloseOrderSDStatus(40,userid);
+			cocs.checkSkip(closeOrder, "check30");
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!check1 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!check1 数据更新失败:", e);
 		}
 		return SUCCESS;
 	}
-	
+
 	/**
 	 * 业务副总通过
+	 * 
 	 * @return
 	 * @throws Exception
 	 */
 	public String check40() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_CHECK50");
 		try {
-			//mdyCloseOrderSDStatus(50,userid);
-			cocs.checkSkip(closeOrder,"check40");
+			// mdyCloseOrderSDStatus(50,userid);
+			cocs.checkSkip(closeOrder, "check40");
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!check1 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!check1 数据更新失败:", e);
 		}
 		return SUCCESS;
 	}
-	
-	
-	
-	
+
 	/**
 	 * 签收
 	 * 
@@ -514,7 +533,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	public String mdyCloseOrderSMDStatus0() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_SMDSTATUS0");
 		try {
-			mdyCloseOrderSMDStatus(10,ContextHelper.getUserLoginUuid());
+			mdyCloseOrderSMDStatus(10, ContextHelper.getUserLoginUuid());
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyCloseOrderSMDStatus0 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyCloseOrderSMDStatus0 数据更新失败:", e);
@@ -532,10 +551,10 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	public String mdyCloseOrderSMDStatus5() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_SMDSTATUS");
 		try {
-			mdyCloseOrderSMDStatus(5,ContextHelper.getUserLoginUuid());
+			mdyCloseOrderSMDStatus(5, ContextHelper.getUserLoginUuid());
 			mdyStatus(0);
-			mdyCloseOrderFDStatus(1,0);
-			mdyCloseOrderFDStatus(2,0);
+			mdyCloseOrderFDStatus(1, 0);
+			mdyCloseOrderFDStatus(2, 0);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyCloseOrderSMDStatus5 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyCloseOrderSMDStatus5 数据更新失败:", e);
@@ -553,8 +572,8 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	public String mdyCloseOrderSMDStatus10() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_SMDSTATUS10");
 		try {
-			 //mdyCloseOrderSMDStatus(30,userid);
-			cocs.checkSkip(closeOrder,"mdyCloseOrderSMDStatus10");
+			// mdyCloseOrderSMDStatus(30,userid);
+			cocs.checkSkip(closeOrder, "mdyCloseOrderSMDStatus10");
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyCloseOrderSMDStatus10 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyCloseOrderSMDStatus10 数据更新失败:", e);
@@ -572,8 +591,8 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	public String mdyCloseOrderSMDStatus40() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_SMDSTATUS40");
 		try {
-			//mdyCloseOrderSMDStatus(40,userid);
-			cocs.checkSkip(closeOrder,"mdyCloseOrderSMDStatus40");
+			// mdyCloseOrderSMDStatus(40,userid);
+			cocs.checkSkip(closeOrder, "mdyCloseOrderSMDStatus40");
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyCloseOrderSMDStatus40 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyCloseOrderSMDStatus40 数据更新失败:", e);
@@ -591,62 +610,63 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	public String mdyCloseOrderSMDStatus50() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_SMDSTATUS50");
 		try {
-			 //mdyCloseOrderSMDStatus(50,userid);
-			cocs.checkSkip(closeOrder,"mdyCloseOrderSMDStatus50");
+			// mdyCloseOrderSMDStatus(50,userid);
+			cocs.checkSkip(closeOrder, "mdyCloseOrderSMDStatus50");
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyCloseOrderSMDStatus40 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyCloseOrderSMDStatus40 数据更新失败:", e);
 		}
 		return SUCCESS;
 	}
-	
+
 	/**
 	 * 总经理通过
+	 * 
 	 * @return
 	 * @throws Exception
 	 */
 	public String mdyCloseOrderSMDStatus60() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_CHECK60");
 		try {
-			 mdyCloseOrderSMDStatus(60,ContextHelper.getUserLoginUuid());
+			mdyCloseOrderSMDStatus(60, ContextHelper.getUserLoginUuid());
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!check1 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!check1 数据更新失败:", e);
 		}
 		return SUCCESS;
 	}
-	
-	
-	
+
 	/**
 	 * 财务通过
+	 * 
 	 * @return
 	 * @throws Exception
 	 */
 	public String checkfd10() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_CHECK40");
 		try {
-			mdyCloseOrderFDStatus(1,10);
+			mdyCloseOrderFDStatus(1, 10);
 			closeOrder.setState(2);
 			dao.mdyPassStatus(closeOrder);
-			addProcess("CLOSEORDER_APPLY_PASS", "提货结案申请通过",ContextHelper.getUserLoginUuid());
+			addProcess("CLOSEORDER_APPLY_PASS", "提货结案申请通过", ContextHelper.getUserLoginUuid());
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!check1 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!check1 数据更新失败:", e);
 		}
 		return SUCCESS;
 	}
-	
+
 	/**
 	 * 财务退回
+	 * 
 	 * @return
 	 * @throws Exception
 	 */
 	public String checkfd5() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_CHECK40");
 		try {
-			mdyCloseOrderFDStatus(1,5);
-			mdyCloseOrderFDStatus(2,0);
+			mdyCloseOrderFDStatus(1, 5);
+			mdyCloseOrderFDStatus(2, 0);
 			mdyStatus(0);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!check1 数据更新失败:", e);
@@ -654,35 +674,35 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
-	
-	
-	
+
 	/**
 	 * 数据中心通过数据中心审核状态0：未审核5：退回10：通过
+	 * 
 	 * @param p_check
 	 * @return
 	 */
 	public String checknd0() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_NDSTATUS0");
 		try {
-			mdyCloseOrderFDStatus(2,10);
+			mdyCloseOrderFDStatus(2, 10);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!check1 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!check1 数据更新失败:", e);
 		}
 		return SUCCESS;
 	}
-	
+
 	/**
 	 * 数据中心退回
+	 * 
 	 * @param p_check
 	 * @return
 	 */
 	public String checknd5() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_NDSTATUS0");
 		try {
-			mdyCloseOrderFDStatus(2,5);
-			mdyCloseOrderFDStatus(1,0);
+			mdyCloseOrderFDStatus(2, 5);
+			mdyCloseOrderFDStatus(1, 0);
 			mdyStatus(0);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!check1 数据更新失败:", e);
@@ -690,7 +710,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
-	
+
 	/**
 	 * 审阅
 	 * 
@@ -701,7 +721,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_APPROVE");
 		try {
 			apdao.add(approve, 3, closeOrder.getUuid());
-			addProcess("CLOSE_APPROVE", "结案提货单-增加一条审阅信息",ContextHelper.getUserLoginUuid());
+			addProcess("CLOSE_APPROVE", "结案提货单-增加一条审阅信息", ContextHelper.getUserLoginUuid());
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!approve 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!approve 数据更新失败:", e);
@@ -718,8 +738,8 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	public String approveDel() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_APPROVEDELLAST");
 		try {
-			apdao.deleteLast(approve, 3,  closeOrder.getUuid());
-			addProcess("CLOSE_APPROVEDEL", "结案提货-删除一条审阅信息",ContextHelper.getUserLoginUuid());
+			apdao.deleteLast(approve, 3, closeOrder.getUuid());
+			addProcess("CLOSE_APPROVEDEL", "结案提货-删除一条审阅信息", ContextHelper.getUserLoginUuid());
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!approveDel 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!approveDel 数据更新失败:", e);
@@ -734,7 +754,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	 * @return
 	 * @date 2014-4-26 上午10:20:39
 	 */
-	public int mdyCloseOrderSDStatus(int sd_status,String userid) {
+	public int mdyCloseOrderSDStatus(int sd_status, String userid) {
 		if (sd_status == 5) {
 			noteflag = "退回";
 		}
@@ -759,10 +779,10 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 		closeOrder.setLm_user(userid);
 		closeOrder.setLm_time(new Date());
 		String note = "提货结案单-销售审核状态变更-" + noteflag;
-		addProcess("CLOSEORDER_MDY_SDSTATUS", note,userid);
+		addProcess("CLOSEORDER_MDY_SDSTATUS", note, userid);
 		return dao.mdyCloseOrderSDStatus(closeOrder);
 	}
-	
+
 	/**
 	 * 改销售管理部审核状态通用权限
 	 * 
@@ -770,8 +790,8 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	 * @throws Exception
 	 * @date 2014-4-26 上午10:25:25
 	 */
-	public int mdyCloseOrderSMDStatus(int smd_status,String userid) {
-		CheckSkip s=new CheckSkip();
+	public int mdyCloseOrderSMDStatus(int smd_status, String userid) {
+		CheckSkip s = new CheckSkip();
 		if (smd_status == 5) {
 			noteflag = "退回";
 		}
@@ -793,12 +813,12 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 		closeOrder.setLm_user(userid);
 		closeOrder.setLm_time(new Date());
 		String note = "提货结案单-销管审核状态变更-" + noteflag;
-		addProcess("CLOSEORDER_MDY_SMDSTATUS", note,userid);
+		addProcess("CLOSEORDER_MDY_SMDSTATUS", note, userid);
 		return dao.mdyCloseOrderSMDStatus(closeOrder);
 	}
-	
+
 	private int mdyStatus(int status) {
-		CheckSkip s=new CheckSkip();
+		CheckSkip s = new CheckSkip();
 		if (status == -1) {
 			noteflag = "作废";
 		}
@@ -824,10 +844,10 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 		closeOrder.setLm_user(ContextHelper.getUserLoginUuid());
 		closeOrder.setLm_time(new Date());
 		String note = "提货结案单状态变更-" + noteflag;
-		addProcess("CLOSEORDER_MDY_STATUS", note,ContextHelper.getUserLoginUuid());
+		addProcess("CLOSEORDER_MDY_STATUS", note, ContextHelper.getUserLoginUuid());
 		return dao.mdyCloseOrderStatus(closeOrder);
 	}
-	
+
 	/**
 	 * 改财务审核状态通用权限
 	 * 
@@ -849,9 +869,9 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 			closeOrder.setLm_user(ContextHelper.getUserLoginUuid());
 			closeOrder.setLm_time(new Date());
 			String note = "提货结案单--财务状态变更-" + noteflag;
-			addProcess("CLOSEORDER_MDY_FDSTATUS", note,ContextHelper.getUserLoginUuid());
+			addProcess("CLOSEORDER_MDY_FDSTATUS", note, ContextHelper.getUserLoginUuid());
 			return dao.mdyCloseOrderFDStatus(closeOrder);
-		}  else {// 数据中心
+		} else {// 数据中心
 			if (smd_status == 5) {
 				noteflag = "退回";
 			}
@@ -864,65 +884,74 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 			closeOrder.setLm_user(ContextHelper.getUserLoginUuid());
 			closeOrder.setLm_time(new Date());
 			String note = "提货结案单--数据中心状态变更-" + noteflag;
-			addProcess("CLOSEORDER_MDY_NDCSTATUS", note,ContextHelper.getUserLoginUuid());
+			addProcess("CLOSEORDER_MDY_NDCSTATUS", note, ContextHelper.getUserLoginUuid());
 			return dao.mdyCloseOrderNDStatus(closeOrder);
 		}
 
 	}
 
-	
-	
-	/*public int check(int p_check) {
-		closeOrder.setCheck_state(p_check);
-		closeOrder.setCheck_user(ContextHelper.getUserLoginUuid());
-		closeOrder.setCheck_time(new Date());
-		closeOrder.setLm_user(ContextHelper.getUserLoginUuid());
-		closeOrder.setLm_time(new Date());
-		addProcess("CLOSEORDER_STATUS_CHANGE", "结案提货单-业务审核状态变更");
-		return dao.check(closeOrder);
-	}
-	
-	public int checknd(int p_check) {
-		closeOrder.setNd_check_state(p_check);
-		closeOrder.setNd_check_user(ContextHelper.getUserLoginUuid());
-		closeOrder.setNd_check_time(new Date());
-		closeOrder.setLm_user(ContextHelper.getUserLoginUuid());
-		closeOrder.setLm_time(new Date());
-		addProcess("CLOSEORDER_NDSTATUS_CHANGE", "结案提货单-数据中心审核状态变更");
-		return dao.checknd(closeOrder);
-	}
-	
-	private void addProcess(String p_sign, String p_note) {
-		ProcessDAO pdao = new ProcessDAO();
-		if (closeOrder != null) {
-			pdao.addProcess(4, closeOrder.getUuid(), p_sign, p_note, closeOrder.getCheck_state(), closeOrder.getNd_check_state());
-		}
-	}*/
+	/*
+	 * public int check(int p_check) {
+	 * closeOrder.setCheck_state(p_check);
+	 * closeOrder.setCheck_user(ContextHelper.getUserLoginUuid());
+	 * closeOrder.setCheck_time(new Date());
+	 * closeOrder.setLm_user(ContextHelper.getUserLoginUuid());
+	 * closeOrder.setLm_time(new Date());
+	 * addProcess("CLOSEORDER_STATUS_CHANGE", "结案提货单-业务审核状态变更");
+	 * return dao.check(closeOrder);
+	 * }
+	 * 
+	 * public int checknd(int p_check) {
+	 * closeOrder.setNd_check_state(p_check);
+	 * closeOrder.setNd_check_user(ContextHelper.getUserLoginUuid());
+	 * closeOrder.setNd_check_time(new Date());
+	 * closeOrder.setLm_user(ContextHelper.getUserLoginUuid());
+	 * closeOrder.setLm_time(new Date());
+	 * addProcess("CLOSEORDER_NDSTATUS_CHANGE", "结案提货单-数据中心审核状态变更");
+	 * return dao.checknd(closeOrder);
+	 * }
+	 * 
+	 * private void addProcess(String p_sign, String p_note) {
+	 * ProcessDAO pdao = new ProcessDAO();
+	 * if (closeOrder != null) {
+	 * pdao.addProcess(4, closeOrder.getUuid(), p_sign, p_note, closeOrder.getCheck_state(), closeOrder.getNd_check_state());
+	 * }
+	 * }
+	 */
 	/**
 	 * sunshanshan20150608历史表
+	 * 
 	 * @param p_sign
 	 * @param p_note
 	 * @param userLogin
 	 */
-	private void addProcess(String p_sign, String p_note,String userLogin) {
+	private void addProcess(String p_sign, String p_note, String userLogin) {
 		ProcessDAO pdao = new ProcessDAO();
-		if (closeOrder != null) {/*单据状态，销售状态，销管状态，财务，数据中心*/
-			pdao.addProcess(4, closeOrder.getUuid(), p_sign, p_note, closeOrder.getState(),closeOrder.getSd_state(), closeOrder.getSmd_status(),closeOrder.getFd_check_state(),closeOrder.getNd_check_state(),userLogin);
+		if (closeOrder != null) {/* 单据状态，销售状态，销管状态，财务，数据中心 */
+			pdao.addProcess(4, closeOrder.getUuid(), p_sign, p_note, closeOrder.getState(), closeOrder.getSd_state(), closeOrder.getSmd_status(), closeOrder.getFd_check_state(),
+					closeOrder.getNd_check_state(), userLogin);
 		}
 	}
-	
-	public String number(){
-		String num=null;
-		String dept=ContextHelper.getUserLoginDept();
+
+	public String number() {
+		String num = null;
+		String dept = ContextHelper.getUserLoginDept();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String nowdate = sdf.format(new Date());
 		map.clear();
 		map.put("apply_dept", dept);
 		map.put("add_time", nowdate);
-		int n=dao.list(map).size();
-		
-		num=ContextHelper.getUserLoginDeptName()+nowdate+"--00"+(n+1);
+		int n = dao.list(map).size();
+
+		String m = "";
+		char[] a = nowdate.toCharArray();
+		for (int i = 0; i < a.length; i++) {
+			if (Character.isDigit(a[i])) {
+				m += a[i];
+			}
+		}
+		num = ContextHelper.getUserLoginDeptName() + m + "--00" + (n + 1);
 		return num;
 	}
-	
+
 }

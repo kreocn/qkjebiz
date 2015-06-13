@@ -63,6 +63,7 @@
 	<sqlMap resource="org/iweb/resource/map/qkj_salpro_SalPromotMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_CloseOrderMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_CloseOrderProMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_CloseOrderPosmMap.xml" />
 	<!--行政管理 -->
 	<sqlMap resource="org/iweb/resource/map/qkj_adm_AssetsMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_adm_AssetItemMap.xml" />

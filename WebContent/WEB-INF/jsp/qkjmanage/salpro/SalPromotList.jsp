@@ -103,7 +103,8 @@
 							<td class="td3 longnote"><s:date name="endtime" format="yyyy-MM-dd" /></td>
 
 							<td class="td2 nw"><s:if test="status==0">新申请</s:if> <s:if test="status==1">审核中</s:if> <s:if test="status==2">审核通过</s:if></td>
-							<td class="td2 nw"><s:if test="sd_status==0">待审核</s:if> <s:if test="sd_status==5">
+							<td class="td2 nw" title="${sd_name} ${it:formatDate(sd_time,'yyyy-MM-dd HH:mm:ss')}">
+							<s:if test="sd_status==0">待审核</s:if> <s:if test="sd_status==5">
 									<span class="message_error">已退回</span>
 								</s:if> <s:if test="sd_status==10">
 									<span class="message_pass">待审核</span>
@@ -114,7 +115,8 @@
 								</s:if> <s:if test="sd_status==50">
 									<span class="message_pass">业务副总已审</span>
 								</s:if></td>
-							<td class="td2 nw"><s:if test="smd_status==10">待审核</s:if> <s:if test="smd_status==5">
+							<td class="td2 nw" title="${smd_name} ${it:formatDate(smd_time,'yyyy-MM-dd HH:mm:ss')}">
+							<s:if test="smd_status==10">待审核</s:if> <s:if test="smd_status==5">
 									<span class="message_error">已退回</span>
 								</s:if> <s:if test="smd_status==30">
 									<span class="message_pass">销管经理已审</span>

@@ -14,8 +14,8 @@
 			LEFT JOIN s_sys_user smd ON(c.`smd_user`=smd.`UUID`)
 			LEFT JOIN s_sys_user fd ON(c.`fd_check_user`=fd.`UUID`)
 			LEFT JOIN s_sys_department d ON (c.apply_dept = d.dept_code)
+			where c.type=0
 		]]>
-		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ c.uuid=#uuid# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="add_time"><![CDATA[ c.add_time LIKE CONCAT(#add_time#,'%') ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="close_time"><![CDATA[ c.close_time=#close_time# ]]></isNotEmpty>
@@ -49,7 +49,6 @@
 				</isNotEmpty>
 			</isEmpty>
 
-		</dynamic>
 		<![CDATA[ LIMIT 1000 ]]>
 	</select>
 	<select id="qkjmanage_getCloseOrdersCounts" resultClass="int" parameterClass="java.util.Map">
@@ -59,8 +58,8 @@
 			LEFT JOIN s_sys_user au ON(c.`add_user`=au.`UUID`)
 			LEFT JOIN s_sys_user lu ON(c.`lm_user`=lu.`UUID`)
 			LEFT JOIN s_sys_user nu ON(c.`nd_check_user`=nu.`UUID`)
+			where type=0
 		]]>
-		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ c.uuid=#uuid# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="add_time"><![CDATA[ c.add_time LIKE CONCAT(#add_time#,'%') ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="close_time"><![CDATA[ c.close_time=#close_time# ]]></isNotEmpty>
@@ -93,13 +92,12 @@
 					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ c.add_user=#apply_userDouble# ]]></isNotEmpty>
 				</isNotEmpty>
 			</isEmpty>
-		</dynamic>
 		<![CDATA[ LIMIT 1000 ]]>
 	</select>
 	<insert id="qkjmanage_addCloseOrder" parameterClass="closeOrder">
 		<![CDATA[ 
-			Insert Into qkjm_r_closeorder(close_time,content,theme,member_id,member_address,member_phone,add_user,add_time,lm_time,lm_user,apply_dept,close_num,state)
-			Values (#close_time#,#content#,#theme#,#member_id#,#member_address#,#member_phone#,#add_user#,#add_time#,#lm_time#,#lm_user#,#apply_dept#,#close_num#,#state#)
+			Insert Into qkjm_r_closeorder(close_time,content,theme,member_id,member_address,member_phone,add_user,add_time,lm_time,lm_user,apply_dept,close_num,state,type)
+			Values (#close_time#,#content#,#theme#,#member_id#,#member_address#,#member_phone#,#add_user#,#add_time#,#lm_time#,#lm_user#,#apply_dept#,#close_num#,#state#,#type#)
 		]]>
 		<selectKey resultClass="int" keyProperty="uuid">
 		<![CDATA[ Select LAST_INSERT_ID() ]]>
@@ -197,10 +195,15 @@
 	<update id="qkjmanage_mdyCloseOrdertotelPrice" parameterClass="integer">
 		<![CDATA[
 		UPDATE qkjm_r_closeorder c SET c.totel_price=(
-			SELECT IFNULL(SUM(a.total_price),0) FROM (SELECT p.`total_price` FROM qkjm_r_closeorder_product p WHERE p.order_id=#value#)a
+			SELECT IFNULL(SUM(a.total_price),0) FROM (
+			SELECT p.`total_price` FROM qkjm_r_closeorder_product p WHERE p.order_id=#value#
+			UNION ALL
+			SELECT m.total_price FROM qkjm_r_closeorder_posm m WHERE m.closeOrder_id = #value#
+			)a
 		)WHERE c.uuid=#value#
 		]]>
 	</update>
+	
 	<delete id="qkjmanage_delCloseOrder" parameterClass="closeOrder">
 	<![CDATA[
 		Delete From qkjm_r_closeorder Where uuid=#uuid#

@@ -16,6 +16,7 @@ public class CloseOrder {
 	private String apply_dept;
 	private String add_user;// (varchar)填加人
 	private Date add_time;// (datetime)填加时间
+	private Integer type;
 
 	private Integer state;
 	private Integer sd_state;
@@ -63,6 +64,14 @@ public class CloseOrder {
 	private Date time50;
 	private Date time60;
 	private Date time70;
+
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
+	}
 
 	public String getSd_user_name() {
 		return sd_user_name;
