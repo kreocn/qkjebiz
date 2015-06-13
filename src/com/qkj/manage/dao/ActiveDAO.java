@@ -20,7 +20,7 @@ public class ActiveDAO extends AbstractDAO {
 	public List nextList(Map<String, Object> map) {
 		return super.list("qkjmanage_getNextActive", map);
 	}
-
+ 
 	public List listHis(Map<String, Object> map) {
 		return super.list("qkjmanage_getActivesHistory", map);
 	}
@@ -130,4 +130,9 @@ public class ActiveDAO extends AbstractDAO {
 	public int getResultCount() {
 		return super.getResultCount();
 	}
+	//在会员修改中查看会员活动
+	public List svipList(Map<String, Object> map) {
+		return super.list("qkjmanage_getsvipActive", map);
+	}
+	
 }

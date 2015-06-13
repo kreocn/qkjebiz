@@ -154,7 +154,14 @@ public class CustomerRecodeAction extends ActionSupport {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CUSTOMERRECODE_DEL");
 		try {
 			dao.delete(customerRecode);
+			map.put("uuid", customerRecode.getUuid());
+			int num=dao.listdelete(map).size();
+			System.out.println(num);
+			if(num>0){
+				setMessage("删除失败,只能删除今日添加的回访记录!ID=" + customerRecode.getUuid());
+			}else{
 			setMessage("删除成功!ID=" + customerRecode.getUuid());
+			}
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!del 数据删除失败:", e);
 			throw new Exception(this.getClass().getName() + "!del 数据删除失败:", e);

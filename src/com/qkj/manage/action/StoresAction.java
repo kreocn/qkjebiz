@@ -267,8 +267,10 @@ public class StoresAction  extends ActionSupport{
 		map.putAll(ContextHelper.getDefaultRequestMap4Page());
 		this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 		map.put("userid", ulf.getUuid());
+		ContextHelper.setSearchDeptPermit4Search("QKJ_QKJMANAGE_STORES_FIND_ORDER",map, "apply_depts", "apply_user");
+		
 		this.setStoresorderlist(dao.listOrder(map));
-		this.setRecCount(dao.listOrder(map).size());
+		this.setRecCount(storesorderlist.size());
 		return SUCCESS;
 	}
 	//门店支付>查看订单>订单详情
