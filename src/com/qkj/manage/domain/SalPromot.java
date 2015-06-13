@@ -27,6 +27,10 @@ public class SalPromot {
 	private String sal_scopDept;
 	private String add_user_dept;
 
+	private Integer fd_status;
+	private String fd_user;
+	private Date fd_time;
+
 	// 以下为非数据库字段
 	private String sd_name;
 	private String smd_name;
@@ -35,6 +39,39 @@ public class SalPromot {
 	private String dept_code;
 	private String sal_scopDept_name;
 	private String add_user_dept_name;
+	private String fd_name;
+
+	public Integer getFd_status() {
+		return fd_status;
+	}
+
+	public void setFd_status(Integer fd_status) {
+		this.fd_status = fd_status;
+	}
+
+	public String getFd_user() {
+		return fd_user;
+	}
+
+	public void setFd_user(String fd_user) {
+		this.fd_user = fd_user;
+	}
+
+	public Date getFd_time() {
+		return fd_time;
+	}
+
+	public void setFd_time(Date fd_time) {
+		this.fd_time = fd_time;
+	}
+
+	public String getFd_name() {
+		return fd_name;
+	}
+
+	public void setFd_name(String fd_name) {
+		this.fd_name = fd_name;
+	}
 
 	public Integer getUuid() {
 		return uuid;

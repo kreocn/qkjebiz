@@ -85,10 +85,16 @@
 									<s:if test="puser_sign!=null">
 										<s:if test="puser_sign==null">	(${puser_name})</s:if>
 										<s:else>
-											<s:if test="%{sign.sign20!=puser_sign && sign.sign30!=puser_sign && sign.sign40!=puser_sign && sign.sign50!=puser_sign && sign.sign60!=puser_sign}">
+											<s:if test="%{sign==null}">
 											<span class="user_sign"><img src="${puser_sign}" /></span>
 											<span class="vab">${it:formatDate(biz_time,'yyyy-MM-dd HH:mm:ss')}</span>
 											</s:if>
+											<s:else>
+											<s:if test="sign.sign50!=puser_sign && sign.sign40!=puser_sign && sign.sign60!=puser_sign && sign.sign70!=puser_sign">
+											<span class="user_sign"><img src="${puser_sign}" /></span>
+											<span class="vab">${it:formatDate(biz_time,'yyyy-MM-dd HH:mm:ss')}</span>
+											</s:if>
+											</s:else>
 										</s:else>
 									</s:if>
 								</div>
@@ -97,7 +103,7 @@
 					</div>
 				</div>
 				
-				<div class="label_main label_main_sep"></div>
+				<%-- <div class="label_main label_main_sep"></div>
 				<div class="label_main">
 					<div class="label_hang label_hang_sign">
 						<div class="label_ltit">主管/办事处</div>
@@ -137,7 +143,7 @@
 							</s:if>
 						</div>
 					</div>
-				</div>
+				</div> --%>
 				
 				<div class="label_main label_main_sep"></div>
 				<div class="label_main">
@@ -145,9 +151,22 @@
 						<div class="label_ltit">财务部:</div>
 						<div class="label_rwbenx label_rwb_sign">
 							(签字/日期)
-							<s:if test="sign!=null  && closeOrder.check_state>=50">
+							<s:if test="sign!=null">
 								<span class="user_sign"><img src="${sign.sign50}" /></span>
 
+							</s:if>
+						</div>
+					</div>
+				</div>
+				
+				<div class="label_main label_main_sep"></div>
+				<div class="label_main">
+					<div class="label_hang label_hang_sign">
+						<div class="label_ltit">销管部经理:</div>
+						<div class="label_rwbenx label_rwb_sign">
+							(签字/日期)
+							<s:if test="sign!=null">
+								<span class="user_sign"><img src="${sign.sign40}" /></span>
 							</s:if>
 						</div>
 					</div>
@@ -156,10 +175,10 @@
 				<div class="label_main label_main_sep"></div>
 				<div class="label_main">
 					<div class="label_hang label_hang_sign">
-						<div class="label_ltit">副总:</div>
+						<div class="label_ltit">销管副总:</div>
 						<div class="label_rwbenx label_rwb_sign">
 							(签字/日期)
-							<s:if test="sign!=null  && closeOrder.check_state>=60">
+							<s:if test="sign!=null">
 								<span class="user_sign"><img src="${sign.sign60}" /></span>
 							</s:if>
 						</div>
@@ -172,7 +191,7 @@
 						<div class="label_ltit">总经理:</div>
 						<div class="label_rwbenx label_rwb_sign">
 							(签字/日期)
-							<s:if test="sign!=null  && closeOrder.check_state>=70">
+							<s:if test="sign!=null">
 								<span class="user_sign"><img src="${sign.sign70}" /></span>
 							</s:if>
 						</div>
