@@ -106,6 +106,10 @@
 				    	    		<a class="input-blue"  href="<s:url namespace="/qkjmanage" action="travel_load"><s:param name="viewFlag">mdy</s:param><s:param name="travel.uuid" value="uuid"></s:param></s:url>">修改</a>
 				    	    	</c:if>
 				    	    	
+				    	    	<c:if test="${it:checkPermit('QKJ_QKJMANAGE_TRAVEL',null)==true}">
+				    	    		<a class="input-blue"  href="<s:url namespace="/qkjmanage" action="travel_closeLoad"><s:param name="viewFlag">mdy</s:param><s:param name="travel.uuid" value="uuid"></s:param></s:url>">开始结案</a>
+				    	    	</c:if>
+				    	    	
 				                <c:if test="${(check_status<=5 || acheck_status<=5) && it:checkPermit('QKJ_QKJMANAGE_TRAVEL_DEL',null)==true}">
 				      	    		<a class="input-red" href="<s:url namespace="/qkjmanage" action="travel_del"><s:param name="travel.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
 				      	    	</c:if>

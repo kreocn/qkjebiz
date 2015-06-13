@@ -191,6 +191,52 @@ public class TravelAction extends ActionSupport {
 					TravelCustomerDAO cdao = new TravelCustomerDAO();
 					map.clear();
 					map.put("travel_id", travel.getUuid());
+					map.put("status", 1);
+					travelCustomers = cdao.list(map);
+
+					TravelProductDAO pdao = new TravelProductDAO();
+					travelProducts = pdao.list(map);
+
+					ProductDAO pdao2 = new ProductDAO();
+					products = pdao2.list(null);
+
+					if ("print1".equals(viewFlag) || "print2".equals(viewFlag) || "print3".equals(viewFlag)) return viewFlag;
+				}
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/travel_list?viewFlag=relist'>工业旅游申请列表</a>&nbsp;&gt;&nbsp;修改工业旅游申请";
+			} else {
+				this.setMessage("参数丢失,自动转到添加申请单页面.");
+				this.setViewFlag("add");
+				load();
+			}
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!load 读取数据错误:", e);
+			throw new Exception(this.getClass().getName() + "!load 读取数据错误:", e);
+		}
+		return SUCCESS;
+	}
+	
+	public String closeLoad() throws Exception {
+		if((perWorkF==null || perWorkF.equals("null")) && perWorkFlag==null){
+			perWorkFlag=null;
+		}else{
+			perWorkFlag="perWork";
+		}
+		try {
+			if ("mdy".equals(viewFlag) || "print1".equals(viewFlag) || "print2".equals(viewFlag) || "print3".equals(viewFlag)) {
+				if (!(travel == null || travel.getUuid() == null)) {
+					this.setTravel((Travel) dao.get(travel.getUuid()));
+					// checkbox专用转换
+					if (!ToolsUtil.isEmpty(travel.getApply_item())) {
+						travel.setApply_items(travel.getApply_item().split(","));
+					}
+					if (!ToolsUtil.isEmpty(travel.getCar())) {
+						travel.setCars(travel.getCar().split(","));
+					}
+
+					TravelCustomerDAO cdao = new TravelCustomerDAO();
+					map.clear();
+					map.put("travel_id", travel.getUuid());
+					map.put("status", 1);
 					travelCustomers = cdao.list(map);
 
 					TravelProductDAO pdao = new TravelProductDAO();

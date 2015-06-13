@@ -5,9 +5,18 @@ public class TravelProduct {
 	private Integer travel_id;// (int)旅游申请ID
 	private Integer product_id;// (int)产品ID
 	private Integer num;// (int)数量
+	private Integer status;
 
 	// 以下为非数据库字段
 	private String product_name;
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 
 	public String getProduct_name() {
 		return product_name;
