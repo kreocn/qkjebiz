@@ -17,6 +17,7 @@
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ c.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="add_time"><![CDATA[ c.add_time LIKE CONCAT(#add_time#,'%') ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="close_time"><![CDATA[ c.close_time=#close_time# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="content"><![CDATA[ c.content=#content# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="member_id"><![CDATA[ c.member_id=#member_id# ]]></isNotEmpty>
@@ -61,6 +62,7 @@
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ c.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="add_time"><![CDATA[ c.add_time LIKE CONCAT(#add_time#,'%') ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="close_time"><![CDATA[ c.close_time=#close_time# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="content"><![CDATA[ c.content=#content# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="member_id"><![CDATA[ c.member_id=#member_id# ]]></isNotEmpty>

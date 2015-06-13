@@ -69,7 +69,7 @@
 						
 						<div class="label_hang">
 							<div class="label_ltit">单据编号:</div>
-							<div class="label_rwb">
+							<div class="label_rwben2">
 								<s:textfield name="closeOrder.close_num" title="单据编号"/>
 							</div>
 						</div>
@@ -361,7 +361,7 @@
 								<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_MDY',null)==true}">
 									<s:submit id="save" name="save" value="保存" action="closeOrder_save" cssClass="input-blue" />
 								</c:if>
-								<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK0',null)==true}">
+								<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK0',null)==true && salPromotsed.size()>0 &&closeOrderPros.size()>0}">
 									<s:submit id="mdyStatus0" name="mdyStatus0" value="报审" action="closeOrder_check0" onclick="return isOp('确定执行此操作?');" cssClass="input-yellow" />
 								</c:if>
 								<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_DEL',null)==true}">

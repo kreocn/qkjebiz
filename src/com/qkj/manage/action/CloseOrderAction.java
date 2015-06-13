@@ -359,7 +359,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	public String add() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_ADD");
 		try {
-			closeOrder.setClose_num(close_num);//单据编号
+			closeOrder.setClose_num(number());//单据编号
 			closeOrder.setApply_dept(ContextHelper.getUserLoginDept());
 			closeOrder.setAdd_user(ContextHelper.getUserLoginUuid());
 			closeOrder.setAdd_time(new Date());
@@ -914,10 +914,14 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	public String number(){
 		String num=null;
 		String dept=ContextHelper.getUserLoginDept();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String nowdate = sdf.format(new Date());
 		map.clear();
 		map.put("apply_dept", dept);
+		map.put("add_time", nowdate);
 		int n=dao.list(map).size();
-		num=n+"";
+		
+		num=ContextHelper.getUserLoginDeptName()+nowdate+"--00"+(n+1);
 		return num;
 	}
 	
