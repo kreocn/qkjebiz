@@ -9,6 +9,9 @@
 <title>会员管理--<s:text name="APP_NAME" /></title>
 <s:action name="ref_head" namespace="/manager" executeResult="true" />
 <script type="text/javascript" src="<s:url value="/js/v0.1/area.js" />"></script>
+<style type="text/css">
+.w5{float:left; width:5px; height:20px;}
+</style>
 </head>
 <body>
 <s:action name="nav" namespace="/manage" executeResult="true" />
@@ -245,8 +248,6 @@
  			<div class="label_main">
  				<fieldset class="clear">
 					<legend>基本信息</legend>
-				
-				
 					<s:if test="'mdy' == viewFlag">
 						<div class="label_hang">
 				            <div class="label_ltit">客户编号:</div>
@@ -450,7 +451,7 @@
 				            	<div class="noprintarea">
 									<s:if test="'add' == viewFlag">
 										<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CUSTOMER_ADD',null)==true}">
-										<s:submit id="add" name="add" value="确定" action="customer_add" cssClass="input-blue" />
+								<%-- 		<s:submit id="add" name="add" value="确定" action="customer_add" cssClass="input-blue" /> --%>
 										</c:if>
 									</s:if>
 									<s:elseif test="'mdy' == viewFlag">
@@ -551,7 +552,7 @@
 								<td>${it:formatDate(plan_start,'yyyy-MM-dd')}</td>
 								<td>${it:formatDate(plan_end,'yyyy-MM-dd')}</td>
 								<td>${expect}</td>
-								
+								 
 								<td data="${status}">
 									<s:if test="0==status">新申请</s:if>
 									<s:if test="1==status">申请审批中</s:if>
@@ -559,7 +560,7 @@
 									<s:if test="3==status">开始结案</s:if>
 									<s:if test="4==status">结案审批中</s:if>
 									<s:if test="5==status">结案通过</s:if>
-								
+							
 								</td>
 								</tr>
 								</s:iterator>
@@ -590,7 +591,7 @@
             <div class="label_rwbenx">
             	<s:if test="'add' == viewFlag">
 					
-					<input id="svipadd" name="svipadd" type="button" value="确定" />
+				 	<input id="svipadd" name="svipadd" type="button" value="确定" /> 
 				</s:if>
 				<s:elseif test="'mdy' == viewFlag">
 					<input id="svipsave" name="svipsave" type="button" value="保存" class="input-blue" />
@@ -686,7 +687,7 @@ $(function() {
 			    	 $("#addMobile").text("正在验证...");
 			     },
 			     success: function(data){
-			    	 alert($("#memMobile").val())
+			    	
 			    	 if($("#memMobile").val()==''){
 			    		 alert("【会员手机】不许为空!");
 				 			$("#memMobile").focus();
