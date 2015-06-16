@@ -53,6 +53,11 @@
 			 </span>
 		</div>
 		<s:form id="editForm" name="editForm" cssClass="validForm" action="apply_load" namespace="/qkjmanage" method="post" theme="simple">
+		<s:hidden name="closeOrder.state" value="%{closeOrder.state}"></s:hidden>
+		<s:hidden name="closeOrder.sd_state" value="%{closeOrder.sd_state}"></s:hidden>
+		<s:hidden name="closeOrder.smd_status" value="%{closeOrder.smd_status}"></s:hidden>
+		<s:hidden name="closeOrder.fd_check_state" value="%{closeOrder.fd_check_state}"></s:hidden>
+		<s:hidden name="closeOrder.nd_check_state" value="%{closeOrder.nd_check_state}"></s:hidden>
 			<div class="label_con">
 				<div class="label_main">
 					<s:if test="'mdy' == viewFlag">
@@ -61,13 +66,15 @@
 							<div class='label_rwben'>${closeOrder.uuid}<s:hidden name="closeOrder.uuid" />
 							</div>
 						</div>
-						</s:if>
-					<div class="label_hang">
+						
+						<div class="label_hang">
 							<div class="label_ltit">单据编号:</div>
-							<div class="label_rwb">
+							<div class="label_rwben2">
 								<s:textfield name="closeOrder.close_num" title="单据编号"/>
 							</div>
 						</div>
+						</s:if>
+					
 					<s:if test="'mdy' == viewFlag">
 					<s:hidden name="closeOrder.apply_dept" value="%{closeOrder.apply_dept}"></s:hidden>
 						<div class='label_hang'>
@@ -354,7 +361,7 @@
 								<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_MDY',null)==true}">
 									<s:submit id="save" name="save" value="保存" action="closeOrder_save" cssClass="input-blue" />
 								</c:if>
-								<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK0',null)==true}">
+								<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK0',null)==true && salPromotsed.size()>0 &&closeOrderPros.size()>0}">
 									<s:submit id="mdyStatus0" name="mdyStatus0" value="报审" action="closeOrder_check0" onclick="return isOp('确定执行此操作?');" cssClass="input-yellow" />
 								</c:if>
 								<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_DEL',null)==true}">
@@ -389,7 +396,7 @@
 								</c:if>
 								
 								<c:if test="${40==closeOrder.sd_state && closeOrder.smd_status>=40  && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK50',closeOrder.apply_dept)==true}">
-									<s:submit id="mdyStatus50" name="mdyStatus50" value="业务副总审核通过" action="closeOrder_check50" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
+									<s:submit id="mdyStatus50" name="mdyStatus50" value="业务副总审核通过" action="closeOrder_check40" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
 									<s:submit id="mdyStatus5" name="mdyStatus5" cssClass="input-red" value="审核不通过" action="closeOrder_check5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
 							</s:if>
@@ -423,11 +430,11 @@
 									<s:submit id="mdyCloseOrderSMDStatus5" name="mdyCloseOrderSMDStatus5" cssClass="input-red" value="审核不通过" action="mdyCloseOrderSMDStatus5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
 								<c:if test="${30==closeOrder.smd_status && closeOrder.sd_state==40 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_SMDSTATUS40',closeOrder.apply_dept)==true}">
-									<s:submit id="mdyCloseOrderSMDStatus50" name="mdyCloseOrderSMDStatus50" cssClass="input-green" value="销管部经理-审核通过" action="mdyCloseOrderSMDStatus50" onclick="return isOp('确定执行此操作?');" />
+									<s:submit id="mdyCloseOrderSMDStatus50" name="mdyCloseOrderSMDStatus50" cssClass="input-green" value="销管部经理-审核通过" action="mdyCloseOrderSMDStatus40" onclick="return isOp('确定执行此操作?');" />
 									<s:submit id="mdyCloseOrderSMDStatus5" name="mdyCloseOrderSMDStatus5" cssClass="input-red" value="审核不通过" action="mdyCloseOrderSMDStatus5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
 								<c:if test="${40==closeOrder.smd_status && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_SMDSTATUS50',closeOrder.apply_dept)==true}">
-									<s:submit id="mdyCloseOrderSMDStatus40" name="mdyCloseOrderSMDStatus40" cssClass="input-green" value="销管副总-审核通过" action="mdyCloseOrderSMDStatus40" onclick="return isOp('确定执行此操作?');" />
+									<s:submit id="mdyCloseOrderSMDStatus40" name="mdyCloseOrderSMDStatus40" cssClass="input-green" value="销管副总-审核通过" action="mdyCloseOrderSMDStatus50" onclick="return isOp('确定执行此操作?');" />
 									<s:submit id="mdyCloseOrderSMDStatus5" name="mdyCloseOrderSMDStatus5" cssClass="input-red" value="审核不通过" action="mdyCloseOrderSMDStatus5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
 								<c:if test="${closeOrder.smd_status==50 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK60',closeOrder.apply_dept)==true}">
