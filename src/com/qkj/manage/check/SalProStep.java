@@ -4,53 +4,46 @@ import java.util.Date;
 
 import org.iweb.sys.ContextHelper;
 
-import com.qkj.manage.dao.CloseOrderDAO;
 import com.qkj.manage.dao.ProcessDAO;
-import com.qkj.manage.domain.CloseOrder;
+import com.qkj.manage.dao.SalPromotDAO;
+import com.qkj.manage.domain.SalPromot;
 
-public class CloseOrderStep {
+public class SalProStep {
 	private String noteflag;
-	private CloseOrder closeOrder;
-	private CloseOrderDAO dao = new CloseOrderDAO();
+	private SalPromot salPro;
+	private SalPromotDAO dao = new SalPromotDAO();
 
-	public CloseOrder getCloseOrder() {
-		return closeOrder;
+	public SalPromot getSalPro() {
+		return salPro;
 	}
 
-	public void setCloseOrder(CloseOrder closeOrder) {
-		this.closeOrder = closeOrder;
+	public void setSalPro(SalPromot salPro) {
+		this.salPro = salPro;
 	}
-	
+
 	/**
 	 * 报审
 	 * 
 	 * @return
 	 * @throws Exception
 	 */
-	public void check0(String userid) throws Exception {
-			CloseOrderCheckSkip s=new CloseOrderCheckSkip();
-			this.setCloseOrder(s.getCloserOrder());
-			mdyStatus(1);//待审核
+	public void status1(String userid) throws Exception {
+		SalProCheckSkip s=new SalProCheckSkip();
+		this.setSalPro(s.getSalPro());
+			mdyStatus(1);// 待审核
 			// 同时进入销售部审核流程
-			mdyCloseOrderSDStatus(10,ContextHelper.getUserLoginUuid());
+			mdyCloseOrderSDStatus(10, ContextHelper.getUserLoginUuid());
 			// 销售管理部默认为已签收
-			mdyCloseOrderSMDStatus(10,ContextHelper.getUserLoginUuid());
-			//财务
-			closeOrder.setFd_check_state(0);
-			closeOrder.setFd_check_user(ContextHelper.getUserLoginUuid());
-			closeOrder.setFd_check_time(new Date());
-			closeOrder.setLm_user(ContextHelper.getUserLoginUuid());
-			closeOrder.setLm_time(new Date());
-			dao.mdyCloseOrderFDStatus(closeOrder);
-			//数据中心
-			closeOrder.setNd_check_state(0);
-			closeOrder.setNd_check_time(new Date());
-			closeOrder.setNd_check_user(ContextHelper.getUserLoginUuid());
-			closeOrder.setLm_user(ContextHelper.getUserLoginUuid());
-			closeOrder.setLm_time(new Date());
-			dao.mdyCloseOrderNDStatus(closeOrder);
+			mdyCloseOrderSMDStatus(10, ContextHelper.getUserLoginUuid());
+			
+			salPro.setFd_status(0);
+			salPro.setFd_user(ContextHelper.getUserLoginUuid());
+			salPro.setFd_time(new Date());
+			salPro.setLm_user(ContextHelper.getUserLoginUuid());
+			salPro.setLm_time(new Date());
+			dao.savefdStatus(salPro);
 	}
-
+	
 	/**
 	 * 大区经理通过
 	 * 
@@ -132,8 +125,8 @@ public class CloseOrderStep {
 	 * @date 2014-4-26 上午10:20:39
 	 */
 	public int mdyCloseOrderSDStatus(int sd_status, String userid) {
-		CloseOrderCheckSkip s=new CloseOrderCheckSkip();
-		this.setCloseOrder(s.getCloserOrder());
+		SalProCheckSkip s=new SalProCheckSkip();
+		this.setSalPro(s.getSalPro());
 		if (sd_status == 5) {
 			noteflag = "退回";
 		}
@@ -152,14 +145,14 @@ public class CloseOrderStep {
 		if (sd_status == 50) {
 			noteflag = "总经理审核通过";
 		}
-		closeOrder.setSd_state(sd_status);
-		closeOrder.setSd_time(new Date());
-		closeOrder.setSd_user(userid);
-		closeOrder.setLm_user(userid);
-		closeOrder.setLm_time(new Date());
-		String note = "提货结案单-销售审核状态变更-" + noteflag;
-		addProcess("CLOSEORDER_MDY_SDSTATUS", note, userid);
-		return dao.mdyCloseOrderSDStatus(closeOrder);
+		salPro.setSd_status(sd_status);
+		salPro.setSd_time(new Date());
+		salPro.setSd_user(userid);
+		salPro.setLm_user(userid);
+		salPro.setLm_time(new Date());
+		String note = "促销活动-销售审核状态变更-" + noteflag;
+		addProcess("SALPRO_MDY_SDSTATUS", note, userid);
+		return dao.saveSdStatus(salPro);
 	}
 
 	/**
@@ -169,9 +162,9 @@ public class CloseOrderStep {
 	 * @throws Exception
 	 * @date 2014-4-26 上午10:25:25
 	 */
-	public int mdyCloseOrderSMDStatus(int smd_status,String userid) {
-		CloseOrderCheckSkip s=new CloseOrderCheckSkip();
-		this.setCloseOrder(s.getCloserOrder());
+	public int mdyCloseOrderSMDStatus(int smd_status, String userid) {
+		SalProCheckSkip s=new SalProCheckSkip();
+		this.setSalPro(s.getSalPro());
 		if (smd_status == 5) {
 			noteflag = "退回";
 		}
@@ -187,19 +180,19 @@ public class CloseOrderStep {
 		if (smd_status == 50) {
 			noteflag = "销管副总审核通过";
 		}
-		closeOrder.setSmd_status(smd_status);
-		closeOrder.setSmd_time(new Date());
-		closeOrder.setSmd_user(userid);
-		closeOrder.setLm_user(userid);
-		closeOrder.setLm_time(new Date());
-		String note = "提货结案单-销管审核状态变更-" + noteflag;
-		addProcess("CLOSEORDER_MDY_SMDSTATUS", note,userid);
-		return dao.mdyCloseOrderSMDStatus(closeOrder);
+		salPro.setSmd_status(smd_status);
+		salPro.setSmd_time(new Date());
+		salPro.setSmd_user(userid);
+		salPro.setLm_user(userid);
+		salPro.setLm_time(new Date());
+		String note = "促销活动-销管审核状态变更-" + noteflag;
+		addProcess("SALPRO_MDY_SMDSTATUS", note, userid);
+		return dao.saveSmdStatus(salPro);
 	}
 
 	private int mdyStatus(int status) {
-		CloseOrderCheckSkip s=new CloseOrderCheckSkip();
-		this.setCloseOrder(s.getCloserOrder());
+		SalProCheckSkip s=new SalProCheckSkip();
+		this.setSalPro(s.getSalPro());
 		if (status == -1) {
 			noteflag = "作废";
 		}
@@ -221,19 +214,19 @@ public class CloseOrderStep {
 		if (status == 5) {
 			noteflag = "结案通过";
 		}
-		closeOrder.setState(status);
-		closeOrder.setLm_user(ContextHelper.getUserLoginUuid());
-		closeOrder.setLm_time(new Date());
-		String note = "提货结案单状态变更-" + noteflag;
-		addProcess("CLOSEORDER_MDY_STATUS", note, ContextHelper.getUserLoginUuid());
-		return dao.mdyCloseOrderStatus(closeOrder);
+		salPro.setStatus(status);
+		salPro.setLm_user(ContextHelper.getUserLoginUuid());
+		salPro.setLm_time(new Date());
+		String note = "促销活动状态变更-" + noteflag;
+		addProcess("SALPRO_MDY_STATUS", note, ContextHelper.getUserLoginUuid());
+		return dao.saveStatus(salPro);
 	}
 
 	private void addProcess(String p_sign, String p_note, String userLogin) {
 		ProcessDAO pdao = new ProcessDAO();
-		if (closeOrder != null) {/* 单据状态，销售状态，销管状态，财务，数据中心 */
-			pdao.addProcess(4, closeOrder.getUuid(), p_sign, p_note, closeOrder.getState(), closeOrder.getSd_state(), closeOrder.getSmd_status(), closeOrder.getFd_check_state(),
-					closeOrder.getNd_check_state(), userLogin);
+		if (salPro != null) {/* 单据状态，销售状态，销管状态，财务 */
+			pdao.addProcess(5, salPro.getUuid(), p_sign, p_note, salPro.getStatus(), salPro.getSd_status(), salPro.getSmd_status(),
+					salPro.getFd_status(),userLogin);
 		}
 	}
 }

@@ -9,7 +9,7 @@
 		<![CDATA[ 
 			select * from qkj_t_product p
 		]]>
-		<dynamic prepend="WHERE">
+		<dynamic prepend="WHERE"> 
 				<isNotEmpty prepend="AND" property="code" open="(" close=")"><![CDATA[ p.bar_code=#code# OR p.bar_code_tibet_box=#code# or p.bar_code_tibet=#code# or p.bar_code_box=#code# ]]></isNotEmpty>
 			             <isNotEmpty prepend="AND" property="userid"><![CDATA[ p.user_id=#userid# ]]></isNotEmpty>
 			             <isNotEmpty prepend="AND" property="title"><![CDATA[ p.title Like '%' + #title# +  '%']]></isNotEmpty>
@@ -53,6 +53,26 @@
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="user_id"><![CDATA[ o.user_id=#userid# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="id"><![CDATA[ o.id=#id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_depts" open="(" close=")">
+			<![CDATA[ o.apply_dept In ]]>
+			<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
+			<isNotEmpty prepend="OR" property="apply_perdepts">
+				<![CDATA[ o.login_dept In ]]>
+				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ o.user_id=#apply_userDouble# ]]></isNotEmpty>
+			</isNotEmpty>
+		</isNotEmpty>
+		
+		<isEmpty  property="apply_depts">
+			<isNotEmpty prepend="AND" property="apply_perdepts">
+				<![CDATA[ o.login_dept In ]]>
+				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ o.user_id=#apply_userDouble# ]]></isNotEmpty>
+			</isNotEmpty>
+		</isEmpty>
+			
+			
+			
 		</dynamic>
 	</select>
 

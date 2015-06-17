@@ -1,3 +1,5 @@
+16:01:09
+安旭旺 2015/6/17 16:01:09
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN" "org/iweb/resource/map/sql-map-config-2.dtd">
 <!-- 新DTD验证地址:http://ibatis.apache.org/dtd/ -->
@@ -8,9 +10,9 @@
 			<!-- <property name="DataSource" value="java:/comp/env/qkj/mysql_druid_BJ01" /> -->
 			<!-- 测试环境 DataSource Proxool -->
 			<!-- <property name="DataSource" value="java:/comp/env/qkj/mysql_druid_local203" /> -->
-			<!-- <property name="DataSource" value="java:/comp/env/qkj/sqlserver_druid_local203" /> -->
+			<property name="DataSource" value="java:/comp/env/qkj/sqlServer_druid_BJ01" />
 			<!-- 本机Tomcat本机测试环境 DataSource(ERP LOCAL TEST)&测试服务器 Proxool -->
-			 <property name="DataSource" value="java:/comp/env/qkj/sqlServer_druid_BJ01" /> 
+			<!--  <property name="DataSource" value="java:/comp/env/qkj/sqlServer_druid_BJ01" />  -->
 		</dataSource>
 	</transactionManager>
 	<!-- 要想实现*通配符模式,可以修改com.ibatis.sqlmap.engine.builder.xml.SqlMapConfigParser类源代码中的addSqlMapNodelets()方法 -->

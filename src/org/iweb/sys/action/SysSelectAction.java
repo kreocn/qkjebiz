@@ -34,10 +34,19 @@ public class SysSelectAction extends ActionSupport {
 	// 当dept_mode=0时,则代表以{dept_code的父部门}作为起始部门,如dept_code的父部门为空,则此参数无效
 	private Integer dept_mode;
 	private String user_pri;
+	private String special;//=1查询全部部门
 
 	// 起始部门代码,为以后集团化运营打下基础
 	private String dept_code;
 	private String check_code;// 订单发货部门
+
+	public String getSpecial() {
+		return special;
+	}
+
+	public void setSpecial(String special) {
+		this.special = special;
+	}
 
 	public String getUser_pri() {
 		return user_pri;
@@ -149,7 +158,7 @@ public class SysSelectAction extends ActionSupport {
 			DepartmentDAO dao = new DepartmentDAO();
 			map.clear();
 			boolean flag = ContextHelper.checkPermit2("SYS_SELECT_DEPT_LIST_ALL", null);
-			if (ContextHelper.isAdmin() || flag == true) {
+			if (ContextHelper.isAdmin() || flag == true || (special!=null && !special.equals(""))) {
 			}else{
 				if (ContextHelper.getUserLoginInfo().getPermit_depts() == null) {
 					map.put("dept_code", ContextHelper.getUserLoginDept()); // 能选到自己的部门

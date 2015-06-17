@@ -187,6 +187,7 @@ function mylist(list){
 	$("#qkj_list").find("tr").each(function(){
 		$(this).find("td").each(function(){
 		if(barcode.trim()==$(this).text().trim()){
+			if(msg[3]==$(this).next().next().text().trim()){
 			var numplus=$(this).next().next().next().next().next().find("input[type=text]").val();
 			var price=$(this).next().next().next().next().text();
 			var totlprice=$(this).next().next().next().next().next().next().text();
@@ -194,11 +195,11 @@ function mylist(list){
 			var totalName=$(this).next().next().next().next().next().next().find("input").attr("name");
 			$(this).next().next().next().next().next().next().empty();
 			$(this).next().next().next().next().next().next().append('<input type="hidden" name="'+totalName+'"  value="'+totlprice+'"/>'+totlprice+'');
-
 			var ordernumcount=(Number(numplus)*1)+parseInt(casenum);
 			$(this).next().next().next().next().next().find("input[type=text]").val(ordernumcount)
 			   $( "#dialog" ).dialog('close');
 			firstnum=false;
+		}
 		}
 		})
 		})
@@ -258,6 +259,7 @@ function fortr(list){
 		$("#qkj_list").find("tr").each(function(){
 			$(this).find("td").each(function(){
 				if($(this).text().trim()==barcode.trim()){
+					if(list[0].title.trim()==$(this).next().next().text().trim()){
 					var numplus=$(this).next().next().next().next().next().find("input[type=text]").val();
 					var price=$(this).next().next().next().next().text();
 					var totlprice=$(this).next().next().next().next().next().next().text();
@@ -270,6 +272,7 @@ function fortr(list){
 					$(this).next().next().next().next().next().find("input[type=text]").val(ordernumcount)
 					firstnum=false;
 			}
+				}
 			})
 			})
 	if(firstnum==true){

@@ -125,7 +125,7 @@ public class CustomerRecodeAction extends ActionSupport {
 	}
 
 	public String add() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_CUSTOMERRECODE_ADD");
+		ContextHelper.isPermit("SYSVIP_MEMBER_LIST");
 		try {
 			customerRecode.setAdd_user(ContextHelper.getUserLoginUuid());
 			customerRecode.setAdd_time(new Date());
@@ -138,7 +138,7 @@ public class CustomerRecodeAction extends ActionSupport {
 	}
 
 	public String save() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_CUSTOMERRECODE_MDY");
+		ContextHelper.isPermit("SYSVIP_MEMBER_LIST");
 		try {
 			customerRecode.setLm_user(ContextHelper.getUserLoginUuid());
 			customerRecode.setLm_time(new Date());
@@ -151,10 +151,17 @@ public class CustomerRecodeAction extends ActionSupport {
 	}
 
 	public String del() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_CUSTOMERRECODE_DEL");
+		ContextHelper.isPermit("SYSVIP_MEMBER_LIST");
 		try {
 			dao.delete(customerRecode);
+			map.put("uuid", customerRecode.getUuid());
+			int num=dao.listdelete(map).size();
+			System.out.println(num);
+			if(num>0){
+				setMessage("删除失败,只能删除今日添加的回访记录!ID=" + customerRecode.getUuid());
+			}else{
 			setMessage("删除成功!ID=" + customerRecode.getUuid());
+			}
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!del 数据删除失败:", e);
 			throw new Exception(this.getClass().getName() + "!del 数据删除失败:", e);
