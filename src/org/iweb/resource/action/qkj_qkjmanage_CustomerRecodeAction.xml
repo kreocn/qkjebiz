@@ -13,14 +13,7 @@
 			<result>/WEB-INF/jsp/qkjmanage/CustomerRecodeEdit.jsp</result>
 		</action>
 		
-		<action name="customerRecode_addt" class="com.qkj.manage.action.CustomerRecodeAction" method="add">
-			<result type="redirectAction">
-				<param name="actionName">member_load</param>
-				<param name="customer.uuid">${customerRecode.customer_id}</param>
-				<param name="viewFlag">mdy</param>
-				<param name="message">${message}</param>
-			</result>
-		</action>
+
 		
 		
 		

@@ -321,7 +321,8 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 			customer.setManager(member.getManager());
 			customer.setDept_code(member.getDept_code());
 			customer.setAdd_time(new Date());
-			customer.setCus_name(member.getMember_name());
+			customer.setCon_name(member.getMember_name());
+			customer.setCus_name(member.getContact());
 			customer.setPhone(member.getMobile());
 			customer.setAdd_user(ContextHelper.getUserLoginUuid());
 			customer.setDistribution(ToolsUtil.Array2String(customer.getDistributions() == null ? new String[] {}
@@ -338,19 +339,6 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -367,6 +355,25 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 			
 			customer.setDept_code(member.getDept_code());
 			customersave();
+			
+				
+			if(member.getIs_customers().equals("1")){
+				
+				customer.setMember_id(member.getUuid());
+				customer.setManager(member.getManager());
+				customer.setDept_code(member.getDept_code());
+				customer.setAdd_time(new Date());
+				customer.setCon_name(member.getMember_name());
+				customer.setCus_name(member.getContact());
+				customer.setPhone(member.getMobile());
+				customer.setAdd_user(ContextHelper.getUserLoginUuid());
+				customer.setDistribution(ToolsUtil.Array2String(customer.getDistributions() == null ? new String[] {}
+						: customer.getDistributions(), ","));
+				customer.setFailed_reason(ToolsUtil.Array2String(customer.getFailed_reasons() == null ? new String[] {}
+						: customer.getFailed_reasons(), ","));
+				cdao.add(customer);
+				}
+			
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);

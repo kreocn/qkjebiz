@@ -31,11 +31,11 @@
 	</div>
 	<div class="label_hang">
 		<div class="label_ltit">登录密码:</div>
-		<div class="label_rwben label_rwb"><s:password id="passwords" name="member.passwords" cssClass="validate[required]" /></div>
+		<div class="label_rwben label_rwb"><s:password id="passwords" name="member.passwords" /></div>
 	</div>
 	<div class="label_hang">
 		<div class="label_ltit">再次输入:</div>
-		<div class="label_rwben label_rwb"><s:password id="passwords2" name="passwords2" cssClass="validate[required,equals[passwords]]" /></div>
+		<div class="label_rwben label_rwb"><s:password id="passwords2" name="passwords2" cssClass="validate[equals[passwords]]" /></div>
 	</div>
 	</div>
 	</s:if>
@@ -109,13 +109,16 @@
 	</div>
 	</s:if>
 	</div>
+
 	<s:if test="'mdy'==viewFlag">
 	<div class="label_main">
 	<div class="label_hang">
 		<div class="label_ltit">潜在客户:</div>
 		<div class="label_rwben label_rwb">
-			<s:if test="1==member.is_customers">是</s:if>
-			<s:else>否</s:else>
+			<s:if test="1==member.is_customers">
+			<s:radio onclick="qianzai(this);"  name="member.is_customers" title="是否是潜在客户"  list="#{0:'否',1:'是'}" value="1" cssClass="regular-radio" />
+			</s:if>
+			<s:else><s:radio onclick="qianzai(this);"  name="member.is_customers" title="是否是潜在客户"  list="#{0:'否',1:'是'}" value="0" cssClass="regular-radio" /></s:else>
 		</div>
 	</div>
 	<div class="是否是潜在客户">
@@ -145,14 +148,16 @@
     <li style="display: none;" id="qianzaikehu"><a href="#tabs-2"  >潜在客户</a></li>
     <s:if test="'mdy'==viewFlag">
     	<s:if test="1==member.is_customers">
-        <li><a href="#tabs-2"  >潜在客户</a></li>
+        <li><a href="#tabs-2"  id="qianzaikehu1">潜在客户</a></li>
     </s:if>
     </s:if>
     <s:if test="'mdy'==viewFlag">
     <li><a href="#tabs-3">回访记录</a></li>
       </s:if>
         <s:if test="'mdy'==viewFlag">
+        	 <c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVE',null)==true}">
          <li><a href="#tabs-4">活动记录</a></li>
+         </c:if>
          </s:if>
   </ul>
 	 <div id="tabs-1">
@@ -450,9 +455,9 @@
 				            <div class="label_rwbenx">
 				            	<div class="noprintarea">
 									<s:if test="'add' == viewFlag">
-										<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CUSTOMER_ADD',null)==true}">
+									
 								<%-- 		<s:submit id="add" name="add" value="确定" action="customer_add" cssClass="input-blue" /> --%>
-										</c:if>
+									
 									</s:if>
 									<s:elseif test="'mdy' == viewFlag">
 									<%-- 	<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CUSTOMER_MDY',null)==true}">
@@ -461,10 +466,10 @@
 										<%-- <c:if test="${it:checkPermit('QKJ_QKJMANAGE_CUSTOMER_DEL',null)==true}">
 										<s:submit id="delete" name="delete" value="删除" action="customer_del" onclick="return isDel();" cssClass="input-red" />
 										</c:if> --%>
-										<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CUSTOMERRECODE_ADD',null)==true}">
+									
 										<input id="addRecode" type="button" value="增加回访记录" onclick="openAddRecode();" />
 
-										</c:if>
+								
 											
 									</s:elseif>
 									<%-- <input type="button" class="input-gray" value="返回" onclick="linkurl('<s:url action="customer_relist" namespace="/qkjmanage" />');" /> --%>
@@ -515,9 +520,8 @@
 								<td>${it:formatDate(next_date,'yyyy-MM-dd')}</td>
 								<td>${add_user_name}</td>
 								<td>
-									 <c:if test="${it:checkPermit('QKJ_QKJMANAGE_CUSTOMERRECODE_DEL',null)==true}">
-							    	[<a style="color:#0044BB;" href="<s:url namespace="/qkjmanage" action="customerRecode_del"><s:param name="customerRecode.uuid" value="uuid" /><s:param name="customerRecode.customer_id" value="customer_id" /></s:url>" onclick="return isDel();">删除</a>]
-							    	</c:if>
+										[<a style="color:#0044BB;" href="<s:url namespace="/qkjmanage" action="customerRecode_del"><s:param name="customerRecode.uuid" value="uuid" /><s:param name="customerRecode.customer_id" value="customer_id" /></s:url>" onclick="return isDel();">删除</a>]
+							    
 							    	[<a style="color:#0044BB;" href="javascript:;" onclick="showRecode(${uuid});">查看详情</a>] 
 							    	<span id="content_${uuid}" class="tooltiptext" style="display:none"><s:property value="content" /></span>
 									<span id="promise_${uuid}" class="tooltiptext" style="display:none"><s:property value="promise" /></span>
@@ -530,7 +534,7 @@
   </div>
   </s:if>
   
-  
+   <c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVE',null)==true}">
       <s:if test="'mdy'==viewFlag">
     <div id="tabs-4">
 
@@ -544,6 +548,7 @@
 							<th>活动结束时间 </th>
 							<th>活动预期</th>
 							<th>活动状态</th>
+							<th>操作</th>
 						</tr>
 						<s:iterator value="active" status="sta1">
 							<tr>
@@ -562,6 +567,7 @@
 									<s:if test="5==status">结案通过</s:if>
 							
 								</td>
+								<td><a style="color:#0044BB;" href="/qkjmanage/active_load.action?viewFlag=mdy&active.uuid=${uuid}">查看</a></td>
 								</tr>
 								</s:iterator>
 </table>
@@ -575,7 +581,7 @@
 
 </div>
   </s:if>
-  
+  </c:if>
   
   
   
@@ -656,9 +662,9 @@
 			<td>&nbsp;</td>
 		    <td class="buttonarea">
 		    	<s:hidden name="customerRecode.customer_id" value="%{member.uuid}" />
-		    	<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CUSTOMERRECODE_ADD',null)==true}">
+		    
 				<s:submit id="customerRecode_add" name="customerRecode_add" value="确定" action="customerRecode_add" />
-				</c:if>
+		
 			</td>
 	    </tr>
 	</table>	
@@ -736,13 +742,7 @@ $(function() {
 			 		} else if($("#memberAddress\\.city").val()=='') {
 			 			alert("【所在省市】不许为空!");
 			 			$("#memberAddress\\.city").focus();
-			 		} else if($("#passwords").val()=='') {
-			 			alert("【登录密码】不许为空!");
-			 			$("passwords").focus();
-			 		} else if($("#passwords2").val()=='') {
-			 			alert("【再次输入】不许为空!");
-			 			$("#passwords2").focus();
-			 		} else {
+			 		}else {
 			 			document.forms[0].action="/sysvip/member_save";
 			 			document.forms[0].submit();
 			 		}
@@ -937,8 +937,10 @@ var showRecode = function(r_id) {
 var qianzai= function (obj) {
 	if(getRadio("member.is_customers")==1) {	
 		document.getElementById("qianzaikehu").style.display = "";
+		
 	} else {
 		document.getElementById("qianzaikehu").style.display = "none";
+		document.getElementById("qianzaikehu1").style.display = "none";
 	}
 }
 </script>
