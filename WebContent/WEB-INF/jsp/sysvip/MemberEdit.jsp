@@ -11,6 +11,7 @@
 <script type="text/javascript" src="<s:url value="/js/v0.1/area.js" />"></script>
 <style type="text/css">
 .w5{float:left; width:5px; height:20px;}
+.ui-widget{font-family:"微软雅黑";}
 </style>
 </head>
 <body>
@@ -121,7 +122,7 @@
 			<s:else><s:radio onclick="qianzai(this);"  name="member.is_customers" title="是否是潜在客户"  list="#{0:'否',1:'是'}" value="0" cssClass="regular-radio" /></s:else>
 		</div>
 	</div>
-	<div class="是否是潜在客户">
+	<div class="label_hang">
 		<div class="label_ltit">注册来源:</div>
 		<div class="label_rwben label_rwb">
 			<s:if test="0==member.reg_type">自行注册</s:if>
@@ -185,7 +186,7 @@
 	<div class="label_main">
 		<div class="label_hang">
 			<div class="label_ltit">街道地址:</div>
-			<div class="label_rwbenx"><s:textarea name="memberAddress.street" cssClass="label_hang_linput" title="街道地址" controlName="街道地址" require="required" /></div>
+			<div class="label_rwbenx"><s:textarea cssStyle="width:910px!important;" name="memberAddress.street" cssClass="label_hang_linput" title="街道地址" controlName="街道地址" require="required" /></div>
 		</div>
 	</div>
 	<div class="label_main">
@@ -198,7 +199,7 @@
 			<div class="label_rwben label_rwb"><s:textfield name="memberAddress.mobile" title="联系号码" controlName="联系号码" require="required" /></div>
 		</div>
 		<div class="label_hang label_button tac">
-			<a href="javascript:;" onclick="copyval();">复制会员姓名和手机</a>
+			<a href="javascript:;" onclick="copyval();" style="color:#074f98;">复制会员姓名和手机</a>
 		</div>
 	</div>
 	</s:if>
@@ -324,13 +325,13 @@
 			            </div>
 					</div>
 					<div class="label_hang">
-			            <div class="label_ltit">邮递地址邮编:</div>
-			            <div class="label_rwben"><s:textfield name="customer.m_post" title="邮递地址邮编"  cssClass="validate[custom[integer],maxSize[10]]" /></div>
+			            <div class="label_ltit">邮递邮编:</div>
+			            <div class="label_rwben"><s:textfield name="customer.m_post" title="邮递邮编"  cssClass="validate[custom[integer],maxSize[10]]" /></div>
 					</div>
 					<div class="label_hline">
 						<div class="label_hang">
 				            <div class="label_ltit">邮递街道地址:</div>
-				            <div class="label_rwben"><s:textarea name="customer.m_street" title="邮递街道地址" cssClass="label_hang_linput inputNote validate[maxSize[255]]" /></div>
+				            <div class="label_rwben"><s:textarea cssStyle="width:910px!important;" name="customer.m_street" title="邮递街道地址" cssClass="label_hang_linput inputNote validate[maxSize[255]]" /></div>
 						</div>
 					</div>
 					<div class="label_hang">
@@ -344,19 +345,19 @@
 					<div class="label_hline">
 						<div class="label_hang">
 				            <div class="label_ltit">经营思路:</div>
-				            <div class="label_rwben"><s:textarea name="customer.mind" title="经营思路" cssClass="label_hang_linput inputNote validate[maxSize[255]]" /></div>
+				            <div class="label_rwben"><s:textarea name="customer.mind" cssStyle="width:910px!important;" title="经营思路" cssClass="label_hang_linput inputNote validate[maxSize[255]]" /></div>
 						</div>
 					</div>
 					<div class="label_hline">
 						<div class="label_hang">
 				            <div class="label_ltit">客户背景概述:</div>
-				            <div class="label_rwben"><s:textarea name="customer.cus_back" title="原从事行业、销售经验、社会资源状况等" cssClass="label_hang_linput inputNote" rows="4" /></div>
+				            <div class="label_rwben"><s:textarea name="customer.cus_back" cssStyle="width:910px!important;" title="原从事行业、销售经验、社会资源状况等" cssClass="label_hang_linput inputNote" rows="4" /></div>
 						</div>
 					</div>
 					<div class="label_hline">
 						<div class="label_hang">
 				            <div class="label_ltit">客户现状概述:</div>
-				            <div class="label_rwben"><s:textarea name="customer.cus_now"  title="目前经营项目、销售团队配置、资金状况、销售模式等" cssClass="label_hang_linput inputNote" rows="4" /></div>
+				            <div class="label_rwben"><s:textarea name="customer.cus_now" cssStyle="width:910px!important;" title="目前经营项目、销售团队配置、资金状况、销售模式等" cssClass="label_hang_linput inputNote" rows="4" /></div>
 						</div>
 					</div>
 					<div class="label_hang">
@@ -429,13 +430,13 @@
 			        <div class="label_hline">
 						<div class="label_hang">
 				            <div class="label_ltit">客户的疑虑:</div>
-				            <div class="label_rwben"><s:textarea name="customer.doubt" title="客户的疑虑" cssClass="label_hang_linput inputNote validate[maxSize[255]]" /></div>
+				            <div class="label_rwben"><s:textarea name="customer.doubt" cssStyle="width:910px!important;" title="客户的疑虑" cssClass="label_hang_linput inputNote validate[maxSize[255]]" /></div>
 						</div>
 					</div>
 					<div class="label_hline">
 						<div class="label_hang">
-				            <div class="label_ltit">客户问题/解答:</div>
-				            <div class="label_rwben"><s:textarea name="customer.qa" title="客户的问题和解答" cssClass="label_hang_linput inputNote validate[maxSize[21845]]" /></div>
+				            <div class="label_ltit">客户问题解答:</div>
+				            <div class="label_rwben"><s:textarea name="customer.qa" cssStyle="width:910px!important;" title="客户的问题和解答" cssClass="label_hang_linput inputNote validate[maxSize[21845]]" /></div>
 						</div>
 					</div>
 				</fieldset>
@@ -455,9 +456,7 @@
 				            <div class="label_rwbenx">
 				            	<div class="noprintarea">
 									<s:if test="'add' == viewFlag">
-									
-								<%-- 		<s:submit id="add" name="add" value="确定" action="customer_add" cssClass="input-blue" /> --%>
-									
+									<%-- <s:submit id="add" name="add" value="确定" action="customer_add" cssClass="input-blue" /> --%>
 									</s:if>
 									<s:elseif test="'mdy' == viewFlag">
 									<%-- 	<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CUSTOMER_MDY',null)==true}">
@@ -466,11 +465,7 @@
 										<%-- <c:if test="${it:checkPermit('QKJ_QKJMANAGE_CUSTOMER_DEL',null)==true}">
 										<s:submit id="delete" name="delete" value="删除" action="customer_del" onclick="return isDel();" cssClass="input-red" />
 										</c:if> --%>
-									
 										<input id="addRecode" type="button" value="增加回访记录" onclick="openAddRecode();" />
-
-								
-											
 									</s:elseif>
 									<%-- <input type="button" class="input-gray" value="返回" onclick="linkurl('<s:url action="customer_relist" namespace="/qkjmanage" />');" /> --%>
 									<input id="print_button" type="button" onclick="window.print();" value="打印本页">
@@ -530,7 +525,7 @@
 						</s:iterator>
 					</table>
 				</fieldset>
-				<input id="addRecode" type="button" value="增加回访记录" onclick="openAddRecode();" />
+				<input id="addRecode" type="button" value="增加回访记录" onclick="openAddRecode();" style="margin-top:10px;" />
   </div>
   </s:if>
   
@@ -595,9 +590,8 @@
         <div class="label_hang">
             <div class="label_ltit">相关操作:</div>
             <div class="label_rwbenx">
-            	<s:if test="'add' == viewFlag">
-					
-				 	<input id="svipadd" name="svipadd" type="button" value="确定" /> 
+            	<s:if test="'add' == viewFlag">					
+				 	<input id="svipadd" name="svipadd" type="button" value="确定"  class="input-blue"/> 
 				</s:if>
 				<s:elseif test="'mdy' == viewFlag">
 					<input id="svipsave" name="svipsave" type="button" value="保存" class="input-blue" />
