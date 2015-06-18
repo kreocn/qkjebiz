@@ -297,7 +297,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 					this.setSalPromotsed(salps);// 已经选择的促销活动
 				}
 				
-				if(closeOrder.getMember_id()!=null)
+				if(closeOrder!=null && closeOrder.getMember_id()!=null)
 				this.setSalPromots(sal.salProPower(closeOrder.getMember_id()));// 可选的促销活动
 
 				CloseOrderProDAO cdao = new CloseOrderProDAO();
