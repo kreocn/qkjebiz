@@ -50,6 +50,12 @@ public class CloseOrderCheckSkip {
 			for (int i = 0; i < skipSteps.size(); i++) {
 				CloseOrerSkipStep as = new CloseOrerSkipStep();
 				as = skipSteps.get(i);
+				if(closerOrder.getType()==1){
+					if(as.getStart_step().equals("check0")){
+						continue;
+					}
+				}
+				
 				if (as.getIsSub() == 1) {// 包含子部门
 					String str = (String) CacheFactory.getCacheInstance().get(SysDBCacheLogic.CACHE_DEPT_PREFIX_PARENT + closerOrder.getApply_dept());//
 					String[] s = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组

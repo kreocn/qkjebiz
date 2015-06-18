@@ -1,6 +1,6 @@
 package com.qkj.manage.domain;
 
-import java.util.*;
+import java.util.Date;
 
 public class CloseOrder {
 	private Integer uuid;// (int)
@@ -17,6 +17,7 @@ public class CloseOrder {
 	private String add_user;// (varchar)填加人
 	private Date add_time;// (datetime)填加时间
 	private Integer type;
+	private Integer apply_id;
 
 	private Integer state;
 	private Integer sd_state;
@@ -64,6 +65,14 @@ public class CloseOrder {
 	private Date time50;
 	private Date time60;
 	private Date time70;
+
+	public Integer getApply_id() {
+		return apply_id;
+	}
+
+	public void setApply_id(Integer apply_id) {
+		this.apply_id = apply_id;
+	}
 
 	public Integer getType() {
 		return type;

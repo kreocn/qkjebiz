@@ -38,7 +38,15 @@ s
 	<div class="tab_right">
 		<div class="tab_warp main">
 			<div class="dq_step">${path}
-				<span class="opb lb op-area"> <a href="<s:url action="closeOrder_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a>
+				<span class="opb lb op-area"> 
+				<s:if test="closeOrder.type==1">
+				<a href="<s:url action="travel_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>">返回工业旅游列表</a>
+				</s:if>
+				<s:else>
+				<a href="<s:url action="closeOrder_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a>
+				</s:else>
+				
+				
 				</span> <span class="opb lb op-area"> <s:if test="closeOrder.sd_state>30 && closeOrder.state>0">
 						<a class="input-gray" href="<s:url namespace="/qkjmanage" action="closeOrder_view"><s:param name="closeOrder.uuid" value="closeOrder.uuid" /></s:url>">转到打印页面</a>
 					</s:if>
@@ -50,6 +58,8 @@ s
 				<s:hidden name="closeOrder.smd_status" value="%{closeOrder.smd_status}"></s:hidden>
 				<s:hidden name="closeOrder.fd_check_state" value="%{closeOrder.fd_check_state}"></s:hidden>
 				<s:hidden name="closeOrder.nd_check_state" value="%{closeOrder.nd_check_state}"></s:hidden>
+				<s:hidden name="closeOrder.type" value="%{closeOrder.type}"></s:hidden>
+				<s:hidden name="closeOrder.apply_id" value="%{closeOrder.apply_id}"></s:hidden>
 				<div class="label_con">
 					<div class="label_main">
 						<s:if test="'mdy' == viewFlag">
@@ -195,7 +205,7 @@ s
 								</div>
 							</div>
 						</div>
-						<s:if test="'mdy'==viewFlag">
+						<s:if test="'mdy'==viewFlag && closeOrder.type==0">
 							<div class="label_main">
 								<fieldset class="clear">
 									<legend>已参与的促销活动</legend>
@@ -269,10 +279,10 @@ s
 													<s:param name="numName">closeOrderPro.product_num</s:param>
 													<s:param name="totalName">closeOrderPro.total_price</s:param>
 												</s:url>
-												<input type="button" id="product" onclick="window.location.href='${ladingAddProductsUrl}';" value="添加酒品" />
+												<input type="button" id="product" onclick="window.location.href='${ladingAddProductsUrl}';" value="添加酒品/公司物料" />
 											</c:if>
 										</div>
-											<p class="lb_gstit">公司提供酒品</p>
+											<p class="lb_gstit">公司酒品/公司物料</p>
 											<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
 												<tr>
 													<th>品名</th>
@@ -289,9 +299,10 @@ s
 														<td class="nw">￥${product_price}</td>
 														<td class="nw">${product_num}</td>
 														<td class="nw">￥${total_price}</td>
-														<td><c:if test="${closeOrder.state==0 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_DEL',null)==true}">
+														<c:if test="${closeOrder.state==0 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_DEL',null)==true}">
+														<td>
 																<a href="<s:url action="closeOrderPro_del"><s:param name="closeOrderPro.uuid" value="%{uuid}" /><s:param name="closeOrderPro.order_id" value="%{closeOrder.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
-															</c:if></td>
+														</td></c:if>
 													</tr>
 												</s:iterator>
 											</table>
@@ -302,7 +313,7 @@ s
 										<input type="button" id="addPosm" value="添加物料" />
 									</c:if>
 									</p>
-									<p class="lb_gstit">公司销售物料(除酒品之外的其他费用,全部算物料)</p>
+									<p class="lb_gstit">其它物料</p>
 									<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
 										<tr>
 											<th>名目</th>
@@ -317,9 +328,10 @@ s
 												<td>${title}</td>
 												<td>${note}</td>
 												<td class="nw">￥${total_price}</td>
-												<td class="nw"><c:if test="${closeOrder.state==0 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_DEL',null)==true}">
+												<c:if test="${closeOrder.state==0 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_DEL',null)==true}">
+												<td class="nw">
 														<a href="<s:url action="closePosm_del"><s:param name="closePosm.uuid" value="%{uuid}" /><s:param name="closePosm.closeOrder_id" value="%{closeOrder.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
-													</c:if></td>
+												</td></c:if>
 											</tr>
 										</s:iterator>
 									</table>
@@ -395,7 +407,13 @@ s
 								<s:if test="closeOrder.sd_state>30 && closeOrder.state>0">
 									<input type="button" onclick="linkurl('<s:url namespace="/qkjmanage" action="closeOrder_view"><s:param name="closeOrder.uuid" value="closeOrder.uuid" /></s:url>');" value="转到打印页面" />
 								</s:if>
+								
+								<s:if test="closeOrder.type==1">
+								<input type="button" value="返回" onclick="linkurl('<s:url action="travel_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');" class="input-gray" />
+								</s:if>
+								<s:else>
 								<input type="button" value="返回" onclick="linkurl('<s:url action="closeOrder_relist" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');" class="input-gray" />
+								</s:else>
 							</div>
 						</div>
 					</div>

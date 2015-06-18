@@ -24,11 +24,13 @@ import com.qkj.manage.dao.CloseOrderProDAO;
 import com.qkj.manage.dao.ProcessDAO;
 import com.qkj.manage.dao.SalPromotDAO;
 import com.qkj.manage.dao.SalPromotPower;
+import com.qkj.manage.dao.TravelDAO;
 import com.qkj.manage.domain.Approve;
 import com.qkj.manage.domain.CloseOrder;
 import com.qkj.manage.domain.CloseOrderPosm;
 import com.qkj.manage.domain.CloseOrderPro;
 import com.qkj.manage.domain.SalPromot;
+import com.qkj.manage.domain.Travel;
 
 public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	private static final long serialVersionUID = 1L;
@@ -238,6 +240,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 			ContextHelper.setSearchDeptPermit4Search("QKJ_QKJMANAGE_CLOSEORDER_LIST", map, "apply_depts", "add_user");
 			ContextHelper.SimpleSearchMap4Page("QKJ_QKJMANAGE_CLOSEORDER_LIST", map, closeOrder, viewFlag);
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
+			map.put("type", 0);
 			this.setCloseOrders(dao.list(map));
 			this.setRecCount(dao.getResultCount());
 			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;结案提货单列表";
@@ -276,6 +279,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 				String salid = null;
 				if (!(closeOrder == null || closeOrder.getUuid() == null)) {
 					this.setCloseOrder((CloseOrder) dao.get(closeOrder.getUuid()));
+					if(closeOrder.getSalPro_id()!=null && !closeOrder.getSalPro_id().equals(""))
 					salid = closeOrder.getSalPro_id();
 				} else {
 					this.setCloseOrder(null);
@@ -292,6 +296,8 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 					}
 					this.setSalPromotsed(salps);// 已经选择的促销活动
 				}
+				
+				if(closeOrder.getMember_id()!=null)
 				this.setSalPromots(sal.salProPower(closeOrder.getMember_id()));// 可选的促销活动
 
 				CloseOrderProDAO cdao = new CloseOrderProDAO();
@@ -312,7 +318,12 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 				/* 检查当前用户是否已经审阅 */
 				if (apdao.userIsIn(approves, ContextHelper.getUserLoginUuid())) this.setIsApprover("true");
 				else this.setIsApprover("false");
-				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/closeOrder_relist'>结案提货单列表</a>&nbsp;&gt;&nbsp;增加结案提货单";
+				if(closeOrder.getType()==1){
+					path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/travel_list?viewFlag=relist'>工业旅游申请列表</a>&nbsp;&gt;&nbsp;工业旅游结案";
+				}else{
+					path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/closeOrder_relist'>结案提货单列表</a>&nbsp;&gt;&nbsp;增加结案提货单";
+				}
+				
 			} else {
 				this.setCloseOrder(null);
 				setMessage("无操作类型!");
@@ -414,6 +425,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 
 	public String del() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_DEL");
+		int type=closeOrder.getType();
 		try {
 			dao.delete(closeOrder);
 			setMessage("删除成功!ID=" + closeOrder.getUuid());
@@ -422,7 +434,12 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 			log.error(this.getClass().getName() + "!del 数据删除失败:", e);
 			throw new Exception(this.getClass().getName() + "!del 数据删除失败:", e);
 		}
-		return SUCCESS;
+		if(type==1){
+			return "TRASUCCESS";
+		}else{
+			return "CLOSUCCESS";
+		}
+		
 	}
 
 	/* 申请单状态 0:新申请 1:申请审批中 2:申请通过 */
@@ -850,6 +867,15 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 		closeOrder.setLm_time(new Date());
 		String note = "提货结案单状态变更-" + noteflag;
 		addProcess("CLOSEORDER_MDY_STATUS", note, ContextHelper.getUserLoginUuid());
+		//修改申请单状态
+		if(closeOrder.getType()==1){
+			TravelDAO td=new TravelDAO();
+			Travel t=new Travel();
+			t.setStatus(status);
+			t.setUuid(closeOrder.getApply_id());
+			td.mdyStatus(t);
+		}
+		
 		return dao.mdyCloseOrderStatus(closeOrder);
 	}
 
