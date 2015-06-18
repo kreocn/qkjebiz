@@ -233,6 +233,7 @@ cursor: pointer;
 				<span class="op-area">
 				<s:if test="ship_status==0"><a class="ship_info input-nostyle"  data="${uuid}">未发货</a></s:if>
 				<s:if test="ship_status==10"><a class="ship_info input-nostyle"  data="${uuid}"><span class="message_pass">已发货</span></a></s:if>
+				<s:if test="ship_status==99"><a class="ship_info input-nostyle"  data="${uuid}">&nbsp;其它&nbsp;</a></s:if>
 				</span>
 				<span class="ship_hidden_info" style="display:none;">
 					<span id="ship_no_${uuid}">${ship_no}</span>

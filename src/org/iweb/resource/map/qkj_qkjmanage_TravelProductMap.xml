@@ -10,6 +10,7 @@
 			WHERE t.`product_id` = p.`uuid`
 		]]>
 		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ t.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="status"><![CDATA[ t.status=#status# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="travel_id"><![CDATA[ t.travel_id=#travel_id# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="product_id"><![CDATA[ t.product_id=#product_id# ]]></isNotEmpty>
 		<![CDATA[ LIMIT 1000 ]]>
@@ -21,14 +22,15 @@
 			WHERE t.`product_id` = p.`uuid`
 		]]>
 		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ t.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="status"><![CDATA[ t.status=#status# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="travel_id"><![CDATA[ t.travel_id=#travel_id# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="product_id"><![CDATA[ t.product_id=#product_id# ]]></isNotEmpty>
 		<![CDATA[ LIMIT 1000 ]]>
 	</select>
 	<insert id="qkjmanage_addTravelProduct" parameterClass="travelProduct">
 		<![CDATA[ 
-			Insert Into qkjm_r_travel_product(travel_id,product_id,num)
-			Values (#travel_id#,#product_id#,#num#)
+			Insert Into qkjm_r_travel_product(travel_id,product_id,num,status)
+			Values (#travel_id#,#product_id#,#num#,#status#)
 		]]>
 		<selectKey resultClass="int" keyProperty="uuid">
 		<![CDATA[ Select LAST_INSERT_ID() ]]>
