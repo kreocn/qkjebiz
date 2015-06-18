@@ -27,7 +27,7 @@ body {background-color: #363636;}
         <div class="label_singlecol label_s2">
         	<s:submit value="登 录" />
         	<span class="label_seq"></span>
-        	<s:reset value="重 置" />
+        	<a href="http://exmail.qq.com/cgi-bin/loginpage?t=logindomain&f=biz&param=@51qkj.com">进入企业邮箱</a>
         </div>
         </s:form>
 	</div>
