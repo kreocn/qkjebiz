@@ -28,6 +28,16 @@
 			<result name="print2">/WEB-INF/jsp/qkjmanage/TravelPrint2.jsp</result>
 			<result name="print3">/WEB-INF/jsp/qkjmanage/TravelPrint3.jsp</result>
 		</action>
+		
+		<action name="travel_closeLoad" class="com.qkj.manage.action.TravelAction" method="closeLoad">
+			<result type="redirectAction">
+				<param name="actionName">closeOrder_load</param>
+				<param name="closeOrder.uuid">${co.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
 		<action name="travel_del" class="com.qkj.manage.action.TravelAction" method="del">
 			<result type="redirectAction">
 				<param name="actionName">travel_list</param>

@@ -46,6 +46,20 @@ public class Travel {
 	private Date add_time;// (datetime)添加时间
 	private String lm_user;// (varchar)最后修改人
 	private Date lm_time;// (datetime)最后修改时间
+	
+	private Integer status;
+	
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	private String member_id;
+	private String member_address;
+	private String member_phone;
 
 	// 以下为非数据库字段
 	private String apply_dept_name;
@@ -61,7 +75,32 @@ public class Travel {
 	private String[] cars;
 
 	// 查询专用字段
+	
 	private Date travel_date_search;
+
+	public String getMember_id() {
+		return member_id;
+	}
+
+	public void setMember_id(String member_id) {
+		this.member_id = member_id;
+	}
+
+	public String getMember_address() {
+		return member_address;
+	}
+
+	public void setMember_address(String member_address) {
+		this.member_address = member_address;
+	}
+
+	public String getMember_phone() {
+		return member_phone;
+	}
+
+	public void setMember_phone(String member_phone) {
+		this.member_phone = member_phone;
+	}
 
 	public String getCheck_user_sign() {
 		return check_user_sign;

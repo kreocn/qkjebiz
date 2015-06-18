@@ -45,8 +45,13 @@
 			</result>
 		</action>
 		<action name="closeOrder_del" class="com.qkj.manage.action.CloseOrderAction" method="del">
-			<result type="redirectAction">
+			<result type="redirectAction" name="CLOSUCCESS">
 				<param name="actionName">closeOrder_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+			<result type="redirectAction" name="TRASUCCESS">
+				<param name="actionName">travel_list</param>
 				<param name="viewFlag">relist</param>
 				<param name="message">${message}</param>
 			</result>
@@ -54,32 +59,36 @@
 		
 		<action name="closeOrder_check*" class="com.qkj.manage.action.CloseOrderAction" method="check{1}">
 			<result type="redirectAction">
-				<param name="actionName">closeOrder_list</param>
-				<param name="viewFlag">relist</param>
+				<param name="actionName">closeOrder_load</param>
+				<param name="closeOrder.uuid">${closeOrder.uuid}</param>
+				<param name="viewFlag">mdy</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
 		
 		<action name="mdyCloseOrderSMDStatus*" class="com.qkj.manage.action.CloseOrderAction" method="mdyCloseOrderSMDStatus{1}">
 			<result type="redirectAction">
-				<param name="actionName">closeOrder_list</param>
-				<param name="viewFlag">relist</param>
+				<param name="actionName">closeOrder_load</param>
+				<param name="closeOrder.uuid">${closeOrder.uuid}</param>
+				<param name="viewFlag">mdy</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
 		
 		<action name="closeOrder_checkfd*" class="com.qkj.manage.action.CloseOrderAction" method="checkfd{1}">
 			<result type="redirectAction">
-				<param name="actionName">closeOrder_list</param>
-				<param name="viewFlag">relist</param>
+				<param name="actionName">closeOrder_load</param>
+				<param name="closeOrder.uuid">${closeOrder.uuid}</param>
+				<param name="viewFlag">mdy</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
 		
 		<action name="closeOrder_checknd*" class="com.qkj.manage.action.CloseOrderAction" method="checknd{1}">
 			<result type="redirectAction">
-				<param name="actionName">closeOrder_list</param>
-				<param name="viewFlag">relist</param>
+				<param name="actionName">closeOrder_load</param>
+				<param name="closeOrder.uuid">${closeOrder.uuid}</param>
+				<param name="viewFlag">mdy</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
