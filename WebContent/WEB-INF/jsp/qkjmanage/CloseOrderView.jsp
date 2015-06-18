@@ -35,7 +35,7 @@
 						</div>
 						<div class="label_hang">
 							<div class="label_ltit">单据编号:</div>
-							<div class="label_rwb">
+							<div class="label_rwben2">
 								${closeOrder.close_num }
 							</div>
 						</div>
@@ -262,7 +262,7 @@
 					
 					<div class="label_main">
 							<fieldset class="clear">
-								<legend>可参与促销活动</legend>
+								<legend>已参与促销活动</legend>
 								<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
 									<tr>
 										<th>活动名称</th>
@@ -283,33 +283,56 @@
 								</script>
 							</fieldset>
 						</div>
+						
 						<fieldset class="clear">
 								<legend>结案单明细</legend>
-						<div class="label_main">
-								<p class="lb_yjtit fy_hide">
-								</p>
-								<div class="lb_yjcon">
+								<div class="lb_xxsm">
+									<div class="lb_lgsfy">
+										<div class="lb_yjtit">
+										</div>
+											<p class="lb_gstit">公司提供酒品</p>
+											<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+												<tr>
+													<th>品名</th>
+													<th>单价</th>
+													<th>数量(瓶)</th>
+													<th>合计</th>
+												</tr>
+												<s:iterator value="closeOrderPros" status="sta">
+													<tr>
+														<td class="nw">${product_name}</td>
+														<td class="nw">￥${product_price}</td>
+														<td class="nw">${product_num}</td>
+														<td class="nw">￥${total_price}</td>
+													</tr>
+												</s:iterator>
+											</table>
+									</div>
+									<div class="lb_gsfy">
+									<p class="lb_yjtit">
+									</p>
+									<p class="lb_gstit">公司销售物料(除酒品之外的其他费用,全部算物料)</p>
 									<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
 										<tr>
-											<th>品名</th>
-											<th>单价</th>
-											<th>数量(瓶)</th>
-											<th>合计</th>
+											<th>名目</th>
+											<th>名目说明</th>
+											<th>金额</th>
 										</tr>
-										<s:iterator value="closeOrderPros" status="sta">
+										<s:iterator value="closePosms" status="sta">
 											<tr>
-												<td class="nw">${product_name}</td>
-												<td class="nw">￥${product_price}</td>
-												<td class="nw">${product_num}</td>
+												<td>${title}</td>
+												<td>${note}</td>
 												<td class="nw">￥${total_price}</td>
 											</tr>
 										</s:iterator>
 									</table>
+								</div>
+								
 									<p class="lb_gstit">费用合计</p>
 									<p class="lb_jwei">￥${closeOrder.totel_price}</p>
 								</div>
-						</div>
-						</fieldset>
+							</fieldset>
+							<div style="height: 10px;"></div>
 
 					<div class="label_main">
 						<div class="label_hang">
