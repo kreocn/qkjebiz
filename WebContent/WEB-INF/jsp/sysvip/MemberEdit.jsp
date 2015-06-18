@@ -44,7 +44,7 @@
 		<div class="label_ltit">会员手机:</div>
 		<div class="label_rwben2">
 			<span class="label_rwb label_rwbx"><s:textfield id="memMobile" name="member.mobile" title="会员手机" cssClass="validate[required,custom[mobile]]" /></span>
-			<span class="label_rwb nw"><s:radio name="member.is_mobile_check" title="手机验证"  list="#{0:'未验证',1:'已验证'}" value="1" cssClass="regular-radio" /></span>
+			<span class="label_rwb nw"><s:radio name="member.is_mobile_check" title="手机验证"  list="#{0:'未验证',1:'已验证'}"  cssClass="regular-radio" /></span>
 		</div>
 	</div>
 	<div class="label_hang">
@@ -64,7 +64,7 @@
 		<div class="label_ltit">会员EMAIL:</div>
 		<div class="label_rwben2">
 			<span class="label_rwb label_rwbx"><s:textfield name="member.email" cssClass="validate[maxSize[85]]" /></span>
-			<span class="label_rwb nw"><s:radio name="member.is_email_check" title="EMAIL验证"  list="#{0:'未验证',1:'已验证'}" value="0" cssClass="regular-radio" /></span>
+			<span class="label_rwb nw"><s:radio name="member.is_email_check" title="EMAIL验证"  list="#{0:'未验证',1:'已验证'}"  cssClass="regular-radio" /></span>
 		</div>
 	</div>
 	<div class="label_hang">
@@ -467,7 +467,7 @@
 										<s:submit id="delete" name="delete" value="删除" action="customer_del" onclick="return isDel();" cssClass="input-red" />
 										</c:if> --%>
 									
-										<input id="addRecode" type="button" value="增加回访记录" onclick="openAddRecode();" />
+									
 
 								
 											
@@ -815,62 +815,16 @@ function checkManager() {
 <script type="text/javascript">
 var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
 var manager = '${customer.manager}';
-$(function(){
-	if($("#customer_dept_code").val()!='') {
-		loadManagers($("#customer_dept_code").val());
-	}
-	$("#customer_stage").bind("change",function(){
-		if($(this).val()==0) {
-			$("#customer_stage_1").hide();
-		} else {
-			$("#customer_stage_1").show();
-		}
-		if($(this).val()==3) {
-			$("#failed_reason_tr").show();
-		} else {
-			$("#failed_reason_tr").hide();
-		}
-		if($(this).val()==4) {
-			$("#contract_end_tr").show();
-			$("#customer_contract_end").attr("require","required");
-		} else {
-			$("#contract_end_tr").hide();
-			$("#customer_contract_end").removeAttr("require");
-		}
-		$("#base_info_td").attr("rowspan",$(".base_info_class:visible").length);
-	});
+
 	$("#AddRecode").dialog({
 	      autoOpen: false,
 	      width: 580,
 	      height: 320,
 	      modal: true
 	});
-	$("#base_info_td").attr("rowspan",$(".base_info_class:visible").length);
-	
-	$("#customer_contract_end").datepicker();
-	if(CommonUtil.isVisible($("#customer_contract_end"))) {
-		$("#customer_contract_end").attr("require","required");
-	} else {
-		$("#customer_contract_end").removeAttr("require");
-	}
-	
 	CommonUtil.pickrow('table_recode');
-	
 	$(".tooltip").tooltip();
  });
- 
-var sobj01;
-var selectDept2 = function() {
-	sobj01 = new DialogIFrame({src:'<s:url namespace="/sys" action="dept_permit_select" />?objname=sobj01',title:"选择部门"});
-	sobj01.selfAction = function(val1,val2) {
-		$("#customer_dept_code").val(val1);
-		$("#customer_dept_name").val(val2);
-		 loadManagers(val1);
-	};
-	sobj01.create();
-	sobj01.open();
-};
-
 function loadManagers(dept_code) {
 	var ajax = new Common_Ajax('ajax_member_message');
 	ajax.config.action_url = ajax_url_action;

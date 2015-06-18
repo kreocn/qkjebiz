@@ -25,6 +25,7 @@ import org.apache.struts2.ServletActionContext;
 import org.iweb.sys.ContextHelper;
 import org.iweb.sys.Parameters;
 import org.iweb.sys.domain.UserLoginInfo;
+import org.iweb.sysvip.domain.Member;
 
 import com.aliyun.openservices.ots.protocol.OtsProtocol.StartTransactionRequest;
 import com.opensymphony.xwork2.ActionContext;
@@ -33,6 +34,7 @@ import com.qkj.manage.dao.StoresDao;
 import com.qkj.manage.domain.Product;
 import com.qkj.manage.domain.StoresOrder;
 import com.qkj.manage.domain.StoresOrderItem;
+
 public class StoresAction  extends ActionSupport{
 	private static final long serialVersionUID = 1L;
 	private String code;
@@ -44,7 +46,7 @@ public class StoresAction  extends ActionSupport{
 	private int recCount;
 	private int pageSize;
 	private int num;
-
+    private Member member;
 	private List<StoresOrder> storesorderlist;
 	private Map<String, Object> map = new HashMap<String, Object>();
 	private static Log log = LogFactory.getLog(StoresAction.class);
@@ -53,7 +55,13 @@ public class StoresAction  extends ActionSupport{
 	private String storesid;
 	private Double price;
 	private Double totalPirce;
+	public Member getMember() {
+		return member;
+	}
 
+	public void setMember(Member member) {
+		this.member = member;
+	}
 	public Double getTotalPirce() {
 		return totalPirce;
 	}
@@ -247,6 +255,9 @@ public class StoresAction  extends ActionSupport{
 				storesorderitem.setTitle(title);
 			}
 			dao.add(storesorderitem);
+			
+			
+			System.out.println(member.getUuid());
 		}
 		return SUCCESS;
 	}
