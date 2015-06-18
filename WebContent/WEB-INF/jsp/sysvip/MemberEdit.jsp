@@ -45,7 +45,7 @@
 		<div class="label_ltit">会员手机:</div>
 		<div class="label_rwben2">
 			<span class="label_rwb label_rwbx"><s:textfield id="memMobile" name="member.mobile" title="会员手机" cssClass="validate[required,custom[mobile]]" /></span>
-			<span class="label_rwb nw"><s:radio name="member.is_mobile_check" title="手机验证"  list="#{0:'未验证',1:'已验证'}"  cssClass="regular-radio" /></span>
+			<span class="label_rwb nw"><s:radio name="member.is_mobile_check" title="手机验证"  list="#{0:'未验证',1:'已验证'}"  value="1" cssClass="regular-radio" /></span>
 		</div>
 	</div>
 	<div class="label_hang">
@@ -65,7 +65,7 @@
 		<div class="label_ltit">会员EMAIL:</div>
 		<div class="label_rwben2">
 			<span class="label_rwb label_rwbx"><s:textfield name="member.email" cssClass="validate[maxSize[85]]" /></span>
-			<span class="label_rwb nw"><s:radio name="member.is_email_check" title="EMAIL验证"  list="#{0:'未验证',1:'已验证'}"  cssClass="regular-radio" /></span>
+			<span class="label_rwb nw"><s:radio name="member.is_email_check" title="EMAIL验证"  list="#{0:'未验证',1:'已验证'}"   cssClass="regular-radio" /></span>
 		</div>
 	</div>
 	<div class="label_hang">
@@ -808,53 +808,32 @@ function checkManager() {
 <script type="text/javascript">
 var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
 var manager = '${customer.manager}';
+$("#AddRecode").dialog({
+    autoOpen: false,
+    width: 580,
+    height: 320,
+    modal: true
+});
+$(function(){
 
-
-
-	$(function(){
-			if($(this).val()==3) {
-				$("#failed_reason_tr").show();
-			} else {
-				$("#failed_reason_tr").hide();
-			}
-			if($(this).val()==4) {
-				$("#contract_end_tr").show();
-	
-			} else {
-				$("#contract_end_tr").hide();
-		
-			}
-			$("#base_info_td").attr("rowspan",$(".base_info_class:visible").length);
-		});
-		$("#AddRecode").dialog({
-		      autoOpen: false,
-		      width: 580,
-		      height: 320,
-		      modal: true
-		});
-		$("#base_info_td").attr("rowspan",$(".base_info_class:visible").length);
-		
-		
-		CommonUtil.pickrow('table_recode');
-		
-		$(".tooltip").tooltip();
-	 });
+	CommonUtil.pickrow('table_recode');
+	$(".tooltip").tooltip();
+ });
 function loadManagers(dept_code) {
 	var ajax = new Common_Ajax('ajax_member_message');
 	ajax.config.action_url = ajax_url_action;
 	ajax.config._success = function(data, textStatus) {
 		$("#membermanagerid").clearAllOption();
 		$("#membermanagerid").addOption("暂不分配","");
-		$("#membermanageridC").clearAllOption();
-		$("#membermanageridC").addOption("暂不分配","");
+
 		$.each(data, function(i, n){
 			$("#membermanagerid").addOption(n.user_name,n.uuid);
-			$("#membermanageridC").addOption(n.user_name,n.uuid);
+
 		});
 		
 		if(manager!='') {
 			$("#membermanagerid").setSelectedValue(manager);
-			$("#membermanageridC").setSelectedValue(manager);
+
 		};
 	};
 	ajax.addParameter("work", "AutoComplete");

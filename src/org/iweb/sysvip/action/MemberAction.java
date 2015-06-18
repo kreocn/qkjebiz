@@ -307,10 +307,13 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 			member.setIs_mobile_check(1);
 			member.setReg_type(1);
 			member.setReg_time(new Date());
+			if(member.getIs_email_check()==null){
+				member.setIs_email_check(0);
+			}
 			 dao.add(member);
 			memberAddress.setMember_id(member.getUuid());
 			memberAddress.setDefaultaddress(1);
-			
+		
 			MemberAddressDAO mdao = new MemberAddressDAO();
 			mdao.add(memberAddress);
 			log.info("成功添加了会员,会员号为:" + member.getUuid());

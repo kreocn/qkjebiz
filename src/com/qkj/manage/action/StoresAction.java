@@ -25,7 +25,9 @@ import org.apache.struts2.ServletActionContext;
 import org.iweb.sys.ContextHelper;
 import org.iweb.sys.Parameters;
 import org.iweb.sys.domain.UserLoginInfo;
+import org.iweb.sysvip.dao.MemberCapitalDAO;
 import org.iweb.sysvip.domain.Member;
+import org.iweb.sysvip.domain.MemberCapital;
 
 import com.aliyun.openservices.ots.protocol.OtsProtocol.StartTransactionRequest;
 import com.opensymphony.xwork2.ActionContext;
@@ -255,9 +257,13 @@ public class StoresAction  extends ActionSupport{
 				storesorderitem.setTitle(title);
 			}
 			dao.add(storesorderitem);
-			
-			
 			System.out.println(member.getUuid());
+			
+			MemberCapital mc=new MemberCapital();
+			mc.setMember_id(member.getUuid());
+			mc.setScore((int)(price*Parameters.STORE_INTEGRATION));
+			MemberCapitalDAO md=new MemberCapitalDAO();
+			md.mdyCapital(mc, 3, 1, id+"");
 		}
 		return SUCCESS;
 	}
