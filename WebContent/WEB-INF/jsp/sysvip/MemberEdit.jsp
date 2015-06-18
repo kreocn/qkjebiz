@@ -809,15 +809,36 @@ function checkManager() {
 var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
 var manager = '${customer.manager}';
 
-$("#AddRecode").dialog({
-      autoOpen: false,
-      width: 580,
-      height: 320,
-      modal: true
-});
-CommonUtil.pickrow('table_recode');
-$(".tooltip").tooltip();
 
+
+	$(function(){
+			if($(this).val()==3) {
+				$("#failed_reason_tr").show();
+			} else {
+				$("#failed_reason_tr").hide();
+			}
+			if($(this).val()==4) {
+				$("#contract_end_tr").show();
+	
+			} else {
+				$("#contract_end_tr").hide();
+		
+			}
+			$("#base_info_td").attr("rowspan",$(".base_info_class:visible").length);
+		});
+		$("#AddRecode").dialog({
+		      autoOpen: false,
+		      width: 580,
+		      height: 320,
+		      modal: true
+		});
+		$("#base_info_td").attr("rowspan",$(".base_info_class:visible").length);
+		
+		
+		CommonUtil.pickrow('table_recode');
+		
+		$(".tooltip").tooltip();
+	 });
 function loadManagers(dept_code) {
 	var ajax = new Common_Ajax('ajax_member_message');
 	ajax.config.action_url = ajax_url_action;
