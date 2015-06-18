@@ -354,14 +354,19 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 			map.put("allsign", 1);
 			map.put("biz_id", closeOrder.getUuid());
 			this.setAllsigns(dao.allsign(map));
-			System.out.println(allsigns.size());
 
 			this.setSign((CloseOrder) dao.sign(closeOrder.getUuid()));
-			System.out.println(sign);
+			
 			CloseOrderProDAO cdao = new CloseOrderProDAO();
 			map.clear();
 			map.put("order_id", closeOrder.getUuid());
 			this.setCloseOrderPros(cdao.list(map));
+			
+			CloseOrderPosmDAO closedao=new CloseOrderPosmDAO();
+			map.clear();
+			map.put("closeOrder_id", closeOrder.getUuid());
+			this.setClosePosms(closedao.list(map));
+			
 			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/closeOrder_relist'>结案提货单列表</a>&nbsp;&gt;&nbsp;结案提货单详情";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!view 读取数据错误:", e);
