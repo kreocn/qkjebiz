@@ -214,21 +214,20 @@ s
 											<th>活动名称</th>
 											<th>开始时间</th>
 											<th>结束时间</th>
-											<th>操作</th>
+											
 										</tr>
 										<!-- lading.promotions -->
 										<s:iterator value="salPromotsed" status="sta">
 											<tr>
-												<td class="nw">${sal_title}</td>
+												<td class="nw">
+												<a  href="<s:url namespace="/salpro" action="salPromot_loadt"><s:param name="viewFlag">view</s:param><s:param name="salPromot.uuid" value="uuid"></s:param><s:param name="salstate" value="1"></s:param></s:url>">${sal_title}</a>
+												</td>
 												<td class="nw">${it:formatDate(startime,'yyyy-MM-dd')}</td>
 												<td class="nw">${it:formatDate(endtime,'yyyy-MM-dd')}</td>
-												<td><a href="javascript:;" onclick="openCustomerView(${uuid});">[查看详情]</a></td>
+												<!-- <td><a href="javascript:;" onclick="openCustomerView(${uuid});">[查看详情]</a></td> -->
 											</tr>
 										</s:iterator>
 									</table>
-									<script type="text/javascript">
-									setCheckBox("closeOrder.salPro_id", '${closeOrder.salPro_id}');
-								</script>
 								</fieldset>
 							</div>
 							<s:if test="closeOrder.state==0">
@@ -247,16 +246,15 @@ s
 											<s:iterator value="salPromots" status="sta">
 												<tr>
 													<td class="nw"><input type="checkbox" name="closeOrder.salPro_id" value="${uuid}" /></td>
-													<td class="nw">${sal_title}</td>
+													<td class="nw">
+													<a  href="<s:url namespace="/salpro" action="salPromot_loadt"><s:param name="viewFlag">view</s:param><s:param name="salPromot.uuid" value="uuid"></s:param><s:param name="salstate" value="1"></s:param></s:url>">${sal_title}</a>
+													</td>
 													<td class="nw">${it:formatDate(startime,'yyyy-MM-dd')}</td>
 													<td class="nw">${it:formatDate(endtime,'yyyy-MM-dd')}</td>
-													<td><a href="javascript:;" onclick="openCustomerView(${uuid});">[查看详情]</a></td>
+													<!-- <td><a href="javascript:;" onclick="openCustomerView(${uuid});">[查看详情]</a></td> -->
 												</tr>
 											</s:iterator>
 										</table>
-										<script type="text/javascript">
-									setCheckBox("closeOrder.salPro_id", '${closeOrder.salPro_id}');
-								</script>
 									</fieldset>
 								</div>
 							</s:if>
@@ -404,6 +402,11 @@ s
 										<input type="button" value="审阅" onclick="openApprove();" class="input-yellow" />
 									</c:if>
 								</s:elseif>
+								
+								<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK5',null)==true && closeOrder.state>0}">
+										<s:submit id="mdyStatus5" name="mdyStatus5" cssClass="input-red" value="退回" action="closeOrder_check5" onclick="return isOp('确定执行此操作?');" />
+								</c:if>
+									
 								<s:if test="closeOrder.sd_state>30 && closeOrder.state>0">
 									<input type="button" onclick="linkurl('<s:url namespace="/qkjmanage" action="closeOrder_view"><s:param name="closeOrder.uuid" value="closeOrder.uuid" /></s:url>');" value="转到打印页面" />
 								</s:if>
@@ -423,8 +426,11 @@ s
 								<div class="label_ltit">销售审核:</div>
 								<div class="label_rwbenx">
 									<s:if test="closeOrder.state<2">
+										
 										<c:if test="${closeOrder.sd_state==10 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK20',closeOrder.apply_dept)==true}">
 											<s:submit id="mdyStatus20" name="mdyStatus20" value="经理/大区审核通过" action="closeOrder_check20" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
+										</c:if>
+										<c:if test="${closeOrder.sd_state==10 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK5',closeOrder.apply_dept)==true}">
 											<s:submit id="mdyStatus5" name="mdyStatus5" cssClass="input-red" value="审核不通过" action="closeOrder_check5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
 										<c:if test="${closeOrder.sd_state==30 && closeOrder.smd_status==30 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK30',closeOrder.apply_dept)==true}">
@@ -526,12 +532,10 @@ s
 							<div class="label_hang">
 								<div class="label_ltit">数据中心:</div>
 								<div class="label_rwbenx">
-									<s:if test="closeOrder.state<2">
 										<c:if test="${closeOrder.smd_status>=50 && 10!=closeOrder.nd_check_state && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK40',closeOrder.apply_dept)==true}">
 											<s:submit id="mdyCloseOrderFDSTATUS10" name="mdyCloseOrderFDSTATUS10" cssClass="input-green" value="数据中心-审核通过" action="closeOrder_checknd0" onclick="return isOp('确定执行此操作?');" />
 											<s:submit id="mdyCloseOrderFDStatus5" name="mdyCloseOrderFDStatus5" cssClass="input-red" value="审核不通过" action="closeOrder_checknd5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
-									</s:if>
 									<div class="statusInline">
 										数据中心审核状态:
 										<s:if test="CloseOrder.nd_check_state==0">未确认</s:if>
@@ -603,9 +607,7 @@ s
 		</div>
 	</div>
 	<s:action name="ref_foot" namespace="/manager" executeResult="true" />
-	<script type="text/javascript">
-									setCheckBox("closeOrder.salPro_id", '${closeOrder.salPro_id}');
-								</script>
+	
 </body>
 <script type="text/javascript">
 			$(function(){

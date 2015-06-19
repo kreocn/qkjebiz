@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.websocket.CloseReason;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.iweb.sys.ContextHelper;
@@ -19,7 +17,6 @@ import com.qkj.manage.dao.ProductDAO;
 import com.qkj.manage.dao.TravelCustomerDAO;
 import com.qkj.manage.dao.TravelDAO;
 import com.qkj.manage.dao.TravelProductDAO;
-import com.qkj.manage.domain.Active;
 import com.qkj.manage.domain.CloseOrder;
 import com.qkj.manage.domain.Product;
 import com.qkj.manage.domain.Travel;

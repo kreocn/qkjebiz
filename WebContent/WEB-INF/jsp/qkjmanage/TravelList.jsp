@@ -110,7 +110,7 @@
 				    	    		<a class="input-blue"  href="<s:url namespace="/qkjmanage" action="travel_closeLoad"><s:param name="viewFlag">add</s:param><s:param name="travel.uuid" value="uuid"></s:param></s:url>">开始结案</a>
 				    	    	</c:if>
 				    	    	<c:if test="${it:checkPermit('QKJ_QKJMANAGE_TRAVEL',null)==true && status>=1&& check_status>=30}">
-				    	    	<a class="input-blue"  href="<s:url namespace="/qkjmanage" action="travel_closeLoad"><s:param name="viewFlag">mdy</s:param><s:param name="travel.uuid" value="uuid"></s:param></s:url>">结案修改</a>
+				    	    	<a class="input-blue"  href="<s:url namespace="/qkjmanage" action="travel_closeLoad"><s:param name="viewFlag">add</s:param><s:param name="travel.uuid" value="uuid"></s:param></s:url>">结案修改</a>
 				    	    	</c:if>
 				    	    	
 				                <c:if test="${(check_status<=5 || acheck_status<=5) && it:checkPermit('QKJ_QKJMANAGE_TRAVEL_DEL',null)==true}">
