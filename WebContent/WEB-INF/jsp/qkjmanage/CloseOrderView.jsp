@@ -13,6 +13,19 @@
   border-right: 1px solid #ccc;
   width: 49%;
 }
+.label_hang_sign{
+	width:49%;
+	min-height:45px;
+	height:auto;
+	line-height:28px;
+}
+.label_rwb_sign {
+  margin-top:0;
+}
+
+.label_main {
+  padding-bottom: 0;
+}
 </style>
 </head>
 
@@ -50,25 +63,45 @@
 					<div class="label_main">
 					<div class="label_hang">
 						<div class="label_ltit">签字:</div>
-						<div class="label_rwbenx">
+						<div class="label_rwbenx label_rwb_sign">
 							<s:iterator value="allsigns" status="sta">
-								<div class="zhuangtai bgcw">
+								
 									<s:if test="puser_sign!=null">
 										<s:if test="puser_sign==null">	(${puser_name})</s:if>
 										<s:else>
 											<s:if test="%{sign==null}">
 											<span class="user_sign"><img src="${puser_sign}" /></span>
-											<span class="vab">${it:formatDate(biz_time,'yyyy-MM-dd HH:mm:ss')}</span>
+											<span class="vab">${it:formatDate(biz_time,'yyyy-MM-dd')}</span>
 											</s:if>
 											<s:else>
-											<s:if test="sign.sign50!=puser_sign && sign.sign40!=puser_sign && sign.sign60!=puser_sign && sign.sign70!=puser_sign">
+											<s:if test="sign.sign50!=puser_sign">
 											<span class="user_sign"><img src="${puser_sign}" /></span>
-											<span class="vab">${it:formatDate(biz_time,'yyyy-MM-dd HH:mm:ss')}</span>
+											<span class="vab">${it:formatDate(biz_time,'yyyy-MM-dd')}</span>
 											</s:if>
+											<s:elseif test="sign.sign40!=puser_sign">
+											<span class="user_sign"><img src="${puser_sign}" /></span>
+											<span class="vab">${it:formatDate(biz_time,'yyyy-MM-dd')}</span>
+											</s:elseif>
+											<s:elseif test="sign.sign60!=puser_sign">
+											<span class="user_sign"><img src="${puser_sign}" /></span>
+											<span class="vab">${it:formatDate(biz_time,'yyyy-MM-dd')}</span>
+											</s:elseif>
+											<s:elseif test="sign.sign70!=puser_sign">
+											<span class="user_sign"><img src="${puser_sign}" /></span>
+											<span class="vab">${it:formatDate(biz_time,'yyyy-MM-dd')}</span>
+											</s:elseif>
+											<s:elseif test="sign.sign30!=puser_sign">
+											<span class="user_sign"><img src="${puser_sign}" /></span>
+											<span class="vab">${it:formatDate(biz_time,'yyyy-MM-dd')}</span>
+											</s:elseif>
+											<s:else>
+											<span class="user_sign"><img src="${puser_sign}" /></span>
+											<span class="vab">${it:formatDate(biz_time,'yyyy-MM-dd')}</span>
+											</s:else>
 											</s:else>
 										</s:else>
 									</s:if>
-								</div>
+								
 							</s:iterator>
 						</div>
 					</div>
@@ -81,9 +114,43 @@
 						<div class="label_ltit">财务部:</div>
 						<div class="label_rwbenx label_rwb_sign">
 							(签字/日期)
-							<s:if test="sign!=null">
+							<s:if test="sign!=null && sign.sign50!=null">
 								<span class="user_sign"><img src="${sign.sign50}" /></span>
+								<span class="vab">${it:formatDate(sign.time50,'yyyy-MM-dd')}</span>
+							</s:if>
+						</div>
+					</div>
+					<div class="label_hang label_hang_sign">
+						<div class="label_ltit">数据中心:</div>
+						<div class="label_rwbenx label_rwb_sign">
+							(签字/日期)
+							<s:if test="sign!=null && sign.sign30!=null">
+								<span class="user_sign"><img src="${sign.sign30}" /></span>
+								<span class="vab">${it:formatDate(sign.time30,'yyyy-MM-dd')}</span>
+							</s:if>
+						</div>
+					</div>
+				</div>
 
+				<div class="label_main label_main_sep"></div>
+				<div class="label_main">
+					<div class="label_hang label_hang_sign">
+						<div class="label_ltit">销管部经理:</div>
+						<div class="label_rwbenx label_rwb_sign">
+							(签字/日期)
+							<s:if test="sign!=null && sign.sign40!=null">
+								<span class="user_sign"><img src="${sign.sign40}" /></span>
+								<span class="vab">${it:formatDate(sign.time40,'yyyy-MM-dd')}</span>
+							</s:if>
+						</div>
+					</div>
+					<div class="label_hang label_hang_sign">
+						<div class="label_ltit">销管副总:</div>
+						<div class="label_rwbenx label_rwb_sign">
+							(签字/日期)
+							<s:if test="sign!=null && sign.sign60!=null">
+								<span class="user_sign"><img src="${sign.sign60}" /></span>
+								<span class="vab">${it:formatDate(sign.time60,'yyyy-MM-dd')}</span>
 							</s:if>
 						</div>
 					</div>
@@ -92,41 +159,17 @@
 				<div class="label_main label_main_sep"></div>
 				<div class="label_main">
 					<div class="label_hang label_hang_sign">
-						<div class="label_ltit">销管部经理:</div>
-						<div class="label_rwbenx label_rwb_sign">
-							(签字/日期)
-							<s:if test="sign!=null">
-								<span class="user_sign"><img src="${sign.sign40}" /></span>
-							</s:if>
-						</div>
-					</div>
-				</div>
-
-				<div class="label_main label_main_sep"></div>
-				<div class="label_main">
-					<div class="label_hang label_hang_sign">
-						<div class="label_ltit">销管副总:</div>
-						<div class="label_rwbenx label_rwb_sign">
-							(签字/日期)
-							<s:if test="sign!=null">
-								<span class="user_sign"><img src="${sign.sign60}" /></span>
-							</s:if>
-						</div>
-					</div>
-				</div>
-
-				<div class="label_main label_main_sep"></div>
-				<div class="label_main">
-					<div class="label_hang label_hang_sign">
 						<div class="label_ltit">总经理:</div>
 						<div class="label_rwbenx label_rwb_sign">
 							(签字/日期)
-							<s:if test="sign!=null">
+							<s:if test="sign!=null && sign.sign70!=null">
 								<span class="user_sign"><img src="${sign.sign70}" /></span>
+								<span class="vab">${it:formatDate(sign.time70,'yyyy-MM-dd')}</span>
 							</s:if>
 						</div>
 					</div>
 				</div>
+				<div class="label_main label_main_sep"></div>
 					<div class="label_main">
 						<div class="label_hang">
 							<div class="label_ltit">主题:</div>
@@ -151,7 +194,7 @@
 						
 						<div class="label_hang">
 							<div class="label_ltit">结案时间:</div>
-							<div class="label_rwben2">
+							<div class="label_rwbenx">
 								<span class="label_rwb nw"> 
 								${it:formatDate(closeOrder.close_time,'yyyy-MM-dd')}
 								</span>
@@ -172,23 +215,15 @@
 							<fieldset class="clear">
 								<legend>已参与促销活动</legend>
 								<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
-									<tr>
-										<th>活动名称</th>
-										<th>开始时间</th>
-										<th>结束时间</th>
-									</tr>
 									<!-- lading.promotions -->
 									<s:iterator value="salPromots" status="sta">
 										<tr>
 											<td class="nw">${sal_title}</td>
-											<td class="nw">${it:formatDate(startime,'yyyy-MM-dd')}</td>
-											<td class="nw">${it:formatDate(endtime,'yyyy-MM-dd')}</td>
+											<td class="nw">活动时间：${it:formatDate(startime,'yyyy-MM-dd')} - ${it:formatDate(endtime,'yyyy-MM-dd')}</td>
 										</tr>
 									</s:iterator>
 								</table>
-								<script type="text/javascript">
-									setCheckBox("closeOrder.salPro_id", '${closeOrder.salPro_id}');
-								</script>
+								
 							</fieldset>
 						</div>
 						

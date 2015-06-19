@@ -414,7 +414,7 @@ public class SalPromotAction extends ActionSupport implements ActionAttr {
 	 * @throws Exception
 	 */
 	public String check5() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_CHECK5");
+		//ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_CHECK5");
 		try {
 			mdySDStatus(5, ContextHelper.getUserLoginUuid());
 
