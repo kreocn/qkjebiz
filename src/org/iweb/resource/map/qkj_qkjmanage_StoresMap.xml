@@ -77,7 +77,31 @@
 	</select>
 
 	<select id="qkjStores_Order_update_listCount" parameterClass="java.util.Map" resultClass="StoresOrder">
-		select count(*) from qkj_t_order where user_id=#userid#
+		select count(*) from qkj_t_order
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="user_id"><![CDATA[ o.user_id=#userid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="id"><![CDATA[ o.id=#id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_depts" open="(" close=")">
+			<![CDATA[ o.apply_dept In ]]>
+			<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
+			<isNotEmpty prepend="OR" property="apply_perdepts">
+				<![CDATA[ o.login_dept In ]]>
+				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ o.user_id=#apply_userDouble# ]]></isNotEmpty>
+			</isNotEmpty>
+		</isNotEmpty>
+		
+		<isEmpty  property="apply_depts">
+			<isNotEmpty prepend="AND" property="apply_perdepts">
+				<![CDATA[ o.login_dept In ]]>
+				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ o.user_id=#apply_userDouble# ]]></isNotEmpty>
+			</isNotEmpty>
+		</isEmpty>
+			
+			
+			
+		</dynamic>
 	</select>
 	<select id="qkjStores_Order_update_item_list" parameterClass="java.util.Map" resultClass="StoresOrderItem">
 		select i.*,p.name AS brand_name from qkj_t_order_item i LEFT JOIN qkj_t_protype p ON (i.brand=p.id) where order_id=#id#

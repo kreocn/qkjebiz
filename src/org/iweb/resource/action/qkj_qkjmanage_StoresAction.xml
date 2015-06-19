@@ -30,6 +30,9 @@
 				<param name="actionName">stores_order_findOrder</param>
 			</result>
 		</action>
+		
+		<action name="findMember" class="org.iweb.sysvip.action.MemberAction" method="get_Member">
+		</action>
 		<!-- Customer End -->
 	</package>
 </struts>

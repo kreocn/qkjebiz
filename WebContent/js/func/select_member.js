@@ -100,7 +100,7 @@ var LoadMemberAutoComplete = function(){
 
 		// 会员姓名搜索
 		$("#order_user_name").autocomplete({ source : function(request, response){
-		
+			$("#order_user_id").val("0")
 			var term = request.term;
 			if (term in cache) {
 				response($.map(cache[term], function(item){

@@ -32,14 +32,17 @@
 					&nbsp;<input type="reset" value="添加" id="storessubmit">
 				</div>
 			</div>
-			
-			
-			<div class="label_hang">
+			<div class="label_hang" id="svipname" style="display: none">
 						<div class="label_ltit">会员名称:</div>
 						<div class="label_rwben label_rwb">
 							<s:textfield id="order_user_name" name="activeMemcost.member_name" />
 						</div>
 					</div>
+					<div class="label_hang label_button tac">
+					<div class="label_ltit">是否是会员:</div>
+						<s:radio onclick="qianzai(this);"  name="member.is_customers" title="是否是会员"  list="#{0:'否',1:'是'}" value="0" cssClass="regular-radio" />
+						
+						</div>
 		</div>
 		<!-- <div class="tiaoma_hang">
 	       <div class="tiaoma_ltit">条形码：<input class="tiaomainput"  name="customer.uuid"  title="客户编号" />				       
@@ -82,6 +85,7 @@
 					<div style="margin: 10px 0;">
 					<input type="hidden" name="member.uuid" id="order_user_id" value="">
 					<s:submit type="reset" value="提交订单" onclick="return nonull();" id="sumbit_order" cssClass="input-blue" />
+					<font id="addMemcost" color="red"></font>
 					</div>
 				</div>
 				<div class="tab_txm2">
@@ -353,25 +357,65 @@ $("#qkj_list").find("tr").each(function(){
     $(function(){
     	SimpleLoadProducts(function(){},"noparam=true");
      });
-    
-    
     $(function(){
+  
     	SimpleLoadMember(ajax_url, $.noop);
      });
 function nonull(){
+var status=true;
+ 	if(getRadio("member.is_customers")==1) {
+ 		 $.ajax({
+			     type:'POST',
+			     url: '/sysvip/getMember',
+			     async:false,
+			     data: "params="+$("#order_user_id").val(),
+			     beforeSend:function() {
+			    	 $("#addMemcost").text("正在验证...");
+			     },
+			    success: function(data){
+		    	 if(data=="false"){
+		 			alert("此客户不存在\n请到[会员管理>添加会员]处添加会员信息后再继续填写.");
+		 			status=false;
+		 		}
+			     },complete:function(){
+				    	$("#addMemcost").text("");
+				    }		
+			     })
+	}
+ 	if(getRadio("member.is_customers")==1) {
+	if(document.getElementById("order_user_name").value==""&&status!=false){
+			alert("请添加会员！")
+			status=false;
+	}
+ 	}
 	var flgnull=0;
+
 	$("#qkj_list").find("tr").each(function(){
 		flgnull++;
 	})
 
-	if(flgnull>1){
-		return true;
-	}else{
-		alert("请添加商品后在提交！")
-	   return false;
+	if(flgnull<=1&&status!=false){
+		alert("请添加商品后再提交！")
+		status=false;
+	}
+	if(status==false){
+		return false;
 	}
 }
 
+var qianzai= function (obj) {
+ 	if(getRadio("member.is_customers")==1) {	
+		document.getElementById("svipname").style.display = "";
+		document.getElementById("order_user_id").value = "";
+		document.getElementById("order_user_name").value = "";
+		
+	} else {
+		document.getElementById("svipname").style.display = "none";
+		document.getElementById("order_user_id").value = "0";
+	
+	} 
+	
+}
 </script>
 
 

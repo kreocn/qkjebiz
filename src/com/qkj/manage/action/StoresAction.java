@@ -38,6 +38,7 @@ import com.qkj.manage.domain.StoresOrder;
 import com.qkj.manage.domain.StoresOrderItem;
 
 public class StoresAction  extends ActionSupport{
+	private List<Member> members;
 	private static final long serialVersionUID = 1L;
 	private String code;
 	private StoresDao dao=new StoresDao();
@@ -57,6 +58,13 @@ public class StoresAction  extends ActionSupport{
 	private String storesid;
 	private Double price;
 	private Double totalPirce;
+	public List<Member> getMembers() {
+		return members;
+	}
+
+	public void setMembers(List<Member> members) {
+		this.members = members;
+	}
 	public Member getMember() {
 		return member;
 	}
@@ -249,21 +257,13 @@ public class StoresAction  extends ActionSupport{
 			sto.setUser_id(ulf.getUuid());
 			sto.setUser_name(ulf.getUser_name());
 			sto.setLogin_dept(ContextHelper.getUserLoginDept());
-			int id=(int) dao.addO(sto);
 			for (StoresOrderItem storesorderitem : sotr) {
 				storesorderitem.setOrder_total_price((double)storesorderitem.getOrder_total_price());
 				storesorderitem.setOrder_id(id+"");
 				String title=storesorderitem.getTitle();
 				storesorderitem.setTitle(title);
 			}
-			dao.add(storesorderitem);
-			System.out.println(member.getUuid());
-			
-			MemberCapital mc=new MemberCapital();
-			mc.setMember_id(member.getUuid());
-			mc.setScore((int)(price*Parameters.STORE_INTEGRATION));
-			MemberCapitalDAO md=new MemberCapitalDAO();
-			md.mdyCapital(mc, 3, 1, id+"");
+			dao.addO(sto,storesorderitem,member.getUuid());
 		}
 		return SUCCESS;
 	}
@@ -285,9 +285,8 @@ public class StoresAction  extends ActionSupport{
 		this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 		map.put("userid", ulf.getUuid());
 		ContextHelper.setSearchDeptPermit4Search("QKJ_QKJMANAGE_STORES_FIND_ORDER",map, "apply_depts", "apply_user");
-		
 		this.setStoresorderlist(dao.listOrder(map));
-		this.setRecCount(storesorderlist.size());
+		this.setRecCount(dao.getResultCount());
 		return SUCCESS;
 	}
 	//门店支付>查看订单>订单详情
@@ -431,5 +430,5 @@ public class StoresAction  extends ActionSupport{
 		return new Double(b2.divide(b1,DEF_DIV_SCALE, BigDecimal.ROUND_HALF_UP)  
 				.doubleValue());  
 	}  
-
+	
 }  
