@@ -93,8 +93,8 @@
             <td colspan="2">办事处经理/部门主管</td>
             <td colspan="4" height="78" valign="top" style="padding:0; position:relative;">
             	<div class="danz_yjian"></div>
-            	<div class="danz_qzi">签字：</div>
-                <div class="danz_date">日期：</div>
+            	<div class="danz_qzi" style="width: 180px;">签字：</div>
+                <div class="danz_date" style="width: 110px;">日期：</div>
             </td>
         </tr>
         <tr>
@@ -102,7 +102,7 @@
             <td colspan="4" height="78" valign="top" style="padding:0; position:relative;">
                 <s:if test="travel.check_status==30">
                   <div class="danz_yjian">${travel.check_note}</div>
-                  <div class="danz_qzi">签字：
+                  <div class="danz_qzi" style="width: 180px;">签字：
                   <s:if test="active.sd_user_sign==null">
                     <span class="span_label">${travel.check_user_name}</span>
                   </s:if>
@@ -110,7 +110,7 @@
                     <span class="user_sign"><img alt="" src="${travel.check_user_sign}" /></span>
                   </s:else>
                  </div>
-                  <div class="danz_date">日期：${it:formatDate(travel.check_time,'yyyy-MM-dd')}</div>
+                  <div class="danz_date" style="width: 110px;">日期：${it:formatDate(travel.check_time,'yyyy-MM-dd')}</div>
                 </s:if>
             </td>
         </tr>
@@ -118,8 +118,8 @@
             <td colspan="2">分管副总</td>
             <td colspan="4" height="78" valign="top" style="padding:0; position:relative;">
             	<div class="danz_yjian"></div>
-            	<div class="danz_qzi">签字： </div>
-                <div class="danz_date">日期：</div>
+            	<div class="danz_qzi" style="width: 180px;">签字： </div>
+                <div class="danz_date" style="width: 110px;">日期：</div>
             </td>
         </tr>
         <tr>
@@ -127,7 +127,7 @@
             <td colspan="4" height="78" valign="top" style="padding:0; position:relative;">
                 <s:if test="travel.check_status==30">
                   <div class="danz_yjian">${travel.acheck_note}</div>
-                  <div class="danz_qzi">签字：
+                  <div class="danz_qzi" style="width: 180px;">签字：
                   <s:if test="active.sd_user_sign==null">
                     <span class="span_label">${travel.acheck_user_name}</span>
                   </s:if>
@@ -135,7 +135,7 @@
                     <span class="user_sign"><img alt="" src="${travel.acheck_user_sign}" /></span>
                   </s:else>
                  </div>
-                  <div class="danz_date">日期：${it:formatDate(travel.acheck_time,'yyyy-MM-dd')}</div>
+                  <div class="danz_date" style="width: 110px;">日期：${it:formatDate(travel.acheck_time,'yyyy-MM-dd')}</div>
                 </s:if>
             </td>
         </tr>
@@ -143,8 +143,8 @@
             <td colspan="2">行政管理副总</td>
             <td colspan="4" height="78" valign="top" style="padding:0; position:relative;">
             	<div class="danz_yjian"></div>
-            	<div class="danz_qzi">签字：</div>
-                <div class="danz_date">日期：</div>
+            	<div class="danz_qzi" style="width: 180px;">签字：</div>
+                <div class="danz_date" style="width: 110px;">日期：</div>
             </td>
         </tr>
     </table>

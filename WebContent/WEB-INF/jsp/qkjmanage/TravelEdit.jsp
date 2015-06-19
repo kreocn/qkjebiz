@@ -383,10 +383,10 @@
 									<s:else>
 										<c:if test="${it:checkPermit('QKJ_QKJMANAGE_TRAVEL_CHECK10',null)==true && travel.check_status==10}">
 											<s:submit id="travel_mdyCheckStatus10" cssClass="input-green" name="travel_mdyCheckStatus10" value="经理/大区审核通过" action="travel_mdyCheckStatus10" onclick="return isOp('确定要执行此操作?');" />
-											<c:if test="${it:checkPermit('QKJ_QKJMANAGE_TRAVEL_CHECK5',null)==true}">
+										</c:if>
+										<c:if test="${it:checkPermit('QKJ_QKJMANAGE_TRAVEL_CHECK5',null)==true && travel.check_status==10}">
 												<s:submit id="travel_mdyCheckStatus5" cssClass="input-red" name="travel_mdyCheckStatus5" value="审核不通过" action="travel_mdyCheckStatus5" onclick="return isOp('确定要执行此操作?');" />
 											</c:if>
-										</c:if>
 										<c:if test="${it:checkPermit('QKJ_QKJMANAGE_TRAVEL_CHECK20',null)==true && travel.check_status==20}">
 											<s:submit id="travel_mdyCheckStatus20" cssClass="input-green" name="travel_mdyCheckStatus20" value="总监审核通过" action="travel_mdyCheckStatus20" onclick="return isOp('确定要执行此操作?');" />
 											<c:if test="${it:checkPermit('QKJ_QKJMANAGE_TRAVEL_CHECK5',null)==true}">

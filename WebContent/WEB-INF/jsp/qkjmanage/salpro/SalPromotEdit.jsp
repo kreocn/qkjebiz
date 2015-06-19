@@ -281,6 +281,12 @@
 								<input type="button" onclick="linkurl('<s:url namespace="/salpro" action="salPromot_view"><s:param name="salPromot.uuid" value="salPromot.uuid" /></s:url>');" value="转到打印页面" />
 							</s:if>
 							
+							<s:if test="salPromot.status>0 && 'mdy' == viewFlag">
+								<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK5',null)==true}">
+								<s:submit  cssClass="input-red" value="退回" action="mdySDStatus5" onclick="return isOp('确定执行此操作?');" />
+								</c:if>
+							</s:if>
+							
 							<s:if test="'view' != viewFlag">
 								<input type="button" class="input-gray" value="返回" onclick="linkurl('<s:url action="salPromot_list" namespace="/salpro"><s:param name="salPromot.type" value="%{salPromot.type}"></s:param></s:url>');" />
 							</s:if>
@@ -297,6 +303,8 @@
 									<s:if test="salPromot.status<2">
 										<c:if test="${salPromot.sd_status==10 && it:checkPermit('QKJ_QKJMANAGE_SALPRO_SDSTATUS30',salPromot.add_user_dept)==true}">
 											<s:submit  value="经理/大区审核通过" action="mdySDStatus20" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
+										</c:if>
+										<c:if test="${salPromot.sd_status==10 && it:checkPermit('QKJ_QKJMANAGE_SALPRO_CHECK5',salPromot.add_user_dept)==true}">
 											<s:submit  cssClass="input-red" value="审核不通过" action="mdySDStatus5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
 										<c:if test="${salPromot.sd_status==30 && salPromot.smd_status==30 && it:checkPermit('QKJ_QKJMANAGE_SALPRO_SDSTATUS40',salPromot.add_user_dept)==true}">
