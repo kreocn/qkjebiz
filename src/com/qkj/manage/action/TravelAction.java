@@ -255,7 +255,11 @@ public class TravelAction extends ActionSupport {
 				this.setCos(cod.list(map));
 				if(cos.size()>0){
 					this.setCo(cos.get(0));
+					this.setTravel((Travel) dao.get(travel.getUuid()));
+					travel.setStatus(1);
+					dao.mdyStatus(travel);
 				}else{
+					dao.startTransaction();
 					this.setTravel((Travel) dao.get(travel.getUuid()));
 					travel.setStatus(1);
 					dao.mdyStatus(travel);
@@ -278,6 +282,7 @@ public class TravelAction extends ActionSupport {
 					co.setApply_id(travel.getUuid());
 					cod.add(co);
 					addProcess("CLOSEORDER_ADD", "新增工业旅游结案单", ContextHelper.getUserLoginUuid());
+					dao.commitTransaction();
 				}
 				
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/travel_list?viewFlag=relist'>工业旅游申请列表</a>&nbsp;&gt;&nbsp;增加工业旅游申请";
@@ -299,6 +304,8 @@ public class TravelAction extends ActionSupport {
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!load 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!load 读取数据错误:", e);
+		}finally{
+			dao.endTransaction();
 		}
 		return SUCCESS;
 	}
