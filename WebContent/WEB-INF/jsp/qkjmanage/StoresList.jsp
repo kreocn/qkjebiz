@@ -30,9 +30,16 @@
 				<div class="label_rwbenx">
 					<s:textfield class="tiaomainput" name="customer.uuid" id="tiaomainput" />
 					&nbsp;<input type="reset" value="添加" id="storessubmit">
-
 				</div>
 			</div>
+			
+			
+			<div class="label_hang">
+						<div class="label_ltit">会员名称:</div>
+						<div class="label_rwben label_rwb">
+							<s:textfield id="order_user_name" name="activeMemcost.member_name" />
+						</div>
+					</div>
 		</div>
 		<!-- <div class="tiaoma_hang">
 	       <div class="tiaoma_ltit">条形码：<input class="tiaomainput"  name="customer.uuid"  title="客户编号" />				       
@@ -73,7 +80,8 @@
 						</tr>
 					</table>
 					<div style="margin: 10px 0;">
-						<s:submit type="reset" value="提交订单" onclick="return nonull();" id="sumbit_order" cssClass="input-blue" />
+					<input type="hidden" name="member.uuid" id="order_user_id" value="">
+					<s:submit type="reset" value="提交订单" onclick="return nonull();" id="sumbit_order" cssClass="input-blue" />
 					</div>
 				</div>
 				<div class="tab_txm2">
@@ -344,6 +352,11 @@ $("#qkj_list").find("tr").each(function(){
 
     $(function(){
     	SimpleLoadProducts(function(){},"noparam=true");
+     });
+    
+    
+    $(function(){
+    	SimpleLoadMember(ajax_url, $.noop);
      });
 function nonull(){
 	var flgnull=0;
