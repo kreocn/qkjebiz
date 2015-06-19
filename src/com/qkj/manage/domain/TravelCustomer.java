@@ -10,11 +10,21 @@ public class TravelCustomer {
 	private String cus_phone;// (varchar)联系电话
 	private String cus_idcard;// (varchar)身份证号
 	private String note;// (varchar)备注
+	
+	private Integer status;
 
 	// 以下为非数据库字段
 
 	public Integer getUuid() {
 		return uuid;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
 	public void setUuid(Integer uuid) {

@@ -9,6 +9,7 @@
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="status"><![CDATA[ status=#status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="travel_id"><![CDATA[ travel_id=#travel_id# ]]></isNotEmpty>
 		</dynamic>
 		<![CDATA[ LIMIT 1000 ]]>
@@ -19,14 +20,15 @@
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="status"><![CDATA[ status=#status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="travel_id"><![CDATA[ travel_id=#travel_id# ]]></isNotEmpty>
 		</dynamic>
 		<![CDATA[ LIMIT 1000 ]]>
 	</select>
 	<insert id="qkjmanage_addTravelCustomer" parameterClass="travelCustomer">
 		<![CDATA[ 
-			Insert Into qkjm_r_travel_customer(travel_id,cus_name,cus_sex,cus_company,cus_type,cus_phone,cus_idcard,note)
-			Values (#travel_id#,#cus_name#,#cus_sex#,#cus_company#,#cus_type#,#cus_phone#,#cus_idcard#,#note#)
+			Insert Into qkjm_r_travel_customer(travel_id,cus_name,cus_sex,cus_company,cus_type,cus_phone,cus_idcard,note,status)
+			Values (#travel_id#,#cus_name#,#cus_sex#,#cus_company#,#cus_type#,#cus_phone#,#cus_idcard#,#note#,#status#)
 		]]>
 		<selectKey resultClass="int" keyProperty="uuid">
 		<![CDATA[ Select LAST_INSERT_ID() ]]>

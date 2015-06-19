@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -9,388 +9,605 @@
 <title>结案提货单管理--<s:text name="APP_NAME" /></title>
 <s:action name="ref_head" namespace="/manager" executeResult="true" />
 <style type="text/css">
-#win{  
-    /*窗口的高度和宽度*/  
-    width : 300px;  
-    height: 200px;  
-    /*窗口的位置*/  
-    position : absolute;  
-    top : 100px;  
-    left: 350px;  
-    /*开始时窗口不可见*/  
-    display : none;  
-}  
-/*控制背景色的样式*/  
-#title{  
-    /*控制标题栏的左内边距*/  
-    padding-left: 3px;  
-}  
-#cotent{  
-    padding-left : 3px;  
-    padding-top :  5px;  
-}  
-/*控制关闭按钮的位置*/  
-#close{  
-    margin-left: 188px;  
-    /*当鼠标移动到X上时，出现小手的效果*/  
-    cursor: pointer;  
-} s
+#win {
+	/*窗口的高度和宽度*/
+	width: 300px; height: 200px;
+	/*窗口的位置*/ position: absolute; top: 100px; left: 350px;
+	/*开始时窗口不可见*/ display: none;
+}
+/*控制背景色的样式*/
+#title {
+	/*控制标题栏的左内边距*/
+	padding-left: 3px;
+}
+
+#cotent {
+	padding-left: 3px; padding-top: 5px;
+}
+/*控制关闭按钮的位置*/
+#close {
+	margin-left: 188px;
+	/*当鼠标移动到X上时，出现小手的效果*/ cursor: pointer;
+}
+s
 </style>
 </head>
 
 <body>
 	<s:action name="nav" namespace="/manage" executeResult="true" />
-<div class="tab_right">
-	<div class="tab_warp main">
-		<div class="dq_step">${path}
-			<span class="opb lb op-area">
+	<div class="tab_right">
+		<div class="tab_warp main">
+			<div class="dq_step">${path}
+				<span class="opb lb op-area"> 
+				<s:if test="closeOrder.type==1">
+				<a href="<s:url action="travel_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>">返回工业旅游列表</a>
+				</s:if>
+				<s:else>
 				<a href="<s:url action="closeOrder_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a>
-			</span>
-			 <span class="opb lb op-area">
-			 <s:if test="closeOrder.check_state>=1">
-			<s:if test="closeOrder.check_state>30">
-					<a class="input-gray" href="<s:url namespace="/qkjmanage" action="closeOrder_view"><s:param name="closeOrder.uuid" value="closeOrder.uuid" /></s:url>">转到打印页面</a>
-			</s:if>
-				</s:if> </span>
-		</div>
-		<s:form id="editForm" name="editForm" cssClass="validForm" action="apply_load" namespace="/qkjmanage" method="post" theme="simple">
-			<div class="label_con">
-				<div class="label_main">
-					<s:if test="'mdy' == viewFlag">
-						<div class='label_hang'>
-							<div class='label_ltit'>主键:</div>
-							<div class='label_rwben'>${closeOrder.uuid}<s:hidden name="closeOrder.uuid" />
-							</div>
-						</div>
-						<div class='label_hang'>
-							<div class='label_ltit'>申请人:</div>
-							<div class='label_rwben'>${closeOrder.add_user_name}</div>
-						</div>
-						<div class="label_hang">
-							<div class="label_ltit">审核状态:</div>
-							<div class="label_rwbenx">
-								<div class="zhuangtai" <s:if test="%{closeOrder.check_state!=0}">title="${it:formatDate(closeOrder.check_time,'yyyy-MM-dd HH:mm:ss')}"</s:if>>
-									单据审核状态:
-									<s:if test="closeOrder.check_state==0">新单</s:if>
-									<s:if test="closeOrder.check_state==5">
-										<font class="message_error">审核退回</font>(${closeOrder.check_user_name})</s:if>
-									<s:if test="closeOrder.check_state==1">
-										<font class="message_warning">待审核</font>
-									</s:if>
-									<s:if test="closeOrder.check_state==10">
-										<font class="message_pass">主管已审</font>(${closeOrder.check_user_name})</s:if>
-									<s:if test="closeOrder.check_state==20">
-										<font class="message_pass">主管/办事处经理已审</font>(${closeOrder.check_user_name})</s:if>
-									<s:if test="closeOrder.check_state==30">
-										<font class="message_pass">经理/大区已审</font>(${closeOrder.check_user_name})</s:if>
-									<s:if test="closeOrder.check_state==40">
-										<font class="message_pass">总监已审</font>(${closeOrder.check_user_name})</s:if>
-									<s:if test="closeOrder.check_state==50">
-										<font class="message_pass">财务已审</font>(${closeOrder.check_user_name})</s:if>
-									<s:if test="closeOrder.check_state==60">
-										<font class="message_pass">业务副总已审</font>(${closeOrder.check_user_name})</s:if>
-									<s:if test="closeOrder.check_state==70">
-										<font class="message_pass">总经理已审</font>(${closeOrder.check_user_name})</s:if>
-								</div>
-								<div class="zhuangtai" <s:if test="%{closeOrder.nd_check_state!=0}">title="${it:formatDate(closeOrder.nd_check_time,'yyyy-MM-dd HH:mm:ss')}"</s:if>>
-									数据中心审核状态:
-									<s:if test="closeOrder.nd_check_state==0">未确认</s:if>
-									<s:if test="closeOrder.nd_check_state==5">
-										<font class="message_error">审核退回</font>(${closeOrder.nd_check_user_name})</s:if>
-									<s:if test="closeOrder.nd_check_state==10">
-										<font class="message_pass">已通过审</font>(${closeOrder.nd_check_user_name})</s:if>
-								</div>
-							</div>
-						</div>
+				</s:else>
+				
+				
+				</span> <span class="opb lb op-area"> <s:if test="closeOrder.sd_state>30 && closeOrder.state>0">
+						<a class="input-gray" href="<s:url namespace="/qkjmanage" action="closeOrder_view"><s:param name="closeOrder.uuid" value="closeOrder.uuid" /></s:url>">转到打印页面</a>
 					</s:if>
-					
+				</span>
+			</div>
+			<s:form id="editForm" name="editForm" cssClass="validForm" action="apply_load" namespace="/qkjmanage" method="post" theme="simple">
+				<s:hidden name="closeOrder.state" value="%{closeOrder.state}"></s:hidden>
+				<s:hidden name="closeOrder.sd_state" value="%{closeOrder.sd_state}"></s:hidden>
+				<s:hidden name="closeOrder.smd_status" value="%{closeOrder.smd_status}"></s:hidden>
+				<s:hidden name="closeOrder.fd_check_state" value="%{closeOrder.fd_check_state}"></s:hidden>
+				<s:hidden name="closeOrder.nd_check_state" value="%{closeOrder.nd_check_state}"></s:hidden>
+				<s:hidden name="closeOrder.type" value="%{closeOrder.type}"></s:hidden>
+				<s:hidden name="closeOrder.apply_id" value="%{closeOrder.apply_id}"></s:hidden>
+				<div class="label_con">
 					<div class="label_main">
-						<div class="label_hang">
-							<div class="label_ltit">单据编号:</div>
-							<div class="label_rwb">
-								<s:textfield name="closeOrder.close_num" title="单据编号"/>
+						<s:if test="'mdy' == viewFlag">
+							<div class='label_hang'>
+								<div class='label_ltit'>主键:</div>
+								<div class='label_rwben'>${closeOrder.uuid}<s:hidden name="closeOrder.uuid" />
+								</div>
 							</div>
-						</div>
-					</div>
-					<div class="label_main">
-						<div class="label_hang">
-							<div class="label_ltit">主题:</div>
-							<div class="label_rwbenx">
-								<s:textfield name="closeOrder.theme" title="主题" cssClass="label_hang_linput validate[required,maxSize[255]]" />
+
+							<div class="label_hang">
+								<div class="label_ltit">单据编号:</div>
+								<div class="label_rwben2">
+									<s:textfield name="closeOrder.close_num" title="单据编号" />
+								</div>
 							</div>
-						</div>
-					</div>
-					<div class="label_main">
-						<div class="label_hang">
-							<div class="label_ltit">结案时间:</div>
-							<div class="label_rwben2">
-								<span class="label_rwb nw"> <input class="datepicker validate[required,custom[date]]" type="text" name="closeOrder.close_time" value="${it:formatDate(closeOrder.close_time,'yyyy-MM-dd')}" />
-								</span>
-							</div>
-						</div>
-					</div>
-					<div class="label_main">
-						<div class="label_hang">
-							<div class="label_ltit">会员号:</div>
-							<div class="label_rwb">
-								<s:textfield id="order_user_id" name="closeOrder.member_id" title="会员号" cssClass="validate[required]" />
-							</div>
-						</div>
-						<div class="label_hang">
-							<div class="label_ltit">手机:</div>
-							<div class="label_rwb">
-								<s:textfield id="order_user_mobile" name="closeOrder.member_phone" title="手机" controlName="手机" />
-							</div>
-						</div>
-						<div class="label_hang">
-							<div class="label_ltit">收货人姓名:</div>
-							<div class="label_rwb">
-								<s:textfield id="order_user_name" name="closeOrder.member_name" title="姓名" controlName="姓名" cssClass="validate[required,maxSize[85]]" />
-							</div>
-						</div>
-					</div>
-					<div class="label_main">
-						<div class="label_hang">
-							<div class="label_ltit">配送地点:</div>
-							<div class="label_rwbenx">
-								<s:textarea id="address" name="closeOrder.member_address" title="配送地点" rows="4" cssClass="label_hang_linput validate[required,maxSize[128]]"></s:textarea>
-								<br /> 选择预设地址:<select id="selectAddress"></select>
-							</div>
-						</div>
-					</div>
-					<s:if test="'mdy'==viewFlag">
-						<div class="label_main">
-							<fieldset class="clear">
-								<legend>已参与的促销活动</legend>
-								<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
-									<tr>
-										<th>活动名称</th>
-										<th>开始时间</th>
-										<th>结束时间</th>
-										<th>操作</th>
-									</tr>
-									<!-- lading.promotions -->
-									<s:iterator value="salPromotsed" status="sta">
-										<tr>
-											<td class="nw">${sal_title}</td>
-											<td class="nw">${it:formatDate(startime,'yyyy-MM-dd')}</td>
-											<td class="nw">${it:formatDate(endtime,'yyyy-MM-dd')}</td>
-											<td>
-											<a href="javascript:;" onclick="openCustomerView(${uuid});">[查看详情]</a>
-											</td>
-										</tr>
-									</s:iterator>
-								</table>
-								<script type="text/javascript">
-									setCheckBox("closeOrder.salPro_id", '${closeOrder.salPro_id}');
-								</script>
-							</fieldset>
-						</div>
-						<s:if test="closeOrder.check_state==0 || closeOrder.check_state==5">
-						<div class="label_main">
-							<fieldset class="clear">
-								<legend>可参与促销活动</legend>
-								<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
-									<tr>
-										<th>参加</th>
-										<th>活动名称</th>
-										<th>开始时间</th>
-										<th>结束时间</th>
-										<th>操作</th>
-									</tr>
-									<!-- lading.promotions -->
-									<s:iterator value="salPromots" status="sta">
-										<tr>
-											<td class="nw"><input type="checkbox" name="closeOrder.salPro_id" value="${uuid}" /></td>
-											<td class="nw">${sal_title}</td>
-											<td class="nw">${it:formatDate(startime,'yyyy-MM-dd')}</td>
-											<td class="nw">${it:formatDate(endtime,'yyyy-MM-dd')}</td>
-											<td>
-											<a href="javascript:;" onclick="openCustomerView(${uuid});">[查看详情]</a>
-											</td>
-										</tr>
-									</s:iterator>
-								</table>
-								<script type="text/javascript">
-									setCheckBox("closeOrder.salPro_id", '${closeOrder.salPro_id}');
-								</script>
-							</fieldset>
-						</div>
 						</s:if>
-					</s:if>
-					<s:if test="'mdy' == viewFlag && closeOrder.salPro_id!=null">
-						<fieldset class="clear">
-								<legend>结案单明细</legend>
-								<div class="label_main">
-									<c:if test="${(closeOrder.check_state==0 || closeOrder.check_state==5) && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_ADD',null)==true}">
-										<div>
-											<s:url id="ladingAddProductsUrl" action="qkjm_addProducts" namespace="qkjmanage">
-												<s:param name="uuidKey">closeOrder.uuid</s:param>
-												<s:param name="uuidValue" value="closeOrder.uuid" />
-												<s:param name="backUrl">/qkjmanage/closeOrder_load?viewFlag=mdy&</s:param>
-												<s:param name="actionUrl">/qkjmanage/closeOrderPro_add</s:param>
-												<s:param name="keyName">closeOrderPro.order_id</s:param>
-												<s:param name="prodName">closeOrderPro.product_id</s:param>
-												<s:param name="perName">closeOrderPro.product_price</s:param>
-												<s:param name="numName">closeOrderPro.product_num</s:param>
-												<s:param name="totalName">closeOrderPro.total_price</s:param>
-											</s:url>
-											<input type="button" id="product" onclick="window.location.href='${ladingAddProductsUrl}';" value="添加酒品" />
-										</div>
-									</c:if>
+
+						<s:if test="'mdy' == viewFlag">
+							<s:hidden name="closeOrder.apply_dept" value="%{closeOrder.apply_dept}"></s:hidden>
+							<div class='label_hang'>
+								<div class='label_ltit'>申请人:</div>
+								<div class='label_rwben'>${closeOrder.add_user_name}</div>
+							</div>
+							<div class='label_hang'>
+								<div class='label_ltit'>申请部门:</div>
+								<div class='label_rwben'>${closeOrder.apply_dept_name}</div>
+							</div>
+						</s:if>
+
+						<div class="label_main">
+							<div class="label_hang">
+								<div class="label_ltit">审核状态:</div>
+								<div class="label_rwbenx">
+									<div class="zhuangtai">
+										单据状态:
+										<!-- 申请单状态 0:新申请 1:申请审批中 2:申请通过 -->
+										<s:if test="closeOrder.state==0">新单</s:if>
+										<s:if test="closeOrder.state==1">
+											<font class="message_warning">申请审批中</font>
+										</s:if>
+										<s:if test="closeOrder.state==2">
+											<font class="message_warning">申请通过</font>
+										</s:if>
+									</div>
+									<div class="zhuangtai" title="${it:formatDate(closeOrder.sd_time,'yyyy-MM-dd HH:mm:ss')}">
+										销售部审核状态:
+										<s:if test="closeOrder.sd_state==0">新单</s:if>
+										<s:if test="closeOrder.sd_state==5">
+											<font class="message_error">审核退回</font>(${closeOrder.sd_user_name})</s:if>
+										<s:if test="closeOrder.sd_state==10">
+											<font class="message_warning">待审核</font>
+										</s:if>
+										<s:if test="closeOrder.sd_state==30">
+											<font class="message_pass">大区已审</font>(${closeOrder.sd_user_name})</s:if>
+										<s:if test="closeOrder.sd_state==40">
+											<font class="message_pass">总监已审</font>(${closeOrder.sd_user_name})</s:if>
+										<s:if test="closeOrder.sd_state==50">
+											<font class="message_pass">副总已审</font>(${closeOrder.sd_user_name})</s:if>
+									</div>
+
+									<div class="zhuangtai" title="${it:formatDate(closeOrder.smd_time,'yyyy-MM-dd HH:mm:ss')}">
+										销管部审核状态:
+										<s:if test="closeOrder.smd_status==0">未签收</s:if>
+										<s:if test="closeOrder.smd_status==5">
+											<font class="message_error">审核退回</font>(${closeOrder.smd_user_name})</s:if>
+										<s:if test="closeOrder.smd_status==10">
+											<font class="message_warning">已签收</font>
+										</s:if>
+										<s:if test="closeOrder.smd_status==30">
+											<font class="message_pass">销管经理已审</font>(${closeOrder.smd_user_name})</s:if>
+										<s:if test="closeOrder.smd_status==40">
+											<font class="message_pass">销管部经理已审</font>(${closeOrder.smd_user_name})</s:if>
+										<s:if test="closeOrder.smd_status==50">
+											<font class="message_pass">销管副总已审</font>(${closeOrder.smd_user_name})</s:if>
+										<s:if test="closeOrder.smd_status==60">
+											<font class="message_pass">总经理已审</font>(${closeOrder.smd_user_name})</s:if>
+									</div>
+
+									<div class="zhuangtai" <s:if test="%{closeOrder.fd_check_state!=0}">title="${it:formatDate(closeOrder.fd_check_time,'yyyy-MM-dd HH:mm:ss')}"</s:if>>
+										财务审核状态:
+										<s:if test="closeOrder.fd_check_state==0">未确认</s:if>
+										<s:if test="closeOrder.fd_check_state==5">
+											<font class="message_error">审核退回</font>(${closeOrder.fd_user_name})</s:if>
+										<s:if test="closeOrder.fd_check_state==10">
+											<font class="message_pass">已通过审</font>(${closeOrder.fd_user_name})</s:if>
+									</div>
+
+									<div class="zhuangtai" <s:if test="%{closeOrder.nd_check_state!=0}">title="${it:formatDate(closeOrder.nd_check_time,'yyyy-MM-dd HH:mm:ss')}"</s:if>>
+										数据中心审核状态:
+										<s:if test="closeOrder.nd_check_state==0">未确认</s:if>
+										<s:if test="closeOrder.nd_check_state==5">
+											<font class="message_error">审核退回</font>(${closeOrder.nd_check_user_name})</s:if>
+										<s:if test="closeOrder.nd_check_state==10">
+											<font class="message_pass">已通过审</font>(${closeOrder.nd_check_user_name})</s:if>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="label_main">
+							<div class="label_hang">
+								<div class="label_ltit">主题:</div>
+								<div class="label_rwbenx">
+									<s:textfield name="closeOrder.theme" title="主题" cssClass="label_hang_linput validate[required,maxSize[255]]" />
+								</div>
+							</div>
+						</div>
+						<div class="label_main">
+							<div class="label_hang">
+								<div class="label_ltit">结案时间:</div>
+								<div class="label_rwben2">
+									<span class="label_rwb nw"> <input class="datepicker validate[required,custom[date]]" type="text" name="closeOrder.close_time" value="${it:formatDate(closeOrder.close_time,'yyyy-MM-dd')}" />
+									</span>
+								</div>
+							</div>
+						</div>
+						<div class="label_main">
+							<div class="label_hang">
+								<div class="label_ltit">会员号:</div>
+								<div class="label_rwb">
+									<s:textfield id="order_user_id" name="closeOrder.member_id" title="会员号" cssClass="validate[required]" />
+								</div>
+							</div>
+							<div class="label_hang">
+								<div class="label_ltit">手机:</div>
+								<div class="label_rwb">
+									<s:textfield id="order_user_mobile" name="closeOrder.member_phone" title="手机" controlName="手机" />
+								</div>
+							</div>
+							<div class="label_hang">
+								<div class="label_ltit">收货人姓名:</div>
+								<div class="label_rwb">
+									<s:textfield id="order_user_name" name="closeOrder.member_name" title="姓名" controlName="姓名" cssClass="validate[required,maxSize[85]]" />
+								</div>
+							</div>
+						</div>
+						<div class="label_main">
+							<div class="label_hang">
+								<div class="label_ltit">配送地点:</div>
+								<div class="label_rwbenx">
+									<s:textarea id="address" name="closeOrder.member_address" title="配送地点" rows="4" cssClass="label_hang_linput validate[required,maxSize[128]]"></s:textarea>
+									<br /> 选择预设地址:<select id="selectAddress"></select>
+								</div>
+							</div>
+						</div>
+						<s:if test="'mdy'==viewFlag && closeOrder.type==0">
+							<div class="label_main">
+								<fieldset class="clear">
+									<legend>已参与的促销活动</legend>
 									<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
 										<tr>
-											<th>品名</th>
-											<th>单价</th>
-											<th>数量(瓶)</th>
-											<th>合计</th>
-											<c:if test="${(closeOrder.check_state==0 || closeOrder.check_state==5) && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_DEL',null)==true}">
-												<th>操作</th>
-											</c:if>
+											<th>活动名称</th>
+											<th>开始时间</th>
+											<th>结束时间</th>
+											
 										</tr>
-										<s:iterator value="closeOrderPros" status="sta">
+										<!-- lading.promotions -->
+										<s:iterator value="salPromotsed" status="sta">
 											<tr>
-												<td class="nw">${product_name}</td>
-												<td class="nw">￥${product_price}</td>
-												<td class="nw">${product_num}</td>
-												<td class="nw">￥${total_price}</td>
-												<td>
-													<c:if test="${(closeOrder.check_state==0 || closeOrder.check_state==5) && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_DEL',null)==true}">
-														<a href="<s:url action="closeOrderPro_del"><s:param name="closeOrderPro.uuid" value="%{uuid}" /><s:param name="closeOrderPro.order_id" value="%{closeOrder.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
-													</c:if>
+												<td class="nw">
+												<a  href="<s:url namespace="/salpro" action="salPromot_loadt"><s:param name="viewFlag">view</s:param><s:param name="salPromot.uuid" value="uuid"></s:param><s:param name="salstate" value="1"></s:param></s:url>">${sal_title}</a>
 												</td>
+												<td class="nw">${it:formatDate(startime,'yyyy-MM-dd')}</td>
+												<td class="nw">${it:formatDate(endtime,'yyyy-MM-dd')}</td>
+												<!-- <td><a href="javascript:;" onclick="openCustomerView(${uuid});">[查看详情]</a></td> -->
 											</tr>
 										</s:iterator>
 									</table>
+								</fieldset>
+							</div>
+							<s:if test="closeOrder.state==0">
+								<div class="label_main">
+									<fieldset class="clear">
+										<legend>可参与促销活动</legend>
+										<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+											<tr>
+												<th>参加</th>
+												<th>活动名称</th>
+												<th>开始时间</th>
+												<th>结束时间</th>
+												<th>操作</th>
+											</tr>
+											<!-- lading.promotions -->
+											<s:iterator value="salPromots" status="sta">
+												<tr>
+													<td class="nw"><input type="checkbox" name="closeOrder.salPro_id" value="${uuid}" /></td>
+													<td class="nw">
+													<a  href="<s:url namespace="/salpro" action="salPromot_loadt"><s:param name="viewFlag">view</s:param><s:param name="salPromot.uuid" value="uuid"></s:param><s:param name="salstate" value="1"></s:param></s:url>">${sal_title}</a>
+													</td>
+													<td class="nw">${it:formatDate(startime,'yyyy-MM-dd')}</td>
+													<td class="nw">${it:formatDate(endtime,'yyyy-MM-dd')}</td>
+													<!-- <td><a href="javascript:;" onclick="openCustomerView(${uuid});">[查看详情]</a></td> -->
+												</tr>
+											</s:iterator>
+										</table>
+									</fieldset>
+								</div>
+							</s:if>
+						</s:if>
+						<s:if test="'mdy' == viewFlag">
+							<fieldset class="clear">
+								<legend>结案单明细</legend>
+								<div class="lb_xxsm">
+									<div class="lb_lgsfy">
+										<div class="lb_yjtit">
+											<c:if test="${closeOrder.state==0 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_ADD',null)==true}">
+												<s:url id="ladingAddProductsUrl" action="qkjm_addProducts" namespace="qkjmanage">
+													<s:param name="uuidKey">closeOrder.uuid</s:param>
+													<s:param name="uuidValue" value="closeOrder.uuid" />
+													<s:param name="backUrl">/qkjmanage/closeOrder_load?viewFlag=mdy&</s:param>
+													<s:param name="actionUrl">/qkjmanage/closeOrderPro_add</s:param>
+													<s:param name="keyName">closeOrderPro.order_id</s:param>
+													<s:param name="prodName">closeOrderPro.product_id</s:param>
+													<s:param name="perName">closeOrderPro.product_price</s:param>
+													<s:param name="numName">closeOrderPro.product_num</s:param>
+													<s:param name="totalName">closeOrderPro.total_price</s:param>
+												</s:url>
+												<input type="button" id="product" onclick="window.location.href='${ladingAddProductsUrl}';" value="添加酒品/公司物料" />
+											</c:if>
+										</div>
+											<p class="lb_gstit">公司酒品/公司物料</p>
+											<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+												<tr>
+													<th>品名</th>
+													<th>单价</th>
+													<th>数量(瓶)</th>
+													<th>合计</th>
+													<c:if test="${closeOrder.state==0 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_DEL',null)==true}">
+														<th>操作</th>
+													</c:if>
+												</tr>
+												<s:iterator value="closeOrderPros" status="sta">
+													<tr>
+														<td class="nw">${product_name}</td>
+														<td class="nw">￥${product_price}</td>
+														<td class="nw">${product_num}</td>
+														<td class="nw">￥${total_price}</td>
+														<c:if test="${closeOrder.state==0 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_DEL',null)==true}">
+														<td>
+																<a href="<s:url action="closeOrderPro_del"><s:param name="closeOrderPro.uuid" value="%{uuid}" /><s:param name="closeOrderPro.order_id" value="%{closeOrder.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
+														</td></c:if>
+													</tr>
+												</s:iterator>
+											</table>
+									</div>
+									<div class="lb_gsfy">
+									<p class="lb_yjtit">
+									<c:if test="${closeOrder.state==0 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_ADD',null)==true}">
+										<input type="button" id="addPosm" value="添加物料" />
+									</c:if>
+									</p>
+									<p class="lb_gstit">其它物料</p>
+									<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+										<tr>
+											<th>名目</th>
+											<th>名目说明</th>
+											<th>金额</th>
+											<c:if test="${closeOrder.state==0 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_DEL',null)==true}">
+												<th>操作</th>
+											</c:if>
+										</tr>
+										<s:iterator value="closePosms" status="sta">
+											<tr>
+												<td>${title}</td>
+												<td>${note}</td>
+												<td class="nw">￥${total_price}</td>
+												<c:if test="${closeOrder.state==0 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_DEL',null)==true}">
+												<td class="nw">
+														<a href="<s:url action="closePosm_del"><s:param name="closePosm.uuid" value="%{uuid}" /><s:param name="closePosm.closeOrder_id" value="%{closeOrder.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
+												</td></c:if>
+											</tr>
+										</s:iterator>
+									</table>
+								</div>
+								
 									<p class="lb_gstit">费用合计</p>
 									<p class="lb_jwei">￥${closeOrder.totel_price}</p>
 								</div>
-						</fieldset>
-						<div style="height:10px;"></div>
+							</fieldset>
+							<div style="height: 10px;"></div>
+						</s:if>
+
+						<div class="label_main">
+							<div class="label_hang">
+								<div class="label_ltit">说明:</div>
+								<div class="label_rwbenx">
+									<s:textarea id="closeOrder.content" name="closeOrder.content" title="活动说明" cssClass="label_hang_linput inputNote validate[maxSize[65535]]" />
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<s:if test="'mdy' == viewFlag">
+						<div class="label_main">
+							<div class="label_hang">
+								<div class="label_ltit">审阅情况:</div>
+								<div class="label_rwbenx approve_list">
+									<ul>
+										<s:iterator value="approves" status="sta">
+											<li>此活动在<span class="approve_ad_time"> ${it:formatDate(ad_time,'yyyy-MM-dd HH:mm:ss')}</span> 被 <span class="approve_check_user"> ${check_user_name}</span> 执行 <span class="approve_flag"> <s:if test="flag==5">
+														<span class="approve_flag_fail">审阅不通过</span>
+													</s:if> <s:if test="flag==10">
+														<span class="approve_flag_pass">审阅通过</span>
+													</s:if>
+											</span> 操作 <s:if test="advice!=null && advice!=''">
+					审阅意见:
+					<span class="approve_advice">${advice}</span>
+												</s:if>
+											</li>
+										</s:iterator>
+									</ul>
+								</div>
+							</div>
+						</div>
 					</s:if>
 
 					<div class="label_main">
 						<div class="label_hang">
-							<div class="label_ltit">说明:</div>
+							<div class="label_ltit">相关操作:</div>
 							<div class="label_rwbenx">
-								<s:textarea id="closeOrder.content" name="closeOrder.content" title="活动说明" cssClass="label_hang_linput inputNote validate[maxSize[65535]]" />
-							</div>
-						</div>
-					</div>
-				</div>
-				
-				<s:if test="'mdy' == viewFlag">
-					<div class="label_main">
-						<div class="label_hang">
-							<div class="label_ltit">审阅情况:</div>
-							<div class="label_rwbenx approve_list">
-								<ul>
-									<s:iterator value="approves" status="sta">
-										<li>此活动在<span class="approve_ad_time"> ${it:formatDate(ad_time,'yyyy-MM-dd HH:mm:ss')}</span> 被 <span class="approve_check_user"> ${check_user_name}</span> 执行 <span class="approve_flag"> <s:if test="flag==5">
-													<span class="approve_flag_fail">审阅不通过</span>
-												</s:if> <s:if test="flag==10">
-													<span class="approve_flag_pass">审阅通过</span>
-												</s:if>
-										</span> 操作 <s:if test="advice!=null && advice!=''">
-					审阅意见:
-					<span class="approve_advice">${advice}</span>
-											</s:if>
-										</li>
-									</s:iterator>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</s:if>
-				
-				<div class="label_main">
-					<div class="label_hang">
-						<div class="label_ltit">相关操作:</div>
-						<div class="label_rwbenx">
-							<font color="red"><span id="messages"></span></font>
-							<s:if test="'add' == viewFlag">
-								<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_ADD',null)==true}">
-									<s:submit id="add" name="add" value="下一步&填写费用明细" action="closeOrder_add" cssClass="input-blue" />
+								<font color="red"><span id="messages"></span></font>
+								<s:if test="'add' == viewFlag">
+									<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_ADD',null)==true}">
+										<s:submit id="add" name="add" value="下一步&填写费用明细" action="closeOrder_add" cssClass="input-blue" />
+									</c:if>
+								</s:if>
+								<s:elseif test="closeOrder.state==0  && 'mdy' == viewFlag">
+									<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_MDY',null)==true}">
+										<s:submit id="save" name="save" value="保存" action="closeOrder_save" cssClass="input-blue" />
+									</c:if>
+									<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK0',null)==true}">
+										<s:submit id="mdyStatus0" name="mdyStatus0" value="报审" action="closeOrder_check0" onclick="return isOp('确定执行此操作?');" cssClass="input-yellow" />
+									</c:if>
+									<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_DEL',null)==true}">
+										<s:submit id="delete" name="delete" value="删除" action="closeOrder_del" onclick="return isDel();" cssClass="input-red" />
+									</c:if>
+								</s:elseif>
+								<s:elseif test="closeOrder.state>0 && 'mdy' == viewFlag">
+									<c:if test="${closeOrder.state>=1 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_APPROVE',null)==true}">
+										<input type="button" value="审阅" onclick="openApprove();" class="input-yellow" />
+									</c:if>
+								</s:elseif>
+								
+								<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK5',null)==true && closeOrder.state>0}">
+										<s:submit id="mdyStatus5" name="mdyStatus5" cssClass="input-red" value="退回" action="closeOrder_check5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
-							</s:if>
-							<s:elseif test="(closeOrder.check_state==0 || closeOrder.check_state==5) && 'mdy' == viewFlag">
-								<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_MDY',null)==true}">
-									<s:submit id="save" name="save" value="保存" action="closeOrder_save" cssClass="input-blue" />
-								</c:if>
-								<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK0',null)==true}">
-									<s:submit id="mdyStatus0" name="mdyStatus0" value="报审" action="closeOrder_check0" onclick="return isOp('确定执行此操作?');" cssClass="input-yellow" />
-								</c:if>
-								<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_DEL',null)==true}">
-									<s:submit id="delete" name="delete" value="删除" action="closeOrder_del" onclick="return isDel();" cssClass="input-red" />
-								</c:if>
-							</s:elseif>
-							<s:elseif test="closeOrder.check_state>0 && 'mdy' == viewFlag">
-								<c:if test="${closeOrder.check_state>=1 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_APPROVE',null)==true}">
-								<input type="button" value="审阅" onclick="openApprove();" class="input-yellow" />
-								</c:if>
-								<!--<c:if test="${closeOrder.check_state==1 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK10',null)==true}">
-									<s:submit id="mdyStatus10" name="mdyStatus10" value="主管/办事处经理审核通过" action="closeOrder_check10" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
-									<s:submit id="mdyStatus5" name="mdyStatus5" cssClass="input-red" value="审核不通过" action="closeOrder_check5" onclick="return isOp('确定执行此操作?');" />
-								</c:if>-->
-								<c:if test="${closeOrder.check_state==1 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK20',null)==true}">
-									<s:submit id="mdyStatus20" name="mdyStatus20" value="经理/大区审核通过" action="closeOrder_check20" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
-									<s:submit id="mdyStatus5" name="mdyStatus5" cssClass="input-red" value="审核不通过" action="closeOrder_check5" onclick="return isOp('确定执行此操作?');" />
-								</c:if>
-								<c:if test="${closeOrder.check_state==30 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK30',null)==true}">
-									<s:submit id="mdyStatus30" name="mdyStatus30" value="运营总监审核通过" action="closeOrder_check30" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
-									<s:submit id="mdyStatus5" name="mdyStatus5" cssClass="input-red" value="审核不通过" action="closeOrder_check5" onclick="return isOp('确定执行此操作?');" />
-								</c:if>
-								<c:if test="${closeOrder.check_state==40 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK40',null)==true}">
-									<s:submit id="mdyStatus40" name="mdyStatus40" value="财务审核通过" action="closeOrder_check40" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
-									<s:submit id="mdyStatus5" name="mdyStatus5" cssClass="input-red" value="审核不通过" action="closeOrder_check5" onclick="return isOp('确定执行此操作?');" />
-								</c:if>
-								<c:if test="${closeOrder.check_state==50 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK50',null)==true}">
-									<s:submit id="mdyStatus50" name="mdyStatus50" value="业务副总审核通过" action="closeOrder_check50" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
-									<s:submit id="mdyStatus5" name="mdyStatus5" cssClass="input-red" value="审核不通过" action="closeOrder_check5" onclick="return isOp('确定执行此操作?');" />
-								</c:if>
-								<c:if test="${closeOrder.check_state==60 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK60',null)==true}">
-									<s:submit id="mdyStatus60" name="mdyStatus60" value="总经理审核通过" action="closeOrder_check60" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
-									<s:submit id="mdyStatus5" name="mdyStatus5" cssClass="input-red" value="审核不通过" action="closeOrder_check5" onclick="return isOp('确定执行此操作?');" />
-								</c:if>
-								<c:if test="${closeOrder.check_state>=40 && closeOrder.nd_check_state<=5  && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_NDSTATUS0',null)==true}">
-									<s:submit id="mdyndStatus0" name="mdyndStatus0" value="数据中心审核通过" action="closeOrder_checknd0" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
-									<s:submit id="mdyndStatus5" name="mdyndStatus5" cssClass="input-red" value="审核不通过" action="closeOrder_checknd5" onclick="return isOp('确定执行此操作?');" />
-								</c:if>
-							</s:elseif>
-							<s:if test="closeOrder.check_state>30">
-								<input type="button" onclick="linkurl('<s:url namespace="/qkjmanage" action="closeOrder_view"><s:param name="closeOrder.uuid" value="closeOrder.uuid" /></s:url>');" value="转到打印页面" />
-							</s:if>
+									
+								<s:if test="closeOrder.sd_state>30 && closeOrder.state>0">
+									<input type="button" onclick="linkurl('<s:url namespace="/qkjmanage" action="closeOrder_view"><s:param name="closeOrder.uuid" value="closeOrder.uuid" /></s:url>');" value="转到打印页面" />
+								</s:if>
+								
+								<s:if test="closeOrder.type==1">
+								<input type="button" value="返回" onclick="linkurl('<s:url action="travel_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');" class="input-gray" />
+								</s:if>
+								<s:else>
 								<input type="button" value="返回" onclick="linkurl('<s:url action="closeOrder_relist" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');" class="input-gray" />
+								</s:else>
+							</div>
 						</div>
 					</div>
-				</div>
-			</div>
-		</s:form>
-		
-		<div id="approveFrom" class="label_con idialog" title="审阅信息">
-			<s:form name="form1" action="close_approve" cssClass="validForm" namespace="/qkjmanage" method="post" theme="simple">
-				<input type="hidden" name="closeOrder.uuid" value="${closeOrder['uuid']}" />
-				<input type="hidden" id="add_approve_flag" name="approve.flag" />
-				<div class="label_main">
-					<textarea name="approve.advice" rows="3"></textarea>
-				</div>
-				<div class="label_main tac" style="padding: 5px 0;">
-					<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_APPROVE',null)==true}">
-						<input type="submit" name="approve_pass" value="审阅通过" onclick="return addApproveCheck(10);" />
-						<input type="submit" name="approve_fail" value="审阅不通过" onclick="return addApproveCheck(5);" />
-					</c:if>
-					<c:if test="${'true'==isApprover && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_APPROVEDELLAST',null)==true}">
-						<s:submit name="active_approveDel" value="撤销最后一次审阅" action="close_approveDel" onclick="return isOp('确定进行此操作?');" />
-					</c:if>
+					<s:if test="closeOrder.state>0">
+						<div class="label_main">
+							<div class="label_hang">
+								<div class="label_ltit">销售审核:</div>
+								<div class="label_rwbenx">
+									<s:if test="closeOrder.state<2">
+										
+										<c:if test="${closeOrder.sd_state==10 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK20',closeOrder.apply_dept)==true}">
+											<s:submit id="mdyStatus20" name="mdyStatus20" value="经理/大区审核通过" action="closeOrder_check20" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
+										</c:if>
+										<c:if test="${closeOrder.sd_state==10 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK5',closeOrder.apply_dept)==true}">
+											<s:submit id="mdyStatus5" name="mdyStatus5" cssClass="input-red" value="审核不通过" action="closeOrder_check5" onclick="return isOp('确定执行此操作?');" />
+										</c:if>
+										<c:if test="${closeOrder.sd_state==30 && closeOrder.smd_status==30 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK30',closeOrder.apply_dept)==true}">
+											<s:submit id="mdyStatus30" name="mdyStatus30" value="运营总监审核通过" action="closeOrder_check30" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
+											<s:submit id="mdyStatus5" name="mdyStatus5" cssClass="input-red" value="审核不通过" action="closeOrder_check5" onclick="return isOp('确定执行此操作?');" />
+										</c:if>
+
+										<c:if test="${40==closeOrder.sd_state && closeOrder.smd_status>=40  && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK50',closeOrder.apply_dept)==true}">
+											<s:submit id="mdyStatus50" name="mdyStatus50" value="业务副总审核通过" action="closeOrder_check40" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
+											<s:submit id="mdyStatus5" name="mdyStatus5" cssClass="input-red" value="审核不通过" action="closeOrder_check5" onclick="return isOp('确定执行此操作?');" />
+										</c:if>
+									</s:if>
+									<div class="statusInline">
+										销售部审核状态:
+										<s:if test="closeOrder.sd_state==0">初始状态</s:if>
+										<s:if test="closeOrder.sd_state==5">
+											<font class="message_error">审核退回</font>(${CloseOrder.sd_user_name} ${it:formatDate(CloseOrder.sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+										<s:if test="closeOrder.sd_state==10">
+											<font class="message_warning">待审核</font>
+										</s:if>
+										<s:if test="closeOrder.sd_state==30">
+											<font class="message_pass">大区已审</font>(${CloseOrder.sd_user_name} ${it:formatDate(CloseOrder.sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+										<s:if test="closeOrder.sd_state==40">
+											<font class="message_pass">总监已审</font>(${CloseOrder.sd_user_name} ${it:formatDate(CloseOrder.sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+										<s:if test="closeOrder.sd_state==50">
+											<font class="message_pass">副总已审</font>(${CloseOrder.sd_user_name} ${it:formatDate(CloseOrder.sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="label_main">
+							<div class="label_hang">
+								<div class="label_ltit">销管审核:</div>
+								<div class="label_rwbenx">
+									<s:if test="closeOrder.state<2">
+										<c:if test="${10==closeOrder.smd_status && 30==closeOrder.sd_state && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_SMDSTATUS10',closeOrder.apply_dept)==true}">
+											<s:submit id="mdyCloseOrderSMDStatus10" name="mdyCloseOrderSMDStatus10" cssClass="input-green" value="销管经理-审核通过" action="mdyCloseOrderSMDStatus10" onclick="return isOp('确定执行此操作?');" />
+											<s:submit id="mdyCloseOrderSMDStatus5" name="mdyCloseOrderSMDStatus5" cssClass="input-red" value="审核不通过" action="mdyCloseOrderSMDStatus5" onclick="return isOp('确定执行此操作?');" />
+										</c:if>
+										<c:if test="${30==closeOrder.smd_status && closeOrder.sd_state==40 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_SMDSTATUS40',closeOrder.apply_dept)==true}">
+											<s:submit id="mdyCloseOrderSMDStatus50" name="mdyCloseOrderSMDStatus50" cssClass="input-green" value="销管部经理-审核通过" action="mdyCloseOrderSMDStatus40" onclick="return isOp('确定执行此操作?');" />
+											<s:submit id="mdyCloseOrderSMDStatus5" name="mdyCloseOrderSMDStatus5" cssClass="input-red" value="审核不通过" action="mdyCloseOrderSMDStatus5" onclick="return isOp('确定执行此操作?');" />
+										</c:if>
+										<c:if test="${40==closeOrder.smd_status && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_SMDSTATUS50',closeOrder.apply_dept)==true}">
+											<s:submit id="mdyCloseOrderSMDStatus40" name="mdyCloseOrderSMDStatus40" cssClass="input-green" value="销管副总-审核通过" action="mdyCloseOrderSMDStatus50" onclick="return isOp('确定执行此操作?');" />
+											<s:submit id="mdyCloseOrderSMDStatus5" name="mdyCloseOrderSMDStatus5" cssClass="input-red" value="审核不通过" action="mdyCloseOrderSMDStatus5" onclick="return isOp('确定执行此操作?');" />
+										</c:if>
+										<c:if test="${closeOrder.smd_status==50 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK60',closeOrder.apply_dept)==true}">
+											<s:submit id="mdyCloseOrderSDStatus50" name="mdyCloseOrderSDStatus50" cssClass="input-green" value="总经理-审核通过" action="mdyCloseOrderSMDStatus60" onclick="return isOp('确定执行此操作?');" />
+											<s:submit id="mdyCloseOrderSDStatus5" name="mdyCloseOrderSDStatus5" cssClass="input-red" value="审核不通过" action="mdyCloseOrderSMDStatus5" onclick="return isOp('确定执行此操作?');" />
+										</c:if>
+									</s:if>
+									<div class="statusInline">
+										销管部审核状态:
+										<s:if test="closeOrder.smd_status==0">未签收</s:if>
+										<s:if test="closeOrder.smd_status==5">
+											<font class="message_error">审核退回</font>(${closeOrder.smd_user_name} ${it:formatDate(closeOrder.smd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+										<s:if test="closeOrder.smd_status==10">
+											<font class="message_warning">已签收</font>
+										</s:if>
+										<s:if test="closeOrder.smd_status==30">
+											<font class="message_pass">销管经理已审</font>(${closeOrder.smd_user_name} ${it:formatDate(closeOrder.smd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+										<s:if test="closeOrder.smd_status==40">
+											<font class="message_pass">销管部经理已审</font>(${closeOrder.smd_user_name} ${it:formatDate(closeOrder.smd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+										<s:if test="closeOrder.smd_status==50">
+											<font class="message_pass">销管副总已审</font>(${closeOrder.smd_user_name} ${it:formatDate(closeOrder.smd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+										<s:if test="closeOrder.smd_status==60">
+											<font class="message_pass">总经理已审</font>(${closeOrder.sd_user_name} ${it:formatDate(closeOrder.sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="label_main">
+							<div class="label_hang">
+								<div class="label_ltit">财务审核:</div>
+								<div class="label_rwbenx">
+									<s:if test="closeOrder.state<2">
+										<c:if test="${closeOrder.smd_status>=50 && 10!=closeOrder.fd_check_state && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK40',closeOrder.apply_dept)==true}">
+											<s:submit id="mdyCloseOrderFDSTATUS10" name="mdyCloseOrderFDSTATUS10" cssClass="input-green" value="财务-审核通过" action="closeOrder_checkfd10" onclick="return isOp('确定执行此操作?');" />
+											<s:submit id="mdyCloseOrderFDStatus5" name="mdyCloseOrderFDStatus5" cssClass="input-red" value="审核不通过" action="closeOrder_checkfd5" onclick="return isOp('确定执行此操作?');" />
+										</c:if>
+									</s:if>
+									<div class="statusInline">
+										财务部审核状态:
+										<s:if test="CloseOrder.fd_check_state==0">未确认</s:if>
+										<s:if test="CloseOrder.fd_check_state==5">
+											<font class="message_error">审核退回</font>(${CloseOrder.fd_user_name} ${it:formatDate(CloseOrder.fd_check_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+										<s:if test="CloseOrder.fd_check_state==10">
+											<font class="message_pass">财务已审</font>(${CloseOrder.fd_user_name} ${it:formatDate(CloseOrder.fd_check_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="label_main">
+							<div class="label_hang">
+								<div class="label_ltit">数据中心:</div>
+								<div class="label_rwbenx">
+										<c:if test="${closeOrder.smd_status>=50 && 10!=closeOrder.nd_check_state && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK40',closeOrder.apply_dept)==true}">
+											<s:submit id="mdyCloseOrderFDSTATUS10" name="mdyCloseOrderFDSTATUS10" cssClass="input-green" value="数据中心-审核通过" action="closeOrder_checknd0" onclick="return isOp('确定执行此操作?');" />
+											<s:submit id="mdyCloseOrderFDStatus5" name="mdyCloseOrderFDStatus5" cssClass="input-red" value="审核不通过" action="closeOrder_checknd5" onclick="return isOp('确定执行此操作?');" />
+										</c:if>
+									<div class="statusInline">
+										数据中心审核状态:
+										<s:if test="CloseOrder.nd_check_state==0">未确认</s:if>
+										<s:if test="CloseOrder.nd_check_state==5">
+											<font class="message_error">审核退回</font>(${CloseOrder.nd_user_name} ${it:formatDate(CloseOrder.nd_check_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+										<s:if test="CloseOrder.nd_check_state==10">
+											<font class="message_pass">已审</font>(${CloseOrder.nd_user_name} ${it:formatDate(CloseOrder.nd_check_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</s:if>
+
 				</div>
 			</s:form>
+
+			<div id="approveFrom" class="label_con idialog" title="审阅信息">
+				<s:form name="form1" action="close_approve" cssClass="validForm" namespace="/qkjmanage" method="post" theme="simple">
+					<input type="hidden" name="closeOrder.uuid" value="${closeOrder['uuid']}" />
+					<input type="hidden" id="add_approve_flag" name="approve.flag" />
+					<div class="label_main">
+						<textarea name="approve.advice" rows="3"></textarea>
+					</div>
+					<div class="label_main tac" style="padding: 5px 0;">
+						<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_APPROVE',null)==true}">
+							<input type="submit" name="approve_pass" value="审阅通过" onclick="return addApproveCheck(10);" />
+							<input type="submit" name="approve_fail" value="审阅不通过" onclick="return addApproveCheck(5);" />
+						</c:if>
+						<c:if test="${'true'==isApprover && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_APPROVEDELLAST',null)==true}">
+							<s:submit name="close_approveDel" value="撤销最后一次审阅" action="close_approveDel" onclick="return isOp('确定进行此操作?');" />
+						</c:if>
+					</div>
+				</s:form>
+			</div>
+
+			<!-- 添加销售物料(公司) -->
+			<div id="addPosmForm" class="label_con idialog" title="添加销售物料(公司)">
+				<s:form name="form_addPosmForm" cssClass="validFormDialog" action="closePosm_add" namespace="/qkjmanage" method="post" theme="simple">
+					<div class="label_main">
+						<div class="label_hang">
+							<div class="label_ltit">名目:</div>
+							<div class="label_rwben label_rwb">
+								<s:textfield name="closePosm.title" title="名目" cssClass="validate[required,maxSize[32]]" />
+							</div>
+						</div>
+						<div class="label_hang">
+							<div class="label_ltit">名目说明:</div>
+							<div class="label_rwben label_rwb">
+								<s:textfield name="closePosm.note" title="名目说明" cssClass="validate[required,maxSize[255]]" />
+							</div>
+						</div>
+						<div class="label_hang">
+							<div class="label_ltit">金额:</div>
+							<div class="label_rwben label_rwb nw">
+								<s:textfield name="closePosm.total_price" title="名目" cssClass="validate[required,custom[number],maxSize[11]]" />
+								元
+							</div>
+						</div>
+						<div class="label_hang label_button tac">
+							<s:hidden name="closePosm.closeOrder_id" value="%{closeOrder.uuid}" />
+							<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_ADD',null)==true}">
+								<s:submit id="add" name="add" value="确定" action="closePosm_add" />
+							</c:if>
+						</div>
+					</div>
+				</s:form>
+			</div>
 		</div>
 	</div>
-	</div>
 	<s:action name="ref_foot" namespace="/manager" executeResult="true" />
-	<script type="text/javascript">
-									setCheckBox("closeOrder.salPro_id", '${closeOrder.salPro_id}');
-								</script>
+	
 </body>
 <script type="text/javascript">
 			$(function(){
@@ -505,6 +722,19 @@ var openCustomerView = function(customer_uuid) {
 	$("#"+iframeId).attr("src","/salpro/salPromot_loadt?viewFlag=view&salstate=1&salPromot.uuid=" + customer_uuid);
 	sobj02.open();
 };
+
+</script>
+
+<script type="text/javascript">
+	var infoeditor01;
+	$(function(){
+		$("#addPosmForm").dialog({ autoOpen : false,
+		modal : true });
+		$("#addPosm").click(function(){
+			$("#addPosmForm").dialog("open");
+		});
+
+	});
 
 </script>
 

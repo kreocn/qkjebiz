@@ -204,9 +204,9 @@
 									<s:else>
 										<c:if test="${apply.status==10 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK10',apply.apply_dept)==true}">
 											<s:submit id="apply_check10" name="apply_check10" value="经理/大区审核通过" cssClass="input-green" action="apply_check10" onclick="return isOp('确定进行此操作?');" />
-											<c:if test="${it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK5',null)==true}">
+										</c:if>
+										<c:if test="${apply.status==10 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK5',null)==true}">
 												<s:submit id="apply_check5" name="apply_check5" value="审核不通过" cssClass="input-red" action="apply_check5" onclick="return isOp('确定进行此操作?');" />
-											</c:if>
 										</c:if>
 									</s:else>
 

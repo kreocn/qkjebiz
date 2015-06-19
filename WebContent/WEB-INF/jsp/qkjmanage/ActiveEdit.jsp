@@ -718,6 +718,8 @@
 							<div class="label_rwbenx">
 								<c:if test="${10==active.sd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS10',active.apply_dept)==true}">
 									<s:submit id="mdyActiveSDStatus10" name="mdyActiveSDStatus10" cssClass="input-green" value="经理/大区-审核通过" action="mdyActiveSDStatus10" onclick="return isOp('确定执行此操作?');" />
+								</c:if>
+								<c:if test="${10==active.sd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS5',active.apply_dept)==true}">
 									<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
 								<c:if test="${30==active.sd_status && 30==active.smd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS30',active.apply_dept)==true}">

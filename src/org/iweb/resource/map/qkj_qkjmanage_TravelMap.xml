@@ -73,8 +73,8 @@
 	</select>
 	<insert id="qkjmanage_addTravel" parameterClass="travel">
 		<![CDATA[ 
-			Insert Into qkjm_r_travel(apply_dept,apply_user,apply_item,travel_num,accompany_num,travel_date,travel_date_end,members_names,lunch_price,lunch_num,lunch_desk,dinner_price,dinner_num,dinner_desk,cigarette,cigarette_num,fruit,hotel,hotel_start,hotel_end,hotel_total,hotel_twinroom,hotel_house,hotel_house_num,car,travel_agency,trip,gift,gift_num,note,check_status,check_user,check_time,check_note,acheck_status,acheck_user,acheck_time,acheck_note,add_user,add_time,lm_user,lm_time)
-			Values (#apply_dept#,#apply_user#,#apply_item#,#travel_num#,#accompany_num#,#travel_date#,#travel_date_end#,#members_names#,#lunch_price#,#lunch_num#,#lunch_desk#,#dinner_price#,#dinner_num#,#dinner_desk#,#cigarette#,#cigarette_num#,#fruit#,#hotel#,#hotel_start#,#hotel_end#,#hotel_total#,#hotel_twinroom#,#hotel_house#,#hotel_house_num#,#car#,#travel_agency#,#trip#,#gift#,#gift_num#,#note#,#check_status#,#check_user#,#check_time#,#check_note#,#acheck_status#,#acheck_user#,#acheck_time#,#acheck_note#,#add_user#,#add_time#,#lm_user#,#lm_time#)
+			Insert Into qkjm_r_travel(apply_dept,apply_user,apply_item,travel_num,accompany_num,travel_date,travel_date_end,members_names,lunch_price,lunch_num,lunch_desk,dinner_price,dinner_num,dinner_desk,cigarette,cigarette_num,fruit,hotel,hotel_start,hotel_end,hotel_total,hotel_twinroom,hotel_house,hotel_house_num,car,travel_agency,trip,gift,gift_num,note,check_status,check_user,check_time,check_note,acheck_status,acheck_user,acheck_time,acheck_note,add_user,add_time,lm_user,lm_time,member_id,member_address,member_phone)
+			Values (#apply_dept#,#apply_user#,#apply_item#,#travel_num#,#accompany_num#,#travel_date#,#travel_date_end#,#members_names#,#lunch_price#,#lunch_num#,#lunch_desk#,#dinner_price#,#dinner_num#,#dinner_desk#,#cigarette#,#cigarette_num#,#fruit#,#hotel#,#hotel_start#,#hotel_end#,#hotel_total#,#hotel_twinroom#,#hotel_house#,#hotel_house_num#,#car#,#travel_agency#,#trip#,#gift#,#gift_num#,#note#,#check_status#,#check_user#,#check_time#,#check_note#,#acheck_status#,#acheck_user#,#acheck_time#,#acheck_note#,#add_user#,#add_time#,#lm_user#,#lm_time#,#member_id#,#member_address#,#member_phone#)
 		]]>
 		<selectKey resultClass="int" keyProperty="uuid">
 		<![CDATA[ Select LAST_INSERT_ID() ]]>
@@ -111,6 +111,9 @@
 				gift=#gift#,
 				gift_num=#gift_num#,
 				note=#note#,
+				member_id=#member_id#,
+				member_address=#member_address#,
+				member_phone=#member_phone#,
 				lm_user=#lm_user#,
 				lm_time=#lm_time#
 			Where uuid = #uuid#
@@ -139,6 +142,14 @@
 				acheck_note=#acheck_note#,
 				lm_user=#lm_user#,
 				lm_time=#lm_time#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<update id="qkjmanage_mdyStatus" parameterClass="travel">
+		<![CDATA[
+			Update qkjm_r_travel
+			Set status=#status#
 			Where uuid = #uuid#
 		]]>
 	</update>
