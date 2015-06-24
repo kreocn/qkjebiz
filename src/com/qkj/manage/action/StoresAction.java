@@ -250,7 +250,7 @@ public class StoresAction  extends ActionSupport{
 			DecimalFormat df =new DecimalFormat("#####0.00");
 			SimpleDateFormat   formatter=new SimpleDateFormat   ("yyyy-MM-dd   HH:mm:ss");  
 			Date   curDate   =   new   Date(System.currentTimeMillis());//获取当前时间       
-			String   date   =   formatter.format(curDate);  
+			String   date   =   formatter.format(curDate);
 			price=price.valueOf(df.format(price));
 			sto.setTotal_price(price);
 			sto.setAdd_time(date);
