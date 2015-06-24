@@ -109,6 +109,13 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
+		
+		<!-- 发货信息修改 -->
+		<action name="mdyCloseOrderShipInfo" class="com.qkj.manage.action.CloseOrderAction" method="mdyShipInfo">
+			<result type="redirectAction">
+				<param name="actionName">closeOrder_relist</param>
+			</result>
+		</action>
 		<!-- CloseOrder End -->
 	</package>
 </struts>
