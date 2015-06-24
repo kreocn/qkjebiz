@@ -26,6 +26,9 @@ public class SalProCheckSkip {
 		skipSteps.add(new CloseOrerSkipStep("2203", 1, "check20", "mdyCloseOrderSMDStatus10"));// 大区审后销管经理代审
 		//西北
 		skipSteps.add(new CloseOrerSkipStep("220", 1, "check30", "mdyCloseOrderSMDStatus50"));// 总监审后销管销管副总代审
+		
+		//红酒
+		skipSteps.add(new CloseOrerSkipStep("312", 1, "status1", "check20,mdyCloseOrderSMDStatus10")); // 跳过大区
 	}
 
 	private String str;
@@ -96,13 +99,25 @@ public class SalProCheckSkip {
 		skipstr = as.getSkip_step();// 跳过的步骤
 		try {
 			ca.getClass().getMethod(str, new Class[] { String.class }).invoke(ca, new Object[] { userid });
-			ca.getClass().getMethod(skipstr, new Class[] { String.class }).invoke(ca, new Object[] { "2" });// 跳过的方法
+			if(skipstr.contains(",")){
+				String meth[]=skipstr.split(",");
+				if(meth.length>0){
+					for(int i=0;i<meth.length;i++){
+						String m=meth[i];
+						ca.getClass().getMethod(m, new Class[] { String.class }).invoke(ca, new Object[] { "2" });// 跳过的方法
+					}
+				}else{
+					ca.getClass().getMethod(skipstr, new Class[] { String.class }).invoke(ca, new Object[] { "2" });// 跳过的方法
+				}
+			}else{
+				ca.getClass().getMethod(skipstr, new Class[] { String.class }).invoke(ca, new Object[] { "2" });// 跳过的方法
+			}
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-
+	
 	private void normalStep(String st) {
 		String userid = ContextHelper.getUserLoginUuid();
 		SalProStep ca = new SalProStep();
