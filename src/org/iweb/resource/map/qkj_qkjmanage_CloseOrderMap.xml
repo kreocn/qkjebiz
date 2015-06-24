@@ -51,7 +51,7 @@
 				</isNotEmpty>
 			</isEmpty>
 		</dynamic>
-		<![CDATA[ LIMIT 1000 ]]>
+		<![CDATA[ ORDER BY c.add_time DESC LIMIT 1000 ]]>
 	</select>
 	<select id="qkjmanage_getCloseOrdersCounts" resultClass="int" parameterClass="java.util.Map">
 		<![CDATA[ 
@@ -269,5 +269,21 @@
 		]]>
 		
 	</select>
+	
+	<!-- ship info change -->
+	<update id="qkjmanage_mdyCloseOrderShipInfo" parameterClass="closeOrder">
+		<![CDATA[
+			Update qkjm_r_closeorder
+			Set ship_status=#ship_status#,
+				ship_ware=#ship_ware#,
+				ship_date=#ship_date#,
+				ship_no=#ship_no#,
+				ship_phone=#ship_phone#,
+				remark=#remark#,
+				ship_type=#ship_type#,
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
 	<!-- CloseOrder End -->
 </sqlMap>

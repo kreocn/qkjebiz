@@ -920,6 +920,26 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 		}
 
 	}
+	
+	/**
+	 * 修改发货信息
+	 * 
+	 * @return
+	 * @throws Exception
+	 * @date 2015-6-24 sun
+	 */
+	public String mdyShipInfo() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_MDYSHIPINFO");
+		try {
+			closeOrder.setLm_user(ContextHelper.getUserLoginUuid());
+			dao.mdyShipInfo(closeOrder);
+			addProcess("ACTIVE_SHIP", "结案-出货信息修改",ContextHelper.getUserLoginUuid());
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!mdyShipInfo 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!mdyShipInfo 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
 
 	/*
 	 * public int check(int p_check) {

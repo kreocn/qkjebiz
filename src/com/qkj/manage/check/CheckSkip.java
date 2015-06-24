@@ -32,6 +32,10 @@ public class CheckSkip {
 		// 新疆
 		skipSteps.add(new SkipStep("2203", 1, 2, 3)); // 申请 2大区 3跳过销管经理
 		skipSteps.add(new SkipStep("2203", 1, 12, 13));// 结案 12大区 13跳过销管经理
+		//西北跳过销管部，销管副总流程
+		skipSteps.add(new SkipStep("220", 1, 4, 7)); // 申请 跳过销管部，销管副总
+		skipSteps.add(new SkipStep("220", 1, 14, 17)); // 结案 跳过销管部，销管副总
+		
 	}
 
 	private Step step = new Step();
