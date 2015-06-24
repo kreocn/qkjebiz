@@ -324,10 +324,8 @@ public class StoresAction  extends ActionSupport{
 			map.clear();
 			map.put("id",this.getId());
 			map.put("num",this.getNum());
-
-
 			if(this.getTotalPirce()!=0.0){
-				map.put("price",mul(this.getTotalPirce(),mul(div(this.getTotalPirce(), this.getPrice()),this.getNum())));
+				map.put("price",sub(this.getTotalPirce(),sub(this.getTotalPirce(),mul(this.getNum(),this.getPrice()))));
 			}else{	
 				map.put("price",0.0);
 			}
@@ -336,7 +334,10 @@ public class StoresAction  extends ActionSupport{
 			map.put("id", this.getStoresid());
 			this.setStoresorderlist(dao.listOrder(map));
 			if(this.getTotalPirce()!=0.0){
-			num=(int) mul(div(this.getTotalPirce(),this.getPrice()),this.getNum());
+		    Object ob=div(this.getPrice(),this.getTotalPirce());
+		    double subnum=sub(ob,this.getNum());
+		    num=(int)subnum;
+			
 			}
 			if(this.getTotalPirce()==0.0){
 				num=0;
@@ -397,7 +398,7 @@ public class StoresAction  extends ActionSupport{
 	 * @param v2 * 
 	 * @return Double 
 	 */  
-	public static Object sub(Object v1, Object v2) {  
+	public static Double sub(Object v1, Object v2) {  
 		BigDecimal b1 = new BigDecimal(v1.toString());  
 		BigDecimal b2 = new BigDecimal(v2.toString());  
 		return new Double(b1.subtract(b2).doubleValue());  
@@ -423,7 +424,7 @@ public class StoresAction  extends ActionSupport{
 	 * @param v2 * 
 	 * @return Double 
 	 */  
-	public static Object div(Object v1, Object v2) {  
+	public static double div(Object v1, Object v2) {  
 		int DEF_DIV_SCALE = 2;  
 		BigDecimal b1 = new BigDecimal(v1.toString());  
 		BigDecimal b2 = new BigDecimal(v2.toString());  

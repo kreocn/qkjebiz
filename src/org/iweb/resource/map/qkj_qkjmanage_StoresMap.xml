@@ -76,7 +76,7 @@
 		</dynamic>
 	</select>
 
-	<select id="qkjStores_Order_update_listCount" parameterClass="java.util.Map" resultClass="StoresOrder">
+	<select id="qkjStores_Order_update_listCount" parameterClass="java.util.Map" resultClass="int">
 		select count(*) from qkj_t_order
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="user_id"><![CDATA[ o.user_id=#userid# ]]></isNotEmpty>

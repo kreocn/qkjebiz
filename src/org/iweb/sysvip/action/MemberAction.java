@@ -228,13 +228,7 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 				map.put("customer_id", member.getUuid());
 				map.put("order_type", "uuidAsc");
 				customerRecodes = cdao.list(map);
-				
 				active=activedao.svipList(map);
-				
-				
-				
-				
-				
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/sysvip/member_list?viewFlag=relist'>会员列表</a>&nbsp;&gt;&nbsp;修改会员信息";
 			} else {
 				this.setMember(null);
