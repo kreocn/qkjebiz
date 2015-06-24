@@ -36,6 +36,10 @@ public class CheckSkip {
 		skipSteps.add(new SkipStep("220", 1, 4, 7)); // 申请 跳过销管部，销管副总
 		skipSteps.add(new SkipStep("220", 1, 14, 17)); // 结案 跳过销管部，销管副总
 		
+		//红酒
+		skipSteps.add(new SkipStep("312", 1, 1, 2,"3")); // 申请 直接到总监
+		skipSteps.add(new SkipStep("312", 1,11, 12, "13"));// 结案 直接到总监
+		
 	}
 
 	private Step step = new Step();
@@ -204,6 +208,10 @@ public class CheckSkip {
 		try {
 			step.getClass().getMethod(str, new Class[] { String.class }).invoke(step, new Object[] { userid });
 			step.getClass().getMethod(skipstr, new Class[] { String.class }).invoke(step, new Object[] { "2" });// 跳过的方法
+			if(as.getSkip_n()!=null&&!as.equals("")){
+				String n="step" + as.getSkip_n();
+				step.getClass().getMethod(n, new Class[] { String.class }).invoke(step, new Object[] { "2" });// 跳过的方法
+			}
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
