@@ -657,6 +657,23 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
+	
+	/**
+	 * 董事通过
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String mdyCloseOrderSMDStatus70() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_CHECK70");
+		try {
+			mdyCloseOrderSMDStatus(70, ContextHelper.getUserLoginUuid());
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!check1 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!check1 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
 
 	/**
 	 * 财务通过

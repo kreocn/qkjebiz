@@ -193,7 +193,7 @@
 									</c:if>
 
 									<!-- 西北，青海大区：大区--销管经理，总监--副总，总经理 -->
-									<!-- 省外，大区--总监--副总，总经理 -->
+									<!-- 省外，传奇天估德  大区--总监--副总，总经理 -->
 									<!-- 北京（销售部，市场部），大区--总监--副总，总经理 （其它部门），大区--总经理-->
 									<!-- 西藏大区：大区--直接副总审，总经理 -- >
 									 <!-- 新疆办事处：直接副总审，总经理 -->
@@ -259,7 +259,7 @@
 									</s:elseif>
 									<s:else>
 										<!-- 北京和省外跳过销管 -->
-										<s:if test="apply.apply_dept.substring(0,3)!='211' && apply.apply_dept.substring(0,1)!=3">
+										<s:if test="apply.apply_dept.substring(0,3)!='211' && apply.apply_dept.substring(0,1)!=3 && apply.apply_dept.substring(0,1)!=4">
 											<c:if test="${apply.status==20 && apply.sp_check_status<=5 && it:checkPermit('QKJ_QKJMANAGE_APPLY_SPCHECK10',apply.apply_dept)==true}">
 												<s:submit id="apply_spcheck10" name="apply_spcheck10" value="销管经理审核通过" cssClass="input-green" action="apply_spcheck10" onclick="return isOp('确定进行此操作?');" />
 												<c:if test="${it:checkPermit('QKJ_QKJMANAGE_APPLY_SPCHECK5',apply.apply_dept)==true}">

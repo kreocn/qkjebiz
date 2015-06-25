@@ -345,6 +345,7 @@ SELECT MAX(a.baotime) baotime,MAX(a.stars) stars,MAX(a.sing) sing,MAX(a.spass) s
 				plan_end=#plan_end#,
 				address=#address#,
 				person=#person#,
+				apply_dept=#apply_dept#,
 				note=#note#,
 				expect=#expect#,
 				lm_user=#lm_user#,

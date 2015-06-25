@@ -87,6 +87,9 @@
 									<s:if test="salPromot.smd_status==60">
 										<span class="message_pass" title="${it:formatDate(salPromot.smd_time,'yyyy-MM-dd HH:mm:ss')}">总经理已审(${salPromot.smd_name })</span>
 									</s:if>
+									<s:if test="salPromot.smd_status==70">
+										<span class="message_pass" title="${it:formatDate(salPromot.smd_time,'yyyy-MM-dd HH:mm:ss')}">董事已审(${salPromot.smd_name })</span>
+									</s:if>
 								</div>
 								
 								<div class="zhuangtai" <s:if test="%{salPromot.fd_status!=0}">title="${it:formatDate(salPromot.fd_time,'yyyy-MM-dd HH:mm:ss')}"</s:if>>
@@ -358,6 +361,10 @@
 											<s:submit cssClass="input-green" value="总经理-审核通过" action="mdySMDStatus60" onclick="return isOp('确定执行此操作?');" />
 											<s:submit cssClass="input-red" value="审核不通过" action="mdySMDStatus5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
+										<c:if test="${salPromot.smd_status==60 && it:checkPermit('QKJ_QKJMANAGE_SALPRO_SMDSTATUS70',salPromot.add_user_dept)==true}">
+											<s:submit cssClass="input-green" value="董事-审核通过" action="mdySMDStatus70" onclick="return isOp('确定执行此操作?');" />
+											<s:submit cssClass="input-red" value="审核不通过" action="mdySMDStatus5" onclick="return isOp('确定执行此操作?');" />
+										</c:if>
 									</s:if>
 										<div class="statusInline">
 											销管部审核状态:
@@ -375,6 +382,8 @@
 												<font class="message_pass">销管副总已审</font>(${salPromot.smd_name} ${it:formatDate(salPromot.smd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 											<s:if test="salPromot.smd_status==60">
 												<font class="message_pass">总经理已审</font>(${salPromot.smd_name} ${it:formatDate(salPromot.sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+												<s:if test="salPromot.smd_status==70">
+												<font class="message_pass">董事已审</font>(${salPromot.smd_name} ${it:formatDate(salPromot.sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 										</div>
 									</div>
 								</div>
