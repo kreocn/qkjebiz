@@ -68,6 +68,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	private Active fuActive;
 	private Active caiActive;
 	private Active shuActive;
+	private Active dongActive;
 
 	private Approve approve;
 	private List<Approve> approves;
@@ -95,6 +96,14 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	// 个人工作标识
 	private String perWorkF;
 	private static String perWorkFlag = null;
+
+	public Active getDongActive() {
+		return dongActive;
+	}
+
+	public void setDongActive(Active dongActive) {
+		this.dongActive = dongActive;
+	}
 
 	public String getUserappid() {
 		return userappid;
@@ -685,7 +694,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 					}
 				}
 
-				if (active.getSd_status() == 60) {// 总经理已审
+				if (active.getSd_status() >= 60 || active.getSmd_status()>=60) {// 总经理已审
 					map.clear();
 					map.put("sq", "sq");
 					map.put("biz_id", active.getUuid());
@@ -696,7 +705,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 					}
 				}
 
-				if (active.getSmd_status() == 50) {// 销管副总
+				if (active.getSmd_status() >= 50) {// 销管副总
 					map.clear();
 					map.put("sq", "sq");
 					map.put("biz_id", active.getUuid());
@@ -716,7 +725,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 					}
 				}
 
-				if (active.getSmd_status() == 40) {// 销管部经理已审
+				if (active.getSmd_status() >= 40) {// 销管部经理已审
 					map.clear();
 					map.put("sq", "sq");
 					map.put("biz_id", active.getUuid());
@@ -726,6 +735,19 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 						this.setGuanActive((Active) t.get(0));
 					}
 				}
+				
+				if (active.getSmd_status() >= 40) {// 董事
+					map.clear();
+					map.put("sq", "sq");
+					map.put("biz_id", active.getUuid());
+					map.put("smd70", "dong");
+					List<Active> t = dao.listSing(map);
+					if (t.size() > 0) {
+						this.setDongActive(t.get(0));
+					}
+				}
+				
+				
 
 				map.clear();
 				map.put("active_id", active.getUuid());
@@ -1362,6 +1384,10 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		if (smd_status == 50) {
 			noteflag = "销管副总审核通过";
 		}
+		
+		if (smd_status == 70) {
+			noteflag = "董事审核通过";
+		}
 		active.setFd_status(0);
 		active.setSmd_status(smd_status);
 		active.setSmd_time(new Date());
@@ -1534,7 +1560,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 					}
 				}
 
-				if (active.getClose_sd_status() == 60) {// 总经理已审
+				if (active.getClose_sd_status() >= 60 || active.getClose_smd_status()>=60) {// 总经理已审
 					map.clear();
 					map.put("ja", "sq");
 					map.put("biz_id", active.getUuid());
@@ -1545,7 +1571,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 					}
 				}
 
-				if (active.getClose_smd_status() == 50) {// 销管副总已审
+				if (active.getClose_smd_status() >= 50) {// 销管副总已审
 					map.clear();
 					map.put("ja", "sq");
 					map.put("biz_id", active.getUuid());
@@ -1565,7 +1591,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 					}
 				}
 
-				if (active.getClose_smd_status() == 40) {// 销管部经理已审
+				if (active.getClose_smd_status() >= 40) {// 销管部经理已审
 					map.clear();
 					map.put("ja", "sq");
 					map.put("biz_id", active.getUuid());
@@ -1573,6 +1599,17 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 					List<Active> t = dao.listSing(map);
 					if (t.size() > 0) {
 						this.setGuanActive((Active) t.get(0));
+					}
+				}
+				
+				if (active.getClose_smd_status() >= 70) {// 董事已审
+					map.clear();
+					map.put("ja", "sq");
+					map.put("biz_id", active.getUuid());
+					map.put("csd70", "dong");
+					List<Active> n = dao.listSing(map);
+					if (n.size() > 0) {
+						this.setDongActive(n.get(0));
 					}
 				}
 

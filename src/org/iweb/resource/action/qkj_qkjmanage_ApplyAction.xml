@@ -111,6 +111,16 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
+		
+		<action name="apply_check50" class="com.qkj.manage.action.ApplyAction" method="check50">
+			<result type="redirectAction">
+				<param name="actionName">apply_load</param>
+				<param name="apply.uuid">${apply.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
 		<action name="apply_approve" class="com.qkj.manage.action.ApplyAction" method="approve">
 			<result type="redirectAction">
 				<param name="actionName">apply_load</param>

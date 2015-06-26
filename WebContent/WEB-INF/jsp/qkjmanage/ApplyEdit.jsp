@@ -193,11 +193,13 @@
 									</c:if>
 
 									<!-- 西北，青海大区：大区--销管经理，总监--副总，总经理 -->
-									<!-- 省外，传奇天估德  大区--总监--副总，总经理 -->
+									<!-- 省外  大区--总监--副总，总经理 -->
 									<!-- 北京（销售部，市场部），大区--总监--副总，总经理 （其它部门），大区--总经理-->
 									<!-- 西藏大区：大区--直接副总审，总经理 -- >
 									 <!-- 新疆办事处：直接副总审，总经理 -->
 									<!-- 股份公司：大区--直接销管，总监，副总审，总经理 -->
+									
+									<!-- 传奇天估德  大区--副总，总经理--董事 -->
 									<s:if test="apply.apply_dept=='22030'">
 										<!-- 新疆办事处：直接副总审，总经理 -->
 									</s:if>
@@ -256,6 +258,23 @@
 											<s:submit id="apply_check40" name="apply_check40" cssClass="input-green" value="总经理-审核通过" action="apply_check40" onclick="return isOp('确定执行此操作?');" />
 											<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
+									</s:elseif>
+									<s:elseif test="apply.apply_dept.substring(0,1)==4">
+									<!-- 传奇 -->
+										<c:if test="${apply.status==20 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK30',apply.apply_dept)==true}">
+											<s:submit id="apply_check30" name="apply_check30" cssClass="input-green" value="副总-审核通过" action="apply_check30" onclick="return isOp('确定执行此操作?');" />
+											<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
+										</c:if>
+										<c:if test="${apply.status>=20 && apply.status<50 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK40',apply.apply_dept)==true}">
+											<s:submit id="apply_check40" name="apply_check40" cssClass="input-green" value="总经理-审核通过" action="apply_check40" onclick="return isOp('确定执行此操作?');" />
+											<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
+										</c:if>
+										
+										<c:if test="${apply.status==50 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK50',apply.apply_dept)==true}">
+											<s:submit id="apply_check40" name="apply_check40" cssClass="input-green" value="董事-审核通过" action="apply_check50" onclick="return isOp('确定执行此操作?');" />
+											<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
+										</c:if>
+										
 									</s:elseif>
 									<s:else>
 										<!-- 北京和省外跳过销管 -->

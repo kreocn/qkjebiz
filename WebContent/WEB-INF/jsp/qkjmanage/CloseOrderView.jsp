@@ -159,6 +159,16 @@
 				<div class="label_main label_main_sep"></div>
 				<div class="label_main">
 					<div class="label_hang label_hang_sign">
+						<div class="label_ltit">业务副总:</div>
+						<div class="label_rwbenx label_rwb_sign">
+							(签字/日期)
+							<s:if test="sign!=null && sign.sign20!=null">
+								<span class="user_sign"><img src="${sign.sign20}" /></span>
+								<span class="vab">${it:formatDate(sign.time20,'yyyy-MM-dd')}</span>
+							</s:if>
+						</div>
+					</div>
+					<div class="label_hang label_hang_sign">
 						<div class="label_ltit">总经理:</div>
 						<div class="label_rwbenx label_rwb_sign">
 							(签字/日期)
@@ -169,6 +179,21 @@
 						</div>
 					</div>
 				</div>
+				<s:if test="closeOrder.apply_dept.substring(0,1)==4">
+				<div class="label_main label_main_sep"></div>
+				<div class="label_main">
+					<div class="label_hang label_hang_sign">
+						<div class="label_ltit">董事:</div>
+						<div class="label_rwbenx label_rwb_sign">
+							(签字/日期)
+							<s:if test="sign!=null && sign.sign80!=null">
+								<span class="user_sign"><img src="${sign.sign80}" /></span>
+								<span class="vab">${it:formatDate(sign.time80,'yyyy-MM-dd')}</span>
+							</s:if>
+						</div>
+					</div>
+				</div>
+				</s:if>
 				<div class="label_main label_main_sep"></div>
 					<div class="label_main">
 						<div class="label_hang">

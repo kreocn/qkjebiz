@@ -66,6 +66,7 @@ public class CloseOrder {
 	private String sign50;
 	private String sign60;
 	private String sign70;
+	private String sign80;
 
 	private Date time20;
 	private Date time30;
@@ -73,9 +74,26 @@ public class CloseOrder {
 	private Date time50;
 	private Date time60;
 	private Date time70;
+	private Date time80;
 
 	public String getRemark() {
 		return remark;
+	}
+
+	public String getSign80() {
+		return sign80;
+	}
+
+	public void setSign80(String sign80) {
+		this.sign80 = sign80;
+	}
+
+	public Date getTime80() {
+		return time80;
+	}
+
+	public void setTime80(Date time80) {
+		this.time80 = time80;
 	}
 
 	public void setRemark(String remark) {

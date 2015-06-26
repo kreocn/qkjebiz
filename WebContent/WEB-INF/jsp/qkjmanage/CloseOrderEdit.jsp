@@ -242,7 +242,7 @@ s
 												<th>活动名称</th>
 												<th>开始时间</th>
 												<th>结束时间</th>
-												<th>操作</th>
+												
 											</tr>
 											<!-- lading.promotions -->
 											<s:iterator value="salPromots" status="sta">
@@ -392,9 +392,16 @@ s
 									<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_MDY',null)==true}">
 										<s:submit id="save" name="save" value="保存" action="closeOrder_save" cssClass="input-blue" />
 									</c:if>
-									<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK0',null)==true}">
-										<s:submit id="mdyStatus0" name="mdyStatus0" value="报审" action="closeOrder_check0" onclick="return isOp('确定执行此操作?');" cssClass="input-yellow" />
-									</c:if>
+									<s:if test="closeOrder.type==0">
+										<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK0',null)==true && salPromotsed.size()>0}">
+											<s:submit id="mdyStatus0" name="mdyStatus0" value="报审" action="closeOrder_check0" onclick="return isOp('确定执行此操作?');" cssClass="input-yellow" />
+										</c:if>
+									</s:if>
+									<s:else>
+										<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK0',null)==true}">
+											<s:submit id="mdyStatus0" name="mdyStatus0" value="报审" action="closeOrder_check0" onclick="return isOp('确定执行此操作?');" cssClass="input-yellow" />
+										</c:if>
+									</s:else>
 									<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_DEL',null)==true}">
 										<s:submit id="delete" name="delete" value="删除" action="closeOrder_del" onclick="return isDel();" cssClass="input-red" />
 									</c:if>
@@ -405,7 +412,7 @@ s
 									</c:if>
 								</s:elseif>
 								
-								<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK5',null)==true && closeOrder.state>0}">
+								<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECKZ5',null)==true && closeOrder.state>0}">
 										<s:submit id="mdyStatus5" name="mdyStatus5" cssClass="input-red" value="退回" action="closeOrder_check5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
 									
@@ -540,7 +547,7 @@ s
 							<div class="label_hang">
 								<div class="label_ltit">数据中心:</div>
 								<div class="label_rwbenx">
-										<c:if test="${closeOrder.smd_status>=50 && 10!=closeOrder.nd_check_state && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK40',closeOrder.apply_dept)==true}">
+										<c:if test="${closeOrder.smd_status>=50 && 10!=closeOrder.nd_check_state && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_NDSTATUS0',closeOrder.apply_dept)==true}">
 											<s:submit id="mdyCloseOrderFDSTATUS10" name="mdyCloseOrderFDSTATUS10" cssClass="input-green" value="数据中心-审核通过" action="closeOrder_checknd0" onclick="return isOp('确定执行此操作?');" />
 											<s:submit id="mdyCloseOrderFDStatus5" name="mdyCloseOrderFDStatus5" cssClass="input-red" value="审核不通过" action="closeOrder_checknd5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>

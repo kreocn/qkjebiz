@@ -422,6 +422,23 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
+	
+	/**
+	 * 董事审核通过
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String check50() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_CHECK50");
+		try {
+			check(60);
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!check50 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!check50 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
 
 	/**
 	 * 特殊审核权限,通过
