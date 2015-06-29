@@ -55,6 +55,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 
 	private List<Active> getapply_depts;
 	private String userappid;
+	private String userdepta;
 
 	private List<ActiveProduct> activeProductsClose;
 	private List<ActiveProduct> indActiveProductsClose;
@@ -96,6 +97,14 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	// 个人工作标识
 	private String perWorkF;
 	private static String perWorkFlag = null;
+
+	public String getUserdepta() {
+		return userdepta;
+	}
+
+	public void setUserdepta(String userdepta) {
+		this.userdepta = userdepta;
+	}
 
 	public Active getDongActive() {
 		return dongActive;
@@ -2194,6 +2203,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		}
 		this.setGetapply_depts(acs);
 		this.setUserappid(ContextHelper.getUserLoginUuid());
+		this.setUserdepta(ContextHelper.getUserLoginDept());
 	}
 
 	/**
