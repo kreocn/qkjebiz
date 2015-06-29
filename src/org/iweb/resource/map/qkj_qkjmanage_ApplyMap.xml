@@ -119,6 +119,7 @@
 			Update qkjm_r_apply
 			Set title=#title#,
 				touser=#touser#,
+				apply_dept=#apply_dept#,
 				note=#note#,
 				lm_user=#lm_user#,
 				is_fullcheck=#is_fullcheck#,

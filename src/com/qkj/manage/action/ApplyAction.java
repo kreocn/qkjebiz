@@ -1,9 +1,11 @@
 package com.qkj.manage.action;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -16,6 +18,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.qkj.manage.dao.ApplyDAO;
 import com.qkj.manage.dao.ApproveDAO;
 import com.qkj.manage.dao.ProcessDAO;
+import com.qkj.manage.domain.Active;
 import com.qkj.manage.domain.Apply;
 import com.qkj.manage.domain.Approve;
 
@@ -40,6 +43,35 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 	// 个人工作标识
 	private String perWorkF;
 	private static String perWorkFlag;
+	
+	private List<Active> getapply_depts;
+	private String userappid;
+	private String userdepta;
+	
+
+	public List<Active> getGetapply_depts() {
+		return getapply_depts;
+	}
+
+	public void setGetapply_depts(List<Active> getapply_depts) {
+		this.getapply_depts = getapply_depts;
+	}
+
+	public String getUserappid() {
+		return userappid;
+	}
+
+	public void setUserappid(String userappid) {
+		this.userappid = userappid;
+	}
+
+	public String getUserdepta() {
+		return userdepta;
+	}
+
+	public void setUserdepta(String userdepta) {
+		this.userdepta = userdepta;
+	}
 
 	public String getPerWorkF() {
 		return perWorkF;
@@ -207,6 +239,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 				setMessage("你没有选择任何操作!");
 			} else if ("add".equals(viewFlag)) {
 				this.setApply(null);
+				get_apply_depts();
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/apply_list?viewFlag=relist'>至事由列表</a>&nbsp;&gt;&nbsp;增加至事由";
 			} else if ("mdy".equals(viewFlag)) {
 				if (!(apply == null || apply.getUuid() == null)) {
@@ -221,6 +254,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 				/* 检查当前用户是否已经审阅 */
 				if (adao.userIsIn(approves, ContextHelper.getUserLoginUuid())) this.setIsApprover("true");
 				else this.setIsApprover("false");
+				get_apply_depts();
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/apply_list?viewFlag=relist'>至事由列表</a>&nbsp;&gt;&nbsp;至事由详情";
 			} else {
 				this.setApply(null);
@@ -255,7 +289,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_ADD");
 		try {
 			apply.setStatus(0);
-			apply.setApply_dept(ContextHelper.getUserLoginDept());
+			//apply.setApply_dept(ContextHelper.getUserLoginDept());
 			apply.setApply_user(ContextHelper.getUserLoginUuid());
 			apply.setApply_time(new Date());
 			apply.setLm_user(ContextHelper.getUserLoginUuid());
@@ -567,6 +601,23 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 		if (apply != null) {
 			pdao.addProcess(2, apply.getUuid(), p_sign, p_note, apply.getStatus(), apply.getSp_check_status(), apply.getShip_status());
 		}
+	}
+	
+	public void get_apply_depts() {
+		Map<String, String> newMap = new HashMap<String, String>();
+		newMap = ContextHelper.getUserLoginInfo().getPermit_depts2();
+		Set<String> set = newMap.keySet();
+		List <Active> acs=new ArrayList<>();
+		for (String s : set) {
+			Active ac = new Active();
+			ac.setApply_dept(s);
+			String value = newMap.get(s);
+			ac.setApply_dept_name(value.substring(0, value.indexOf("#")));
+			acs.add(ac);
+		}
+		this.setGetapply_depts(acs);
+		this.setUserappid(ContextHelper.getUserLoginUuid());
+		this.setUserdepta(ContextHelper.getUserLoginDept());
 	}
 
 	public String del() throws Exception {
