@@ -77,6 +77,16 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
+		
+		<action name="apply_check9" class="com.qkj.manage.action.ApplyAction" method="check9">
+			<result type="redirectAction">
+				<param name="actionName">apply_load</param>
+				<param name="apply.uuid">${apply.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
 		<action name="apply_check10" class="com.qkj.manage.action.ApplyAction" method="check10">
 			<result type="redirectAction">
 				<param name="actionName">apply_load</param>

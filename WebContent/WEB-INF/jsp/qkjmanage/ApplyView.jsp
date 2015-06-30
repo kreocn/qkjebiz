@@ -72,6 +72,46 @@
 						</s:if>
 						<div class="apply_t apply_y">由：${apply.apply_dept_name } ${apply.apply_user_name}</div>
 						<div class="apply_hr"></div>
+						
+						<%-- <div class="label_main">
+							<div class="label_hang">
+								<div class="label_ltit">签字:</div>
+								<div class="label_rwbenx label_rwb_sign">
+									<s:iterator value="applyUserSign" status="sta">
+											<!--<s:if test="user_sign==null">
+												<span class="uname">${sign_user_name}</span>
+											</s:if>-->
+											<s:if test="user_sign!=null">
+													<s:if test="%{sign==null}">
+													<span class="user_sign"><img src="${user_sign}" /></span>
+													<span class="vab">${it:formatDate(sign_biz_time,'yyyy-MM-dd')}</span>
+													</s:if>
+													<s:else>
+													<s:if test="sign.sign60!=user_sign && sign.sign70!=user_sign && sign.sign80!=user_sign">
+													<span class="user_sign"><img src="${user_sign}" /></span>
+													<span class="vab">${it:formatDate(sign_biz_time,'yyyy-MM-dd')}</span>
+													</s:if>
+													<!-- <s:elseif test="sign.sign70!=user_sign">
+													<span class="user_sign"><img src="${user_sign}" /></span>
+													<span class="vab">${it:formatDate(sign_biz_time,'yyyy-MM-dd')}</span>
+													</s:elseif>
+													<s:elseif test="sign.sign80!=user_sign">
+													<span class="user_sign"><img src="${user_sign}" /></span>
+													<span class="vab">${it:formatDate(sign_biz_time,'yyyy-MM-dd')}</span>
+													</s:elseif> -->
+													<s:else>
+													<span class="user_sign"><img src="${user_sign}" /></span>
+													<span class="vab">${it:formatDate(sign_biz_time,'yyyy-MM-dd')}</span>
+													</s:else>
+													</s:else>
+											</s:if>
+										
+									</s:iterator>
+								</div>
+							</div>
+						</div> --%>
+						
+						
 						<div class="apply_t">说明:</div>
 						<div id="apply_note_text" class="apply_n oneditor">${apply.note}</div>
 						<div class="check_note">

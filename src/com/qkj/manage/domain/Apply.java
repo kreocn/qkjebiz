@@ -24,6 +24,7 @@ public class Apply {
 	private String ship_no;// 运单号码
 	private String ship_type;// 物流名称
 	private String ship_phone;// 物流单号
+	private Integer apply_type;
 
 	private Integer sp_check_status; // 特殊状态 0表示未审核 5表示退回 10表示已审核
 	private String sp_check_user;
@@ -47,6 +48,14 @@ public class Apply {
 	private Integer status_start;
 	private Integer status_end;
 	private Integer status_sp;
+
+	public Integer getApply_type() {
+		return apply_type;
+	}
+
+	public void setApply_type(Integer apply_type) {
+		this.apply_type = apply_type;
+	}
 
 	public Integer getStatus_sp() {
 		return status_sp;

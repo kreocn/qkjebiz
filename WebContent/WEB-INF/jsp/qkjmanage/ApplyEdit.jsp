@@ -54,6 +54,25 @@
 							</div>
 						</div>
 					</s:if>
+					<c:if test="${it:checkPermit('QKJ_QKJMANAGE_APPLY_ADDTYPE',null)==true}">
+						<div class="label_main">
+							<div class="label_hang">
+					            <div class="label_ltit">类型:</div>
+					            <div class="label_rwben label_rwb"><s:select name="apply.apply_type" cssClass="selectKick" list="#{0:'普通至事由',1:'媒体投放'}" /></div>
+					        </div>
+				        </div>
+					</c:if>
+					
+					<c:if test="${it:checkPermit('QKJ_QKJMANAGE_APPLY_ADDTYPE',null)==false}">
+						<div class="label_main">
+							<div class="label_hang">
+								<div class="label_ltit">类型:</div>
+								<div class="label_rwben">
+									<span class="label_rwb">普通至事由<s:hidden name="apply.apply_type"  value="0"/></span>
+								</div>
+							</div>
+						</div>
+					</c:if>
 					
 					<s:if test="'mdy' == viewFlag">
 						<s:if test="apply.apply_user==userappid">
@@ -96,6 +115,26 @@
 							</div>
 					</s:else>
 					
+					<s:if test="applyUserSign.size()>0">
+					<div class="label_main">
+							<div class="label_hang">
+								<div class="label_ltit">签字:</div>
+								<div class="label_rwbenx label_rwb_sign">
+									<s:iterator value="applyUserSign" status="sta">
+											<s:if test="user_sign==null">
+												<span class="uname">${sign_user_name}</span>
+												<span class="vab">${it:formatDate(sign_biz_time,'yyyy-MM-dd')}</span>
+											</s:if>
+											<s:if test="user_sign!=null">
+													<span class="user_sign"><img src="${user_sign}" /></span>
+													<span class="vab">${it:formatDate(sign_biz_time,'yyyy-MM-dd')}</span>
+											</s:if>
+										
+									</s:iterator>
+								</div>
+							</div>
+						</div>
+					</s:if>
 					<div class="label_main">
 						<div class="label_hang">
 							<div class="label_ltit">至:</div>
@@ -233,7 +272,9 @@
 									<c:if test="${apply.status>=10 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK_1',null)==true}">
 										<s:submit id="apply_check_1" name="apply_check_1" value="作废" action="apply_check_1" cssClass="input-red" onclick="return isOp('确定进行此操作?');" />
 									</c:if>
-
+									
+									<!-- 类型为媒体投放：主管审核-大区。。。。 -->
+									
 									<!-- 西北，青海大区：大区--销管经理，总监--副总，总经理 -->
 									<!-- 省外  大区--总监--副总，总经理 -->
 									<!-- 北京（销售部，市场部），大区--总监--副总，总经理 （其它部门），大区--总经理-->
@@ -246,12 +287,28 @@
 										<!-- 新疆办事处：直接副总审，总经理 -->
 									</s:if>
 									<s:else>
+									<s:if test="apply.apply_type==1">
+										<c:if test="${apply.status==10 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK9',apply.apply_dept)==true}">
+											<s:submit value="主管审核通过" cssClass="input-green" action="apply_check9" onclick="return isOp('确定进行此操作?');" />
+										</c:if>
+										
+										<c:if test="${apply.status==9 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK10',apply.apply_dept)==true}">
+											<s:submit id="apply_check10" name="apply_check10" value="经理/大区审核通过" cssClass="input-green" action="apply_check10" onclick="return isOp('确定进行此操作?');" />
+										</c:if>
+										
+										<c:if test="${(apply.status==10 || apply.status==9) && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK5',null)==true}">
+												<s:submit id="apply_check5" name="apply_check5" value="审核不通过" cssClass="input-red" action="apply_check5" onclick="return isOp('确定进行此操作?');" />
+										</c:if>
+									
+									</s:if>
+									<s:else>
 										<c:if test="${apply.status==10 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK10',apply.apply_dept)==true}">
 											<s:submit id="apply_check10" name="apply_check10" value="经理/大区审核通过" cssClass="input-green" action="apply_check10" onclick="return isOp('确定进行此操作?');" />
 										</c:if>
 										<c:if test="${apply.status==10 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK5',null)==true}">
 												<s:submit id="apply_check5" name="apply_check5" value="审核不通过" cssClass="input-red" action="apply_check5" onclick="return isOp('确定进行此操作?');" />
 										</c:if>
+									</s:else>
 									</s:else>
 
 									<s:if test="apply.apply_dept.substring(0,4)=='2302'">

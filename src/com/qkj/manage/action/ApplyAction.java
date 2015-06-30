@@ -21,6 +21,7 @@ import com.qkj.manage.dao.ProcessDAO;
 import com.qkj.manage.domain.Active;
 import com.qkj.manage.domain.Apply;
 import com.qkj.manage.domain.Approve;
+import com.qkj.manage.domain.CloseOrder;
 
 public class ApplyAction extends ActionSupport implements ActionAttr {
 	private static final long serialVersionUID = 1L;
@@ -43,11 +44,20 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 	// 个人工作标识
 	private String perWorkF;
 	private static String perWorkFlag;
-	
+
 	private List<Active> getapply_depts;
 	private String userappid;
 	private String userdepta;
-	
+
+	private CloseOrder sign;
+
+	public CloseOrder getSign() {
+		return sign;
+	}
+
+	public void setSign(CloseOrder sign) {
+		this.sign = sign;
+	}
 
 	public List<Active> getGetapply_depts() {
 		return getapply_depts;
@@ -202,7 +212,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 					apply.setSp_check_status(null);
 				}
 			}
-			ContextHelper.setSearchDeptPermit4Search("QKJ_QKJMANAGE_APPLY_LIST",map, "apply_depts", "apply_user");
+			ContextHelper.setSearchDeptPermit4Search("QKJ_QKJMANAGE_APPLY_LIST", map, "apply_depts", "apply_user");
 			ContextHelper.SimpleSearchMap4Page("QKJ_QKJMANAGE_APPLY_LIST", map, apply, viewFlag);
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 			this.setCurrPage(Integer.parseInt((ToolsUtil.isEmpty(map.get(Parameters.Current_Page_Str)) ? "1" : map.get(Parameters.Current_Page_Str)).toString()));
@@ -214,10 +224,10 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
 		}
-		if(perWorkFlag==null || perWorkFlag.equals("null")){
+		if (perWorkFlag == null || perWorkFlag.equals("null")) {
 			return "success";
-		}else{
-			perWorkFlag=null;
+		} else {
+			perWorkFlag = null;
 			return "perSuccess";
 		}
 	}
@@ -228,10 +238,10 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 
 	public String load() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_VIEW");
-		if((perWorkF==null || perWorkF.equals("null")) && perWorkFlag==null){
-			perWorkFlag=null;
-		}else{
-			perWorkFlag="perWork";
+		if ((perWorkF == null || perWorkF.equals("null")) && perWorkFlag == null) {
+			perWorkFlag = null;
+		} else {
+			perWorkFlag = "perWork";
 		}
 		try {
 			if (null == viewFlag) {
@@ -255,6 +265,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 				if (adao.userIsIn(approves, ContextHelper.getUserLoginUuid())) this.setIsApprover("true");
 				else this.setIsApprover("false");
 				get_apply_depts();
+				this.setApplyUserSign(dao.listUserSign(apply.getUuid()));
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/apply_list?viewFlag=relist'>至事由列表</a>&nbsp;&gt;&nbsp;至事由详情";
 			} else {
 				this.setApply(null);
@@ -276,6 +287,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 			} else {
 				this.setApply((Apply) dao.get(apply.getUuid()));
 				this.setApplyUserSign(dao.listUserSign(apply.getUuid()));
+				//this.setSign((CloseOrder) dao.sign(apply.getUuid()));
 			}
 
 		} catch (Exception e) {
@@ -289,7 +301,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_ADD");
 		try {
 			apply.setStatus(0);
-			//apply.setApply_dept(ContextHelper.getUserLoginDept());
+			// apply.setApply_dept(ContextHelper.getUserLoginDept());
 			apply.setApply_user(ContextHelper.getUserLoginUuid());
 			apply.setApply_time(new Date());
 			apply.setLm_user(ContextHelper.getUserLoginUuid());
@@ -388,6 +400,23 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
+	
+	/**
+	 * 主管审核通过
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String check9() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_CHECK9");
+		try {
+			check(9);
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!check10 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!check10 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
 
 	/**
 	 * 大区经理审核通过
@@ -456,7 +485,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
-	
+
 	/**
 	 * 董事审核通过
 	 * 
@@ -602,12 +631,12 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 			pdao.addProcess(2, apply.getUuid(), p_sign, p_note, apply.getStatus(), apply.getSp_check_status(), apply.getShip_status());
 		}
 	}
-	
+
 	public void get_apply_depts() {
 		Map<String, String> newMap = new HashMap<String, String>();
 		newMap = ContextHelper.getUserLoginInfo().getPermit_depts2();
 		Set<String> set = newMap.keySet();
-		List <Active> acs=new ArrayList<>();
+		List<Active> acs = new ArrayList<>();
 		for (String s : set) {
 			Active ac = new Active();
 			ac.setApply_dept(s);
