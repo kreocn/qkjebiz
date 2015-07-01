@@ -29,6 +29,7 @@
 				<div class="label_ltit">条形码:</div>
 				<div class="label_rwbenx">
 					<s:textfield class="tiaomainput" name="customer.uuid" id="tiaomainput" />
+		
 					&nbsp;<input type="reset" value="添加" id="storessubmit">
 				</div>
 			</div>
@@ -117,8 +118,6 @@
 </body>
 <script>
 
-
-
 var num=0;
 var firstnum=true;
 var show = new Array(); 
@@ -150,8 +149,8 @@ if(code!=""&&code!=null||puuid!=null&&puuid!=""){
       	    		     var procode = data[i].prod_code;
       	    		     var barcode=data[i].bar_code;
       	    		     var bar_code_box=data[i].bar_code_box;
-      	    		    var bar_code_tibet=data[i].bar_code_tibet;
-      	    		    var bar_code_tibet_box=data[i].bar_code_tibet_box;
+      	    		     var bar_code_tibet=data[i].bar_code_tibet;
+      	    		     var bar_code_tibet_box=data[i].bar_code_tibet_box;
       	    	         var title = data[i].title;
       	    	         var spec = data[i].spec;
       	    	         var brand=data[i].brand;
@@ -200,15 +199,16 @@ function mylist(list){
 		$(this).find("td").each(function(){
 		if(barcode.trim()==$(this).text().trim()){
 			if(msg[3]==$(this).next().next().text().trim()){
-			var numplus=$(this).next().next().next().next().next().find("input[type=text]").val();
-			var price=$(this).next().next().next().next().text();
-			var totlprice=$(this).next().next().next().next().next().next().text();
-			totlprice=(parseFloat(totlprice)+parseFloat(price*casenum)).toFixed(2);
-			var totalName=$(this).next().next().next().next().next().next().find("input").attr("name");
-			$(this).next().next().next().next().next().next().empty();
-			$(this).next().next().next().next().next().next().append('<input type="hidden" name="'+totalName+'"  value="'+totlprice+'"/>'+totlprice+'');
-			var ordernumcount=(Number(numplus)*1)+parseInt(casenum);
-			$(this).next().next().next().next().next().find("input[type=text]").val(ordernumcount)
+				var numplus=$(this).next().next().next().next().next().find("input[type=text]").val();
+				var price=$(this).next().next().next().next().find("input[type=hidden]").val();
+				var totlprice=$(this).next().next().next().next().next().next().find("input[type=hidden]").val();
+				totlprice=(parseFloat(totlprice)+parseFloat(price*casenum)).toFixed(2);
+				var totalName=$(this).next().next().next().next().next().next().find("input").attr("name");
+				$(this).next().next().next().next().next().next().find("input[type=hidden]").val(totlprice);
+				$(this).next().next().next().next().next().next().find("input[type=text]").val(totlprice)
+				var ordernumName=$(this).next().next().next().next().next().find("input").attr("name");
+				var ordernumcount=(Number(numplus)*1)+casenum;
+				$(this).next().next().next().next().next().find("input[type=text]").val(ordernumcount)
 			   $( "#dialog" ).dialog('close');
 			firstnum=false;
 		}
@@ -223,9 +223,9 @@ if(firstnum==true){
     show.push('<td class="td1" style="display:none"><input type="hidden" name="storesorderitem['+num+'].brand"   value="'+msg[6]+'"/>'+ msg[6] +'</td>');
     show.push('<td class="td1"><input type="hidden" name="storesorderitem['+num+'].title" value="'+msg[3]+'"/>'+ msg[3] +'</td>');
     show.push('<td class="td1" style="display:none"><input type="hidden"  name="storesorderitem['+num+'].spec"  value="'+msg[4]+'"/>'+ msg[4] +'</td>') ;
-    show.push('<td class="td1"><input  type="hidden" id="price'+msg[0]+'" name="storesorderitem['+num+'].product_price"  value="'+msg[5]+'"/>'+ msg[5] +'</td>') ;
-    show.push('<td class="td1"><input type="button" id="jisuanadd'+msg[0]+'" value="+" /> <input type="text" style="width:40px" id="jisuannum'+msg[0]+'" name="storesorderitem['+num+'].order_num" value="'+casenum+'" /> <input type="button" id="jisuanjian'+msg[0]+'" value="-" /></td>') ;
-    show.push('<td class="td1" id="jisuanprice'+msg[0]+'"><input type="hidden" name="storesorderitem['+num+'].order_total_price"  value="'+msg[5]*casenum+'"/>'+ msg[5]*casenum +'</td>') ;
+    show.push('<td class="td1" ><input  type="hidden" id="price'+msg[0]+'" name="storesorderitem['+num+'].product_price"  value="'+msg[5]+'"/><input type="text" onkeyup="update_price('+msg[0]+')" value="'+msg[5]+'" style="width:50px" ></td>') ;
+    show.push('<td class="td1"><input type="button" id="jisuanadd'+msg[0]+'" value="+" /> <input type="text" style="width:40px" id="jisuannum'+msg[0]+'" name="storesorderitem['+num+'].order_num" value="'+casenum+'"  readonly="readonly"/> <input type="button" id="jisuanjian'+msg[0]+'" value="-" /></td>') ;
+    show.push('<td class="td1" id="jisuanprice'+msg[0]+'"><input id="total_price'+msg[0]+'" type="hidden" name="storesorderitem['+num+'].order_total_price"  value="'+msg[5]*casenum+'"/><input type="text"    onkeyup="up_total_price('+msg[0]+')" value="'+ msg[5]*casenum+'"  style="width:50px"></td>') ;
     show.push(' <td class="td1 op-area"><a id="rmtr'+num+'" onclick="javascript:ondeltr(this)" href="javascript:void(0)" class="input-red">删除</a></td>') ;
     show.push('</tr>');
    $("#qkj_list").append(show.join(""));
@@ -236,7 +236,7 @@ if(firstnum==true){
     	  var n=$("#jisuannum"+msg[0]).val();
     	  var jinum=parseInt(n)+1;
     	 	 $("#jisuanprice"+msg[0]).empty();
-           	 $("#jisuanprice"+msg[0]).append('<input type="hidden" name="storesorderitem['+iNum+'].order_total_price"  value="'+$("#price"+msg[0]).val()*jinum+'"/>'+$("#price"+msg[0]).val()*jinum);
+           	 $("#jisuanprice"+msg[0]).append('<input type="hidden" id="total_price'+msg[0]+'" name="storesorderitem['+iNum+'].order_total_price"  value="'+$("#price"+msg[0]).val()*jinum+'"/>'+'<input type="text"  value="'+$("#price"+msg[0]).val()*jinum+'" onkeyup="up_total_price('+msg[0]+')"  style="width:50px">');
     	 if(jinum==0){alert("cc");}
     	  $("#jisuannum"+msg[0]).val(jinum);
     	});
@@ -246,7 +246,7 @@ if(firstnum==true){
     	  var jinum=parseInt(n)-1;
     	  if(jinum!=0){
     	 	 $("#jisuanprice"+msg[0]).empty();
-           	 $("#jisuanprice"+msg[0]).append('<input type="hidden" name="storesorderitem['+iNum+'].order_total_price"  value="'+$("#price"+msg[0]).val()*jinum+'"/>'+$("#price"+msg[0]).val()*jinum);
+           	 $("#jisuanprice"+msg[0]).append('<input type="hidden" id="total_price'+msg[0]+'" name="storesorderitem['+iNum+'].order_total_price"  value="'+$("#price"+msg[0]).val()*jinum+'"/>'+'<input type="text"  value="'+$("#price"+msg[0]).val()*jinum+'"  onkeyup="up_total_price('+msg[0]+')" style="width:50px">');
     	  }
            	 if(jinum==0){alert("不能为0!"); return}
     	  $("#jisuannum"+msg[0]).val(jinum);
@@ -259,26 +259,29 @@ function ondeltr(data){
 	$("#"+data.id).parents("tr").remove();
 }
 function fortr(list){
+
 	 var code=$(".tiaomainput").val();
 	 var casenum=1;
 	 var barcode = list[0].bar_code;
 	 if(list[0].bar_code_box==code){
+		
 		casenum=list[0].case_spec;
 	}else if(list[0].bar_code_tibet==code){
 	}else if(list[0].bar_code_tibet_box==code){
 		casenum=list[0].case_spec;
+
 	}
 		$("#qkj_list").find("tr").each(function(){
 			$(this).find("td").each(function(){
 				if($(this).text().trim()==barcode.trim()){
 					if(list[0].title.trim()==$(this).next().next().text().trim()){
 					var numplus=$(this).next().next().next().next().next().find("input[type=text]").val();
-					var price=$(this).next().next().next().next().text();
-					var totlprice=$(this).next().next().next().next().next().next().text();
+					var price=$(this).next().next().next().next().find("input[type=hidden]").val();
+					var totlprice=$(this).next().next().next().next().next().next().find("input[type=hidden]").val();
 					totlprice=(parseFloat(totlprice)+parseFloat(price*casenum)).toFixed(2);
 					var totalName=$(this).next().next().next().next().next().next().find("input").attr("name");
-					$(this).next().next().next().next().next().next().empty();
-					$(this).next().next().next().next().next().next().append('<input type="hidden" name="'+totalName+'"  value="'+totlprice+'"/>'+totlprice+'');
+					$(this).next().next().next().next().next().next().find("input[type=hidden]").val(totlprice);
+					$(this).next().next().next().next().next().next().find("input[type=text]").val(totlprice)
 					var ordernumName=$(this).next().next().next().next().next().find("input").attr("name");
 					var ordernumcount=(Number(numplus)*1)+casenum;
 					$(this).next().next().next().next().next().find("input[type=text]").val(ordernumcount)
@@ -301,9 +304,9 @@ function fortr(list){
          show.push('<td class="td1" style="display:none" ><input type="hidden"name="storesorderitem['+num+'].brand"  value="'+brand+'"/></td>');
          show.push('<td class="td1" ><input type="hidden" name="storesorderitem['+num+'].title"  value="'+title+'"/>'+ title +'</td>');
          show.push('<td class="td1" style="display:none"><input type="hidden" name="storesorderitem['+num+'].spec"  value="'+spec+'"/>'+ spec +'</td>') ;
-         show.push('<td class="td1"><input type="hidden" id="price'+product_id+'" name="storesorderitem['+num+'].product_price"  value="'+marketprice+'"/>'+ marketprice +'</td>') ;
-         show.push('<td class="td1"><input type="button" id="jisuanadd'+product_id+'" value="+" /> <input type="text" style="width:40px" id="jisuannum'+product_id+'" name="storesorderitem['+num+'].order_num" value="'+casenum+'" /> <input type="button" id="jisuanjian'+product_id+'" value="-" /></td>') ;
-         show.push('<td class="td1" id="jisuanprice'+product_id+'"><input type="hidden"  name="storesorderitem['+num+'].order_total_price"  value="'+marketprice*casenum+'"/>'+ marketprice*casenum +'</td>') ;
+         show.push('<td class="td1" ><input type="hidden" id="price'+product_id+'" name="storesorderitem['+num+'].product_price"  value="'+marketprice+'"/><input type="text"    onkeyup="update_price('+product_id+')" value="'+marketprice+'"  style="width:50px"></td>') ;
+         show.push('<td class="td1"><input type="button" id="jisuanadd'+product_id+'" value="+" /> <input type="text" style="width:40px" id="jisuannum'+product_id+'" name="storesorderitem['+num+'].order_num" value="'+casenum+'"   readonly="readonly"/> <input type="button" id="jisuanjian'+product_id+'" value="-" /></td>') ;
+         show.push('<td class="td1" id="jisuanprice'+product_id+'"><input id="total_price'+product_id+'" type="hidden"  name="storesorderitem['+num+'].order_total_price"  value="'+marketprice*casenum+'"/><input type="text"    onkeyup="up_total_price('+product_id+')" value="'+ marketprice*casenum+'"  style="width:50px"></td>') ;
          show.push(' <td class="td1 op-area"><a id="rmtr'+num+'" onclick="javascript:ondeltr(this)" href="javascript:void(0)" class="input-red">删除</a></td>') ;
          show.push('</tr>');
         $("#qkj_list").append(show.join(""));
@@ -314,7 +317,7 @@ function fortr(list){
        	  var n=$("#jisuannum"+product_id).val();
        	  var jinum=parseInt(n)+1;
        	 $("#jisuanprice"+product_id).empty();
-       	 $("#jisuanprice"+product_id).append('<input type="hidden" name="storesorderitem['+iNum+'].order_total_price"  value="'+$("#price"+product_id).val()*jinum+'"/>'+$("#price"+product_id).val()*jinum);
+       	 $("#jisuanprice"+product_id).append('<input type="hidden" id="total_price'+product_id+'" name="storesorderitem['+iNum+'].order_total_price"  value="'+$("#price"+product_id).val()*jinum+'"/>'+'<input type="text" onkeyup="up_total_price('+product_id+')"  value="'+ $("#price"+product_id).val()*jinum+'" style="width:50px">');
        	 if(jinum==0){alert("cc");}
        	  $("#jisuannum"+product_id).val(jinum);
        	});
@@ -324,7 +327,7 @@ function fortr(list){
        	  var jinum=parseInt(n)-1;
       	if(jinum!=0){
        	  $("#jisuanprice"+product_id).empty();
-       	 $("#jisuanprice"+product_id).append('<input type="hidden" name="storesorderitem['+iNum+'].order_total_price"  value="'+$("#price"+product_id).val()*jinum+'"/>'+$("#price"+product_id).val()*jinum);
+       	 $("#jisuanprice"+product_id).append('<input type="hidden" id="total_price'+product_id+'" name="storesorderitem['+iNum+'].order_total_price"  value="'+$("#price"+product_id).val()*jinum+'"/>'+'<input type="text" onkeyup="up_total_price('+product_id+')"   value="'+ $("#price"+product_id).val()*jinum+'" style="width:50px">');gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggc4
        		}
        		if(jinum==0){alert("不能为0!"); return}
        	  $("#jisuannum"+product_id).val(jinum);
@@ -416,6 +419,32 @@ var qianzai= function (obj) {
 	} 
 	
 }
+
+function update_price(a){
+	      var price=$("#price"+a).parent().find("input[type=text]").val();
+	  alert(price)
+	      if(isNaN(price))
+{
+	    	     $("#price"+a).parent().find("input[type=text]").val(parseInt(price))
+	   	      update_price(a)
+	
+}else{
+	   $("#price"+a).parent().find("input[type=hidden]").val(parseInt(price))
+	      var num=$("#jisuannum"+a).val()
+	      var total_price=$("#jisuanprice"+a).find("input[type=hidden]").val(price*num)
+	      $("#jisuanprice"+a).find("input[type=text]").val(price*num)
+}
+	   
+}
+function up_total_price(a){
+  var total_price=$("#total_price"+a).parent().find("input[type=text]").val();
+  $("#total_price"+a).parent().find("input[type=text]").val(parseInt(total_price));
+  $("#total_price"+a).parent().find("input[type=hidden]").val(parseInt(total_price));
+}
+
+
+
+
 </script>
 
 

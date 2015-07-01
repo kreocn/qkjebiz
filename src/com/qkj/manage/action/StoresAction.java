@@ -245,7 +245,7 @@ public class StoresAction  extends ActionSupport{
 			ulf=(UserLoginInfo) request.getSession().getAttribute(Parameters.UserLoginInfo_Session_Str);
 
 			for (StoresOrderItem storesorderitem : sotr) {
-				price=price+(storesorderitem.getProduct_price()*storesorderitem.getOrder_num());
+				price=price+(storesorderitem.getOrder_total_price());
 			}
 			DecimalFormat df =new DecimalFormat("#####0.00");
 			SimpleDateFormat   formatter=new SimpleDateFormat   ("yyyy-MM-dd   HH:mm:ss");  
