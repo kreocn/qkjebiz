@@ -120,6 +120,7 @@
 			lm_time=#lm_time#,
 			lm_user=#lm_user#,
 			salPro_id=#salPro_id#,
+			apply_dept=#apply_dept#,
 			close_num=#close_num#
 			Where uuid = #uuid#
 		]]>

@@ -78,16 +78,52 @@ s
 						</s:if>
 
 						<s:if test="'mdy' == viewFlag">
-							<s:hidden name="closeOrder.apply_dept" value="%{closeOrder.apply_dept}"></s:hidden>
 							<div class='label_hang'>
 								<div class='label_ltit'>申请人:</div>
 								<div class='label_rwben'>${closeOrder.add_user_name}</div>
 							</div>
-							<div class='label_hang'>
-								<div class='label_ltit'>申请部门:</div>
-								<div class='label_rwben'>${closeOrder.apply_dept_name}</div>
+						</s:if>
+						
+						<s:if test="'mdy' == viewFlag">
+						<s:if test="closeOrder.add_user==userappid">
+							<div class="label_main">
+							<div class="label_hang">
+										<div class="label_ltit">申请部门:</div>
+										<div class="label_rwbenx">
+										<s:select  name="closeOrder.apply_dept" list="getapply_depts" listKey="apply_dept" listValue="apply_dept_name"	 cssClass="validate[required]" />
+										</div>
+								</div>
 							</div>
 						</s:if>
+						<s:else>
+						
+						<div class="label_main">
+							<div class="label_hang">
+										<div class="label_ltit">申请部门:</div>
+										<div class="label_rwbenx">${closeOrder.apply_dept_name}
+										<s:hidden name="closeOrder.apply_dept" value="%{closeOrder.apply_dept}"></s:hidden>
+										</div>
+								</div>
+							</div>
+						
+						</s:else>
+					</s:if>
+					<s:else>
+						<div class="label_main">
+							<div class="label_hang">
+										<div class="label_ltit">申请部门:</div>
+										<div class="label_rwbenx">
+										<select name="closeOrder.apply_dept" class="validate[required]">
+											<s:iterator value="getapply_depts" status="sta">
+											<option value ="${apply_dept }" 
+											<s:if test="apply_dept==userdepta">selected="selected"</s:if>
+											>${apply_dept_name }</option>
+											</s:iterator>
+										</select>
+										</div>
+								</div>
+							</div>
+					</s:else>
 
 						<div class="label_main">
 							<div class="label_hang">
