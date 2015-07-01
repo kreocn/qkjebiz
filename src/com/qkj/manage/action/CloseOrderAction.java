@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -25,6 +26,7 @@ import com.qkj.manage.dao.ProcessDAO;
 import com.qkj.manage.dao.SalPromotDAO;
 import com.qkj.manage.dao.SalPromotPower;
 import com.qkj.manage.dao.TravelDAO;
+import com.qkj.manage.domain.Active;
 import com.qkj.manage.domain.Approve;
 import com.qkj.manage.domain.CloseOrder;
 import com.qkj.manage.domain.CloseOrderPosm;
@@ -66,6 +68,34 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	// 个人工作标识
 	private String perWorkF;
 	private static String perWorkFlag = null;
+	
+	private List<Active> getapply_depts;
+	private String userappid;
+	private String userdepta;
+
+	public List<Active> getGetapply_depts() {
+		return getapply_depts;
+	}
+
+	public void setGetapply_depts(List<Active> getapply_depts) {
+		this.getapply_depts = getapply_depts;
+	}
+
+	public String getUserappid() {
+		return userappid;
+	}
+
+	public void setUserappid(String userappid) {
+		this.userappid = userappid;
+	}
+
+	public String getUserdepta() {
+		return userdepta;
+	}
+
+	public void setUserdepta(String userdepta) {
+		this.userdepta = userdepta;
+	}
 
 	public List<CloseOrderPosm> getClosePosms() {
 		return closePosms;
@@ -274,6 +304,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 				setMessage("你没有选择任何操作!");
 			} else if ("add".equals(viewFlag)) {
 				this.setCloseOrder(null);
+				get_apply_depts();
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/closeOrder_relist'>结案提货单列表</a>&nbsp;&gt;&nbsp;增加结案提货单";
 			} else if ("mdy".equals(viewFlag)) {
 				String salid = null;
@@ -314,7 +345,8 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 				map.put("int_id", closeOrder.getUuid());
 				map.put("approve_type", 3);
 				this.setApproves(apdao.list(map));
-
+				
+				get_apply_depts();
 				/* 检查当前用户是否已经审阅 */
 				if (apdao.userIsIn(approves, ContextHelper.getUserLoginUuid())) this.setIsApprover("true");
 				else this.setIsApprover("false");
@@ -1020,6 +1052,23 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 		}
 		num = ContextHelper.getUserLoginDeptName() + m + "--00" + (n + 1);
 		return num;
+	}
+	
+	public void get_apply_depts() {
+		Map<String, String> newMap = new HashMap<String, String>();
+		newMap = ContextHelper.getUserLoginInfo().getPermit_depts2();
+		Set<String> set = newMap.keySet();
+		List<Active> acs = new ArrayList<>();
+		for (String s : set) {
+			Active ac = new Active();
+			ac.setApply_dept(s);
+			String value = newMap.get(s);
+			ac.setApply_dept_name(value.substring(0, value.indexOf("#")));
+			acs.add(ac);
+		}
+		this.setGetapply_depts(acs);
+		this.setUserappid(ContextHelper.getUserLoginUuid());
+		this.setUserdepta(ContextHelper.getUserLoginDept());
 	}
 
 }
