@@ -426,7 +426,7 @@ function update_price(a){
 	      if(isNaN(price))
 {
 	    	     $("#price"+a).parent().find("input[type=text]").val(parseInt(price))
-	   	      update_price(a)
+	   	         update_price(a)
 	
 }else{
 	   $("#price"+a).parent().find("input[type=hidden]").val(parseInt(price))

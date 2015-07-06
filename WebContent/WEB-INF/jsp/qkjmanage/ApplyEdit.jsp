@@ -54,16 +54,15 @@
 							</div>
 						</div>
 					</s:if>
-					<c:if test="${it:checkPermit('QKJ_QKJMANAGE_APPLY_ADDTYPE',null)==true}">
+				<s:if test="apply.apply_dept.substring(0,3)=='220'">
 						<div class="label_main">
 							<div class="label_hang">
 					            <div class="label_ltit">类型:</div>
 					            <div class="label_rwben label_rwb"><s:select name="apply.apply_type" cssClass="selectKick" list="#{0:'普通至事由',1:'媒体投放'}" /></div>
 					        </div>
 				        </div>
-					</c:if>
-					
-					<c:if test="${it:checkPermit('QKJ_QKJMANAGE_APPLY_ADDTYPE',null)==false}">
+					</s:if>
+					<s:else>
 						<div class="label_main">
 							<div class="label_hang">
 								<div class="label_ltit">类型:</div>
@@ -72,7 +71,7 @@
 								</div>
 							</div>
 						</div>
-					</c:if>
+					</s:else>
 					
 					<s:if test="'mdy' == viewFlag">
 						<s:if test="apply.apply_user==userappid">
