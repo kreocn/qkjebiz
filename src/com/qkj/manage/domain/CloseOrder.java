@@ -36,6 +36,14 @@ public class CloseOrder {
 	private Date lm_time;// (datetime)修改时间
 	private String lm_user;// (varchar)修改人
 
+	private Integer ship_status;// 发货状态
+	private Integer ship_ware;// 发货仓库
+	private Date ship_date;// 发货时间
+	private String ship_no;// 运单号码
+	private String ship_type;// 物流名称
+	private String ship_phone;// 物流单号
+	private String remark;
+
 	// 以下为非数据库字段
 	private String member_name;
 	private String lm_user_name;
@@ -58,6 +66,7 @@ public class CloseOrder {
 	private String sign50;
 	private String sign60;
 	private String sign70;
+	private String sign80;
 
 	private Date time20;
 	private Date time30;
@@ -65,6 +74,79 @@ public class CloseOrder {
 	private Date time50;
 	private Date time60;
 	private Date time70;
+	private Date time80;
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public String getSign80() {
+		return sign80;
+	}
+
+	public void setSign80(String sign80) {
+		this.sign80 = sign80;
+	}
+
+	public Date getTime80() {
+		return time80;
+	}
+
+	public void setTime80(Date time80) {
+		this.time80 = time80;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public Integer getShip_status() {
+		return ship_status;
+	}
+
+	public void setShip_status(Integer ship_status) {
+		this.ship_status = ship_status;
+	}
+
+	public Integer getShip_ware() {
+		return ship_ware;
+	}
+
+	public void setShip_ware(Integer ship_ware) {
+		this.ship_ware = ship_ware;
+	}
+
+	public Date getShip_date() {
+		return ship_date;
+	}
+
+	public void setShip_date(Date ship_date) {
+		this.ship_date = ship_date;
+	}
+
+	public String getShip_no() {
+		return ship_no;
+	}
+
+	public void setShip_no(String ship_no) {
+		this.ship_no = ship_no;
+	}
+
+	public String getShip_type() {
+		return ship_type;
+	}
+
+	public void setShip_type(String ship_type) {
+		this.ship_type = ship_type;
+	}
+
+	public String getShip_phone() {
+		return ship_phone;
+	}
+
+	public void setShip_phone(String ship_phone) {
+		this.ship_phone = ship_phone;
+	}
 
 	public Integer getApply_id() {
 		return apply_id;

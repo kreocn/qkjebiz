@@ -126,7 +126,11 @@
 									<span class="message_pass">销管副总已审</span>
 								</s:if> <s:if test="smd_status==60">
 									<span class="message_pass">总经理已审</span>
-								</s:if></td>
+								</s:if>
+								<s:if test="smd_status==70">
+									<span class="message_pass">董事已审</span>
+								</s:if>
+								</td>
 
 							<td class="td5"><s:if test="%{fd_status==10}">
 									<!-- 已审 -->

@@ -714,7 +714,6 @@ var openCustomerView = function(customer_uuid) {
 						</div>
 					</div>
 				</s:else>
-
 				<div class="label_main">
 					<div class="label_hang">
 						<div class="label_ltit">备注:</div>
@@ -724,7 +723,6 @@ var openCustomerView = function(customer_uuid) {
 						</div>
 					</div>
 				</div>
-
 				<div class="label_main">
 					<div class="label_hang">
 						<div class="label_ltit">添加时间:</div>

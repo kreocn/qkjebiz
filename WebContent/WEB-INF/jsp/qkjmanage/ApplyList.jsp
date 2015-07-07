@@ -105,6 +105,7 @@ display: none;
 				<th class="td3">事</th>
 				<th class="td1">状态</th>
 				<th class="td4">发货情况</th>
+				<th class="td4">类型</th>
 				<th class="td4">操作</th>
 				<th class="td0">查看</th>
 			</tr>
@@ -152,6 +153,10 @@ display: none;
 						<span id="check_note_${uuid}">${check_note}</span>
 					</span>
 					</s:if>
+				</td>
+				<td class="td4 op-area nw">
+				<s:if test="apply_type==0">普通</s:if>
+				<s:else>媒体投放</s:else>
 				</td>
 				<td class="td4 op-area">				
 					<c:if test="${it:checkPermit('QKJ_QKJMANAGE_APPLY_VIEW',null)==true}">

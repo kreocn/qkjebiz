@@ -5,16 +5,33 @@ public class SkipStep {
 	private Integer isSub;// 是否包涵子部门1是0否
 	private int start_step;// 从第几步开始执行跳过
 	private int skip_step;// 要跳过的步骤
+	private String skip_n;//跳过的附加步骤
 
 	public SkipStep() {
 
 	}
-
+	
 	public SkipStep(String skip_dept, Integer isSub, int start_step, int skip_step) {
 		this.skip_dept = skip_dept;
 		this.isSub = isSub;
 		this.start_step = start_step;
 		this.skip_step = skip_step;
+	}
+
+	public SkipStep(String skip_dept, Integer isSub, int start_step, int skip_step,String skip_n) {
+		this.skip_dept = skip_dept;
+		this.isSub = isSub;
+		this.start_step = start_step;
+		this.skip_step = skip_step;
+		this.skip_n = skip_n;
+	}
+
+	public String getSkip_n() {
+		return skip_n;
+	}
+
+	public void setSkip_n(String skip_n) {
+		this.skip_n = skip_n;
 	}
 
 	public String getSkip_dept() {

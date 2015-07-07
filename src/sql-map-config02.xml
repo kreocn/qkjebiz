@@ -6,13 +6,17 @@
 		<dataSource type="JNDI">
 			<!-- 正式环境 DataSource Proxool -->
 			<!-- <property name="DataSource" value="java:/comp/env/qkj/mysql_druid_BJ01" /> -->
+			<property name="DataSource" value="java:/comp/env/qkj/sqlServer_druid_huzhu" />
 			<!-- 测试环境 DataSource Proxool -->
 			<!-- <property name="DataSource" value="java:/comp/env/qkj/mysql_druid_local203" /> -->
 			<!-- 本机Tomcat本机测试环境 DataSource(ERP LOCAL TEST)&测试服务器 Proxool -->
-			<!-- <property name="DataSource" value="java:/comp/env/qkj/mysqlLocalCJ_druid" /> -->
+		  	<!-- <property name="DataSource" value="java:/comp/env/qkj/sqlServer_druid_BJ01" />  -->
 		</dataSource>
 	</transactionManager>
 	<!-- 要想实现*通配符模式,可以修改com.ibatis.sqlmap.engine.builder.xml.SqlMapConfigParser类源代码中的addSqlMapNodelets()方法 -->
 	<!-- 以下为自定义的MAP文件 -->
-	<sqlMap resource="org/iweb/resource/map/qkj_adm_LeaveMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/sys_Map.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_StoresMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_StoresProductMap.xml" />
+
 </sqlMapConfig>

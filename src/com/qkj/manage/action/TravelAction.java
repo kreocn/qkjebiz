@@ -292,7 +292,9 @@ public class TravelAction extends ActionSupport {
 					map.clear();
 					map.put("apply_id", travel.getUuid());
 					map.put("type", 1);
-					this.setCo((CloseOrder) cod.list(map).get(0));
+					this.setCos(cod.list(map));
+					if(cos.size()>0)
+					this.setCo((CloseOrder) cos.get(0));
 					
 				}
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/travel_list?viewFlag=relist'>工业旅游申请列表</a>&nbsp;&gt;&nbsp;修改工业旅游申请";

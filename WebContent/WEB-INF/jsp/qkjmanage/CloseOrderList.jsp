@@ -9,6 +9,11 @@
 <title>结案提货单列表--<s:text name="APP_NAME" /></title>
 <s:action name="ref_head" namespace="/manager" executeResult="true" />
 </head>
+<style type="text/css">
+.ship_info {
+cursor: pointer;
+}
+</style>
 <body>
 	<!-- 顶部和左侧菜单导航 -->
 <s:action name="nav" namespace="/manage" executeResult="true" />
@@ -23,6 +28,16 @@
 		<s:form id="serachForm" name="serachForm" action="closeOrder_list" method="get" namespace="/qkjmanage" theme="simple">
 			<div class="label_con">
 				<div class="label_main">
+					<div class="label_hang">
+			            <div class="label_ltit">快速查询:</div>
+			           <div class="label_rwben2" style="size: 30%">
+			            	<s:select id="sselect" onchange="kselect();" name="sselect"  cssClass="selectKick" headerKey="" headerValue="-----请选择-----" list="#{0:'大区经理待审',1:'销管经理待审',
+			            	2:'运营总监待审',
+			            	3:'销管部经理待审',4:'业务副总待审',5:'销管副总待审',
+			            	6:'总经理待审'
+			            	}" />
+			            </div>
+			        </div>
 					<div class='label_hang'>
 						<div class='label_ltit'>主键:</div>
 						<div class='label_rwben'>
@@ -66,13 +81,13 @@
 					<div class="label_hang">
 						<div class="label_ltit">销售状态:</div>
 						<div class="label_rwben label_rwb">
-							<s:select id="check_state" name="closeOrder.sd_state" cssClass="selectKick" list="#{5:'退回',10:'待审核',30:'大区审核通过',40:'总监审核通过',50:'业务副总通过'}" headerKey="" headerValue="--请选择--" />
+							<s:select id="check_sdstate" name="closeOrder.sd_state" cssClass="selectKick" list="#{5:'退回',10:'待审核',30:'大区审核通过',40:'总监审核通过',50:'业务副总通过'}" headerKey="" headerValue="--请选择--" />
 						</div>
 					</div>
 					<div class="label_hang">
 						<div class="label_ltit">销管状态:</div>
 						<div class="label_rwben label_rwb">
-							<s:select id="check_state" name="closeOrder.smd_status" cssClass="selectKick" list="#{5:'退回',10:'已签收',30:'销管经理已审',40:'销管部经理已审',50:'销管副总通过',60:'总经理通过'}" headerKey="" headerValue="--请选择--" />
+							<s:select id="check_smdstate" name="closeOrder.smd_status" cssClass="selectKick" list="#{5:'退回',10:'已签收',30:'销管经理已审',40:'销管部经理已审',50:'销管副总通过',60:'总经理通过',70:'董事通过'}" headerKey="" headerValue="--请选择--" />
 						</div>
 					</div>
 					<div class="label_hang">
@@ -115,6 +130,22 @@
 						<s:if test="state==0">新单</s:if>
 						<s:if test="state==1">审批中</s:if>
 						<s:if test="state==2">通过</s:if>
+						
+						<s:if test="state==2">
+							<span class="op-area">
+							<s:if test="ship_status==0"><a class="ship_info input-nostyle"  data="${uuid}">未发货</a></s:if>
+							<s:if test="ship_status==10"><a class="ship_info input-nostyle"  data="${uuid}"><span class="message_pass">已发货</span></a></s:if>
+							<s:if test="ship_status==99"><a class="ship_info input-nostyle"  data="${uuid}">&nbsp;其它&nbsp;</a></s:if>
+							</span>
+							<span class="ship_hidden_info" style="display:none;">
+								<span id="ship_no_${uuid}">${ship_no}</span>
+								<span id="ship_type_${uuid}">${ship_type}</span>
+								<span id="ship_date_${uuid}">${it:formatDate(ship_date,"yyyy-MM-dd")}</span>
+								<span id="ship_phone_${uuid}">${ship_phone}</span>
+								<span id="ship_status_${uuid}">${ship_status}</span>
+								<span id="active_remark_${uuid}">${remark}</span>
+							</span>
+						</s:if>
 						</td>
 						<td class="td2 nw" title="${sd_user_name} ${it:formatDate(sd_time,'yyyy-MM-dd HH:mm:ss')}">
 						<s:if test="sd_state==0">新单</s:if>
@@ -145,6 +176,8 @@
 										<font class="message_pass">销管副总已审</font></s:if>
 										<s:if test="smd_status==60">
 										<font class="message_pass">总经理已审</font></s:if>
+										<s:if test="smd_status==70">
+										<font class="message_pass">董事已审</font></s:if>
 						</td>
 						<td class="td4 op-area">
 							<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_MDY',null)==true}">
@@ -164,6 +197,42 @@
 		<div id="listpage" class="pagination"></div>
 	</div>
 </div>
+<div id="mdyActiveShipInfoForm" class="label_con idialog" title="修改发货信息">
+<s:form name="form_mdyActiveShipInfoForm" action="mdyCloseOrderShipInfo" namespace="/qkjmanage" method="post" theme="simple">
+	<div class="label_main">
+        <div class="label_hang">
+            <div class="label_ltit">发货状态:</div>
+            <div class="label_rwben"><s:select id="e_active_ship_status" name="closeOrder.ship_status" list="#{0:'未发货',10:'已发货',99:'其他' }" /></div>
+        </div>
+		<div class="label_hang">
+            <div class="label_ltit">出库日期:</div>
+            <div class="label_rwben"><input id="e_active_ship_date" class="datepicker validate[custom[date]]" type="text" name="closeOrder.ship_date" title="出库日期" value="${it:formatDate(closeOrder.ship_date,'yyyy-MM-dd')}" /></div>
+        </div>
+        <div class="label_hang">
+            <div class="label_ltit">运单号:</div>
+            <div class="label_rwben"><s:textfield id="e_active_ship_no" cssClass="validate[maxSize[48]]" name="closeOrder.ship_no" title="运单号码" /></div>
+        </div>
+		<div class="label_hang">
+            <div class="label_ltit">物流名称:</div>
+            <div class="label_rwben"><s:textfield id="e_active_ship_type" name="closeOrder.ship_type" cssClass="validate[maxSize[32]]" title="物流类型/名称" /></div>
+        </div>
+        <div class="label_hang">
+            <div class="label_ltit">物流电话:</div>
+            <div class="label_rwben"><s:textfield id="e_active_ship_phone" name="closeOrder.ship_phone"  cssClass="validate[maxSize[48]]" title="物流电话" /></div>
+        </div>
+        <div class="label_hang">
+            <div class="label_ltit">备注:</div>
+            <div class="label_rwben"><s:textarea id="e_active_remark" name="closeOrder.remark" cssClass="validate[maxSize[65535]]" title="备注" cols="3" rows="4" /></div>
+        </div>
+        <div class="label_hang label_button tac">
+           	<s:hidden id="e_active_uuid" name="closeOrder.uuid" value="%{closeOrder.uuid}" />
+           	<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_MDYSHIPINFO',null)==true}">
+				<s:submit id="mdyActiveShipInfo" name="mdyActiveShipInfo" value="确定" action="mdyCloseOrderShipInfo" />
+			</c:if>
+        </div> 
+    </div>
+</s:form>
+</div>
 <s:action name="ref_foot" namespace="/manager" executeResult="true" />
 <script type="text/javascript" src="<s:url value="/js/jqueryPlugins/select3/jquery.cityselect.js" />"></script>
 <script type="text/javascript">
@@ -178,6 +247,68 @@ $(function(){
 	});
 	printPagination("listpage",'${currPage}','${recCount}','${pageSize}');
  });
+ 
+$(function(){
+	if($(".ship_info").length>0) {
+		$(".ship_info").bind("click",function(){
+			setShipVal($(this).attr("data"));
+			$("#mdyActiveShipInfoForm").dialog("open");
+		});
+	}
+	$("#mdyActiveShipInfoForm").dialog({
+	      autoOpen: false,
+	      modal: true
+	});
+ });
+ 
+function setShipVal(p_uuid) {
+	$("#e_active_uuid").val(p_uuid);
+	$("#e_active_ship_phone").val($("#ship_phone_"+p_uuid).text());
+	$("#e_active_ship_type").val($("#ship_type_"+p_uuid).text());
+	$("#e_active_ship_no").val($("#ship_no_"+p_uuid).text());
+	$("#e_active_ship_date").val($("#ship_date_"+p_uuid).text());
+	$("#e_active_ship_status").val($("#ship_status_"+p_uuid).text());
+	$("#e_active_remark").text($("#active_remark_"+p_uuid).text());
+}
+ 
+function kselect(){
+	var num=$("#sselect").val();
+	document.getElementById("check_state").options[2].selected = true; 
+	if(parseInt(num)==0){//(申)大区经理待审
+		document.getElementById("check_sdstate").options[2].selected = true; 
+		document.getElementById("check_smdstate").options[2].selected = true;
+	}
+	if(parseInt(num)==1){//(申)销管经理待审
+		document.getElementById("check_sdstate").options[3].selected = true; 
+		document.getElementById("check_smdstate").options[2].selected = true;
+	}
+	if(parseInt(num)==2){//总监
+		document.getElementById("check_sdstate").options[3].selected = true; 
+		document.getElementById("check_smdstate").options[3].selected = true;
+	}
+	if(parseInt(num)==3){//销管部经理待审西北
+		document.getElementById("check_sdstate").options[4].selected = true; 
+		document.getElementById("check_smdstate").options[3].selected = true;
+		
+	}
+	if(parseInt(num)==4){//西北业务副总
+		document.getElementById("check_sdstate").options[4].selected = true; 
+		document.getElementById("check_smdstate").options[0].selected = true;
+	}
+	if(parseInt(num)==5){//西北销管副总
+		document.getElementById("check_sdstate").options[4].selected = true; 
+		document.getElementById("check_smdstate").options[0].selected = true; 
+	}
+	
+	if(parseInt(num)==6){//总经理
+		document.getElementById("check_sdstate").options[0].selected = true; 
+		document.getElementById("check_smdstate").options[5].selected = true; 
+	
+	}
+	
+	document.getElementById("serachForm").action="/qkjmanage/closeOrder_list";
+	document.getElementById("serachForm").submit();
+}
 </script>
 </body>
 </html>

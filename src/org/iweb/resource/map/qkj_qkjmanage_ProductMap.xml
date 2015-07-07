@@ -69,5 +69,8 @@
 		Delete From qkj_t_product Where uuid=#uuid#
 	]]>
 	</delete>
+	
+	
+	
 	<!-- Product End -->
 </sqlMap>

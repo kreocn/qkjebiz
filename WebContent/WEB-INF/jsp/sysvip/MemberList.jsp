@@ -99,7 +99,7 @@ ${path}
 		<td class="td2">${manager_name}</td>
 		<td class="td4 op-area">
 			<c:if test="${it:checkPermit('SYSVIP_MEMBER_MDY',null)==true}">
-	    	<a class="input-blue" href="<s:url namespace="/sysvip" action="member_load"><s:param name="viewFlag">mdy</s:param><s:param name="member.uuid" value="uuid"></s:param></s:url>">修改</a>
+	    	<a class="input-blue" href="<s:url namespace="/sysvip" action="member_load"><s:param name="viewFlag">mdy</s:param><s:param name="member.uuid" value="uuid"></s:param><s:param name="member.c_id" value="c_id"></s:param></s:url>">修改</a>
 	    	</c:if>
 	    	<c:if test="${it:checkPermit('SYSVIP_MEMBER_DEL',null)==true}">
 	    	<a class="input-red" href="<s:url namespace="/sysvip" action="member_del"><s:param name="member.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>

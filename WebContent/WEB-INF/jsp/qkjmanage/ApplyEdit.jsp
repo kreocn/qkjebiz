@@ -54,6 +54,86 @@
 							</div>
 						</div>
 					</s:if>
+				<s:if test="apply.apply_dept.substring(0,3)=='220'">
+						<div class="label_main">
+							<div class="label_hang">
+					            <div class="label_ltit">类型:</div>
+					            <div class="label_rwben label_rwb"><s:select name="apply.apply_type" cssClass="selectKick" list="#{0:'普通至事由',1:'媒体投放'}" /></div>
+					        </div>
+				        </div>
+					</s:if>
+					<s:else>
+						<div class="label_main">
+							<div class="label_hang">
+								<div class="label_ltit">类型:</div>
+								<div class="label_rwben">
+									<span class="label_rwb">普通至事由<s:hidden name="apply.apply_type"  value="0"/></span>
+								</div>
+							</div>
+						</div>
+					</s:else>
+					
+					<s:if test="'mdy' == viewFlag">
+						<s:if test="apply.apply_user==userappid">
+							<div class="label_main">
+							<div class="label_hang">
+										<div class="label_ltit">申请部门:</div>
+										<div class="label_rwbenx">
+										<s:select  name="apply.apply_dept" list="getapply_depts" listKey="apply_dept" listValue="apply_dept_name"	 cssClass="validate[required]" />
+										</div>
+								</div>
+							</div>
+						</s:if>
+						<s:else>
+						
+						<div class="label_main">
+							<div class="label_hang">
+										<div class="label_ltit">申请部门:</div>
+										<div class="label_rwbenx">${apply.apply_dept_name}
+										<s:hidden name="apply.apply_dept" value="%{apply.apply_dept}"></s:hidden>
+										</div>
+								</div>
+							</div>
+						
+						</s:else>
+					</s:if>
+					<s:else>
+						<div class="label_main">
+							<div class="label_hang">
+										<div class="label_ltit">申请部门:</div>
+										<div class="label_rwbenx">
+										<select name="apply.apply_dept" class="validate[required]">
+											<s:iterator value="getapply_depts" status="sta">
+											<option value ="${apply_dept }" 
+											<s:if test="apply_dept==userdepta">selected="selected"</s:if>
+											>${apply_dept_name }</option>
+											</s:iterator>
+										</select>
+										</div>
+								</div>
+							</div>
+					</s:else>
+					
+					<s:if test="applyUserSign.size()>0">
+					<div class="label_main">
+							<div class="label_hang">
+								<div class="label_ltit">签字:</div>
+								<div class="label_rwbenx label_rwb_sign">
+									<s:iterator value="applyUserSign" status="sta">
+											<s:if test="user_sign==null">
+												<span class="uname">${sign_user_name}</span>
+												<span class="vab">${it:formatDate(sign_biz_time,'yyyy-MM-dd')}</span>
+											</s:if>
+											<s:if test="user_sign!=null">
+													<span class="user_sign"><img src="${user_sign}" /></span>
+													<span class="vab">${it:formatDate(sign_biz_time,'yyyy-MM-dd')}</span>
+											</s:if>
+										
+									</s:iterator>
+								</div>
+							</div>
+						</div>
+					</s:if>
 					<div class="label_main">
 						<div class="label_hang">
 							<div class="label_ltit">至:</div>
@@ -191,15 +271,34 @@
 									<c:if test="${apply.status>=10 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK_1',null)==true}">
 										<s:submit id="apply_check_1" name="apply_check_1" value="作废" action="apply_check_1" cssClass="input-red" onclick="return isOp('确定进行此操作?');" />
 									</c:if>
-
+									
+									<!-- 类型为媒体投放：主管审核-大区。。。。 -->
+									
 									<!-- 西北，青海大区：大区--销管经理，总监--副总，总经理 -->
-									<!-- 省外，大区--总监--副总，总经理 -->
+									<!-- 省外  大区--总监--副总，总经理 -->
 									<!-- 北京（销售部，市场部），大区--总监--副总，总经理 （其它部门），大区--总经理-->
 									<!-- 西藏大区：大区--直接副总审，总经理 -- >
 									 <!-- 新疆办事处：直接副总审，总经理 -->
 									<!-- 股份公司：大区--直接销管，总监，副总审，总经理 -->
+									
+									<!-- 传奇天估德  大区--副总，总经理--董事 -->
 									<s:if test="apply.apply_dept=='22030'">
 										<!-- 新疆办事处：直接副总审，总经理 -->
+									</s:if>
+									<s:else>
+									<s:if test="apply.apply_type==1">
+										<c:if test="${apply.status==10 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK9',apply.apply_dept)==true}">
+											<s:submit value="主管审核通过" cssClass="input-green" action="apply_check9" onclick="return isOp('确定进行此操作?');" />
+										</c:if>
+										
+										<c:if test="${apply.status==9 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK10',apply.apply_dept)==true}">
+											<s:submit id="apply_check10" name="apply_check10" value="经理/大区审核通过" cssClass="input-green" action="apply_check10" onclick="return isOp('确定进行此操作?');" />
+										</c:if>
+										
+										<c:if test="${(apply.status==10 || apply.status==9) && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK5',null)==true}">
+												<s:submit id="apply_check5" name="apply_check5" value="审核不通过" cssClass="input-red" action="apply_check5" onclick="return isOp('确定进行此操作?');" />
+										</c:if>
+									
 									</s:if>
 									<s:else>
 										<c:if test="${apply.status==10 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK10',apply.apply_dept)==true}">
@@ -208,6 +307,7 @@
 										<c:if test="${apply.status==10 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK5',null)==true}">
 												<s:submit id="apply_check5" name="apply_check5" value="审核不通过" cssClass="input-red" action="apply_check5" onclick="return isOp('确定进行此操作?');" />
 										</c:if>
+									</s:else>
 									</s:else>
 
 									<s:if test="apply.apply_dept.substring(0,4)=='2302'">
@@ -257,9 +357,26 @@
 											<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
 									</s:elseif>
+									<s:elseif test="apply.apply_dept.substring(0,1)==4">
+									<!-- 传奇 -->
+										<c:if test="${apply.status==20 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK30',apply.apply_dept)==true}">
+											<s:submit id="apply_check30" name="apply_check30" cssClass="input-green" value="副总-审核通过" action="apply_check30" onclick="return isOp('确定执行此操作?');" />
+											<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
+										</c:if>
+										<c:if test="${apply.status>=20 && apply.status<50 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK40',apply.apply_dept)==true}">
+											<s:submit id="apply_check40" name="apply_check40" cssClass="input-green" value="总经理-审核通过" action="apply_check40" onclick="return isOp('确定执行此操作?');" />
+											<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
+										</c:if>
+										
+										<c:if test="${apply.status==50 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK50',apply.apply_dept)==true}">
+											<s:submit id="apply_check40" name="apply_check40" cssClass="input-green" value="董事-审核通过" action="apply_check50" onclick="return isOp('确定执行此操作?');" />
+											<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
+										</c:if>
+										
+									</s:elseif>
 									<s:else>
 										<!-- 北京和省外跳过销管 -->
-										<s:if test="apply.apply_dept.substring(0,3)!='211' && apply.apply_dept.substring(0,1)!=3">
+										<s:if test="apply.apply_dept.substring(0,3)!='211' && apply.apply_dept.substring(0,1)!=3 && apply.apply_dept.substring(0,1)!=4">
 											<c:if test="${apply.status==20 && apply.sp_check_status<=5 && it:checkPermit('QKJ_QKJMANAGE_APPLY_SPCHECK10',apply.apply_dept)==true}">
 												<s:submit id="apply_spcheck10" name="apply_spcheck10" value="销管经理审核通过" cssClass="input-green" action="apply_spcheck10" onclick="return isOp('确定进行此操作?');" />
 												<c:if test="${it:checkPermit('QKJ_QKJMANAGE_APPLY_SPCHECK5',apply.apply_dept)==true}">
@@ -268,10 +385,9 @@
 											</c:if>
 										</s:if>
 										<!-- 北京（销售部，市场部），大区--总监--副总，总经理 （其它部门），大区--总经理-->
-										
 										<s:if test="apply.apply_dept.substring(0,1)==3">
-											<s:if test="apply.apply_dept.substring(0,3)!='302' && apply.apply_dept.substring(0,3)!='303'">
-											<c:if test="${apply.status>=20 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK40',apply.apply_dept)==true}">
+											<s:if test="apply.apply_dept.substring(0,3)!='302' && apply.apply_dept.substring(0,3)!='303' && apply.apply_dept.substring(0,3)!='312'">
+											<c:if test="${apply.status>=20 && apply.status<50  && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK40',apply.apply_dept)==true}">
 												<s:submit id="apply_check40" name="apply_check40" cssClass="input-green" value="总经理-审核通过" action="apply_check40" onclick="return isOp('确定执行此操作?');" />
 												<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
 											</c:if>
@@ -287,7 +403,7 @@
 											<s:submit id="apply_check30" name="apply_check30" cssClass="input-green" value="副总-审核通过" action="apply_check30" onclick="return isOp('确定执行此操作?');" />
 											<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
-										<c:if test="${apply.status>=30 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK40',apply.apply_dept)==true}">
+										<c:if test="${apply.status>=30 && apply.status<50 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK40',apply.apply_dept)==true}">
 											<s:submit id="apply_check40" name="apply_check40" cssClass="input-green" value="总经理-审核通过" action="apply_check40" onclick="return isOp('确定执行此操作?');" />
 											<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>

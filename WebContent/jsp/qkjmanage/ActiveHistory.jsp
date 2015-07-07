@@ -36,7 +36,7 @@ cursor: pointer;
 	  	</tr>
 	  	<s:iterator value="myPros" status="sta">
 	  	<tr id="showtr${uuid}">
-			<td class="td2 nw">${it:formatDate(biz_time,'yyyy-MM-dd dd:mm:ss')}</td>
+			<td class="td2 nw">${it:formatDate(biz_time,'yyyy-MM-dd hh:mm:ss')}</td>
 			<td class="td3 nw">${uname}</td>			
 			<td class="td1 nw tal">${biz_note}</td>			
 		    <td class="td0 op-area"><a onclick="showDetail('showtr${uuid}');" href="javascript:;" class="input-nostyle">查看</a></td>

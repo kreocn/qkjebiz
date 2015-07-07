@@ -66,6 +66,10 @@ public class CloseOrderDAO extends AbstractDAO {
 		return super.get("qkjmanage_getclosesign", map);
 	}
 	
+	public int mdyShipInfo(Object parameters) {
+		return super.save("qkjmanage_mdyCloseOrderShipInfo", parameters);
+	}
+	
 	public int getResultCount() {
 		return super.getResultCount();
 	}

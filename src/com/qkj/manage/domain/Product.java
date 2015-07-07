@@ -5,10 +5,10 @@ import java.util.Date;
 public class Product {
 	private Integer uuid;// (int)主键ID
 	private String prod_code;// 产品统一编码
-	private String bar_code;
-	private String bar_code_box;
-	private String bar_code_tibet;
-	private String bar_code_tibet_box;
+	private String bar_code;// 青海条形码
+	private String bar_code_box;// 青海条形码箱子
+	private String bar_code_tibet;// 西藏条形码
+	private String bar_code_tibet_box;// 西藏条形码箱子
 	private Integer brand;// (varchar)系列/类型/品牌
 	private String title;// (varchar)品名
 	private String spec;// (varchar)规格(500ml)
@@ -28,8 +28,8 @@ public class Product {
 	private Integer status;// 是否启用
 	private String lm_user;// (varchar)
 	private Date lm_time;// (timestamp)
-
 	private String brand_name;
+
 	private Integer num;
 	private Double dprice;
 	private Double dtotle;
@@ -56,6 +56,16 @@ public class Product {
 
 	public void setNum(Integer num) {
 		this.num = num;
+	}
+
+	private Double update_price;
+
+	public Double getUpdate_price() {
+		return update_price;
+	}
+
+	public void setUpdate_price(Double update_price) {
+		this.update_price = update_price;
 	}
 
 	public String getBar_code_box() {
@@ -265,5 +275,4 @@ public class Product {
 	public void setBrand_name(String brand_name) {
 		this.brand_name = brand_name;
 	}
-
 }

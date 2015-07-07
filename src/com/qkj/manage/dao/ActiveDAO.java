@@ -6,7 +6,13 @@ import java.util.Map;
 import org.iweb.sys.AbstractDAO;
 
 public class ActiveDAO extends AbstractDAO {
+	public ActiveDAO() {
+		super.setDb_num(0);
+		System.out.println("#############1:"+super.getDb_num());
+	}
+	
 	public List list(Map<String, Object> map) {
+		System.out.println("#############2:"+super.getDb_num());
 		setCountMapid("qkjmanage_getActivesCounts");
 		return super.list("qkjmanage_getActives", map);
 	}
@@ -14,7 +20,7 @@ public class ActiveDAO extends AbstractDAO {
 	public List nextList(Map<String, Object> map) {
 		return super.list("qkjmanage_getNextActive", map);
 	}
-
+ 
 	public List listHis(Map<String, Object> map) {
 		return super.list("qkjmanage_getActivesHistory", map);
 	}
@@ -124,4 +130,9 @@ public class ActiveDAO extends AbstractDAO {
 	public int getResultCount() {
 		return super.getResultCount();
 	}
+	//在会员修改中查看会员活动
+	public List svipList(Map<String, Object> map) {
+		return super.list("qkjmanage_getsvipActive", map);
+	}
+	
 }

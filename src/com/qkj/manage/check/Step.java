@@ -237,7 +237,7 @@ public class Step {
 		if (sd_status == 50) {
 			noteflag = "副总审核通过";
 		}
-		if (sd_status == 50) {
+		if (sd_status == 60) {
 			noteflag = "总经理审核通过";
 		}
 		active.setSd_status(sd_status);
@@ -370,6 +370,10 @@ public class Step {
 		if (close_sd_status == 50) {
 			noteflag = "销管副总审核通过";
 		}
+		if (close_sd_status == 60) {
+			noteflag = "总经理审核通过";
+		}
+		
 		active.setClose_fd_status(0);
 		active.setClose_nd_status(0);
 		active.setClose_smd_status(close_sd_status);

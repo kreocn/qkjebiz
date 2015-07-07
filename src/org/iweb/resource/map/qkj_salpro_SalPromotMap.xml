@@ -212,30 +212,39 @@
 	
 	<select id="qkjmanage_getsalProsign" resultClass="closeOrder" parameterClass="java.util.Map">
 		<![CDATA[ 
-			SELECT 	MAX(sign50) sign50,MAX(time50) time50,MAX(sign40) sign40,MAX(time40) time40,MAX(sign60) sign60,MAX(time60) time60,MAX(sign70) sign70,MAX(time70) time70 FROM (
-SELECT u.`user_sign` sign50,s.`biz_time` time50,NULL sign40,NULL time40,NULL sign60,NULL time60,NULL sign70,NULL time70  FROM qkjm_h_process s  
+			SELECT 	MAX(sign50) sign50,MAX(time50) time50,MAX(sign40) sign40,MAX(time40) time40,MAX(sign60) sign60,MAX(time60) time60,MAX(sign70) sign70,MAX(time70) time70,MAX(sign80) sign80,MAX(time80) time80 FROM (
+SELECT u.`user_sign` sign50,s.`biz_time` time50,NULL sign40,NULL time40,NULL sign60,NULL time60,NULL sign70,NULL time70,null sign80,null time80  FROM qkjm_h_process s  
 			LEFT JOIN qkjm_r_salpromotion a ON (a.`uuid`=s.`biz_id`)
 			LEFT JOIN s_sys_user u ON (s.`biz_user`=u.`UUID`)
 			WHERE s.`process_id`=5 AND s.`biz_status04`=10 AND s.`biz_sign`='SALPRO_MDY_FDSTATUS' AND NOT ISNULL(u.`user_sign`) AND s.`biz_id`=#biz_id# 
 			AND s.`biz_time`>(SELECT MAX(p.`biz_time`) biz_time FROM qkjm_h_process p WHERE p.process_id=5 AND p.biz_status01=0 AND p.`biz_id`=#biz_id#)
 UNION ALL 
-SELECT NULL sign50,NULL time50,u.`user_sign` sign40,s.`biz_time` time40,NULL sign60,NULL time60,NULL sign70,NULL time70 FROM qkjm_h_process s  
+SELECT NULL sign50,NULL time50,u.`user_sign` sign40,s.`biz_time` time40,NULL sign60,NULL time60,NULL sign70,NULL time70,null sign80,null time80 FROM qkjm_h_process s  
 			LEFT JOIN qkjm_r_salpromotion a ON (a.`uuid`=s.`biz_id`)
 			LEFT JOIN s_sys_user u ON (s.`biz_user`=u.`UUID`)
 			WHERE s.`process_id`=5 AND s.`biz_status03`=40 AND s.`biz_sign`='SALPRO_MDY_SMDSTATUS' AND NOT ISNULL(u.`user_sign`) AND s.`biz_id`=#biz_id# 
 			AND s.`biz_time`>(SELECT MAX(p.`biz_time`) biz_time FROM qkjm_h_process p WHERE p.process_id=5 AND p.biz_status01=0 AND p.`biz_id`=#biz_id#)
 UNION ALL 
-SELECT NULL sign50,NULL time50,NULL sign40,NULL time40, u.`user_sign` sign60,s.`biz_time` time60,NULL sign70,NULL time70 FROM qkjm_h_process s  
+SELECT NULL sign50,NULL time50,NULL sign40,NULL time40, u.`user_sign` sign60,s.`biz_time` time60,NULL sign70,NULL time70,null sign80,null time80 FROM qkjm_h_process s  
 			LEFT JOIN qkjm_r_salpromotion a ON (a.`uuid`=s.`biz_id`)
 			LEFT JOIN s_sys_user u ON (s.`biz_user`=u.`UUID`)
 			WHERE s.`process_id`=5 AND s.`biz_status03`=50 AND s.`biz_sign`='SALPRO_MDY_SMDSTATUS' AND NOT ISNULL(u.`user_sign`) AND s.`biz_id`=#biz_id# 
 			AND s.`biz_time`>(SELECT MAX(p.`biz_time`) biz_time FROM qkjm_h_process p WHERE p.process_id=5 AND p.biz_status01=0 AND p.`biz_id`=#biz_id#)
 UNION ALL 
-SELECT NULL sign50,NULL time50,NULL sign40,NULL time40, NULL sign60,NULL time60,u.`user_sign` sign70,s.`biz_time` time70 FROM qkjm_h_process s  
+SELECT NULL sign50,NULL time50,NULL sign40,NULL time40, NULL sign60,NULL time60,u.`user_sign` sign70,s.`biz_time` time70,null sign80,null time80 FROM qkjm_h_process s  
 			LEFT JOIN qkjm_r_salpromotion a ON (a.`uuid`=s.`biz_id`)
 			LEFT JOIN s_sys_user u ON (s.`biz_user`=u.`UUID`)
 			WHERE s.`process_id`=5 AND s.`biz_status03`=60 AND s.`biz_sign`='SALPRO_MDY_SMDSTATUS' AND NOT ISNULL(u.`user_sign`) AND s.`biz_id`=#biz_id# 
 			AND s.`biz_time`>(SELECT MAX(p.`biz_time`) biz_time FROM qkjm_h_process p WHERE p.process_id=5 AND p.biz_status01=0 AND p.`biz_id`=#biz_id#)
+			
+UNION ALL 
+
+			SELECT NULL sign50,NULL time50,NULL sign40,NULL time40, NULL sign60,NULL time60,null sign70,null time70,u.`user_sign` sign80,s.`biz_time` time80 FROM qkjm_h_process s  
+			LEFT JOIN qkjm_r_salpromotion a ON (a.`uuid`=s.`biz_id`)
+			LEFT JOIN s_sys_user u ON (s.`biz_user`=u.`UUID`)
+			WHERE s.`process_id`=5 AND s.`biz_status03`=70 AND s.`biz_sign`='SALPRO_MDY_SMDSTATUS' AND NOT ISNULL(u.`user_sign`) AND s.`biz_id`=#biz_id# 
+			AND s.`biz_time`>(SELECT MAX(p.`biz_time`) biz_time FROM qkjm_h_process p WHERE p.process_id=5 AND p.biz_status01=0 AND p.`biz_id`=#biz_id#)
+
 			)a
 		]]>
 		

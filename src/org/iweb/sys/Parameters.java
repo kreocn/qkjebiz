@@ -29,6 +29,8 @@ public class Parameters {
 	// 藏酒帮助中心
 	final public static String CELLAR_HELP_CLASSID = "1358236000445001";
 
+	
+	final public static Integer STORE_INTEGRATION=100;
 	/**
 	 * 得到WEB初始化参数的MAP
 	 * 

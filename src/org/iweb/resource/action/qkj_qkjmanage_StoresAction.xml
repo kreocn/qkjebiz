@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="qkjmanage_stores" extends="default" namespace="/qkjmanage">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- Customer Start -->
+		<action name="stores_list" class="com.qkj.manage.action.StoresAction" method="list">
+			<result>/WEB-INF/jsp/qkjmanage/StoresList.jsp</result>
+		</action>
+	<!-- 	<action name="add_sotres_list" class="com.qkj.manage.action.StoresAction" method="addlist">
+		</action> -->
+		<action name="insert_sotres_order" class="com.qkj.manage.action.StoresAction" method="insertOrder">
+			<result type="redirectAction">
+				<param name="actionName">stores_list</param>
+			</result>
+		</action>
+		<action name="stores_order_findOrder" class="com.qkj.manage.action.StoresAction" method="findOrder">
+		<result>/WEB-INF/jsp/qkjmanage/StoresUpdateOrderList.jsp</result>
+		</action>
+		<action name="stores_order_update_details" class="com.qkj.manage.action.StoresAction" method="updateDetails">
+	<result>/WEB-INF/jsp/qkjmanage/StoresUpdateOrderItemList.jsp</result>
+		</action>
+		<action name="stores_order_item_delete" class="com.qkj.manage.action.StoresAction" method="itemDelete">
+	   <result>/WEB-INF/jsp/qkjmanage/StoresUpdateOrderItemList.jsp</result>
+		</action>
+		<action name="stores_order_delete" class="com.qkj.manage.action.StoresAction" method="delete">
+	   	<result type="redirectAction">
+				<param name="actionName">stores_order_findOrder</param>
+			</result>
+		</action>
+		
+		<action name="findMember" class="org.iweb.sysvip.action.MemberAction" method="get_Member">
+		</action>
+		<!-- Customer End -->
+	</package>
+</struts>

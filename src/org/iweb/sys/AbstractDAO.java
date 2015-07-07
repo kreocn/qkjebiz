@@ -164,6 +164,7 @@ public abstract class AbstractDAO {
 			showLog(map_id, "list", map, e);
 			throw new RuntimeException(e);
 		}
+
 		return resultList;
 	}
 
