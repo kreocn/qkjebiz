@@ -280,13 +280,16 @@
 									<!-- 西藏大区：大区--直接副总审，总经理 -- >
 									 <!-- 新疆办事处：直接副总审，总经理 -->
 									<!-- 股份公司：大区--直接销管，总监，副总审，总经理 -->
-									
 									<!-- 传奇天估德  大区--副总，总经理--董事 -->
+									
+									
+									
+									
 									<s:if test="apply.apply_dept=='22030'">
-										<!-- 新疆办事处：直接副总审，总经理 -->
+									<!-- 新疆办事处：直接副总审，总经理 -->
 									</s:if>
 									<s:else>
-									<s:if test="apply.apply_type==1">
+									<s:if test="apply.apply_type==1&&apply.apply_dept.substring(0,4)=='2202'">
 										<c:if test="${apply.status==10 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK9',apply.apply_dept)==true}">
 											<s:submit value="主管审核通过" cssClass="input-green" action="apply_check9" onclick="return isOp('确定进行此操作?');" />
 										</c:if>

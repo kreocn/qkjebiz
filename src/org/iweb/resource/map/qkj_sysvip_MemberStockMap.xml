@@ -7,12 +7,13 @@
 	<select id="sysvip_getMemberStocks" resultClass="memberStock" parameterClass="java.util.Map">
 		<![CDATA[ 
 			SELECT m.*,ad.`USER_NAME` add_user_name,lm.`USER_NAME` lm_user_name,p.`title` product_name,
-			ROUND(m.`stock`/(p.`case_spec`*1.0)) case_spec,vm.member_name member_name
+			ROUND(m.`stock`/(p.`case_spec`*1.0)) case_spec,vm.member_name member_name,d.`dept_cname` add_dept_name
 			FROM qkjm_t_member m 
 			LEFT JOIN s_sys_user ad ON(m.`add_user`=ad.`UUID`)
 			LEFT JOIN s_sys_user lm ON(m.`lm_user`=lm.`UUID`)
 			LEFT JOIN qkj_t_product p ON(p.`uuid`=m.`product`)
 			LEFT JOIN s_vip_member vm ON(vm.uuid=m.dealer)
+			LEFT JOIN s_sys_department d ON(d.`dept_code`=m.`add_dept`)
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ m.uuid=#uuid# ]]></isNotEmpty>
@@ -23,6 +24,24 @@
 			<isNotEmpty prepend="AND" property="add_time"><![CDATA[ m.add_time=#add_time# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="lm_user"><![CDATA[ m.lm_user=#lm_user# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="member_name"><![CDATA[ vm.member_name LIKE CONCAT(#member_name#,'%') ]]></isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="apply_depts" open="(" close=")">
+				<![CDATA[ m.add_dept In ]]>
+				<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
+				<isNotEmpty prepend="OR" property="apply_perdepts">
+					<![CDATA[ m.add_dept In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ m.add_user=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
+			</isNotEmpty>
+			
+			<isEmpty  property="apply_depts">
+				<isNotEmpty prepend="AND" property="apply_perdepts">
+					<![CDATA[ m.add_dept In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ m.add_user=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
+			</isEmpty>
 
 		</dynamic>
 		<![CDATA[ORDER BY m.`check_date` DESC ]]>
@@ -40,14 +59,32 @@
 			<isNotEmpty prepend="AND" property="add_time"><![CDATA[ m.add_time=#add_time# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="lm_user"><![CDATA[ m.lm_user=#lm_user# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="member_name"><![CDATA[ vm.member_name LIKE CONCAT(#member_name#,'%') ]]></isNotEmpty>
-
+			
+			<isNotEmpty prepend="AND" property="apply_depts" open="(" close=")">
+				<![CDATA[ m.add_dept In ]]>
+				<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
+				<isNotEmpty prepend="OR" property="apply_perdepts">
+					<![CDATA[ m.add_dept In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ m.add_user=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
+			</isNotEmpty>
+			
+			<isEmpty  property="apply_depts">
+				<isNotEmpty prepend="AND" property="apply_perdepts">
+					<![CDATA[ m.add_dept In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ m.add_user=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
+			</isEmpty>
+			
 		</dynamic>
 		<![CDATA[ LIMIT 1000 ]]>
 	</select>
 	<insert id="sysvip_addMemberStock" parameterClass="memberStock">
 		<![CDATA[ 
-			Insert Into qkjm_t_member(dealer,product,stock,check_date,add_user,add_time,lm_user,lm_time)
-			Values (#dealer#,#product#,#stock#,#check_date#,#add_user#,#add_time#,#lm_user#,#lm_time#)
+			Insert Into qkjm_t_member(dealer,product,stock,check_date,add_dept,add_user,add_time,lm_user,lm_time)
+			Values (#dealer#,#product#,#stock#,#check_date#,#add_dept#,#add_user#,#add_time#,#lm_user#,#lm_time#)
 		]]>
 		<selectKey resultClass="int" keyProperty="uuid">
 		<![CDATA[ Select LAST_INSERT_ID() ]]>
