@@ -2,7 +2,6 @@ package org.iweb.sysvip.action;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,8 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import jxl.Cell;
 import jxl.CellType;
@@ -34,7 +33,6 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.ServletActionContext;
 import org.iweb.sys.ActionAttr;
 import org.iweb.sys.ContextHelper;
-import org.iweb.sys.Parameters;
 import org.iweb.sys.ToolsUtil;
 import org.iweb.sysvip.dao.MemberStockDAO;
 import org.iweb.sysvip.domain.Member;
@@ -177,6 +175,8 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 				}
 				map.putAll(ToolsUtil.getMapByBean(memberStock));
 			}
+			ContextHelper.setSearchDeptPermit4Search("QKJM_SYSVIP_MEMBERSTOCK_LIST", map, "apply_depts", "apply_user");
+			ContextHelper.SimpleSearchMap4Page("QKJM_SYSVIP_MEMBERSTOCK_LIST", map, memberStock, viewFlag);
 			map.putAll(ContextHelper.getDefaultRequestMap4Page());
 			this.setPageSize(ContextHelper.getPageSize(map));
 			this.setCurrPage(ContextHelper.getCurrPage(map));		
@@ -223,6 +223,7 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 	public String add() throws Exception {
 		ContextHelper.isPermit("QKJM_SYSVIP_MEMBERSTOCK_ADD");
 		try {
+			memberStock.setAdd_dept(ContextHelper.getUserLoginDept());
 			memberStock.setAdd_user(ContextHelper.getUserLoginUuid());
 			memberStock.setAdd_time(new Date());
 			memberStock.setLm_user(ContextHelper.getUserLoginUuid());
@@ -286,6 +287,7 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 	public String leading() throws Exception {
 		ContextHelper.isPermit("QKJM_SYSVIP_MEMBERSTOCK_ADD");
 		try {
+			memberStock.setAdd_dept(ContextHelper.getUserLoginDept());
 			memberStock.setAdd_user(ContextHelper.getUserLoginUuid());
 			memberStock.setAdd_time(new Date());
 			memberStock.setLm_user(ContextHelper.getUserLoginUuid());
@@ -399,6 +401,7 @@ public class MemberStockAction extends ActionSupport implements ActionAttr {
 					        			   memberStock.setCheck_date(date);
 					        			   memberStock.setProduct(Integer.parseInt(produ));
 					        			   memberStock.setStock(Integer.parseInt(stock));
+					        			   memberStock.setAdd_dept(ContextHelper.getUserLoginDept());
 					        			   memberStock.setAdd_user(ContextHelper.getUserLoginUuid());
 						       			   memberStock.setAdd_time(new Date());
 						       			   memberStock.setLm_user(ContextHelper.getUserLoginUuid());

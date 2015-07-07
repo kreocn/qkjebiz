@@ -113,6 +113,12 @@
 	<s:if test="'mdy'==viewFlag">
 	<div class="label_main">
 	<div class="label_hang">
+		<div class="label_ltit">添加部门:</div>
+	    <div class="label_rwben label_rwb">
+	    ${memberStock.add_dept_name }
+	    </div>
+	</div>
+	<div class="label_hang">
 		<div class="label_ltit">添加人:</div>
 	    <div class="label_rwben label_rwb">
 	    ${memberStock.add_user_name }
