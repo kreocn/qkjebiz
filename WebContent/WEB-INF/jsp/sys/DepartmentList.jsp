@@ -70,6 +70,12 @@
 								<div class="label_ltit">部门名称(英文):</div>
 								<div class="label_rwbenx"><s:textfield id="dept.dept_ename" name="dept.dept_ename" /></div>
 							</div>
+							<div class="label_hang">
+								<div class="label_ltit">部门类型:</div>
+								<div class="label_rwbenx">
+								<s:select id="dept.type" name="dept.type" cssClass="selectKick" list="#{0:'普通',1:'机构'}" />
+								</div>
+							</div>
 							<div class="label_hang clear">
 								<div class="label_ltit">描述:</div>
 								<div class="label_rwbenx"><s:textfield id="dept.descriptions" name="dept.descriptions" cssClass="label_hang_linput"/></div>

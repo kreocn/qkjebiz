@@ -12,6 +12,16 @@ public class Department {
 	private Date lm_time;
 	private String parent_dept;
 
+	private Integer type;
+
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
+	}
+
 	public String getUuid() {
 		return uuid;
 	}
