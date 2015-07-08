@@ -41,8 +41,8 @@ public class CheckSkip {
 		skipSteps.add(new SkipStep("312", 1,11, 12, "13"));// 结案 直接到总监
 		
 		//传奇天估德401402
-		skipSteps.add(new SkipStep("4", 1, 4, 7));// 结案 14总监 17跳过销管副总
-		skipSteps.add(new SkipStep("4", 1, 14, 17));// 结案 14总监 17跳过销副总
+		skipSteps.add(new SkipStep("4", 1, 2, 4,"5"));// 结案 14总监 17跳过销管副总
+		skipSteps.add(new SkipStep("4", 1, 12,4,"15"));// 结案 14总监 17跳过销副总
 		//skipSteps.add(new SkipStep("402", 1, 3, 4,"5"));// 结案 14总监 17跳过总监销管部
 		//skipSteps.add(new SkipStep("402", 1, 13, 14,"15"));// 结案 14总监 17跳过销管经理
 		
@@ -55,6 +55,9 @@ public class CheckSkip {
 		
 		skipSteps.add(new SkipStep("406", 1, 1, 2)); // 申请 2大区 3跳过大区
 		skipSteps.add(new SkipStep("406", 1, 11, 12)); // 申请 2大区 3跳过大区
+		
+		skipSteps.add(new SkipStep("406", 1, 3, 4,"5")); // 申请 2大区 3跳过大区
+		skipSteps.add(new SkipStep("406", 1, 13, 14,"15")); // 申请 2大区 3跳过大区
 		
 		//skipSteps.add(new SkipStep("405", 1, 3, 4,"5"));// 结案接到销管副总
 		//skipSteps.add(new SkipStep("405", 1, 13, 14,"15"));// 结案接到销管副总
