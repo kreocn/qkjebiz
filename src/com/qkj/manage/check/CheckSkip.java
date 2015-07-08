@@ -53,8 +53,8 @@ public class CheckSkip {
 		//skipSteps.add(new SkipStep("404", 1, 1, 4,"5"));// 结案 接到销管副总
 		//skipSteps.add(new SkipStep("404", 1, 11, 14,"15"));// 结案 接到销管副总
 		
-		skipSteps.add(new SkipStep("405", 1, 1, 2)); // 申请 2大区 3跳过大区
-		skipSteps.add(new SkipStep("405", 1, 11, 12)); // 申请 2大区 3跳过大区
+		skipSteps.add(new SkipStep("406", 1, 1, 2)); // 申请 2大区 3跳过大区
+		skipSteps.add(new SkipStep("406", 1, 11, 12)); // 申请 2大区 3跳过大区
 		
 		//skipSteps.add(new SkipStep("405", 1, 3, 4,"5"));// 结案接到销管副总
 		//skipSteps.add(new SkipStep("405", 1, 13, 14,"15"));// 结案接到销管副总
