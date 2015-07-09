@@ -215,8 +215,8 @@
 	</select>
 	<insert id="sys_addDept" parameterClass="dept">
 		<![CDATA[ 
-			Insert Into s_sys_department(uuid,dept_code,parent_dept,dept_ename,dept_cname,descriptions,lm_user,lm_time)
-			Values (#uuid#,#dept_code#,#parent_dept#,#dept_ename#,#dept_cname#,#descriptions#,#lm_user#,#lm_time#)
+			Insert Into s_sys_department(uuid,dept_code,parent_dept,dept_ename,dept_cname,descriptions,lm_user,lm_time,type)
+			Values (#uuid#,#dept_code#,#parent_dept#,#dept_ename#,#dept_cname#,#descriptions#,#lm_user#,#lm_time#,#type#)
 		]]>
 	</insert>
 	<update id="sys_mdyDept" parameterClass="dept">
@@ -228,6 +228,7 @@
 				dept_cname=#dept_cname#,
 				descriptions=#descriptions#,
 				lm_user=#lm_user#,
+				type=#type#,
 				lm_time=#lm_time#
 			Where uuid=#uuid#
 		]]>

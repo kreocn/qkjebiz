@@ -60,7 +60,7 @@
 								<div class="label_ltit">仓库类型:</div>
 								<div class="label_rwbenx">
 								<s:hidden id="ware_class"></s:hidden>
-								<s:radio id="ware.ware_class" name="ware.ware_class" list="#{0:'普通库',1:'藏酒库',2:'区域',3:'机构'}" value="0" />
+								<s:radio id="ware.ware_class" name="ware.ware_class" list="#{0:'普通库',1:'藏酒库',2:'区域',3:'机构'}" value="0" onclick="seCheck(this.value);"/>
 								</div>
 							</div>
 							<div class="label_hang">
@@ -257,6 +257,14 @@ function comPower(){
 	var uuid=$("#ware\\.uuid").val();
 	var name=$("#ware\\.ware_name").val();
 	 location.href="/sysebiz/ware_power?ware.uuid="+uuid+"&ware.ware_name="+name;
+}
+
+function seCheck(a){
+	alert(a);
+	
+	if(a==3){
+		alert(1);
+	}
 }
 </script>
 

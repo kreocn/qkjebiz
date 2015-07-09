@@ -161,6 +161,8 @@ function getInfo(obj) {
 		$("#dept\\.descriptions").val(json.descriptions);
 		$("#dept\\.lm_user").text(json.lm_user);
 		$("#dept\\.lm_time").text(formatDate(json.lm_time));
+		
+		$("#dept\\.type").val(json.type);
 		setControl("save");
 		$("#message").text("获取数据成功!");
 	};
