@@ -840,7 +840,7 @@
 						<div class="label_hang">
 							<div class="label_ltit">销售部审核:</div>
 							<div class="label_rwbenx">
-								<s:if test="active.apply_dept.substring(0,1)==4 || active.apply_dept.substring(0,4)==2202">
+								<s:if test="active.apply_dept.substring(0,1)==4 || active.apply_dept.substring(0,4)==2202 || active.apply_dept.substring(0,5)==22033">
 								<c:if test="${10==active.close_sd_status && 30==active.close_smd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS10',active.apply_dept)==true}">
 									<s:submit cssClass="input-green" name="mdyCloseActiveSDStatus10" value="经理/大区-审核通过" action="mdyCloseActiveSDStatus10" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
@@ -886,7 +886,7 @@
 						<div class="label_hang">
 							<div class="label_ltit">销管部审核:</div>
 							<div class="label_rwbenx">
-								<s:if test="active.apply_dept.substring(0,1)==4 || active.apply_dept.substring(0,4)==2202">
+								<s:if test="active.apply_dept.substring(0,1)==4 || active.apply_dept.substring(0,4)==2202 || active.apply_dept.substring(0,5)==22033">
 								<c:if test="${10==active.close_smd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SMDSTATUS10',active.apply_dept)==true}">
 									<s:submit cssClass="input-green" name="mdyCloseActiveSMDStatus10" value="销管经理-审核通过" action="mdyCloseActiveSMDStatus10" onclick="return isOp('确定执行此操作?');" />
 									<s:submit cssClass="input-red" name="mdyCloseActiveSMDStatus5" value="审核不通过" action="mdyCloseActiveSMDStatus5" onclick="return isOp('确定执行此操作?');" />
