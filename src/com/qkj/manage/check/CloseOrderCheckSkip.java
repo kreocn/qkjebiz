@@ -31,13 +31,14 @@ public class CloseOrderCheckSkip {
 		//西北跳过销管部，销管副总流程
 		skipSteps.add(new CloseOrerSkipStep("220", 1, "check30", "mdyCloseOrderSMDStatus50"));// 总监审后销管销管副总代审
 		//传奇天估德401402
-		skipSteps.add(new CloseOrerSkipStep("4", 1, "check30", "mdyCloseOrderSMDStatus50"));// 总监跳过销管部经理
+		skipSteps.add(new CloseOrerSkipStep("4", 1, "check20", "check30,mdyCloseOrderSMDStatus40"));// 总监跳过销管部经理
 		
 		//skipSteps.add(new CloseOrerSkipStep("402", 1, "mdyCloseOrderSMDStatus10", "check30,mdyCloseOrderSMDStatus40"));// 销管跳过总监销管部
 		//skipSteps.add(new CloseOrerSkipStep("403", 1, "check0", "check30,mdyCloseOrderSMDStatus40"));// 销管跳过总监销管部
 		//skipSteps.add(new CloseOrerSkipStep("404", 1, "check0", "check30,mdyCloseOrderSMDStatus40"));// 销管跳过总监销管部
 		
-		skipSteps.add(new CloseOrerSkipStep("405", 1, "check0", "check20"));// 销管跳过大区
+		skipSteps.add(new CloseOrerSkipStep("406", 1, "check0", "check20"));// 销管跳过大区
+		skipSteps.add(new CloseOrerSkipStep("406", 1, "mdyCloseOrderSMDStatus10", "check30,mdyCloseOrderSMDStatus40"));// 销管跳过大区
 		//skipSteps.add(new CloseOrerSkipStep("405", 1, "mdyCloseOrderSMDStatus10", "check30,mdyCloseOrderSMDStatus40"));// 销管跳过总监销管部
 		
 	}
