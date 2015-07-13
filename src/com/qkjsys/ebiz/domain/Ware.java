@@ -13,6 +13,8 @@ public class Ware {
 	private String note;// (text) 详细描述
 	private String lm_user;// (varchar) 最后修改人
 	private Date lm_time;// (datetime) 最后修改时间
+	
+	private String ware_instcode;
 
 	private String bug;
 	private String dept_code;
@@ -20,6 +22,14 @@ public class Ware {
 	private String son;
 	private String username;
 	private String lm_user_name;
+
+	public String getWare_instcode() {
+		return ware_instcode;
+	}
+
+	public void setWare_instcode(String ware_instcode) {
+		this.ware_instcode = ware_instcode;
+	}
 
 	public String getLm_user_name() {
 		return lm_user_name;

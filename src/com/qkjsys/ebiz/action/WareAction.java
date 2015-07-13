@@ -14,6 +14,8 @@ import org.iweb.sys.ContextHelper;
 import org.iweb.sys.Parameters;
 import org.iweb.sys.ToolsUtil;
 import org.iweb.sys.dao.DepartmentDAO;
+import org.iweb.sys.domain.Department;
+import org.iweb.sys.logic.DeptLogic;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.qkj.ware.action.warepower;
@@ -31,6 +33,7 @@ public class WareAction extends ActionSupport {
 	private Ware ware;
 	private List<Ware> wares;
 	private List<Warepowers> wps;
+	private List<Department> depts;
 	private Warepowers wp;
 	private String message;
 	private String viewFlag;
@@ -38,6 +41,14 @@ public class WareAction extends ActionSupport {
 	private int pageSize;
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;仓库权限管理";
 	
+	public List<Department> getDepts() {
+		return depts;
+	}
+
+	public void setDepts(List<Department> depts) {
+		this.depts = depts;
+	}
+
 	public List<Warepowers> getWps() {
 		return wps;
 	}
@@ -127,6 +138,11 @@ public class WareAction extends ActionSupport {
 				this.setWps(wpd.list(map));
 			}
 			
+			DepartmentDAO d=new DepartmentDAO();
+			map.clear();
+			map.put("type", 1);
+			this.setDepts(d.list(map));
+			
 			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;仓库列表";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
@@ -139,6 +155,12 @@ public class WareAction extends ActionSupport {
 		// ContextHelper.isPermit("GLOBAL_PRVG_DEPT_FUNCTION");
 		try {
 			this.setWares(dao.list(null));
+			
+			DepartmentDAO d=new DepartmentDAO();
+			map.clear();
+			map.put("type", 1);
+			this.setDepts(d.list(map));
+			
 			System.out.println(wares.size());
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!ware_select 读取数据错误:", e);
@@ -188,6 +210,10 @@ public class WareAction extends ActionSupport {
 					this.setWare(null);
 				else
 					this.setWare((Ware) dao.list(map).get(0));
+				DepartmentDAO d=new DepartmentDAO();
+				map.clear();
+				map.put("type", 1);
+				this.setDepts(d.list(map));
 			} else {
 				this.setWare(null);
 				setMessage("无操作类型!");

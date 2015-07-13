@@ -74,6 +74,13 @@
 								<div class="label_rwbenx"><s:textfield id="ware.ware_name" name="ware.ware_name" cssClass="validate[required]" title="仓库名称"/></div>
 							</div>
 							
+							<div id="ins" class="label_hang" style="display: none;">
+								<div class="label_ltit">所属机构:</div>
+								<div class="label_rwbenx">
+								<s:select title="父权限" id="ware.ware_instcode" name="ware.ware_instcode" list="depts" listKey="dept_code" listValue="dept_cname" headerKey="" headerValue="-----请选择-----"  cssClass="validate[required]" />
+								</div>
+							</div>
+							
 							<div class="label_hang">
 						         <div class="label_ltit">仓库地点:</div>
 						         <div class="label_rwben2">
@@ -172,6 +179,20 @@
 </script>
 
 <script type="text/javascript">
+$(function(){
+	checkState();
+ });
+ 
+function checkState(){
+	var state=$(":radio[name='ware.ware_class']").val();
+	if(state==3){
+		$("#ins").show();
+	}else{
+		$("#ins").hide();
+	}
+	
+}
+
 var puuid = '<s:property value="ware.uuid" />';
 var cflag = 0;//状态符,0代表新增状态 1代表修改状态
 
@@ -202,7 +223,13 @@ function getInfo(obj) {
 		$("#ware\\.lm_user").text(json.lm_user_name);
 		$("#ware\\.lm_time").text(formatDate(json.lm_time));
 		$("#ware_class").val(json.ware_class);
+		$("#ware\\.ware_instcode").val(json.ware_instcode);
 		$("#long_note").val(json.note);
+		if(json.ware_instcode!=null&& json.ware_instcode==3){
+			$("#ins").show();
+		}else{
+			$("#ins").hide();
+		}
 		setControl("save");
 		$("#message").text("获取数据成功!");
 	};
@@ -260,10 +287,11 @@ function comPower(){
 }
 
 function seCheck(a){
-	alert(a);
-	
 	if(a==3){
-		alert(1);
+		$("#ins").show();
+	}else{
+		$("#ins").hide();
+		$("#ware\\.ware_instcode").val("");
 	}
 }
 </script>

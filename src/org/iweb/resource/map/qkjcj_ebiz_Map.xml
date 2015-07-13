@@ -261,8 +261,8 @@
 	
 	<insert id="ebiz_addWare" parameterClass="ware">
 		<![CDATA[ 
-			Insert Into qkj_t_warehouse(ware_class, ware_name, parent_ware,address,map_data, short_note, note, lm_user, lm_time)
-			Values (#ware_class#, #ware_name#, #parent_ware#,#address#,#map_data#, #short_note#, #note#, #lm_user#, #lm_time#)
+			Insert Into qkj_t_warehouse(ware_class, ware_name, parent_ware,address,map_data, short_note, note, lm_user, lm_time,ware_instcode)
+			Values (#ware_class#, #ware_name#, #parent_ware#,#address#,#map_data#, #short_note#, #note#, #lm_user#, #lm_time#,#ware_instcode#)
 		]]>
 	</insert>
 	<update id="ebiz_mdyWare" parameterClass="ware">
@@ -274,6 +274,7 @@
 				address = #address#,
 				map_data = #map_data#,
 				short_note = #short_note#,
+				ware_instcode=#ware_instcode#,
 				note = #note#,
 				lm_user = #lm_user#,
 				lm_time = #lm_time#
