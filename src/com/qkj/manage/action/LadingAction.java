@@ -11,6 +11,8 @@ import org.apache.commons.logging.LogFactory;
 import org.iweb.sys.ContextHelper;
 import org.iweb.sys.Parameters;
 import org.iweb.sys.ToolsUtil;
+import org.iweb.sys.dao.DepartmentDAO;
+import org.iweb.sys.domain.Department;
 import org.iweb.sys.domain.User;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -28,6 +30,8 @@ import com.qkj.manage.domain.Product;
 import com.qkj.manage.domain.SalPromot;
 import com.qkj.ware.dao.OutStockDAO;
 import com.qkj.ware.domain.InDetail;
+import com.qkjsys.ebiz.dao.WareDAO;
+import com.qkjsys.ebiz.domain.Ware;
 
 public class LadingAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
@@ -398,7 +402,7 @@ public class LadingAction extends ActionSupport {
 				}
 			}
 				OutStockDAO isa = new OutStockDAO();
-			//	isa.addStock(lading.getUuid(), inStock.getGoldId(), inStock.getStore_id(), 6, 1, produs);
+				isa.addStock(lading.getUuid(), lading.getGoldId(), null, 0, 2, produs);//生成销售用酒出库
 			dao.commitTransaction();
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!saveLadingStatus10 数据更新失败:", e);
@@ -450,5 +454,22 @@ public class LadingAction extends ActionSupport {
 			throw new Exception(this.getClass().getName() + "!mdyLadingOutFlag1 数据更新失败:", e);
 		}
 		return SUCCESS;
+	}
+	
+	//获得发货部门所在总仓库
+	public String getWare(String dept){
+		String ware=null;
+		DepartmentDAO d=new DepartmentDAO();
+		Department dm=new Department();
+		List<Department> was=new ArrayList<>();
+		map.clear();
+		map.put("type", 1);
+		was=d.list(map);
+		if(was.size()>0){
+			for(int i=0;i<was.size();i++){
+				dm=was.get(i);
+			}
+		}
+		return ware;
 	}
 }
