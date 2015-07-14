@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "sql-map-2.dtd">
+<sqlMap>
+	<!-- ActiveProduct Start -->
+	<typeAlias alias="integralpay" type="com.qkj.manage.domain.IntegralPay" />
+	<insert id="qkjmanage_addIntegralPay" parameterClass="integralpay">
+		<![CDATA[ 
+			Insert Into qkj_t_integralpay(member_id,payContent,payDetails,integral)
+			Values (#member_id#,#payContent#,#payDetails#,#integral#)
+		]]>
+	</insert>
+	<!-- ActiveProduct End -->
+</sqlMap>

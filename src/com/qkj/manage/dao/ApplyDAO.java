@@ -55,6 +55,11 @@ public class ApplyDAO extends AbstractDAO {
 	public int mdyShipInfo(Object parameters) {
 		return super.save("qkjmanage_mdyApplyShipInfo", parameters);
 	}
+	//修改总价
+	
+	public int mdyActiveItPrice(String apply_id) {
+		return super.save("qkjmanage_mdyApplyItPrice", apply_id);
+	}
 
 	public int getResultCount() {
 		return super.getResultCount();

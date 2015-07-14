@@ -7,6 +7,7 @@ public class Apply {
 	private String touser;// 至(From)
 	private String title;// (varchar)主题
 	private String note;// (text)详细说明
+	private Double it_price;// 公司合计费用
 	private String apply_dept;// (varchar)申请部门
 	private String apply_user;// (varchar)申请人
 	private Date apply_time;// (datetime)申请时间
@@ -48,7 +49,14 @@ public class Apply {
 	private Integer status_start;
 	private Integer status_end;
 	private Integer status_sp;
+	
+	public Double getIt_price() {
+		return it_price;
+	}
 
+	public void setIt_price(Double it_price) {
+		this.it_price = it_price;
+	}
 	public Integer getApply_type() {
 		return apply_type;
 	}

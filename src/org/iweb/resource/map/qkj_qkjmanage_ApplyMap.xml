@@ -207,6 +207,29 @@
 			Where uuid = #uuid#
 		]]>
 	</update>
+	
+	
+	
+	
+	<update id="qkjmanage_mdyApplyItPrice" parameterClass="string">
+		<![CDATA[
+		UPDATE qkjm_r_apply t
+		SET t.it_price = (
+			SELECT IFNULL(SUM(a.total_price),0)
+			FROM (
+				SELECT m.total_price
+				FROM qkjm_r_apply_posm m
+				WHERE m.apply_id = #value#
+				AND `status` = 1
+				UNION ALL
+				SELECT p.total_price
+				FROM qkjm_r_apply_product p
+				WHERE p.apply_id = #value#
+				AND `status` = 1)a
+		)
+		WHERE t.uuid = #value#
+		]]>
+	</update>
 	<!-- ship info change -->
 	<!-- Apply End -->
 </sqlMap>
