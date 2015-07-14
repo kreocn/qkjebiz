@@ -353,18 +353,10 @@
 									<div class="label_ltit">销管审核:</div>
 									<div class="label_rwbenx">
 									<s:if test="salPromot.status<2">
-									<s:if test="salPromot.add_user_dept.substring(0,1)==4">
-									<c:if test="${10==salPromot.smd_status && it:checkPermit('QKJ_QKJMANAGE_SALPRO_SMDSTATUS30',salPromot.add_user_dept)==true}">
+										<c:if test="${10==salPromot.smd_status && it:checkPermit('QKJ_QKJMANAGE_SALPRO_SMDSTATUS30',salPromot.add_user_dept)==true}">
 											<s:submit  cssClass="input-green" value="销管经理-审核通过" action="mdySMDStatus10" onclick="return isOp('确定执行此操作?');" />
 											<s:submit  cssClass="input-red" value="审核不通过" action="mdySMDStatus5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
-									</s:if>
-									<s:else>
-									<c:if test="${10==salPromot.smd_status && 30==salPromot.sd_status && it:checkPermit('QKJ_QKJMANAGE_SALPRO_SMDSTATUS30',salPromot.add_user_dept)==true}">
-											<s:submit  cssClass="input-green" value="销管经理-审核通过" action="mdySMDStatus10" onclick="return isOp('确定执行此操作?');" />
-											<s:submit  cssClass="input-red" value="审核不通过" action="mdySMDStatus5" onclick="return isOp('确定执行此操作?');" />
-										</c:if>
-									</s:else>
 										
 										<c:if test="${30==salPromot.smd_status && salPromot.sd_status==40 && it:checkPermit('QKJ_QKJMANAGE_SALPRO_SMDSTATUS40',salPromot.add_user_dept)==true}">
 											<s:submit cssClass="input-green" value="销管部经理-审核通过" action="mdySMDStatus40" onclick="return isOp('确定执行此操作?');" />
