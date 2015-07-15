@@ -257,7 +257,11 @@
 		<isNotNull prepend="AND" property="email"><![CDATA[ u.email like #email# ]]></isNotNull>
 		<isNotNull prepend="AND" property="mobile"><![CDATA[ u.mobile like #mobile# ]]></isNotNull>
 		<isNotNull prepend="AND" property="status"><![CDATA[ u.status=#status# ]]></isNotNull>
-		<isNotNull prepend="AND" property="dept_code"><![CDATA[ u.dept_code=#dept_code# ]]></isNotNull>
+		
+		<isNotEmpty prepend="AND" property="dept_code">
+			<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ u.dept_code=#dept_code#]]></isNotEqual>
+			<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ u.dept_code LIKE CONCAT(#dept_code#,'%') ]]></isEqual>
+		</isNotEmpty>
 		
 		<!-- <isNotEmpty prepend="AND" property="dept_codes" open="(" close=")">
 			<![CDATA[ u.dept_code In ]]>
