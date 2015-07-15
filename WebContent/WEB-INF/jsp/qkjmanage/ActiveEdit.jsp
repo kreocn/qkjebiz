@@ -481,7 +481,7 @@
 										</s:iterator>
 									</table>
 									<p class="lb_gstit">公司预计费用合计</p>
-									<p class="lb_jwei">￥${active.it_price}</p>
+									<p class="lb_jwei">￥${apply.it_price}</p>
 								</div>
 							</div>
 							<div class="lb_gsfy">

@@ -13,6 +13,7 @@ public class Product {
 	private String title;// (varchar)品名
 	private String spec;// (varchar)规格(500ml)
 	private Integer case_spec;// (int)数量(件)
+	private String unit; //单位
 	private Double alcohol;// (decimal)酒精度
 	private String flavor;// (varchar)香型
 	private String raw_materials;// (varchar)原材料
@@ -30,6 +31,13 @@ public class Product {
 	private Date lm_time;// (timestamp)
 	private String brand_name;
    private Double update_price;
+	public String getUnit() {
+		return unit;
+	}
+
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
 	public Double getUpdate_price() {
 	return update_price;
 }

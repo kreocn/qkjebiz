@@ -15,11 +15,20 @@ import org.iweb.sys.Parameters;
 import org.iweb.sys.ToolsUtil;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.qkj.manage.dao.ActivePosmDAO;
+import com.qkj.manage.dao.ActiveProductDAO;
 import com.qkj.manage.dao.ApplyDAO;
+import com.qkj.manage.dao.ApplyPosmDAO;
+import com.qkj.manage.dao.ApplyProductDAO;
 import com.qkj.manage.dao.ApproveDAO;
 import com.qkj.manage.dao.ProcessDAO;
 import com.qkj.manage.domain.Active;
+import com.qkj.manage.domain.ActiveMemcost;
+import com.qkj.manage.domain.ActivePosm;
+import com.qkj.manage.domain.ActiveProduct;
 import com.qkj.manage.domain.Apply;
+import com.qkj.manage.domain.ApplyPosm;
+import com.qkj.manage.domain.ApplyProduct;
 import com.qkj.manage.domain.Approve;
 import com.qkj.manage.domain.CloseOrder;
 
@@ -50,6 +59,57 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 	private String userdepta;
 
 	private CloseOrder sign;
+	private List<ApplyProduct> applyproduct;
+	private double indprice;
+	private List<ApplyProduct> indApplyProducts;
+	private List<ApplyProduct> otherApplyProducts;
+	private List<ActivePosm> activePosms;
+	private List<ActiveMemcost> activeMemcosts;
+	private List<ApplyPosm> applyPosms;
+
+	public List<ApplyPosm> getApplyPosms() {
+		return applyPosms;
+	}
+
+	public void setApplyPosms(List<ApplyPosm> applyPosms) {
+		this.applyPosms = applyPosms;
+	}
+
+	public List<ApplyProduct> getIndApplyProducts() {
+		return indApplyProducts;
+	}
+
+	public void setIndApplyProducts(List<ApplyProduct> indApplyProducts) {
+		this.indApplyProducts = indApplyProducts;
+	}
+
+	public List<ApplyProduct> getOtherApplyProducts() {
+		return otherApplyProducts;
+	}
+
+	public void setOtherApplyProducts(List<ApplyProduct> otherApplyProducts) {
+		this.otherApplyProducts = otherApplyProducts;
+	}
+
+
+
+
+
+	public double getIndprice() {
+		return indprice;
+	}
+
+	public void setIndprice(double indprice) {
+		this.indprice = indprice;
+	}
+
+	public List<ApplyProduct> getApplyproduct() {
+		return applyproduct;
+	}
+
+	public void setApplyproduct(List<ApplyProduct> applyproduct) {
+		this.applyproduct = applyproduct;
+	}
 
 	public CloseOrder getSign() {
 		return sign;
@@ -266,6 +326,30 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 				else this.setIsApprover("false");
 				get_apply_depts();
 				this.setApplyUserSign(dao.listUserSign(apply.getUuid()));
+				
+				
+				
+				map.clear();
+				map.put("apply_id", apply.getUuid());
+				map.put("status", 1);
+				ApplyProductDAO adao = new ApplyProductDAO();
+				this.setApplyproduct(adao.list(map));
+				this.setIndApplyProducts(independence(map, "海拔", 1));
+				this.setOtherApplyProducts(independence(map, "海拔", 2));
+				
+				
+				ApplyPosmDAO apdao = new ApplyPosmDAO();
+				this.setApplyPosms(apdao.list(map));
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/apply_list?viewFlag=relist'>至事由列表</a>&nbsp;&gt;&nbsp;至事由详情";
 			} else {
 				this.setApply(null);
@@ -661,4 +745,33 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
+	
+	
+	
+	
+	private List<ApplyProduct> independence(Map<String, Object> map, String title, int flag) {
+		ApplyProductDAO adao = new ApplyProductDAO();
+		List<ApplyProduct> products = new ArrayList<>();
+		ApplyProduct pri = new ApplyProduct();
+		if (flag == 1) {// 是需要独立显示的商品
+			map.put("title", title);
+			map.remove("othertitle");
+			products = adao.list(map);
+			if (products.size() > 0) {
+				for (int i = 0; i < products.size(); i++) {
+					pri = products.get(i);
+					indprice = indprice + pri.getTotal_price();
+				}
+			}
+		} else {
+			map.remove("title");
+			map.put("othertitle", title);
+			products = adao.list(map);
+		}
+		return products;
+	}
+	
+	
+	
+	
 }

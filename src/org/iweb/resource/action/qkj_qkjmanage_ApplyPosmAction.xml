@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="qkjmanage_applyPosm" extends="default" namespace="/qkjmanage">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- Apply Start -->
+		<action name="applyPosm_add" class="com.qkj.manage.action.ApplyPosmAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">apply_load</param>
+				<param name="apply.uuid">${applyPosm.apply_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		
+				<action name="applyPosm_del" class="com.qkj.manage.action.ApplyPosmAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">apply_load</param>
+				<param name="apply.uuid">${applyPosm.apply_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+	    <!-- Apply end -->
+	</package>
+</struts>

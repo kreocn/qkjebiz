@@ -237,7 +237,7 @@ if(firstnum==true){
     	  var jinum=parseInt(n)+1;
     	 	 $("#jisuanprice"+msg[0]).empty();
            	 $("#jisuanprice"+msg[0]).append('<input type="hidden" id="total_price'+msg[0]+'" name="storesorderitem['+iNum+'].order_total_price"  value="'+$("#price"+msg[0]).val()*jinum+'"/>'+'<input type="text"  value="'+$("#price"+msg[0]).val()*jinum+'" onkeyup="up_total_price('+msg[0]+')"  style="width:50px">');
-    	 if(jinum==0){alert("cc");}
+
     	  $("#jisuannum"+msg[0]).val(jinum);
     	});
     	$("#jisuanjian"+msg[0]).click(function(){
@@ -318,7 +318,7 @@ function fortr(list){
        	  var jinum=parseInt(n)+1;
        	 $("#jisuanprice"+product_id).empty();
        	 $("#jisuanprice"+product_id).append('<input type="hidden" id="total_price'+product_id+'" name="storesorderitem['+iNum+'].order_total_price"  value="'+$("#price"+product_id).val()*jinum+'"/>'+'<input type="text" onkeyup="up_total_price('+product_id+')"  value="'+ $("#price"+product_id).val()*jinum+'" style="width:50px">');
-       	 if(jinum==0){alert("cc");}
+
        	  $("#jisuannum"+product_id).val(jinum);
        	});
        	$("#jisuanjian"+product_id).click(function(){
@@ -327,7 +327,7 @@ function fortr(list){
        	  var jinum=parseInt(n)-1;
       	if(jinum!=0){
        	  $("#jisuanprice"+product_id).empty();
-       	 $("#jisuanprice"+product_id).append('<input type="hidden" id="total_price'+product_id+'" name="storesorderitem['+iNum+'].order_total_price"  value="'+$("#price"+product_id).val()*jinum+'"/>'+'<input type="text" onkeyup="up_total_price('+product_id+')"   value="'+ $("#price"+product_id).val()*jinum+'" style="width:50px">');gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggc4
+       	 $("#jisuanprice"+product_id).append('<input type="hidden" id="total_price'+product_id+'" name="storesorderitem['+iNum+'].order_total_price"  value="'+$("#price"+product_id).val()*jinum+'"/>'+'<input type="text" onkeyup="up_total_price('+product_id+')"   value="'+ $("#price"+product_id).val()*jinum+'" style="width:50px">');
        		}
        		if(jinum==0){alert("不能为0!"); return}
        	  $("#jisuannum"+product_id).val(jinum);
@@ -422,11 +422,18 @@ var qianzai= function (obj) {
 
 function update_price(a){
 	      var price=$("#price"+a).parent().find("input[type=text]").val();
-	  alert(price)
+
 	      if(isNaN(price))
 {
-	    	     $("#price"+a).parent().find("input[type=text]").val(parseInt(price))
-	   	         update_price(a)
+	    		 var count=price.length;
+	    		 if(count=="1"){
+	    			   $("#price"+a).parent().find("input[type=text]").val("0");
+	        		   update_price(a)
+	    		 }else{
+	    		     $("#price"+a).parent().find("input[type=text]").val(parseInt(price))
+	    		        update_price(a)
+	    		 }
+	   	      
 	
 }else{
 	   $("#price"+a).parent().find("input[type=hidden]").val(parseInt(price))
