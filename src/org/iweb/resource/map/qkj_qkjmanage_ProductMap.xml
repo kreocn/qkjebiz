@@ -60,7 +60,8 @@
 				agree_price_3=#agree_price_3#,
 				lm_user=#lm_user#,
 				prod_code=#prod_code#,
-				status=#status#
+				status=#status#,
+				unit=#unit#
 			Where uuid = #uuid#
 		]]>
 	</update>

@@ -36,6 +36,8 @@
 					</span>
 					<span class="lb nw">
 					<img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true);" />
+					<s:checkbox id="apply_is_sub_dept" name="user.is_sub_dept" cssClass="regular-checkbox" />
+					<label for="apply_is_sub_dept"></label>包含子部门<span id="ajax_member_message"></span>
 					</span>
 	            </div>
 	        </div>

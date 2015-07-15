@@ -193,6 +193,10 @@
 							<div class="label_rwbenx"></div>
 						</div>
 					</div>
+					</div>
+					
+					
+					
 					<div class="label_main">
 						<div class="note_area">
 							<s:if test="apply.status>=10">
@@ -204,6 +208,109 @@
 							<div class="clear"></div>
 						</div>
 					</div>
+					
+						<s:if test="'mdy' == viewFlag">
+					<div class="label_main">
+						<div class="lb_xxsm">
+							<p class="lb_yjtit fy_hide">预计活动费用</p>
+								<s:if test="apply.status==0" >
+							<p class="lb_yjtit">
+							<s:url id="ladingAddProductsUrl" action="qkjm_addProducts" namespace="qkjmanage">
+												<s:param name="prodName">applyProduct.product_id</s:param>
+												<s:param name="uuidKey">applyProduct.uuid</s:param>
+												<s:param name="uuidValue" value="apply.uuid" />
+												<s:param name="backUrl">/qkjmanage/active_load?viewFlag=mdy&</s:param>
+												<s:param name="actionUrl">/qkjmanage/applyProduct_add</s:param>
+												<s:param name="keyName">applyProduct.apply_id</s:param>
+												<s:param name="perName">applyProduct.per_price</s:param>
+												<s:param name="numName">applyProduct.num</s:param>
+												<s:param name="totalName">applyProduct.total_price</s:param>
+											</s:url>
+							<input type="button" id="product" onclick="window.location.href='${ladingAddProductsUrl}';" value="添加酒品" />
+										<input type="button" id="addPosm" value="添加物料" />
+										</s:if>
+							<div class="lb_lgsfy">
+											
+								<div class="lb_yjcon">
+									<p class="lb_gstit">非海拔系列</p>
+									<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+										<tr>
+											<th>品名</th>
+											<th>单价</th>
+											<th>数量(瓶)</th>
+											<th>合计</th>
+											<th>操作</th>
+										</tr>
+										<s:iterator value="otherApplyProducts" status="sta">
+											<tr>
+												<td class="nw">${product_name}</td>
+												<td class="nw">￥${per_price}</td>
+												<td class="nw">${num}</td>
+												<td class="nw">￥${total_price}</td>
+												<td>
+										<s:if test="apply.status==0" >
+														<a href="<s:url action="applyProduct_del"><s:param name="applyProduct.uuid" value="%{uuid}" /><s:param name="applyProduct.apply_id" value="%{apply.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
+											</s:if>
+												</td>
+											</tr>
+										</s:iterator>
+									</table>
+									<p class="lb_gstit">海拔系列</p>
+									<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+										<tr>
+											<th>品名</th>
+											<th>单价</th>
+											<th>数量(瓶)</th>
+											<th>合计</th>
+											<th>操作</th>
+										</tr>
+										<s:iterator value="indApplyProducts" status="sta">
+											<tr>
+												<td class="nw">${product_name}</td>
+												<td class="nw">￥${per_price}</td>
+												<td class="nw">${num}</td>
+												<td class="nw">￥${total_price}</td>
+												<td>
+												<s:if test="apply.status==0" >
+														<a href="<s:url action="applyProduct_del"><s:param name="applyProduct.uuid" value="%{uuid}" /><s:param name="applyProduct.apply_id" value="%{apply.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
+												</s:if>
+												</td>
+											</tr>
+										</s:iterator>
+									</table>
+								</div>
+							</div>
+							<div class="lb_gsfy">
+							<p class="lb_gstit" style="padding-top:11px;">公司销售物料(除酒品之外的其他费用,全部算物料)</p>
+									<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+										<tr>
+											<th>名目</th>
+											<th>名目说明</th>
+											<th>金额</th>
+											<th>操作</th>
+										</tr>
+										<s:iterator value="applyPosms" status="sta">
+											<tr>
+												<td>${title}</td>
+												<td>${note}</td>
+												<td class="nw">￥${total_price}</td>
+												<td class="nw">
+												<s:if test="apply.status==0" >
+														<a href="<s:url action="applyPosm_del"><s:param name="applyPosm.uuid" value="%{uuid}" /><s:param name="applyPosm.apply_id" value="%{apply.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
+									</s:if>
+												</td>
+											</tr>
+										</s:iterator>
+									</table>
+
+								
+								</div>
+							</div>
+							<div class="clear"></div>
+							<p class="lb_yjbot">方案预计费用总计: ￥${apply.it_price}</p>
+						</div>
+					</s:if>
+					
 					<s:if test="'mdy' == viewFlag">
 						<div class="label_main">
 							<div class="label_hang">
@@ -481,6 +588,40 @@
 			</div>
 		</s:form>
 	</div>
+	
+			<!-- 添加销售物料(公司) -->
+		<div id="addPosmForm" class="label_con idialog" title="添加销售物料(公司)">
+			<s:form name="form_addPosmForm" cssClass="validFormDialog" action="applyPosm_add" namespace="/qkjmanage" method="post" theme="simple">
+				<div class="label_main">
+					<div class="label_hang">
+						<div class="label_ltit">名目:</div>
+						<div class="label_rwben label_rwb">
+							<s:textfield name="applyPosm.title" title="名目" cssClass="validate[required,maxSize[32]]" />
+						</div>
+					</div>
+					<div class="label_hang">
+						<div class="label_ltit">名目说明:</div>
+						<div class="label_rwben label_rwb">
+							<s:textfield name="applyPosm.note" title="名目说明" cssClass="validate[required,maxSize[255]]" />
+						</div>
+					</div>
+					<div class="label_hang">
+						<div class="label_ltit">金额:</div>
+						<div class="label_rwben label_rwb nw">
+							<s:textfield name="applyPosm.total_price" title="名目" cssClass="validate[required,custom[number],maxSize[11]]" />
+							元
+						</div>
+					</div>
+					<div class="label_hang label_button tac">
+						<s:hidden name="applyPosm.apply_id" value="%{apply.uuid}" />
+						<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVEPOSM_ADD',null)==true}">
+							<s:submit id="add" name="add" value="确定" action="applyPosm_add" />
+						</c:if>
+					</div>
+				</div>
+			</s:form>
+		</div>
+	
 	<s:action name="ref_foot" namespace="/manager" executeResult="true" />
 	<script type="text/javascript">
 		$(function(){
@@ -514,6 +655,21 @@
 				return false;
 			}
 		}
-	</script>
+	
+		</script>
+		
+
+		<script type="text/javascript">
+	var infoeditor01;
+	$(function(){
+		$("#addPosmForm").dialog({ autoOpen : false,
+		modal : true });
+		$("#addPosm").click(function(){
+			$("#addPosmForm").dialog("open");
+		});
+	});
+</script>
+
+
 </body>
 </html>
