@@ -8,8 +8,13 @@ import java.util.Map;
 
 import org.iweb.sys.AbstractDAO;
 import org.iweb.sys.ContextHelper;
+import org.iweb.sysvip.domain.Member;
 
+import com.qkj.manage.dao.LadingDAO;
+import com.qkj.manage.dao.LadingItemDAO;
 import com.qkj.manage.dao.ProductDAO;
+import com.qkj.manage.domain.Lading;
+import com.qkj.manage.domain.LadingItem;
 import com.qkj.manage.domain.Product;
 import com.qkj.ware.action.InStockAction;
 import com.qkj.ware.domain.InDetail;
@@ -155,6 +160,31 @@ public class OutStockDAO extends AbstractDAO {
 				}
 				
 			}
+			
+			if(outStock.getGoreason()==2){//销售订单
+			/*	map.clear();
+				map.put("lading_id", outStock.getGoldUuid());
+				List<LadingItem> ladingItems=new ArrayList<>();
+				LadingItemDAO idao = new LadingItemDAO();
+				ladingItems = idao.list(map);
+				if(ladingItems.size()>0){
+					for(int i=0;i<ladingItems.size();i++){
+						if(outDetails.size()>0){
+							
+						}
+					}
+					
+				}*/
+				LadingDAO idao = new LadingDAO();
+				Lading l=new Lading();
+				l.setUuid(outStock.getGoldUuid());
+				l.setGoflag(1);
+				idao.mdyLadingGoflag(l);
+			}
+			
+			if(outStock.getGoreason()==3){//至事由
+				
+			}
 
 			super.commitTransaction();
 
@@ -211,6 +241,13 @@ public class OutStockDAO extends AbstractDAO {
 				in.setGoflag(1);
 				id.saveFlogbyGodUid(in);
 			}
+			if(outStock.getGoreason()==2){//销售订单
+				LadingDAO idao = new LadingDAO();
+				Lading l=new Lading();
+				l.setUuid(outStock.getGoldUuid());
+				l.setGoflag(3);
+				idao.mdyLadingGoflag(l);
+			}
 			super.commitTransaction();
 		}  catch (Exception e) {
 			// TODO: handle exception
@@ -220,7 +257,7 @@ public class OutStockDAO extends AbstractDAO {
 		return 1;
 	}
 	
-	public void addStock(Integer uuid, Integer store_id, Integer borrow_id,Integer reason, Integer goreason, List<Product> products) {
+	public void addStock(Integer uuid, Integer store_id, Integer borrow_id,Integer reason, Integer goreason, List<Product> products,Member me) {
 		// TODO Auto-generated method stub
 			OutDetailDAO idao=new OutDetailDAO();
 			InStockDAO id=new InStockDAO();
@@ -243,6 +280,12 @@ public class OutStockDAO extends AbstractDAO {
 			outStock.setBorrowStore_id(borrow_id);
 			outStock.setGoreason(goreason);
 			outStock.setSend(2);
+			if(reason==0){
+				outStock.setMember_id(me.getUuid());
+				outStock.setMember_mebile(me.getMobile());
+				outStock.setMember_name(me.getManager_name());
+				outStock.setMember_adress(me.getAddress());
+			}
 			add(outStock);
 			
 			//修改入库表goldUid

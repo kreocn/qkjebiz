@@ -207,6 +207,9 @@ font-size: 14px;
 									<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_DEL',null)==true && it:checkWarePermit(inStock.store_id,'in')==true && inStock.confirm==null && (inStock.goflag==0 || inStock.goflag==null)}">
 								   	[<a href="<s:url namespace="/inStock" action="inDetail_del"><s:param name="inDetail.uuid" value="uuid" /><s:param name="inDetail.lading_id" value="lading_id" /></s:url>" onclick="return isDel();">删除</a>]
 								   	</c:if>
+								   	<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_SPILT',null)==true && it:checkWarePermit(inStock.store_id,'in')==true && inStock.confirm==null && (inStock.goflag==0 || inStock.goflag==null)}">
+								   	[<a href="<s:url namespace="/inStock" action="inDetail_spilt"><s:param name="inDetail.uuid" value="uuid" /><s:param name="inDetail.lading_id" value="lading_id" /></s:url>" onclick="return isOp('是否确认?');">拆分</a>]
+								   	</c:if>
 								    </td>
 									</tr>
 					</s:iterator>
