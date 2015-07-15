@@ -67,8 +67,8 @@
 	
 	<insert id="outStock_addOutStock" parameterClass="outStock">
 		<![CDATA[ 
-			Insert Into qkj_t_outstock(ordernum,date,store_id,reason,member_id,member_mebile,member_name, member_adress,bsreason, operator_id,dept_code,dept_name,take_id,note,add_user,add_timer,lm_user,lm_timer,send,borrowStore_id,member_price,goldUuid,goreason)
-			Values (#ordernum#,#date#,#store_id#, #reason#,#member_id#,#member_mebile#,#member_name#,#member_adress#,#bsreason#, #operator_id#,#dept_code#,#dept_name#,#take_id#,#note#,#add_user#,#add_timer#,#lm_user#,#lm_timer#,#send#,#borrowStore_id#,#member_price#,#goldUuid#,#goreason#)
+			Insert Into qkj_t_outstock(ordernum,date,store_id,reason,member_id,member_mebile,member_name, member_adress,bsreason, operator_id,dept_code,dept_name,take_id,note,add_user,add_timer,lm_user,lm_timer,send,borrowStore_id,member_price,goldUuid,goreason,splitUuid,split)
+			Values (#ordernum#,#date#,#store_id#, #reason#,#member_id#,#member_mebile#,#member_name#,#member_adress#,#bsreason#, #operator_id#,#dept_code#,#dept_name#,#take_id#,#note#,#add_user#,#add_timer#,#lm_user#,#lm_timer#,#send#,#borrowStore_id#,#member_price#,#goldUuid#,#goreason#,#splitUuid#,#split#)
 		]]>
 		<selectKey resultClass="int" keyProperty="uuid">
 		<![CDATA[ 
@@ -171,6 +171,18 @@
 			Set 
 			goldUuid=#goldUuid#
 			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<update id="outStock_mdyTotalPrice" parameterClass="Integer">
+		<![CDATA[
+			UPDATE qkj_t_outstock
+			SET total_price=(
+				SELECT SUM(i.totel)
+				FROM qkj_t_outdetail i
+				WHERE i.lading_id = #value#
+			)
+			WHERE UUID = #value#
 		]]>
 	</update>
 	

@@ -50,9 +50,10 @@ font-size: 14px;
 	       		
 	       		<div class="label_hang">
 		            <div class="label_ltit">来源:</div>
-		            <div class="label_rwben">
+		            <div class="label_rwbenx">
 					<s:if test="%{inStock.goreason==1}">调货出库单</s:if>
 					<s:else>手动填加</s:else>
+					<s:if test="%{inStock.split==1}">(拆分自编号${inStock.splitUuid })</s:if>
 		            </div>
 	       		</div>
 	       		<div class="label_hang">
@@ -207,9 +208,6 @@ font-size: 14px;
 									<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_DEL',null)==true && it:checkWarePermit(inStock.store_id,'in')==true && inStock.confirm==null && (inStock.goflag==0 || inStock.goflag==null)}">
 								   	[<a href="<s:url namespace="/inStock" action="inDetail_del"><s:param name="inDetail.uuid" value="uuid" /><s:param name="inDetail.lading_id" value="lading_id" /></s:url>" onclick="return isDel();">删除</a>]
 								   	</c:if>
-								   	<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_SPILT',null)==true && it:checkWarePermit(inStock.store_id,'in')==true && inStock.confirm==null && (inStock.goflag==0 || inStock.goflag==null)}">
-								   	[<a href="<s:url namespace="/inStock" action="inDetail_spilt"><s:param name="inDetail.uuid" value="uuid" /><s:param name="inDetail.lading_id" value="lading_id" /></s:url>" onclick="return isOp('是否确认?');">拆分</a>]
-								   	</c:if>
 								    </td>
 									</tr>
 					</s:iterator>
@@ -238,6 +236,10 @@ font-size: 14px;
 						<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_MDY',null)==true && inStock.confirm==null}">
 							<s:submit id="save" name="save" value="保存" action="inStock_save" cssClass="input-blue"/>
 						</c:if>
+						<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_SPILT',null)==true && it:checkWarePermit(inStock.store_id,'in')==true && inStock.confirm==null && (inStock.goflag==0 || inStock.goflag==null)}">
+							<input type="button" id="addPosm" value="拆分" />
+						</c:if>
+						
 						<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_DEL',null)==true && inStock.confirm==null }">
 							<s:submit id="delete" name="delete" value="删除" action="inStock_del"  cssClass="input-red"/>
 						</c:if>
@@ -260,6 +262,44 @@ font-size: 14px;
 		</div>
 	</div>
 	</s:form>
+	
+	<!-- 添加拆分 -->
+		<div id="addPosmForm" class="label_con idialog" title="拆分">
+			<s:form name="form_addPosmForm" cssClass="validFormDialog" action="inDetail_spilt" namespace="/inStock" method="post" theme="simple">
+			<s:hidden name="inStock.uuid" title="编号" value="%{inStock.uuid}" />
+				<div class="label_main">
+					<div class="label_hang">
+			            <div class="label_ltit">拆分商品:</div>
+			            <div class="label_rwbenx">
+							       <span class="label_rwb">
+							       <s:select id="membermanagerid" cssClass="validate[required]" name="inDetail.uuid" title="出库仓库"   list="inDetails" listKey="uuid" listValue="product_name" />
+							       </span>
+						       </div>
+			        </div>
+			        
+			        <div class="label_hang">
+			            <div class="label_ltit">入库仓库:</div>
+			            <div class="label_rwbenx">
+							       <span class="label_rwb">
+							       <s:select id="membermanagerid" cssClass="validate[required]" name="inStock.store_id" title="出库仓库"   list="wares" listKey="uuid" listValue="ware_name" />
+							       </span>
+						       </div>
+			        </div>
+					<div class="label_hang">
+						<div class="label_ltit">拆分数量:</div>
+						<div class="label_rwben label_rwb nw">
+							<s:textfield name="inStock.splitNum" title="数量" cssClass="validate[required,custom[number],maxSize[11]]" />
+						</div>
+					</div>
+					<div class="label_hang label_button tac">
+						<s:hidden name="activePosm.active_id" value="%{active.uuid}" />
+						<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_SPILT',null)==true}">
+							<s:submit id="add" name="add" value="确定" action="inDetail_spilt" />
+						</c:if>
+					</div>
+				</div>
+			</s:form>
+		</div>
 </div>
 </div>
 
@@ -372,5 +412,11 @@ function setDataCase() {
 		$("#ladingItemnumCase").text((num_value/data_case)+'件');
 	}
 }
+
+$("#addPosm").click(function(){
+	$("#addPosmForm").dialog("open");
+});
+$("#addPosmForm").dialog({ autoOpen : false,
+	modal : true }); 
 </script>
 </html>

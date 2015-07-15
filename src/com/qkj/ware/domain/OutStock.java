@@ -1,9 +1,9 @@
 package com.qkj.ware.domain;
 
-import java.util.*;
+import java.util.Date;
 
 public class OutStock {
-	private int uuid;// (varchar)
+	private Integer uuid;// (varchar)
 	private String ordernum;// 订单号
 	private Date date;// (date)
 	private Integer store_id;// (int)
@@ -34,6 +34,9 @@ public class OutStock {
 	private Integer goldUuid;
 	private Integer goreason;
 
+	private Integer splitUuid;
+	private Integer split;
+
 	// 以下为非数据库字段
 	private String add_user_name;
 	private String lm_user_name;
@@ -44,6 +47,32 @@ public class OutStock {
 	private Date date_start;
 	private Date date_end;
 	private String borrowStore_name;
+	
+	private Integer splitNum;
+
+	public Integer getSplitNum() {
+		return splitNum;
+	}
+
+	public void setSplitNum(Integer splitNum) {
+		this.splitNum = splitNum;
+	}
+
+	public Integer getSplitUuid() {
+		return splitUuid;
+	}
+
+	public void setSplitUuid(Integer splitUuid) {
+		this.splitUuid = splitUuid;
+	}
+
+	public Integer getSplit() {
+		return split;
+	}
+
+	public void setSplit(Integer split) {
+		this.split = split;
+	}
 
 	public Integer getGoreason() {
 		return goreason;
@@ -73,11 +102,11 @@ public class OutStock {
 		return date;
 	}
 
-	public int getUuid() {
+	public Integer getUuid() {
 		return uuid;
 	}
 
-	public void setUuid(int uuid) {
+	public void setUuid(Integer uuid) {
 		this.uuid = uuid;
 	}
 

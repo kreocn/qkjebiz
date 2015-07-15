@@ -301,6 +301,7 @@ public class InStockAction extends ActionSupport {
 				inStock.setStore_id(6);
 			} else {
 			}
+			inStock.setSplit(0);
 			inStock.setGoflag(0);
 			inStock.setGoreason(0);
 			inStock.setTake_id(u);
@@ -420,6 +421,20 @@ public class InStockAction extends ActionSupport {
 		ContextHelper.isPermit("QKJ_WARE_INSTOCK_CENCLE");
 		this.setInStock((InStock) dao.get(inStock.getUuid()));
 		dao.cencle(inStock);
+		return SUCCESS;
+	}
+	
+	/**
+	 * 拆分20150715
+	 * @return
+	 * @throws Exception
+	 */
+	public String inSpilt() throws Exception{
+		ContextHelper.isPermit("QKJ_WARE_INSTOCK_SPILT");
+		InStock ins=new InStock();
+		ins=(InStock)dao.get(inStock.getUuid());
+		this.setInDetail((InDetail) idao.get(inDetail.getUuid()));
+		dao.addStock(ins,1,inStock.getUuid(),inDetail,inStock.getStore_id(),inStock.getSplitNum());
 		return SUCCESS;
 	}
 

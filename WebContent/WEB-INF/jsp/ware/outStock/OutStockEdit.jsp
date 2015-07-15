@@ -55,9 +55,16 @@
         <div class="label_main">
 	        <div class="label_hang">
 	            <div class="label_ltit">状态:</div>
-	            <div class="label_rwben2">
-		            <span class="label_rwb">
+	            <div class="label_rwbenx">
+		            <span class="label_rwbx">
 		            	<s:select id="out" onchange="checkState();" name="outStock.reason" cssClass="selectKick" list="#{0:'销售出库',3:'报损',1:'招待用酒',4:'赠酒',6:'调货出库',5:'其它'}" />
+					</span>
+	            </div>
+	        </div>
+	        <div class="label_hang">
+	            <div class="label_rwbenx">
+		            <span class="label_rwbx">
+		            	<s:if test="outStock.split==1">拆分自编号${outStock.splitUuid }</s:if>
 					</span>
 	            </div>
 	        </div>
@@ -236,6 +243,9 @@
 					<c:if test="${it:checkPermit('QKJ_WARE_OUTSTOCK_MDY',null)==true && outStock.send!=4}">
 						<s:submit id="save" name="save" value="保存" action="outStock_save" cssClass="input-blue"/>
 					</c:if>
+					<c:if test="${it:checkPermit('QKJ_WARE_OUTSTOCK_SPILT',null)==true && outStock.send!=4}">
+							<input type="button" id="addPosm" value="拆分" />
+						</c:if>
 					<c:if test="${it:checkPermit('QKJ_WARE_OUTSTOCK_SURE',null)==true && outStock.send==2}">
 						<s:if test="%{outDetails.size>0}">
 						<s:submit value="经手人确认" action="outStock_sure" onclick="return isOp('是否确认?\n确认后将不能更改!');" cssClass="input-yellow"></s:submit>
@@ -256,6 +266,44 @@
 		
 	</div>
 	</s:form>
+	
+	<!-- 添加拆分 -->
+		<div id="addPosmForm" class="label_con idialog" title="拆分">
+			<s:form name="form_addPosmForm" cssClass="validFormDialog" action="outStock_spilt" namespace="/outStock" method="post" theme="simple">
+			<s:hidden name="outStock.uuid" title="编号" value="%{outStock.uuid}" />
+				<div class="label_main">
+					<div class="label_hang">
+			            <div class="label_ltit">拆分商品:</div>
+			            <div class="label_rwbenx">
+							       <span class="label_rwb">
+							       <s:select id="membermanagerid" cssClass="validate[required]" name="outDetail.uuid" title="出库仓库"   list="outDetails" listKey="uuid" listValue="product_name" />
+							       </span>
+						       </div>
+			        </div>
+			        
+			        <div class="label_hang">
+			            <div class="label_ltit">出库仓库:</div>
+			            <div class="label_rwbenx">
+							       <span class="label_rwb">
+							       <s:select id="membermanagerid" cssClass="validate[required]" name="outStock.store_id" title="出库仓库"   list="wares" listKey="uuid" listValue="ware_name" />
+							       </span>
+						       </div>
+			        </div>
+					<div class="label_hang">
+						<div class="label_ltit">拆分数量:</div>
+						<div class="label_rwben label_rwb nw">
+							<s:textfield name="outStock.splitNum" title="数量" cssClass="validate[required,custom[number],maxSize[11]]" />
+						</div>
+					</div>
+					<div class="label_hang label_button tac">
+						<s:hidden name="activePosm.active_id" value="%{active.uuid}" />
+						<c:if test="${it:checkPermit('QKJ_WARE_OUTSTOCK_SPILT',null)==true}">
+							<s:submit id="add" name="add" value="确定" action="outStock_spilt" />
+						</c:if>
+					</div>
+				</div>
+			</s:form>
+		</div>
 </div>
 </div>
 <s:action name="ref_foot" namespace="/manager" executeResult="true" />
@@ -319,6 +367,12 @@ function orderDis2(){
 		document.getElementById("order_user_name").disabled=true;
 		document.getElementById("address").disabled=true;
 }
+
+$("#addPosm").click(function(){
+	$("#addPosmForm").dialog("open");
+});
+$("#addPosmForm").dialog({ autoOpen : false,
+	modal : true }); 
 </script>
 <script type="text/javascript">
 	var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';

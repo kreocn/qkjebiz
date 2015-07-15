@@ -64,6 +64,15 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
+		
+		<action name="outStock_spilt" class="com.qkj.ware.action.OutStockAction" method="inSpilt">
+			<result type="redirectAction">
+				<param name="actionName">outStock_load</param>
+				<param name="outStock.uuid">${outStock.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
 
 		<action name="outStock_note" class="com.qkj.ware.action.OutStockAction" method="note">
 			<result type="redirectAction">

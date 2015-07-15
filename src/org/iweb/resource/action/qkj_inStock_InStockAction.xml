@@ -60,6 +60,15 @@
 			</result>
 		</action>
 		
+		<action name="inDetail_spilt" class="com.qkj.ware.action.InStockAction" method="inSpilt">
+			<result type="redirectAction">
+				<param name="actionName">inStock_load</param>
+				<param name="inStock.uuid">${inStock.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
 		<action name="inStock_view" class="com.qkj.ware.action.InStockAction" method="load">
 			<result>/WEB-INF/jsp/ware/inStock/InStockView.jsp</result>
 		</action>

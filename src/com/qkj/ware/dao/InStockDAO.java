@@ -58,11 +58,11 @@ public class InStockDAO extends AbstractDAO {
 	public int saveFlogbyGodUid(Object parameters) {
 		return super.save("inStock_mdyGodUid", parameters);
 	}
-	
+
 	public int mdyGodFlog(Object parameters) {
 		return super.save("inStock_mdyGodFlog", parameters);
 	}
-	
+
 	public int mdyGodUuid(Object parameters) {
 		return super.save("inStock_mdyGodUuid", parameters);
 	}
@@ -87,14 +87,16 @@ public class InStockDAO extends AbstractDAO {
 					List<Product> pros = new ArrayList<>();
 					map.clear();
 					map.put("uuid", inDetail.getProduct_id());
-					/*pros = pd.list(map);
-					if (pros.size() > 0) {
-						pdi = pros.get(0);
-						pdi.setNum(inDetail.getNum());
-						pdi.setDprice(inDetail.getPrice());
-						pdi.setDtotle(inDetail.getTotal());
-						produs.add(pdi);
-					}*/
+					/*
+					 * pros = pd.list(map);
+					 * if (pros.size() > 0) {
+					 * pdi = pros.get(0);
+					 * pdi.setNum(inDetail.getNum());
+					 * pdi.setDprice(inDetail.getPrice());
+					 * pdi.setDtotle(inDetail.getTotal());
+					 * produs.add(pdi);
+					 * }
+					 */
 
 					// 查询库存同一仓库中是否有此商品
 					StockDAO stockdao = new StockDAO();
@@ -194,15 +196,16 @@ public class InStockDAO extends AbstractDAO {
 		inStock.setGoldUuid(uuid);
 		inStock.setGoldId(goldId);
 		inStock.setGoflag(3);
+		inStock.setSplit(0);
 		add(inStock);
-		
-		//修改出库表goldUid
-		OutStockDAO od=new OutStockDAO();
-		OutStock outs=new OutStock();
+
+		// 修改出库表goldUid
+		OutStockDAO od = new OutStockDAO();
+		OutStock outs = new OutStock();
 		outs.setUuid(uuid);
 		outs.setGoldUuid(inStock.getUuid());
 		od.mdygolduid(outs);
-		
+
 		// 填加子表s
 		if (products.size() > 0) {
 			for (int i = 0; i < products.size(); i++) {
@@ -221,6 +224,65 @@ public class InStockDAO extends AbstractDAO {
 		ldao.mdyTotalPrice(inStock.getUuid());
 	}
 
+	public void addStock(InStock ins, Integer spilt, Integer splitUuid, InDetail inDe,Integer store_id, Integer num) {
+		// TODO Auto-generated method stub
+		try {
+			InDetailDAO idao = new InDetailDAO();
+			Product p = new Product();
+			super.startTransaction();
+
+			// 修改被拆表商品数量及价格
+			Double price = 0.00;
+			InDetail ind = new InDetail();
+			ind=inDe;
+			ind.setNum(ind.getNum() - num);
+			ind.setTotal(ind.getNum() * ind.getPrice());
+			price = ind.getPrice();
+			idao.save(ind);
+			
+			// 填加主表
+			InStock inStock = new InStock();
+			Date d = new Date();
+			String u = ContextHelper.getUserLoginUuid();
+			String numb = getMoveOrderNo(0);
+			inStock = ins;
+			inStock.setUuid(null);
+			inStock.setOrdernum(numb);
+			inStock.setStore_id(store_id);
+			inStock.setAdd_user(u);
+			inStock.setAdd_timer(d);
+			inStock.setLm_timer(d);
+			inStock.setLm_user(u);
+			if (spilt != null && spilt == 1) {
+				inStock.setSplit(1);
+				inStock.setSplitUuid(splitUuid);
+			} else {
+				inStock.setSplit(0);
+			}
+			add(inStock);
+
+			// 填加子表s
+			InDetail inDetail = new InDetail();
+			inDetail.setLading_id(inStock.getUuid());
+			inDetail.setProduct_id(inDe.getProduct_id());
+			inDetail.setNum(num);
+			inDetail.setPrice(price);
+			inDetail.setTotal(num * price);
+			idao.add(inDetail);
+			// 修改拆分主表的总价
+			InStockDAO ldao = new InStockDAO();
+			ldao.mdyTotalPrice(inStock.getUuid());
+			// 修改被拆主表的总价
+			ldao.mdyTotalPrice(ins.getUuid());
+
+			super.commitTransaction();
+		} catch (Exception e) {
+		} finally {
+			super.endTransaction();
+		}
+
+	}
+
 	/**
 	 * 产生流水号
 	 */
@@ -236,9 +298,9 @@ public class InStockDAO extends AbstractDAO {
 		}
 		m = m.substring(0, m.length() - 4);
 		if (num == 1) {
-			m = "C"+m;
+			m = "C" + m;
 		} else {
-			m = "R"+m;
+			m = "R" + m;
 		}
 		m = m + "000" + m.substring(m.length() - 1, m.length());
 		System.out.println(m);

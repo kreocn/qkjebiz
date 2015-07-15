@@ -1,6 +1,6 @@
 package com.qkj.ware.domain;
 
-import java.util.*;
+import java.util.Date;
 
 public class InStock {
 	private Integer uuid;// (varchar)
@@ -26,10 +26,14 @@ public class InStock {
 	private Integer goldUuid;
 	private Integer goflag;
 	private Integer goldId;
+	private Integer splitUuid;
+	private Integer split;
 
 	// 数据库外
 	private String add_user_name;
 	private String lm_user_name;
+	
+	private Integer splitNum;
 
 	// 以下为非数据库字段
 	private String prvg;
@@ -40,6 +44,30 @@ public class InStock {
 	private String conname_u;
 	private String goldId_name;
 	private String ware_name;
+
+	public Integer getSplitNum() {
+		return splitNum;
+	}
+
+	public void setSplitNum(Integer splitNum) {
+		this.splitNum = splitNum;
+	}
+
+	public Integer getSplitUuid() {
+		return splitUuid;
+	}
+
+	public void setSplitUuid(Integer splitUuid) {
+		this.splitUuid = splitUuid;
+	}
+
+	public Integer getSplit() {
+		return split;
+	}
+
+	public void setSplit(Integer split) {
+		this.split = split;
+	}
 
 	public String getWare_name() {
 		return ware_name;

@@ -12,14 +12,13 @@ import org.iweb.sys.ContextHelper;
 import org.iweb.sys.ToolsUtil;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.qkj.manage.dao.ProductDAO;
-import com.qkj.manage.domain.Product;
 import com.qkj.ware.dao.InStockDAO;
 import com.qkj.ware.dao.OutDetailDAO;
 import com.qkj.ware.dao.OutDetailHDAO;
 import com.qkj.ware.dao.OutStockDAO;
 import com.qkj.ware.dao.OutStockHDAO;
 import com.qkj.ware.dao.StockDAO;
+import com.qkj.ware.domain.InDetail;
 import com.qkj.ware.domain.InStock;
 import com.qkj.ware.domain.OutDetail;
 import com.qkj.ware.domain.OutDetailH;
@@ -519,6 +518,21 @@ public class OutStockAction extends ActionSupport {
 			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
 		}
+		return SUCCESS;
+	}
+	
+	/**
+	 * 拆分20150715
+	 * @return
+	 * @throws Exception
+	 */
+	public String inSpilt() throws Exception{
+		ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_SPILT");
+		OutStock ins=new OutStock();
+		OutDetailDAO od=new OutDetailDAO();
+		ins=(OutStock)dao.get(outStock.getUuid());
+		this.setOutDetail((OutDetail) od.get(outDetail.getUuid()));
+		dao.addStock(ins,1,outStock.getUuid(),outDetail,outStock.getStore_id(),outStock.getSplitNum());
 		return SUCCESS;
 	}
 

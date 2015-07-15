@@ -120,8 +120,8 @@
 	
 	<insert id="inStock_addInStock" parameterClass="inStock">
 		<![CDATA[ 
-			Insert Into qkj_t_instock(uuid,ordernum,date,store_id,operator_id,take_id,note,add_user,add_timer,lm_user,lm_timer,reason,goreason,goldId,goldUuid,goflag)
-			Values (#uuid#,#ordernum#,#date#,#store_id#,#operator_id#,#take_id#,#note#,#add_user#,#add_timer#,#lm_user#,#lm_timer#,#reason#,#goreason#,#goldId#,#goldUuid#,#goflag#)
+			Insert Into qkj_t_instock(uuid,ordernum,date,store_id,operator_id,take_id,note,add_user,add_timer,lm_user,lm_timer,reason,goreason,goldId,goldUuid,goflag,splitUuid,split)
+			Values (#uuid#,#ordernum#,#date#,#store_id#,#operator_id#,#take_id#,#note#,#add_user#,#add_timer#,#lm_user#,#lm_timer#,#reason#,#goreason#,#goldId#,#goldUuid#,#goflag#,#splitUuid#,#split#)
 		]]>
 		<selectKey resultClass="int" keyProperty="uuid">
 		<![CDATA[ 
