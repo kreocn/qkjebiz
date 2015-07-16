@@ -263,29 +263,7 @@
 											</tr>
 										</s:iterator>
 									</table>
-									<p class="lb_gstit">海拔系列</p>
-									<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
-										<tr>
-											<th>品名</th>
-											<th>单价</th>
-											<th>数量(瓶)</th>
-											<th>合计</th>
-											<th>操作</th>
-										</tr>
-										<s:iterator value="indApplyProducts" status="sta">
-											<tr>
-												<td class="nw">${product_name}</td>
-												<td class="nw">￥${per_price}</td>
-												<td class="nw">${num}</td>
-												<td class="nw">￥${total_price}</td>
-												<td>
-												<s:if test="apply.status==0||apply.status==5" >
-														<a href="<s:url action="applyProduct_del"><s:param name="applyProduct.uuid" value="%{uuid}" /><s:param name="applyProduct.apply_id" value="%{apply.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
-												</s:if>
-												</td>
-											</tr>
-										</s:iterator>
-									</table>
+								
 								</div>
 							</div>
 							<div class="lb_gsfy">
