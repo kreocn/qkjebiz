@@ -334,22 +334,10 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 				map.put("status", 1);
 				ApplyProductDAO adao = new ApplyProductDAO();
 				this.setApplyproduct(adao.list(map));
-				this.setIndApplyProducts(independence(map, "海拔", 1));
+				//this.setIndApplyProducts(independence(map, "海拔", 1));
 				this.setOtherApplyProducts(independence(map, "海拔", 2));
-				
-				
 				ApplyPosmDAO apdao = new ApplyPosmDAO();
 				this.setApplyPosms(apdao.list(map));
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/apply_list?viewFlag=relist'>至事由列表</a>&nbsp;&gt;&nbsp;至事由详情";
 			} else {
 				this.setApply(null);
@@ -753,7 +741,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 		ApplyProductDAO adao = new ApplyProductDAO();
 		List<ApplyProduct> products = new ArrayList<>();
 		ApplyProduct pri = new ApplyProduct();
-		if (flag == 1) {// 是需要独立显示的商品
+	/*	if (flag == 1) {// 是需要独立显示的商品
 			map.put("title", title);
 			map.remove("othertitle");
 			products = adao.list(map);
@@ -763,11 +751,11 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 					indprice = indprice + pri.getTotal_price();
 				}
 			}
-		} else {
+		} else {*/
 			map.remove("title");
-			map.put("othertitle", title);
+			//map.put("othertitle", title);
 			products = adao.list(map);
-		}
+	/*	}*/
 		return products;
 	}
 	
