@@ -229,7 +229,10 @@ font-size: 14px;
 					</c:if>
 				</s:if>
 				<s:elseif test="'mdy' == viewFlag">
-					<s:if test="inStock.goflag==1"><font color="red">对方取消发货</font></s:if>
+					<s:if test="inStock.goflag==1"><font color="red">对方取消全部发货</font></s:if>
+					<s:if test="inStock.goflag==5"><font color="red">对方取消部分发货</font></s:if>
+					<s:if test="inStock.goflag==3"><font color="red">对方全部产品已发货</font></s:if>
+					<s:if test="inStock.goflag==4"><font color="red">对方部分产品已发货</font></s:if>
 					<s:else>
 					<c:if test="${it:checkWarePermit(null,'in')==true}">
 						<s:if test="inStock.goflag==0 || inStock.goflag==null">
@@ -265,6 +268,7 @@ font-size: 14px;
 	</s:form>
 	
 	<!-- 添加拆分 -->
+	<s:if test="'mdy' == viewFlag">
 		<div id="addPosmForm" class="label_con idialog" title="拆分">
 			<s:form name="form_addPosmForm" cssClass="validFormDialog" action="inDetail_spilt" namespace="/inStock" method="post" theme="simple">
 			<s:hidden name="inStock.uuid" title="编号" value="%{inStock.uuid}" />
@@ -301,6 +305,7 @@ font-size: 14px;
 				</div>
 			</s:form>
 		</div>
+	</s:if>
 </div>
 </div>
 

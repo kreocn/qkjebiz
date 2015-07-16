@@ -24,6 +24,10 @@ public class InStockDAO extends AbstractDAO {
 		setCountMapid("inStock_getInStocksCounts");
 		return super.list("inStock_getInStocks", map);
 	}
+	
+	public List listSplit(Map<String, Object> map) {
+		return super.list("inStock_getInStocksSpilt", map);
+	}
 
 	public Object get(Object uuid) {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -125,7 +129,52 @@ public class InStockDAO extends AbstractDAO {
 			inStock.setConname(u);
 			inStock.setContime(new Date());
 			mdySure(inStock);
-
+			
+			
+			List<InStock> spilts=new ArrayList<>();
+			map.clear();
+			if(inStock.getSplit()==1){
+				map.put("uuid", inStock.getSplitUuid());
+			}else{
+				map.put("uuid", inStock.getUuid());
+			}
+			spilts=this.listSplit(map);
+			boolean falg=true;
+			if(spilts.size()>1){//说明拆分过
+				for(int i=0;i<spilts.size();i++){
+					InStock s=new InStock();
+					s=spilts.get(i);
+					if(s.getConfirm()!=null&&s.getSend()!=1){//说明已确认入库
+					}else{
+						falg=false;
+					}
+				}
+			}
+			if(falg==false){//部分确认入库
+				if(inStock.getGoreason()==1){//非手动填加来自出库单
+					OutStockDAO od = new OutStockDAO();
+					OutStock os = new OutStock();
+					if(inStock.getSplit()==1){
+						os.setGoldUuid(inStock.getSplitUuid());
+					}else{
+						os.setGoldUuid(inStock.getUuid());
+					}
+					os.setBoflag(6);
+					od.updateboflag(os);
+				}
+			}else{//全部确认
+				if(inStock.getGoreason()==1){//非手动填加
+					OutStockDAO od = new OutStockDAO();
+					OutStock os = new OutStock();
+					if(inStock.getSplit()==1){
+						os.setGoldUuid(inStock.getSplitUuid());
+					}else{
+						os.setGoldUuid(inStock.getUuid());
+					}
+					os.setBoflag(5);
+					od.updateboflag(os);
+				}
+			}
 			super.commitTransaction();
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -159,12 +208,58 @@ public class InStockDAO extends AbstractDAO {
 
 				}
 			}
-			if (inStock.getReason() == 4) {
+			if (inStock.getReason() == 4 && inStock.getGoreason()!=1) {//手动添加的调入单取消时修改出库状态
 				OutStockDAO od = new OutStockDAO();
 				OutStock os = new OutStock();
 				os.setGoldUuid(inStock.getUuid());
 				os.setBoflag(3);
 				od.updateboflag(os);
+			}
+			
+			List<InStock> spilts=new ArrayList<>();
+			map.clear();
+			map.put("uuid", inStock.getUuid());
+			if(inStock.getSplit()==1){
+				map.put("uuid", inStock.getSplitUuid());
+			}else{
+				map.put("uuid", inStock.getUuid());
+			}
+			spilts=this.listSplit(map);
+			boolean falg=true;
+			if(spilts.size()>1){//说明拆分过
+				for(int i=0;i<spilts.size();i++){
+					InStock s=new InStock();
+					s=spilts.get(i);
+					if(s.getSend()==1){//说明已取消入库
+					}else{
+						falg=false;
+					}
+				}
+			}
+			if(falg==false){//部分取消入库
+				if(inStock.getGoreason()==1){//非手动填加来自出库单
+					OutStockDAO od = new OutStockDAO();
+					OutStock os = new OutStock();
+					if(inStock.getSplit()==1){
+						os.setGoldUuid(inStock.getSplitUuid());
+					}else{
+						os.setGoldUuid(inStock.getUuid());
+					}
+					os.setBoflag(4);
+					od.updateboflag(os);
+				}
+			}else{//全部取消
+				if(inStock.getGoreason()==1){//非手动填加
+					OutStockDAO od = new OutStockDAO();
+					OutStock os = new OutStock();
+					if(inStock.getSplit()==1){
+						os.setGoldUuid(inStock.getSplitUuid());
+					}else{
+						os.setGoldUuid(inStock.getUuid());
+					}
+					os.setBoflag(3);
+					od.updateboflag(os);
+				}
 			}
 			super.commitTransaction();
 		} catch (Exception e) {

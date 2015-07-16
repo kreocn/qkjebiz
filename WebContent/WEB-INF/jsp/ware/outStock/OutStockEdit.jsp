@@ -260,6 +260,10 @@
 				</c:if>
 			</s:if>
 			<input type="button" value="返回" class="input-gray" onclick="linkurl('<s:url action="outStock_list" namespace="/outStock"><s:param name="viewFlag">relist</s:param></s:url>');" />
+			<s:if test="outStock.boflag==3"><font color="red">对方取消全部货物的入库</font></s:if>
+			<s:if test="outStock.boflag==4"><font color="red">对方取消部分货物的入库</font></s:if>
+			<s:if test="outStock.boflag==5"><font color="red">对方全部货物已入库</font></s:if>
+			<s:if test="outStock.boflag==6"><font color="red">对方部分货物已入库</font></s:if>
             </div>
 		</div>
 		</div>

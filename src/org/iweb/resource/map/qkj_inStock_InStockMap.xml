@@ -117,6 +117,11 @@
 		</dynamic>
 	</select>
 	
+	<select id="inStock_getInStocksSpilt" resultClass="inStock" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT * FROM qkj_t_instock s WHERE s.`uuid`=#uuid# OR s.`splitUuid`=#uuid#
+		]]>
+	</select>
 	
 	<insert id="inStock_addInStock" parameterClass="inStock">
 		<![CDATA[ 

@@ -30,6 +30,10 @@ public class OutStockDAO extends AbstractDAO {
 		setCountMapid("outStock_getOutStocksCounts");
 		return super.list("outStock_getOutStocks", map);
 	}
+	
+	public List listSplit(Map<String, Object> map) {
+		return super.list("outStock_getOutStocksSpilt", map);
+	}
 
 	public Object get(Object uuid) {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -165,36 +169,8 @@ public class OutStockDAO extends AbstractDAO {
 				}
 
 			}
-
-			if (outStock.getGoreason() == 2) {// 销售订单
-				/*
-				 * map.clear();
-				 * map.put("lading_id", outStock.getGoldUuid());
-				 * List<LadingItem> ladingItems=new ArrayList<>();
-				 * LadingItemDAO idao = new LadingItemDAO();
-				 * ladingItems = idao.list(map);
-				 * if(ladingItems.size()>0){
-				 * for(int i=0;i<ladingItems.size();i++){
-				 * if(outDetails.size()>0){
-				 * 
-				 * }
-				 * }
-				 * 
-				 * }
-				 */
-				LadingDAO idao = new LadingDAO();
-				Lading l = new Lading();
-				l.setUuid(outStock.getGoldUuid());
-				l.setGoflag(1);
-				idao.mdyLadingGoflag(l);
-			}
-
-			if (outStock.getGoreason() == 3) {// 至事由
-
-			}
-
+			mdyQstate(outStock,1);
 			super.commitTransaction();
-
 		} catch (Exception e) {
 			// TODO: handle exception
 		} finally {
@@ -202,6 +178,8 @@ public class OutStockDAO extends AbstractDAO {
 		}
 		return 1;
 	}
+
+	
 
 	/**
 	 * 取消订单
@@ -241,20 +219,16 @@ public class OutStockDAO extends AbstractDAO {
 				}
 			}
 			// 修改对应入库单状态（调货）取消发货
-			if (outStock.getReason() == 6) {
+			if (outStock.getReason() == 6&&outStock.getGoreason()==0) {
 				InStockDAO id = new InStockDAO();
 				InStock in = new InStock();
 				in.setGoldUuid(outStock.getUuid());
 				in.setGoflag(1);
 				id.saveFlogbyGodUid(in);
 			}
-			if (outStock.getGoreason() == 2) {// 销售订单
-				LadingDAO idao = new LadingDAO();
-				Lading l = new Lading();
-				l.setUuid(outStock.getGoldUuid());
-				l.setGoflag(3);
-				idao.mdyLadingGoflag(l);
-			}
+			
+			mdyQstate(outStock,1);
+			
 			super.commitTransaction();
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -384,6 +358,92 @@ public class OutStockDAO extends AbstractDAO {
 			super.endTransaction();
 		}
 
+	}
+	
+	/**
+	 * 修改对方表的状态
+	 * @param outStock
+	 */
+	private void mdyQstate(OutStock outStock,int state) {
+		List<OutStock> spilts=new ArrayList<>();
+		InStockDAO id = new InStockDAO();
+		InStock in = new InStock();
+		LadingDAO idao = new LadingDAO();
+		Lading l = new Lading();
+		
+		map.clear();
+		if(outStock.getSplit()==1){
+			map.put("uuid", outStock.getSplitUuid());
+		}else{
+			map.put("uuid", outStock.getUuid());
+		}
+		spilts=this.listSplit(map);
+		boolean falg=true;
+		if(spilts.size()>1){//说明拆分过
+			for(int i=0;i<spilts.size();i++){
+				OutStock s=new OutStock();
+				s=spilts.get(i);
+				if(s.getSend()==4){//说明已确认入库
+				}else{
+					falg=false;
+				}
+			}
+		}
+		
+		if(falg==false){//部分
+			if(outStock.getGoreason()==1){//非手动填加来自入库单
+				if(outStock.getSplit()==1){
+					in.setGoldUuid(outStock.getSplitUuid());
+				}else{
+					in.setGoldUuid(outStock.getUuid());
+				}
+				if(state==1){//确认出库
+					in.setGoflag(4);
+				}else{//取消出库
+					in.setGoflag(5);
+				}
+				id.saveFlogbyGodUid(in);
+			}
+			
+			if (outStock.getGoreason() == 2) {// 销售订单
+				l.setUuid(outStock.getGoldUuid());
+				if(state==1){//确认出库
+					l.setGoflag(2);
+				}else{//取消出库
+					l.setGoflag(4);
+				}
+				idao.mdyLadingGoflag(l);
+			}
+
+			if (outStock.getGoreason() == 3) {// 至事由
+
+			}
+			
+		}else{//全部确认
+			if(outStock.getGoreason()==1){//非手动填加
+				if(outStock.getSplit()==1){
+					in.setGoldUuid(outStock.getSplitUuid());
+				}else{
+					in.setGoldUuid(outStock.getUuid());
+				}
+				in.setGoflag(3);
+				id.saveFlogbyGodUid(in);
+			}
+			
+			if (outStock.getGoreason() == 2) {// 销售订单
+				l.setUuid(outStock.getGoldUuid());
+				if(state==1){//确认出库
+					l.setGoflag(1);
+				}else{//取消出库
+					l.setGoflag(3);
+				}
+				idao.mdyLadingGoflag(l);
+			}
+
+			if (outStock.getGoreason() == 3) {// 至事由
+
+			}
+		}
 	}
 
 	public int getResultCount() {
