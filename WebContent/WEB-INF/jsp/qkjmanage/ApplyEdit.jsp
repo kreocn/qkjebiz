@@ -220,8 +220,8 @@
 						<s:if test="'mdy' == viewFlag">
 					<div class="label_main">
 						<div class="lb_xxsm">
-							<p class="lb_yjtit fy_hide">预计活动费用</p>
-								<s:if test="apply.status==0" >
+							<p class="lb_yjtit fy_hide">预计活动费用 </p>
+								<s:if test="apply.status==0||apply.status==5" >
 							<p class="lb_yjtit">
 							<s:url id="ladingAddProductsUrl" action="qkjm_addProducts" namespace="qkjmanage">
 												<s:param name="prodName">applyProduct.product_id</s:param>
@@ -256,7 +256,7 @@
 												<td class="nw">${num}</td>
 												<td class="nw">￥${total_price}</td>
 												<td>
-										<s:if test="apply.status==0" >
+										<s:if test="apply.status==0||apply.status==5" >
 														<a href="<s:url action="applyProduct_del"><s:param name="applyProduct.uuid" value="%{uuid}" /><s:param name="applyProduct.apply_id" value="%{apply.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
 											</s:if>
 												</td>
@@ -279,7 +279,7 @@
 												<td class="nw">${num}</td>
 												<td class="nw">￥${total_price}</td>
 												<td>
-												<s:if test="apply.status==0" >
+												<s:if test="apply.status==0||apply.status==5" >
 														<a href="<s:url action="applyProduct_del"><s:param name="applyProduct.uuid" value="%{uuid}" /><s:param name="applyProduct.apply_id" value="%{apply.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
 												</s:if>
 												</td>
@@ -303,7 +303,7 @@
 												<td>${note}</td>
 												<td class="nw">￥${total_price}</td>
 												<td class="nw">
-												<s:if test="apply.status==0" >
+												<s:if test="apply.status==0||apply.status==5" >
 														<a href="<s:url action="applyPosm_del"><s:param name="applyPosm.uuid" value="%{uuid}" /><s:param name="applyPosm.apply_id" value="%{apply.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
 									</s:if>
 												</td>
