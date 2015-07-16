@@ -118,19 +118,27 @@
 					<div class="label_main">
 							<div class="label_hang">
 								<div class="label_ltit">签字:</div>
-								<div class="label_rwbenx label_rwb_sign">
 									<s:iterator value="applyUserSign" status="sta">
+									
 											<s:if test="user_sign==null">
-												<span class="uname">${sign_user_name}</span>
-												<span class="vab">${it:formatDate(sign_biz_time,'yyyy-MM-dd')}</span>
-											</s:if>
-											<s:if test="user_sign!=null">
-													<span class="user_sign"><img src="${user_sign}" /></span>
-													<span class="vab">${it:formatDate(sign_biz_time,'yyyy-MM-dd')}</span>
+												<div style="float:left;margin-left:10px;">
+												<span >${sign_user_name}  </span>
+												<br/>
+														
+												<span style="line-height:60px" >${it:formatDate(sign_biz_time,'yyyy-MM-dd')}</span>
+													</div>
 											</s:if>
 										
+										
+											<s:if test="user_sign!=null">
+														<div style="float:left;margin-left:10px;">
+													<span class="user_sign"><img src="${user_sign}" /></span>
+													<span class="vab">${it:formatDate(sign_biz_time,'yyyy-MM-dd')}</span>
+														</div>
+											</s:if>
+														
 									</s:iterator>
-								</div>
+								
 							</div>
 						</div>
 					</s:if>
