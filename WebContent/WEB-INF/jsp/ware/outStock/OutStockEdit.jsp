@@ -268,6 +268,7 @@
 	</s:form>
 	
 	<!-- 添加拆分 -->
+	<s:if test="'mdy'==viewFlag">
 		<div id="addPosmForm" class="label_con idialog" title="拆分">
 			<s:form name="form_addPosmForm" cssClass="validFormDialog" action="outStock_spilt" namespace="/outStock" method="post" theme="simple">
 			<s:hidden name="outStock.uuid" title="编号" value="%{outStock.uuid}" />
@@ -304,6 +305,7 @@
 				</div>
 			</s:form>
 		</div>
+	</s:if>
 </div>
 </div>
 <s:action name="ref_foot" namespace="/manager" executeResult="true" />

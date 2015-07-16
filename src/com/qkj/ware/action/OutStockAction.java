@@ -275,6 +275,9 @@ public class OutStockAction extends ActionSupport {
 				this.setOutStock(null);
 				setMessage("无操作类型!");
 			}
+			if(detailS==null||detailS.equals("")){
+				detailS="0";
+			}
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!load 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!load 读取数据错误:", e);

@@ -235,6 +235,7 @@ public class OutDetailAction extends ActionSupport {
 				if(outStock.getTotal_price()==null){
 					outStock.setTotal_price(0.00);
 				}
+				outDetail.setFlag("0");
 				outStock.setTotal_price(outStock.getTotal_price() + outDetail.getTotel());
 				od.saveTotal(outStock);
 			}

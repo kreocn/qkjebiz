@@ -236,14 +236,15 @@ font-size: 14px;
 						<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_MDY',null)==true && inStock.confirm==null}">
 							<s:submit id="save" name="save" value="保存" action="inStock_save" cssClass="input-blue"/>
 						</c:if>
-						<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_SPILT',null)==true && it:checkWarePermit(inStock.store_id,'in')==true && inStock.confirm==null && (inStock.goflag==0 || inStock.goflag==null)}">
-							<input type="button" id="addPosm" value="拆分" />
-						</c:if>
-						
 						<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_DEL',null)==true && inStock.confirm==null }">
 							<s:submit id="delete" name="delete" value="删除" action="inStock_del"  cssClass="input-red"/>
 						</c:if>
 						</s:if>
+						
+						<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_SPILT',null)==true  && inDetails.size()>0 && inStock.confirm!=1 && (inStock.reason!=4 || (inStock.reason==4 && inStock.goflag==3))}">
+							<input type="button" id="addPosm" value="拆分" />
+						</c:if>
+						
 						<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_SURE',null)==true && inDetails.size()>0 && inStock.confirm!=1 && (inStock.reason!=4 || (inStock.reason==4 && inStock.goflag==3))}">
 							<s:submit value="确认入库" action="inStock_sure" onclick="return isOp('是否确认?\n确认后将不能更改!');" cssClass="input-yellow"></s:submit>
 						</c:if>
