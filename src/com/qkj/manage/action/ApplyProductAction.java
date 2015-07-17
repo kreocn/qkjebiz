@@ -27,7 +27,7 @@ public class ApplyProductAction  extends ActionSupport{
 		this.applyProduct = applyProduct;
 	}
 	public String add() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVEPRODUCT_ADD");
+	
 		try {
 			applyProduct.setStatus(1);
 			dao.add(applyProduct);
@@ -40,7 +40,7 @@ public class ApplyProductAction  extends ActionSupport{
 	}
 	
 	public String del() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVEPRODUCT_DEL");
+
 		try {
 			dao.delete(applyProduct);
 			adao.mdyActiveItPrice(applyProduct.getApply_id());
