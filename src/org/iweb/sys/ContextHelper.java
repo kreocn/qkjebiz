@@ -403,10 +403,30 @@ public class ContextHelper {
 		} else {
 			String value = ulf.getUser_prvg_map().get(p_id);
 			if (value!=null && value.contains("#")) {// 权限中存在个人权限
-				String code = value.substring(value.indexOf("#") + 1, value.length());
-				if (code != null && dept_code.equals(code)) {
-					flag = true;
+				String[] s = (String[]) JSONUtil.toObject(value, String[].class);// 转换成数组
+				if(s!=null&&value.contains(",")){
+					for(int i=0;i<s.length;i++){
+						if(s[i].contains("#")){
+							String code = value.substring(s[i].indexOf("#") + 1, s[i].length());
+							if (code != null && dept_code.equals(code)) {
+								flag = true;
+								break;
+							}
+						}else{
+							if (s[i] != null && dept_code.equals(s[i])) {
+								flag = true;
+								break;
+							}
+						}
+					}
+					
+				}else{
+					String code = value.substring(value.indexOf("#") + 1, value.length());
+					if (code != null && dept_code.equals(code)) {
+						flag = true;
+					}
 				}
+				
 			} else {
 				String[] s = (String[]) JSONUtil.toObject(value, String[].class);// 转换成数组
 				flag = ToolsUtil.isIn(dept_code, s);// 判断在不在数组中
