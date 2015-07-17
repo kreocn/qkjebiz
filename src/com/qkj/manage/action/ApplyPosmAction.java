@@ -49,7 +49,7 @@ public class ApplyPosmAction extends ActionSupport {
 	}
 
 	public String add() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVEPOSM_ADD");
+	
 		try {
 			applyPosm.setStatus(1);
 			dao.add(applyPosm);
