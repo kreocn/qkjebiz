@@ -37,8 +37,8 @@ public class CloseOrderCheckSkip {
 		//skipSteps.add(new CloseOrerSkipStep("403", 1, "check0", "check30,mdyCloseOrderSMDStatus40"));// 销管跳过总监销管部
 		//skipSteps.add(new CloseOrerSkipStep("404", 1, "check0", "check30,mdyCloseOrderSMDStatus40"));// 销管跳过总监销管部
 		
-		skipSteps.add(new CloseOrerSkipStep("406", 1, "check0", "check20"));// 销管跳过大区
-		skipSteps.add(new CloseOrerSkipStep("406", 1, "mdyCloseOrderSMDStatus10", "check30,mdyCloseOrderSMDStatus40"));// 销管跳过大区
+		skipSteps.add(new CloseOrerSkipStep("40102", 1, "check0", "mdyCloseOrderSMDStatus10"));// 销管跳过销管
+		//skipSteps.add(new CloseOrerSkipStep("406", 1, "mdyCloseOrderSMDStatus10", "check30,mdyCloseOrderSMDStatus40"));// 销管跳过大区
 		//skipSteps.add(new CloseOrerSkipStep("405", 1, "mdyCloseOrderSMDStatus10", "check30,mdyCloseOrderSMDStatus40"));// 销管跳过总监销管部
 		
 	}
