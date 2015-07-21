@@ -136,8 +136,8 @@
 	
 	<insert id="qkjmanage_addApply" parameterClass="apply">
 		<![CDATA[ 
-			Insert Into qkjm_r_apply(touser,title,note,apply_dept,apply_user,apply_time,status,lm_user,is_fullcheck,fullcheck_text,apply_type)
-			Values (#touser#,#title#,#note#,#apply_dept#,#apply_user#,#apply_time#,#status#,#lm_user#,#is_fullcheck#,#fullcheck_text#,#apply_type#)
+			Insert Into qkjm_r_apply(touser,title,note,apply_dept,apply_user,apply_time,status,lm_user,is_fullcheck,fullcheck_text,apply_type,is_material)
+			Values (#touser#,#title#,#note#,#apply_dept#,#apply_user#,#apply_time#,#status#,#lm_user#,#is_fullcheck#,#fullcheck_text#,#apply_type#,#is_material#)
 		]]>
 		<selectKey resultClass="int" keyProperty="uuid">
 		<![CDATA[ 
@@ -155,7 +155,8 @@
 				lm_user=#lm_user#,
 				is_fullcheck=#is_fullcheck#,
 				apply_type=#apply_type#,
-				fullcheck_text=#fullcheck_text#
+				fullcheck_text=#fullcheck_text#,
+				is_material=#is_material# 
 			Where uuid = #uuid#
 		]]>
 	</update>
