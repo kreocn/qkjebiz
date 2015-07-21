@@ -298,6 +298,7 @@ public class OutStockAction extends ActionSupport {
 			outStock.setAdd_timer(d);
 			outStock.setLm_user(u);
 			outStock.setLm_timer(new Date());
+			outStock.setSplit(0);
 			dao.add(outStock);
 			map.clear();
 			map.put("ordernum", outStock.getOrdernum());

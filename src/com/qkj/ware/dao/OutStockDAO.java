@@ -260,6 +260,7 @@ public class OutStockDAO extends AbstractDAO {
 		outStock.setGoldUuid(uuid);
 		outStock.setBorrowStore_id(borrow_id);
 		outStock.setGoreason(goreason);
+		outStock.setSplit(0);
 		outStock.setSend(2);
 		if (reason == 0) {
 			outStock.setMember_id(me.getUuid());
@@ -372,7 +373,7 @@ public class OutStockDAO extends AbstractDAO {
 		Lading l = new Lading();
 		
 		map.clear();
-		if(outStock.getSplit()==1){
+		if(outStock.getSplit()!=null&&outStock.getSplit()==1){
 			map.put("uuid", outStock.getSplitUuid());
 		}else{
 			map.put("uuid", outStock.getUuid());
@@ -392,7 +393,7 @@ public class OutStockDAO extends AbstractDAO {
 		
 		if(falg==false){//部分
 			if(outStock.getGoreason()==1){//非手动填加来自入库单
-				if(outStock.getSplit()==1){
+				if(outStock.getSplit()!=null&&outStock.getSplit()==1){
 					in.setGoldUuid(outStock.getSplitUuid());
 				}else{
 					in.setGoldUuid(outStock.getUuid());
@@ -421,7 +422,7 @@ public class OutStockDAO extends AbstractDAO {
 			
 		}else{//全部确认
 			if(outStock.getGoreason()==1){//非手动填加
-				if(outStock.getSplit()==1){
+				if(outStock.getSplit()!=null&&outStock.getSplit()==1){
 					in.setGoldUuid(outStock.getSplitUuid());
 				}else{
 					in.setGoldUuid(outStock.getUuid());

@@ -64,7 +64,7 @@
 		</dynamic>
 	</select>
 	
-	<select id="outStock_getOutStocksSpilt" resultClass="inStock" parameterClass="java.util.Map">
+	<select id="outStock_getOutStocksSpilt" resultClass="outStock" parameterClass="java.util.Map">
 		<![CDATA[ 
 			SELECT * FROM qkj_t_outstock s WHERE s.`uuid`=#uuid# OR s.`splitUuid`=#uuid#
 		]]>

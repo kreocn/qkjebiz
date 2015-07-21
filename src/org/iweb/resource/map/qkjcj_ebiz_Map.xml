@@ -233,6 +233,7 @@
 			<isNotNull prepend="AND" property="ware_class"><![CDATA[ w.ware_class=#ware_class# ]]></isNotNull>
 			<isNotNull prepend="AND" property="bug"><![CDATA[ w.uuid<>6 ]]></isNotNull>
 			<isNotNull prepend="AND" property="type"><![CDATA[ w.`ware_class`=0 ]]></isNotNull>
+			<isNotNull prepend="AND" property="ware_instcode"><![CDATA[ w.`ware_instcode`=#ware_instcode# ]]></isNotNull>
 			
 			<isNotEmpty prepend="AND" property="uuids">
 			<![CDATA[ w.uuid In ]]>
