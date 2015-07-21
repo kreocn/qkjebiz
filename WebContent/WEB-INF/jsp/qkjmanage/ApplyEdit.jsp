@@ -174,20 +174,6 @@
 							</div>
 						</div>
 					</div>
-					
-					<s:if test="apply.status==0||apply.status==5" >
-							<div class="label_main">
-						<div class="label_hang">
-							<div class="label_ltit">需要添加物料?</div>
-							<div class="label_rwbenx">
-								<s:checkbox id="apply_is_material_box" name="is_material_box" cssClass="regular-checkbox" />
-								<label for="apply_is_material_box"></label>
-								<s:hidden id="apply_is_material" name="apply.is_material" />
-								<font style="font-color:red" id="is_material_p"></font>
-							</div>
-						</div>
-					</div>
-					</s:if>
 					<div id="apply_fullcheck_text" class="label_main" style="display: none;">
 						<div class="label_hang">
 							<div class="label_ltit">会审说明:</div>
@@ -230,33 +216,45 @@
 							<div class="clear"></div>
 						</div>
 					</div>
-
+					<s:if test="apply.status==0||apply.status==5" >
+							<div class="label_main">
+						<div class="label_hang">
+							<div class="label_ltit">需要添加物料?</div>
+							<div class="label_rwbenx">
+								<s:checkbox id="apply_is_material_box" name="is_material_box" cssClass="regular-checkbox" />
+								<label for="apply_is_material_box"></label>
+								<s:hidden id="apply_is_material" name="apply.is_material" />
+								<font style="font-color:red" id="is_material_p"></font>
+							</div>
+						</div>
+					</div>
+					</s:if>
 						<s:if test="'mdy' == viewFlag">
 						<s:if test="1 == apply.is_material">
 					<div class="label_main" id="apply_material_text">
-						<div class="lb_xxsm">
-							<p class="lb_yjtit fy_hide">预计活动费用 </p>
+						<div >
+					
 								<s:if test="apply.status==0||apply.status==5" >
-							<p class="lb_yjtit">
+			
 							<s:url id="ladingAddProductsUrl" action="qkjm_addProducts" namespace="qkjmanage">
-												<s:param name="prodName">applyProduct.product_id</s:param>
-												<s:param name="uuidKey">applyProduct.uuid</s:param>
+												<s:param name="prodName">apply.product_id</s:param>
+												<s:param name="uuidKey">apply.uuid</s:param>
 												<s:param name="uuidValue" value="apply.uuid" />
-												<s:param name="backUrl">/qkjmanage/active_load?viewFlag=mdy&</s:param>
+												<s:param name="backUrl">/qkjmanage/apply_load?viewFlag=mdy&</s:param>
 												<s:param name="actionUrl">/qkjmanage/applyProduct_add</s:param>
-												<s:param name="keyName">applyProduct.apply_id</s:param>
-												<s:param name="perName">applyProduct.per_price</s:param>
-												<s:param name="numName">applyProduct.num</s:param>
-												<s:param name="totalName">applyProduct.total_price</s:param>
+												<s:param name="keyName">apply.apply_id</s:param>
+												<s:param name="perName">apply.per_price</s:param>
+												<s:param name="numName">apply.num</s:param>
+												<s:param name="totalName">apply.total_price</s:param>
 										
 											</s:url>
-							<input type="button" id="product" onclick="window.location.href='${ladingAddProductsUrl}';" value="添加酒品" />
-										<input type="button" id="addPosm" value="添加物料" />
+					
+									<!-- 	<input type="button" id="addPosm" value="添加物料" /> -->
 										</s:if>
-							<div class="lb_lgsfy">
+							<div class="lb_lgsfy" style="width: 100%;border: none;">	
 											
-								<div class="lb_yjcon">
-									<p class="lb_gstit">非海拔系列</p>
+								<div class="lb_yjcon" style="padding-left: 0;padding-right: 0;">
+									<p class="lb_gstit" style="text-align: left;"><input type="button" id="product" onclick="window.location.href='${ladingAddProductsUrl}';" value="添加酒品" /></p>
 									<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
 										<tr>
 											<th>品名</th>
@@ -273,7 +271,7 @@
 												<td class="nw">￥${total_price}</td>
 												<td>
 										<s:if test="apply.status==0||apply.status==5" >
-														<a href="<s:url action="applyProduct_del"><s:param name="applyProduct.uuid" value="%{uuid}" /><s:param name="applyProduct.apply_id" value="%{apply.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
+														<a href="<s:url action="applyProduct_del"><s:param name="apply.uuid" value="%{uuid}" /><s:param name="apply.apply_id" value="%{apply.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
 											</s:if>
 												</td>
 											</tr>
@@ -282,7 +280,7 @@
 								
 								</div>
 							</div>
-							<div class="lb_gsfy">
+							<div class="lb_gsfy" style="display: none">
 							<p class="lb_gstit" style="padding-top:11px;">公司销售物料(除酒品之外的其他费用,全部算物料)</p>
 									<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
 										<tr>
@@ -309,7 +307,7 @@
 								</div>
 							</div>
 							<div class="clear"></div>
-							<p class="lb_yjbot">方案预计费用总计: ￥${apply.it_price}</p>
+							<p class="lb_yjbot">费用总计: ￥${apply.it_price}</p>
 						</div>
 					</s:if>
 					</s:if>

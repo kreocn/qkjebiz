@@ -16,22 +16,25 @@ public class ApplyProductAction  extends ActionSupport{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private ApplyProduct applyProduct;
+	private ApplyProduct apply;
 	private ApplyProductDAO dao=new ApplyProductDAO();
 	private static Log log = LogFactory.getLog(ApplyProductAction.class);
 	private ApplyDAO adao = new ApplyDAO();
-	public ApplyProduct getApplyProduct() {
-		return applyProduct;
+
+	public ApplyProduct getApply() {
+		return apply;
 	}
-	public void setApplyProduct(ApplyProduct applyProduct) {
-		this.applyProduct = applyProduct;
+
+	public void setApply(ApplyProduct apply) {
+		this.apply = apply;
 	}
+
 	public String add() throws Exception {
 	
 		try {
-			applyProduct.setStatus(1);
-			dao.add(applyProduct);
-			adao.mdyActiveItPrice(applyProduct.getApply_id());
+			apply.setStatus(1);
+			dao.add(apply);
+			adao.mdyActiveItPrice(apply.getApply_id());
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!add 数据添加失败:", e);
 			throw new Exception(this.getClass().getName() + "!add 数据添加失败:", e);
@@ -42,8 +45,8 @@ public class ApplyProductAction  extends ActionSupport{
 	public String del() throws Exception {
 
 		try {
-			dao.delete(applyProduct);
-			adao.mdyActiveItPrice(applyProduct.getApply_id());
+			dao.delete(apply);
+			adao.mdyActiveItPrice(apply.getApply_id());
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!del 数据删除失败:", e);
 			throw new Exception(this.getClass().getName() + "!del 数据删除失败:", e);
