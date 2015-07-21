@@ -237,7 +237,7 @@
 								<s:if test="apply.status==0||apply.status==5" >
 			
 							<s:url id="ladingAddProductsUrl" action="qkjm_addProducts" namespace="qkjmanage">
-												<s:param name="prodName">apply.product_id</s:param>
+												<s:param name="prodName">apply	.product_id</s:param>
 												<s:param name="uuidKey">apply.uuid</s:param>
 												<s:param name="uuidValue" value="apply.uuid" />
 												<s:param name="backUrl">/qkjmanage/apply_load?viewFlag=mdy&</s:param>
@@ -254,7 +254,9 @@
 							<div class="lb_lgsfy" style="width: 100%;border: none;">	
 											
 								<div class="lb_yjcon" style="padding-left: 0;padding-right: 0;">
+										<s:if test="apply.status==0||apply.status==5" >
 									<p class="lb_gstit" style="text-align: left;"><input type="button" id="product" onclick="window.location.href='${ladingAddProductsUrl}';" value="添加酒品" /></p>
+								</s:if>
 									<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
 										<tr>
 											<th>品名</th>
