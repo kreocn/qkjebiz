@@ -174,6 +174,20 @@
 							</div>
 						</div>
 					</div>
+					
+					<s:if test="apply.status==0||apply.status==5" >
+							<div class="label_main">
+						<div class="label_hang">
+							<div class="label_ltit">需要添加物料?</div>
+							<div class="label_rwbenx">
+								<s:checkbox id="apply_is_material_box" name="is_material_box" cssClass="regular-checkbox" />
+								<label for="apply_is_material_box"></label>
+								<s:hidden id="apply_is_material" name="apply.is_material" />
+								<font style="font-color:red" id="is_material_p"></font>
+							</div>
+						</div>
+					</div>
+					</s:if>
 					<div id="apply_fullcheck_text" class="label_main" style="display: none;">
 						<div class="label_hang">
 							<div class="label_ltit">会审说明:</div>
@@ -216,9 +230,10 @@
 							<div class="clear"></div>
 						</div>
 					</div>
-					
+
 						<s:if test="'mdy' == viewFlag">
-					<div class="label_main">
+						<s:if test="1 == apply.is_material">
+					<div class="label_main" id="apply_material_text">
 						<div class="lb_xxsm">
 							<p class="lb_yjtit fy_hide">预计活动费用 </p>
 								<s:if test="apply.status==0||apply.status==5" >
@@ -233,6 +248,7 @@
 												<s:param name="perName">applyProduct.per_price</s:param>
 												<s:param name="numName">applyProduct.num</s:param>
 												<s:param name="totalName">applyProduct.total_price</s:param>
+										
 											</s:url>
 							<input type="button" id="product" onclick="window.location.href='${ladingAddProductsUrl}';" value="添加酒品" />
 										<input type="button" id="addPosm" value="添加物料" />
@@ -296,7 +312,7 @@
 							<p class="lb_yjbot">方案预计费用总计: ￥${apply.it_price}</p>
 						</div>
 					</s:if>
-					
+					</s:if>
 					<s:if test="'mdy' == viewFlag">
 						<div class="label_main">
 							<div class="label_hang">
@@ -626,9 +642,39 @@
 					$("#apply_fullcheck_text").hide();
 				}
 			});
+			
+			
+			$(function(){
+				if ($("#apply_is_material").val() == 1) {
+					$("#apply_is_material_box").attr("checked", "checked");
+					$("#apply_material_text").show();
+				}
+				$("#apply_is_material_box").bind("click", function(){
+					if ($("#apply_is_material").val() == 0) {
+						$("#is_material_p").text("请保存单据后再添加物料清单").css("color","red");
+						$("#apply_is_material").val("1")
+					} else if ($("#apply_is_material").val() == 1){
+						$("#is_material_p").text("").css("color","red");
+						$("#apply_is_material").val("0")
+						$("#apply_material_text").hide();
+					}
+				});
+			});
+			
+			
+			
+			
+			
+			
+			
 			$("#approveFrom").dialog({ autoOpen : false,
 			modal : true });
 		});
+		
+		
+		
+		
+		
 		function openApprove(){
 			$("#approveFrom").dialog("open");
 		}
