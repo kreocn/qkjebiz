@@ -28,9 +28,9 @@
 			<div class="label_hang">
 				<div class="label_ltit">条形码:</div>
 				<div class="label_rwbenx">
-					<s:textfield class="tiaomainput" name="customer.uuid" id="tiaomainput" />
+					<s:textfield class="tiaomainput" name="customer.uuid" id="tiaomainput" onkeydown= "if(event.keyCode==13)down()"/>
 		
-					&nbsp;<input type="reset" value="添加" id="storessubmit">
+					&nbsp;<input type="reset" value="添加" id="storessubmit" >
 				</div>
 			</div>
 			<div class="label_hang" id="svipname" style="display: none">
@@ -168,6 +168,7 @@ if(code!=""&&code!=null||puuid!=null&&puuid!=""){
        		alert("请输入正确的条码")
        	}
        firstnum=true; 
+  
  };
 
  ajax.addParameter("parameters", "code="+code+"&puuid="+puuid);
@@ -177,6 +178,7 @@ if(code!=""&&code!=null||puuid!=null&&puuid!=""){
 }else{
 	alert("请输入正确的条码")
 }
+$("#tiaomainput").val("");
 });
 function mylist(list){
 	var msg=list.id.split(",");
@@ -224,7 +226,7 @@ if(firstnum==true){
     show.push('<td class="td1"><input type="hidden" name="storesorderitem['+num+'].title" value="'+msg[3]+'"/>'+ msg[3] +'</td>');
     show.push('<td class="td1" style="display:none"><input type="hidden"  name="storesorderitem['+num+'].spec"  value="'+msg[4]+'"/>'+ msg[4] +'</td>') ;
     show.push('<td class="td1" ><input  type="hidden" id="price'+msg[0]+'" name="storesorderitem['+num+'].product_price"  value="'+msg[5]+'"/><input type="text" onkeyup="update_price('+msg[0]+')" value="'+msg[5]+'" style="width:50px" ></td>') ;
-    show.push('<td class="td1"><input type="button" id="jisuanadd'+msg[0]+'" value="+" /> <input type="text" style="width:40px" id="jisuannum'+msg[0]+'" name="storesorderitem['+num+'].order_num" value="'+casenum+'"  readonly="readonly"/> <input type="button" id="jisuanjian'+msg[0]+'" value="-" /></td>') ;
+    show.push('<td class="td1"><input type="button" id="jisuanjian'+msg[0]+'" value="-" /> <input type="text" style="width:40px" id="jisuannum'+msg[0]+'" name="storesorderitem['+num+'].order_num" value="'+casenum+'"  readonly="readonly"/><input type="button" id="jisuanadd'+msg[0]+'" value="+" /> </td>') ;
     show.push('<td class="td1" id="jisuanprice'+msg[0]+'"><input id="total_price'+msg[0]+'" type="hidden" name="storesorderitem['+num+'].order_total_price"  value="'+msg[5]*casenum+'"/><input type="text"    onkeyup="up_total_price('+msg[0]+')" value="'+ msg[5]*casenum+'"  style="width:50px"></td>') ;
     show.push(' <td class="td1 op-area"><a id="rmtr'+num+'" onclick="javascript:ondeltr(this)" href="javascript:void(0)" class="input-red">删除</a></td>') ;
     show.push('</tr>');
@@ -264,8 +266,8 @@ function fortr(list){
 	 var casenum=1;
 	 var barcode = list[0].bar_code;
 	 if(list[0].bar_code_box==code){
-		
 		casenum=list[0].case_spec;
+		alert(list[0].case_spec);
 	}else if(list[0].bar_code_tibet==code){
 	}else if(list[0].bar_code_tibet_box==code){
 		casenum=list[0].case_spec;
@@ -305,7 +307,7 @@ function fortr(list){
          show.push('<td class="td1" ><input type="hidden" name="storesorderitem['+num+'].title"  value="'+title+'"/>'+ title +'</td>');
          show.push('<td class="td1" style="display:none"><input type="hidden" name="storesorderitem['+num+'].spec"  value="'+spec+'"/>'+ spec +'</td>') ;
          show.push('<td class="td1" ><input type="hidden" id="price'+product_id+'" name="storesorderitem['+num+'].product_price"  value="'+marketprice+'"/><input type="text"    onkeyup="update_price('+product_id+')" value="'+marketprice+'"  style="width:50px"></td>') ;
-         show.push('<td class="td1"><input type="button" id="jisuanadd'+product_id+'" value="+" /> <input type="text" style="width:40px" id="jisuannum'+product_id+'" name="storesorderitem['+num+'].order_num" value="'+casenum+'"   readonly="readonly"/> <input type="button" id="jisuanjian'+product_id+'" value="-" /></td>') ;
+         show.push('<td class="td1"><input type="button" id="jisuanjian'+product_id+'" value="-" /> <input type="text" style="width:40px" id="jisuannum'+product_id+'" name="storesorderitem['+num+'].order_num" value="'+casenum+'"   readonly="readonly"/><input type="button" id="jisuanadd'+product_id+'" value="+" /> </td>') ;
          show.push('<td class="td1" id="jisuanprice'+product_id+'"><input id="total_price'+product_id+'" type="hidden"  name="storesorderitem['+num+'].order_total_price"  value="'+marketprice*casenum+'"/><input type="text"    onkeyup="up_total_price('+product_id+')" value="'+ marketprice*casenum+'"  style="width:50px"></td>') ;
          show.push(' <td class="td1 op-area"><a id="rmtr'+num+'" onclick="javascript:ondeltr(this)" href="javascript:void(0)" class="input-red">删除</a></td>') ;
          show.push('</tr>');
@@ -450,7 +452,11 @@ function up_total_price(a){
 }
 
 
+function down(){
+$("#storessubmit").click();
 
+
+}
 
 </script>
 

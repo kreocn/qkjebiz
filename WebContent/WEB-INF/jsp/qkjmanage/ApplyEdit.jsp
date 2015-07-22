@@ -136,9 +136,7 @@
 													<span class="vab">${it:formatDate(sign_biz_time,'yyyy-MM-dd')}</span>
 														</div>
 											</s:if>
-														
 									</s:iterator>
-								
 							</div>
 						</div>
 					</s:if>
