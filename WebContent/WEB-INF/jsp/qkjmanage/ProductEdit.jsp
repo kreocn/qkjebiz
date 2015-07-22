@@ -64,7 +64,7 @@
 				<div class="label_hang">
 				       <div class="label_ltit">数量:</div>
 				       <div class="label_rwben"><s:textfield name="product.case_spec" title="数量" cssClass="validate[required,custom[integer]]" cssStyle="width:40%;" />
-				       <s:textfield name="product.unit"  cssClass="validate[required,custom[integer]]" cssStyle="width:20%;" />&nbsp;/件</div>
+				       <s:textfield name="product.unit"   cssStyle="width:20%;" />&nbsp;/件</div>
 				</div>
 				<div class="label_hang">
 				       <div class="label_ltit">酒精度:</div>
