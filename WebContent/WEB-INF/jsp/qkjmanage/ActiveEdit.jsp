@@ -258,6 +258,8 @@
 										<font class="message_pass">销管部经理已审</font>(${active.smd_user_name})</s:if>
 									<s:if test="active.smd_status==50">
 										<font class="message_pass">销管副总已审</font>(${active.smd_user_name})</s:if>
+										<s:if test="active.smd_status==60">
+										<font class="message_pass">总经理已审</font>(${active.smd_user_name})</s:if>
 										<s:if test="active.smd_status==70">
 										<font class="message_pass">董事已审</font>(${active.smd_user_name})</s:if>
 								</div>
@@ -822,7 +824,7 @@
 									<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
 								
-								<c:if test="${active.smd_status==50 && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SMDSTATUS60',active.apply_dept)==true}">
+								<c:if test="${active.smd_status>=50 &&active.smd_status<70 && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SMDSTATUS60',active.apply_dept)==true}">
 									<s:submit id="mdyActiveSDStatus50" name="mdyActiveSDStatus50" cssClass="input-green" value="董事-审核通过" action="mdyActiveSMDStatus70" onclick="return isOp('确定执行此操作?');" />
 									<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSMDStatus5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
@@ -841,7 +843,7 @@
 									<s:if test="active.smd_status==50">
 										<font class="message_pass">销管副总已审</font>(${active.smd_user_name} ${it:formatDate(active.smd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 									<s:if test="active.smd_status==60">
-										<font class="message_pass">总经理已审</font>(${active.sd_user_name} ${it:formatDate(active.sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+										<font class="message_pass">总经理已审</font>(${active.smd_user_name} ${it:formatDate(active.smd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 									<s:if test="active.smd_status==70">
 										<font class="message_pass">董事已审</font>(${active.smd_user_name} ${it:formatDate(active.smd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 								</div>
