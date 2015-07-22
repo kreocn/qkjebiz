@@ -41,8 +41,8 @@
 
 	<insert id="qkjStores_addOrder" parameterClass="StoresOrder">  
     <![CDATA[
-        insert into qkj_t_order(user_id,user_name,total_price,add_time,login_dept) values 
-        (#user_id#,#user_name#,#total_price#,#add_time#,#login_dept#)  
+        insert into qkj_t_order(user_id,user_name,total_price,add_time,login_dept,member_id,member_name,member_mobile) values 
+        (#user_id#,#user_name#,#total_price#,#add_time#,#login_dept#,#member_id#,#member_name#,#member_mobile#)  
     ]]>
 		<selectKey resultClass="int" type="post" keyProperty="id">
 			select @@IDENTITY as value
@@ -127,7 +127,7 @@
 	
 		<select id="qkjStores_getOrderWeek" parameterClass="java.util.Map" resultClass="StoresOrder">
 		
-		select * from dbo.qkj_t_order WHERE datediff(day,[add_time],getdate())=0 and user_id=#userid#
+		select * from dbo.qkj_t_order WHERE datediff(day,[add_time],getdate())=0 and user_id=#userid# order by add_time DESC
 	</select>
 	
 		<delete id="qkjStores_deleteStoresOrderPrice" parameterClass="java.util.Map">
