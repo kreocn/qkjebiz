@@ -228,6 +228,9 @@
 								<s:if test="active.close_smd_status==50">
 									<font class="message_pass">销管副总已审</font>(${active.close_smd_user_name})</s:if>
 									
+									<s:if test="active.close_smd_status==60">
+									<font class="message_pass">总经理已审</font>(${active.close_smd_user_name})</s:if>
+									
 									<s:if test="active.close_smd_status==70">
 									<font class="message_pass">董事已审</font>(${active.close_smd_user_name})</s:if>
 							</div>
@@ -923,7 +926,7 @@
 										<s:if test="active.close_smd_status==50">
 											<font class="message_pass">销管副总已审</font>(${active.close_smd_user_name} ${it:formatDate(active.close_smd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 										<s:if test="active.close_smd_status==60">
-											<font class="message_pass">总经理已审</font>(${active.close_sd_user_name} ${it:formatDate(active.close_sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+											<font class="message_pass">总经理已审</font>(${active.close_smd_user_name} ${it:formatDate(active.close_smd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 											<s:if test="active.close_smd_status==70">
 											<font class="message_pass">董事已审</font>(${active.close_sd_user_name} ${it:formatDate(active.close_sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 									</div>

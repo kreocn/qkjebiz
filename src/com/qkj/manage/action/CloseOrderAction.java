@@ -422,7 +422,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_ADD");
 		try {
 			closeOrder.setClose_num(number());// 单据编号
-			closeOrder.setApply_dept(ContextHelper.getUserLoginDept());
+			//closeOrder.setApply_dept(ContextHelper.getUserLoginDept());
 			closeOrder.setAdd_user(ContextHelper.getUserLoginUuid());
 			closeOrder.setAdd_time(new Date());
 			closeOrder.setLm_user(ContextHelper.getUserLoginUuid());

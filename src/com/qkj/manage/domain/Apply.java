@@ -7,6 +7,7 @@ public class Apply {
 	private String touser;// 至(From)
 	private String title;// (varchar)主题
 	private String note;// (text)详细说明
+	private Integer is_material;// (text)详细说明
 	private Double it_price;// 公司合计费用
 	private String apply_dept;// (varchar)申请部门
 	private String apply_user;// (varchar)申请人
@@ -50,6 +51,13 @@ public class Apply {
 	private Integer status_end;
 	private Integer status_sp;
 	
+	public Integer getIs_material() {
+		return is_material;
+	}
+
+	public void setIs_material(Integer is_material) {
+		this.is_material = is_material;
+	}
 	public Double getIt_price() {
 		return it_price;
 	}
