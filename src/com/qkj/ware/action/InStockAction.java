@@ -437,5 +437,12 @@ public class InStockAction extends ActionSupport {
 		dao.addStock(ins,1,inStock.getUuid(),inDetail,inStock.getStore_id(),inStock.getSplitNum());
 		return SUCCESS;
 	}
+	
+	public String mdyRemark() throws Exception{
+		inStock.setRemark("仓库编号"+inStock.getStore_id()+"转入"+inStock.getStore_idR());
+		inStock.setStore_id(inStock.getStore_idR());
+		dao.mdyRemark(inStock);
+		return SUCCESS;
+	}
 
 }

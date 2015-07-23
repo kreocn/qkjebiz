@@ -539,6 +539,13 @@ public class OutStockAction extends ActionSupport {
 		dao.addStock(ins,1,outStock.getUuid(),outDetail,outStock.getStore_id(),outStock.getSplitNum());
 		return SUCCESS;
 	}
+	
+	public String mdyRemark() throws Exception{
+		outStock.setRemark("仓库编号"+outStock.getStore_id()+"转入"+outStock.getStore_idR());
+		outStock.setStore_id(outStock.getStore_idR());
+		dao.mdyRemark(outStock);
+		return SUCCESS;
+	}
 
 	/*
 	 * //送审

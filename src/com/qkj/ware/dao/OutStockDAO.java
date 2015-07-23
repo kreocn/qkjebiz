@@ -86,6 +86,10 @@ public class OutStockDAO extends AbstractDAO {
 	public int mdygolduid(Object parameters) {
 		return super.save("outStock_mdyGoldUuid", parameters);
 	}
+	
+	public int mdyRemark(Object parameters) {
+		return super.save("outStock_mdyRemark", parameters);
+	}
 
 	/**
 	 * 订单确认

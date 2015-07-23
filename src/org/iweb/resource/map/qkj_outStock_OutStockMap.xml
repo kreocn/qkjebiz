@@ -191,5 +191,15 @@
 		]]>
 	</update>
 	
+	<update id="outStock_mdyRemark" parameterClass="outStock">
+		<![CDATA[
+			Update qkj_t_outstock
+			Set 
+			store_id=#store_id#,
+			remark=#remark#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
 	<!-- OutStock End outStock_mdyCheckManage-->
 </sqlMap>

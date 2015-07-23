@@ -215,5 +215,15 @@
 			Where uuid = #uuid#
 		]]>
 	</update>
+	
+	<update id="inStock_mdyRemark" parameterClass="inStock">
+		<![CDATA[
+			Update qkj_t_instock
+			Set 
+			store_id=#store_id#,
+			remark=#remark#
+			Where uuid = #uuid#
+		]]>
+	</update>
 	<!-- InStock End -->
 </sqlMap>

@@ -824,11 +824,7 @@
 									<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
 								
-<<<<<<< HEAD
-								<c:if test="${active.smd_status>=50 && active.smd_status<70 && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SMDSTATUS60',active.apply_dept)==true}">
-=======
 								<c:if test="${active.smd_status>=50 &&active.smd_status<70 && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SMDSTATUS60',active.apply_dept)==true}">
->>>>>>> dev
 									<s:submit id="mdyActiveSDStatus50" name="mdyActiveSDStatus50" cssClass="input-green" value="董事-审核通过" action="mdyActiveSMDStatus70" onclick="return isOp('确定执行此操作?');" />
 									<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSMDStatus5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>

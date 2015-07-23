@@ -36,6 +36,7 @@ public class OutStock {
 
 	private Integer splitUuid;
 	private Integer split;
+	private String remark;
 
 	// 以下为非数据库字段
 	private String add_user_name;
@@ -47,8 +48,25 @@ public class OutStock {
 	private Date date_start;
 	private Date date_end;
 	private String borrowStore_name;
-	
+	private Integer store_idR;
+
 	private Integer splitNum;
+
+	public Integer getStore_idR() {
+		return store_idR;
+	}
+
+	public void setStore_idR(Integer store_idR) {
+		this.store_idR = store_idR;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
 
 	public Integer getSplitNum() {
 		return splitNum;

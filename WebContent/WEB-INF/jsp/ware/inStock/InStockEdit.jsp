@@ -135,6 +135,26 @@ font-size: 14px;
 					       </span>
 				       </div>
 	        </div>
+	        <c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_MDYREMAEK',null)==true && 'mdy' == viewFlag && inStock.confirm==null}">
+	        <div class="label_hang">
+		            <div class="label_ltit">转库:</div>
+		            <div class="label_rwben2">
+		            	<span class="label_rwb">
+						<s:textfield title="仓库名称" id="userdept_nameid" name="inStock.ware_name" readonly="true"  cssClass="validate[required,maxSize[85]]"/>
+						<s:hidden title="仓库编码" id="userdept_codeid" name="inStock.store_idR" readonly="true" />
+						</span>
+						<span class="lb nw">
+						<img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectWarevar('userdept_codeid','userdept_nameid');" />
+						</span>
+		            </div>
+		        </div>
+		        
+		        <div class="label_hang">
+			            <div class="label_rwben">
+								<s:submit  value="确定转库" action="mdyRemark"/>
+			            </div>
+			        </div>
+			       </c:if>
         </div>
         
         <div id="state6" style="display: none;">

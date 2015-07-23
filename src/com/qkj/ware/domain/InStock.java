@@ -28,11 +28,12 @@ public class InStock {
 	private Integer goldId;
 	private Integer splitUuid;
 	private Integer split;
+	private String remark;
 
 	// 数据库外
 	private String add_user_name;
 	private String lm_user_name;
-	
+	private Integer store_idR;
 	private Integer splitNum;
 
 	// 以下为非数据库字段
@@ -44,6 +45,22 @@ public class InStock {
 	private String conname_u;
 	private String goldId_name;
 	private String ware_name;
+
+	public Integer getStore_idR() {
+		return store_idR;
+	}
+
+	public void setStore_idR(Integer store_idR) {
+		this.store_idR = store_idR;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
 
 	public Integer getSplitNum() {
 		return splitNum;

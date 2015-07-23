@@ -70,6 +70,10 @@ public class InStockDAO extends AbstractDAO {
 	public int mdyGodUuid(Object parameters) {
 		return super.save("inStock_mdyGodUuid", parameters);
 	}
+	
+	public int mdyRemark(Object parameters) {
+		return super.save("inStock_mdyRemark", parameters);
+	}
 
 	public int sure(InStock inStock) {
 		String u = ContextHelper.getUserLoginUuid();
