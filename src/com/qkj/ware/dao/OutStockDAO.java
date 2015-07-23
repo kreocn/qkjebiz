@@ -10,14 +10,12 @@ import org.iweb.sys.AbstractDAO;
 import org.iweb.sys.ContextHelper;
 import org.iweb.sysvip.domain.Member;
 
+import com.qkj.manage.dao.ApplyDAO;
 import com.qkj.manage.dao.LadingDAO;
-import com.qkj.manage.dao.LadingItemDAO;
 import com.qkj.manage.dao.ProductDAO;
+import com.qkj.manage.domain.Apply;
 import com.qkj.manage.domain.Lading;
-import com.qkj.manage.domain.LadingItem;
 import com.qkj.manage.domain.Product;
-import com.qkj.ware.action.InStockAction;
-import com.qkj.ware.domain.InDetail;
 import com.qkj.ware.domain.InStock;
 import com.qkj.ware.domain.OutDetail;
 import com.qkj.ware.domain.OutStock;
@@ -231,7 +229,7 @@ public class OutStockDAO extends AbstractDAO {
 				id.saveFlogbyGodUid(in);
 			}
 			
-			mdyQstate(outStock,1);
+			mdyQstate(outStock,2);
 			
 			super.commitTransaction();
 		} catch (Exception e) {
@@ -374,7 +372,9 @@ public class OutStockDAO extends AbstractDAO {
 		InStockDAO id = new InStockDAO();
 		InStock in = new InStock();
 		LadingDAO idao = new LadingDAO();
+		ApplyDAO adao=new ApplyDAO();
 		Lading l = new Lading();
+		Apply a=new Apply();
 		
 		map.clear();
 		if(outStock.getSplit()!=null&&outStock.getSplit()==1){
@@ -421,7 +421,13 @@ public class OutStockDAO extends AbstractDAO {
 			}
 
 			if (outStock.getGoreason() == 3) {// 至事由
-
+				a.setUuid(outStock.getGoldUuid());
+				if(state==1){//确认出库
+					a.setGoflag(2);
+				}else{//取消出库
+					a.setGoflag(4);
+				}
+				adao.mdyApplyGoflag(a);
 			}
 			
 		}else{//全部确认
@@ -446,7 +452,13 @@ public class OutStockDAO extends AbstractDAO {
 			}
 
 			if (outStock.getGoreason() == 3) {// 至事由
-
+				a.setUuid(outStock.getGoldUuid());
+				if(state==1){//确认出库
+					a.setGoflag(1);
+				}else{//取消出库
+					a.setGoflag(3);
+				}
+				adao.mdyApplyGoflag(a);
 			}
 		}
 	}

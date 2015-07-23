@@ -231,6 +231,15 @@
 		WHERE t.uuid = #value#
 		]]>
 	</update>
+	
+	<update id="qkjmanage_mdyGoflag" parameterClass="apply">
+		<![CDATA[
+			Update qkjm_r_apply
+			Set 
+				goflag=#goflag#
+			Where uuid = #uuid#
+		]]>
+	</update>
 	<!-- ship info change -->
 	<!-- Apply End -->
 </sqlMap>

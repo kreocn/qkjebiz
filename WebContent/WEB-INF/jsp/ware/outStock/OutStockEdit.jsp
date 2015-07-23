@@ -360,6 +360,12 @@ function checkState(){
 		$("#state145").hide();
 		$("#state6").show();//
 		orderDis2();
+	}else if(state==5){//调出仓库
+		$("#state3").hide();//
+		$("#state0").hide();
+		$("#state145").hide();
+		$("#state6").hide();//
+		orderDis2();
 	}else{
 		$("#state145").show();//
 		$("#state0").hide();

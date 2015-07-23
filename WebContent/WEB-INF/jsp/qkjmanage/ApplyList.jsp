@@ -152,6 +152,11 @@ display: none;
 						<span id="ship_status_${uuid}">${ship_status}</span>
 						<span id="check_note_${uuid}">${check_note}</span>
 					</span>
+					
+					<s:if test='0==goflag'>未出库</s:if>
+					<s:if test='1==goflag'>确认出库</s:if>
+					<s:if test='2==goflag'>部分出库</s:if>
+					<s:if test='3==goflag'>取消出库</s:if>
 					</s:if>
 				</td>
 				<td class="td4 op-area nw">

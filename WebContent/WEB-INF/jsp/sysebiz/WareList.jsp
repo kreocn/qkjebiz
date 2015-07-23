@@ -225,7 +225,7 @@ function getInfo(obj) {
 		$("#ware_class").val(json.ware_class);
 		$("#ware\\.ware_instcode").val(json.ware_instcode);
 		$("#long_note").val(json.note);
-		if(json.ware_instcode!=null&& json.ware_instcode==3){
+		if(json.ware_instcode!=null){
 			$("#ins").show();
 		}else{
 			$("#ins").hide();
