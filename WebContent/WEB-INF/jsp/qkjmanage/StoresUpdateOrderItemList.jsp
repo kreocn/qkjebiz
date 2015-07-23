@@ -101,7 +101,33 @@
 				</table>
 				</fieldset>
 			</div>
-		</div>
+			<div class="tab_warp">
+				<fieldset>
+					<legend>是否</legend>
+			          			<div class="label_main">
+						<div class="label_hang">
+							<div class="label_ltit">是否需要开票</div>
+							<div class="label_rwbenx">
+						     <s:radio onclick="ticket(this);"  name="storyit.is_ticket" title="是否是会员"  list="#{0:'否',1:'是'}" value="0" cssClass="regular-radio" />
+							</div>
+						</div>
+					</div>
+		<div class="label_hang" id="svipname" style="display: none" >
+						<div class="label_ltit">发票抬头:</div>
+						<div class="label_rwben label_rwb">
+							<s:textfield id="order_user_name" name="storyit.invoice_title" />
+						</div>
+							<div class="label_ltit">发票金额:</div>
+						<div class="label_rwben label_rwb">
+							<s:textfield id="order_user_name" name="storyit.price" />
+						</div>
+							<div class="label_ltit">发票编号:</div>
+						<div class="label_rwben label_rwb">
+							<s:textfield id="order_user_name" name="storyit.member_name" />
+						</div>
+					</div>
+						</fieldset>
+			</div>
 	</div>
 		</div>
 	<s:action name="ref_foot" namespace="/manager" executeResult="true" />
@@ -124,6 +150,15 @@
 		       	 var num=$( "#spinner"+id ).spinner( "value" );
 		 		$("#tr"+id).find(".input-blue").attr("href","/qkjmanage/stores_order_item_delete.action?id="+id+"&storesid="+storesorder_id+"&totalPirce="+totalPrice+"&num="+num+"&price="+price+"");
 		 		$("#tr"+id).find(".input-blue").click(); 
+	}
+	
+	var ticket = function(obj){
+		if (getRadio("storyit.is_ticket") == 1) {
+			
+			document.getElementById("svipname").style.display = "";
+			document.getElementById("order_user_name").value = "";
+
+		} 
 	}
 	</script>
 </body>
