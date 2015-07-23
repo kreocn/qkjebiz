@@ -9,7 +9,7 @@
 		<action name="applyProduct_add" class="com.qkj.manage.action.ApplyProductAction" method="add">
 			<result type="redirectAction">
 				<param name="actionName">apply_load</param>
-				<param name="apply.uuid">${applyProduct.apply_id}</param>
+				<param name="apply.uuid">${apply.apply_id}</param>
 				<param name="viewFlag">mdy</param>
 				<param name="message">${message}</param>
 			</result>
@@ -19,7 +19,7 @@
 				<action name="applyProduct_del" class="com.qkj.manage.action.ApplyProductAction" method="del">
 					<result type="redirectAction">
 				<param name="actionName">apply_load</param>
-				<param name="apply.uuid">${applyProduct.apply_id}</param>
+				<param name="apply.uuid">${apply.apply_id}</param>
 				<param name="viewFlag">mdy</param>
 				<param name="message">${message}</param>
 			</result>

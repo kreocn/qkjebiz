@@ -53,13 +53,13 @@ public class StoresDao extends AbstractDAO {
 			dao.add(storesorderitem);
 			MemberCapital mc=new MemberCapital();
 			if(uuid.equals("")||uuid.equals("0")){
-				uuid="q999999";
+				uuid="q000500";
 			}
 			mc.setMember_id(uuid);
 			StoresOrder s=(StoresOrder)parameters;
 			mc.setScore((int)(s.getTotal_price()*Parameters.STORE_INTEGRATION));
 			MemberCapitalDAO md=new MemberCapitalDAO();
-			md.mdyCapital(mc, 3, 1, "消费积分增加,调整编号"+id);
+			md.mdyCapital(mc, 3, 1, "消费积分增加,门店支付,订单编号"+id);
 			commitTransaction();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
