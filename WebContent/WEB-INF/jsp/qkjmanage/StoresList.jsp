@@ -101,7 +101,6 @@
 						<tr>
 							<th class="td1">订单时间</th>
 							<th class="td1">订单总价</th>
-
 							<th class="td1">操作</th>
 						</tr>
 						<s:iterator value="storesorderlist" status="sta">
@@ -111,9 +110,10 @@
 								<td class="td1 op-area"><a class="input-blue" href="/qkjmanage/stores_order_update_details.action?id=${id}">查看详情</a></td>
 							</tr>
 						</s:iterator>
+					
 					</table>
+						<font style="color:red"> 显示为当天订单</font>
 				</div>
-
 			</div>
 		</s:form>
 	</div>
