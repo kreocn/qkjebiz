@@ -413,7 +413,7 @@ public class LadingAction extends ActionSupport {
 			me.setAddress(lading.getAddress());
 			OutStockDAO isa = new OutStockDAO();
 			Integer goid=getWare(lading.getDis_dept());
-			isa.addStock(lading.getUuid(), goid, null, 0, 2, produs,me);//生成销售用酒出库
+			isa.addStock(lading.getUuid(), goid, null, 0, 2, produs,me,false);//生成销售用酒出库
 			dao.commitTransaction();
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!saveLadingStatus10 数据更新失败:", e);

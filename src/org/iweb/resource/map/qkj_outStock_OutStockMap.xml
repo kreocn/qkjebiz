@@ -165,8 +165,9 @@
 		<![CDATA[
 			Update qkj_t_outstock
 			Set 
-			boflag=#boflag#
-			Where goldUuid = #goldUuid#
+			boflag=#boflag#,
+			backStock=#backStock#
+			Where goldUuid = #goldUuid# or uuid=#goldUuid#
 		]]>
 	</update>
 	

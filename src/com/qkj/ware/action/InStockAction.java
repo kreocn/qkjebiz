@@ -348,7 +348,11 @@ public class InStockAction extends ActionSupport {
 			}
 			if (inStock.getReason() == 4) {
 				OutStockDAO isa = new OutStockDAO();
-				isa.addStock(inStock.getUuid(), inStock.getGoldId(), inStock.getStore_id(), 6, 1, produs,null);
+				isa.addStock(inStock.getUuid(), inStock.getGoldId(), inStock.getStore_id(), 6, 1, produs,null,false);
+			}
+			if (inStock.getReason() == 5) {
+				OutStockDAO isa = new OutStockDAO();
+				isa.addStock(inStock.getUuid(), inStock.getGoldId(), inStock.getStore_id(), 7, 1, produs,null,false);
 			}
 			//修改goflag2出库单生成成功
 			inStock.setGoflag(2);
@@ -434,7 +438,59 @@ public class InStockAction extends ActionSupport {
 		InStock ins=new InStock();
 		ins=(InStock)dao.get(inStock.getUuid());
 		this.setInDetail((InDetail) idao.get(inDetail.getUuid()));
-		dao.addStock(ins,1,inStock.getUuid(),inDetail,inStock.getStore_id(),inStock.getSplitNum());
+		try {
+			dao.startTransaction();
+			dao.addStock(ins,1,inStock.getUuid(),inDetail,null,inStock.getStore_id(),inStock.getSplitNum());
+			dao.commitTransaction();
+		} catch (Exception e) {
+			// TODO: handle exception
+		} finally {
+			dao.endTransaction();
+		}
+		
+		return SUCCESS;
+	}
+	
+	/**
+	 * 还货20150715
+	 * @return
+	 * @throws Exception
+	 */
+	public String bakeStock() throws Exception{
+		ContextHelper.isPermit("QKJ_WARE_INSTOCK_BAKE");
+		try {
+			// 如何是调入仓库自动生成对方的调出仓库单
+			ProductDAO pd = new ProductDAO();
+			Product pdi = new Product();
+			List<Product> produs = new ArrayList<>();
+			map.clear();
+			map.put("lading_id", inStock.getUuid());
+			inDetails = idao.list(map);
+			if (inDetails != null && inDetails.size() > 0) {
+				for (int i = 0; i < inDetails.size(); i++) {
+					inDetail = new InDetail();
+					inDetail = inDetails.get(i);
+					List<Product> pros = new ArrayList<>();
+					map.clear();
+					map.put("uuid", inDetail.getProduct_id());
+					pros = pd.list(map);
+					if (pros.size() > 0) {
+						pdi = pros.get(0);
+						pdi.setNum(inDetail.getNum());
+						pdi.setDprice(inDetail.getPrice());
+						pdi.setDtotle(inDetail.getTotal());
+						produs.add(pdi);
+					}
+				}
+			}
+			InStock insa=new InStock();
+			insa=(InStock)dao.get(inStock.getUuid());
+			dao.bakeStock(insa, produs, inDetails);
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!add 数据添加失败:", e);
+			throw new Exception(this.getClass().getName() + "!add 数据添加失败:", e);
+		} 
+		
 		return SUCCESS;
 	}
 	

@@ -45,28 +45,13 @@
 						</div>
 					</div>
 					<div class="label_hang">
-						<div class="label_ltit">经手人:</div>
-						<div class="label_rwben">
-							<div class="label_rwb">
-								<s:property value="inStock.operator_name" />
-							</div>
-						</div>
-					</div>
-					<div class="label_hang">
-						<div class="label_ltit">保管员:</div>
-						<div class="label_rwben">
-							<div class="label_rwb">
-								<s:property value="inStock.take_name" />
-							</div>
-						</div>
-					</div>
-					<div class="label_hang">
 						<div class="label_ltit">入库时间:</div>
 						<div class="label_rwben">
 							<s:date name="inStock.date" format="yyyy-MM-dd" />
 						</div>
 					</div>
-					<div class="label_hang">
+					
+					<!--  --><div class="label_hang">
 						<div class="label_ltit">单据性质:</div>
 						<div class="label_rwben">
 							<s:if test="%{inStock.reason==0}">正常入库</s:if>
@@ -75,48 +60,25 @@
 							<s:if test="%{inStock.reason==3 }">其它</s:if>
 						</div>
 					</div>
+					
+				</div>
+				<div class="label_main">
 					<div class="label_hang">
-						<div class="label_ltit">添加人:</div>
-						<div class="label_rwben">
-							<s:property value="inStock.add_user_name" />
+						<div class="label_ltit">制单人:</div>
+						<div class="label_rwbenx">
+							<s:property value="inStock.add_user_name" />(<s:date name="inStock.add_timer" format="yyyy-MM-dd HH:mm:ss" />)
 						</div>
 					</div>
 
-					<div class="label_hang">
-						<div class="label_ltit">添加时间:</div>
-						<div class="label_rwbenx">
-							<s:date name="inStock.add_timer" format="yyyy-MM-dd HH:mm:ss" />
-						</div>
-					</div>
-					<div class="label_hang">
-						<div class="label_ltit">最后修改人:</div>
-						<div class="label_rwben">
-							<s:property value="inStock.lm_user_name" />
-						</div>
-					</div>
-					<div class="label_hang">
-						<div class="label_ltit">最后修改时间:</div>
-						<div class="label_rwbenx">
-							<s:date name="inStock.lm_timer" format="yyyy-MM-dd HH:mm:ss" />
-						</div>
-					</div>
 					<s:if test="%{inStock.conname!=null}">
 						<div class="label_hang">
 							<div class="label_ltit">确认人:</div>
-							<div class="label_rwben">
-								<s:property value="inStock.conname_u" />
-							</div>
-						</div>
-						<div class="label_hang">
-							<div class="label_ltit">确认时间:</div>
 							<div class="label_rwbenx">
-								<s:date name="inStock.contime" format="yyyy-MM-dd HH:mm:ss" />
+								<s:property value="inStock.conname_u" />(<s:date name="inStock.contime" format="yyyy-MM-dd HH:mm:ss" />)
 							</div>
 						</div>
 					</s:if>
-				</div>
-
-				<div class="label_main">
+					
 					<div class="label_hang">
 						<div class="label_ltit">入库仓库:</div>
 						<div class="label_rwben2">
@@ -135,22 +97,19 @@
 						</div>
 					</div>
 				</div>
+				
 				<div class="label_main">
 					<div class="label_hang">
 						<div class="label_ltit">入库原因:</div>
 						<div class="label_rwbenx">
-							<s:textarea id="apply_check_note" name="inStock.note"
-								title="入库原因" rows="4"
-								cssClass="label_hang_linput validate[required,maxSize[128]]"></s:textarea>
+						${inStock.note}
 						</div>
 					</div>
 				</div>
+				
 
 				<!-- 入库明细 -->
 				<s:if test="null != inStock">
-					<fieldset>
-						<legend>入库明细</legend>
-
 						<div class="label_main">
 							<table width="100%" cellpadding="0" cellspacing="0" border="0"
 								class="lb_jpin">
@@ -178,7 +137,6 @@
 								<s:property value="inStock.total_price" />
 							</p>
 						</div>
-					</fieldset>
 				</s:if>
 
 				<div class="label_main">

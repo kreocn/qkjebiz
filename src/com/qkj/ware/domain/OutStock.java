@@ -33,6 +33,7 @@ public class OutStock {
 	private Integer boflag;// 0未还1已还
 	private Integer goldUuid;
 	private Integer goreason;
+	private Integer backStock;
 
 	private Integer splitUuid;
 	private Integer split;
@@ -51,6 +52,14 @@ public class OutStock {
 	private Integer store_idR;
 
 	private Integer splitNum;
+
+	public Integer getBackStock() {
+		return backStock;
+	}
+
+	public void setBackStock(Integer backStock) {
+		this.backStock = backStock;
+	}
 
 	public Integer getStore_idR() {
 		return store_idR;

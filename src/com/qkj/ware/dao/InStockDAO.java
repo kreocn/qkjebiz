@@ -163,6 +163,12 @@ public class InStockDAO extends AbstractDAO {
 					}else{
 						os.setGoldUuid(inStock.getUuid());
 					}
+					if(inStock.getReason()==6){//还货
+						os.setBackStock(1);
+						os.setGoldUuid(inStock.getGoldUuid());
+					}else{
+						os.setBackStock(0);
+					}
 					os.setBoflag(6);
 					od.updateboflag(os);
 				}
@@ -174,6 +180,12 @@ public class InStockDAO extends AbstractDAO {
 						os.setGoldUuid(inStock.getSplitUuid());
 					}else{
 						os.setGoldUuid(inStock.getUuid());
+					}
+					if(inStock.getReason()==6){//还货
+						os.setBackStock(2);
+						os.setGoldUuid(inStock.getGoldUuid());
+					}else{
+						os.setBackStock(0);
 					}
 					os.setBoflag(5);
 					od.updateboflag(os);
@@ -323,22 +335,12 @@ public class InStockDAO extends AbstractDAO {
 		ldao.mdyTotalPrice(inStock.getUuid());
 	}
 
-	public void addStock(InStock ins, Integer spilt, Integer splitUuid, InDetail inDe,Integer store_id, Integer num) {
+	public void addStock(InStock ins, Integer spilt, Integer splitUuid, InDetail inDe,List<InDetail> inDes,Integer store_id, Integer num) {
 		// TODO Auto-generated method stub
 		try {
 			InDetailDAO idao = new InDetailDAO();
 			Product p = new Product();
-			super.startTransaction();
 
-			// 修改被拆表商品数量及价格
-			Double price = 0.00;
-			InDetail ind = new InDetail();
-			ind=inDe;
-			ind.setNum(ind.getNum() - num);
-			ind.setTotal(ind.getNum() * ind.getPrice());
-			price = ind.getPrice();
-			idao.save(ind);
-			
 			// 填加主表
 			InStock inStock = new InStock();
 			Date d = new Date();
@@ -347,7 +349,14 @@ public class InStockDAO extends AbstractDAO {
 			inStock = ins;
 			inStock.setUuid(null);
 			inStock.setOrdernum(numb);
-			inStock.setStore_id(store_id);
+			if (spilt != null && spilt == 2) {
+				inStock.setStore_id(inStock.getGoldId());
+				inStock.setGoldId(store_id);
+				inStock.setReason(6);
+				inStock.setGoreason(1);
+			}else{
+				inStock.setStore_id(store_id);
+			}
 			inStock.setAdd_user(u);
 			inStock.setAdd_timer(d);
 			inStock.setLm_timer(d);
@@ -361,27 +370,64 @@ public class InStockDAO extends AbstractDAO {
 			add(inStock);
 
 			// 填加子表s
-			InDetail inDetail = new InDetail();
-			inDetail.setLading_id(inStock.getUuid());
-			inDetail.setProduct_id(inDe.getProduct_id());
-			inDetail.setNum(num);
-			inDetail.setPrice(price);
-			inDetail.setTotal(num * price);
-			idao.add(inDetail);
+			if(inDe!=null){
+				// 修改被拆表商品数量及价格
+				Double price = 0.00;
+				InDetail ind = new InDetail();
+				ind=inDe;
+				ind.setNum(ind.getNum() - num);
+				ind.setTotal(ind.getNum() * ind.getPrice());
+				price = ind.getPrice();
+				idao.save(ind);
+				
+				InDetail inDetail = new InDetail();
+				inDetail.setLading_id(inStock.getUuid());
+				inDetail.setProduct_id(inDe.getProduct_id());
+				inDetail.setNum(num);
+				inDetail.setPrice(price);
+				inDetail.setTotal(num * price);
+				idao.add(inDetail);
+			}else{
+				for(int i=0;i<inDes.size();i++){
+					InDetail inDetail = new InDetail();
+					inDetail=inDes.get(i);
+					inDetail.setLading_id(inStock.getUuid());
+					idao.add(inDetail);
+				}
+			}
+			
+			if (spilt != null && spilt == 1) {
 			// 修改拆分主表的总价
 			InStockDAO ldao = new InStockDAO();
 			ldao.mdyTotalPrice(inStock.getUuid());
 			// 修改被拆主表的总价
 			ldao.mdyTotalPrice(ins.getUuid());
-
-			super.commitTransaction();
+			}
 		} catch (Exception e) {
-		} finally {
-			super.endTransaction();
+			
 		}
 
 	}
-
+	/**
+	 * 还货
+	 */
+	public void bakeStock(InStock inStock,List<Product> produs,List<InDetail>inDetails){
+		try {
+			super.startTransaction();
+			OutStockDAO isa = new OutStockDAO();
+			//填加已确认的出库单
+			isa.addStock(inStock.getUuid(),inStock.getStore_id(), inStock.getGoldId(),  8, 1, produs,null,true);
+			//填加待确认的入库单
+			InStock insa=new InStock();
+			insa=inStock;
+			addStock(insa,2,inStock.getUuid(),null,inDetails,inStock.getStore_id(),0);
+			super.commitTransaction();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}finally {
+			super.endTransaction();
+		}
+	}
 	/**
 	 * 产生流水号
 	 */

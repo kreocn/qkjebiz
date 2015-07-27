@@ -78,7 +78,7 @@
 	            <div class="label_ltit">状态:</div>
 	            <div class="label_rwbenx">
 		            <span class="label_rwbx">
-		            	<s:select id="out" onchange="checkState();" name="outStock.reason" cssClass="selectKick" list="#{0:'销售出库',3:'报损',1:'招待用酒',4:'赠酒',6:'调货出库',5:'其它'}" />
+		            	<s:select id="out" onchange="checkState();" name="outStock.reason" cssClass="selectKick" list="#{0:'销售出库',3:'报损',1:'招待用酒',4:'赠酒',6:'调货出库',7:'借货',8:'还货',5:'其它'}" />
 					</span>
 	            </div>
 	        </div>
@@ -261,10 +261,10 @@
 			</s:if> 
 			<s:if test="'mdy'==viewFlag">
 				<c:if test="${it:checkWarePermit(null,'out')==true}">
-					<c:if test="${it:checkPermit('QKJ_WARE_OUTSTOCK_MDY',null)==true && outStock.send!=4}">
+					<c:if test="${it:checkPermit('QKJ_WARE_OUTSTOCK_MDY',null)==true && outStock.send!=4&& outStock.send!=5}">
 						<s:submit id="save" name="save" value="保存" action="outStock_save" cssClass="input-blue"/>
 					</c:if>
-					<c:if test="${it:checkPermit('QKJ_WARE_OUTSTOCK_SPILT',null)==true && outStock.send!=4}">
+					<c:if test="${it:checkPermit('QKJ_WARE_OUTSTOCK_SPILT',null)==true && outStock.send!=4 && outStock.send!=5 }">
 							<input type="button" id="addPosm" value="拆分" />
 						</c:if>
 					<c:if test="${it:checkPermit('QKJ_WARE_OUTSTOCK_SURE',null)==true && outStock.send==2}">
@@ -354,7 +354,7 @@ function checkState(){
 		$("#state0").hide();
 		$("#state145").hide();
 		$("#state6").hide();orderDis2();
-	}else if(state==6){//调出仓库
+	}else if(state==6 || state==7 || state==8){//调出仓库
 		$("#state3").hide();//
 		$("#state0").hide();
 		$("#state145").hide();

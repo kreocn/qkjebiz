@@ -120,8 +120,8 @@ font-size: 14px;
 	        <div class="label_hang">
 	            <div class="label_ltit">单据性质:</div>
 	            <div class="label_rwben2">
-		            <span class="label_rwb">
-		            	<s:select id="out" onchange="checkState();" name="inStock.reason" cssClass="selectKick" list="#{0:'正常入库',1:'正常退货',2:'损坏退货',4:'调货入库',3:'其它'}" />
+		            <span class="label_rwb"><!--入库原因：0正常1正常退货2损坏退货3其它4调入仓库5借货 -->
+		            	<s:select id="out" onchange="checkState();" name="inStock.reason" cssClass="selectKick" list="#{0:'正常入库',1:'正常退货',2:'损坏退货',4:'调货入库',5:'借货',6:'还货',3:'其它'}" />
 					</span>
 	            </div>
 	        </div>
@@ -268,15 +268,18 @@ font-size: 14px;
 							<input type="button" id="addPosm" value="拆分" />
 						</c:if>
 						
-						<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_SURE',null)==true && inDetails.size()>0 && inStock.confirm!=1 && (inStock.reason!=4 || (inStock.reason==4 && inStock.goflag==3))}">
+						<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_SURE',null)==true && inDetails.size()>0 && inStock.confirm!=1 && ((inStock.reason!=4 &&inStock.reason!=5) || ((inStock.reason==4 || inStock.reason==5 ) && inStock.goflag==3))}">
 							<s:submit value="确认入库" action="inStock_sure" onclick="return isOp('是否确认?\n确认后将不能更改!');" cssClass="input-yellow"></s:submit>
 						</c:if>
-						<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_ADD',null)==true && inDetails.size()>0 && inStock.confirm!=1&& inStock.reason==4 && inStock.goflag==0 && inStock.goreason==0}">
+						<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_ADD',null)==true && inDetails.size()>0 && inStock.confirm!=1&& (inStock.reason==4 || inStock.reason==5 )&& inStock.goflag==0 && inStock.goreason==0}">
 							<s:submit value="生成调货出库单 " onclick="return isOp('是否确认?\n确认后将不能更改!');" action="inStock_addOut"   cssClass="input-yellow"></s:submit>
 						</c:if>
 					</c:if>
-					<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_CENCLE',null)==true &&  inStock.send==0 && inStock.confirm!=null}">
+					<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_CENCLE',null)==true &&  inStock.send==0 && inStock.confirm!=null && inStock.reason!=5}">
 						<s:submit cssClass="input-red" id="cencle" name="cencle" value="取消订单" action="inStock_cencle" onclick="return isOp('确认取消?');" />
+					</c:if>
+					<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_BAKE',null)==true &&  inStock.send==0 && inStock.confirm!=null && inStock.reason==5}">
+						<s:submit cssClass="input-red"  value="还货" action="inStock_bake" onclick="return isOp('确认还货?');" />
 					</c:if>
 					</s:else>
 				</s:elseif>
@@ -337,12 +340,14 @@ $(function(){
  });
 function checkState(){
 	var state= $("#out ").val();
-	if(state==4){
+	if(state==4 || state==5 || state==6){
 		$("#state6").show();
 	}else{
 		$("#state6").hide();
 		
 	}
+	
+	
 }
  
 function flag(){

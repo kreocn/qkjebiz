@@ -112,7 +112,7 @@
  		<table>
  		<tr id="coltr">
 		<th class="td1">编号</th>
-		<th class="td3">经办人</th>
+		<th class="td3">制单人</th>
 		<th class="td2">单号</th>
 		<th class="td1">出库仓库</th>
 		<th class="td3">状态</th>
@@ -123,14 +123,14 @@
 	  	<s:iterator value="outStocks" status="sta">
 	  		<tr id="showtr${uuid}">
 	  			<td class="td1 nw"><s:property value="uuid" /></td>
-				<td class="td3 nw"><s:property value="manager_check_user_name" /></td>
+				<td class="td3 nw"><s:property value="add_user_name" /></td>
 				<td class="td2 nw"><s:property value="ordernum" /></td>
 				<td class="td1 nw"><s:property value="ware_name" /></td>
 				<td class="td3 nw"><s:if test='0==send'>借出未还</s:if>
 						<s:if test='1==send'>借出已还</s:if>
 						<s:if test='2==send'>新单</s:if>
 						<s:if test='3==send'>待审核</s:if>
-						<s:if test='4==send'>结案<s:date name="lading.close_time" format="yyyy-MM-dd HH:mm:ss" /></s:if>
+						<s:if test='4==send'>已确认<s:date name="lading.close_time" format="yyyy-MM-dd HH:mm:ss" /></s:if>
 						<s:if test='5==send'>已取消订单</s:if>
 				</td>
 				<td class="td1 nw">
@@ -146,6 +146,15 @@
 					<s:if test="%{reason==5 }">其它
 					</s:if>
 					<s:if test="%{reason==6 }">调货出库
+					</s:if>
+					<s:if test="%{reason==7 }">借货
+					<s:if test="4==send">
+					<s:if test="%{backStock==0 }">未还</s:if>
+					<s:if test="%{backStock==1 }">部分已还</s:if>
+					<s:if test="%{backStock==2 }">已还</s:if>
+					</s:if>
+					</s:if>
+					<s:if test="%{reason==8 }">还货
 					</s:if>
 				</td>
 				<td class="td4 op-area">

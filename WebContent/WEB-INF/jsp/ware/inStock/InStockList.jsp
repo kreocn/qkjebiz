@@ -89,8 +89,7 @@
  		<table>
  		<tr id="coltr">
 		<th class="td1">编号</th>
-		<th class="td3">经办人</th>
-		<th class="td3">保管员</th>
+		<th class="td3">制单人</th>
 		<th class="td2">单据号</th>
 		<th class="td1">单据性质/状态</th>
 		<th class="td4">操作</th>
@@ -99,15 +98,17 @@
 	  	<s:iterator value="inStocks" status="sta">
 	  		<tr id="showtr${uuid}">
 	  			<td class="td1 nw"><s:property value="uuid" /></td>
-	  			<td class="td3 nw"><s:property value="operator_name" /></td>
-				<td class="td3 nw"><s:property value="take_name" /></td>
+	  			<td class="td3 nw"><s:property value="add_user_name" /></td>
 			    <td class="td2 nw"><s:property value="ordernum" /></td>
-			    <td class="td1 nw">
+			    <td class="td1 nw"><!--入库原因：0正常1正常退货2损坏退货3其它4调入仓库5借货 -->
 			    <s:if test="%{reason==0}">正常入库</s:if>
 				<s:if test="%{reason==1}">正常退货</s:if>
 				<s:if test="%{reason==2 }">损坏退货</s:if>
-				<s:if test="%{reason==3 }">其它</s:if>(<s:if test="confirm==null">未确认</s:if><s:if test="confirm!=null">已确认</s:if>)
-				(<s:if test="send==0">正常订单</s:if><s:if test="send==1">已取消订单</s:if>)
+				<s:if test="%{reason==5 }">借货</s:if>
+				<s:if test="%{reason==6 }">还货</s:if>
+				<s:if test="%{reason==4 }">调货入库</s:if>
+				<s:if test="%{reason==3 }">其它</s:if>
+				<s:if test="send==0">(<s:if test="confirm==null">未确认</s:if><s:if test="confirm!=null">已确认</s:if>)</s:if><s:if test="send==1">(已取消订单)</s:if>
 			    </td>
 				<td class="td4 op-area">
 					<c:if test="${it:checkWarePermit(store_id,'in')==true }">

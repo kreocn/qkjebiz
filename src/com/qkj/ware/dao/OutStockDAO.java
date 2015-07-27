@@ -158,10 +158,15 @@ public class OutStockDAO extends AbstractDAO {
 			updateCheck(outStock);
 
 			// 如何是调出仓库自动生成对方的入库单
-			if (outStock.getReason() == 6) {
+			if (outStock.getReason() == 6 || outStock.getReason()==7) {
 				InStockDAO isa = new InStockDAO();
 				if (outStock.getGoreason() == null || outStock.getGoreason() == 0) {// 出库单是手动填写的
-					isa.addStock(outStock.getUuid(), outStock.getBorrowStore_id(), outStock.getStore_id(), 4, 1, produs);
+					if(outStock.getReason() == 6){
+						isa.addStock(outStock.getUuid(), outStock.getBorrowStore_id(), outStock.getStore_id(), 4, 1, produs);
+					}else{
+						isa.addStock(outStock.getUuid(), outStock.getBorrowStore_id(), outStock.getStore_id(), 5, 1, produs);
+					}
+					
 				} else {// 出库单自动生成
 						// 修改goflag3出库单确认出库
 					InStock inStock = new InStock();
@@ -240,7 +245,7 @@ public class OutStockDAO extends AbstractDAO {
 		return 1;
 	}
 
-	public void addStock(Integer uuid, Integer store_id, Integer borrow_id, Integer reason, Integer goreason, List<Product> products, Member me) {
+	public void addStock(Integer uuid, Integer store_id, Integer borrow_id, Integer reason, Integer goreason, List<Product> products, Member me,Boolean sure) {
 		// TODO Auto-generated method stub
 		OutDetailDAO idao = new OutDetailDAO();
 		InStockDAO id = new InStockDAO();
@@ -271,6 +276,15 @@ public class OutStockDAO extends AbstractDAO {
 			outStock.setMember_adress(me.getAddress());
 		}
 		add(outStock);
+		
+		if(sure==true){//生成确认单据
+			// 修改确认状态
+			outStock.setSend(4);
+			outStock.setManager_check(1);// 确认
+			outStock.setManager_check_user(u);// 确认人
+			outStock.setManager_check_time(new Date());// 确认时间
+			updateCheck(outStock);
+		}
 
 		// 修改入库表goldUid
 		InStock is = new InStock();
@@ -291,6 +305,31 @@ public class OutStockDAO extends AbstractDAO {
 				outDetail.setTotel(p.getDtotle());
 				totle = outDetail.getTotel();
 				idao.add(outDetail);
+				
+				if(sure==true){//生成确认单据
+					List<Stock> stocks = new ArrayList();
+					StockDAO stockdao = new StockDAO();
+					Stock stock = new Stock();
+					//修改库存
+					map.clear();
+					map.put("product_id", outDetail.getProduct_id());
+					map.put("store_id", outStock.getStore_id());
+					stocks = stockdao.list(map);// 查询出库仓库是否有此商品
+					if (stocks.size() > 0) {
+						stock = stocks.get(0);
+						map.clear();
+						map.put("quantity", stock.getQuantity() - outDetail.getNum());
+						map.put("uuid", stock.getUuid());
+						stockdao.updateTotleById(map);
+					} else {// 填加为负数据库存
+						stock = new Stock();
+						stock.setProduct_id(outDetail.getProduct_id());
+						stock.setStore_id(outStock.getStore_id());
+						stock.setQuantity(0 - outDetail.getNum());
+						stock.setFreezeNum(0);
+						stockdao.add(stock);
+					}
+				}
 			}
 		}
 		// 修改主表的总价
