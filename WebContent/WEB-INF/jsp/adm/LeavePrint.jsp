@@ -66,6 +66,23 @@
 				 日期：<span class="date_area">${it:formatDate(leave.check_time,'yyyy-MM-dd')}</span>
 				 </span>
 			</s:if>
+			<s:elseif test="leave.check_status==20">
+			
+			<span class="sh">${leave.check_note}</span>
+				<span class="st">	签字:			
+				<span class="sign_area">
+				<s:if test="leave.check_user_sign==null">
+				<span class="uname">${leave.check_user_name}</span>
+				</s:if>
+				<s:else>
+				<span class="user_sign">
+				<img alt="" src="${leave.check_user_sign}" />
+				</span>
+				</s:else>
+				</span>
+				 日期：<span class="date_area">${it:formatDate(leave.check_time,'yyyy-MM-dd')}</span>
+				 </span>
+			</s:elseif>
 			<s:else>
 				<span class="sh"></span>
 				<span  class="st">	签字:			
@@ -252,6 +269,23 @@
 				 日期：<span class="date_area">${it:formatDate(leave.check_time,'yyyy-MM-dd')}</span>
 				 </span>
 			</s:if>
+			<s:elseif test="leave.check_status==20">
+			
+			<span class="sh">${leave.check_note}</span>
+				<span class="st">	签字:			
+				<span class="sign_area">
+				<s:if test="leave.check_user_sign==null">
+				<span class="uname">${leave.check_user_name}</span>
+				</s:if>
+				<s:else>
+				<span class="user_sign">
+				<img alt="" src="${leave.check_user_sign}" />
+				</span>
+				</s:else>
+				</span>
+				 日期：<span class="date_area">${it:formatDate(leave.check_time,'yyyy-MM-dd')}</span>
+				 </span>
+			</s:elseif>
 			<s:else>
 				<span class="sh"></span>
 				<span  class="st">	签字:			
@@ -425,6 +459,23 @@
 				 日期：<span class="date_area">${it:formatDate(leave.check_time,'yyyy-MM-dd')}</span>
 				 </span>
 			</s:if>
+			<s:elseif test="leave.check_status==20">
+			
+			<span class="sh">${leave.check_note}</span>
+				<span class="st">	签字:			
+				<span class="sign_area">
+				<s:if test="leave.check_user_sign==null">
+				<span class="uname">${leave.check_user_name}</span>
+				</s:if>
+				<s:else>
+				<span class="user_sign">
+				<img alt="" src="${leave.check_user_sign}" />
+				</span>
+				</s:else>
+				</span>
+				 日期：<span class="date_area">${it:formatDate(leave.check_time,'yyyy-MM-dd')}</span>
+				 </span>
+			</s:elseif>
 			<s:else>
 				<span class="sh"></span>
 				<span  class="st">	签字:			
@@ -594,6 +645,23 @@
 				 日期：<span class="date_area">${it:formatDate(leave.check_time,'yyyy-MM-dd')}</span>
 				 </span>
 			</s:if>
+			<s:elseif test="leave.check_status==20">
+			
+			<span class="sh">${leave.check_note}</span>
+				<span class="st">	签字:			
+				<span class="sign_area">
+				<s:if test="leave.check_user_sign==null">
+				<span class="uname">${leave.check_user_name}</span>
+				</s:if>
+				<s:else>
+				<span class="user_sign">
+				<img alt="" src="${leave.check_user_sign}" />
+				</span>
+				</s:else>
+				</span>
+				 日期：<span class="date_area">${it:formatDate(leave.check_time,'yyyy-MM-dd')}</span>
+				 </span>
+			</s:elseif>
 			<s:else>
 				<span class="sh"></span>
 				<span  class="st">	签字:			
@@ -767,6 +835,23 @@
 				 日期：<span class="date_area">${it:formatDate(leave.check_time,'yyyy-MM-dd')}</span>
 				 </span>
 			</s:if>
+			<s:elseif test="leave.check_status==20">
+			
+			<span class="sh">${leave.check_note}</span>
+				<span class="st">	签字:			
+				<span class="sign_area">
+				<s:if test="leave.check_user_sign==null">
+				<span class="uname">${leave.check_user_name}</span>
+				</s:if>
+				<s:else>
+				<span class="user_sign">
+				<img alt="" src="${leave.check_user_sign}" />
+				</span>
+				</s:else>
+				</span>
+				 日期：<span class="date_area">${it:formatDate(leave.check_time,'yyyy-MM-dd')}</span>
+				 </span>
+			</s:elseif>
 			<s:else>
 				<span class="sh"></span>
 				<span  class="st">	签字:			
