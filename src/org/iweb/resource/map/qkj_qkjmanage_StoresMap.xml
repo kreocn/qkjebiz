@@ -54,7 +54,7 @@
 			<isNotEmpty prepend="AND" property="user_id"><![CDATA[ o.user_id=#userid# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="id"><![CDATA[ o.id=#id# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="apply_depts" open="(" close=")">
-			<![CDATA[ o.apply_dept In ]]>
+			<![CDATA[ o.login_dept In ]]>
 			<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
 			<isNotEmpty prepend="OR" property="apply_perdepts">
 				<![CDATA[ o.login_dept In ]]>
@@ -77,12 +77,12 @@
 	</select>
 
 	<select id="qkjStores_Order_update_listCount" parameterClass="java.util.Map" resultClass="int">
-		select count(*) from qkj_t_order
+		select count(*) from qkj_t_order o
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="user_id"><![CDATA[ o.user_id=#userid# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="id"><![CDATA[ o.id=#id# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="apply_depts" open="(" close=")">
-			<![CDATA[ o.apply_dept In ]]>
+			<![CDATA[ o.login_dept In ]]>
 			<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
 			<isNotEmpty prepend="OR" property="apply_perdepts">
 				<![CDATA[ o.login_dept In ]]>
@@ -126,7 +126,7 @@
 	</delete>
 	
 		<select id="qkjStores_getOrderWeek" parameterClass="java.util.Map" resultClass="StoresOrder">
-		
+
 		select * from dbo.qkj_t_order WHERE datediff(day,[add_time],getdate())=0 and user_id=#userid# order by add_time DESC
 	</select>
 	

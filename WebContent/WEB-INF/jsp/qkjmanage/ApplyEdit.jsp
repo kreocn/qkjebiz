@@ -235,7 +235,7 @@
 								<s:if test="apply.status==0||apply.status==5" >
 			
 							<s:url id="ladingAddProductsUrl" action="qkjm_addProducts" namespace="qkjmanage">
-												<s:param name="prodName">apply	.product_id</s:param>
+												<s:param name="prodName">apply.product_id</s:param>
 												<s:param name="uuidKey">apply.uuid</s:param>
 												<s:param name="uuidValue" value="apply.uuid" />
 												<s:param name="backUrl">/qkjmanage/apply_load?viewFlag=mdy&</s:param>
