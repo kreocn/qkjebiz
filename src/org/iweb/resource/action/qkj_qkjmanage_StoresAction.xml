@@ -22,6 +22,10 @@
 		<action name="stores_order_update_details" class="com.qkj.manage.action.StoresAction" method="updateDetails">
 	<result>/WEB-INF/jsp/qkjmanage/StoresUpdateOrderItemList.jsp</result>
 		</action>
+			<action name="stores_order_update_details_view" class="com.qkj.manage.action.StoresAction" method="updateDetails">
+	<result>/WEB-INF/jsp/qkjmanage/StoresUpdateOrderItemView.jsp</result>
+		</action>
+		
 		<action name="stores_order_item_delete" class="com.qkj.manage.action.StoresAction" method="itemDelete">
 	   <result>/WEB-INF/jsp/qkjmanage/StoresUpdateOrderItemList.jsp</result>
 		</action>
@@ -32,6 +36,17 @@
 		</action>
 		
 		<action name="findMember" class="org.iweb.sysvip.action.MemberAction" method="get_Member">
+		</action>
+		
+				<action name="stores_order_finance_details" class="com.qkj.manage.action.StoresAction" method="financeDetails">
+	            <result>/WEB-INF/jsp/qkjmanage/StoresFinanceItemList.jsp</result>
+		</action>
+		
+				<action name="sotres_the_library" class="com.qkj.manage.action.StoresAction" method="theLibrary">
+					<result type="redirectAction">
+					<param name="actionName">stores_order_findOrder</param>
+			</result>
+	           	
 		</action>
 		<!-- Customer End -->
 	</package>

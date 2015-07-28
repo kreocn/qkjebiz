@@ -10,9 +10,99 @@ private int fd_check=0;//订单状态
 private String add_time;//添加时间
 private Date lmtime;//修改时间
 private String login_dept;
+private String login_name;
 private String member_id;
 private String member_name;
 private String member_mobile;
+private Integer payment_type;//付款方式
+private Integer is_arrears;//是否欠款
+private Double arrears_price;//欠款金额
+private String remark;//备注
+private Integer is_ticket;
+private String invoice_title;
+private Double invoice_price;
+private String invoice_id;
+private Integer is_library;//是否出库 默认0
+public Integer getIs_library() {
+	return is_library;
+}
+
+public void setIs_library(Integer is_library) {
+	this.is_library = is_library;
+}
+
+public String getLogin_name() {
+	return login_name;
+}
+
+public void setLogin_name(String login_name) {
+	this.login_name = login_name;
+}
+public Integer getIs_ticket() {
+	return is_ticket;
+}
+
+public void setIs_ticket(Integer is_ticket) {
+	this.is_ticket = is_ticket;
+}
+
+public String getInvoice_title() {
+	return invoice_title;
+}
+
+public void setInvoice_title(String invoice_title) {
+	this.invoice_title = invoice_title;
+}
+
+public Double getInvoice_price() {
+	return invoice_price;
+}
+
+public void setInvoice_price(Double invoice_price) {
+	this.invoice_price = invoice_price;
+}
+
+public String getInvoice_id() {
+	return invoice_id;
+}
+
+public void setInvoice_id(String invoice_id) {
+	this.invoice_id = invoice_id;
+}
+
+
+public Integer getPayment_type() {
+	return payment_type;
+}
+
+public void setPayment_type(Integer payment_type) {
+	this.payment_type = payment_type;
+}
+
+public Integer getIs_arrears() {
+	return is_arrears;
+}
+
+public void setIs_arrears(Integer is_arrears) {
+	this.is_arrears = is_arrears;
+}
+
+public Double getArrears_price() {
+	return arrears_price;
+}
+
+public void setArrears_price(Double arrears_price) {
+	this.arrears_price = arrears_price;
+}
+
+public String getRemark() {
+	return remark;
+}
+
+public void setRemark(String remark) {
+	this.remark = remark;
+}
+
 public String getMember_id() {
 	return member_id;
 }

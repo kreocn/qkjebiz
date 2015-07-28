@@ -29,26 +29,33 @@
 		<div class="tab_warp main">
 			<div class="dq_step">	<a href="/manager/default">首页</a>&nbsp;&gt;&nbsp;查看订单</div>
 			<div class="tab_warp">
+				<s:form id="serachForm" name="serachForm" action="sotres_the_library" method="get" namespace="/qkjmanage" theme="simple">
+	
 				<table>
 					<tr id="coltr">
-			
-						<th class="td3">用户名称</th>
+				<th class="td1">全选<input type="checkbox" id="cbselect"></th>
+						<th class="td2">用户名称</th>
 						<th class="td3">订单总价</th>
-						<th class="td1">添加时间</th>
-						
+						<th class="td4">添加时间</th>
 						<th class="td4">操作</th>
 					</tr>
 					<s:iterator value="storesorderlist" status="sta">
 						<tr>
-						
+							<td class="td1" >
+								<s:if test="0==is_library"><input type="checkbox" name="cb" value="${id}"></s:if>
+								
+								<s:if test="1==is_library">已出库</s:if></td>
 							<td class="td2" >${user_name}</td>
 							<td class="td3">${total_price}</td>
 							<td class="td4">${add_time}</td>
 							
-							<td class="td4 op-area"><a  class="input-blue"  href="/qkjmanage/stores_order_update_details.action?id=${id}" >查看详情</a> 		<c:if test="${it:checkPermit('QKJ_QKJMANAGE_STORES_FIND_ORDER_DEL',null)==true}"> <a  class="input-red" onclick="return isDel();" href="/qkjmanage/stores_order_delete.action?id=${id}"  >删除</a></c:if></td>
+							<td class="td4 op-area"><a class="input-gray"  href="/qkjmanage/stores_order_update_details_view.action?id=${id}" >打印</a><a  class="input-blue"  href="/qkjmanage/stores_order_update_details.action?id=${id}" >查看详情</a> 		<c:if test="${it:checkPermit('QKJ_QKJMANAGE_STORES_FIND_ORDER_DEL',null)==true}">
+							<s:if test="0==is_library"> <a  class="input-red" onclick="return isDel();" href="/qkjmanage/stores_order_delete.action?id=${id}"  >删除</a></s:if></c:if></td>
 						</tr>
 					</s:iterator>
 				</table>
+					<s:submit type="reset" value="批量出库"   cssClass="input-blue" />
+					</s:form>
 			</div>
 			<div id="listpage" class="pagination"></div>
 		</div>
@@ -57,6 +64,25 @@
 	<script type="text/javascript" src="<s:url value="/js/jqueryPlugins/select3/jquery.cityselect.js" />">
 </script>
 	<script type="text/javascript">
+	
+	$("#cbselect").change(function() { 
+		var num=0;
+		var arrChk=$("input[name='cb']:checked");
+		var arr=$("input[name='cb']");
+		var count=arr.size();
+
+	    $(arrChk).each(function(){
+	       num++;
+	    } ); 
+
+	    if(num == count){
+	    	 $("[name='cb']").removeAttr("checked");
+	    }
+	    else{
+	    
+	    	 $("[name='cb']").attr("checked",'true');
+	    }
+	})
 	$(function(){
 		$("#mmtype").citySelect({
 			url:'<s:url value="/js/jqueryPlugins/select3/mm.js" />',

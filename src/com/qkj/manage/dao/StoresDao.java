@@ -100,6 +100,14 @@ public class StoresDao extends AbstractDAO {
 
 		return null;
 	}
+	
+	public Object saveIs_library(Object parameters) {
+		super.save("qkjStores_order_is_library", parameters);
+		return null;
+	}
+	
+	
+	
 	public int getResultCount() {
 		return super.getResultCount();
 	}

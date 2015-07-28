@@ -41,8 +41,8 @@
 
 	<insert id="qkjStores_addOrder" parameterClass="StoresOrder">  
     <![CDATA[
-        insert into qkj_t_order(user_id,user_name,total_price,add_time,login_dept,member_id,member_name,member_mobile) values 
-        (#user_id#,#user_name#,#total_price#,#add_time#,#login_dept#,#member_id#,#member_name#,#member_mobile#)  
+        insert into qkj_t_order(user_id,user_name,total_price,add_time,login_dept,login_name,member_id,member_name,member_mobile) values 
+        (#user_id#,#user_name#,#total_price#,#add_time#,#login_dept#,#login_name#,#member_id#,#member_name#,#member_mobile#)  
     ]]>
 		<selectKey resultClass="int" type="post" keyProperty="id">
 			select @@IDENTITY as value
@@ -134,4 +134,14 @@
 		DELETE FROM qkj_t_order_custom
 		WHERE product_id = #productid# and login_dept=#logindept#
 	</delete>
+	
+		<select id="qkjStores_getStoresOrderItemByorderid" resultClass="StoresOrderItem" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT * from qkj_t_order_item where order_id=#order_id#
+		]]>
+	</select>
+		<update id="qkjStores_order_is_library" parameterClass="java.util.Map">
+		update qkj_t_order set is_library=1 WHERE id = #id#
+	</update>
+
 </sqlMap>

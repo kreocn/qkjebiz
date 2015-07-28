@@ -21,6 +21,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.qkj.manage.dao.ProductDAO;
 import com.qkj.manage.dao.StoresOrderDAO;
 import com.qkj.manage.domain.Product;
+import com.qkj.manage.domain.StoresOrder;
 import com.qkj.manage.domain.StoresOrderCustom;
 import com.qkj.manage.domain.StoresOrderItem;
 
@@ -28,6 +29,14 @@ public class StoresOrderAction   extends ActionSupport{
 	private Product product;
 	private ProductDAO dao = new ProductDAO();
 	private StoresOrderDAO storesorderdao=new StoresOrderDAO();
+	private StoresOrder storyit;
+	
+	public StoresOrder getStoryit() {
+		return storyit;
+	}
+	public void setStoryit(StoresOrder storyit) {
+		this.storyit = storyit;
+	}
 	public List<Product> getProducts() {
 		return products;
 	}
@@ -59,7 +68,7 @@ public class StoresOrderAction   extends ActionSupport{
 	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
 	}
-	// 
+
 	public String list() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_STORES_ORDER");
 		try {
@@ -75,7 +84,6 @@ public class StoresOrderAction   extends ActionSupport{
 			HttpServletRequest request = (HttpServletRequest) context.get(ServletActionContext.HTTP_REQUEST);  
 			HttpServletResponse response = (HttpServletResponse) context.get(ServletActionContext.HTTP_RESPONSE);  
 			ulf=(UserLoginInfo) request.getSession().getAttribute(Parameters.UserLoginInfo_Session_Str);
-	
 			map.put("logindept",ContextHelper.getUserLoginDept());
 			storesOrderCustoms=storesorderdao.list(map);
 			for (int i = 0; i < this.products.size(); i++) {
@@ -94,5 +102,9 @@ public class StoresOrderAction   extends ActionSupport{
 		}
 		return SUCCESS;
 	}
-	
+	public String update() throws Exception{
+		System.out.println("=====");
+		storesorderdao.update(storyit);
+		return SUCCESS;
+	}
 }

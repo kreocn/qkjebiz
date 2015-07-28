@@ -339,6 +339,7 @@
 					.push('<td class="td1" id="jisuanprice'+product_id+'"><input id="total_price'+product_id+'" type="hidden"  name="storesorderitem['+num+'].order_total_price"  value="'+marketprice*casenum+'"/><input type="text"    onkeyup="up_total_price(' + product_id + ')" value="' + marketprice * casenum + '"  style="width:50px"></td>');
 			show.push(' <td class="td1 op-area"><a id="rmtr' + num + '" onclick="javascript:ondeltr(this)" href="javascript:void(0)" class="input-red">删除</a></td>');
 			show.push('</tr>');
+			alert(show.join(""));
 			$("#qkj_list").append(show.join(""));
 			show = new Array();
 			var iNum = num;

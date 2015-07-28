@@ -26,7 +26,6 @@ public class StoresAjax extends Ajax {
 		map.put("price", parameter.get("price").toString());
 		map.put("barcode", parameter.get("barcode").toString());
 		sou=sod.list(map);
-	
 		if(sou.size()==0){
 			if(!map.get("price").equals("0")){
 			sod.add(map);

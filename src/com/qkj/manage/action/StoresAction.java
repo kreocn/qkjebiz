@@ -58,6 +58,15 @@ public class StoresAction  extends ActionSupport{
 	private String storesid;
 	private Double price;
 	private Double totalPirce;
+	private Object cb[];
+	public Object[] getCb() {
+		return cb;
+	}
+
+	public void setCb(Object[] cb) {
+		this.cb = cb;
+	}
+
 	public List<Member> getMembers() {
 		return members;
 	}
@@ -257,6 +266,7 @@ public class StoresAction  extends ActionSupport{
 			sto.setUser_id(ulf.getUuid());
 			sto.setUser_name(ulf.getUser_name());
 			sto.setLogin_dept(ContextHelper.getUserLoginDept());
+			sto.setLogin_name(ContextHelper.getUserLoginDeptName());
 			for (StoresOrderItem storesorderitem : sotr) {
 				storesorderitem.setOrder_total_price((double)storesorderitem.getOrder_total_price());
 				storesorderitem.setOrder_id(id+"");
@@ -360,24 +370,31 @@ public class StoresAction  extends ActionSupport{
 		dao.deleteItemandorder(map);
 		return SUCCESS;
 	}
+	//门店支付>财务报表
+	public String financeDetails() throws Exception {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		map.putAll(ContextHelper.getDefaultRequestMap4Page());
+		map.put("Page_Size", "5");
+		this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
+		this.setStoresorderlist(dao.listOrder(map));
+		this.setRecCount(dao.getResultCount());
+		return SUCCESS;
+	}
+	
+	
+	//出库
+	
+	public String theLibrary() throws Exception {
+ if(cb!=null){
+        for (int i = 0; i < cb.length; i++) {
+        	map.put("id", cb[i]);
+			System.out.println(cb[i]);
+			dao.saveIs_library(map);
+			map.clear();
+		}
+ }
+		return SUCCESS;
+	}
 	/** 
 	 * * 两个Double数相加 * 
 	 *  
