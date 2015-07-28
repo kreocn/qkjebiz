@@ -194,7 +194,6 @@
 			Where 1=1
 		]]>
 		<isNotNull prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotNull>
-		<isNotNull prepend="AND" property="type"><![CDATA[ type=#type# ]]></isNotNull>
 		<isNotNull prepend="AND" property="dept_code"><![CDATA[ dept_code=#dept_code# ]]></isNotNull>
 		<isNotEmpty prepend="AND" property="dept_codes">
 			<![CDATA[ dept_code In ]]>
@@ -216,8 +215,8 @@
 	</select>
 	<insert id="sys_addDept" parameterClass="dept">
 		<![CDATA[ 
-			Insert Into s_sys_department(uuid,dept_code,parent_dept,dept_ename,dept_cname,descriptions,lm_user,lm_time,type)
-			Values (#uuid#,#dept_code#,#parent_dept#,#dept_ename#,#dept_cname#,#descriptions#,#lm_user#,#lm_time#,#type#)
+			Insert Into s_sys_department(uuid,dept_code,parent_dept,dept_ename,dept_cname,descriptions,lm_user,lm_time)
+			Values (#uuid#,#dept_code#,#parent_dept#,#dept_ename#,#dept_cname#,#descriptions#,#lm_user#,#lm_time#)
 		]]>
 	</insert>
 	<update id="sys_mdyDept" parameterClass="dept">
@@ -229,7 +228,6 @@
 				dept_cname=#dept_cname#,
 				descriptions=#descriptions#,
 				lm_user=#lm_user#,
-				type=#type#,
 				lm_time=#lm_time#
 			Where uuid=#uuid#
 		]]>
@@ -251,7 +249,6 @@
 			LEFT JOIN s_sys_user u2 ON (u.SENIOR = u2.UUID)
 			LEFT JOIN s_sys_role r ON (u.USER_TYPE = r.UUID)
 			LEFT JOIN s_cfg_position p ON (u.POSITION = p.UUID)
-			LEFT JOIN s_sys_userdept ud ON(ud.`user_id`=u.`UUID`)
 			Where 1=1
 		]]>
 		<isNotNull prepend="AND" property="uuid"><![CDATA[ u.uuid=#uuid# ]]></isNotNull>
@@ -262,8 +259,8 @@
 		<isNotNull prepend="AND" property="status"><![CDATA[ u.status=#status# ]]></isNotNull>
 		
 		<isNotEmpty prepend="AND" property="dept_code">
-			<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ ud.`dept_code`=#dept_code#]]></isNotEqual>
-			<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ ud.`dept_code` LIKE CONCAT(#dept_code#,'%') ]]></isEqual>
+			<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ u.dept_code=#dept_code#]]></isNotEqual>
+			<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ u.dept_code LIKE CONCAT(#dept_code#,'%') ]]></isEqual>
 		</isNotEmpty>
 		
 		<!-- <isNotEmpty prepend="AND" property="dept_codes" open="(" close=")">
@@ -278,7 +275,7 @@
 		
 		<isEmpty  property="dept_codes">
 			<isNotEmpty prepend="AND" property="apply_perdepts">
-				<![CDATA[ ud.`dept_code` In ]]>
+				<![CDATA[ u.dept_code In ]]>
 				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
 				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ u.uuid=#apply_userDouble# ]]></isNotEmpty>
 			</isNotEmpty>
