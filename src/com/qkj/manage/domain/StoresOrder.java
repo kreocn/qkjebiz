@@ -9,6 +9,42 @@ private Double total_price;//订单总价
 private int fd_check=0;//订单状态
 private String add_time;//添加时间
 private Date lmtime;//修改时间
+private String login_dept;
+private String member_id;
+private String member_name;
+private String member_mobile;
+public String getMember_id() {
+	return member_id;
+}
+
+public void setMember_id(String member_id) {
+	this.member_id = member_id;
+}
+
+public String getMember_name() {
+	return member_name;
+}
+
+public void setMember_name(String member_name) {
+	this.member_name = member_name;
+}
+
+public String getMember_mobile() {
+	return member_mobile;
+}
+
+public void setMember_mobile(String member_mobile) {
+	this.member_mobile = member_mobile;
+}
+
+public String getLogin_dept() {
+	return login_dept;
+}
+
+public void setLogin_dept(String login_dept) {
+	this.login_dept = login_dept;
+}
+
 public Date getLmtime() {
 	return lmtime;
 }

@@ -8,6 +8,7 @@
 			<!-- <property name="DataSource" value="java:/comp/env/qkj/mysql_druid_BJ01" /> -->
 			<!-- 测试环境 DataSource Proxool -->
 			<!-- <property name="DataSource" value="java:/comp/env/qkj/mysql_druid_local253" /> -->
+			<!-- <property name="DataSource" value="java:/comp/env/qkj/mysql_druid_local203" /> -->
 			<!-- 本机Tomcat本机测试环境 DataSource(ERP LOCAL TEST)&测试服务器 Proxool -->
 			<property name="DataSource" value="java:/comp/env/qkj/mysqlLocalCJ_druid" />
 		</dataSource>
@@ -53,6 +54,8 @@
 	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_ActivePosmMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_ActiveMemcostMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_ApplyMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_ApplyProductMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_ApplyPosmMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_ApproveMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_ProcessMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_TravelMap.xml" />
@@ -63,6 +66,8 @@
 	<sqlMap resource="org/iweb/resource/map/qkj_salpro_SalPromotMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_CloseOrderMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_CloseOrderProMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_CloseOrderPosmMap.xml" />
+	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_IntegralPaymentMap.xml" />
 	<!--行政管理 -->
 	<sqlMap resource="org/iweb/resource/map/qkj_adm_AssetsMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_adm_AssetItemMap.xml" />
@@ -88,7 +93,5 @@
 	<sqlMap resource="org/iweb/resource/map/qkj_ware_OutDetailHMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_ware_OutStockHMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_bordetail_BordetailMap.xml" />
-
 	<sqlMap resource="org/iweb/resource/map/qkj_Personal_PerWorkMap.xml" />
-
 </sqlMapConfig>

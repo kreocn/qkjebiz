@@ -8,6 +8,7 @@ public class MemberStock {
 	private Integer product;// (int)商品编号
 	private Integer stock;// (int)库存数量（瓶）
 	private Date check_date;// (varchar)核对日期
+	private String add_dept;
 	private String add_user;// (varchar)填加人
 	private Date add_time;// (datetime)填加时间
 	private String lm_user;// (varchar)修改人
@@ -19,7 +20,23 @@ public class MemberStock {
 	private String product_name;
 	private Integer case_spec;
 	private String member_name;
-	
+	private String add_dept_name;
+
+	public String getAdd_dept_name() {
+		return add_dept_name;
+	}
+
+	public void setAdd_dept_name(String add_dept_name) {
+		this.add_dept_name = add_dept_name;
+	}
+
+	public String getAdd_dept() {
+		return add_dept;
+	}
+
+	public void setAdd_dept(String add_dept) {
+		this.add_dept = add_dept;
+	}
 
 	public Integer getCase_spec() {
 		return case_spec;
@@ -132,5 +149,5 @@ public class MemberStock {
 	public void setMember_name(String member_name) {
 		this.member_name = member_name;
 	}
-	
+
 }

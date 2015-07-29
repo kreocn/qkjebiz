@@ -100,14 +100,18 @@ var LoadMemberAutoComplete = function(){
 
 		// 会员姓名搜索
 		$("#order_user_name").autocomplete({ source : function(request, response){
+			$("#order_user_id").val("0")
 			var term = request.term;
 			if (term in cache) {
 				response($.map(cache[term], function(item){
 					return { order_user_id : item.uuid,
+						
 					order_user_mobile : item.mobile,
 					order_user_name : item.member_name,
 					value : item.member_name,
-					label : selfobj.boldColorTerm(item.member_name, request.term) };
+					label : selfobj.boldColorTerm(item.member_name, request.term)
+					};
+					
 				}));
 				return;
 			}

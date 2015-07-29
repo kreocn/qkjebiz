@@ -122,6 +122,12 @@ function addprice(data){
 	var productid =$("#"+data.id).parent().parent("#showtr"+data.id).find("#uuid").text();
 	var price =$("#"+data.id).parent().parent("#showtr"+data.id).find("#price").text();
 	var barcode =$("#"+data.id).parent().parent("#showtr"+data.id).find("#bar_code").text();
+	if(price==""){
+		price=0;
+	}
+	if(barcode==""){
+		barcode=" ";
+	}
 	var userid='${sessionScope.userlogininfosessionstr.uuid}';
 	/*
 	 var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';

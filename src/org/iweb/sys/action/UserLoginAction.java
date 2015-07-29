@@ -438,8 +438,16 @@ public class UserLoginAction extends ActionSupport {
 												String[] a = (String[]) JSONUtil.toObject(v, String[].class);// 转换成数组
 												flag = ToolsUtil.isIn(userDept.getDept_code(), a);// 判断在不在数组中
 												if (flag == false) {
-													String[] all = (String[]) ArrayUtils.add(a, "0.1" + "#" + userDept.getDept_code());
-													ud_dept_map.put(roles_prvg.getPrivilege_id(), JSONUtil.toJsonString(all));
+													if(a==null && v!=null){
+														ArrayList<String> list = new ArrayList<String>();
+														Set<String> dset = new HashSet<>();
+														dset.add(v);
+														dset.add("0.1" + "#" + userDept.getDept_code());
+														ud_dept_map.put(roles_prvg.getPrivilege_id(), JSONUtil.toJsonString(dset));
+													}else{
+														String[] all = (String[]) ArrayUtils.add(a, "0.1" + "#" + userDept.getDept_code());
+														ud_dept_map.put(roles_prvg.getPrivilege_id(), JSONUtil.toJsonString(all));
+													}
 												}
 											} else {
 												ud_dept_map.put(roles_prvg.getPrivilege_id(), "0.1" + "#" + userDept.getDept_code());

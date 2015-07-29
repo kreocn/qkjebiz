@@ -45,9 +45,20 @@ public class ApplyDAO extends AbstractDAO {
 		return super.list("qkjmanage_getApplysUserSign", map);
 	}
 
+	public Object sign(Object uuid) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("biz_id", uuid);
+		return super.get("qkjmanage_getApplysSign", map);
+	}	
+	
 	// 发货信息修改
 	public int mdyShipInfo(Object parameters) {
 		return super.save("qkjmanage_mdyApplyShipInfo", parameters);
+	}
+	//修改总价
+	
+	public int mdyActiveItPrice(String apply_id) {
+		return super.save("qkjmanage_mdyApplyItPrice", apply_id);
 	}
 
 	public int getResultCount() {

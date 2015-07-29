@@ -3,6 +3,7 @@
 <sqlMap>
 	<!-- Apply Start -->
 	<typeAlias alias="apply" type="com.qkj.manage.domain.Apply" />
+	<typeAlias alias="closeOrder" type="com.qkj.manage.domain.CloseOrder" />
 	<select id="qkjmanage_getApplys" resultClass="apply" parameterClass="java.util.Map">
 		<![CDATA[ 
 			SELECT a.*,au.USER_NAME apply_user_name,cu.USER_NAME check_user_name,cu.`user_sign` check_user_sign,ad.dept_cname apply_dept_name,su.`USER_NAME` sp_check_user_name
@@ -99,14 +100,44 @@
 			SELECT a.user_sign,a.biz_time sign_biz_time,a.biz_user,a.USER_NAME sign_user_name FROM (SELECT u.`user_sign`,p.`biz_time`,p.`biz_user`,u.`USER_NAME` FROM qkjm_r_apply a LEFT JOIN qkjm_h_process p ON (a.`uuid`=p.`biz_id`)
 			LEFT JOIN s_sys_user u ON (u.`UUID`=p.`biz_user`)
 			WHERE p.`process_id`=2  AND p.`biz_id`=#biz_id# AND (p.`biz_status01`>10 OR p.biz_status02>=10)
-			ORDER BY p.`biz_time` DESC) a GROUP BY a.biz_user
+			AND p.`biz_time`>(SELECT MAX(p.`biz_time`) biz_time FROM qkjm_h_process p WHERE p.process_id=2 AND p.biz_status01=10 AND p.`biz_id`=#biz_id#)
+			ORDER BY p.`biz_time` DESC) a GROUP BY a.biz_user order by a.biz_time asc
 		]]>
+	</select>
+	
+	<select id="qkjmanage_getApplysSign" resultClass="closeOrder" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT 	MAX(sign60) sign60,MAX(time60) time60,MAX(sign70) sign70,MAX(time70) time70,MAX(sign80) sign80,MAX(time80) time80 FROM (
+			SELECT u.`user_sign` sign60,s.`biz_time` time60,NULL sign70,NULL time70,null sign80,null time80 FROM qkjm_h_process s  
+			LEFT JOIN qkjm_r_apply a ON (a.`uuid`=s.`biz_id`)
+			LEFT JOIN s_sys_user u ON (s.`biz_user`=u.`UUID`)
+			WHERE s.`process_id`=2 AND s.`biz_status01`=40 AND s.`biz_sign`='APPLY_CHANGE_STATUS' AND NOT ISNULL(u.`user_sign`) AND s.`biz_id`=#biz_id# 
+			AND s.`biz_time`>(SELECT MAX(p.`biz_time`) biz_time FROM qkjm_h_process p WHERE p.process_id=2 AND p.biz_status01=0 AND p.`biz_id`=#biz_id#)
+			
+			UNION ALL 
+			SELECT NULL sign60,NULL time60,u.`user_sign` sign70,s.`biz_time` time70,null sign80,null time80 FROM qkjm_h_process s  
+			LEFT JOIN qkjm_r_apply a ON (a.`uuid`=s.`biz_id`)
+			LEFT JOIN s_sys_user u ON (s.`biz_user`=u.`UUID`)
+			WHERE s.`process_id`=2 AND s.`biz_status01`=50 AND s.`biz_sign`='APPLY_CHANGE_STATUS' AND NOT ISNULL(u.`user_sign`) AND s.`biz_id`=#biz_id# 
+			AND s.`biz_time`>(SELECT MAX(p.`biz_time`) biz_time FROM qkjm_h_process p WHERE p.process_id=2 AND p.biz_status01=0 AND p.`biz_id`=#biz_id#)
+			
+			union all 
+			
+			SELECT NULL sign60,NULL time60,NULL sign70,NULL time70,u.`user_sign` sign80,s.`biz_time` time80 FROM qkjm_h_process s  
+			LEFT JOIN qkjm_r_apply a ON (a.`uuid`=s.`biz_id`)
+			LEFT JOIN s_sys_user u ON (s.`biz_user`=u.`UUID`)
+			WHERE s.`process_id`=2 AND s.`biz_status01`=60 AND s.`biz_sign`='APPLY_CHANGE_STATUS' AND NOT ISNULL(u.`user_sign`) AND s.`biz_id`=#biz_id# 
+			AND s.`biz_time`>(SELECT MAX(p.`biz_time`) biz_time FROM qkjm_h_process p WHERE p.process_id=2 AND p.biz_status01=0 AND p.`biz_id`=#biz_id#)
+			
+			)a
+		]]>
+		
 	</select>
 	
 	<insert id="qkjmanage_addApply" parameterClass="apply">
 		<![CDATA[ 
-			Insert Into qkjm_r_apply(touser,title,note,apply_dept,apply_user,apply_time,status,lm_user,is_fullcheck,fullcheck_text)
-			Values (#touser#,#title#,#note#,#apply_dept#,#apply_user#,#apply_time#,#status#,#lm_user#,#is_fullcheck#,#fullcheck_text#)
+			Insert Into qkjm_r_apply(touser,title,note,apply_dept,apply_user,apply_time,status,lm_user,is_fullcheck,fullcheck_text,apply_type,is_material)
+			Values (#touser#,#title#,#note#,#apply_dept#,#apply_user#,#apply_time#,#status#,#lm_user#,#is_fullcheck#,#fullcheck_text#,#apply_type#,#is_material#)
 		]]>
 		<selectKey resultClass="int" keyProperty="uuid">
 		<![CDATA[ 
@@ -119,10 +150,13 @@
 			Update qkjm_r_apply
 			Set title=#title#,
 				touser=#touser#,
+				apply_dept=#apply_dept#,
 				note=#note#,
 				lm_user=#lm_user#,
 				is_fullcheck=#is_fullcheck#,
-				fullcheck_text=#fullcheck_text#
+				apply_type=#apply_type#,
+				fullcheck_text=#fullcheck_text#,
+				is_material=#is_material# 
 			Where uuid = #uuid#
 		]]>
 	</update>
@@ -172,6 +206,29 @@
 				ship_type=#ship_type#,
 				lm_user=#lm_user#
 			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	
+	
+	
+	<update id="qkjmanage_mdyApplyItPrice" parameterClass="string">
+		<![CDATA[
+		UPDATE qkjm_r_apply t
+		SET t.it_price = (
+			SELECT IFNULL(SUM(a.total_price),0)
+			FROM (
+				SELECT m.total_price
+				FROM qkjm_r_apply_posm m
+				WHERE m.apply_id = #value#
+				AND `status` = 1
+				UNION ALL
+				SELECT p.total_price
+				FROM qkjm_r_apply_product p
+				WHERE p.apply_id = #value#
+				AND `status` = 1)a
+		)
+		WHERE t.uuid = #value#
 		]]>
 	</update>
 	<!-- ship info change -->

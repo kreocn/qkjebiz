@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "sql-map-2.dtd">
+<sqlMap>
+	<!-- Apply Start -->
+	<typeAlias alias="applyPosm" type="com.qkj.manage.domain.ApplyPosm" />
+
+	<insert id="qkjmanage_addApplyPosm" parameterClass="applyPosm">
+		<![CDATA[ 
+			Insert Into qkjm_r_apply_posm(apply_id,title,note,total_price,status)
+			Values (#apply_id#,#title#,#note#,#total_price#,#status#)
+		]]>
+	</insert>
+	
+		<select id="qkjmanage_getApplyPosms" resultClass="applyPosm" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select * From qkjm_r_apply_posm where apply_id=#apply_id#
+		]]>
+	
+	</select>
+	
+	
+	
+	<select id="qkjmanage_getApplyPosmsCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) From qkjm_r_apply_posm where apply_id=#apply_id#
+		]]>
+	</select>
+		<delete id="qkjmanage_delApplyPosm" parameterClass="applyPosm">
+	<![CDATA[
+		Delete From qkjm_r_apply_posm Where uuid=#uuid#
+	]]>
+	</delete>
+	
+</sqlMap>

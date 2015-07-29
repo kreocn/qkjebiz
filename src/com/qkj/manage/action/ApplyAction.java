@@ -1,9 +1,11 @@
 package com.qkj.manage.action;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -13,11 +15,22 @@ import org.iweb.sys.Parameters;
 import org.iweb.sys.ToolsUtil;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.qkj.manage.dao.ActivePosmDAO;
+import com.qkj.manage.dao.ActiveProductDAO;
 import com.qkj.manage.dao.ApplyDAO;
+import com.qkj.manage.dao.ApplyPosmDAO;
+import com.qkj.manage.dao.ApplyProductDAO;
 import com.qkj.manage.dao.ApproveDAO;
 import com.qkj.manage.dao.ProcessDAO;
+import com.qkj.manage.domain.Active;
+import com.qkj.manage.domain.ActiveMemcost;
+import com.qkj.manage.domain.ActivePosm;
+import com.qkj.manage.domain.ActiveProduct;
 import com.qkj.manage.domain.Apply;
+import com.qkj.manage.domain.ApplyPosm;
+import com.qkj.manage.domain.ApplyProduct;
 import com.qkj.manage.domain.Approve;
+import com.qkj.manage.domain.CloseOrder;
 
 public class ApplyAction extends ActionSupport implements ActionAttr {
 	private static final long serialVersionUID = 1L;
@@ -40,6 +53,95 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 	// 个人工作标识
 	private String perWorkF;
 	private static String perWorkFlag;
+
+	private List<Active> getapply_depts;
+	private String userappid;
+	private String userdepta;
+
+	private CloseOrder sign;
+	private List<ApplyProduct> applyproduct;
+	private double indprice;
+	private List<ApplyProduct> indApplyProducts;
+	private List<ApplyProduct> otherApplyProducts;
+	private List<ActivePosm> activePosms;
+	private List<ActiveMemcost> activeMemcosts;
+	private List<ApplyPosm> applyPosms;
+
+	public List<ApplyPosm> getApplyPosms() {
+		return applyPosms;
+	}
+
+	public void setApplyPosms(List<ApplyPosm> applyPosms) {
+		this.applyPosms = applyPosms;
+	}
+
+	public List<ApplyProduct> getIndApplyProducts() {
+		return indApplyProducts;
+	}
+
+	public void setIndApplyProducts(List<ApplyProduct> indApplyProducts) {
+		this.indApplyProducts = indApplyProducts;
+	}
+
+	public List<ApplyProduct> getOtherApplyProducts() {
+		return otherApplyProducts;
+	}
+
+	public void setOtherApplyProducts(List<ApplyProduct> otherApplyProducts) {
+		this.otherApplyProducts = otherApplyProducts;
+	}
+
+
+
+
+
+	public double getIndprice() {
+		return indprice;
+	}
+
+	public void setIndprice(double indprice) {
+		this.indprice = indprice;
+	}
+
+	public List<ApplyProduct> getApplyproduct() {
+		return applyproduct;
+	}
+
+	public void setApplyproduct(List<ApplyProduct> applyproduct) {
+		this.applyproduct = applyproduct;
+	}
+
+	public CloseOrder getSign() {
+		return sign;
+	}
+
+	public void setSign(CloseOrder sign) {
+		this.sign = sign;
+	}
+
+	public List<Active> getGetapply_depts() {
+		return getapply_depts;
+	}
+
+	public void setGetapply_depts(List<Active> getapply_depts) {
+		this.getapply_depts = getapply_depts;
+	}
+
+	public String getUserappid() {
+		return userappid;
+	}
+
+	public void setUserappid(String userappid) {
+		this.userappid = userappid;
+	}
+
+	public String getUserdepta() {
+		return userdepta;
+	}
+
+	public void setUserdepta(String userdepta) {
+		this.userdepta = userdepta;
+	}
 
 	public String getPerWorkF() {
 		return perWorkF;
@@ -170,7 +272,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 					apply.setSp_check_status(null);
 				}
 			}
-			ContextHelper.setSearchDeptPermit4Search("QKJ_QKJMANAGE_APPLY_LIST",map, "apply_depts", "apply_user");
+			ContextHelper.setSearchDeptPermit4Search("QKJ_QKJMANAGE_APPLY_LIST", map, "apply_depts", "apply_user");
 			ContextHelper.SimpleSearchMap4Page("QKJ_QKJMANAGE_APPLY_LIST", map, apply, viewFlag);
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 			this.setCurrPage(Integer.parseInt((ToolsUtil.isEmpty(map.get(Parameters.Current_Page_Str)) ? "1" : map.get(Parameters.Current_Page_Str)).toString()));
@@ -182,10 +284,10 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
 		}
-		if(perWorkFlag==null || perWorkFlag.equals("null")){
+		if (perWorkFlag == null || perWorkFlag.equals("null")) {
 			return "success";
-		}else{
-			perWorkFlag=null;
+		} else {
+			perWorkFlag = null;
 			return "perSuccess";
 		}
 	}
@@ -196,10 +298,10 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 
 	public String load() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_VIEW");
-		if((perWorkF==null || perWorkF.equals("null")) && perWorkFlag==null){
-			perWorkFlag=null;
-		}else{
-			perWorkFlag="perWork";
+		if ((perWorkF == null || perWorkF.equals("null")) && perWorkFlag == null) {
+			perWorkFlag = null;
+		} else {
+			perWorkFlag = "perWork";
 		}
 		try {
 			if (null == viewFlag) {
@@ -207,6 +309,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 				setMessage("你没有选择任何操作!");
 			} else if ("add".equals(viewFlag)) {
 				this.setApply(null);
+				get_apply_depts();
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/apply_list?viewFlag=relist'>至事由列表</a>&nbsp;&gt;&nbsp;增加至事由";
 			} else if ("mdy".equals(viewFlag)) {
 				if (!(apply == null || apply.getUuid() == null)) {
@@ -221,6 +324,20 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 				/* 检查当前用户是否已经审阅 */
 				if (adao.userIsIn(approves, ContextHelper.getUserLoginUuid())) this.setIsApprover("true");
 				else this.setIsApprover("false");
+				get_apply_depts();
+				this.setApplyUserSign(dao.listUserSign(apply.getUuid()));
+				
+				
+				
+				map.clear();
+				map.put("apply_id", apply.getUuid());
+				map.put("status", 1);
+				ApplyProductDAO adao = new ApplyProductDAO();
+				this.setApplyproduct(adao.list(map));
+				//this.setIndApplyProducts(independence(map, "海拔", 1));
+				this.setOtherApplyProducts(independence(map, "海拔", 2));
+				ApplyPosmDAO apdao = new ApplyPosmDAO();
+				this.setApplyPosms(apdao.list(map));
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/apply_list?viewFlag=relist'>至事由列表</a>&nbsp;&gt;&nbsp;至事由详情";
 			} else {
 				this.setApply(null);
@@ -242,6 +359,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 			} else {
 				this.setApply((Apply) dao.get(apply.getUuid()));
 				this.setApplyUserSign(dao.listUserSign(apply.getUuid()));
+				//this.setSign((CloseOrder) dao.sign(apply.getUuid()));
 			}
 
 		} catch (Exception e) {
@@ -255,7 +373,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_ADD");
 		try {
 			apply.setStatus(0);
-			apply.setApply_dept(ContextHelper.getUserLoginDept());
+			// apply.setApply_dept(ContextHelper.getUserLoginDept());
 			apply.setApply_user(ContextHelper.getUserLoginUuid());
 			apply.setApply_time(new Date());
 			apply.setLm_user(ContextHelper.getUserLoginUuid());
@@ -354,6 +472,23 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
+	
+	/**
+	 * 主管审核通过
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String check9() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_CHECK9");
+		try {
+			check(9);
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!check10 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!check10 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
 
 	/**
 	 * 大区经理审核通过
@@ -419,6 +554,23 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!check40 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!check40 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+
+	/**
+	 * 董事审核通过
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String check50() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_CHECK50");
+		try {
+			check(60);
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!check50 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!check50 数据更新失败:", e);
 		}
 		return SUCCESS;
 	}
@@ -552,6 +704,23 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 		}
 	}
 
+	public void get_apply_depts() {
+		Map<String, String> newMap = new HashMap<String, String>();
+		newMap = ContextHelper.getUserLoginInfo().getPermit_depts2();
+		Set<String> set = newMap.keySet();
+		List<Active> acs = new ArrayList<>();
+		for (String s : set) {
+			Active ac = new Active();
+			ac.setApply_dept(s);
+			String value = newMap.get(s);
+			ac.setApply_dept_name(value.substring(0, value.indexOf("#")));
+			acs.add(ac);
+		}
+		this.setGetapply_depts(acs);
+		this.setUserappid(ContextHelper.getUserLoginUuid());
+		this.setUserdepta(ContextHelper.getUserLoginDept());
+	}
+
 	public String del() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_DEL");
 		try {
@@ -564,4 +733,33 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
+	
+	
+	
+	
+	private List<ApplyProduct> independence(Map<String, Object> map, String title, int flag) {
+		ApplyProductDAO adao = new ApplyProductDAO();
+		List<ApplyProduct> products = new ArrayList<>();
+		ApplyProduct pri = new ApplyProduct();
+	/*	if (flag == 1) {// 是需要独立显示的商品
+			map.put("title", title);
+			map.remove("othertitle");
+			products = adao.list(map);
+			if (products.size() > 0) {
+				for (int i = 0; i < products.size(); i++) {
+					pri = products.get(i);
+					indprice = indprice + pri.getTotal_price();
+				}
+			}
+		} else {*/
+			map.remove("title");
+			//map.put("othertitle", title);
+			products = adao.list(map);
+	/*	}*/
+		return products;
+	}
+	
+	
+	
+	
 }

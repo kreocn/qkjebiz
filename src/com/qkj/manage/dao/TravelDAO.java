@@ -38,6 +38,10 @@ public class TravelDAO extends AbstractDAO {
 	public int mdyCheckStatus(Object parameters) {
 		return super.save("qkjmanage_mdyCheckStatus", parameters);
 	}
+	
+	public int mdyStatus(Object parameters) {
+		return super.save("qkjmanage_mdyStatus", parameters);
+	}
 
 	public int getResultCount() {
 		return super.getResultCount();

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "sql-map-2.dtd">
+<sqlMap>
+	<!-- Apply Start -->
+	<typeAlias alias="applyProduct" type="com.qkj.manage.domain.ApplyProduct" />
+
+		<insert id="qkjmanage_addApplyProduct1" parameterClass="applyProduct">
+		<![CDATA[ 
+			Insert Into qkjm_r_apply_product(apply_id,product_id,per_price,num,total_price,status)
+			Values (#apply_id#,#product_id#,#per_price#,#num#,#total_price#,#status#)
+		]]>
+	</insert>
+	
+	
+	
+	<select id="qkjmanage_getApplyProducts" resultClass="applyProduct" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select a.*,p.title product_name
+			From qkjm_r_apply_product a,qkj_t_product p
+			WHERE a.product_id = p.uuid
+		]]>
+		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ a.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="apply_id"><![CDATA[ a.apply_id=#apply_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="status"><![CDATA[ a.status=#status# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="title"><![CDATA[ p.`brand`=11 ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="othertitle"><![CDATA[ p.`brand`<>11 ]]></isNotEmpty>
+	</select>
+	<select id="qkjmanage_getApplyProductsCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*)
+			From qkjm_r_apply_product a,qkj_t_product p
+			WHERE a.product_id = p.uuid
+		]]>
+		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ a.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="apply_id"><![CDATA[ a.apply_id=#apply_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="status"><![CDATA[ a.status=#status# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="title"><![CDATA[ p.title LIKE CONCAT(#title#,'%')   ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="othertitle"><![CDATA[ p.title not LIKE CONCAT(#othertitle#,'%') ]]></isNotEmpty>
+	</select>
+	
+	
+	
+	
+		<delete id="qkjmanage_delApplyProduct" parameterClass="applyProduct">
+	<![CDATA[
+		Delete From qkjm_r_apply_product Where uuid=#uuid#
+	]]>
+	</delete>
+</sqlMap>

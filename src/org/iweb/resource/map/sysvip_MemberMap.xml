@@ -122,7 +122,10 @@
 			member_name=#member_name#,
 			email=#email#,			
 			user_type=#user_type#,
-			contact=#contact#
+			contact=#contact#,
+			is_customers=#is_customers#,
+			is_mobile_check=#is_mobile_check#,
+			is_email_check=#is_email_check# 
 			Where uuid = #uuid#
 		]]>
 	</update>

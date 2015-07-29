@@ -25,8 +25,10 @@ import org.iweb.sysvip.domain.Member;
 import org.iweb.sysvip.domain.MemberAddress;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.qkj.manage.dao.ActiveDAO;
 import com.qkj.manage.dao.CustomerDAO;
 import com.qkj.manage.dao.CustomerRecodeDAO;
+import com.qkj.manage.domain.Active;
 import com.qkj.manage.domain.Customer;
 import com.qkj.manage.domain.CustomerRecode;
 
@@ -37,7 +39,26 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 	private Map<String, Object> map = new HashMap<String, Object>();
 	private MemberDAO dao = new MemberDAO();
 	private UserRoleDAO role_dao = new UserRoleDAO();
+	private ActiveDAO activedao=new ActiveDAO();
 	private Customer customer;
+	private String customer_id;
+	private List<Active> active;
+	public List<Active> getActive() {
+		return active;
+	}
+
+	public void setActive(List<Active> active) {
+		this.active = active;
+	}
+
+	public String getCustomer_id() {
+		return customer_id;
+	}
+
+	public void setCustomer_id(String customer_id) {
+		this.customer_id = customer_id;
+	}
+
 	private Member member;
 	private CustomerDAO cdao = new CustomerDAO();
 	private List<CustomerRecode> customerRecodes;
@@ -180,7 +201,13 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/sysvip/member_list?viewFlag=relist'>会员列表</a>&nbsp;&gt;&nbsp;添加会员";
 			} else if ("mdy".equals(viewFlag)) {
 				map.clear();
-				map.put("uuid", member.getUuid());
+				String uuid="";
+				if(member==null){
+					uuid=customer_id;
+				}else{
+					uuid=member.getUuid();
+				}
+				map.put("uuid", uuid);
 				if (null == map.get("uuid")) {
 					viewFlag = "add";
 					member = new Member();
@@ -196,8 +223,12 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 				if(member.getIs_customers().equals("1")){
 					load1();
 				}
-				
-	
+				CustomerRecodeDAO cdao = new CustomerRecodeDAO();
+				map.clear();
+				map.put("customer_id", member.getUuid());
+				map.put("order_type", "uuidAsc");
+				customerRecodes = cdao.list(map);
+				active=activedao.svipList(map);
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/sysvip/member_list?viewFlag=relist'>会员列表</a>&nbsp;&gt;&nbsp;修改会员信息";
 			} else {
 				this.setMember(null);
@@ -238,11 +269,7 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 				if (!ToolsUtil.isEmpty(customer.getFailed_reason())) {
 					customer.setFailed_reasons(customer.getFailed_reason().split(","));
 				}
-				CustomerRecodeDAO cdao = new CustomerRecodeDAO();
-				map.clear();
-				map.put("customer_id", customer.getUuid());
-				map.put("order_type", "uuidAsc");
-				customerRecodes = cdao.list(map);
+			
 			} else {
 				this.setCustomer(null);
 				setMessage("无操作类型!");
@@ -274,10 +301,13 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 			member.setIs_mobile_check(1);
 			member.setReg_type(1);
 			member.setReg_time(new Date());
+			if(member.getIs_email_check()==null){
+				member.setIs_email_check(0);
+			}
 			 dao.add(member);
 			memberAddress.setMember_id(member.getUuid());
 			memberAddress.setDefaultaddress(1);
-			
+		
 			MemberAddressDAO mdao = new MemberAddressDAO();
 			mdao.add(memberAddress);
 			log.info("成功添加了会员,会员号为:" + member.getUuid());
@@ -288,7 +318,8 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 			customer.setManager(member.getManager());
 			customer.setDept_code(member.getDept_code());
 			customer.setAdd_time(new Date());
-			customer.setCus_name(member.getMember_name());
+			customer.setCon_name(member.getMember_name());
+			customer.setCus_name(member.getContact());
 			customer.setPhone(member.getMobile());
 			customer.setAdd_user(ContextHelper.getUserLoginUuid());
 			customer.setDistribution(ToolsUtil.Array2String(customer.getDistributions() == null ? new String[] {}
@@ -305,19 +336,6 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -334,6 +352,25 @@ public class MemberAction extends ActionSupport implements ActionAttr {
 			
 			customer.setDept_code(member.getDept_code());
 			customersave();
+			
+				
+			if(member.getIs_customers().equals("1")){
+				
+				customer.setMember_id(member.getUuid());
+				customer.setManager(member.getManager());
+				customer.setDept_code(member.getDept_code());
+				customer.setAdd_time(new Date());
+				customer.setCon_name(member.getMember_name());
+				customer.setCus_name(member.getContact());
+				customer.setPhone(member.getMobile());
+				customer.setAdd_user(ContextHelper.getUserLoginUuid());
+				customer.setDistribution(ToolsUtil.Array2String(customer.getDistributions() == null ? new String[] {}
+						: customer.getDistributions(), ","));
+				customer.setFailed_reason(ToolsUtil.Array2String(customer.getFailed_reasons() == null ? new String[] {}
+						: customer.getFailed_reasons(), ","));
+				cdao.add(customer);
+				}
+			
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);

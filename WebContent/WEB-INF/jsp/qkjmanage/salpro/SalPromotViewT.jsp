@@ -11,7 +11,7 @@
 </head>
 
 <body>
-
+<s:action name="nav" namespace="/manage" executeResult="true" />
 <div class="tab_right">
 	<div class="tab_warp main">
 		<div class="dq_step">
@@ -108,15 +108,6 @@
 					</div>
 				</div>
 				
-				<div class="label_hang">
-							<div class="label_ltit">许可范围:</div>
-							<div class="label_rwben label_rwb">
-								<span class="label_rwb">
-								 <s:select id="sal_scopUs" name="salPromot.sal_scopUs" cssClass="selectKick" list="#{1:'公有',2:'私有'}" headerKey="" headerValue="--请选择--"  onchange="pub();"/>
-								</span>
-							</div>
-				</div>
-				
 				</div>
 				<s:if test="salstate!=1">
 				<div class="label_main">
@@ -148,23 +139,23 @@
 						<div class="clear"></div>
 		        	</div>
 		        </div>
-				<s:if test="salstate!=1">
+				
 				<div class="label_main">
 					<div class="label_hang">
 						<div class="label_ltit">相关操作:</div>
 						<div class="label_rwbenx">
 							<span id="message"><s:property value="message" /></span>
 							<span class="opb lb op-area noprint"><input type="button" onclick="window.print();" value="打印本页"/>&nbsp;</span>
-							<input type="button" class="input-gray" value="返回"
-								onclick="linkurl('<s:url action="salPromot_list" namespace="/salpro"></s:url>');" />
+							<input type="button" class="input-gray" value="返回" onclick="history.go(-1)" />
 						</div>
 					</div>
 				</div>
-				</s:if>
+			
 			</div>
 		</s:form>
 	</div>
 	</div>
+	<s:action name="ref_foot" namespace="/manager" executeResult="true" />
 </body>
 <script type="text/javascript">
 $("#sendee").click(function() {

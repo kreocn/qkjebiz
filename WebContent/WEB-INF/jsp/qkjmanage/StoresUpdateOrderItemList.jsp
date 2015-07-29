@@ -63,24 +63,24 @@
 					<legend>商品清单</legend>
 				<table id="orderTable">
 					<tr id="coltr">
-						<th class="td1">商品编号</th>
-						<th class="td3">商品名称</th>
-						<th class="td3">商品类型</th>
+							
+						<th class="td1">商品名称</th>
+					<th class="td2">规格</th>
 						<th class="td3">单价</th>
-						<th class="td3">数量</th>
-						<th class="td1">总价</th>
-						<th class="td2">条形码</th>
-						<th class="td4">规格</th>
+						<th class="td4">数量</th>
+						<th class="td5">总价</th>
+					
+						
 						 <c:if test="${it:checkPermit('QKJ_QKJMANAGE_STORES_FIND_ORDER_DEL',null)==true}"> 
 						
-						<th class="td4">操作</th>
+						<th class="td6">操作</th>
 						</c:if>
 					</tr>
 					<s:iterator value="storesorderitem" status="sta">
 						<tr id="tr${id}">
-						    <td class="td1" >${id}</td>
-							<td class="td2" >${title}</td>
-							<td class="td3">${brand_name}</td>
+						 
+							<td class="td1" >${title}</td>
+							<td class="td2">${spec}</td>
 							<td class="td3">${product_price}</td>
 							<td class="td4"  >		<c:if test=""> </c:if>
 							<c:choose>  
@@ -89,10 +89,10 @@
                            </c:choose> 
 							</td>
 							<td class="td5">${order_total_price}</td>
-							<td class="td6">${bar_code}</td>
-							<td class="td7">${spec}</td>
+						
+							
 							<c:if test="${it:checkPermit('QKJ_QKJMANAGE_STORES_FIND_ORDER_DEL',null)==true}"> 
-							<td class="td4 op-area"><a  class="input-blue"   onclick="del(${id},${sotresorder.id},${order_total_price},${product_price})">保存</a></td>
+							<td class="td6 op-area"><a  class="input-blue"   onclick="del(${id},${sotresorder.id},${order_total_price},${product_price})">修改</a></td>
 							</c:if>
 							<%-- href="/qkjmanage/stores_order_item_delete.action?id=${id}&storesid=${sotresorder.id}&price=${product_price}"
 						 --%>
@@ -101,7 +101,33 @@
 				</table>
 				</fieldset>
 			</div>
-		</div>
+			<div class="tab_warp">
+				<fieldset>
+					<legend>是否</legend>
+			          			<div class="label_main">
+						<div class="label_hang">
+							<div class="label_ltit">是否需要开票</div>
+							<div class="label_rwbenx">
+						     <s:radio onclick="ticket(this);"  name="storyit.is_ticket" title="是否是会员"  list="#{0:'否',1:'是'}" value="0" cssClass="regular-radio" />
+							</div>
+						</div>
+					</div>
+		<div class="label_hang" id="svipname" style="display: none" >
+						<div class="label_ltit">发票抬头:</div>
+						<div class="label_rwben label_rwb">
+							<s:textfield id="order_user_name" name="storyit.invoice_title" />
+						</div>
+							<div class="label_ltit">发票金额:</div>
+						<div class="label_rwben label_rwb">
+							<s:textfield id="order_user_name" name="storyit.price" />
+						</div>
+							<div class="label_ltit">发票编号:</div>
+						<div class="label_rwben label_rwb">
+							<s:textfield id="order_user_name" name="storyit.member_name" />
+						</div>
+					</div>
+						</fieldset>
+			</div>
 	</div>
 		</div>
 	<s:action name="ref_foot" namespace="/manager" executeResult="true" />
@@ -124,6 +150,15 @@
 		       	 var num=$( "#spinner"+id ).spinner( "value" );
 		 		$("#tr"+id).find(".input-blue").attr("href","/qkjmanage/stores_order_item_delete.action?id="+id+"&storesid="+storesorder_id+"&totalPirce="+totalPrice+"&num="+num+"&price="+price+"");
 		 		$("#tr"+id).find(".input-blue").click(); 
+	}
+	
+	var ticket = function(obj){
+		if (getRadio("storyit.is_ticket") == 1) {
+			
+			document.getElementById("svipname").style.display = "";
+			document.getElementById("order_user_name").value = "";
+
+		} 
 	}
 	</script>
 </body>

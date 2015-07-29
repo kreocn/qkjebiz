@@ -55,6 +55,7 @@ public class TravelCustomerAction extends ActionSupport {
 	public String add() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_TRAVELCUSTOMER_ADD");
 		try {
+			travelCustomer.setStatus(1);
 			dao.add(travelCustomer);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!add 数据添加失败:", e);
@@ -82,6 +83,18 @@ public class TravelCustomerAction extends ActionSupport {
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!del 数据删除失败:", e);
 			throw new Exception(this.getClass().getName() + "!del 数据删除失败:", e);
+		}
+		return SUCCESS;
+	}
+	
+	public String addClose() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_TRAVELCUSTOMER_ADD");
+		try {
+			travelCustomer.setStatus(2);
+			dao.add(travelCustomer);
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!add 数据添加失败:", e);
+			throw new Exception(this.getClass().getName() + "!add 数据添加失败:", e);
 		}
 		return SUCCESS;
 	}

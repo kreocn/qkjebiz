@@ -11,11 +11,13 @@ import org.iweb.sys.ContextHelper;
 import org.iweb.sys.ToolsUtil;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.qkj.manage.dao.CloseOrderDAO;
+import com.qkj.manage.dao.ProcessDAO;
 import com.qkj.manage.dao.ProductDAO;
 import com.qkj.manage.dao.TravelCustomerDAO;
 import com.qkj.manage.dao.TravelDAO;
 import com.qkj.manage.dao.TravelProductDAO;
-import com.qkj.manage.domain.Active;
+import com.qkj.manage.domain.CloseOrder;
 import com.qkj.manage.domain.Product;
 import com.qkj.manage.domain.Travel;
 import com.qkj.manage.domain.TravelCustomer;
@@ -33,6 +35,9 @@ public class TravelAction extends ActionSupport {
 	private List<TravelCustomer> travelCustomers;
 	private List<TravelProduct> travelProducts;
 	private List<Product> products;
+	
+	private CloseOrder co;
+	private List<CloseOrder> cos;
 
 	private String message;
 	private String viewFlag;
@@ -44,6 +49,22 @@ public class TravelAction extends ActionSupport {
 	private String perWorkF;
 	private static String perWorkFlag=null;
 	
+	public CloseOrder getCo() {
+		return co;
+	}
+
+	public void setCo(CloseOrder co) {
+		this.co = co;
+	}
+
+	public List<CloseOrder> getCos() {
+		return cos;
+	}
+
+	public void setCos(List<CloseOrder> cos) {
+		this.cos = cos;
+	}
+
 	public String getPerWorkF() {
 		return perWorkF;
 	}
@@ -191,6 +212,7 @@ public class TravelAction extends ActionSupport {
 					TravelCustomerDAO cdao = new TravelCustomerDAO();
 					map.clear();
 					map.put("travel_id", travel.getUuid());
+					map.put("status", 1);
 					travelCustomers = cdao.list(map);
 
 					TravelProductDAO pdao = new TravelProductDAO();
@@ -210,6 +232,82 @@ public class TravelAction extends ActionSupport {
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!load 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!load 读取数据错误:", e);
+		}
+		return SUCCESS;
+	}
+	
+	public String closeLoad() throws Exception {
+		if((perWorkF==null || perWorkF.equals("null")) && perWorkFlag==null){
+			perWorkFlag=null;
+		}else{
+			perWorkFlag="perWork";
+		}
+		try {
+			if ("add".equals(viewFlag)) {
+				// this.setTravel(null);
+				if (travel == null) {
+					travel = new Travel();
+				} 
+				CloseOrderDAO cod=new CloseOrderDAO();
+				map.clear();
+				map.put("apply_id", travel.getUuid());
+				map.put("type", 1);
+				this.setCos(cod.list(map));
+				if(cos.size()>0){
+					this.setCo(cos.get(0));
+					this.setTravel((Travel) dao.get(travel.getUuid()));
+					travel.setStatus(1);
+					dao.mdyStatus(travel);
+				}else{
+					dao.startTransaction();
+					this.setTravel((Travel) dao.get(travel.getUuid()));
+					travel.setStatus(1);
+					dao.mdyStatus(travel);
+					CloseOrderAction ca=new CloseOrderAction();
+					co=new CloseOrder();
+					co.setMember_id(travel.getMember_id());
+					co.setMember_address(travel.getMember_address());
+					co.setMember_phone(travel.getMember_phone());
+					co.setMember_name(travel.getMembers_names());
+					co.setTheme("会员"+travel.getMembers_names()+"工业旅游结案");
+					co.setClose_time(new Date());
+					co.setClose_num(ca.number());// 单据编号
+					co.setApply_dept(ContextHelper.getUserLoginDept());
+					co.setAdd_user(ContextHelper.getUserLoginUuid());
+					co.setAdd_time(new Date());
+					co.setLm_user(ContextHelper.getUserLoginUuid());
+					co.setLm_time(new Date());
+					co.setState(0);
+					co.setType(1);
+					co.setApply_id(travel.getUuid());
+					cod.add(co);
+					addProcess("CLOSEORDER_ADD", "新增工业旅游结案单", ContextHelper.getUserLoginUuid());
+					dao.commitTransaction();
+				}
+				
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/travel_list?viewFlag=relist'>工业旅游申请列表</a>&nbsp;&gt;&nbsp;增加工业旅游申请";
+			} else if ("mdy".equals(viewFlag) || "print1".equals(viewFlag) || "print2".equals(viewFlag) || "print3".equals(viewFlag)) {
+				if (!(travel == null || travel.getUuid() == null)) {
+					CloseOrderDAO cod=new CloseOrderDAO();
+					map.clear();
+					map.put("apply_id", travel.getUuid());
+					map.put("type", 1);
+					this.setCos(cod.list(map));
+					if(cos.size()>0)
+					this.setCo((CloseOrder) cos.get(0));
+					
+				}
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/travel_list?viewFlag=relist'>工业旅游申请列表</a>&nbsp;&gt;&nbsp;修改工业旅游申请";
+			} else {
+				this.setMessage("参数丢失,自动转到添加申请单页面.");
+				this.setViewFlag("add");
+				load();
+			}
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!load 读取数据错误:", e);
+			throw new Exception(this.getClass().getName() + "!load 读取数据错误:", e);
+		}finally{
+			dao.endTransaction();
 		}
 		return SUCCESS;
 	}
@@ -446,5 +544,13 @@ public class TravelAction extends ActionSupport {
 		travel.setLm_user(ContextHelper.getUserLoginUuid());
 		travel.setLm_time(new Date());
 		dao.mdyACheckStatus(travel);
+	}
+	
+	private void addProcess(String p_sign, String p_note, String userLogin) {
+		ProcessDAO pdao = new ProcessDAO();
+		if (co != null) {/* 单据状态，销售状态，销管状态，财务，数据中心 */
+			pdao.addProcess(4, co.getUuid(), p_sign, p_note, co.getState(), co.getSd_state(), co.getSmd_status(), co.getFd_check_state(),
+					co.getNd_check_state(), userLogin);
+		}
 	}
 }

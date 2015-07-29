@@ -7,6 +7,26 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>结案提货单管理--<s:text name="APP_NAME" /></title>
 <s:action name="ref_head" namespace="/manager" executeResult="true" />
+<style type="text/css">
+.lb_lgsfy {
+  float: left;
+  border-right: 1px solid #ccc;
+  width: 49%;
+}
+.label_hang_sign{
+	width:49%;
+	min-height:45px;
+	height:auto;
+	line-height:28px;
+}
+.label_rwb_sign {
+  margin-top:0;
+}
+
+.label_main {
+  padding-bottom: 0;
+}
+</style>
 </head>
 
 <body>
@@ -14,9 +34,11 @@
 <div class="tab_right">
 	<div class="tab_warp main">
 		<div class="dq_step">
-			<span id="hs" class="pt">结案提货单</span>
+			<span id="hs" class="pt">结案提货单（${closeOrder.uuid}）</span>
 			<span class="opb lb op-area noprint">
-				<a href="<s:url action="closeOrder_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a>
+				<!-- <a href="<s:url action="closeOrder_list" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a> -->
+				<a href="<s:url namespace="/qkjmanage" action="closeOrder_load"><s:param name="viewFlag">mdy</s:param><s:param name="closeOrder.uuid" value="%{closeOrder.uuid}"></s:param></s:url>">返回修改页面</a>
+				
 			</span> 
 			<span class="opb lb op-area noprint">
 				<input type="button" onclick="window.print();" value="打印本页" />&nbsp;</span> 
@@ -25,119 +47,66 @@
 			<div class="label_con">
 				<div class="label_main">
 						<div class='label_hang'>
-							<div class='label_ltit'>主键:</div>
-							<div class='label_rwben'>${closeOrder.uuid}<s:hidden name="closeOrder.uuid" />
-							</div>
-						</div>
-						<div class='label_hang'>
 							<div class='label_ltit'>申请人:</div>
 							<div class='label_rwben'>${closeOrder.add_user_name}</div>
 						</div>
 						<div class="label_hang">
 							<div class="label_ltit">单据编号:</div>
-							<div class="label_rwb">
+							<div class="label_rwbenx">
 								${closeOrder.close_num }
 							</div>
 						</div>
-						<!-- <div class="label_hang">
-							<div class="label_ltit">审核状态:</div>
-							<div class="label_rwbenx">
-								<div class="zhuangtai" <s:if test="%{closeOrder.check_state!=0}">title="${it:formatDate(closeOrder.check_time,'yyyy-MM-dd HH:mm:ss')}"</s:if>>
-									单据审核状态:
-									<s:if test="closeOrder.check_state==0">新单</s:if>
-									<s:if test="closeOrder.check_state==5">
-										<font class="message_error">审核退回</font>(${closeOrder.check_user_name})</s:if>
-									<s:if test="closeOrder.check_state==1">
-										<font class="message_warning">待审核</font>
-									</s:if>
-									<s:if test="closeOrder.check_state==10">
-										<font class="message_pass">主管已审</font>(${closeOrder.check_user_name})</s:if>
-									<s:if test="closeOrder.check_state==20">
-										<font class="message_pass">办事处经理已审</font>(${closeOrder.check_user_name})</s:if>
-									<s:if test="closeOrder.check_state==30">
-										<font class="message_pass">大区经理已审</font>(${closeOrder.check_user_name})</s:if>
-									<s:if test="closeOrder.check_state==40">
-										<font class="message_pass">财务已审</font>(${closeOrder.check_user_name})</s:if>
-									<s:if test="closeOrder.check_state==50">
-										<font class="message_pass">总监已审</font>(${closeOrder.check_user_name})</s:if>
-									<s:if test="closeOrder.check_state==60">
-										<font class="message_pass">业务副总已审</font>(${closeOrder.check_user_name})</s:if>
-									<s:if test="closeOrder.check_state==70">
-										<font class="message_pass">总经理已审</font>(${closeOrder.check_user_name})</s:if>
-								</div>
-								<div class="zhuangtai" <s:if test="%{closeOrder.nd_check_state!=0}">title="${it:formatDate(closeOrder.nd_check_time,'yyyy-MM-dd HH:mm:ss')}"</s:if>>
-									数据中心审核状态:
-									<s:if test="closeOrder.nd_check_state==0">未确认</s:if>
-									<s:if test="closeOrder.nd_check_state==5">
-										<font class="message_error">审核退回</font>(${closeOrder.nd_check_user_name})</s:if>
-									<s:if test="closeOrder.nd_check_state==10">
-										<font class="message_pass">已通过审</font>(${closeOrder.nd_check_user_name})</s:if>
-								</div>
-							</div>
-						</div> -->
+					</div>
+						
+						
 					
 					<div class="label_main">
 					<div class="label_hang">
 						<div class="label_ltit">签字:</div>
-						<div class="label_rwbenx">
+						<div class="label_rwbenx label_rwb_sign">
 							<s:iterator value="allsigns" status="sta">
-								<div class="zhuangtai bgcw">
+								
 									<s:if test="puser_sign!=null">
 										<s:if test="puser_sign==null">	(${puser_name})</s:if>
 										<s:else>
-											<s:if test="%{sign.sign20!=puser_sign && sign.sign30!=puser_sign && sign.sign40!=puser_sign && sign.sign50!=puser_sign && sign.sign60!=puser_sign}">
+											<s:if test="%{sign==null}">
 											<span class="user_sign"><img src="${puser_sign}" /></span>
-											<span class="vab">${it:formatDate(biz_time,'yyyy-MM-dd HH:mm:ss')}</span>
+											<span class="vab">${it:formatDate(biz_time,'yyyy-MM-dd')}</span>
 											</s:if>
+											<s:else>
+											<s:if test="sign.sign50!=puser_sign">
+											<span class="user_sign"><img src="${puser_sign}" /></span>
+											<span class="vab">${it:formatDate(biz_time,'yyyy-MM-dd')}</span>
+											</s:if>
+											<s:elseif test="sign.sign40!=puser_sign">
+											<span class="user_sign"><img src="${puser_sign}" /></span>
+											<span class="vab">${it:formatDate(biz_time,'yyyy-MM-dd')}</span>
+											</s:elseif>
+											<s:elseif test="sign.sign60!=puser_sign">
+											<span class="user_sign"><img src="${puser_sign}" /></span>
+											<span class="vab">${it:formatDate(biz_time,'yyyy-MM-dd')}</span>
+											</s:elseif>
+											<s:elseif test="sign.sign70!=puser_sign">
+											<span class="user_sign"><img src="${puser_sign}" /></span>
+											<span class="vab">${it:formatDate(biz_time,'yyyy-MM-dd')}</span>
+											</s:elseif>
+											<s:elseif test="sign.sign30!=puser_sign">
+											<span class="user_sign"><img src="${puser_sign}" /></span>
+											<span class="vab">${it:formatDate(biz_time,'yyyy-MM-dd')}</span>
+											</s:elseif>
+											<s:else>
+											<span class="user_sign"><img src="${puser_sign}" /></span>
+											<span class="vab">${it:formatDate(biz_time,'yyyy-MM-dd')}</span>
+											</s:else>
+											</s:else>
 										</s:else>
 									</s:if>
-								</div>
+								
 							</s:iterator>
 						</div>
 					</div>
 				</div>
 				
-				<div class="label_main label_main_sep"></div>
-				<div class="label_main">
-					<div class="label_hang label_hang_sign">
-						<div class="label_ltit">主管/办事处</div>
-						<div class="label_rwbenx label_rwb_sign">
-							(签字/日期)
-							<s:if test="sign!=null && closeOrder.check_state>=20">
-								<span class="user_sign"><img src="${sign.sign20}" /></span>
-
-							</s:if>
-						</div>
-					</div>
-				</div>
-				
-				<div class="label_main label_main_sep"></div>
-				<div class="label_main">
-					<div class="label_hang label_hang_sign">
-						<div class="label_ltit">经理/大区</div>
-						<div class="label_rwbenx label_rwb_sign">
-							(签字/日期)
-							<s:if test="sign!=null  && closeOrder.check_state>=30">
-								<span class="user_sign"><img src="${sign.sign30}" /></span>
-
-							</s:if>
-						</div>
-					</div>
-				</div>
-				
-				<div class="label_main label_main_sep"></div>
-				<div class="label_main">
-					<div class="label_hang label_hang_sign">
-						<div class="label_ltit">运营总监</div>
-						<div class="label_rwbenx label_rwb_sign">
-							(签字/日期)
-							<s:if test="sign!=null  && closeOrder.check_state>=40">
-								<span class="user_sign"><img src="${sign.sign40}" /></span>
-
-							</s:if>
-						</div>
-					</div>
-				</div>
 				
 				<div class="label_main label_main_sep"></div>
 				<div class="label_main">
@@ -145,9 +114,19 @@
 						<div class="label_ltit">财务部:</div>
 						<div class="label_rwbenx label_rwb_sign">
 							(签字/日期)
-							<s:if test="sign!=null  && closeOrder.check_state>=50">
+							<s:if test="sign!=null && sign.sign50!=null">
 								<span class="user_sign"><img src="${sign.sign50}" /></span>
-
+								<span class="vab">${it:formatDate(sign.time50,'yyyy-MM-dd')}</span>
+							</s:if>
+						</div>
+					</div>
+					<div class="label_hang label_hang_sign">
+						<div class="label_ltit">数据中心:</div>
+						<div class="label_rwbenx label_rwb_sign">
+							(签字/日期)
+							<s:if test="sign!=null && sign.sign30!=null">
+								<span class="user_sign"><img src="${sign.sign30}" /></span>
+								<span class="vab">${it:formatDate(sign.time30,'yyyy-MM-dd')}</span>
 							</s:if>
 						</div>
 					</div>
@@ -156,29 +135,66 @@
 				<div class="label_main label_main_sep"></div>
 				<div class="label_main">
 					<div class="label_hang label_hang_sign">
-						<div class="label_ltit">副总:</div>
+						<div class="label_ltit">销管部经理:</div>
 						<div class="label_rwbenx label_rwb_sign">
 							(签字/日期)
-							<s:if test="sign!=null  && closeOrder.check_state>=60">
+							<s:if test="sign!=null && sign.sign40!=null">
+								<span class="user_sign"><img src="${sign.sign40}" /></span>
+								<span class="vab">${it:formatDate(sign.time40,'yyyy-MM-dd')}</span>
+							</s:if>
+						</div>
+					</div>
+					<div class="label_hang label_hang_sign">
+						<div class="label_ltit">销管副总:</div>
+						<div class="label_rwbenx label_rwb_sign">
+							(签字/日期)
+							<s:if test="sign!=null && sign.sign60!=null">
 								<span class="user_sign"><img src="${sign.sign60}" /></span>
-							</s:if>
-						</div>
-					</div>
-				</div>
-
-				<div class="label_main label_main_sep"></div>
-				<div class="label_main">
-					<div class="label_hang label_hang_sign">
-						<div class="label_ltit">总经理:</div>
-						<div class="label_rwbenx label_rwb_sign">
-							(签字/日期)
-							<s:if test="sign!=null  && closeOrder.check_state>=70">
-								<span class="user_sign"><img src="${sign.sign70}" /></span>
+								<span class="vab">${it:formatDate(sign.time60,'yyyy-MM-dd')}</span>
 							</s:if>
 						</div>
 					</div>
 				</div>
 				
+				<div class="label_main label_main_sep"></div>
+				<div class="label_main">
+					<div class="label_hang label_hang_sign">
+						<div class="label_ltit">业务副总:</div>
+						<div class="label_rwbenx label_rwb_sign">
+							(签字/日期)
+							<s:if test="sign!=null && sign.sign20!=null">
+								<span class="user_sign"><img src="${sign.sign20}" /></span>
+								<span class="vab">${it:formatDate(sign.time20,'yyyy-MM-dd')}</span>
+							</s:if>
+						</div>
+					</div>
+					<div class="label_hang label_hang_sign">
+						<div class="label_ltit">总经理:</div>
+						<div class="label_rwbenx label_rwb_sign">
+							(签字/日期)
+							<s:if test="sign!=null && sign.sign70!=null">
+								<span class="user_sign"><img src="${sign.sign70}" /></span>
+								<span class="vab">${it:formatDate(sign.time70,'yyyy-MM-dd')}</span>
+							</s:if>
+						</div>
+					</div>
+				</div>
+				<s:if test="closeOrder.apply_dept.substring(0,1)==4">
+				<div class="label_main label_main_sep"></div>
+				<div class="label_main">
+					<div class="label_hang label_hang_sign">
+						<div class="label_ltit">董事:</div>
+						<div class="label_rwbenx label_rwb_sign">
+							(签字/日期)
+							<s:if test="sign!=null && sign.sign80!=null">
+								<span class="user_sign"><img src="${sign.sign80}" /></span>
+								<span class="vab">${it:formatDate(sign.time80,'yyyy-MM-dd')}</span>
+							</s:if>
+						</div>
+					</div>
+				</div>
+				</s:if>
+				<div class="label_main label_main_sep"></div>
 					<div class="label_main">
 						<div class="label_hang">
 							<div class="label_ltit">主题:</div>
@@ -189,34 +205,9 @@
 					</div>
 					<div class="label_main">
 						<div class="label_hang">
-							<div class="label_ltit">结案时间:</div>
-							<div class="label_rwben2">
-								<span class="label_rwb nw"> 
-								${it:formatDate(closeOrder.close_time,'yyyy-MM-dd')}
-								</span>
-							</div>
-						</div>
-
-
-						<!--<div class="label_hang">
-							<div class="label_ltit">促销方案:</div>
-							<div class="label_rwben label_rwb">
-									<s:select name="closeOrder.salPro_id" list="salPromots" listKey="uuid" listValue="sal_title" cssClass="validate[required]"  headerKey="" headerValue="--请选择--"  />
-									<select name="closeOrder.salPro_id" title="产品">
-										<s:iterator value="salPromots" status="sta">
-											<option value='<s:property value="uuid" />'>
-												<s:property value="sal_title" />
-											</option>
-										</s:iterator>
-									</select>
-							</div>
-						</div>-->
-					</div>
-					<div class="label_main">
-						<div class="label_hang">
-							<div class="label_ltit">会员号:</div>
-							<div class="label_rwb">
-								${ closeOrder.member_id}
+							<div class="label_ltit">收货人姓名:</div>
+							<div class="label_rwbenx">
+								${ closeOrder.member_name}
 							</div>
 						</div>
 						<div class="label_hang">
@@ -225,12 +216,16 @@
 								${ closeOrder.member_phone}
 							</div>
 						</div>
+						
 						<div class="label_hang">
-							<div class="label_ltit">收货人姓名:</div>
-							<div class="label_rwb">
-								${ closeOrder.member_name}
+							<div class="label_ltit">结案时间:</div>
+							<div class="label_rwbenx">
+								<span class="label_rwb nw"> 
+								${it:formatDate(closeOrder.close_time,'yyyy-MM-dd')}
+								</span>
 							</div>
 						</div>
+						
 					</div>
 					<div class="label_main">
 						<div class="label_hang">
@@ -243,54 +238,62 @@
 					
 					<div class="label_main">
 							<fieldset class="clear">
-								<legend>可参与促销活动</legend>
+								<legend>已参与促销活动</legend>
 								<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
-									<tr>
-										<th>活动名称</th>
-										<th>开始时间</th>
-										<th>结束时间</th>
-									</tr>
 									<!-- lading.promotions -->
 									<s:iterator value="salPromots" status="sta">
 										<tr>
 											<td class="nw">${sal_title}</td>
-											<td class="nw">${it:formatDate(startime,'yyyy-MM-dd')}</td>
-											<td class="nw">${it:formatDate(endtime,'yyyy-MM-dd')}</td>
+											<td class="nw">活动时间：${it:formatDate(startime,'yyyy-MM-dd')} - ${it:formatDate(endtime,'yyyy-MM-dd')}</td>
 										</tr>
 									</s:iterator>
 								</table>
-								<script type="text/javascript">
-									setCheckBox("closeOrder.salPro_id", '${closeOrder.salPro_id}');
-								</script>
+								
 							</fieldset>
 						</div>
+						
 						<fieldset class="clear">
 								<legend>结案单明细</legend>
-						<div class="label_main">
-								<p class="lb_yjtit fy_hide">
-								</p>
-								<div class="lb_yjcon">
-									<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+									<div class="lb_lgsfy">
+											<p class="lb_gstit">公司酒品/公司物料</p>
+											<table  class="lb_jpin">
+												<tr>
+													<th>品名</th>
+													<th>单价</th>
+													<th>数量(瓶)</th>
+													<th>合计</th>
+												</tr>
+												<s:iterator value="closeOrderPros" status="sta">
+													<tr>
+														<td class="nw">${product_name}</td>
+														<td class="nw">￥${product_price}</td>
+														<td class="nw">${product_num}</td>
+														<td class="nw">￥${total_price}</td>
+													</tr>
+												</s:iterator>
+											</table>
+									</div>
+									<div class="lb_gsfy">
+									<p class="lb_gstit">其它物料</p>
+									<table class="lb_jpin">
 										<tr>
-											<th>品名</th>
-											<th>单价</th>
-											<th>数量(瓶)</th>
-											<th>合计</th>
+											<th>名目</th>
+											<th>名目说明</th>
+											<th>金额</th>
 										</tr>
-										<s:iterator value="closeOrderPros" status="sta">
+										<s:iterator value="closePosms" status="sta">
 											<tr>
-												<td class="nw">${product_name}</td>
-												<td class="nw">￥${product_price}</td>
-												<td class="nw">${product_num}</td>
+												<td>${title}</td>
+												<td>${note}</td>
 												<td class="nw">￥${total_price}</td>
 											</tr>
 										</s:iterator>
 									</table>
+								</div>
 									<p class="lb_gstit">费用合计</p>
 									<p class="lb_jwei">￥${closeOrder.totel_price}</p>
-								</div>
-						</div>
-						</fieldset>
+							</fieldset>
+							<div style="height: 10px;"></div>
 
 					<div class="label_main">
 						<div class="label_hang">
@@ -300,13 +303,14 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				
 				<div class="label_main noprint">
 					<div class="label_hang">
 						<div class="label_ltit">相关操作:</div>
 						<div class="label_rwbenx">
 							<input type="button" onclick="window.print();" value="打印本页" />&nbsp;
-							<input type="button" value="返回" onclick="linkurl('<s:url action="closeOrder_relist" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');" class="input-gray" />
+							<!-- <input type="button" value="返回" onclick="linkurl('<s:url action="closeOrder_relist" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');" class="input-gray" />-->
+							 <input type="button" value="返回修改页面" onclick="linkurl('<s:url action="closeOrder_load" namespace="/qkjmanage"><s:param name="viewFlag">mdy</s:param><s:param name="closeOrder.uuid" value="%{closeOrder.uuid}"></s:param></s:url>');" />
 						</div>
 					</div>
 				</div>

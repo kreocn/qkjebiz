@@ -315,6 +315,19 @@
 						</div>
 					</div>
 				</div>
+				
+				<div class="label_main label_main_sep"></div>
+				<div class="label_main">
+					<div class="label_hang label_hang_sign">
+						<div class="label_ltit">董事:</div>
+						<div class="label_rwbenx label_rwb_sign">
+							(签字/日期)
+							<s:if test="dongActive!=null">
+								<span class="user_sign"><img src="${dongActive.puser_sign}" /></span>
+							</s:if>
+						</div>
+					</div>
+				</div>
 
 				<div class="label_main">
 					<div class="label_hang">

@@ -162,15 +162,17 @@
 			<th>活动名称</th>
 			<th>开始时间</th>
 			<th>结束时间</th>
-			<th>操作</th>
+			
 		</tr>
 		<!-- lading.promotions -->
 		<s:iterator value="salPromotsed" status="sta">
 		<tr>
-			<td class="nw">${sal_title}</td>
+			<td class="nw">
+				<a  href="<s:url namespace="/salpro" action="salPromot_loadt"><s:param name="viewFlag">view</s:param><s:param name="salPromot.uuid" value="uuid"></s:param><s:param name="salstate" value="1"></s:param></s:url>">${sal_title}</a>
+			</td>
 			<td class="nw">${it:formatDate(startime,'yyyy-MM-dd')}</td>
 			<td class="nw">${it:formatDate(endtime,'yyyy-MM-dd')}</td>
-			<td><a href="javascript:;" onclick="openCustomerView(${uuid});">[查看详情]</a></td>
+			
 		</tr>
 		</s:iterator>
 		</table>
@@ -189,7 +191,6 @@
 			<th>活动名称</th>
 			<th>开始时间</th>
 			<th>结束时间</th>
-			<th>操作</th>
 		</tr>
 		<!-- lading.promotions -->
 		<s:iterator value="salPromots" status="sta">
@@ -197,10 +198,9 @@
 			<td class="nw">
 				<input type="checkbox" name="lading.promotions" value="${uuid}" />
 			</td>
-			<td class="nw">${sal_title}</td>
+			<td class="nw"><a  href="<s:url namespace="/salpro" action="salPromot_loadt"><s:param name="viewFlag">view</s:param><s:param name="salPromot.uuid" value="uuid"></s:param><s:param name="salstate" value="1"></s:param></s:url>">${sal_title}</a></td>
 			<td class="nw">${it:formatDate(startime,'yyyy-MM-dd')}</td>
 			<td class="nw">${it:formatDate(endtime,'yyyy-MM-dd')}</td>
-			<td><a href="javascript:;" onclick="openCustomerView(${uuid});">[查看详情]</a></td>
 		</tr>
 		</s:iterator>
 		</table>

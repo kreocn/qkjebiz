@@ -32,6 +32,36 @@ public class CheckSkip {
 		// 新疆
 		skipSteps.add(new SkipStep("2203", 1, 2, 3)); // 申请 2大区 3跳过销管经理
 		skipSteps.add(new SkipStep("2203", 1, 12, 13));// 结案 12大区 13跳过销管经理
+		//西北跳过销管部，销管副总流程
+		skipSteps.add(new SkipStep("220", 1, 4, 7)); // 申请 跳过销管部，销管副总
+		skipSteps.add(new SkipStep("220", 1, 14, 17)); // 结案 跳过销管部，销管副总
+		
+		//红酒
+		skipSteps.add(new SkipStep("312", 1, 1, 2,"3")); // 申请 直接到总监
+		skipSteps.add(new SkipStep("312", 1,11, 12, "13"));// 结案 直接到总监
+		
+		//传奇天估德401402
+		skipSteps.add(new SkipStep("4", 1, 2, 4,"5"));// 结案 14总监 17跳过销管副总
+		skipSteps.add(new SkipStep("4", 1, 12,4,"15"));// 结案 14总监 17跳过销副总
+		//skipSteps.add(new SkipStep("402", 1, 3, 4,"5"));// 结案 14总监 17跳过总监销管部
+		//skipSteps.add(new SkipStep("402", 1, 13, 14,"15"));// 结案 14总监 17跳过销管经理
+		
+		
+		
+		//skipSteps.add(new SkipStep("403", 1, 1, 4,"5"));// 结案 直接到销管副总
+		//skipSteps.add(new SkipStep("403", 1, 11, 14,"15"));// 结案 接到销管副总
+		//skipSteps.add(new SkipStep("404", 1, 1, 4,"5"));// 结案 接到销管副总
+		//skipSteps.add(new SkipStep("404", 1, 11, 14,"15"));// 结案 接到销管副总
+		
+		skipSteps.add(new SkipStep("40102", 1, 1, 3)); // 申请 2大区 3跳过大区
+		skipSteps.add(new SkipStep("40102", 1, 11, 13)); // 申请 2大区 3跳过大区
+		
+		//skipSteps.add(new SkipStep("406", 1, 3, 4,"5")); // 申请 2大区 3跳过大区
+		//skipSteps.add(new SkipStep("406", 1, 13, 14,"15")); // 申请 2大区 3跳过大区
+		
+		//skipSteps.add(new SkipStep("405", 1, 3, 4,"5"));// 结案接到销管副总
+		//skipSteps.add(new SkipStep("405", 1, 13, 14,"15"));// 结案接到销管副总
+		
 	}
 
 	private Step step = new Step();
@@ -200,6 +230,10 @@ public class CheckSkip {
 		try {
 			step.getClass().getMethod(str, new Class[] { String.class }).invoke(step, new Object[] { userid });
 			step.getClass().getMethod(skipstr, new Class[] { String.class }).invoke(step, new Object[] { "2" });// 跳过的方法
+			if(as.getSkip_n()!=null&&!as.equals("")){
+				String n="step" + as.getSkip_n();
+				step.getClass().getMethod(n, new Class[] { String.class }).invoke(step, new Object[] { "2" });// 跳过的方法
+			}
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

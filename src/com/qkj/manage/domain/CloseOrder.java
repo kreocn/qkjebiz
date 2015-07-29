@@ -1,6 +1,6 @@
 package com.qkj.manage.domain;
 
-import java.util.*;
+import java.util.Date;
 
 public class CloseOrder {
 	private Integer uuid;// (int)
@@ -16,14 +16,34 @@ public class CloseOrder {
 	private String apply_dept;
 	private String add_user;// (varchar)填加人
 	private Date add_time;// (datetime)填加时间
-	private Integer check_state;// (int)审核状态0：新单1：待审核，5：退回10：招商主管通过20：招商经理30大区40财务50总监60副总70总经理
-	private Date check_time;// (datetime)审核时间
-	private String check_user;// (varchar)操作人
+	private Integer type;
+	private Integer apply_id;
+
+	private Integer state;
+	private Integer sd_state;
+	private String sd_user;
+	private Date sd_time;
+	private Integer smd_status;
+	private String smd_user;
+	private Date smd_time;
+	private Integer fd_check_state;
+	private String fd_check_user;
+	private Date fd_check_time;
+
 	private Integer nd_check_state;// (int)数据中心审核状态0：未审核5：退回10：通过
 	private Date nd_check_time;// (datetime)数据中心审核时间
 	private String nd_check_user;// (varchar)操作人
 	private Date lm_time;// (datetime)修改时间
 	private String lm_user;// (varchar)修改人
+
+	private Integer ship_status;// 发货状态
+	private Integer ship_ware;// 发货仓库
+	private Date ship_date;// 发货时间
+	private String ship_no;// 运单号码
+	private String ship_type;// 物流名称
+	private String ship_phone;// 物流单号
+	private String remark;
+	private String close_note;
 
 	// 以下为非数据库字段
 	private String member_name;
@@ -36,20 +56,154 @@ public class CloseOrder {
 	private String puser_name;
 	private String puser_sign;
 	private Date biz_time;
-	
+	private String sd_user_name;
+	private String smd_user_name;
+	private String fd_user_name;
+	private String nd_user_name;
+
 	private String sign20;
 	private String sign30;
 	private String sign40;
 	private String sign50;
 	private String sign60;
 	private String sign70;
-	
+	private String sign80;
+
 	private Date time20;
 	private Date time30;
 	private Date time40;
 	private Date time50;
 	private Date time60;
 	private Date time70;
+	private Date time80;
+
+	public String getClose_note() {
+		return close_note;
+	}
+
+	public void setClose_note(String close_note) {
+		this.close_note = close_note;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public String getSign80() {
+		return sign80;
+	}
+
+	public void setSign80(String sign80) {
+		this.sign80 = sign80;
+	}
+
+	public Date getTime80() {
+		return time80;
+	}
+
+	public void setTime80(Date time80) {
+		this.time80 = time80;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public Integer getShip_status() {
+		return ship_status;
+	}
+
+	public void setShip_status(Integer ship_status) {
+		this.ship_status = ship_status;
+	}
+
+	public Integer getShip_ware() {
+		return ship_ware;
+	}
+
+	public void setShip_ware(Integer ship_ware) {
+		this.ship_ware = ship_ware;
+	}
+
+	public Date getShip_date() {
+		return ship_date;
+	}
+
+	public void setShip_date(Date ship_date) {
+		this.ship_date = ship_date;
+	}
+
+	public String getShip_no() {
+		return ship_no;
+	}
+
+	public void setShip_no(String ship_no) {
+		this.ship_no = ship_no;
+	}
+
+	public String getShip_type() {
+		return ship_type;
+	}
+
+	public void setShip_type(String ship_type) {
+		this.ship_type = ship_type;
+	}
+
+	public String getShip_phone() {
+		return ship_phone;
+	}
+
+	public void setShip_phone(String ship_phone) {
+		this.ship_phone = ship_phone;
+	}
+
+	public Integer getApply_id() {
+		return apply_id;
+	}
+
+	public void setApply_id(Integer apply_id) {
+		this.apply_id = apply_id;
+	}
+
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
+	}
+
+	public String getSd_user_name() {
+		return sd_user_name;
+	}
+
+	public void setSd_user_name(String sd_user_name) {
+		this.sd_user_name = sd_user_name;
+	}
+
+	public String getSmd_user_name() {
+		return smd_user_name;
+	}
+
+	public void setSmd_user_name(String smd_user_name) {
+		this.smd_user_name = smd_user_name;
+	}
+
+	public String getFd_user_name() {
+		return fd_user_name;
+	}
+
+	public void setFd_user_name(String fd_user_name) {
+		this.fd_user_name = fd_user_name;
+	}
+
+	public String getNd_user_name() {
+		return nd_user_name;
+	}
+
+	public void setNd_user_name(String nd_user_name) {
+		this.nd_user_name = nd_user_name;
+	}
 
 	public Integer getUuid() {
 		return uuid;
@@ -137,30 +291,6 @@ public class CloseOrder {
 
 	public void setAdd_time(Date add_time) {
 		this.add_time = add_time;
-	}
-
-	public Integer getCheck_state() {
-		return check_state;
-	}
-
-	public void setCheck_state(Integer check_state) {
-		this.check_state = check_state;
-	}
-
-	public Date getCheck_time() {
-		return check_time;
-	}
-
-	public void setCheck_time(Date check_time) {
-		this.check_time = check_time;
-	}
-
-	public String getCheck_user() {
-		return check_user;
-	}
-
-	public void setCheck_user(String check_user) {
-		this.check_user = check_user;
 	}
 
 	public Integer getNd_check_state() {
@@ -393,6 +523,86 @@ public class CloseOrder {
 
 	public void setBiz_time(Date biz_time) {
 		this.biz_time = biz_time;
+	}
+
+	public Integer getState() {
+		return state;
+	}
+
+	public void setState(Integer state) {
+		this.state = state;
+	}
+
+	public Integer getSd_state() {
+		return sd_state;
+	}
+
+	public void setSd_state(Integer sd_state) {
+		this.sd_state = sd_state;
+	}
+
+	public String getSd_user() {
+		return sd_user;
+	}
+
+	public void setSd_user(String sd_user) {
+		this.sd_user = sd_user;
+	}
+
+	public Date getSd_time() {
+		return sd_time;
+	}
+
+	public void setSd_time(Date sd_time) {
+		this.sd_time = sd_time;
+	}
+
+	public Integer getSmd_status() {
+		return smd_status;
+	}
+
+	public void setSmd_status(Integer smd_status) {
+		this.smd_status = smd_status;
+	}
+
+	public String getSmd_user() {
+		return smd_user;
+	}
+
+	public void setSmd_user(String smd_user) {
+		this.smd_user = smd_user;
+	}
+
+	public Date getSmd_time() {
+		return smd_time;
+	}
+
+	public void setSmd_time(Date smd_time) {
+		this.smd_time = smd_time;
+	}
+
+	public Integer getFd_check_state() {
+		return fd_check_state;
+	}
+
+	public void setFd_check_state(Integer fd_check_state) {
+		this.fd_check_state = fd_check_state;
+	}
+
+	public String getFd_check_user() {
+		return fd_check_user;
+	}
+
+	public void setFd_check_user(String fd_check_user) {
+		this.fd_check_user = fd_check_user;
+	}
+
+	public Date getFd_check_time() {
+		return fd_check_time;
+	}
+
+	public void setFd_check_time(Date fd_check_time) {
+		this.fd_check_time = fd_check_time;
 	}
 
 }

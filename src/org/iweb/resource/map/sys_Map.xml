@@ -243,12 +243,13 @@
 	<typeAlias alias="user" type="org.iweb.sys.domain.User" />
 	<select id="sys_getUser" resultClass="user" parameterClass="java.util.Map">
 		<![CDATA[ 
-			SELECT u.*,r.ROLE_NAME TYPE_NAME,d.DEPT_CNAME,u2.USER_NAME AS senior_name,p.POSITION_NAME
+			SELECT DISTINCT u.uuid,u.*,r.ROLE_NAME TYPE_NAME,d.DEPT_CNAME,u2.USER_NAME AS senior_name,p.POSITION_NAME
 			FROM s_sys_user u
 			LEFT JOIN s_sys_department d ON (u.dept_code = d.dept_code)
 			LEFT JOIN s_sys_user u2 ON (u.SENIOR = u2.UUID)
 			LEFT JOIN s_sys_role r ON (u.USER_TYPE = r.UUID)
 			LEFT JOIN s_cfg_position p ON (u.POSITION = p.UUID)
+			LEFT JOIN s_sys_userdept ud ON(ud.`user_id`=u.`UUID`)
 			Where 1=1
 		]]>
 		<isNotNull prepend="AND" property="uuid"><![CDATA[ u.uuid=#uuid# ]]></isNotNull>
@@ -257,7 +258,11 @@
 		<isNotNull prepend="AND" property="email"><![CDATA[ u.email like #email# ]]></isNotNull>
 		<isNotNull prepend="AND" property="mobile"><![CDATA[ u.mobile like #mobile# ]]></isNotNull>
 		<isNotNull prepend="AND" property="status"><![CDATA[ u.status=#status# ]]></isNotNull>
-		<isNotNull prepend="AND" property="dept_code"><![CDATA[ u.dept_code=#dept_code# ]]></isNotNull>
+		
+		<isNotEmpty prepend="AND" property="dept_code">
+			<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ ud.`dept_code`=#dept_code#]]></isNotEqual>
+			<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ ud.`dept_code` LIKE CONCAT(#dept_code#,'%') ]]></isEqual>
+		</isNotEmpty>
 		
 		<!-- <isNotEmpty prepend="AND" property="dept_codes" open="(" close=")">
 			<![CDATA[ u.dept_code In ]]>
@@ -271,7 +276,7 @@
 		
 		<isEmpty  property="dept_codes">
 			<isNotEmpty prepend="AND" property="apply_perdepts">
-				<![CDATA[ u.dept_code In ]]>
+				<![CDATA[ ud.`dept_code` In ]]>
 				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
 				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ u.uuid=#apply_userDouble# ]]></isNotEmpty>
 			</isNotEmpty>
