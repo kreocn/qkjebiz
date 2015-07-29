@@ -775,7 +775,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 		OutStockDAO isa = new OutStockDAO();
 		LadingAction l = new LadingAction();
 		Integer goid = l.getWare(ContextHelper.getUserLoginDept());
-		isa.addStock(apply.getUuid(), goid, null, 5, 3, produs, null,false);// 生成销售用酒出库
+		isa.addStock(apply.getUuid(), goid, null, 5, 3, produs, null,false,null,null);// 生成销售用酒出库
 	}
 
 	private List<ApplyProduct> independence(Map<String, Object> map, String title, int flag) {

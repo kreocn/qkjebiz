@@ -19,6 +19,7 @@
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ i.uuid=#uuid# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="send"><![CDATA[ i.send=#send# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="reason"><![CDATA[ i.reason=#reason# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="goreason"><![CDATA[ i.goreason=#goreason# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="boflag"><![CDATA[ i.boflag=#boflag# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="date"><![CDATA[ i.date=#date# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="store_id"><![CDATA[ i.store_id=#store_id# ]]></isNotEmpty>
@@ -49,6 +50,7 @@
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="send"><![CDATA[ send=#send# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="reason"><![CDATA[reason=#reason# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="goreason"><![CDATA[ i.goreason=#goreason# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="boflag"><![CDATA[ boflag=#boflag# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="ordernum"><![CDATA[ ordernum=#ordernum# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="date"><![CDATA[ date=#date# ]]></isNotEmpty>

@@ -348,11 +348,11 @@ public class InStockAction extends ActionSupport {
 			}
 			if (inStock.getReason() == 4) {
 				OutStockDAO isa = new OutStockDAO();
-				isa.addStock(inStock.getUuid(), inStock.getGoldId(), inStock.getStore_id(), 6, 1, produs,null,false);
+				isa.addStock(inStock.getUuid(), inStock.getGoldId(), inStock.getStore_id(), 6, 1, produs,null,false,null,null);
 			}
 			if (inStock.getReason() == 5) {
 				OutStockDAO isa = new OutStockDAO();
-				isa.addStock(inStock.getUuid(), inStock.getGoldId(), inStock.getStore_id(), 7, 1, produs,null,false);
+				isa.addStock(inStock.getUuid(), inStock.getGoldId(), inStock.getStore_id(), 7, 1, produs,null,false,null,null);
 			}
 			//修改goflag2出库单生成成功
 			inStock.setGoflag(2);

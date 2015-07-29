@@ -11,9 +11,11 @@ import org.iweb.sys.ContextHelper;
 import org.iweb.sysvip.domain.Member;
 
 import com.qkj.manage.dao.ApplyDAO;
+import com.qkj.manage.dao.CloseOrderDAO;
 import com.qkj.manage.dao.LadingDAO;
 import com.qkj.manage.dao.ProductDAO;
 import com.qkj.manage.domain.Apply;
+import com.qkj.manage.domain.CloseOrder;
 import com.qkj.manage.domain.Lading;
 import com.qkj.manage.domain.Product;
 import com.qkj.ware.domain.InStock;
@@ -245,7 +247,7 @@ public class OutStockDAO extends AbstractDAO {
 		return 1;
 	}
 
-	public void addStock(Integer uuid, Integer store_id, Integer borrow_id, Integer reason, Integer goreason, List<Product> products, Member me,Boolean sure) {
+	public void addStock(Integer uuid, Integer store_id, Integer borrow_id, Integer reason, Integer goreason, List<Product> products, Member me,Boolean sure,String addUser,String sureUser) {
 		// TODO Auto-generated method stub
 		OutDetailDAO idao = new OutDetailDAO();
 		InStockDAO id = new InStockDAO();
@@ -259,8 +261,13 @@ public class OutStockDAO extends AbstractDAO {
 		outStock.setDate(d);
 		outStock.setStore_id(store_id);
 		outStock.setNote("出库");
-		outStock.setAdd_user(u);
-		outStock.setLm_user(u);
+		if(sure==true && addUser!=null){//生成确认单据
+			outStock.setAdd_user(addUser);
+			outStock.setLm_user(addUser);
+		}else{
+			outStock.setAdd_user(u);
+			outStock.setLm_user(u);
+		}
 		outStock.setAdd_timer(new Date());
 		outStock.setLm_timer(new Date());
 		outStock.setReason(reason);
@@ -281,7 +288,7 @@ public class OutStockDAO extends AbstractDAO {
 			// 修改确认状态
 			outStock.setSend(4);
 			outStock.setManager_check(1);// 确认
-			outStock.setManager_check_user(u);// 确认人
+			outStock.setManager_check_user(sureUser);// 确认人
 			outStock.setManager_check_time(new Date());// 确认时间
 			updateCheck(outStock);
 		}
@@ -414,6 +421,9 @@ public class OutStockDAO extends AbstractDAO {
 		ApplyDAO adao=new ApplyDAO();
 		Lading l = new Lading();
 		Apply a=new Apply();
+		CloseOrder closeO=new CloseOrder();
+		CloseOrderDAO closeDao=new CloseOrderDAO();
+		
 		
 		map.clear();
 		if(outStock.getSplit()!=null&&outStock.getSplit()==1){
@@ -469,6 +479,16 @@ public class OutStockDAO extends AbstractDAO {
 				adao.mdyApplyGoflag(a);
 			}
 			
+			if (outStock.getGoreason() == 4) {//提货结案
+				closeO.setUuid(outStock.getGoldUuid());
+				if(state==1){//确认出库
+					closeO.setGoflag(2);
+				}else{//取消出库
+					closeO.setGoflag(4);
+				}
+				closeDao.mdyGoFlag(closeO);
+			}
+			
 		}else{//全部确认
 			if(outStock.getGoreason()==1){//非手动填加
 				if(outStock.getSplit()!=null&&outStock.getSplit()==1){
@@ -498,6 +518,16 @@ public class OutStockDAO extends AbstractDAO {
 					a.setGoflag(3);
 				}
 				adao.mdyApplyGoflag(a);
+			}
+			
+			if (outStock.getGoreason() == 4) {//提货结案
+				closeO.setUuid(outStock.getGoldUuid());
+				if(state==1){//确认出库
+					closeO.setGoflag(1);
+				}else{//取消出库
+					closeO.setGoflag(3);
+				}
+				closeDao.mdyGoFlag(closeO);
 			}
 		}
 	}

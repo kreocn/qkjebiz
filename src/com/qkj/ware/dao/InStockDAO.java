@@ -416,7 +416,7 @@ public class InStockDAO extends AbstractDAO {
 			super.startTransaction();
 			OutStockDAO isa = new OutStockDAO();
 			//填加已确认的出库单
-			isa.addStock(inStock.getUuid(),inStock.getStore_id(), inStock.getGoldId(),  8, 1, produs,null,true);
+			isa.addStock(inStock.getUuid(),inStock.getStore_id(), inStock.getGoldId(),  8, 1, produs,null,true,ContextHelper.getUserLoginUuid(),ContextHelper.getUserLoginUuid());
 			//填加待确认的入库单
 			InStock insa=new InStock();
 			insa=inStock;
