@@ -243,7 +243,7 @@
 	<typeAlias alias="user" type="org.iweb.sys.domain.User" />
 	<select id="sys_getUser" resultClass="user" parameterClass="java.util.Map">
 		<![CDATA[ 
-			SELECT u.*,r.ROLE_NAME TYPE_NAME,d.DEPT_CNAME,u2.USER_NAME AS senior_name,p.POSITION_NAME
+			SELECT DISTINCT u.uuid,u.*,r.ROLE_NAME TYPE_NAME,d.DEPT_CNAME,u2.USER_NAME AS senior_name,p.POSITION_NAME
 			FROM s_sys_user u
 			LEFT JOIN s_sys_department d ON (u.dept_code = d.dept_code)
 			LEFT JOIN s_sys_user u2 ON (u.SENIOR = u2.UUID)
