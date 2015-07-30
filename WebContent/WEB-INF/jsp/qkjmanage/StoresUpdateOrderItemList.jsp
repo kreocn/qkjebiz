@@ -82,12 +82,14 @@
 							<td class="td1" >${title}</td>
 							<td class="td2">${spec}</td>
 							<td class="td3">${product_price}</td>
-							<td class="td4"  >		<s:if test="sotresorder.is_library==0">
+							
+							<td class="td4"  >		<s:if test="sotresorder.is_library==0&&sotresorder.is_liqueur_ticket==0">
 							<c:choose>  
     <c:when test="${it:checkPermit('QKJ_QKJMANAGE_STORES_FIND_ORDER_DEL',null)==true}"><input id="hiddennum" name="${order_num}" type="hidden" value="${id}"/><input id="spinner${id}" value="${order_num}"/></c:when>  
     <c:when test="${it:checkPermit('QKJ_QKJMANAGE_STORES_FIND_ORDER_DEL',null)==false}">${order_num}</c:when>  
                            </c:choose> 
                             </s:if>
+                            <s:if test="sotresorder.is_liqueur_ticket==1"> ${order_num}</s:if>
                             <s:if test="sotresorder.is_library==1">
                             ${order_num}
                             </s:if>
@@ -97,7 +99,7 @@
 							
 							<c:if test="${it:checkPermit('QKJ_QKJMANAGE_STORES_FIND_ORDER_DEL',null)==true}"> 
 							
-							<td class="td6 op-area">   <s:if test="sotresorder.is_library==0"><a  class="input-blue"   onclick="del(${id},${sotresorder.id},${order_total_price},${product_price})">修改</a></s:if><s:if test="sotresorder.is_library==1">已出库</s:if></td>
+							<td class="td6 op-area">   <s:if test="sotresorder.is_library==0&&sotresorder.is_liqueur_ticket==0"><a  class="input-blue"   onclick="del(${id},${sotresorder.id},${order_total_price},${product_price})">修改</a></s:if><s:if test="sotresorder.is_library==1">已出库</s:if><s:if test="sotresorder.is_liqueur_ticket==1">酒票订单</s:if></td>
 							</c:if>
 							<%-- href="/qkjmanage/stores_order_item_delete.action?id=${id}&storesid=${sotresorder.id}&price=${product_price}"
 						 --%>

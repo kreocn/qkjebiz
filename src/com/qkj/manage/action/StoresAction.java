@@ -36,6 +36,7 @@ import com.qkj.manage.dao.StoresDao;
 import com.qkj.manage.domain.Product;
 import com.qkj.manage.domain.StoresOrder;
 import com.qkj.manage.domain.StoresOrderItem;
+import com.qkj.manage.domain.StoresTicket;
 
 public class StoresAction  extends ActionSupport{
 	private List<Member> members;
@@ -49,7 +50,8 @@ public class StoresAction  extends ActionSupport{
 	private int recCount;
 	private int pageSize;
 	private int num;
-    private Member member;
+	private String viewFlag;
+	private Member member;
 	private List<StoresOrder> storesorderlist;
 	private Map<String, Object> map = new HashMap<String, Object>();
 	private static Log log = LogFactory.getLog(StoresAction.class);
@@ -59,6 +61,51 @@ public class StoresAction  extends ActionSupport{
 	private Double price;
 	private Double totalPirce;
 	private Object cb[];
+	private String tick_code;
+
+
+	public String getTick_code() {
+		return tick_code;
+	}
+
+	public void setTick_code(String tick_code) {
+		this.tick_code = tick_code;
+	}
+
+	public String getIs_li() {
+		return is_li;
+	}
+
+	public void setIs_li(String is_li) {
+		this.is_li = is_li;
+	}
+
+	private StoresTicket storesTicket;
+	private String is_li;
+	private List<StoresTicket> storesTicketList;
+	   public String getViewFlag() {
+			return viewFlag;
+		}
+
+		public void setViewFlag(String viewFlag) {
+			this.viewFlag = viewFlag;
+		}
+	public List<StoresTicket> getStoresTicketList() {
+		return storesTicketList;
+	}
+
+	public void setStoresTicketList(List<StoresTicket> storesTicketList) {
+		this.storesTicketList = storesTicketList;
+	}
+
+	public StoresTicket getStoresTicket() {
+		return storesTicket;
+	}
+
+	public void setStoresTicket(StoresTicket storesTicket) {
+		this.storesTicket = storesTicket;
+	}
+
 	public Object[] getCb() {
 		return cb;
 	}
@@ -204,6 +251,7 @@ public class StoresAction  extends ActionSupport{
 		HttpServletResponse response = (HttpServletResponse) context.get(ServletActionContext.HTTP_RESPONSE);  
 		ulf=(UserLoginInfo) request.getSession().getAttribute(Parameters.UserLoginInfo_Session_Str);
 		map.put("userid", ulf.getUuid());
+		map.put("is_liqueur_ticket", "0");
 		storesorderlist=dao.listWeek(map);
 		return SUCCESS;
 	}
@@ -267,13 +315,20 @@ public class StoresAction  extends ActionSupport{
 			sto.setUser_name(ulf.getUser_name());
 			sto.setLogin_dept(ContextHelper.getUserLoginDept());
 			sto.setLogin_name(ContextHelper.getUserLoginDeptName());
+	
 			for (StoresOrderItem storesorderitem : sotr) {
 				storesorderitem.setOrder_total_price((double)storesorderitem.getOrder_total_price());
 				storesorderitem.setOrder_id(id+"");
 				String title=storesorderitem.getTitle();
 				storesorderitem.setTitle(title);
 			}
+			if(is_li.equals("ticket")){
+				sto.setIs_liqueur_ticket(1);
+				sto.setLiqueur_ticket_code(tick_code);
+				dao.addO(sto,storesorderitem);
+			}else{
 			dao.addO(sto,storesorderitem,member.getUuid());
+			}
 		}
 		return SUCCESS;
 	}
@@ -294,6 +349,7 @@ public class StoresAction  extends ActionSupport{
 		map.putAll(ContextHelper.getDefaultRequestMap4Page());
 		this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 		map.put("userid", ulf.getUuid());
+		map.put("is_liqueur_ticket", "0");
 		ContextHelper.setSearchDeptPermit4Search("QKJ_QKJMANAGE_STORES_FIND_ORDER",map, "apply_depts", "apply_user");
 		this.setStoresorderlist(dao.listOrder(map));
 		this.setRecCount(dao.getResultCount());
@@ -380,9 +436,11 @@ public class StoresAction  extends ActionSupport{
 		this.setRecCount(dao.getResultCount());
 		return SUCCESS;
 	}
+	//添加酒票
+	public String addTicket(){
+		return SUCCESS;
+	}
 	
-	
-	//出库
 	
 	public String theLibrary() throws Exception {
  if(cb!=null){
@@ -395,6 +453,50 @@ public class StoresAction  extends ActionSupport{
  }
 		return SUCCESS;
 	}
+	public String OrderTicket() throws Exception {
+		storesTicketList=dao.listTicket(map);
+		UserLoginInfo ulf = new UserLoginInfo();
+		ActionContext context = ActionContext.getContext();  
+		HttpServletRequest request = (HttpServletRequest) context.get(ServletActionContext.HTTP_REQUEST);  
+		HttpServletResponse response = (HttpServletResponse) context.get(ServletActionContext.HTTP_RESPONSE);  
+		ulf=(UserLoginInfo) request.getSession().getAttribute(Parameters.UserLoginInfo_Session_Str);
+		map.put("userid", ulf.getUuid());
+		map.put("is_liqueur_ticket", "1");
+		storesorderlist=dao.listWeek(map);
+		
+		return SUCCESS;
+	}
+	
+	
+	
+	public String insertTicket() throws Exception {
+		map.put("puuid", storesTicket.getProduct_id());
+		Product p=(Product) dao.list(map).get(0);
+		storesTicket.setProduct_code(p.getBar_code_box());
+		dao.addStoresTicket(storesTicket);
+		return SUCCESS;
+	}
+	
+	
+	
+	//门店支付>查看酒票订单
+	public String findTicketOrder() throws Exception {
+		UserLoginInfo ulf = new UserLoginInfo();
+		ActionContext context = ActionContext.getContext();  
+		HttpServletRequest request = (HttpServletRequest) context.get(ServletActionContext.HTTP_REQUEST);  
+		HttpServletResponse response = (HttpServletResponse) context.get(ServletActionContext.HTTP_RESPONSE);  
+		ulf=(UserLoginInfo) request.getSession().getAttribute(Parameters.UserLoginInfo_Session_Str);
+		map.clear();
+		map.putAll(ContextHelper.getDefaultRequestMap4Page());
+		this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
+		map.put("userid", ulf.getUuid());
+		map.put("is_liqueur_ticket", "1");
+		ContextHelper.setSearchDeptPermit4Search("QKJ_QKJMANAGE_STORES_FIND_ORDER",map, "apply_depts", "apply_user");
+		this.setStoresorderlist(dao.listOrder(map));
+		this.setRecCount(dao.getResultCount());
+		return SUCCESS;
+	}
+	
 	/** 
 	 * * 两个Double数相加 * 
 	 *  
@@ -448,5 +550,5 @@ public class StoresAction  extends ActionSupport{
 		return new Double(b2.divide(b1,DEF_DIV_SCALE, BigDecimal.ROUND_HALF_UP)  
 				.doubleValue());  
 	}  
-	
+
 }  

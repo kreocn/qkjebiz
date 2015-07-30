@@ -36,6 +36,10 @@ public class StoresDao extends AbstractDAO {
 		return super.list("qkjStores_Order_update_item_list", map);
 	}
 
+	public List listTicket(Map<String, Object> map) {
+		return super.list("qkjStores_Order_Ticket_list", map);
+	}
+	
 	public Object add(Object parameters) {
 		Object ob = super.add("qkjStores_addProducts", parameters);
 		return ob;
@@ -70,6 +74,27 @@ public class StoresDao extends AbstractDAO {
 		return id;
 	}
 
+	
+	public int addO(Object parameters,List<StoresOrderItem> storesorderitem) {
+		int id=0;
+		try {
+			startTransaction();
+			id = (int) super.add("qkjStores_addOrder", parameters);
+			StoresDao dao=new StoresDao();
+			for (StoresOrderItem storesOrderItem2 : storesorderitem) {
+				storesOrderItem2.setOrder_id(id+"");
+			}
+			dao.add(storesorderitem);
+			commitTransaction();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			endTransaction();
+		}
+		return id;
+	}
+	
 	public Object delete(Object parameters) {
 		Object ob = super.delete("qkjStores_OrderItemDelete", parameters);
 		return ob;
@@ -105,7 +130,10 @@ public class StoresDao extends AbstractDAO {
 		super.save("qkjStores_order_is_library", parameters);
 		return null;
 	}
-	
+	public Object addStoresTicket(Object parameters){
+		super.add("qkjStores_order_add_Ticket", parameters);
+		return null;
+	}
 	
 	
 	public int getResultCount() {

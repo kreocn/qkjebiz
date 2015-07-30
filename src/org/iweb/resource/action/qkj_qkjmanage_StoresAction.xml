@@ -46,7 +46,22 @@
 					<result type="redirectAction">
 					<param name="actionName">stores_order_findOrder</param>
 			</result>
-	           	
+		</action>
+		
+		
+				<action name="stores_add_ticket" class="com.qkj.manage.action.StoresAction" method="addTicket">
+					      <result>/WEB-INF/jsp/qkjmanage/StoresAddTicket.jsp</result>
+		</action>
+		
+				<action name="insert_sotres_ticket" class="com.qkj.manage.action.StoresAction" method="insertTicket">
+					      <result>/WEB-INF/jsp/qkjmanage/StoresAddTicket.jsp</result>
+		</action>
+		
+			<action name="stores_ticket" class="com.qkj.manage.action.StoresAction" method="OrderTicket">
+					      <result>/WEB-INF/jsp/qkjmanage/StoresOrderTicket.jsp</result>
+		</action>
+			<action name="stores_order_find_ticketOrder" class="com.qkj.manage.action.StoresAction" method="findTicketOrder">
+					      <result>/WEB-INF/jsp/qkjmanage/StoresUpdateOrderList.jsp</result>
 		</action>
 		<!-- Customer End -->
 	</package>

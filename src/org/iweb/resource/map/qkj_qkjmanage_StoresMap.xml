@@ -5,6 +5,7 @@
 	<typeAlias alias="StoresOrder" type="com.qkj.manage.domain.StoresOrder" />
 	<typeAlias alias="product" type="com.qkj.manage.domain.Product" />
 	<typeAlias alias="StoresOrderItem" type="com.qkj.manage.domain.StoresOrderItem" />
+		<typeAlias alias="StoresTicket" type="com.qkj.manage.domain.StoresTicket" />
 	<select id="qkjStores_getProducts" resultClass="product" parameterClass="java.util.Map">
 		<![CDATA[ 
 			select * from qkj_t_product p
@@ -14,6 +15,7 @@
 			             <isNotEmpty prepend="AND" property="userid"><![CDATA[ p.user_id=#userid# ]]></isNotEmpty>
 			             <isNotEmpty prepend="AND" property="title"><![CDATA[ p.title Like '%' + #title# +  '%']]></isNotEmpty>
 			             <isNotEmpty prepend="AND" property="puuid"><![CDATA[ p.uuid=#puuid# ]]></isNotEmpty>
+			                 
 		</dynamic>
 	</select>
 
@@ -41,8 +43,8 @@
 
 	<insert id="qkjStores_addOrder" parameterClass="StoresOrder">  
     <![CDATA[
-        insert into qkj_t_order(user_id,user_name,total_price,add_time,login_dept,login_name,member_id,member_name,member_mobile) values 
-        (#user_id#,#user_name#,#total_price#,#add_time#,#login_dept#,#login_name#,#member_id#,#member_name#,#member_mobile#)  
+        insert into qkj_t_order(user_id,user_name,total_price,add_time,login_dept,login_name,member_id,member_name,member_mobile,is_liqueur_ticket,liqueur_ticket_code) values 
+        (#user_id#,#user_name#,#total_price#,#add_time#,#login_dept#,#login_name#,#member_id#,#member_name#,#member_mobile#,#is_liqueur_ticket#,#liqueur_ticket_code#)  
     ]]>
 		<selectKey resultClass="int" type="post" keyProperty="id">
 			select @@IDENTITY as value
@@ -51,6 +53,7 @@
 	<select id="qkjStores_Order_update_list" parameterClass="java.util.Map" resultClass="StoresOrder">
 		select * from qkj_t_order o
 		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="is_liqueur_ticket"><![CDATA[ o.is_liqueur_ticket=#is_liqueur_ticket# ]]></isNotEmpty> 
 			<isNotEmpty prepend="AND" property="user_id"><![CDATA[ o.user_id=#userid# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="id"><![CDATA[ o.id=#id# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="apply_depts" open="(" close=")">
@@ -79,6 +82,7 @@
 	<select id="qkjStores_Order_update_listCount" parameterClass="java.util.Map" resultClass="int">
 		select count(*) from qkj_t_order o
 		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="is_liqueur_ticket"><![CDATA[ o.is_liqueur_ticket=#is_liqueur_ticket# ]]></isNotEmpty> 
 			<isNotEmpty prepend="AND" property="user_id"><![CDATA[ o.user_id=#userid# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="id"><![CDATA[ o.id=#id# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="apply_depts" open="(" close=")">
@@ -124,17 +128,13 @@
 		DELETE FROM qkj_t_order
 		WHERE id = #orderid#
 	</delete>
-	
 		<select id="qkjStores_getOrderWeek" parameterClass="java.util.Map" resultClass="StoresOrder">
-
-		select * from dbo.qkj_t_order WHERE datediff(day,[add_time],getdate())=0 and user_id=#userid# order by add_time DESC
+		select * from qkj_t_order WHERE datediff(day,[add_time],getdate())=0 and user_id=#userid# and is_liqueur_ticket=#is_liqueur_ticket# order by add_time DESC
 	</select>
-	
 		<delete id="qkjStores_deleteStoresOrderPrice" parameterClass="java.util.Map">
 		DELETE FROM qkj_t_order_custom
 		WHERE product_id = #productid# and login_dept=#logindept#
 	</delete>
-	
 		<select id="qkjStores_getStoresOrderItemByorderid" resultClass="StoresOrderItem" parameterClass="java.util.Map">
 		<![CDATA[ 
 			SELECT * from qkj_t_order_item where order_id=#order_id#
@@ -144,4 +144,19 @@
 		update qkj_t_order set is_library=1 WHERE id = #id#
 	</update>
 
+
+
+<insert id="qkjStores_order_add_Ticket" parameterClass="StoresTicket">  
+    <![CDATA[
+        insert into qkj_t_ticket(product_id,ticket_name,start_time,end_time,product_code) values 
+        (#product_id#,#ticket_name#,#start_time#,#end_time#,#product_code#)  
+    ]]>
+	</insert>
+	
+			<select id="qkjStores_Order_Ticket_list" resultClass="StoresTicket" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT * from qkj_t_ticket
+		]]>
+	</select>
+	
 </sqlMap>

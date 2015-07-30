@@ -23,6 +23,37 @@ private String invoice_title;
 private Double invoice_price;
 private String invoice_id;
 private Integer is_library;//是否出库 默认0
+private int is_liqueur_ticket;
+private String liqueur_ticket_code;
+//非数据库字段
+private String is_li;//判断是否是使用酒票
+
+
+public String getIs_li() {
+	return is_li;
+}
+
+public void setIs_li(String is_li) {
+	this.is_li = is_li;
+}
+
+public int getIs_liqueur_ticket() {
+	return is_liqueur_ticket;
+}
+
+public void setIs_liqueur_ticket(int is_liqueur_ticket) {
+	this.is_liqueur_ticket = is_liqueur_ticket;
+}
+
+public String getLiqueur_ticket_code() {
+	return liqueur_ticket_code;
+}
+
+public void setLiqueur_ticket_code(String liqueur_ticket_code) {
+	this.liqueur_ticket_code = liqueur_ticket_code;
+}
+
+
 public Integer getIs_library() {
 	return is_library;
 }

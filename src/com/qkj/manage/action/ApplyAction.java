@@ -454,7 +454,6 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
-
 	/**
 	 * 退回
 	 * 

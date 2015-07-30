@@ -42,8 +42,10 @@ public class StoresOrderAjax extends Ajax{
 	if(parameter.keySet().contains("puuid")){map.put("puuid", parameter.get("puuid").toString());}
 	this.souList=sod.list(map);
 	for (int i = 0; i < proList.size(); i++) {
+		if(parameter.keySet().contains("code")!=false){
 		if(parameter.keySet().contains("code")==false){
 		proList.get(i).setCase_spec(1);}
+		}
 		for (int j = 0; j < souList.size(); j++) {
 			int productid=Integer.parseInt(souList.get(j).getProduct_id());
 			
