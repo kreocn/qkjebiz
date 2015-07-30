@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
+<%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -18,6 +19,9 @@
 		${path}
 		<c:if test="${it:checkPermit('QKJ_QKJMANAGE_TRAVEL_ADD',null)==true}">
 			<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="travel_load"><s:param name="viewFlag">add</s:param></s:url>" >添加工业旅游申请</a></span>
+			<span class="opb lb op-area">
+			<s:hidden id="marketimgid"></s:hidden>
+			</span>
 		</c:if>
 	</div>
 	<s:form id="serachForm" name="serachForm" action="travel_list"  method="get" namespace="/qkjmanage" theme="simple">
@@ -115,6 +119,10 @@
 				                <c:if test="${(check_status<=5 || acheck_status<=5) && it:checkPermit('QKJ_QKJMANAGE_TRAVEL_DEL',null)==true}">
 				      	    		<a class="input-red" href="<s:url namespace="/qkjmanage" action="travel_del"><s:param name="travel.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
 				      	    	</c:if>
+				      	    	
+				      	    	<c:if test="${it:checkPermit('QKJ_QKJMANAGE_TRAVEL',null)==true}">
+									<a class="input-blue" href="javascript:;" onclick="linkurl('<s:url action="travel_out" namespace="/qkjmanage" ><s:param name="travel.uuid" value="uuid"></s:param></s:url>');" >客户信息模板</a>
+								</c:if>
 	            		</td>
 	            		<td  class="td0 op-area"><a onclick="showDetail('showtr${uuid}');" href="javascript:;" class="input-nostyle">查看</a></td>
 	            	</tr>
@@ -138,6 +146,24 @@ $(function(){
 	});
 	printPagination("listpage",'${currPage}','${recCount}','${pageSize}');
  });
+ 
+function refurbish(){
+	window.location.href="/qkjmanage/travel_list";
+}
+
+$(function(){
+	$.fn.xhuploadinit("Travel",refurbish);
+	$("#marketimgid").xhupload();
+});
+
+$(document).ready(function(){
+	$("#filebtn").removeClass("filearea"); //添加样式marketimgid_filebutton
+	$("#marketimgid_filebutton").val("选择导入文件");
+});
+
+
 </script>
+
+
 </body>
 </html>

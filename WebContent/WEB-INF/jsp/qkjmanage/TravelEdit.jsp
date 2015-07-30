@@ -19,7 +19,8 @@
 	<div class="tab_right">
 		<div class="tab_warp main">
 			<div class="dq_step">
-				${path} <span class="opb lb op-area"> <a href="<s:url namespace="/qkjmanage" action="travel_list"><s:param name="viewFlag">relist</s:param></s:url>">工业旅游申请列表</a> <c:if test="${travel.check_status>=30 && travel.acheck_status>=10 && it:checkPermit('QKJ_QKJMANAGE_TRAVEL_DEL',null)==true}">
+				${path} <span class="opb lb op-area"> 
+				<a href="<s:url namespace="/qkjmanage" action="travel_list"><s:param name="viewFlag">relist</s:param></s:url>">工业旅游申请列表</a> <c:if test="${travel.check_status>=30 && travel.acheck_status>=10 && it:checkPermit('QKJ_QKJMANAGE_TRAVEL_DEL',null)==true}">
 						<a href="<s:url namespace="/qkjmanage" action="travel_load"><s:param name="viewFlag">print1</s:param><s:param name="travel.uuid" value="travel.uuid" /></s:url>">打印(餐饮,住宿)申请单</a>
 						<a href="<s:url namespace="/qkjmanage" action="travel_load"><s:param name="viewFlag">print2</s:param><s:param name="travel.uuid" value="travel.uuid" /></s:url>">打印(餐酒,礼品)申请单</a>
 						<a href="<s:url namespace="/qkjmanage" action="travel_load"><s:param name="viewFlag">print3</s:param><s:param name="travel.uuid" value="travel.uuid" /></s:url>">打印客户表</a>
