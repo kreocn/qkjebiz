@@ -61,7 +61,17 @@
 					      <result>/WEB-INF/jsp/qkjmanage/StoresOrderTicket.jsp</result>
 		</action>
 			<action name="stores_order_find_ticketOrder" class="com.qkj.manage.action.StoresAction" method="findTicketOrder">
-					      <result>/WEB-INF/jsp/qkjmanage/StoresUpdateOrderList.jsp</result>
+					      <result>/WEB-INF/jsp/qkjmanage/StoresUpdateOrderTicketList.jsp</result>
+		</action>
+				<action name="sotres_the_library_ticket" class="com.qkj.manage.action.StoresAction" method="theLibrary">
+					<result type="redirectAction">
+					<param name="actionName">stores_order_find_ticketOrder</param>
+			</result>
+		</action>
+		<action name="insert_sotres_order_ticked" class="com.qkj.manage.action.StoresAction" method="insertOrder">
+			<result type="redirectAction">
+				<param name="actionName">stores_ticket</param>
+			</result>
 		</action>
 		<!-- Customer End -->
 	</package>

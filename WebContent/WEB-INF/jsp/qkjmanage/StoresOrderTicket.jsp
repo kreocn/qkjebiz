@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>门店支付首页<s:text name="APP_NAME" /></title>
+<title>酒票支付首页<s:text name="APP_NAME" /></title>
 <s:action name="ref_head" namespace="/manager" executeResult="true" />
 </head>
 <body>
@@ -20,15 +20,15 @@
 			<div class="label_hang">
 				<div class="label_ltit">酒票名称:</div>
 				<div class="label_rwbenx">
-					<s:select list="storesTicketList"  listValue="ticket_name" listKey="product_id"  name="storesTicketLists" id="storesTicketLiss" >  
+					<s:select list="storesTicketList"  listValue="ticket_name" listKey="product_id"  name="storesTicketLists" id="storesTicketLiss"  headerKey="99999999999" headerValue="--请选择--" >  
                     </s:select> 
 				</div>
 			</div>
 				<div class="label_hang">
 				<div class="label_ltit">酒票编号:</div>
 				<div class="label_rwbenx">
-					<s:textfield class="tiaomainput" name="sotresorder.liqueur_ticket_code" id="tiaomainput" />
-			
+					<s:textfield type="hidden" class="tiaomainput"  id="tiaomainput" />
+			        <s:textfield id="ticket_code" name="sotresorder.liqueur_ticket_code"  />
 				</div>
 			</div>
 		<div class="label_hang" style="display: none">	<input type="reset" value="添加" id="storessubmit" ></div>
@@ -59,7 +59,7 @@
 		</div>
 	    <s:submit class="tiaomareset" type="reset" value="提交订单" id="sumbit_order"/> 
 	</s:form> -->
-		<s:form id="serachForm" name="serachForm" action="insert_sotres_order" method="get" namespace="/qkjmanage" theme="simple">
+		<s:form id="serachForm" name="serachForm" action="insert_sotres_order_ticked" method="get" namespace="/qkjmanage" theme="simple">
 				<s:textfield  type="hidden" name="is_li" value="ticket"/>
 				<s:textfield  type="hidden" name="tick_code"  id="tiaomainput2"/>
 						<input type="hidden" name="member.uuid" id="order_user_id" value="">
@@ -116,7 +116,6 @@
 	$("#storessubmit")
 			.click(function(){
 				var puuid = $(".tiaomainput").val();
-				alert(puuid)
 				if (puuid != "" && puuid != null ) {
 					/* $.ajax({
 					type:"post",
@@ -135,7 +134,6 @@
 						 if (data.length == 0) {
 								alert("请输入正确的条码");
 							} else {
-								alert(data[0].case_spec)
 								fortr(data);
 							}
 						} else {
@@ -144,11 +142,11 @@
 						firstnum = true;
 						$("#tiaomainput").val('');
 					};
-
-					ajax.addParameter("parameters", "puuid=" + puuid+"&tcd=true");
-					ajax.addParameter("work", "StoresOrder");
-					ajax.sendAjax();
-
+                    if(puuid!=99999999999){
+                    	ajax.addParameter("parameters", "puuid=" + puuid+"&tcd=true");
+    					ajax.addParameter("work", "StoresOrder");
+    					ajax.sendAjax();
+                    }
 				} else {
 					alert("请输入正确的条码")
 				}
@@ -161,7 +159,6 @@
 	function fortr(list){
 		var code = $(".tiaomainput").val();
 		var casenum = list[0].case_spec;
-		alert(casenum)
 		var barcode = list[0].bar_code;
 		$("#qkj_list").find("tr").each(function(){
 			$(this).find("td").each(function(){
@@ -188,7 +185,7 @@
 			var title = list[0].title;
 			var spec = list[0].spec;
 			var brand = list[0].brand;
-			var marketprice = list[0].market_price;
+			var marketprice = 0;
 			show.push('<tr>');
 			show.push('<input type="hidden" name="storesorderitem['+num+'].product_id" value="'+product_id+'"/>')
 			show.push('<td class="td1" style="display:none"><input type="hidden" name="storesorderitem['+num+'].prod_code" value="'+procode+'"/>' + procode + '</td>');
@@ -232,7 +229,7 @@
 											.val() * jinum + '"/>' + '<input type="text" onkeyup="up_total_price(' + product_id + ')"   value="' + $("#price" + product_id).val() * jinum + '" style="width:50px">');
 						}
 						if (jinum == 0) {
-							alert("不能为0!");
+							("不能为0!");
 							return
 						}
 						$("#jisuannum" + product_id).val(jinum);

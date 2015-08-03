@@ -27,7 +27,7 @@ public class StoresOrderAjax extends Ajax{
 	private List<StoresOrderCustom> souList=new ArrayList<StoresOrderCustom>();
 	private List<Product> proList=new ArrayList<Product>();
 	public Object getResult() {
-	ContextHelper.isPermit("QKJ_QKJMANAGE_STORES");
+
 	if(parameter.keySet().contains("code")){map.put("code", parameter.get("code").toString());}
 	if(parameter.keySet().contains("puuid")){map.put("puuid", parameter.get("puuid").toString());}
 	this.proList=dao.list(map);

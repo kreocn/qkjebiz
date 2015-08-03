@@ -22,12 +22,28 @@ private Integer is_ticket;
 private String invoice_title;
 private Double invoice_price;
 private String invoice_id;
-private Integer is_library;//是否出库 默认0
-private int is_liqueur_ticket;
+private String is_library;//是否出库 默认0
+private int is_liqueur_ticket;//是否是酒票订单
 private String liqueur_ticket_code;
 //非数据库字段
 private String is_li;//判断是否是使用酒票
+private String time_begin;
+private String time_end;
+public String getTime_begin() {
+	return time_begin;
+}
 
+public void setTime_begin(String time_begin) {
+	this.time_begin = time_begin;
+}
+
+public String getTime_end() {
+	return time_end;
+}
+
+public void setTime_end(String time_end) {
+	this.time_end = time_end;
+}
 
 public String getIs_li() {
 	return is_li;
@@ -54,11 +70,13 @@ public void setLiqueur_ticket_code(String liqueur_ticket_code) {
 }
 
 
-public Integer getIs_library() {
+
+
+public String getIs_library() {
 	return is_library;
 }
 
-public void setIs_library(Integer is_library) {
+public void setIs_library(String is_library) {
 	this.is_library = is_library;
 }
 

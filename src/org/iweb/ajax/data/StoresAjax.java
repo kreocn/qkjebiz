@@ -19,7 +19,7 @@ public class StoresAjax extends Ajax {
 	private List<StoresOrderCustom> sou=new ArrayList<StoresOrderCustom>();
 	private Map<String, Object> map = new HashMap<String, Object>();
 	public Object getResult() {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_STORES_ORDER_UPDATE");
+		ContextHelper.isPermit("QKJ_STORES_ORDER_UPDATE");
 	
 		map.put("productid", parameter.get("productid").toString());
 		map.put("logindept", ContextHelper.getUserLoginDept());

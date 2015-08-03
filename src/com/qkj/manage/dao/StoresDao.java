@@ -73,8 +73,6 @@ public class StoresDao extends AbstractDAO {
 		}
 		return id;
 	}
-
-	
 	public int addO(Object parameters,List<StoresOrderItem> storesorderitem) {
 		int id=0;
 		try {
@@ -134,7 +132,11 @@ public class StoresDao extends AbstractDAO {
 		super.add("qkjStores_order_add_Ticket", parameters);
 		return null;
 	}
-	
+	public List findOrder(Map<String, Object> map) {
+		List list = super.list("qkjStores_get_order", map);
+		return list;
+	}
+
 	
 	public int getResultCount() {
 		return super.getResultCount();

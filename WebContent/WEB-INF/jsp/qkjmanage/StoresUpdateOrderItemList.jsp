@@ -71,7 +71,7 @@
 						<th class="td5">总价</th>
 					
 						
-						 <c:if test="${it:checkPermit('QKJ_QKJMANAGE_STORES_FIND_ORDER_DEL',null)==true}"> 
+						 <c:if test="${it:checkPermit('QKJ_STORES_FIND_ORDER_DEL',null)==true}"> 
 						
 						<th class="td6">操作</th>
 						</c:if>
@@ -85,8 +85,8 @@
 							
 							<td class="td4"  >		<s:if test="sotresorder.is_library==0&&sotresorder.is_liqueur_ticket==0">
 							<c:choose>  
-    <c:when test="${it:checkPermit('QKJ_QKJMANAGE_STORES_FIND_ORDER_DEL',null)==true}"><input id="hiddennum" name="${order_num}" type="hidden" value="${id}"/><input id="spinner${id}" value="${order_num}"/></c:when>  
-    <c:when test="${it:checkPermit('QKJ_QKJMANAGE_STORES_FIND_ORDER_DEL',null)==false}">${order_num}</c:when>  
+    <c:when test="${it:checkPermit('QKJ_STORES_FIND_ORDER_DEL',null)==true}"><input id="hiddennum" name="${order_num}" type="hidden" value="${id}"/><input id="spinner${id}" value="${order_num}"/></c:when>  
+    <c:when test="${it:checkPermit('QKJ_STORES_FIND_ORDER_DEL',null)==false}">${order_num}</c:when>  
                            </c:choose> 
                             </s:if>
                             <s:if test="sotresorder.is_liqueur_ticket==1"> ${order_num}</s:if>
@@ -97,7 +97,7 @@
 							<td class="td5">${order_total_price}</td>
 						
 							
-							<c:if test="${it:checkPermit('QKJ_QKJMANAGE_STORES_FIND_ORDER_DEL',null)==true}"> 
+							<c:if test="${it:checkPermit('QKJ_STORES_FIND_ORDER_DEL',null)==true}"> 
 							
 							<td class="td6 op-area">   <s:if test="sotresorder.is_library==0&&sotresorder.is_liqueur_ticket==0"><a  class="input-blue"   onclick="del(${id},${sotresorder.id},${order_total_price},${product_price})">修改</a></s:if><s:if test="sotresorder.is_library==1">已出库</s:if><s:if test="sotresorder.is_liqueur_ticket==1">酒票订单</s:if></td>
 							</c:if>
@@ -121,19 +121,27 @@
 							</div>
 						</div>
 					</div>
-							<div class="label_hang" id="invoice" style="display:none">
+					<div class="label_main" id="invoice"  style="display:none">
+							<div class="label_hang" >
 								<div class="label_ltit">发票抬头:</div>
 								<div class="label_rwben label_rwb">
-									<s:textfield id="invoice_title" name="storyit.invoice_title" value="%{sotresorder.invoice_title}" />
+									<s:textfield id="invoice_title" name="storyit.invoice_title" value="%{sotresorder.invoice_title}" cssClass="label_hang_linput inputNote validate[maxSize[255]]"/>
 								</div>
+								</div>
+						<div class="label_main" >
+										<div class="label_hang" >
 								<div class="label_ltit">发票金额:</div>
 								<div class="label_rwben label_rwb">
 									<s:textfield id="invoice_price" name="storyit.invoice_price" value="%{sotresorder.invoice_price}" />
 								</div>
+								</div>
+										<div class="label_hang" >
 								<div class="label_ltit">发票编号:</div>
 								<div class="label_rwben label_rwb">
 									<s:textfield id="invoice_id" name="storyit.invoice_id" value="%{sotresorder.invoice_id}" />
 								</div>
+						</div>
+							</div>
 							</div>
                       <div class="label_main" >
 							<div class="label_ltit">付款方式:</div>

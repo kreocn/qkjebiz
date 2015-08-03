@@ -203,6 +203,7 @@
 		var barcode = null;
 		var casenum = 1;
 		var code = $(".tiaomainput").val();
+		$(".tiaomainput").val("")
 		var case_spec = msg[10];
 		barcode = bar_code;
 		if (bar_code_box == msg[11]) {

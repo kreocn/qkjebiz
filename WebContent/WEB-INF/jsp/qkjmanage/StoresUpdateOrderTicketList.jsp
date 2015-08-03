@@ -28,56 +28,8 @@
 	<div class="tab_right">
 		<div class="tab_warp main">
 			<div class="dq_step">	<a href="/manager/default">首页</a>&nbsp;&gt;&nbsp;查看订单</div>
-			
-			
-	<s:form id="serachForm" name="serachForm" action="stores_order_findOrder"  method="get" namespace="/qkjmanage" theme="simple">
- 	<div class="label_con">
- 	<div class="label_main">
-        <div class="label_hang">
-            <div class="label_ltit">编号:</div>
-            <div class="label_rwben"><s:textfield name='sotresorder.id' value=""/></div>
-        </div>
-        
-           <div class="label_hang">
-            <div class="label_ltit">订单状态:</div>
-            <div class="label_rwben label_rwb"><s:select id="fdsta" name="sotresorder.is_library" cssClass="selectKick"
-				 list="#{0:'未出库',1:'已出库'}"
-				 headerKey="" headerValue="--请选择--" />
-            </div>
-        </div>
-        
-        
-        <div class="label_hang">
-            <div class="label_ltit">订单时间:</div>
-            <div class="label_rwben2">
-            	<span class="label_rwb nw">
-				<input type="text" class="datepicker iI iI-f" name="sotresorder.time_begin" title="从" value="${it:formatDate(apply.apply_time_begin,'yyyy-MM-dd')}" />
-				</span>
-				<span class="label_rwb nw">
-				<input type="text" class="datepicker iI iI-t" name="sotresorder.time_end" title="到" value="${it:formatDate(apply.apply_time_end,'yyyy-MM-dd')}" />
-            	</span>
-            </div>
-        </div>
-        
-        
-        
-        <div class="label_hang tac">
-        	<s:checkbox id="search_mcondition" name="search_mcondition" fieldValue="true" value="true" cssClass="regular-checkbox" />
-			<label for="search_mcondition"></label>更多条件
-            <s:submit value="搜索" /> <s:reset value="重置" />
-        </div>
-	</div>
- 	</div>
- 	</s:form>
-			
-			
-			
-			
-			
-			
 			<div class="tab_warp">
-			
-				<s:form id="serachForm" name="serachForm" action="sotres_the_library" method="get" namespace="/qkjmanage" theme="simple">
+				<s:form id="serachForm" name="serachForm" action="sotres_the_library_ticket" method="get" namespace="/qkjmanage" theme="simple">
 	
 				<table>
 					<tr id="coltr">

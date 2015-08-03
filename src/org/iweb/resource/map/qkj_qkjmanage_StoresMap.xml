@@ -53,6 +53,9 @@
 	<select id="qkjStores_Order_update_list" parameterClass="java.util.Map" resultClass="StoresOrder">
 		select * from qkj_t_order o
 		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="time_begin"><![CDATA[ o.add_time>=#time_begin# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="time_end"><![CDATA[ o.add_time<=#time_end# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="is_library"><![CDATA[ o.is_library=#is_library# ]]></isNotEmpty> 
 			<isNotEmpty prepend="AND" property="is_liqueur_ticket"><![CDATA[ o.is_liqueur_ticket=#is_liqueur_ticket# ]]></isNotEmpty> 
 			<isNotEmpty prepend="AND" property="user_id"><![CDATA[ o.user_id=#userid# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="id"><![CDATA[ o.id=#id# ]]></isNotEmpty>
@@ -72,6 +75,7 @@
 				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
 				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ o.user_id=#apply_userDouble# ]]></isNotEmpty>
 			</isNotEmpty>
+			order by add_time asc
 		</isEmpty>
 			
 			
@@ -82,6 +86,10 @@
 	<select id="qkjStores_Order_update_listCount" parameterClass="java.util.Map" resultClass="int">
 		select count(*) from qkj_t_order o
 		<dynamic prepend="WHERE">
+		
+			<isNotEmpty prepend="AND" property="time_begin"><![CDATA[ o.add_time>=#time_begin# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="time_end"><![CDATA[ o.add_time<=DATE_ADD(#time_end#,INTERVAL 1 day) ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="is_library"><![CDATA[ o.is_library=#is_library# ]]></isNotEmpty> 
 			<isNotEmpty prepend="AND" property="is_liqueur_ticket"><![CDATA[ o.is_liqueur_ticket=#is_liqueur_ticket# ]]></isNotEmpty> 
 			<isNotEmpty prepend="AND" property="user_id"><![CDATA[ o.user_id=#userid# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="id"><![CDATA[ o.id=#id# ]]></isNotEmpty>
@@ -144,7 +152,11 @@
 		update qkj_t_order set is_library=1 WHERE id = #id#
 	</update>
 
-
+	<select id="qkjStores_get_order" resultClass="StoresOrder" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT * from qkj_t_order WHERE id = #id# 
+		]]>
+	</select>
 
 <insert id="qkjStores_order_add_Ticket" parameterClass="StoresTicket">  
     <![CDATA[
@@ -155,7 +167,7 @@
 	
 			<select id="qkjStores_Order_Ticket_list" resultClass="StoresTicket" parameterClass="java.util.Map">
 		<![CDATA[ 
-			SELECT * from qkj_t_ticket
+			SELECT * from qkj_t_ticket where convert(varchar(100), getdate(), 23)>=start_time and convert(varchar(100), getdate(), 23)<=end_time
 		]]>
 	</select>
 	

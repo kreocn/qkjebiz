@@ -70,7 +70,7 @@ public class StoresOrderAction   extends ActionSupport{
 	}
 
 	public String list() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_STORES_ORDER");
+		ContextHelper.isPermit("QKJ_STORES_ORDER");
 		try {
 			map.clear();
 			if (product != null)
@@ -103,7 +103,6 @@ public class StoresOrderAction   extends ActionSupport{
 		return SUCCESS;
 	}
 	public String update() throws Exception{
-		System.out.println("=====");
 		storesorderdao.update(storyit);
 		return SUCCESS;
 	}
