@@ -495,9 +495,11 @@ public class InStockAction extends ActionSupport {
 	}
 	
 	public String mdyRemark() throws Exception{
-		inStock.setRemark("仓库编号"+inStock.getStore_id()+"转入"+inStock.getStore_idR());
-		inStock.setStore_id(inStock.getStore_idR());
-		dao.mdyRemark(inStock);
+		if(inStock!=null && inStock.getStore_idR()!=null){
+			inStock.setRemark("仓库编号"+inStock.getStore_id()+"转入"+inStock.getStore_idR());
+			inStock.setStore_id(inStock.getStore_idR());
+			dao.mdyRemark(inStock);
+		}
 		return SUCCESS;
 	}
 

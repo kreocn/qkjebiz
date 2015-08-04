@@ -12,6 +12,8 @@ public class Stock {
 	private Integer cnum;
 
 	// 以下为非数据库字段
+	private Integer quantity2;// (int)
+	private Integer freezeNum2;
 	private Integer groupQ;
 	private String product_name;
 	private String store_name;
@@ -27,6 +29,22 @@ public class Stock {
 	private Integer snum;
 	private Integer qnum;
 	private Integer jnum;
+
+	public Integer getFreezeNum2() {
+		return freezeNum2;
+	}
+
+	public void setFreezeNum2(Integer freezeNum2) {
+		this.freezeNum2 = freezeNum2;
+	}
+
+	public Integer getQuantity2() {
+		return quantity2;
+	}
+
+	public void setQuantity2(Integer quantity2) {
+		this.quantity2 = quantity2;
+	}
 
 	public Integer getCnum() {
 		return cnum;
@@ -116,8 +134,6 @@ public class Stock {
 		this.group_price = group_price;
 	}
 
-	
-
 	public Integer getCase_spec() {
 		return case_spec;
 	}
@@ -197,9 +213,5 @@ public class Stock {
 	public void setJnum(Integer jnum) {
 		this.jnum = jnum;
 	}
-
-	
-	
-	
 
 }

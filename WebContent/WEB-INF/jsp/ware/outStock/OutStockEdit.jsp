@@ -78,7 +78,11 @@
 	            <div class="label_ltit">状态:</div>
 	            <div class="label_rwbenx">
 		            <span class="label_rwbx">
-		            	<s:select id="out" onchange="checkState();" name="outStock.reason" cssClass="selectKick" list="#{0:'销售出库',3:'报损',1:'招待用酒',4:'赠酒',6:'调货出库',7:'借货',8:'还货',5:'其它'}" />
+		            	<s:if test="%{outStock.reason==8}">还货 <s:hidden id="out" value="8"/></s:if>
+		            	<s:else>
+		            		<s:select id="out" onchange="checkState();" name="outStock.reason" cssClass="selectKick" list="#{0:'销售出库',3:'报损',1:'招待用酒',2:'白条',4:'赠酒',6:'调货出库',7:'借货',8:'还货',5:'其它'}" />
+		            	</s:else>
+		            
 					</span>
 	            </div>
 	        </div>
@@ -342,7 +346,7 @@ $(function(){
  
 
 function checkState(){
-	var state= $("#out ").val();
+	var state= $("#out").val();
 	if(state==0){
 		$("#state0").show();//
 		$("#state3").hide();
@@ -360,7 +364,7 @@ function checkState(){
 		$("#state145").hide();
 		$("#state6").show();//
 		orderDis2();
-	}else if(state==5){//调出仓库
+	}else if(state==2){//调出仓库
 		$("#state3").hide();//
 		$("#state0").hide();
 		$("#state145").hide();

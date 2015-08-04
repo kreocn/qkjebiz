@@ -54,23 +54,13 @@
         	<div class="label_hang">
             <div class="label_ltit">单据性质:</div>
             <div class="label_rwben label_rwb">
-            	<select id="membermanagerid" class="selectKick" name="inStock.reason" title="状态">
-					<option value="-1">---请选择---</option>
-					<option value="0">正常入库</option>
-					<option value="1">正常退货</option>
-					<option value="2" >损坏退货</option>
-					<option value="3" >其它</option>
-				</select>
+				<s:select name="inStock.reason" cssClass="selectKick" headerKey="" headerValue="---请选择---"  list="#{0:'正常入库',1:'正常退货',2:'损坏退货',4:'调货入库',5:'借货',6:'还货',3:'其它'}" />
             </div>
         	</div>
         	<div class="label_hang">
             <div class="label_ltit">状态:</div>
             <div class="label_rwben label_rwb">
-            	<select id="membermanagerid" class="selectKick" name="inStock.send" title="状态">
-					<option value="-1">---请选择---</option>
-					<option value="0">正常订单</option>
-					<option value="1">取消订单</option>
-				</select>
+				<s:select name="inStock.send" cssClass="selectKick" headerKey="" headerValue="---请选择---"  list="#{0:'正常订单',1:'取消订单'}" />
             </div>
         	</div>
         	

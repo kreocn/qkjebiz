@@ -228,7 +228,7 @@ public class OutStockAction extends ActionSupport {
 			if (wps != null && wps.size() > 0) {
 				List<Integer> ud_list = new ArrayList<>();
 				for (int i = 0; i < wps.size(); i++) {
-					if (wps.get(i).getPrvg().contains("1")) {// 有入库权限则有入库单查询权限
+					if (wps.get(i).getPrvg().contains("2")) {// 有入库权限则有出库单查询权限
 						ud_list.add(wps.get(i).getWare_id());
 					}
 				}
@@ -541,9 +541,11 @@ public class OutStockAction extends ActionSupport {
 	}
 	
 	public String mdyRemark() throws Exception{
-		outStock.setRemark("仓库编号"+outStock.getStore_id()+"转入"+outStock.getStore_idR());
-		outStock.setStore_id(outStock.getStore_idR());
-		dao.mdyRemark(outStock);
+		if(outStock!=null &&outStock.getStore_idR()!=null){
+			outStock.setRemark("仓库编号"+outStock.getStore_id()+"转入"+outStock.getStore_idR());
+			outStock.setStore_id(outStock.getStore_idR());
+			dao.mdyRemark(outStock);
+		}
 		return SUCCESS;
 	}
 

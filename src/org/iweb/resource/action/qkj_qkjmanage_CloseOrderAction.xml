@@ -119,9 +119,8 @@
 		
 		<action name="closeOrder_outStock" class="com.qkj.manage.action.CloseOrderAction" method="outStock">
 			<result type="redirectAction">
-				<param name="actionName">closeOrder_load</param>
-				<param name="closeOrder.uuid">${closeOrder.uuid}</param>
-				<param name="viewFlag">mdy</param>
+				<param name="actionName">closeOrder_list</param>
+				<param name="viewFlag">relist</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>

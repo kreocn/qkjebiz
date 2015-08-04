@@ -55,7 +55,7 @@
         	<div class="label_hang">
 	            <div class="label_ltit">单据性质:</div><!-- 0销售用酒1招待用酒3报损4赠酒6调货出库5其它 -->
 	            <div class="label_rwben label_rwb">
-	            <s:select name="outStock.reason" cssClass="selectKick" headerKey="" headerValue="---请选择---" list="#{0:'销售出库',3:'报损',1:'招待用酒',4:'赠酒',6:'调货出库',7:'借货',8:'还货',5:'其它'}"/>
+	            <s:select name="outStock.reason" cssClass="selectKick" headerKey="" headerValue="---请选择---" list="#{0:'销售出库',3:'报损',1:'招待用酒',2:'白条',4:'赠酒',6:'调货出库',7:'借货',8:'还货',5:'其它'}"/>
 	            </div>
 	        </div>
         
@@ -114,7 +114,8 @@
 					</s:if>
 					 <s:if test="%{reason==1}">招待用酒
 					</s:if>
-					
+					<s:if test="%{reason==2 }">白条
+					</s:if>
 					<s:if test="%{reason==3 }">报损
 					</s:if>
 					<s:if test="%{reason==4 }">赠酒

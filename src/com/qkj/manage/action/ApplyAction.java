@@ -13,6 +13,7 @@ import org.iweb.sys.ActionAttr;
 import org.iweb.sys.ContextHelper;
 import org.iweb.sys.Parameters;
 import org.iweb.sys.ToolsUtil;
+import org.iweb.sysvip.domain.Member;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.qkj.manage.dao.ActivePosmDAO;
@@ -21,6 +22,7 @@ import com.qkj.manage.dao.ApplyDAO;
 import com.qkj.manage.dao.ApplyPosmDAO;
 import com.qkj.manage.dao.ApplyProductDAO;
 import com.qkj.manage.dao.ApproveDAO;
+import com.qkj.manage.dao.CloseOrderProDAO;
 import com.qkj.manage.dao.ProcessDAO;
 import com.qkj.manage.dao.ProductDAO;
 import com.qkj.manage.domain.Active;
@@ -32,6 +34,7 @@ import com.qkj.manage.domain.ApplyPosm;
 import com.qkj.manage.domain.ApplyProduct;
 import com.qkj.manage.domain.Approve;
 import com.qkj.manage.domain.CloseOrder;
+import com.qkj.manage.domain.CloseOrderPro;
 import com.qkj.manage.domain.LadingItem;
 import com.qkj.manage.domain.Product;
 import com.qkj.ware.dao.OutStockDAO;
@@ -518,7 +521,21 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 			dao.startTransaction();
 			check(30);
 			this.setApply((Apply) dao.get(apply.getUuid()));
-			
+			dao.commitTransaction();
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!check20 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!check20 数据更新失败:", e);
+		} finally {
+			dao.endTransaction();
+		}
+		return SUCCESS;
+	}
+
+	public String outStock() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_OUTSTOCK");
+		try {
+			// 生成出库单
+			// this.setApply((Apply) dao.get(apply.getUuid()));
 			map.clear();
 			map.put("apply_id", apply.getUuid());
 			map.put("status", 1);
@@ -527,30 +544,30 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 			this.setApplyproduct(adao.list(map));
 			Product pdi = new Product();
 			List<Product> produs = new ArrayList<>();
-			if(applyproduct.size()>0){
-					for (int i = 0; i < applyproduct.size(); i++) {
-						ApplyProduct ladingItem=new ApplyProduct();
-						ladingItem = applyproduct.get(i);
-						List<Product> pros = new ArrayList<>();
-						map.clear();
-						map.put("uuid", ladingItem.getProduct_id());
-						pros = pd.list(map);
-						if (pros.size() > 0) {
-							pdi = pros.get(0);
-							pdi.setNum(ladingItem.getNum());
-							pdi.setDprice(ladingItem.getPer_price());
-							pdi.setDtotle(ladingItem.getTotal_price());
-							produs.add(pdi);
-						}
+			if (applyproduct.size() > 0) {
+				for (int i = 0; i < applyproduct.size(); i++) {
+					ApplyProduct ladingItem = new ApplyProduct();
+					ladingItem = applyproduct.get(i);
+					List<Product> pros = new ArrayList<>();
+					map.clear();
+					map.put("uuid", ladingItem.getProduct_id());
+					pros = pd.list(map);
+					if (pros.size() > 0) {
+						pdi = pros.get(0);
+						pdi.setNum(ladingItem.getNum());
+						pdi.setDprice(ladingItem.getPer_price());
+						pdi.setDtotle(ladingItem.getTotal_price());
+						produs.add(pdi);
 					}
-					addOutStock(apply,produs);
+				}
+				addOutStock(apply, produs);
 			}
-			dao.commitTransaction();
+			if(produs.size()<=0){
+				this.setMessage("没有物料信息,不能生成出库单");
+			}
 		} catch (Exception e) {
-			log.error(this.getClass().getName() + "!check20 数据更新失败:", e);
-			throw new Exception(this.getClass().getName() + "!check20 数据更新失败:", e);
-		}finally {
-			dao.endTransaction();
+			log.error(this.getClass().getName() + "!outStock 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!outStock 数据更新失败:", e);
 		}
 		return SUCCESS;
 	}
@@ -772,10 +789,23 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 	 * @throws Exception
 	 */
 	public void addOutStock(Apply apply, List<Product> produs) throws Exception {
-		OutStockDAO isa = new OutStockDAO();
-		LadingAction l = new LadingAction();
-		Integer goid = l.getWare(ContextHelper.getUserLoginDept());
-		isa.addStock(apply.getUuid(), goid, null, 5, 3, produs, null,false,null,null);// 生成销售用酒出库
+		try {
+			dao.startTransaction();
+			OutStockDAO isa = new OutStockDAO();
+			LadingAction l = new LadingAction();
+			Integer goid = l.getWare(ContextHelper.getUserLoginDept());
+			isa.addStock(apply.getUuid(), goid, null, 2, 3, produs, null, false, null, null);// 生成销售用酒出库
+			
+			//修改状态
+			apply.setGoflag(4);
+			dao.mdyApplyGoflag(apply);
+			dao.commitTransaction();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}finally {
+			dao.endTransaction();
+		}
+		
 	}
 
 	private List<ApplyProduct> independence(Map<String, Object> map, String title, int flag) {

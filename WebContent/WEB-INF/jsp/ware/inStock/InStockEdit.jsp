@@ -121,7 +121,11 @@ font-size: 14px;
 	            <div class="label_ltit">单据性质:</div>
 	            <div class="label_rwben2">
 		            <span class="label_rwb"><!--入库原因：0正常1正常退货2损坏退货3其它4调入仓库5借货 -->
-		            	<s:select id="out" onchange="checkState();" name="inStock.reason" cssClass="selectKick" list="#{0:'正常入库',1:'正常退货',2:'损坏退货',4:'调货入库',5:'借货',6:'还货',3:'其它'}" />
+		            	<s:if test="%{inStock.reason==6}">还货 <s:hidden id="out" value="8"/></s:if>
+		            	<s:else>
+		            		<s:select id="out" onchange="checkState();" name="inStock.reason" cssClass="selectKick" list="#{0:'正常入库',1:'正常退货',2:'损坏退货',4:'调货入库',5:'借货',6:'还货',3:'其它'}" />
+		            	</s:else>
+		            	
 					</span>
 	            </div>
 	        </div>
@@ -339,7 +343,7 @@ $(function(){
 	checkState();
  });
 function checkState(){
-	var state= $("#out ").val();
+	var state= $("#out").val();
 	if(state==4 || state==5 || state==6){
 		$("#state6").show();
 	}else{
