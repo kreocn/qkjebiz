@@ -426,7 +426,7 @@
 											<s:submit id="apply_check30" name="apply_check30" cssClass="input-green" value="副总-审核通过" action="apply_check30" onclick="return isOp('确定执行此操作?');" />
 											<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
-										<c:if test="${apply.status>=20 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK40',apply.apply_dept)==true}">
+										<c:if test="${apply.status>=20 && apply.status<50  && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK40',apply.apply_dept)==true}">
 											<s:submit id="apply_check40" name="apply_check40" cssClass="input-green" value="总经理-审核通过" action="apply_check40" onclick="return isOp('确定执行此操作?');" />
 											<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
@@ -437,7 +437,7 @@
 											<s:submit id="apply_check30" name="apply_check30" cssClass="input-green" value="副总-审核通过" action="apply_check30" onclick="return isOp('确定执行此操作?');" />
 											<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
-										<c:if test="${apply.status>=10 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK40',apply.apply_dept)==true}">
+										<c:if test="${apply.status>=10 && apply.status<50  && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK40',apply.apply_dept)==true}">
 											<s:submit id="apply_check40" name="apply_check40" cssClass="input-green" value="总经理-审核通过" action="apply_check40" onclick="return isOp('确定执行此操作?');" />
 											<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
@@ -462,7 +462,7 @@
 											<s:submit id="apply_check30" name="apply_check30" cssClass="input-green" value="副总-审核通过" action="apply_check30" onclick="return isOp('确定执行此操作?');" />
 											<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
-										<c:if test="${apply.status>=20 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK40',apply.apply_dept)==true}">
+										<c:if test="${apply.status>=20 && apply.status<50  && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK40',apply.apply_dept)==true}">
 											<s:submit id="apply_check40" name="apply_check40" cssClass="input-green" value="总经理-审核通过" action="apply_check40" onclick="return isOp('确定执行此操作?');" />
 											<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
@@ -530,7 +530,7 @@
 											<s:submit id="apply_check30" name="apply_check30" cssClass="input-green" value="副总-审核通过" action="apply_check30" onclick="return isOp('确定执行此操作?');" />
 											<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
-										<c:if test="${apply.status>=30 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK40',apply.apply_dept)==true}">
+										<c:if test="${apply.status>=30 && apply.status<50  && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK40',apply.apply_dept)==true}">
 											<s:submit id="apply_check40" name="apply_check40" cssClass="input-green" value="总经理-审核通过" action="apply_check40" onclick="return isOp('确定执行此操作?');" />
 											<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
