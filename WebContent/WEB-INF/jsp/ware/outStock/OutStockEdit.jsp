@@ -298,7 +298,7 @@
 	
 	<!-- 添加拆分 -->
 	<s:if test="'mdy'==viewFlag">
-		<div id="addPosmForm" class="label_con idialog" title="拆分">
+		<div id="addPosmForm" class="label_con idialog" title="拆分" style="display: none;">
 			<s:form name="form_addPosmForm" cssClass="validFormDialog" action="outStock_spilt" namespace="/outStock" method="post" theme="simple">
 			<s:hidden name="outStock.uuid" title="编号" value="%{outStock.uuid}" />
 				<div class="label_main">
@@ -339,6 +339,12 @@
 </div>
 <s:action name="ref_foot" namespace="/manager" executeResult="true" />
 <script type="text/javascript">
+$("#addPosm").click(function(){
+	$("#addPosmForm").dialog("open");
+});
+$("#addPosmForm").dialog({ autoOpen : false,
+	modal : true }); 
+	
 $(function(){
 	checkState();
 	addDe();
@@ -405,11 +411,7 @@ function orderDis2(){
 		document.getElementById("address").disabled=true;
 }
 
-$("#addPosm").click(function(){
-	$("#addPosmForm").dialog("open");
-});
-$("#addPosmForm").dialog({ autoOpen : false,
-	modal : true }); 
+
 </script>
 <script type="text/javascript">
 	var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';

@@ -60,7 +60,7 @@
 								<div class="label_ltit">仓库类型:</div>
 								<div class="label_rwbenx">
 								<s:hidden id="ware_class"></s:hidden>
-								<s:radio id="ware.ware_class" name="ware.ware_class" list="#{0:'普通库',1:'藏酒库',2:'区域',3:'机构'}" value="0" onclick="seCheck(this.value);"/>
+								<s:radio id="ware.ware_class" name="ware.ware_class" list="#{0:'普通库',1:'藏酒库',2:'区域',3:'机构'}"  onclick="seCheck(this.value);"/>
 								</div>
 							</div>
 							<div class="label_hang">
@@ -225,7 +225,7 @@ function getInfo(obj) {
 		$("#ware_class").val(json.ware_class);
 		$("#ware\\.ware_instcode").val(json.ware_instcode);
 		$("#long_note").val(json.note);
-		if(json.ware_instcode!=null){
+		if(json.ware_instcode!=null && json.ware_instcode!=""){
 			$("#ins").show();
 		}else{
 			$("#ins").hide();
