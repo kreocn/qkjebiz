@@ -288,7 +288,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
 		}
-		if (perWorkFlag == null || perWorkFlag.equals("null")) {
+		if (perWorkFlag == null || perWorkFlag.equals("null") ||perWorkFlag.equals("")) {
 			return "success";
 		} else {
 			perWorkFlag = null;
@@ -302,7 +302,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 
 	public String load() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_VIEW");
-		if ((perWorkF == null || perWorkF.equals("null")) && perWorkFlag == null) {
+		if ((perWorkF == null || perWorkF.equals("null")  ||perWorkF.equals("")) && (perWorkFlag == null || perWorkFlag.equals(""))) {
 			perWorkFlag = null;
 		} else {
 			perWorkFlag = "perWork";

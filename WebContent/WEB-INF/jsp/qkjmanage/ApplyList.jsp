@@ -153,15 +153,15 @@ display: none;
 						<span id="check_note_${uuid}">${check_note}</span>
 					</span>
 					
-					<s:if test='0==goflag'>未出库</s:if>
-					<s:if test='1==goflag'>确认出库</s:if>
-					<s:if test='2==goflag'>部分出库</s:if>
-					<s:if test='3==goflag'>取消出库</s:if>
-					
 					<c:if test="${it:checkPermit('QKJ_QKJMANAGE_APPLY_OUTSTOCK',null)==true && goflag==0}">
 							<span class="opb lb op-area">
 								<a class="ship_info input-nostyle" href="<s:url namespace="/qkjmanage" action="apply_outStock"><s:param name="apply.uuid" value="uuid"></s:param></s:url>">出库</a>
 							</span>
+						<s:if test='0==goflag'>未出库</s:if>
+						<s:if test='1==goflag'>确认出库</s:if>
+						<s:if test='2==goflag'>部分出库</s:if>
+						<s:if test='3==goflag'>取消出库</s:if>
+						<s:if test='4==goflag'>出库单已生成</s:if>
 					</c:if> 
 					</s:if>
 				</td>
