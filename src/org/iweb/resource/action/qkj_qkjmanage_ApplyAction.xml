@@ -183,8 +183,9 @@
 		
 		<action name="apply_outStock" class="com.qkj.manage.action.ApplyAction" method="outStock">
 			<result type="redirectAction">
-				<param name="actionName">apply_list</param>
-				<param name="viewFlag">relist</param>
+				<param name="actionName">apply_load</param>
+				<param name="apply.uuid">${apply.uuid}</param>
+				<param name="viewFlag">mdy</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
