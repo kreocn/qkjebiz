@@ -55,7 +55,14 @@
 							<input type="button" value="新增权限" onClick="setControl('add','1');" />
 						</div>						
 						<div class="label_main">
-							<s:hidden id="ware.uuid" name="ware.uuid" value="ware.uuid" />
+							<div class="label_hang">
+								<div class="label_ltit">仓库ID:</div>
+								<div class="label_rwbenx"><span id="ware.uuid_text"></span>
+								
+								<s:hidden id="ware.uuid" name="ware.uuid" value="%{ware.uuid}"></s:hidden>
+								</div>
+							</div>
+							
 							<div class="label_hang">
 								<div class="label_ltit">仓库类型:</div>
 								<div class="label_rwbenx">
@@ -120,6 +127,7 @@
 					            <span id="ware.lm_time"></span>
 					            </div>
 				       		</div>
+				       		
 							<div class="label_hang clear">
 								<div class="label_ltit">相关操作:</div>
 								<div class="label_rwbenx ">
@@ -172,7 +180,7 @@
 	};		
 	d.add('0','-1','仓库列表');
 	<s:iterator value="wares">
-	d.add('<s:property value="uuid" />','<s:property value="parent_ware" />','<s:property value="ware_name" />',"javascript:getInfo('<s:property value="uuid" />')");
+	d.add('<s:property value="uuid" />','<s:property value="parent_ware" />'+'','<s:property value="ware_name" />',"javascript:getInfo('<s:property value="uuid" />')");
 	</s:iterator>
 	d.add();
 	divID.innerHTML = d;
@@ -211,6 +219,7 @@ function getInfo(obj) {
 	ajax.config.action_url = '<s:url value="/common_ajax/json_ajax" />';
 	ajax.config._success = function(data, textStatus) {
 		var json = data[0];
+		$("#ware\\.uuid_text").text(json.uuid);
 		$("#ware\\.uuid").val(json.uuid);
 		//单选框,复选框,多选下拉菜单都要用数组赋值
 		//单选下拉菜单用字符串直接赋值
