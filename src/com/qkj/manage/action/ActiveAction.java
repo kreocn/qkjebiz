@@ -988,6 +988,28 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
+	
+	/**
+	 * 办事处审核通过
+	 * 
+	 * @return
+	 * @throws Exception
+	 * @date 2014-4-26 上午10:21:02
+	 */
+	public String mdyActiveSDStatus20() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_SDSTATUS20");
+		try {
+			// mdyActiveSDStatus(30);
+			cs.checkSkip(active, 0);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!mdyActiveSDStatus10 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!mdyActiveSDStatus10 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
 
 	/**
 	 * 大区经理审核通过
@@ -1804,6 +1826,28 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyCloseActiveSDStatusT 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyCloseActiveSDStatusT 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+	
+	/**
+	 * 销售部-结案 大区经理审核通过
+	 * 
+	 * @return
+	 * @throws Exception
+	 * @date 2014-4-26 上午10:29:40
+	 */
+	public String mdyCloseActiveSDStatus20() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS20");
+		try {
+			// mdyCloseActiveSDStatus(30);
+			cs.checkSkip(active, 10);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!mdyCloseActiveSDStatus10 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!mdyCloseActiveSDStatus10 数据更新失败:", e);
 		}
 		return SUCCESS;
 	}

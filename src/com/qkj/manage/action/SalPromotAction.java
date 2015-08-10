@@ -637,8 +637,9 @@ public class SalPromotAction extends ActionSupport implements ActionAttr {
 	public String checkfd10() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_SALPRO_FDSTATUS10");
 		try {
-			mdyFDStatus(10);
-			mdyStatus(2);
+			//mdyFDStatus(10);
+			//mdyStatus(2);
+			cocs.checkSkip(salPromot, "checkfd10");
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!check1 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!check1 数据更新失败:", e);

@@ -29,7 +29,8 @@ public class CloseOrderCheckSkip {
 		// 新疆
 		skipSteps.add(new CloseOrerSkipStep("2203", 1, "check20", "mdyCloseOrderSMDStatus10"));// 大区审后销管经理代审
 		//西北跳过销管部，销管副总流程
-		skipSteps.add(new CloseOrerSkipStep("220", 1, "check30", "mdyCloseOrderSMDStatus50"));// 总监审后销管销管副总代审
+		//skipSteps.add(new CloseOrerSkipStep("220", 1, "check30", "mdyCloseOrderSMDStatus50"));// 总监审后销管销管副总代审
+		skipSteps.add(new CloseOrerSkipStep("220", 1, "check30", "mdyCloseOrderSMDStatus40"));// 总监审后销管部经理代审
 		//传奇天估德401402
 		skipSteps.add(new CloseOrerSkipStep("4", 1, "check20", "check30,mdyCloseOrderSMDStatus40"));// 总监跳过销管部经理
 		

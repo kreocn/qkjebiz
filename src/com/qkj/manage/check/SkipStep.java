@@ -6,24 +6,35 @@ public class SkipStep {
 	private int start_step;// 从第几步开始执行跳过
 	private int skip_step;// 要跳过的步骤
 	private String skip_n;//跳过的附加步骤
+	private Boolean flag;//true为除此部门外，false只有此部门
 
 	public SkipStep() {
 
 	}
 	
-	public SkipStep(String skip_dept, Integer isSub, int start_step, int skip_step) {
+	public SkipStep(String skip_dept, Integer isSub, int start_step, int skip_step,Boolean flag) {
 		this.skip_dept = skip_dept;
 		this.isSub = isSub;
 		this.start_step = start_step;
 		this.skip_step = skip_step;
+		this.flag = flag;
 	}
 
-	public SkipStep(String skip_dept, Integer isSub, int start_step, int skip_step,String skip_n) {
+	public SkipStep(String skip_dept, Integer isSub, int start_step, int skip_step,String skip_n,Boolean flag) {
 		this.skip_dept = skip_dept;
 		this.isSub = isSub;
 		this.start_step = start_step;
 		this.skip_step = skip_step;
 		this.skip_n = skip_n;
+		this.flag = flag;
+	}
+
+	public Boolean getFlag() {
+		return flag;
+	}
+
+	public void setFlag(Boolean flag) {
+		this.flag = flag;
 	}
 
 	public String getSkip_n() {
