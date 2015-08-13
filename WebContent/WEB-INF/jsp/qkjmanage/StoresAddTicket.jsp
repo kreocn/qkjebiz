@@ -44,6 +44,12 @@
 					<s:textfield id="auto_prod_name" name="prodname" cssClass="selectAll iI iI-s" />
 					<input id="auto_prod_id" type="hidden" name="storesTicket.product_id" />
 				</div>
+				
+				<div class="label_rwbenx">
+				<div class="label_ltit">商品数量:</div>
+							<s:textfield name="storesTicket.num"  id="upname"  onkeyup="up_num()" />
+				</div>
+					
 			</div>
 			</div>
 				<div class="label_main">
@@ -74,6 +80,19 @@
 	$(function(){
 		SimpleLoadMember(ajax_url, $.noop);
 	});
+	
+	function up_num(){
+		var upname = $("#upname").parent().find("input[type=text]").val();
+		if (isNaN(upname)) {
+			var count = upname.length;
+			if (count == "1") {
+				$("#upname").parent().find("input[type=text]").val("0");
+				up_num(a)
+			}else{
+		$("#upname").parent().find("input[type=text]").val(parseInt(upname));
+		$("#upname").parent().find("input[type=hidden]").val(parseInt(upname));
+			}
+	}}
 </script>
 </body>
 </html>

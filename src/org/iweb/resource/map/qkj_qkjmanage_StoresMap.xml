@@ -149,19 +149,27 @@
 		]]>
 	</select>
 		<update id="qkjStores_order_is_library" parameterClass="java.util.Map">
-		update qkj_t_order set is_library=1 WHERE id = #id#
+		<![CDATA[ update qkj_t_order set is_library=1 	]]>
+			<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="id"><![CDATA[ id=#id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="is_library"><![CDATA[ is_library=#is_library# ]]></isNotEmpty>
+					</dynamic>
 	</update>
 
 	<select id="qkjStores_get_order" resultClass="StoresOrder" parameterClass="java.util.Map">
 		<![CDATA[ 
-			SELECT * from qkj_t_order WHERE id = #id# 
-		]]>
+			SELECT * from qkj_t_order 
+				]]>
+				<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="id"><![CDATA[ id=#id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="is_library"><![CDATA[ is_library=#is_library# ]]></isNotEmpty>
+		</dynamic>
 	</select>
 
 <insert id="qkjStores_order_add_Ticket" parameterClass="StoresTicket">  
     <![CDATA[
-        insert into qkj_t_ticket(product_id,ticket_name,start_time,end_time,product_code) values 
-        (#product_id#,#ticket_name#,#start_time#,#end_time#,#product_code#)  
+        insert into qkj_t_ticket(product_id,ticket_name,start_time,end_time,product_code,num) values 
+        (#product_id#,#ticket_name#,#start_time#,#end_time#,#product_code#,#num#)  
     ]]>
 	</insert>
 	

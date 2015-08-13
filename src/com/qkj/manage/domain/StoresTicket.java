@@ -8,6 +8,13 @@ private String ticket_name;
 private String product_code;
 private String start_time;
 private String end_time;
+private Integer num;
+public Integer getNum() {
+	return num;
+}
+public void setNum(Integer num) {
+	this.num = num;
+}
 public String getProduct_code() {
 	return product_code;
 }

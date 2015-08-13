@@ -22,6 +22,12 @@
 				<div class="label_rwbenx">
 					<s:select list="storesTicketList"  listValue="ticket_name" listKey="product_id"  name="storesTicketLists" id="storesTicketLiss"  headerKey="99999999999" headerValue="--请选择--" >  
                     </s:select> 
+                    <div id="inputfor">
+                    	<s:iterator value="storesTicketList" status="sta">
+                    	<input type="hidden" value="${num}">
+                    </s:iterator>
+                    <input type="hidden" value="" id="ticketnum">
+                    </div>
 				</div>
 			</div>
 				<div class="label_hang">
@@ -186,6 +192,7 @@
 			var spec = list[0].spec;
 			var brand = list[0].brand;
 			var marketprice = 0;
+			casenum=$("#ticketnum").val();
 			show.push('<tr>');
 			show.push('<input type="hidden" name="storesorderitem['+num+'].product_id" value="'+product_id+'"/>')
 			show.push('<td class="td1" style="display:none"><input type="hidden" name="storesorderitem['+num+'].prod_code" value="'+procode+'"/>' + procode + '</td>');
@@ -269,7 +276,8 @@
 	function nonull(){
 		$("#order_user_id_2").val($("#order_user_id").val())
 		$("#order_user_name_2").val($("#order_user_name").val())
-		$("#tiaomainput2").val($("#tiaomainput").val())
+		$("#tiaomainput2").val($("#ticket_code").val())
+
 		var status = true;
 		if (getRadio("member.is_customers") == 1) {
 			$.ajax({ type : 'POST',
@@ -346,10 +354,15 @@
 		$("#total_price" + a).parent().find("input[type=hidden]").val(parseInt(total_price));
 	}
 	$("#storesTicketLiss").change(function() {
+		
+		  var tt = document.getElementById("storesTicketLiss");
+		$("#ticketnum").val($("#inputfor input").eq((tt.selectedIndex-1)).val())
 		$("#qkj_list  tr:not(:first)").empty()
 		$("#tiaomainput").val($(this).val());
 		$("#storessubmit").click();
     });
+	
+	
 </script>
 
 

@@ -329,7 +329,9 @@ public class StoresAction  extends ActionSupport{
 			sto.setUser_name(ulf.getUser_name());
 			sto.setLogin_dept(ContextHelper.getUserLoginDept());
 			sto.setLogin_name(ContextHelper.getUserLoginDeptName());
-	
+			sto.setMember_id(sotresorder.getMember_id());
+			sto.setMember_name(sotresorder.getMember_name());
+			sto.setMember_mobile(sotresorder.getMember_mobile());
 			for (StoresOrderItem storesorderitem : sotr) {
 				storesorderitem.setOrder_total_price((double)storesorderitem.getOrder_total_price());
 				storesorderitem.setOrder_id(id+"");
@@ -392,6 +394,69 @@ public class StoresAction  extends ActionSupport{
 		this.setRecCount(dao.getResultCount());
 		return SUCCESS;
 	}
+	//门店支付>查看酒票订单
+		public String findTicketOrder() throws Exception {
+			ContextHelper.isPermit("QKJ_STORES_FIND_TICKET_ORDER");
+			UserLoginInfo ulf = new UserLoginInfo();
+			ActionContext context = ActionContext.getContext();  
+			HttpServletRequest request = (HttpServletRequest) context.get(ServletActionContext.HTTP_REQUEST);  
+			HttpServletResponse response = (HttpServletResponse) context.get(ServletActionContext.HTTP_RESPONSE);  
+			ulf=(UserLoginInfo) request.getSession().getAttribute(Parameters.UserLoginInfo_Session_Str);
+			map.clear();
+			map.putAll(ContextHelper.getDefaultRequestMap4Page());
+			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
+			map.put("userid", ulf.getUuid());
+			map.put("is_liqueur_ticket", "1");
+			ContextHelper.setSearchDeptPermit4Search("QKJ_STORES_FIND_TICKET_ORDER",map, "apply_depts", "apply_user");
+			
+			ContextHelper.setSearchDeptPermit4Search("QKJ_STORES_FIND_ORDER",map, "apply_depts", "apply_user");
+			if(sotresorder!=null){
+				if(!sotresorder.getTime_begin().equals("")){
+			map.put("time_begin", sotresorder.getTime_begin());
+				}
+				if(!sotresorder.getTime_end().equals("")){
+					SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");//小写的mm表示的是分钟  
+					java.util.Date date=sdf.parse(sotresorder.getTime_end());  
+					     Calendar   calendar   =   new   GregorianCalendar(); 
+					     calendar.setTime(date); 
+					     calendar.add(calendar.DATE,1);//把日期往后增加一天.整数往后推,负数往前移动 
+					     date=calendar.getTime();   //这个时间就是日期往后推一天的结果 
+					     System.out.println(date);
+			            map.put("time_end", date);
+				}
+				if(sotresorder.getId()!=0){
+					map.put("id", sotresorder.getId());
+				}
+				if(!sotresorder.getIs_library().equals("")){
+					map.put("is_library", sotresorder.getIs_library());
+				}
+			}
+			
+			this.setStoresorderlist(dao.listOrder(map));
+			this.setRecCount(dao.getResultCount());
+			return SUCCESS;
+		}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	//门店支付>查看订单>订单详情
 	public String updateDetails() throws Exception {
 		ContextHelper.isPermit("QKJ_STORES_FIND_ORDER");
@@ -513,8 +578,13 @@ public class StoresAction  extends ActionSupport{
 		if(cb!=null){
 	        for (int i = 0; i < cb.length; i++) {
 	        	map.put("id", cb[i]);
+	        	map.put("is_library", "0");
 	    		List<Product> pros = new ArrayList<>();
-	    		sotresorder=(StoresOrder) dao.findOrder(map).get(0);
+	    		if(dao.findOrder(map).size()==0){
+	    			continue;
+	    		}else {
+	    			sotresorder=(StoresOrder) dao.findOrder(map).get(0);
+	    		}
 	    		this.setStoresorderitem(dao.listOrderItem(map));
 	    		for (StoresOrderItem setStoresorderitem :storesorderitem) {
 	    			map.clear();
@@ -529,8 +599,6 @@ public class StoresAction  extends ActionSupport{
 				}
 	    		}
 				map.clear();
-			}
-		
 			//会员信息
 		Member me=new Member();
 		if(sotresorder.getMember_id()==""||sotresorder.getMember_id()==null){
@@ -548,11 +616,11 @@ public class StoresAction  extends ActionSupport{
 		Integer goid=getWare(sotresorder.getLogin_dept());
 		isa.addStock(sotresorder.getId(), goid, null, 0, 5, produs,me,true,ContextHelper.getUserLoginDept(),ContextHelper.getUserLoginDept());//生成销售用酒出库
 		
-		
+	        }
 		if(cb!=null){
         for (int i = 0; i < cb.length; i++) {
         	map.put("id", cb[i]);
-			System.out.println(cb[i]);
+        	map.put("is_library", "0");
 			dao.saveIs_library(map);
 			map.clear();
 		}
@@ -586,24 +654,7 @@ public class StoresAction  extends ActionSupport{
 		return SUCCESS;
 	}
 	
-	//门店支付>查看酒票订单
-	public String findTicketOrder() throws Exception {
-		ContextHelper.isPermit("QKJ_STORES_FIND_TICKET_ORDER");
-		UserLoginInfo ulf = new UserLoginInfo();
-		ActionContext context = ActionContext.getContext();  
-		HttpServletRequest request = (HttpServletRequest) context.get(ServletActionContext.HTTP_REQUEST);  
-		HttpServletResponse response = (HttpServletResponse) context.get(ServletActionContext.HTTP_RESPONSE);  
-		ulf=(UserLoginInfo) request.getSession().getAttribute(Parameters.UserLoginInfo_Session_Str);
-		map.clear();
-		map.putAll(ContextHelper.getDefaultRequestMap4Page());
-		this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
-		map.put("userid", ulf.getUuid());
-		map.put("is_liqueur_ticket", "1");
-		ContextHelper.setSearchDeptPermit4Search("QKJ_STORES_FIND_TICKET_ORDER",map, "apply_depts", "apply_user");
-		this.setStoresorderlist(dao.listOrder(map));
-		this.setRecCount(dao.getResultCount());
-		return SUCCESS;
-	}
+	
 	
 	
 	

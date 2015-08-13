@@ -83,21 +83,23 @@
 					<tr id="coltr">
 				<th class="td1">全选<input type="checkbox" id="cbselect"></th>
 						<th class="td2">用户名称</th>
-						<th class="td3">订单总价</th>
-						<th class="td4">添加时间</th>
-						<th class="td4">操作</th>
+						<th class="td3">订单状态</th>
+						<th class="td4">订单总价</th>
+						<th class="td5">添加时间</th>
+						<th class="td6">操作</th>
 					</tr>
 					<s:iterator value="storesorderlist" status="sta">
 						<tr>
 							<td class="td1" >
-								<s:if test="0==is_library"><input type="checkbox" name="cb" value="${id}"></s:if>
-								
-								<s:if test="1==is_library">已出库</s:if></td>
+								<input type="checkbox" name="cb" value="${id}" <s:if test="1==is_library">checked="checked"</s:if> >
+							</td>
 							<td class="td2" >${user_name}</td>
-							<td class="td3">${total_price}</td>
-							<td class="td4">${add_time}</td>
+							<td class="td3" >	<s:if test="1==is_library">已出库</s:if>
+								<s:if test="0==is_library">待出库</s:if></td>
+							<td class="td4">${total_price}</td>
+							<td class="td5">${add_time}</td>
 							
-							<td class="td4 op-area"><a class="input-gray"  href="/qkjmanage/stores_order_update_details_view.action?id=${id}" >打印</a><a  class="input-blue"  href="/qkjmanage/stores_order_update_details.action?id=${id}" >查看详情</a> 		<c:if test="${it:checkPermit('QKJ_STORES_FIND_ORDER_DEL',null)==true}">
+							<td class="td6 op-area"><a class="input-gray"  href="/qkjmanage/stores_order_update_details_view.action?id=${id}" >打印</a><a  class="input-blue"  href="/qkjmanage/stores_order_update_details.action?id=${id}" >查看详情</a> 		<c:if test="${it:checkPermit('QKJ_STORES_FIND_ORDER_DEL',null)==true}">
 							<s:if test="0==is_library"> <a  class="input-red" onclick="return isDel();" href="/qkjmanage/stores_order_delete.action?id=${id}"  >删除</a></s:if></c:if></td>
 						</tr>
 					</s:iterator>

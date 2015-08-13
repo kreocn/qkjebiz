@@ -409,6 +409,7 @@
 	function nonull(){
 		$("#order_user_id_2").val($("#order_user_id").val())
 		$("#order_user_name_2").val($("#order_user_name").val())
+		alert($("#order_user_id").val())
 		var status = true;
 		if (getRadio("member.is_customers") == 1) {
 			$.ajax({ type : 'POST',

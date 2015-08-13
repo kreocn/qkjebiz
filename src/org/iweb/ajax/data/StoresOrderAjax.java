@@ -48,11 +48,13 @@ public class StoresOrderAjax extends Ajax{
 		}
 		for (int j = 0; j < souList.size(); j++) {
 			int productid=Integer.parseInt(souList.get(j).getProduct_id());
-			
 			if(proList.get(i).getUuid()==productid){
 				proList.get(i).setMarket_price(souList.get(j).getPrice());
 			}
 		}
+	}
+	if(parameter.keySet().contains("tcd")==true){
+		
 	}
 	return proList;
 	}
