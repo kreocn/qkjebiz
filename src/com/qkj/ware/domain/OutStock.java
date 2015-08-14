@@ -39,6 +39,10 @@ public class OutStock {
 	private Integer split;
 	private String remark;
 
+	private String ship_no;
+	private String ship_phone;
+	private String ship_type;
+
 	// 以下为非数据库字段
 	private String add_user_name;
 	private String lm_user_name;
@@ -50,6 +54,30 @@ public class OutStock {
 	private Date date_end;
 	private String borrowStore_name;
 	private Integer store_idR;
+
+	public String getShip_no() {
+		return ship_no;
+	}
+
+	public void setShip_no(String ship_no) {
+		this.ship_no = ship_no;
+	}
+
+	public String getShip_phone() {
+		return ship_phone;
+	}
+
+	public void setShip_phone(String ship_phone) {
+		this.ship_phone = ship_phone;
+	}
+
+	public String getShip_type() {
+		return ship_type;
+	}
+
+	public void setShip_type(String ship_type) {
+		this.ship_type = ship_type;
+	}
 
 	private Integer splitNum;
 

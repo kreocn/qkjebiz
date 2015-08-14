@@ -205,6 +205,28 @@
 						</div>
 					</div>
 				</s:else>
+				
+				<div class="label_main">
+		        <div class="label_hang">
+		            <div class="label_ltit">运单号:</div>
+		            <div class="label_rwbenx">
+		            ${outStock.ship_no }
+		            </div>
+		        </div>
+		        <div class="label_hang">
+		            <div class="label_ltit">物流名称:</div>
+		            <div class="label_rwbenx">
+		               ${outStock.ship_type }
+		            </div>
+		        </div>
+		        <div class="label_hang">
+		            <div class="label_ltit">物流电话:</div>
+		            <div class="label_rwbenx">
+		              ${outStock.ship_phone }
+		            </div>
+		        </div>
+		     </div>
+		     
 				<!-- 明细 -->
 				<s:if test="null != outStock">
 					<fieldset>

@@ -687,7 +687,6 @@
 							<div class="label_rwbenx">${it:formatDate(activeTime.baotime,'yyyy-MM-dd hh:mm:ss')}</div>
 						</div>
 					</s:if>
-
 				</div>
 
 				<s:if test="'mdy' == viewFlag">

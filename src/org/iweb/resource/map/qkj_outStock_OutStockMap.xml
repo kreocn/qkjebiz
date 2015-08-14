@@ -74,8 +74,8 @@
 	
 	<insert id="outStock_addOutStock" parameterClass="outStock">
 		<![CDATA[ 
-			Insert Into qkj_t_outstock(ordernum,date,store_id,reason,member_id,member_mebile,member_name, member_adress,bsreason, operator_id,dept_code,dept_name,take_id,note,add_user,add_timer,lm_user,lm_timer,send,borrowStore_id,member_price,goldUuid,goreason,splitUuid,split)
-			Values (#ordernum#,#date#,#store_id#, #reason#,#member_id#,#member_mebile#,#member_name#,#member_adress#,#bsreason#, #operator_id#,#dept_code#,#dept_name#,#take_id#,#note#,#add_user#,#add_timer#,#lm_user#,#lm_timer#,#send#,#borrowStore_id#,#member_price#,#goldUuid#,#goreason#,#splitUuid#,#split#)
+			Insert Into qkj_t_outstock(ordernum,date,store_id,reason,member_id,member_mebile,member_name, member_adress,bsreason, operator_id,dept_code,dept_name,take_id,note,add_user,add_timer,lm_user,lm_timer,send,borrowStore_id,member_price,goldUuid,goreason,splitUuid,split,ship_no,ship_phone,ship_type)
+			Values (#ordernum#,#date#,#store_id#, #reason#,#member_id#,#member_mebile#,#member_name#,#member_adress#,#bsreason#, #operator_id#,#dept_code#,#dept_name#,#take_id#,#note#,#add_user#,#add_timer#,#lm_user#,#lm_timer#,#send#,#borrowStore_id#,#member_price#,#goldUuid#,#goreason#,#splitUuid#,#split#,#ship_no#,#ship_phone#,#ship_type#)
 		]]>
 		<selectKey resultClass="int" keyProperty="uuid">
 		<![CDATA[ 
@@ -102,7 +102,10 @@
 			member_name=#member_name#,
 			member_adress=#member_adress#,
 			borrowStore_id=#borrowStore_id#,
-			member_price=#member_price#
+			member_price=#member_price#,
+			ship_no=#ship_no#,
+			ship_phone=#ship_phone#,
+			ship_type=#ship_type#
 			Where uuid = #uuid#
 		]]>
 	</update>

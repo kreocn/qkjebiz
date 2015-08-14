@@ -187,6 +187,29 @@
 		     </div>
         </div>
         
+        
+        	<div class="label_main">
+		        <div class="label_hang">
+		            <div class="label_ltit">运单号:</div>
+		            <div class="label_rwbenx">
+		            	<s:textfield id="form_apply_ship_no" name="outStock.ship_no" title="运单号码" cssClass="validate[maxSize[48]]" />
+		            </div>
+		        </div>
+		        <div class="label_hang">
+		            <div class="label_ltit">物流名称:</div>
+		            <div class="label_rwbenx">
+		            	<s:textfield name="outStock.ship_type" title="物流名称" cssClass="validate[maxSize[48]]"/>
+		            </div>
+		        </div>
+		        <div class="label_hang">
+		            <div class="label_ltit">物流电话:</div>
+		            <div class="label_rwbenx">
+		            	<s:textfield id="form_apply_ship_phone" name="outStock.ship_phone" title="物流电话"  cssClass="validate[maxSize[48]]" />
+		            </div>
+		        </div>
+		     </div>
+        
+        
         <s:if test="'mdy'==viewFlag">
         	<fieldset>
 			<legend>出库明细</legend>
