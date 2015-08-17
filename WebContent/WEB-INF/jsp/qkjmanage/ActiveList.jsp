@@ -473,7 +473,7 @@ function kselect(){
 	var num=$("#sselect").val();
 	if(parseInt(num)==0){//(申)大区经理待审
 		jnull();
-		document.getElementById("sd_status").options[3].selected = true; 
+		document.getElementById("sd_status").options[4].selected = true; 
 		document.getElementById("smd_sta").options[0].selected = true;
 		$("#userdept_codeid").val("");
 		$("#userdept_nameid").val("");
@@ -592,7 +592,7 @@ function kselect(){
 	}
 	if(parseInt(num)==21){//(结)大区经理待审
 		snull();
-		document.getElementById("clsdsta").options[3].selected = true; 
+		document.getElementById("clsdsta").options[4].selected = true; 
 		document.getElementById("clsmdsta").options[0].selected = true;
 		$("#userdept_codeid").val("");
 		$("#userdept_nameid").val("");
