@@ -34,7 +34,7 @@
 
 						<div class="label_ltit">会员名称:</div>
 						<div class="label_rwben label_rwb">
-							<s:textfield id="order_user_name"/>
+							<s:textfield id="order_user_name_nopermission"/>
 						<input type="hidden" name="integralPay.member_id" id="order_user_id" value=""  >
 						</div>
 					</div>

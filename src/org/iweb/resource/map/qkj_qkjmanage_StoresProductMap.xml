@@ -2,6 +2,7 @@
 <!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "sql-map-2.dtd">
 <sqlMap>
 	<typeAlias alias="storesOrderCustom" type="com.qkj.manage.domain.StoresOrderCustom" />
+		<typeAlias alias="storesOrder" type="com.qkj.manage.domain.StoresOrder" />
     <typeAlias alias="product" type="com.qkj.manage.domain.Product" />
 	<select id="qkjmanage_getProducts" resultClass="product" parameterClass="java.util.Map">
 		<![CDATA[ 
@@ -44,4 +45,11 @@ insert into qkj_t_order_custom(product_id,login_dept,price,bar_code) values (#pr
 <update  id ="qkjStores_SaveStoresOrder"  parameterClass ="java.util.Map" >
 UPDATE qkj_t_order_custom SET price = #price# WHERE product_id =#productid# and login_dept=#logindept#
 </update>
+
+
+<update  id ="qkjStores_updateStoresItemOrder"  parameterClass ="storesOrder" >
+UPDATE qkj_t_order SET is_ticket = #is_ticket#,invoice_title=#invoice_title#,invoice_price=#invoice_price#,invoice_id=#invoice_id#,payment_type=#payment_type#,is_arrears=#is_arrears#,arrears_price=#arrears_price#,remark=#remark# WHERE id=#id#
+</update>
+
+
 </sqlMap>

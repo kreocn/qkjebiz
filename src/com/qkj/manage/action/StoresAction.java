@@ -6,8 +6,11 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +26,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.ServletActionContext;
 import org.iweb.sys.ContextHelper;
+import org.iweb.sys.JSONUtil;
 import org.iweb.sys.Parameters;
+import org.iweb.sys.ToolsUtil;
+import org.iweb.sys.cache.CacheFactory;
+import org.iweb.sys.cache.SysDBCacheLogic;
+import org.iweb.sys.dao.DepartmentDAO;
+import org.iweb.sys.domain.Department;
 import org.iweb.sys.domain.UserLoginInfo;
 import org.iweb.sysvip.dao.MemberCapitalDAO;
 import org.iweb.sysvip.domain.Member;
@@ -32,10 +41,17 @@ import org.iweb.sysvip.domain.MemberCapital;
 import com.aliyun.openservices.ots.protocol.OtsProtocol.StartTransactionRequest;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import com.qkj.manage.dao.LadingItemDAO;
+import com.qkj.manage.dao.ProductDAO;
 import com.qkj.manage.dao.StoresDao;
+import com.qkj.manage.domain.LadingItem;
 import com.qkj.manage.domain.Product;
 import com.qkj.manage.domain.StoresOrder;
 import com.qkj.manage.domain.StoresOrderItem;
+import com.qkj.manage.domain.StoresTicket;
+import com.qkj.ware.dao.OutStockDAO;
+import com.qkjsys.ebiz.dao.WareDAO;
+import com.qkjsys.ebiz.domain.Ware;
 
 public class StoresAction  extends ActionSupport{
 	private List<Member> members;
@@ -49,7 +65,8 @@ public class StoresAction  extends ActionSupport{
 	private int recCount;
 	private int pageSize;
 	private int num;
-    private Member member;
+	private String viewFlag;
+	private Member member;
 	private List<StoresOrder> storesorderlist;
 	private Map<String, Object> map = new HashMap<String, Object>();
 	private static Log log = LogFactory.getLog(StoresAction.class);
@@ -58,6 +75,68 @@ public class StoresAction  extends ActionSupport{
 	private String storesid;
 	private Double price;
 	private Double totalPirce;
+	private Object cb[];
+	private String tick_code;
+	private List<StoresTicket> storesTickets;
+
+	public List<StoresTicket> getStoresTickets() {
+		return storesTickets;
+	}
+
+	public void setStoresTickets(List<StoresTicket> storesTickets) {
+		this.storesTickets = storesTickets;
+	}
+
+	public String getTick_code() {
+		return tick_code;
+	}
+
+	public void setTick_code(String tick_code) {
+		this.tick_code = tick_code;
+	}
+
+	public String getIs_li() {
+		return is_li;
+	}
+
+	public void setIs_li(String is_li) {
+		this.is_li = is_li;
+	}
+
+	private StoresTicket storesTicket;
+	private String is_li;
+	private List<StoresTicket> storesTicketList;
+	   public String getViewFlag() {
+			return viewFlag;
+		}
+
+		public void setViewFlag(String viewFlag) {
+			this.viewFlag = viewFlag;
+		}
+	public List<StoresTicket> getStoresTicketList() {
+		return storesTicketList;
+	}
+
+	public void setStoresTicketList(List<StoresTicket> storesTicketList) {
+		this.storesTicketList = storesTicketList;
+	}
+
+	public StoresTicket getStoresTicket() {
+		return storesTicket;
+	}
+
+	public void setStoresTicket(StoresTicket storesTicket) {
+		this.storesTicket = storesTicket;
+	}
+
+	public Object[] getCb() {
+		return cb;
+	}
+
+	public void setCb(Object[] cb) {
+		this.cb = cb;
+	}
+
 	public List<Member> getMembers() {
 		return members;
 	}
@@ -187,14 +266,14 @@ public class StoresAction  extends ActionSupport{
 	}
 	//门店支付 >添加订单 >首页
 	public String list() throws Exception {
-
-		ContextHelper.isPermit("QKJ_QKJMANAGE_STORES");
+		ContextHelper.isPermit("QKJ_STORES_PAYMENT");
 		UserLoginInfo ulf = new UserLoginInfo();
 		ActionContext context = ActionContext.getContext();  
 		HttpServletRequest request = (HttpServletRequest) context.get(ServletActionContext.HTTP_REQUEST);  
 		HttpServletResponse response = (HttpServletResponse) context.get(ServletActionContext.HTTP_RESPONSE);  
 		ulf=(UserLoginInfo) request.getSession().getAttribute(Parameters.UserLoginInfo_Session_Str);
 		map.put("userid", ulf.getUuid());
+		map.put("is_liqueur_ticket", "0");
 		storesorderlist=dao.listWeek(map);
 		return SUCCESS;
 	}
@@ -230,7 +309,7 @@ public class StoresAction  extends ActionSupport{
 	}*/
 	//门店支付>添加订单>添加订单
 	public String insertOrder(){
-		ContextHelper.isPermit("QKJ_QKJMANAGE_STORES");
+		ContextHelper.isPermit("QKJ_STORES_PAYMENT");
 		List<StoresOrderItem> sotr=storesorderitem;
 		if(sotr.size()>0){
 			Collection nuCon = new Vector();
@@ -257,13 +336,23 @@ public class StoresAction  extends ActionSupport{
 			sto.setUser_id(ulf.getUuid());
 			sto.setUser_name(ulf.getUser_name());
 			sto.setLogin_dept(ContextHelper.getUserLoginDept());
+			sto.setLogin_name(ContextHelper.getUserLoginDeptName());
+			sto.setMember_id(sotresorder.getMember_id());
+			sto.setMember_name(sotresorder.getMember_name());
+			sto.setMember_mobile(sotresorder.getMember_mobile());
 			for (StoresOrderItem storesorderitem : sotr) {
 				storesorderitem.setOrder_total_price((double)storesorderitem.getOrder_total_price());
 				storesorderitem.setOrder_id(id+"");
 				String title=storesorderitem.getTitle();
 				storesorderitem.setTitle(title);
 			}
+			if(is_li.equals("ticket")){
+				sto.setIs_liqueur_ticket(1);
+				sto.setLiqueur_ticket_code(tick_code);
+				dao.addO(sto,storesorderitem);
+			}else{
 			dao.addO(sto,storesorderitem,member.getUuid());
+			}
 		}
 		return SUCCESS;
 	}
@@ -274,7 +363,7 @@ public class StoresAction  extends ActionSupport{
 	} 
 	//门店支付>查看订单
 	public String findOrder() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_STORES_FIND_ORDER");
+		ContextHelper.isPermit("QKJ_STORES_FIND_ORDER");
 		UserLoginInfo ulf = new UserLoginInfo();
 		ActionContext context = ActionContext.getContext();  
 		HttpServletRequest request = (HttpServletRequest) context.get(ServletActionContext.HTTP_REQUEST);  
@@ -284,14 +373,101 @@ public class StoresAction  extends ActionSupport{
 		map.putAll(ContextHelper.getDefaultRequestMap4Page());
 		this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 		map.put("userid", ulf.getUuid());
-		ContextHelper.setSearchDeptPermit4Search("QKJ_QKJMANAGE_STORES_FIND_ORDER",map, "apply_depts", "apply_user");
+		map.put("is_liqueur_ticket", "0");
+		ContextHelper.setSearchDeptPermit4Search("QKJ_STORES_FIND_ORDER",map, "apply_depts", "apply_user");
+		if(sotresorder!=null){
+			if(!sotresorder.getTime_begin().equals("")){
+		map.put("time_begin", sotresorder.getTime_begin());
+			}
+			if(!sotresorder.getTime_end().equals("")){
+				SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");//小写的mm表示的是分钟  
+				java.util.Date date=sdf.parse(sotresorder.getTime_end());  
+				     Calendar   calendar   =   new   GregorianCalendar(); 
+				     calendar.setTime(date); 
+				     calendar.add(calendar.DATE,1);//把日期往后增加一天.整数往后推,负数往前移动 
+				     date=calendar.getTime();   //这个时间就是日期往后推一天的结果 
+				     System.out.println(date);
+		            map.put("time_end", date);
+			}
+			if(sotresorder.getId()!=0){
+				map.put("id", sotresorder.getId());
+			}
+			if(!sotresorder.getIs_library().equals("")){
+				map.put("is_library", sotresorder.getIs_library());
+			}
+		}
+		
+		
 		this.setStoresorderlist(dao.listOrder(map));
 		this.setRecCount(dao.getResultCount());
 		return SUCCESS;
 	}
+	//门店支付>查看酒票订单
+		public String findTicketOrder() throws Exception {
+			ContextHelper.isPermit("QKJ_STORES_FIND_TICKET_ORDER");
+			UserLoginInfo ulf = new UserLoginInfo();
+			ActionContext context = ActionContext.getContext();  
+			HttpServletRequest request = (HttpServletRequest) context.get(ServletActionContext.HTTP_REQUEST);  
+			HttpServletResponse response = (HttpServletResponse) context.get(ServletActionContext.HTTP_RESPONSE);  
+			ulf=(UserLoginInfo) request.getSession().getAttribute(Parameters.UserLoginInfo_Session_Str);
+			map.clear();
+			map.putAll(ContextHelper.getDefaultRequestMap4Page());
+			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
+			map.put("userid", ulf.getUuid());
+			map.put("is_liqueur_ticket", "1");
+			ContextHelper.setSearchDeptPermit4Search("QKJ_STORES_FIND_TICKET_ORDER",map, "apply_depts", "apply_user");
+			
+/*			ContextHelper.setSearchDeptPermit4Search("QKJ_STORES_FIND_ORDER",map, "apply_depts", "apply_user");*/
+			if(sotresorder!=null){
+				if(!sotresorder.getTime_begin().equals("")){
+			map.put("time_begin", sotresorder.getTime_begin());
+				}
+				if(!sotresorder.getTime_end().equals("")){
+					SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");//小写的mm表示的是分钟  
+					java.util.Date date=sdf.parse(sotresorder.getTime_end());  
+					     Calendar   calendar   =   new   GregorianCalendar(); 
+					     calendar.setTime(date); 
+					     calendar.add(calendar.DATE,1);//把日期往后增加一天.整数往后推,负数往前移动 
+					     date=calendar.getTime();   //这个时间就是日期往后推一天的结果 
+					     System.out.println(date);
+			            map.put("time_end", date);
+				}
+				if(sotresorder.getId()!=0){
+					map.put("id", sotresorder.getId());
+				}
+				if(!sotresorder.getIs_library().equals("")){
+					map.put("is_library", sotresorder.getIs_library());
+				}
+			}
+			
+			this.setStoresorderlist(dao.listOrder(map));
+			this.setRecCount(dao.getResultCount());
+			return SUCCESS;
+		}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	//门店支付>查看订单>订单详情
 	public String updateDetails() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_STORES_FIND_ORDER");
+		ContextHelper.isPermit("QKJ_STORES_FIND_ORDER");
 		map.clear();
 		map.put("id", this.getId());
 		this.setStoresorderlist(dao.listOrder(map));
@@ -304,7 +480,7 @@ public class StoresAction  extends ActionSupport{
 	}
 	//门店支付>查看订单>订单详情>删除
 	public String itemDelete() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_STORES_FIND_ORDER_DEL");
+		ContextHelper.isPermit("QKJ_STORES_FIND_ORDER_DEL");
 		if(num==0){
 			map.clear();
 			map.put("id",this.getId());
@@ -354,30 +530,245 @@ public class StoresAction  extends ActionSupport{
 	}
 	//门店支付>查看订单>删除
 	public String delete() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_STORES_FIND_ORDER_DEL");
+		ContextHelper.isPermit("QKJ_STORES_FIND_ORDER_DEL");
 		map.clear();
 		map.put("orderid",this.getId());
 		dao.deleteItemandorder(map);
 		return SUCCESS;
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	//门店支付>财务报表
+	public String financeDetails() throws Exception {
+		ContextHelper.isPermit("QKJ_STORES_FINANCE_ITEM");
+		map.putAll(ContextHelper.getDefaultRequestMap4Page());
+	
+		if(sotresorder!=null){
+			if(!sotresorder.getTime_begin().equals("")){
+		map.put("time_begin", sotresorder.getTime_begin());
+			}
+			if(!sotresorder.getTime_end().equals("")){
+				SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");//小写的mm表示的是分钟  
+				java.util.Date date=sdf.parse(sotresorder.getTime_end());  
+				     Calendar   calendar   =   new   GregorianCalendar(); 
+				     calendar.setTime(date); 
+				     calendar.add(calendar.DATE,1);//把日期往后增加一天.整数往后推,负数往前移动 
+				     date=calendar.getTime();   //这个时间就是日期往后推一天的结果 
+				     System.out.println(date);
+		map.put("time_end", date);
+			}
+			if(sotresorder.getId()!=0){
+				map.put("id", sotresorder.getId());
+			}
+		}
+		map.put("is_library", "1");
+		this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
+		this.setStoresorderlist(dao.listOrder(map));
+		this.setRecCount(dao.getResultCount());
+		return SUCCESS;
+	}
+	//添加酒票
+	public String addTicket(){
+		ContextHelper.isPermit("QKJ_STORES_ADD_TICKET");
+		
+		return SUCCESS;
+	}
+	
+	public String theLibrary() throws Exception {
+		ContextHelper.isPermit("QKJ_STORES_ORDER_OUT");
+		UserLoginInfo ulf = new UserLoginInfo();
+		ActionContext context = ActionContext.getContext();  
+		HttpServletRequest request = (HttpServletRequest) context.get(ServletActionContext.HTTP_REQUEST);  
+		HttpServletResponse response = (HttpServletResponse) context.get(ServletActionContext.HTTP_RESPONSE);  
+		ulf=(UserLoginInfo) request.getSession().getAttribute(Parameters.UserLoginInfo_Session_Str);
+		ProductDAO pd = new ProductDAO();
+		LadingItemDAO idao = new LadingItemDAO();
+		Product pdi = new Product();
+		List<Product> produs = new ArrayList<>();
+		if(cb!=null){
+	        for (int i = 0; i < cb.length; i++) {
+	        	map.put("id", cb[i]);
+	        	map.put("is_library", "0");
+	    		List<Product> pros = new ArrayList<>();
+	    		if(dao.findOrder(map).size()==0){
+	    			continue;
+	    		}else {
+	    			sotresorder=(StoresOrder) dao.findOrder(map).get(0);
+	    		}
+	    		this.setStoresorderitem(dao.listOrderItem(map));
+	    		for (StoresOrderItem setStoresorderitem :storesorderitem) {
+	    			map.clear();
+		        	map.put("uuid", setStoresorderitem.getProduct_id());
+		        	pros = pd.list(map);
+				if (pros.size() > 0) {
+					pdi = pros.get(0);
+					pdi.setNum(setStoresorderitem.getOrder_num());
+					pdi.setDprice(setStoresorderitem.getProduct_price());
+					pdi.setDtotle(setStoresorderitem.getOrder_total_price());
+					produs.add(pdi);
+				}
+	    		}
+				map.clear();
+			//会员信息
+		Member me=new Member();
+		if(sotresorder.getMember_id()==""||sotresorder.getMember_id()==null){
+			me.setUuid("q000500");
+			me.setManager_name("门店销售散客订单订单");
+			me.setMobile("门店销售散客订单订单");
+			me.setAddress("门店销售散客订单订单");
+		}else{
+		me.setUuid(sotresorder.getMember_id()+"");
+		me.setManager_name(sotresorder.getMember_name());
+		me.setMobile(sotresorder.getMember_mobile());
+		me.setAddress("门店销售订单");
+		}
+		OutStockDAO isa = new OutStockDAO();
+		Integer goid=getWare(sotresorder.getLogin_dept());
+		isa.addStock(sotresorder.getId(), goid, null, 0, 5, produs,me,true,ContextHelper.getUserLoginDept(),ContextHelper.getUserLoginDept());//生成销售用酒出库
+		
+	        }
+		if(cb!=null){
+        for (int i = 0; i < cb.length; i++) {
+        	map.put("id", cb[i]);
+        	map.put("is_library", "0");
+			dao.saveIs_library(map);
+			map.clear();
+		}
+ }
+	}
+		return SUCCESS;
+	}
+	public String OrderTicket() throws Exception {
+		ContextHelper.isPermit("QKJ_STORES_TICKET_ORDER");
+		storesTicketList=dao.listTicket(map);
+		UserLoginInfo ulf = new UserLoginInfo();
+		ActionContext context = ActionContext.getContext();  
+		HttpServletRequest request = (HttpServletRequest) context.get(ServletActionContext.HTTP_REQUEST);  
+		HttpServletResponse response = (HttpServletResponse) context.get(ServletActionContext.HTTP_RESPONSE);  
+		ulf=(UserLoginInfo) request.getSession().getAttribute(Parameters.UserLoginInfo_Session_Str);
+		map.put("userid", ulf.getUuid());
+		map.put("is_liqueur_ticket", "1");
+		storesorderlist=dao.listWeek(map);
+		return SUCCESS;
+	}
+	
+	
+	
+	public String insertTicket() throws Exception {
+		
+		ContextHelper.isPermit("QKJ_STORES_ADD_TICKET");
+		map.put("puuid", storesTicket.getProduct_id());
+		Product p=(Product) dao.list(map).get(0);
+		storesTicket.setProduct_code(p.getBar_code_box());
+		
+		UserLoginInfo ulf = new UserLoginInfo();
+		ActionContext context = ActionContext.getContext();  
+		HttpServletRequest request = (HttpServletRequest) context.get(ServletActionContext.HTTP_REQUEST);  
+		HttpServletResponse response = (HttpServletResponse) context.get(ServletActionContext.HTTP_RESPONSE);  
+		ulf=(UserLoginInfo) request.getSession().getAttribute(Parameters.UserLoginInfo_Session_Str);
+		storesTicket.setUser_id(ulf.getUuid());
+		storesTicket.setUser_name(ulf.getUser_name());
+		storesTicket.setLogin_dept(ContextHelper.getUserLoginDept());
+		storesTicket.setLogin_name(ContextHelper.getUserLoginDeptName());
+		dao.addStoresTicket(storesTicket);
+		return SUCCESS;
+	}
+	
+	
+	
+	
+	
+	
+	//获得发货部门所在总仓库
+	public Integer getWare(String dept){
+		Integer ware=null;
+		DepartmentDAO d=new DepartmentDAO();
+		Department dm=new Department();
+		List<Department> was=new ArrayList<>();
+		List<String> a=new ArrayList<>();
+		map.clear();
+		map.put("type", 1);
+		was=d.list(map);
+		String part=null;
+		String str = (String) CacheFactory.getCacheInstance().get(SysDBCacheLogic.CACHE_DEPT_PREFIX_PARENT +dept);//
+		String[] s = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
+		System.out.println(str);
+		if(was.size()>0){
+			for(int i=0;i<was.size();i++){
+				dm=was.get(i);
+				Boolean iskip = ToolsUtil.isIn(dm.getDept_code(), s);// 判断在不在数组中
+				if(dm.getDept_code().equals(dept)){
+					part=dept;
+					break;
+				}else if(iskip==true){
+					part=dm.getDept_code();
+					break;
+				}
+				/*else if (iskip) {
+					a.add(dm.getDept_code());
+				}*/
+			}
+			
+			/*if(dm.getDept_code().equals(dept)){
+				
+			}else if(a.size()>0){
+				for(int i=0;i<a.size();i++){
+					String l=a.get(i+1);
+					if(a.get(i).length()>l.length()){
+						
+					}else{
+						
+					}
+				}
+			}*/
+			
+			if(part!=null){
+				Ware w=new Ware();
+				List<Ware> ws=new ArrayList<>();
+				WareDAO wd=new WareDAO();
+				map.clear();
+				map.put("ware_instcode", part);
+				ws=wd.list(map);
+				if(ws.size()>0){w=ws.get(0);ware=w.getUuid();}
+			}
+		}
+		return ware;
+	}
+	
+	public String ticket_list(){
+		UserLoginInfo ulf = new UserLoginInfo();
+		ActionContext context = ActionContext.getContext();  
+		HttpServletRequest request = (HttpServletRequest) context.get(ServletActionContext.HTTP_REQUEST);  
+		HttpServletResponse response = (HttpServletResponse) context.get(ServletActionContext.HTTP_RESPONSE);  
+		ulf=(UserLoginInfo) request.getSession().getAttribute(Parameters.UserLoginInfo_Session_Str);
+		map.clear();
+		map.putAll(ContextHelper.getDefaultRequestMap4Page());
+		this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
+		ContextHelper.setSearchDeptPermit4Search("QKJ_STORES_TICKET",map, "apply_depts", "apply_user");
+		if(storesTicket!=null){
+			if(storesTicket.getId()!=0){
+		    map.put("id", storesTicket.getId());
+			}
+			if(!storesTicket.getTicket_name().equals("")){
+			    map.put("ticket_name", storesTicket.getTicket_name());
+				}
+			if(!storesTicket.getStart_time().equals("")){
+			    map.put("start_time", storesTicket.getStart_time());
+				}
+			if(!storesTicket.getEnd_time().equals("")){
+			    map.put("end_time", storesTicket.getEnd_time());
+				}
+		}
+		
+		this.setStoresTicketList(dao.listticket(map));
+		this.setRecCount(dao.getResultCount());
+		
+		return SUCCESS;
+	}
+	
+	public String ticket_del(){
+		map.put("id", storesTicket.getId());
+		dao.delTicket(map);
+		return SUCCESS;
+	}
 	/** 
 	 * * 两个Double数相加 * 
 	 *  
@@ -431,5 +822,5 @@ public class StoresAction  extends ActionSupport{
 		return new Double(b2.divide(b1,DEF_DIV_SCALE, BigDecimal.ROUND_HALF_UP)  
 				.doubleValue());  
 	}  
-	
+
 }  
