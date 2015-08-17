@@ -77,7 +77,15 @@ public class StoresAction  extends ActionSupport{
 	private Double totalPirce;
 	private Object cb[];
 	private String tick_code;
+	private List<StoresTicket> storesTickets;
 
+	public List<StoresTicket> getStoresTickets() {
+		return storesTickets;
+	}
+
+	public void setStoresTickets(List<StoresTicket> storesTickets) {
+		this.storesTickets = storesTickets;
+	}
 
 	public String getTick_code() {
 		return tick_code;
@@ -409,7 +417,7 @@ public class StoresAction  extends ActionSupport{
 			map.put("is_liqueur_ticket", "1");
 			ContextHelper.setSearchDeptPermit4Search("QKJ_STORES_FIND_TICKET_ORDER",map, "apply_depts", "apply_user");
 			
-			ContextHelper.setSearchDeptPermit4Search("QKJ_STORES_FIND_ORDER",map, "apply_depts", "apply_user");
+/*			ContextHelper.setSearchDeptPermit4Search("QKJ_STORES_FIND_ORDER",map, "apply_depts", "apply_user");*/
 			if(sotresorder!=null){
 				if(!sotresorder.getTime_begin().equals("")){
 			map.put("time_begin", sotresorder.getTime_begin());
@@ -650,6 +658,16 @@ public class StoresAction  extends ActionSupport{
 		map.put("puuid", storesTicket.getProduct_id());
 		Product p=(Product) dao.list(map).get(0);
 		storesTicket.setProduct_code(p.getBar_code_box());
+		
+		UserLoginInfo ulf = new UserLoginInfo();
+		ActionContext context = ActionContext.getContext();  
+		HttpServletRequest request = (HttpServletRequest) context.get(ServletActionContext.HTTP_REQUEST);  
+		HttpServletResponse response = (HttpServletResponse) context.get(ServletActionContext.HTTP_RESPONSE);  
+		ulf=(UserLoginInfo) request.getSession().getAttribute(Parameters.UserLoginInfo_Session_Str);
+		storesTicket.setUser_id(ulf.getUuid());
+		storesTicket.setUser_name(ulf.getUser_name());
+		storesTicket.setLogin_dept(ContextHelper.getUserLoginDept());
+		storesTicket.setLogin_name(ContextHelper.getUserLoginDeptName());
 		dao.addStoresTicket(storesTicket);
 		return SUCCESS;
 	}
@@ -715,7 +733,42 @@ public class StoresAction  extends ActionSupport{
 		return ware;
 	}
 	
+	public String ticket_list(){
+		UserLoginInfo ulf = new UserLoginInfo();
+		ActionContext context = ActionContext.getContext();  
+		HttpServletRequest request = (HttpServletRequest) context.get(ServletActionContext.HTTP_REQUEST);  
+		HttpServletResponse response = (HttpServletResponse) context.get(ServletActionContext.HTTP_RESPONSE);  
+		ulf=(UserLoginInfo) request.getSession().getAttribute(Parameters.UserLoginInfo_Session_Str);
+		map.clear();
+		map.putAll(ContextHelper.getDefaultRequestMap4Page());
+		this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
+		ContextHelper.setSearchDeptPermit4Search("QKJ_STORES_TICKET",map, "apply_depts", "apply_user");
+		if(storesTicket!=null){
+			if(storesTicket.getId()!=0){
+		    map.put("id", storesTicket.getId());
+			}
+			if(!storesTicket.getTicket_name().equals("")){
+			    map.put("ticket_name", storesTicket.getTicket_name());
+				}
+			if(!storesTicket.getStart_time().equals("")){
+			    map.put("start_time", storesTicket.getStart_time());
+				}
+			if(!storesTicket.getEnd_time().equals("")){
+			    map.put("end_time", storesTicket.getEnd_time());
+				}
+		}
+		
+		this.setStoresTicketList(dao.listticket(map));
+		this.setRecCount(dao.getResultCount());
+		
+		return SUCCESS;
+	}
 	
+	public String ticket_del(){
+		map.put("id", storesTicket.getId());
+		dao.delTicket(map);
+		return SUCCESS;
+	}
 	/** 
 	 * * 两个Double数相加 * 
 	 *  

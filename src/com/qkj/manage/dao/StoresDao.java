@@ -136,8 +136,16 @@ public class StoresDao extends AbstractDAO {
 		List list = super.list("qkjStores_get_order", map);
 		return list;
 	}
+	public List listticket(Map<String, Object> map) {	
 
-	
+		setCountMapid("qkjStores_Ticket_listCount");
+		return super.list("qkjStores_Ticket_list", map);
+	}
+	public Object delTicket(Map<String, Object> map){
+		super.delete("qkjStores_ticket_del", map);
+		return null;
+		
+	}
 	public int getResultCount() {
 		return super.getResultCount();
 	}

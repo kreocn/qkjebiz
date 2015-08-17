@@ -68,11 +68,16 @@
 					<param name="actionName">stores_order_find_ticketOrder</param>
 			</result>
 		</action>
-		<action name="insert_sotres_order_ticked" class="com.qkj.manage.action.StoresAction" method="insertOrder">
-			<result type="redirectAction">
-				<param name="actionName">stores_ticket</param>
+		<action name="ticket_list" class="com.qkj.manage.action.StoresAction" method="ticket_list">
+		  <result>/WEB-INF/jsp/qkjmanage/StoresTicketList.jsp</result>
+		</action>
+			<action name="ticket_del" class="com.qkj.manage.action.StoresAction" method="ticket_del">
+				<result type="redirectAction">
+					<param name="actionName">ticket_list</param>
 			</result>
 		</action>
+		
+		
 		<!-- Customer End -->
 	</package>
 </struts>

@@ -168,8 +168,8 @@
 
 <insert id="qkjStores_order_add_Ticket" parameterClass="StoresTicket">  
     <![CDATA[
-        insert into qkj_t_ticket(product_id,ticket_name,start_time,end_time,product_code,num) values 
-        (#product_id#,#ticket_name#,#start_time#,#end_time#,#product_code#,#num#)  
+        insert into qkj_t_ticket(product_id,ticket_name,start_time,end_time,product_code,num,user_id,user_name,login_name,login_dept) values 
+        (#product_id#,#ticket_name#,#start_time#,#end_time#,#product_code#,#num#,#user_id#,#user_name#,#login_dept#,#login_name#)  
     ]]>
 	</insert>
 	
@@ -178,5 +178,71 @@
 			SELECT * from qkj_t_ticket where convert(varchar(100), getdate(), 23)>=start_time and convert(varchar(100), getdate(), 23)<=end_time
 		]]>
 	</select>
+	
+	
+	
+	
+	<select id="qkjStores_Ticket_list" parameterClass="java.util.Map" resultClass="StoresTicket">
+		select * from qkj_t_ticket t
+		<dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="id"><![CDATA[ id=#id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="ticket_name"><![CDATA[ ticket_name=#ticket_name# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="start_time"><![CDATA[ start_time=#start_time# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="end_time"><![CDATA[ end_time=#end_time# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_depts" open="(" close=")">
+			<![CDATA[ t.login_dept In ]]>
+			<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
+			<isNotEmpty prepend="OR" property="apply_perdepts">
+				<![CDATA[ t.login_dept In ]]>
+				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ t.user_id=#apply_userDouble# ]]></isNotEmpty>
+			</isNotEmpty>
+		</isNotEmpty>
+		
+		<isEmpty  property="apply_depts">
+			<isNotEmpty prepend="AND" property="apply_perdepts">
+				<![CDATA[ t.login_dept In ]]>
+				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ t.user_id=#apply_userDouble# ]]></isNotEmpty>
+			</isNotEmpty>
+	
+		</isEmpty>
+			
+		</dynamic>
+	</select>
+	
+	
+	
+	<select id="qkjStores_Ticket_listCount" parameterClass="java.util.Map" resultClass="int">
+		select count(*) from qkj_t_ticket t
+		<dynamic prepend="WHERE">
+		
+			<isNotEmpty prepend="AND" property="apply_depts" open="(" close=")">
+			<![CDATA[ t.login_dept In ]]>
+			<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
+			<isNotEmpty prepend="OR" property="apply_perdepts">
+				<![CDATA[ t.login_dept In ]]>
+				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ t.user_id=#apply_userDouble# ]]></isNotEmpty>
+			</isNotEmpty>
+		</isNotEmpty>
+		
+		<isEmpty  property="apply_depts">
+			<isNotEmpty prepend="AND" property="apply_perdepts">
+				<![CDATA[ t.login_dept In ]]>
+				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ t.user_id=#apply_userDouble# ]]></isNotEmpty>
+			</isNotEmpty>
+		
+		</isEmpty>
+			
+		</dynamic>
+	</select>
+		<delete id="qkjStores_ticket_del" parameterClass="java.util.Map">
+		DELETE FROM qkj_t_ticket
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="id"><![CDATA[ id=#id# ]]></isNotEmpty>
+		</dynamic>
+	</delete>
 	
 </sqlMap>

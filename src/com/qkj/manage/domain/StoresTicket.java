@@ -9,6 +9,52 @@ private String product_code;
 private String start_time;
 private String end_time;
 private Integer num;
+private String user_name;
+private String login_dept;
+private String login_name;
+private String user_id;
+
+//非数据库字段
+
+private String time_begin;
+private String time_end;
+public String getTime_begin() {
+	return time_begin;
+}
+public void setTime_begin(String time_begin) {
+	this.time_begin = time_begin;
+}
+public String getTime_end() {
+	return time_end;
+}
+public void setTime_end(String time_end) {
+	this.time_end = time_end;
+}
+public String getUser_id() {
+	return user_id;
+}
+public void setUser_id(String user_id) {
+	this.user_id = user_id;
+}
+public String getUser_name() {
+	return user_name;
+}
+public void setUser_name(String user_name) {
+	this.user_name = user_name;
+}
+public String getLogin_dept() {
+	return login_dept;
+}
+public void setLogin_dept(String login_dept) {
+	this.login_dept = login_dept;
+}
+public String getLogin_name() {
+	return login_name;
+}
+public void setLogin_name(String login_name) {
+	this.login_name = login_name;
+}
+
 public Integer getNum() {
 	return num;
 }
