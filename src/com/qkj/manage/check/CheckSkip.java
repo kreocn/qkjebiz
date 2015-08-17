@@ -46,13 +46,10 @@ public class CheckSkip {
 		skipSteps.add(new SkipStep("4", 1, 2, 4,"5",false));// 结案 14总监 17跳过销管副总
 		skipSteps.add(new SkipStep("4", 1, 12,4,"15",false));// 结案 14总监 17跳过销副总
 		
-		skipSteps.add(new SkipStep("40102", 1, 1, 3,false)); // 申请 2大区 3跳过大区
-		skipSteps.add(new SkipStep("40102", 1, 11, 13,false)); // 申请 2大区 3跳过大区
+		skipSteps.add(new SkipStep("40102", 1, 1, 0,"3",false)); // 申请 2大区 3跳过大区
+		skipSteps.add(new SkipStep("40102", 1, 11, 0,"13",false)); // 申请 2大区 3跳过大区
 		
-		//所有部门跳过办事处，西北除外
 		
-		skipSteps.add(new SkipStep("220", 1, 1, 0,true)); // 
-		skipSteps.add(new SkipStep("220", 1, 11, 10,true)); //
 		
 	}
 
