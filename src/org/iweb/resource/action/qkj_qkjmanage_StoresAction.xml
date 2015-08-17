@@ -22,6 +22,10 @@
 		<action name="stores_order_update_details" class="com.qkj.manage.action.StoresAction" method="updateDetails">
 	<result>/WEB-INF/jsp/qkjmanage/StoresUpdateOrderItemList.jsp</result>
 		</action>
+			<action name="stores_order_update_details_view" class="com.qkj.manage.action.StoresAction" method="updateDetails">
+	<result>/WEB-INF/jsp/qkjmanage/StoresUpdateOrderItemView.jsp</result>
+		</action>
+		
 		<action name="stores_order_item_delete" class="com.qkj.manage.action.StoresAction" method="itemDelete">
 	   <result>/WEB-INF/jsp/qkjmanage/StoresUpdateOrderItemList.jsp</result>
 		</action>
@@ -33,6 +37,47 @@
 		
 		<action name="findMember" class="org.iweb.sysvip.action.MemberAction" method="get_Member">
 		</action>
+		
+				<action name="stores_order_finance_details" class="com.qkj.manage.action.StoresAction" method="financeDetails">
+	            <result>/WEB-INF/jsp/qkjmanage/StoresFinanceItemList.jsp</result>
+		</action>
+		
+				<action name="sotres_the_library" class="com.qkj.manage.action.StoresAction" method="theLibrary">
+					<result type="redirectAction">
+					<param name="actionName">stores_order_findOrder</param>
+			</result>
+		</action>
+		
+		
+				<action name="stores_add_ticket" class="com.qkj.manage.action.StoresAction" method="addTicket">
+					      <result>/WEB-INF/jsp/qkjmanage/StoresAddTicket.jsp</result>
+		</action>
+		
+				<action name="insert_sotres_ticket" class="com.qkj.manage.action.StoresAction" method="insertTicket">
+					      <result>/WEB-INF/jsp/qkjmanage/StoresAddTicket.jsp</result>
+		</action>
+		
+			<action name="stores_ticket" class="com.qkj.manage.action.StoresAction" method="OrderTicket">
+					      <result>/WEB-INF/jsp/qkjmanage/StoresOrderTicket.jsp</result>
+		</action>
+			<action name="stores_order_find_ticketOrder" class="com.qkj.manage.action.StoresAction" method="findTicketOrder">
+					      <result>/WEB-INF/jsp/qkjmanage/StoresUpdateOrderTicketList.jsp</result>
+		</action>
+				<action name="sotres_the_library_ticket" class="com.qkj.manage.action.StoresAction" method="theLibrary">
+					<result type="redirectAction">
+					<param name="actionName">stores_order_find_ticketOrder</param>
+			</result>
+		</action>
+		<action name="ticket_list" class="com.qkj.manage.action.StoresAction" method="ticket_list">
+		  <result>/WEB-INF/jsp/qkjmanage/StoresTicketList.jsp</result>
+		</action>
+			<action name="ticket_del" class="com.qkj.manage.action.StoresAction" method="ticket_del">
+				<result type="redirectAction">
+					<param name="actionName">ticket_list</param>
+			</result>
+		</action>
+		
+		
 		<!-- Customer End -->
 	</package>
 </struts>

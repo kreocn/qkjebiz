@@ -489,6 +489,16 @@ public class OutStockDAO extends AbstractDAO {
 				closeDao.mdyGoFlag(closeO);
 			}
 			
+			
+			if (outStock.getGoreason() == 5) {//门店订单
+				closeO.setUuid(outStock.getGoldUuid());
+				if(state==1){//确认出库
+					closeO.setGoflag(2);
+				}else{//取消出库
+					closeO.setGoflag(4);
+				}
+				closeDao.mdyGoFlag(closeO);
+			}
 		}else{//全部确认
 			if(outStock.getGoreason()==1){//非手动填加
 				if(outStock.getSplit()!=null&&outStock.getSplit()==1){

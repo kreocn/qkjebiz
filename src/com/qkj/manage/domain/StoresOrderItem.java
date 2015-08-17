@@ -13,6 +13,7 @@ private String product_id;
 private String spec;
 private String brand;
 private String brand_name;
+
 public String getBrand_name() {
 	return brand_name;
 }

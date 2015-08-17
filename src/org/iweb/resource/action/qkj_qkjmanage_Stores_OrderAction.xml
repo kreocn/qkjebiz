@@ -10,5 +10,11 @@
 				<result>/WEB-INF/jsp/qkjmanage/StoresOrderList.jsp</result>
 		</action>
 		<!-- Customer End -->
+				<action name="update_story_order_itme" class="com.qkj.manage.action.StoresOrderAction" method="update">
+			<result type="redirectAction">
+				<param name="actionName">stores_order_update_details</param>
+				<param name="id">${storyit.id}</param>
+			</result>
+		</action>
 	</package>
 </struts>
