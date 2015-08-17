@@ -93,12 +93,21 @@
 	            	<div class="label_ltit" style="width:150px;">文件系统绑定目录:</div>
 		            <div class="label_rwben">${user.filesystem_root}</div>
 				</div>
+				
+				<div class="label_hang">
+	            	<div class="label_ltit" style="width:150px;">签字:</div>
+		            <div class="label_rwben">${user.filesystem_root}</div>
+				</div>
+				
 				<div class="label_hline">
 					<div class="label_hang">
 		            	<div class="label_ltit">相关操作:</div>
 						<div class="label_rwbenx">
 							<s:submit id="save" name="save" value="保存" cssClass="input-blue"/>
 							<input type="button" value="修改密码" onclick="changePWD();" />
+							<s:hidden id="marketimgid"></s:hidden>
+							
+							
 							<span id="message"><s:property value="message" /></span>
 						</div>
 					</div>
@@ -173,5 +182,20 @@ function view(obj) {
 	}
 	$('message').innerHTML = str;
 }
+
+function refurbish(){
+	window.location.href="/sys/iuser_load";
+}
+
+$(function(){
+	$.fn.xhuploadinit("IUser",refurbish);
+	$("#marketimgid").xhupload();
+});
+
+$(document).ready(function(){
+	$("#filebtn").removeClass("filearea"); //添加样式marketimgid_filebutton
+	$("#marketimgid_filebutton").val("选择签字图片");
+});
+
 </script>
 </html>

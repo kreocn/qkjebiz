@@ -152,7 +152,7 @@ function refurbish(){
 }
 
 $(function(){
-	$.fn.xhuploadinit("Travel",refurbish);
+	$.fn.xhupload("Travel",refurbish);
 	$("#marketimgid").xhupload();
 });
 
