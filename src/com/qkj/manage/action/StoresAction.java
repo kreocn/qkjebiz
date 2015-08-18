@@ -67,6 +67,9 @@ public class StoresAction  extends ActionSupport{
 	private int num;
 	private String viewFlag;
 	private Member member;
+	private String message;
+
+
 	private List<StoresOrder> storesorderlist;
 	private Map<String, Object> map = new HashMap<String, Object>();
 	private static Log log = LogFactory.getLog(StoresAction.class);
@@ -78,7 +81,13 @@ public class StoresAction  extends ActionSupport{
 	private Object cb[];
 	private String tick_code;
 	private List<StoresTicket> storesTickets;
+	public String getMessage() {
+		return message;
+	}
 
+	public void setMessage(String message) {
+		this.message = message;
+	}
 	public List<StoresTicket> getStoresTickets() {
 		return storesTickets;
 	}
@@ -669,6 +678,7 @@ public class StoresAction  extends ActionSupport{
 		storesTicket.setLogin_dept(ContextHelper.getUserLoginDept());
 		storesTicket.setLogin_name(ContextHelper.getUserLoginDeptName());
 		dao.addStoresTicket(storesTicket);
+		this.setMessage("添加成功");
 		return SUCCESS;
 	}
 	

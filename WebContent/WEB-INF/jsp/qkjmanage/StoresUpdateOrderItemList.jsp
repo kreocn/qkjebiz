@@ -201,7 +201,7 @@
 	}
 	
 	var ticket = function(obj){
-		
+
 		if (getRadio("storyit.is_ticket") == 1) {
 			
 			document.getElementById("invoice").style.display = "";
@@ -220,7 +220,9 @@
 	}
 	$(function(){
 		var is_ticket=${sotresorder.is_ticket};
+
 		if(is_ticket==1){
+	
 			$("#invoice").css("display","")
 		}
 		var is_arrears=${sotresorder.is_arrears};
