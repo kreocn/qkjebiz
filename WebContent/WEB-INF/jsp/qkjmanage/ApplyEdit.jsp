@@ -40,9 +40,6 @@
 					</s:else> <s:if test="apply.status>=30">
 						<a class="input-gray" href="<s:url namespace="/qkjmanage" action="apply_print"><s:param name="apply.uuid" value="apply.uuid"></s:param></s:url>">转到打印页面</a>
 					</s:if>
-					<c:if test="${it:checkPermit('QKJ_QKJMANAGE_APPLY_OUTSTOCK',null)==true && apply.goflag==0}">
-						<a href="<s:url namespace="/qkjmanage" action="apply_outStock"><s:param name="apply.uuid" value="apply.uuid"></s:param></s:url>">成生出库单</a>
-					</c:if> 
 				</span>
 			</div>
 			<s:form id="editForm" name="editForm" cssClass="validForm" action="apply_load" namespace="/qkjmanage" method="post" theme="simple">
@@ -51,30 +48,20 @@
 						<div class="label_main">
 							<div class="label_hang">
 								<div class="label_ltit">申请编号:</div>
-								<div class="label_rwbenx">
-									<span class="label_rwbx">${apply.uuid}<s:hidden name="apply.uuid" />
-										<c:if test="${it:checkPermit('QKJ_QKJMANAGE_APPLY_OUTSTOCK',null)==true}">
-											(<s:if test='0==apply.goflag'>未出库</s:if>
-											<s:if test='1==apply.goflag'>已确认出库</s:if>
-											<s:if test='2==apply.goflag'>已部分出库</s:if>
-											<s:if test='3==apply.goflag'>已取消出库</s:if>
-											<s:if test='4==apply.goflag'>出库单已生成</s:if>)
-											<font color="red">${message }</font>
-										</c:if> 
-									</span>
+								<div class="label_rwben">
+									<span class="label_rwb">${apply.uuid}<s:hidden name="apply.uuid" /></span>
 								</div>
 							</div>
-							
 						</div>
 					</s:if>
-					<s:if test="apply.apply_dept.substring(0,3)=='220'">
-							<div class="label_main">
-								<div class="label_hang">
-						            <div class="label_ltit">类型:</div>
-						            <div class="label_rwben label_rwb"><s:select name="apply.apply_type" cssClass="selectKick" list="#{0:'普通至事由',1:'媒体投放'}" /></div>
-						        </div>
+				<s:if test="apply.apply_dept.substring(0,3)=='220'">
+						<div class="label_main">
+							<div class="label_hang">
+					            <div class="label_ltit">类型:</div>
+					            <div class="label_rwben label_rwb"><s:select name="apply.apply_type" cssClass="selectKick" list="#{0:'普通至事由',1:'媒体投放'}" /></div>
 					        </div>
-						</s:if>
+				        </div>
+					</s:if>
 					<s:else>
 						<div class="label_main">
 							<div class="label_hang">
@@ -212,7 +199,7 @@
 							<div class="label_rwbenx"></div>
 						</div>
 					</div>
-					<!-- </div> -->
+					</div>
 					
 					
 					
@@ -239,7 +226,9 @@
 							</div>
 						</div>
 					</div>
+				
 					</s:if>
+						
 						<s:if test="'mdy' == viewFlag">
 						<s:if test="1 == apply.is_material">
 					<div class="label_main" id="apply_material_text">
@@ -320,10 +309,33 @@
 								</div>
 							</div>
 							<div class="clear"></div>
-							<p class="lb_yjbot">费用总计: ￥${apply.it_price}</p>
+							<p class="lb_yjbot" style="display: none">费用总计: ￥${apply.it_price}</p>
 						</div>
 					</s:if>
 					</s:if>
+					
+							<s:if test="apply.status>=10">
+								<div class="label_main">
+						<div class="label_hang" >
+							<div class="label_ltit"  style="color:#008000;">预计费用总计：</div>
+							<div class="label_rwbenx">
+								<font style="color:#008000;font-weight:800">${apply.total_price}</font>
+							</div>
+						</div>
+					</div>
+					</s:if>
+						<s:else>
+									<div class="label_main">
+						<div class="label_hang">
+							<div class="label_ltit">预计费用总计：</div>
+							<div class="label_rwbenx">
+								<s:textfield id="apply_total_price" name="apply.total_price"  value="%{apply.total_price}" />
+							</div>
+						</div>
+					</div>
+						</s:else>
+					
+					
 					<s:if test="'mdy' == viewFlag">
 						<div class="label_main">
 							<div class="label_hang">
@@ -441,7 +453,7 @@
 											<s:submit id="apply_check30" name="apply_check30" cssClass="input-green" value="副总-审核通过" action="apply_check30" onclick="return isOp('确定执行此操作?');" />
 											<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
-										<c:if test="${apply.status>=20 && apply.status<50  && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK40',apply.apply_dept)==true}">
+										<c:if test="${apply.status>=20 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK40',apply.apply_dept)==true}">
 											<s:submit id="apply_check40" name="apply_check40" cssClass="input-green" value="总经理-审核通过" action="apply_check40" onclick="return isOp('确定执行此操作?');" />
 											<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
@@ -452,7 +464,7 @@
 											<s:submit id="apply_check30" name="apply_check30" cssClass="input-green" value="副总-审核通过" action="apply_check30" onclick="return isOp('确定执行此操作?');" />
 											<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
-										<c:if test="${apply.status>=10 && apply.status<50  && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK40',apply.apply_dept)==true}">
+										<c:if test="${apply.status>=10 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK40',apply.apply_dept)==true}">
 											<s:submit id="apply_check40" name="apply_check40" cssClass="input-green" value="总经理-审核通过" action="apply_check40" onclick="return isOp('确定执行此操作?');" />
 											<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
@@ -477,7 +489,7 @@
 											<s:submit id="apply_check30" name="apply_check30" cssClass="input-green" value="副总-审核通过" action="apply_check30" onclick="return isOp('确定执行此操作?');" />
 											<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
-										<c:if test="${apply.status>=20 && apply.status<50  && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK40',apply.apply_dept)==true}">
+										<c:if test="${apply.status>=20 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK40',apply.apply_dept)==true}">
 											<s:submit id="apply_check40" name="apply_check40" cssClass="input-green" value="总经理-审核通过" action="apply_check40" onclick="return isOp('确定执行此操作?');" />
 											<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
@@ -565,7 +577,7 @@
 											<s:submit id="apply_check30" name="apply_check30" cssClass="input-green" value="副总-审核通过" action="apply_check30" onclick="return isOp('确定执行此操作?');" />
 											<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
-										<c:if test="${apply.status>=30 && apply.status<50  && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK40',apply.apply_dept)==true}">
+										<c:if test="${apply.status>=30 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK40',apply.apply_dept)==true}">
 											<s:submit id="apply_check40" name="apply_check40" cssClass="input-green" value="总经理-审核通过" action="apply_check40" onclick="return isOp('确定执行此操作?');" />
 											<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>

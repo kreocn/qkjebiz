@@ -41,6 +41,7 @@
 				<param name="actionName">apply_load</param>
 				<param name="apply.uuid">${apply.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="is_total_price">1</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>

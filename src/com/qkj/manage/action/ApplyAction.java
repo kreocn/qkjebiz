@@ -54,6 +54,9 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 	private String isApprover;
 	private String message;
 	private String viewFlag;
+
+
+	private String is_total_price="0";
 	private int recCount;
 	private int pageSize;
 	private int currPage;
@@ -74,7 +77,13 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 	private List<ActivePosm> activePosms;
 	private List<ActiveMemcost> activeMemcosts;
 	private List<ApplyPosm> applyPosms;
+	public String getIs_total_price() {
+		return is_total_price;
+	}
 
+	public void setIs_total_price(String is_total_price) {
+		this.is_total_price = is_total_price;
+	}
 	public List<ApplyPosm> getApplyPosms() {
 		return applyPosms;
 	}
@@ -340,6 +349,23 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 				this.setOtherApplyProducts(independence(map, "海拔", 2));
 				ApplyPosmDAO apdao = new ApplyPosmDAO();
 				this.setApplyPosms(apdao.list(map));
+				if(!is_total_price.equals("1")){
+				for (int i = 0; i < applyproduct.size(); i++) {
+					if(i==0){
+						this.apply.setTotal_price(0);
+					}
+					double total_price=this.apply.getTotal_price()+applyproduct.get(i).getTotal_price();
+					this.apply.setTotal_price(total_price);
+				}
+				for (int i = 0; i < applyPosms.size(); i++) {
+					double total_price=this.apply.getTotal_price()+applyPosms.get(i).getTotal_price();
+					this.apply.setTotal_price(total_price);
+				}
+				map.clear();
+				map.put("uuid", apply.getUuid());
+				map.put("total_price", this.apply.getTotal_price());
+				dao.saveTotalPrice(map);
+				}
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/apply_list?viewFlag=relist'>至事由列表</a>&nbsp;&gt;&nbsp;至事由详情";
 			} else {
 				this.setApply(null);
