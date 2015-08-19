@@ -51,6 +51,10 @@ public class Step {
 		mdyActiveSMDStatus(10,userid);
 	}
 	
+	public void step0(String userid){//办事处
+		mdyActiveSDStatus(20,userid);
+	}
+	
 	public void step2(String userid){//经理大区
 		mdyActiveSDStatus(30,userid);
 	}
@@ -99,6 +103,10 @@ public class Step {
 		mdyCloseActiveSDStatus(10,userid);
 		// 同时销管部的流程变成已签收
 		mdyCloseActiveSMDStatus(10,userid);
+	}
+	
+	public void step10(String userid){//结案办事处审
+		mdyCloseActiveSDStatus(20,userid);
 	}
 	
 	public void step12(String userid){//结案大区审

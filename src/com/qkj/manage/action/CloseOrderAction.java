@@ -14,6 +14,7 @@ import org.iweb.sys.ActionAttr;
 import org.iweb.sys.ContextHelper;
 import org.iweb.sys.Parameters;
 import org.iweb.sys.ToolsUtil;
+import org.iweb.sysvip.domain.Member;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.qkj.manage.check.CheckSkip;
@@ -22,7 +23,9 @@ import com.qkj.manage.dao.ApproveDAO;
 import com.qkj.manage.dao.CloseOrderDAO;
 import com.qkj.manage.dao.CloseOrderPosmDAO;
 import com.qkj.manage.dao.CloseOrderProDAO;
+import com.qkj.manage.dao.LadingItemDAO;
 import com.qkj.manage.dao.ProcessDAO;
+import com.qkj.manage.dao.ProductDAO;
 import com.qkj.manage.dao.SalPromotDAO;
 import com.qkj.manage.dao.SalPromotPower;
 import com.qkj.manage.dao.TravelDAO;
@@ -31,8 +34,11 @@ import com.qkj.manage.domain.Approve;
 import com.qkj.manage.domain.CloseOrder;
 import com.qkj.manage.domain.CloseOrderPosm;
 import com.qkj.manage.domain.CloseOrderPro;
+import com.qkj.manage.domain.LadingItem;
+import com.qkj.manage.domain.Product;
 import com.qkj.manage.domain.SalPromot;
 import com.qkj.manage.domain.Travel;
+import com.qkj.ware.dao.OutStockDAO;
 
 public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	private static final long serialVersionUID = 1L;
@@ -524,6 +530,24 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	}
 
 	/**
+	 * 办事处通过
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String check10() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_CHECK10");
+		try {
+			// mdyCloseOrderSDStatus(30,userid);
+			cocs.checkSkip(closeOrder, "check10");
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!check1 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!check1 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+	
+	/**
 	 * 大区经理通过
 	 * 
 	 * @return
@@ -989,6 +1013,68 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
+	
+	public String outStock() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_OUTSTOCK");
+		try {
+			try {
+				dao.startTransaction();
+				//生成出库单
+				ProductDAO pd = new ProductDAO();
+				CloseOrderProDAO idao=new CloseOrderProDAO();
+				this.setCloseOrder((CloseOrder) dao.get(closeOrder.getUuid()));
+				
+				Product pdi = new Product();
+				List<Product> produs = new ArrayList<>();
+				map.clear();
+				map.put("order_id", closeOrder.getUuid());
+				this.setCloseOrderPros(idao.list(map));
+				
+				if (closeOrderPros != null && closeOrderPros.size() > 0) {
+					for (int i = 0; i < closeOrderPros.size(); i++) {
+						CloseOrderPro ci=new CloseOrderPro();
+						ci = closeOrderPros.get(i);
+						List<Product> pros = new ArrayList<>();
+						map.clear();
+						map.put("uuid", ci.getProduct_id());
+						pros = pd.list(map);
+						if (pros.size() > 0) {
+							pdi = pros.get(0);
+							pdi.setNum(ci.getProduct_num());
+							pdi.setDprice(ci.getProduct_price());
+							pdi.setDtotle(ci.getTotal_price());
+							produs.add(pdi);
+						}
+					}
+				}
+					//会员信息
+				Member me=new Member();
+				me.setUuid(closeOrder.getMember_id());
+				me.setManager_name(closeOrder.getMember_name());
+				me.setMobile(closeOrder.getMember_phone());
+				me.setAddress(closeOrder.getMember_address());
+				OutStockDAO isa = new OutStockDAO();
+				LadingAction l=new LadingAction();
+				Integer goid=l.getWare(closeOrder.getApply_dept());//出库仓库
+				isa.addStock(closeOrder.getUuid(), goid, null, 0, 4, produs,me,false,null,null);//生成销售用酒出库
+				//修改出库状态（已生成出库单）
+				closeOrder.setGoflag(5);
+				dao.mdyGoFlag(closeOrder);
+				dao.commitTransaction();
+			} catch (Exception e) {
+				log.error(this.getClass().getName() + "!saveLadingStatus10 数据更新失败:", e);
+				throw new Exception(this.getClass().getName() + "!saveLadingStatus10 数据更新失败:", e);
+			}finally {
+				dao.endTransaction();
+			}
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!mdyShipInfo 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!mdyShipInfo 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+	
+	
 
 	/*
 	 * public int check(int p_check) {

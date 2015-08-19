@@ -23,6 +23,7 @@
 				<param name="actionName">outStock_load</param>
 				<param name="outStock.uuid">${outDetail.lading_id}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="detailS">${outDetail.flag}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>

@@ -19,14 +19,13 @@ public class StoresAjax extends Ajax {
 	private List<StoresOrderCustom> sou=new ArrayList<StoresOrderCustom>();
 	private Map<String, Object> map = new HashMap<String, Object>();
 	public Object getResult() {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_STORES_ORDER_UPDATE");
+		ContextHelper.isPermit("QKJ_STORES_ORDER_UPDATE");
 	
 		map.put("productid", parameter.get("productid").toString());
 		map.put("logindept", ContextHelper.getUserLoginDept());
 		map.put("price", parameter.get("price").toString());
 		map.put("barcode", parameter.get("barcode").toString());
 		sou=sod.list(map);
-	
 		if(sou.size()==0){
 			if(!map.get("price").equals("0")){
 			sod.add(map);

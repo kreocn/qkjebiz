@@ -4,15 +4,24 @@ import java.util.*;
 
 public class OutDetail {
 	private Integer uuid;// (int)
-	private String lading_id;// (varchar)
+	private Integer lading_id;// (varchar)
 	private Integer product_id;// (int)
 	private Integer num;// (int)
 	private Double price;// (decimal)
-	private Integer totel;// (int)
+	private Double totel;// (int)
 
 	// 以下为非数据库字段
 	private String product_name;
 	private Integer case_spec;
+	private String flag;
+
+	public String getFlag() {
+		return flag;
+	}
+
+	public void setFlag(String flag) {
+		this.flag = flag;
+	}
 
 	public Integer getUuid() {
 		return uuid;
@@ -22,11 +31,11 @@ public class OutDetail {
 		this.uuid = uuid;
 	}
 
-	public String getLading_id() {
+	public Integer getLading_id() {
 		return lading_id;
 	}
 
-	public void setLading_id(String lading_id) {
+	public void setLading_id(Integer lading_id) {
 		this.lading_id = lading_id;
 	}
 
@@ -54,11 +63,11 @@ public class OutDetail {
 		this.price = price;
 	}
 
-	public Integer getTotel() {
+	public Double getTotel() {
 		return totel;
 	}
 
-	public void setTotel(Integer totel) {
+	public void setTotel(Double totel) {
 		this.totel = totel;
 	}
 

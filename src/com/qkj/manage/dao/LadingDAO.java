@@ -66,6 +66,10 @@ public class LadingDAO extends AbstractDAO {
 	public int mdyLadingOutFlag(Object parameters) {
 		return super.save("qkjmanage_mdyLadingOutFlag", parameters);
 	}
+	
+	public int mdyLadingGoflag(Object parameters) {
+		return super.save("qkjmanage_mdyLadinGoflag", parameters);
+	}
 
 	public int mdyLadingRebatesFlag(Object parameters) {
 		return super.save("qkjmanage_mdyLadingRebatesFlag", parameters);

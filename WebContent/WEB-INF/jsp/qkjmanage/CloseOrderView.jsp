@@ -296,13 +296,31 @@
 							<div style="height: 10px;"></div>
 
 					<div class="label_main">
-						<div class="label_hang">
-							<div class="label_ltit">说明:</div>
-							<div class="label_rwbenx">
-								${member_address }
+							<div class="label_hang">
+								<div class="label_ltit">结案说明:</div>
+								<div class="label_rwbenx"></div>
 							</div>
 						</div>
-					</div>
+						<div class="label_main">
+							<div class="note_area">
+								<s:if test="closeOrder.state==0">
+									<s:textarea name="closeOrder.close_note" title="详细说明" cssClass="xheditorArea validate[maxSize[65535]]" />
+								</s:if>
+								<s:else>
+						${closeOrder.close_note}
+						</s:else>
+								<div class="clear"></div>
+							</div>
+						</div>
+
+						<div class="label_main">
+							<div class="label_hang">
+								<div class="label_ltit">其它说明:</div>
+								<div class="label_rwbenx">
+									<s:textarea id="closeOrder.content" name="closeOrder.content" title="活动说明" cssClass="label_hang_linput inputNote validate[maxSize[65535]]" />
+								</div>
+							</div>
+						</div>
 				
 				<div class="label_main noprint">
 					<div class="label_hang">

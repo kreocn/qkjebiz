@@ -61,7 +61,7 @@
 									test='0==outStock.send'>借出未还</s:if> <s:if
 									test='1==outStock.send'>借出已还</s:if> <s:if
 									test='2==outStock.send'>新单</s:if> <s:if test='3==outStock.send'>待审核</s:if>
-								<s:if test='4==outStock.send'>结案<s:date
+								<s:if test='4==outStock.send'>已确认<s:date
 										name="lading.close_time" format="yyyy-MM-dd HH:mm:ss" />
 								</s:if> <s:if test='5==outStock.send'>已取消订单</s:if> <s:if
 									test='6==outStock.send'>
@@ -80,7 +80,7 @@
 						<div class="label_ltit">出库仓库:</div>
 						<div class="label_rwben2" style="width:auto;">
 							<span class="label_rwb"> <select
-								id="membermanagerid" cssClass="selectKick"
+								id="membermanagerid" Class="selectKick"
 								name="outStock.store_id" title="出库仓库">
 
 									<s:iterator value="wares" status="sta" var="x">
@@ -95,42 +95,18 @@
 						</div>
 					</div>
 					<div class="label_hang">
-						<div class="label_ltit">添加人:</div>
-						<div class="label_rwben">
-							<s:property value="outStock.add_user_name" />
+						<div class="label_ltit">制单人:</div>
+						<div class="label_rwbenx">
+							<s:property value="outStock.add_user_name" />(<s:date name="outStock.add_timer" format="yyyy-MM-dd HH:mm:ss" />)
 						</div>
 					</div>
 
-					<div class="label_hang">
-						<div class="label_ltit">添加时间:</div>
-						<div class="label_rwbenx">
-							<s:date name="outStock.add_timer" format="yyyy-MM-dd HH:mm:ss" />
-						</div>
-					</div>
-					<div class="label_hang">
-						<div class="label_ltit">最后修改人:</div>
-						<div class="label_rwben">
-							<s:property value="outStock.lm_user_name" />
-						</div>
-					</div>
-					<div class="label_hang">
-						<div class="label_ltit">最后修改时间:</div>
-						<div class="label_rwbenx">
-							<s:date name="outStock.lm_timer" format="yyyy-MM-dd HH:mm:ss" />
-						</div>
-					</div>
 					<s:if test="%{outStock.manager_check!=null}">
 						<div class="label_hang">
 							<div class="label_ltit">确认人/经手人:</div>
-							<div class="label_rwben">
-								<s:property value="outStock.manager_check_user_name" />
-							</div>
-						</div>
-						<div class="label_hang">
-							<div class="label_ltit">确认时间:</div>
 							<div class="label_rwbenx">
-								<s:date name="outStock.manager_check_time"
-									format="yyyy-MM-dd HH:mm:ss" />
+								<s:property value="outStock.manager_check_user_name" />(<s:date name="outStock.manager_check_time"
+									format="yyyy-MM-dd HH:mm:ss" />)
 							</div>
 						</div>
 					</s:if>
@@ -164,9 +140,6 @@
 				</s:if>
 				<s:elseif test="%{outStock.reason==0}"><!-- 销售出库 -->
 					<div class="label_main">
-		        		<div class="label_hang">
-			       		<div class="label_ltit">客户信息:</div>
-			       		</div>
 			       		<div class="label_hang">
 				            <div class="label_ltit">会员号:</div>
 				            <div class="label_rwb">
@@ -232,6 +205,28 @@
 						</div>
 					</div>
 				</s:else>
+				
+				<div class="label_main">
+		        <div class="label_hang">
+		            <div class="label_ltit">运单号:</div>
+		            <div class="label_rwbenx">
+		            ${outStock.ship_no }
+		            </div>
+		        </div>
+		        <div class="label_hang">
+		            <div class="label_ltit">物流名称:</div>
+		            <div class="label_rwbenx">
+		               ${outStock.ship_type }
+		            </div>
+		        </div>
+		        <div class="label_hang">
+		            <div class="label_ltit">物流电话:</div>
+		            <div class="label_rwbenx">
+		              ${outStock.ship_phone }
+		            </div>
+		        </div>
+		     </div>
+		     
 				<!-- 明细 -->
 				<s:if test="null != outStock">
 					<fieldset>

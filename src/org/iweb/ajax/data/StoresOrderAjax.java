@@ -27,7 +27,7 @@ public class StoresOrderAjax extends Ajax{
 	private List<StoresOrderCustom> souList=new ArrayList<StoresOrderCustom>();
 	private List<Product> proList=new ArrayList<Product>();
 	public Object getResult() {
-	ContextHelper.isPermit("QKJ_QKJMANAGE_STORES");
+
 	if(parameter.keySet().contains("code")){map.put("code", parameter.get("code").toString());}
 	if(parameter.keySet().contains("puuid")){map.put("puuid", parameter.get("puuid").toString());}
 	this.proList=dao.list(map);
@@ -42,15 +42,19 @@ public class StoresOrderAjax extends Ajax{
 	if(parameter.keySet().contains("puuid")){map.put("puuid", parameter.get("puuid").toString());}
 	this.souList=sod.list(map);
 	for (int i = 0; i < proList.size(); i++) {
+		if(parameter.keySet().contains("code")!=false){
 		if(parameter.keySet().contains("code")==false){
 		proList.get(i).setCase_spec(1);}
+		}
 		for (int j = 0; j < souList.size(); j++) {
 			int productid=Integer.parseInt(souList.get(j).getProduct_id());
-			
 			if(proList.get(i).getUuid()==productid){
 				proList.get(i).setMarket_price(souList.get(j).getPrice());
 			}
 		}
+	}
+	if(parameter.keySet().contains("tcd")==true){
+		
 	}
 	return proList;
 	}

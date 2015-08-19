@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -24,7 +24,7 @@
 			<div class="label_hang">
             <div class="label_ltit">商品名称:</div>
             <div class="label_rwben label_rwb">
-            	<s:select id="membermanagerid" cssClass="selectKick" name="stock.product_id" title="状态" headerKey="" headerValue="--请选择--" list="products" listKey="uuid" listValue="title" />
+            	<s:select id="membermanagerid" cssClass="selectKick" name="stock.product_id" title="状态" headerKey="" headerValue="--请选择--" list="inproducts" listKey="product_id" listValue="product_name" />
             </div>
        		</div>
         	<div class="label_hang">
@@ -37,7 +37,7 @@
             <div class="label_ltit">商品名称:</div>
             <div class="label_rwben label_rwb" style="width:auto;">
             	<div  style="float:left;">
-            	<s:select id="membermanagerid" cssClass="selectKick" name="stock.groupQ" title="状态" headerKey="0" headerValue="--请选择--" list="inproducts" listKey="product_id" listValue="product_name" />
+            	<s:select id="membermanagerid" cssClass="selectKick" name="stock.groupQ" title="状态" headerKey="" headerValue="--请选择--" list="inproducts" listKey="product_id" listValue="product_name" />
             	</div>
             	<span style="float:left;">&nbsp;(统计查询)</span>
             </div>
@@ -73,8 +73,8 @@
 				<td class="td2 nw"><s:property value="store_name" /></td>
 				</s:if>
 				<td class="td1 nw">
-				<s:property value="%{quantity-freezeNum}" />&nbsp;瓶
-				(<s:property value="%{((quantity-freezeNum)/(case_spec*1.0)).toString().substring(0,3)}" />件)
+				<s:property value="%{quantity2-freezeNum2}" />&nbsp;瓶
+				(<s:property value="%{((quantity2-freezeNum2)/(case_spec*1.0)).toString().substring(0,3)}" />件)
 				</td>
 				<td class="td0 op-area"><a href="javascript:;" onClick="showDetail('showtr${uuid}');" class="input-nostyle">查看</a></td>
 	  		</tr>

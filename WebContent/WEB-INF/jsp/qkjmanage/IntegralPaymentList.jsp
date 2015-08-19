@@ -34,7 +34,7 @@
 
 						<div class="label_ltit">会员名称:</div>
 						<div class="label_rwben label_rwb">
-							<s:textfield id="order_user_name"/>
+							<s:textfield id="order_user_name_nopermission"/>
 						<input type="hidden" name="integralPay.member_id" id="order_user_id" value=""  >
 						</div>
 					</div>
@@ -82,7 +82,7 @@ $(function(){
  });
  function nonull(){
 
-	 if($("#order_user_name").val().trim()==""){
+	 if($("#order_user_name_nopermission").val().trim()==""){
 		 alert("会员名称不能为空")
 	 }else if($("#payContent").val().trim()==""){
 		 alert("消费说明不能为空")
@@ -91,6 +91,7 @@ $(function(){
 	 }else if($("#integral").val()==""||$("#integral").val().trim()=="0"){
 		 alert("消费积分不能为空且不能为0")
 	 }else{
+	
 		 $("#serachForm").submit();
 	 }
  }

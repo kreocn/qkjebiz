@@ -9,9 +9,15 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.iweb.sys.ContextHelper;
+import org.iweb.sys.JSONUtil;
 import org.iweb.sys.Parameters;
 import org.iweb.sys.ToolsUtil;
+import org.iweb.sys.cache.CacheFactory;
+import org.iweb.sys.cache.SysDBCacheLogic;
+import org.iweb.sys.dao.DepartmentDAO;
+import org.iweb.sys.domain.Department;
 import org.iweb.sys.domain.User;
+import org.iweb.sysvip.domain.Member;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.qkj.manage.dao.LadingDAO;
@@ -26,6 +32,10 @@ import com.qkj.manage.domain.LadingPay;
 import com.qkj.manage.domain.LadingProductg;
 import com.qkj.manage.domain.Product;
 import com.qkj.manage.domain.SalPromot;
+import com.qkj.ware.dao.OutStockDAO;
+import com.qkj.ware.domain.InDetail;
+import com.qkjsys.ebiz.dao.WareDAO;
+import com.qkjsys.ebiz.domain.Ware;
 
 public class LadingAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
@@ -367,10 +377,49 @@ public class LadingAction extends ActionSupport {
 	public String saveLadingStatus10() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_LADING_STATUS10");
 		try {
+			dao.startTransaction();
 			saveLadingStatus(20);
+			//生成出库单
+			ProductDAO pd = new ProductDAO();
+			LadingItemDAO idao = new LadingItemDAO();
+			
+			Product pdi = new Product();
+			List<Product> produs = new ArrayList<>();
+			map.clear();
+			map.put("lading_id", lading.getUuid());
+			ladingItems = idao.list(map);
+			if (ladingItems != null && ladingItems.size() > 0) {
+				for (int i = 0; i < ladingItems.size(); i++) {
+					LadingItem ladingItem=new LadingItem();
+					ladingItem = ladingItems.get(i);
+					List<Product> pros = new ArrayList<>();
+					map.clear();
+					map.put("uuid", ladingItem.getProduct_id());
+					pros = pd.list(map);
+					if (pros.size() > 0) {
+						pdi = pros.get(0);
+						pdi.setNum(ladingItem.getNum());
+						pdi.setDprice(ladingItem.getPer_price());
+						pdi.setDtotle(ladingItem.getTotal_price());
+						produs.add(pdi);
+					}
+				}
+			}
+				//会员信息
+			Member me=new Member();
+			me.setUuid(lading.getMember_id());
+			me.setManager_name(lading.getMember_name());
+			me.setMobile(lading.getMember_mobile());
+			me.setAddress(lading.getAddress());
+			OutStockDAO isa = new OutStockDAO();
+			Integer goid=getWare(lading.getDis_dept());
+			isa.addStock(lading.getUuid(), goid, null, 0, 2, produs,me,false,null,null);//生成销售用酒出库
+			dao.commitTransaction();
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!saveLadingStatus10 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!saveLadingStatus10 数据更新失败:", e);
+		}finally {
+			dao.endTransaction();
 		}
 		return SUCCESS;
 	}
@@ -416,5 +465,61 @@ public class LadingAction extends ActionSupport {
 			throw new Exception(this.getClass().getName() + "!mdyLadingOutFlag1 数据更新失败:", e);
 		}
 		return SUCCESS;
+	}
+	
+	//获得发货部门所在总仓库
+	public Integer getWare(String dept){
+		Integer ware=null;
+		DepartmentDAO d=new DepartmentDAO();
+		Department dm=new Department();
+		List<Department> was=new ArrayList<>();
+		List<String> a=new ArrayList<>();
+		map.clear();
+		map.put("type", 1);
+		was=d.list(map);
+		String part=null;
+		String str = (String) CacheFactory.getCacheInstance().get(SysDBCacheLogic.CACHE_DEPT_PREFIX_PARENT +dept);//
+		String[] s = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
+		System.out.println(str);
+		if(was.size()>0){
+			for(int i=0;i<was.size();i++){
+				dm=was.get(i);
+				Boolean iskip = ToolsUtil.isIn(dm.getDept_code(), s);// 判断在不在数组中
+				if(dm.getDept_code().equals(dept)){
+					part=dept;
+					break;
+				}else if(iskip==true){
+					part=dm.getDept_code();
+					break;
+				}
+				/*else if (iskip) {
+					a.add(dm.getDept_code());
+				}*/
+			}
+			
+			/*if(dm.getDept_code().equals(dept)){
+				
+			}else if(a.size()>0){
+				for(int i=0;i<a.size();i++){
+					String l=a.get(i+1);
+					if(a.get(i).length()>l.length()){
+						
+					}else{
+						
+					}
+				}
+			}*/
+			
+			if(part!=null){
+				Ware w=new Ware();
+				List<Ware> ws=new ArrayList<>();
+				WareDAO wd=new WareDAO();
+				map.clear();
+				map.put("ware_instcode", part);
+				ws=wd.list(map);
+				if(ws.size()>0){w=ws.get(0);ware=w.getUuid();}
+			}
+		}
+		return ware;
 	}
 }

@@ -5,7 +5,7 @@
 	<typeAlias alias="stock" type="com.qkj.ware.domain.Stock" />
 	<select id="stock_getStocks" resultClass="stock" parameterClass="java.util.Map">
 		<![CDATA[ 
-			SELECT s.*,p.`title` product_name,w.`ware_name` store_name,p.`case_spec` case_spec FROM qkj_r_stock s LEFT JOIN qkj_t_product p ON (s.`product_id`=p.`uuid`)
+			SELECT s.*,SUM(s.`quantity`) quantity2,SUM(s.`freezeNum`) freezeNum2,p.`title` product_name,w.`ware_name` store_name,p.`case_spec` case_spec FROM qkj_r_stock s LEFT JOIN qkj_t_product p ON (s.`product_id`=p.`uuid`)
 			 LEFT JOIN qkj_t_warehouse w ON (s.`store_id`=w.`uuid`)
 		]]>
 		<dynamic prepend="WHERE">
@@ -13,9 +13,14 @@
 			<isNotEmpty prepend="AND" property="product_id"><![CDATA[ s.product_id=#product_id# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="store_id"><![CDATA[ s.store_id=#store_id# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="quantity"><![CDATA[ s.quantity=#quantity# ]]></isNotEmpty>
-			
-
+			<isNotEmpty prepend="AND" property="groupQ"><![CDATA[ s.product_id=#groupQ# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="storeids">
+			<![CDATA[ s.store_id In ]]>
+				<iterate property="storeids" open="(" close=")" conjunction=" , "> #storeids[]#</iterate>
+			</isNotEmpty>
 		</dynamic>
+		<isNotEmpty property="groupQ"><![CDATA[ GROUP BY s.`product_id` ORDER BY s.UUID DESC ]]></isNotEmpty>
+		<isEmpty property="groupQ"><![CDATA[ GROUP BY s.`uuid` ]]></isEmpty>
 	</select>
 	<!-- 盘点 -->
 	<select id="stock_getChecks" resultClass="stock" parameterClass="java.util.Map">
@@ -142,18 +147,6 @@
 		</dynamic>
 	</select>
 	
-	
-	<select id="stock_getStocksCounts" resultClass="int" parameterClass="java.util.Map">
-		<![CDATA[ 
-			Select Count(*) FROM qkj_r_stock s 
-		]]>
-		<dynamic prepend="WHERE">
-			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ s.uuid=#uuid# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="product_id"><![CDATA[ s.product_id=#product_id# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="store_id"><![CDATA[ s.store_id=#store_id# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="quantity"><![CDATA[ s.quantity=#quantity# ]]></isNotEmpty>
-		</dynamic>
-	</select>
 	
 	<select id="stock_getStocksCountsByPower" resultClass="int" parameterClass="java.util.Map">
 		<![CDATA[ 

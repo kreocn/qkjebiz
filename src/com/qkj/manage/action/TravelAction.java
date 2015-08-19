@@ -1,12 +1,32 @@
 package com.qkj.manage.action;
 
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
+import jxl.Workbook;
+import jxl.format.UnderlineStyle;
+import jxl.write.Alignment;
+import jxl.write.Border;
+import jxl.write.BorderLineStyle;
+import jxl.write.Colour;
+import jxl.write.Label;
+import jxl.write.VerticalAlignment;
+import jxl.write.WritableCellFeatures;
+import jxl.write.WritableCellFormat;
+import jxl.write.WritableFont;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.struts2.ServletActionContext;
 import org.iweb.sys.ContextHelper;
 import org.iweb.sys.ToolsUtil;
 
@@ -553,4 +573,102 @@ public class TravelAction extends ActionSupport {
 					co.getNd_check_state(), userLogin);
 		}
 	}
+	
+	
+	
+	public String traveOut() throws Exception {
+		ProductDAO prodao=new ProductDAO();
+		HttpServletResponse response =ServletActionContext.getResponse();  
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date dt = new Date();   
+        String date=sdf.format(dt); 
+		try {
+			WritableWorkbook wwb = null;
+			 //设这输出的类型和文件格式
+			   response.setContentType("application/vnd.ms-excel;charset=UTF-8");
+			   //设置文件名和并且解决中文名不能下载
+			   String filenames = "("+travel.getUuid()+")"+date+"%e5%ae%a2%e6%88%b7%e4%bf%a1%e6%81%af.xls";//urlencode编码
+			      response.addHeader("Content-Disposition","attachment;   filename=\""+ new String(filenames.getBytes(),"UTF-8")+   "\"");    
+			      //创建输出流
+			      OutputStream os = response.getOutputStream();
+			      wwb = Workbook.createWorkbook(os);
+
+            // 创建工作表
+            WritableSheet ws = wwb.createSheet("客户信息", 0);
+            ws.setColumnView(0, 15);
+            ws.setColumnView(1, 15);
+            ws.setColumnView(2, 25);
+            ws.setColumnView(3, 20);
+            ws.setColumnView(4, 20);
+            ws.setColumnView(5, 15);
+            ws.setColumnView(6, 30);
+            
+            /*List sex=new ArrayList();
+           sex.add("男");
+           sex.add("女");
+           Label norFormat=null;
+           norFormat=new Label(1,2,"请选择");
+           WritableCellFeatures wsc = new WritableCellFeatures(); 
+           wsc.setDataValidationList(sex); 
+           norFormat.setCellFeatures(wsc); 
+           ws.addCell(norFormat); */
+            
+            WritableFont font1 = new WritableFont(WritableFont.ARIAL,11);  
+            
+            WritableCellFormat cellFormat1 = new WritableCellFormat(font1);  
+            //要插入到的Excel表格的行号，默认从0开始
+            Label labelId= new Label(0, 0, "工业旅游编号:",cellFormat1);//表示第1列1个
+            Label labelName= new Label(1, 0, travel.getUuid().toString(),cellFormat1);//第2列1个
+            
+            WritableFont wf_title = new WritableFont(WritableFont.ARIAL, 11,  
+                    WritableFont.NO_BOLD, false, UnderlineStyle.NO_UNDERLINE,  
+                    jxl.format.Colour.RED); // 定义格式 字体 下划线 斜体 粗体 颜色 
+            WritableCellFormat wcf_title1 = new WritableCellFormat(wf_title); // 单元格定义  
+            
+            Label title1= new Label(0, 1, "姓名",getHeadFormat());//表示第
+            Label title2= new Label(1, 1, "性别",getHeadFormat());
+            Label title3= new Label(2, 1, "公司名称",getHeadFormat());
+            Label title4= new Label(3, 1, "身份证号",getHeadFormat());
+            Label title5= new Label(4, 1, "联系电话",getHeadFormat());
+            Label title6= new Label(5, 1, "客户类别",getHeadFormat());
+            Label title7= new Label(6, 1, "备注",getHeadFormat());
+            
+            Label titleOne=new Label(2,0,"客户类别(请填写数字编号):1:政府,2:企业,3:经销商,4:潜在客户,5:终端零售,6:专卖店消费者,7:其他",wcf_title1); 
+            ws.addCell(titleOne);
+            ws.addCell(labelId);
+            ws.addCell(labelName);
+            ws.addCell(title1);
+            ws.addCell(title2);
+            ws.addCell(title3);
+            ws.addCell(title4);
+            ws.addCell(title5);
+            ws.addCell(title6);
+            ws.addCell(title7);
+            ws.mergeCells(2, 0, 6, 0);//合并单元格，第一个参数：要合并的单元格最左上角的列号，第二个参数：要合并的单元格最左上角的行号，第三个参数：要合并的单元格最右角的列号，第四个参数：要合并的单元格最右下角的行号，
+           //写进文档
+            wwb.write();
+           // 关闭Excel工作簿对象
+            wwb.close();
+            os.close();
+            response.flushBuffer();
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!out 数据添加失败:", e);
+			throw new Exception(this.getClass().getName() + "!out 数据添加失败:", e);
+		}
+		return null;
+	}
+	
+	public static WritableCellFormat getHeadFormat() throws Exception {   
+        //设置字体   
+        WritableFont wf = new WritableFont(WritableFont.ARIAL, 11, WritableFont.BOLD);   
+           
+        //创建单元格FORMAT   
+        WritableCellFormat wcf = new WritableCellFormat(wf);   
+        wcf.setAlignment(Alignment.CENTRE);                            
+        wcf.setVerticalAlignment(VerticalAlignment.CENTRE);            
+        wcf.setLocked(true);   
+        wcf.setBorder(Border.ALL, BorderLineStyle.THIN, Colour.BLACK);   
+        wcf.setBackground(Colour.GREY_25_PERCENT);   
+        return wcf;   
+    }
 }

@@ -52,6 +52,14 @@
 				<param name="travel.uuid">${travel.uuid}</param>
 			</result>
 		</action>
+		
+		<action name="travel_out" class="com.qkj.manage.action.TravelAction" method="traveOut">
+			<result type="redirectAction">
+				<param name="actionName">travel_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
 		<!-- Travel End -->
 	</package>
 </struts>

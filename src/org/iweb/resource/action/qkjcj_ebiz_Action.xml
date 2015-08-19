@@ -53,9 +53,19 @@
 		<action name="ware_list" class="com.qkjsys.ebiz.action.WareAction" method="list">
 			<result>/WEB-INF/jsp/sysebiz/WareList.jsp</result>
 		</action>
+		
+		<action name="ware_select" class="com.qkjsys.ebiz.action.WareAction" method="ware_select">
+			<result>/WEB-INF/jsp/ware/WareSelect.jsp</result>
+		</action>
+		
 		<action name="ware_load" class="com.qkjsys.ebiz.action.WareAction" method="load">
 			<result>/WEB-INF/jsp/sysebiz/WareEdit.jsp</result>
 		</action>
+		
+		<action name="ware_power" class="com.qkjsys.ebiz.action.WareAction" method="ware_power">
+			<result>/WEB-INF/jsp/ware/warepower/WarePower.jsp</result>
+		</action>
+		
 		<action name="ware_add" class="com.qkjsys.ebiz.action.WareAction" method="add">
 			<result type="redirectAction">
 				<param name="actionName">ware_list</param>

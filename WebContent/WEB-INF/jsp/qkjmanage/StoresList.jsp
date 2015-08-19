@@ -88,6 +88,7 @@
 						</tr>
 					</table>
 					<div style="margin: 10px 0;">
+							<s:textfield  type="hidden"  name="is_li" value="stores"/>
 					<input type="hidden" name="member.uuid" id="order_user_id" value="">
 					<input type="hidden" name="sotresorder.member_id" id="order_user_id_2" value="">
 					<input type="hidden" name="sotresorder.member_name" id="order_user_name_2" value="">
@@ -202,6 +203,7 @@
 		var barcode = null;
 		var casenum = 1;
 		var code = $(".tiaomainput").val();
+		$(".tiaomainput").val("")
 		var case_spec = msg[10];
 		barcode = bar_code;
 		if (bar_code_box == msg[11]) {
@@ -339,6 +341,7 @@
 					.push('<td class="td1" id="jisuanprice'+product_id+'"><input id="total_price'+product_id+'" type="hidden"  name="storesorderitem['+num+'].order_total_price"  value="'+marketprice*casenum+'"/><input type="text"    onkeyup="up_total_price(' + product_id + ')" value="' + marketprice * casenum + '"  style="width:50px"></td>');
 			show.push(' <td class="td1 op-area"><a id="rmtr' + num + '" onclick="javascript:ondeltr(this)" href="javascript:void(0)" class="input-red">删除</a></td>');
 			show.push('</tr>');
+	
 			$("#qkj_list").append(show.join(""));
 			show = new Array();
 			var iNum = num;

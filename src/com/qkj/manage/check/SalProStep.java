@@ -6,6 +6,7 @@ import org.iweb.sys.ContextHelper;
 
 import com.qkj.manage.dao.ProcessDAO;
 import com.qkj.manage.dao.SalPromotDAO;
+import com.qkj.manage.domain.Active;
 import com.qkj.manage.domain.SalPromot;
 
 public class SalProStep {
@@ -116,7 +117,18 @@ public class SalProStep {
 	public void check60(String userid) throws Exception {
 		mdyCloseOrderSMDStatus(60, userid);
 	}
-
+	
+	/**
+	 * 财务通过
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public void checkfd10(String userid) throws Exception {
+			mdyFDStatus(10,userid);
+			mdyStatus(2);
+	}
+	
 	/**
 	 * 改销售部审批状态通用函数
 	 * 
@@ -222,6 +234,32 @@ public class SalProStep {
 		return dao.saveStatus(salPro);
 	}
 
+	
+	/**
+	 * 改财务审核状态通用权限
+	 * 
+	 * @return
+	 * @throws Exception
+	 * @date 2014-4-26 上午10:25:25
+	 */
+	public int mdyFDStatus(int smd_status, String userid) {
+		if (smd_status == 5) {
+			noteflag = "退回";
+		}
+		if (smd_status == 10) {
+			noteflag = "通过";
+		}
+		salPro.setFd_status(smd_status);
+		salPro.setFd_user(userid);
+		salPro.setFd_time(new Date());
+
+		salPro.setLm_user(userid);
+		salPro.setLm_time(new Date());
+		String note = "促销活动--财务状态变更-" + noteflag;
+		addProcess("SALPRO_MDY_FDSTATUS", note, userid);
+		return dao.savefdStatus(salPro);
+	}
+	
 	private void addProcess(String p_sign, String p_note, String userLogin) {
 		ProcessDAO pdao = new ProcessDAO();
 		if (salPro != null) {/* 单据状态，销售状态，销管状态，财务 */

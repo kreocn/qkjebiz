@@ -13,7 +13,6 @@
 		<isNotEmpty prepend="AND" property="active_id"><![CDATA[ a.active_id=#active_id# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="title"><![CDATA[ p.title LIKE CONCAT(#title#,'%')   ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="othertitle"><![CDATA[ p.title NOT LIKE CONCAT(#othertitle#,'%') ]]></isNotEmpty>
-		
 		<isNotEmpty prepend="AND" property="status"><![CDATA[ a.status=#status# ]]></isNotEmpty>
 	</select>
 	<select id="qkjmanage_getActiveProductsCounts" resultClass="int" parameterClass="java.util.Map">

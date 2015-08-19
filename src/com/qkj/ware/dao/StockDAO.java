@@ -5,7 +5,7 @@ import org.iweb.sys.AbstractDAO;
 public class StockDAO extends AbstractDAO {
 
 	public List list(Map<String, Object> map) {
-		setCountMapid("stock_getStocksCounts");
+		//setCountMapid("stock_getStocksCounts");
 		return super.list("stock_getStocks", map);
 	}
 	
@@ -56,7 +56,7 @@ public class StockDAO extends AbstractDAO {
 	}
 	
 	//综合查询
-	public List listPowerByGroup(Map<String, Object> map) {
+	/*public List listPowerByGroup(Map<String, Object> map) {
 		setCountMapid("stock_getStocksCountsByGroup");
 		return super.list("stock_getPowerByGroup", map);
 	}
@@ -64,7 +64,7 @@ public class StockDAO extends AbstractDAO {
 		setCountMapid("stock_getPowerCountsByGroup");
 		return super.list("stock_getByGroup", map);
 	}
-	
+	*/
 	//盘点
 	public List listCheck(Map<String, Object> map) {
 		return super.list("stock_getChecks", map);

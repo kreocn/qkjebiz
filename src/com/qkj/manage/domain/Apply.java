@@ -34,6 +34,9 @@ public class Apply {
 	private String user_sign;
 	private Date sign_biz_time;
 	private String sign_user_name;
+	private Integer goflag;
+    private double total_price;
+
 
 	// 非数据库字段
 	private String apply_user_name;
@@ -50,7 +53,21 @@ public class Apply {
 	private Integer status_start;
 	private Integer status_end;
 	private Integer status_sp;
-	
+	public double getTotal_price() {
+		return total_price;
+	}
+
+	public void setTotal_price(double total_price) {
+		this.total_price = total_price;
+	}
+	public Integer getGoflag() {
+		return goflag;
+	}
+
+	public void setGoflag(Integer goflag) {
+		this.goflag = goflag;
+	}
+
 	public Integer getIs_material() {
 		return is_material;
 	}
@@ -58,6 +75,7 @@ public class Apply {
 	public void setIs_material(Integer is_material) {
 		this.is_material = is_material;
 	}
+
 	public Double getIt_price() {
 		return it_price;
 	}
@@ -65,6 +83,7 @@ public class Apply {
 	public void setIt_price(Double it_price) {
 		this.it_price = it_price;
 	}
+
 	public Integer getApply_type() {
 		return apply_type;
 	}

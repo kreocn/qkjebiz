@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -33,7 +34,6 @@ font-size: 14px;
 			<s:hidden name="inStock.take_id"></s:hidden>
 			<s:hidden name="inStock.operator_id"></s:hidden>
 			<s:hidden name="inStock.date" title="入库时间" />
-			<s:hidden name="inStock.reason" value="%{inStock.reason}" />
         	<div class="label_main">
 	        	<div class="label_hang">
 		            <div class="label_ltit">入库单号:</div>
@@ -47,13 +47,13 @@ font-size: 14px;
 		            <s:date name="inStock.date" format="yyyy-MM-dd" />
 		            </div>
 	       		</div>
+	       		
 	       		<div class="label_hang">
-		            <div class="label_ltit">单据性质:</div>
-		            <div class="label_rwben">
-		            <s:if test="%{inStock.reason==0}">正常入库</s:if>
-					<s:if test="%{inStock.reason==1}">正常退货</s:if>
-					<s:if test="%{inStock.reason==2 }">损坏退货</s:if>
-					<s:if test="%{inStock.reason==3 }">其它</s:if>
+		            <div class="label_ltit">来源:</div>
+		            <div class="label_rwbenx">
+					<s:if test="%{inStock.goreason==1}">调货出库单</s:if>
+					<s:else>手动填加</s:else>
+					<s:if test="%{inStock.split==1}">(拆分自编号${inStock.splitUuid })</s:if>
 		            </div>
 	       		</div>
 	       		<div class="label_hang">
@@ -114,55 +114,70 @@ font-size: 14px;
 	            </div>
 	        </div>
 	     </div>
-	    <div class="label_main">
-	        <div class="label_hang">
-	            <div class="label_ltit">单据性质:</div>
-	            <div class="label_rwben label_rwb">
-	            	<select id="membermanagerid" cssClass="selectKick" name="inStock.reason" title="状态">
-								<option value="0"
-								<s:if test="%{inStock.reason==0}">
-								 selected="selected"
-								</s:if>
-								>正常入库</option>
-								<option value="1"
-								 <s:if test="%{inStock.reason==1}">
-								 selected="selected"
-								</s:if>
-								>正常退货</option>
-								<option value="2" 
-								<s:if test="%{inStock.reason==2 }">
-								selected="selected"
-								</s:if>
-								>损坏退货</option>
-								<option value="3" 
-								<s:if test="%{inStock.reason==3 }">
-								selected="selected"
-								</s:if>
-								>其它</option>
-						</select>
-	            </div>
-	        </div>
-	     </div>
 	     
         </s:else>
         <div class="label_main">
 	        <div class="label_hang">
-	            <div class="label_ltit">入库仓库:</div>
+	            <div class="label_ltit">单据性质:</div>
 	            <div class="label_rwben2">
-			       <span class="label_rwb">
-	            	<select id="membermanagerid" cssClass="selectKick" name="inStock.store_id" title="入库仓库" >
-						<s:iterator value="wares" status="sta" var="x">
-						<option value="<s:property value="uuid" />" 
-						<s:if test="#x.uuid==inStock.store_id">
-						selected="selected"
-						</s:if>
-						/><s:property value="ware_name" />
-						</s:iterator>
-					</select>
-	            	</span>
+		            <span class="label_rwb"><!--入库原因：0正常1正常退货2损坏退货3其它4调入仓库5借货 -->
+		            	<s:if test="%{inStock.reason==6}">还货 <s:hidden id="out" value="8"/></s:if>
+		            	<s:else>
+		            		<s:select id="out" onchange="checkState();" name="inStock.reason" cssClass="selectKick" list="#{0:'正常入库',1:'正常退货',2:'损坏退货',4:'调货入库',5:'借货',6:'还货',3:'其它'}" />
+		            	</s:else>
+		            	
+					</span>
 	            </div>
 	        </div>
+	     </div>
+        <div class="label_main">
+	        <div class="label_hang">
+	            <div class="label_ltit">入库仓库:</div>
+	            <div class="label_rwben2">
+					       <span class="label_rwb">
+					       <s:select id="membermanagerid" cssClass="validate[required]" name="inStock.store_id" title="出库仓库"   list="wares" listKey="uuid" listValue="ware_name" />
+					       </span>
+				       </div>
+	        </div>
+	        <c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_MDYREMAEK',null)==true && 'mdy' == viewFlag && inStock.confirm==null}">
+	        <div class="label_hang">
+		            <div class="label_ltit">转库:</div>
+		            <div class="label_rwben2">
+		            	<span class="label_rwb">
+						<s:textfield title="仓库名称" id="userdept_nameid" name="inStock.ware_name" readonly="true"  cssClass="validate[required,maxSize[85]]"/>
+						<s:hidden title="仓库编码" id="userdept_codeid" name="inStock.store_idR" readonly="true" />
+						</span>
+						<span class="lb nw">
+						<img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectWarevar('userdept_codeid','userdept_nameid');" />
+						</span>
+		            </div>
+		        </div>
+		        
+		        <div class="label_hang">
+			            <div class="label_rwben">
+								<s:submit  value="确定转库" action="mdyRemark"/>
+			            </div>
+			        </div>
+			       </c:if>
         </div>
+        
+        <div id="state6" style="display: none;">
+        	<div class="label_main">
+		        <div class="label_hang">
+		            <div class="label_ltit">调出仓库:</div>
+		            <div class="label_rwben2">
+		            	<span class="label_rwb">
+						<s:textfield title="仓库名称" id="userdept_nameid" name="inStock.goldId_name" readonly="true"  cssClass="validate[required,maxSize[85]]"/>
+						<s:hidden title="仓库编码" id="userdept_codeid" name="inStock.goldId" readonly="true" />
+						</span>
+						<span class="lb nw">
+						<img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectWarevar('userdept_codeid','userdept_nameid');" />
+						</span>
+		            </div>
+		        </div>
+		     </div>
+        </div>
+        
         <div class="label_main">
         <div class="label_hang">
             <div class="label_ltit">入库原因:</div>
@@ -185,7 +200,7 @@ font-size: 14px;
 						<th>单价</th>
 						<th>订单数量</th>
 						<th>实际价格</th>
-						<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_ADD') && null==inStock.confirm && @com.qkj.ware.action.warepower@checkPermit(inStock.store_id,'add')">
+						<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_ADD',null)==true && it:checkWarePermit(inStock.store_id,'in')==true && inStock.confirm==null &&(inStock.goflag==0 || inStock.goflag==null)}">
 						<th>
 						<s:url id="ladingAddProductsUrl" action="qkjm_addProducts" namespace="/qkjmanage">
 												<s:param name="uuidKey">inStock.uuid</s:param>
@@ -201,7 +216,7 @@ font-size: 14px;
 											<input type="button" id="product" onclick="window.location.href='${ladingAddProductsUrl}';" value="添加酒品" />
 						<!-- <a id="addItem" onclick="commain();" >添加入库明细</a> -->
 						</th>
-						</s:if>
+						</c:if>
 					</tr>
 					<s:iterator value="inDetails" status="sta">
 									<tr>
@@ -214,9 +229,9 @@ font-size: 14px;
 									</td>
 									<td class="nw"><s:property value="total" /></td>
 									<td>
-								   	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_INDETAIL_INDETAIL_DEL') && @com.qkj.ware.action.warepower@checkPermit(inStock.store_id,'add')  && null==inStock.confirm">
+									<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_DEL',null)==true && it:checkWarePermit(inStock.store_id,'in')==true && inStock.confirm==null && (inStock.goflag==0 || inStock.goflag==null)}">
 								   	[<a href="<s:url namespace="/inStock" action="inDetail_del"><s:param name="inDetail.uuid" value="uuid" /><s:param name="inDetail.lading_id" value="lading_id" /></s:url>" onclick="return isDel();">删除</a>]
-								   	</s:if>	   
+								   	</c:if>
 								    </td>
 									</tr>
 					</s:iterator>
@@ -233,96 +248,112 @@ font-size: 14px;
             <div class="label_rwbenx">
             <span id="message"><s:property value="message" /></span>
             	<s:if test="null == inStock && 'add' == viewFlag">
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_ADD')">
+					<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_ADD',null)==true}">
 					<s:submit id="add" name="add" value="保存&填写明细" action="inStock_add" cssClass="input-blue"/>
-					</s:if>
+					</c:if>
 				</s:if>
-				<s:elseif test="null != inStock && 'mdy' == viewFlag && @com.qkj.ware.action.warepower@checkPermit(inStock.store_id,'add')">
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_MDY') && null==inStock.confirm">
-					<s:submit id="save" name="save" value="保存" action="inStock_save" cssClass="input-blue"/>
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_SURE') && inDetails.size()>0">
-					<s:submit value="确认" action="inStock_sure" onclick="return isOp('是否确认?\n确认后将不能更改!');" cssClass="input-yellow"></s:submit>
-					</s:if>
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_DEL')  && null==inStock.confirm && inStock.confirm==null">
-				
-					<s:submit id="delete" name="delete" value="删除" action="inStock_del"  cssClass="input-red"/>
-					</s:if>
-					</s:if>
+				<s:elseif test="'mdy' == viewFlag">
+					<s:if test="inStock.goflag==1"><font color="red">对方取消全部发货</font></s:if>
+					<s:if test="inStock.goflag==5"><font color="red">对方取消部分发货</font></s:if>
+					<s:if test="inStock.goflag==3"><font color="red">对方全部产品已发货</font></s:if>
+					<s:if test="inStock.goflag==4"><font color="red">对方部分产品已发货</font></s:if>
+					<s:else>
+					<c:if test="${it:checkWarePermit(null,'in')==true}">
+						<s:if test="inStock.goflag==0 || inStock.goflag==null">
+						<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_MDY',null)==true && inStock.confirm==null}">
+							<s:submit id="save" name="save" value="保存" action="inStock_save" cssClass="input-blue"/>
+						</c:if>
+						<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_DEL',null)==true && inStock.confirm==null }">
+							<s:submit id="delete" name="delete" value="删除" action="inStock_del"  cssClass="input-red"/>
+						</c:if>
+						</s:if>
+						
+						<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_SPILT',null)==true  && inDetails.size()>0 && inStock.confirm!=1 && (inStock.reason!=4 || (inStock.reason==4 && inStock.goflag==3))}">
+							<input type="button" id="addPosm" value="拆分" />
+						</c:if>
+						
+						<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_SURE',null)==true && inDetails.size()>0 && inStock.confirm!=1 && ((inStock.reason!=4 &&inStock.reason!=5) || ((inStock.reason==4 || inStock.reason==5 ) && inStock.goflag==3))}">
+							<s:submit value="确认入库" action="inStock_sure" onclick="return isOp('是否确认?\n确认后将不能更改!');" cssClass="input-yellow"></s:submit>
+						</c:if>
+						<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_ADD',null)==true && inDetails.size()>0 && inStock.confirm!=1&& (inStock.reason==4 || inStock.reason==5 )&& inStock.goflag==0 && inStock.goreason==0}">
+							<s:submit value="生成调货出库单 " onclick="return isOp('是否确认?\n确认后将不能更改!');" action="inStock_addOut"   cssClass="input-yellow"></s:submit>
+						</c:if>
+					</c:if>
+					<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_CENCLE',null)==true &&  inStock.send==0 && inStock.confirm!=null && inStock.reason!=5}">
+						<s:submit cssClass="input-red" id="cencle" name="cencle" value="取消订单" action="inStock_cencle" onclick="return isOp('确认取消?');" />
+					</c:if>
+					<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_BAKE',null)==true &&  inStock.send==0 && inStock.confirm!=null && inStock.reason==5}">
+						<s:submit cssClass="input-red"  value="还货" action="inStock_bake" onclick="return isOp('确认还货?');" />
+					</c:if>
+					</s:else>
 				</s:elseif>
-				<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_CENCLE') && @com.qkj.ware.action.warepower@checkPermit(inStock.store_id,'add')  && inStock.confirm!=null && inStock.send!=1">
-					<s:submit cssClass="input-red" id="cencle" name="cencle" value="取消订单" action="inStock_cencle" onclick="return isOp('确认取消?');" />
-					</s:if>
 				<input type="button" value="返回" class="input-gray" onclick="linkurl('<s:url action="inStock_list" namespace="/inStock"><s:param name="viewFlag">relist</s:param></s:url>');" />
             </div>
 		</div>
 		</div>
 	</div>
 	</s:form>
-</div>
-</div>
-
-
-<!--盘点仓库 -->
-<div id="addItemForm" title="添加明细">
-<s:form id="form_addItem" name="form_addItem" action="inDetail_add" namespace="/inDetail" onsubmit="return validator(this);" method="post" theme="simple">
-	<table>
-		  <tr>
-		   	<td>
-		   	<div class="label_main input-a">
-				<div id="addItemForm" class="label_con" title="请选择入库商品">	
+	
+	<!-- 添加拆分 -->
+	<s:if test="'mdy' == viewFlag">
+		<div id="addPosmForm" class="label_con idialog" title="拆分">
+			<s:form name="form_addPosmForm" cssClass="validFormDialog" action="inDetail_spilt" namespace="/inStock" method="post" theme="simple">
+			<s:hidden name="inStock.uuid" title="编号" value="%{inStock.uuid}" />
+				<div class="label_main">
 					<div class="label_hang">
-			            <div class="label_ltit">商品:</div>
-			            <div class="label_rwben2">
-			            	<span class="label_rwb">
-			            	<select id="membermanagerid" name="inDetail.product_id" title="产品">
-								<option>--请选择--</option>
-								<s:iterator value="products" status="sta">
-								<option data='<s:property value="market_price" />#<s:property value="group_price" />#<s:property value="dealer_price" />#<s:property value="agree_price_1" />#<s:property value="agree_price_2" />#<s:property value="agree_price_3" />' data_case='<s:property value="case_spec" />' value='<s:property value="uuid" />'><s:property value="title" /></option>
-								</s:iterator>
-							</select>	
-							</span>
-			            </div>
-			        </div>																		
-					
-			        <div class="label_hang">
-		            <div class="label_ltit">单价:</div>
-		            <div class="label_rwben2">
-		            <div class="label_rwb"><s:textfield name="inDetail.price" title="单价" dataType="number"  /></div>
-		            </div>
-	       		</div>
-	       		<div class="label_hang">
-		            <div class="label_ltit">数量:</div>
-		            <div class="label_rwben2">
-		            <div class="label_rwb">
-						<s:textfield id="num" name="inDetail.num" title="数量" dataType="integer" cssClass="validate[required]" />
-						<span id="ladingItemnumCase"></span>
-					</div>
-		            </div>
-	       		</div>	
-	       		<div class="label_hang">
-		            <div class="label_ltit">合计:</div>
-		            <div class="label_rwben2">
-		            <div class="label_rwb"><s:textfield name="inDetail.total" title="合计" dataType="number" /></div>
-		            </div>
-	       		</div>																				
-			        <div class="label_hang label_button tac">																				
-			         <s:hidden name="inDetail.lading_id" title="提货单ID" value="%{inStock.uuid}" />
-					<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_INSTOCK_ADD')">
-					<s:submit id="add" name="add" value="确定" action="inDetail_add" onclick="return flag();" />
-					</s:if>
-					<input type="button" value="关闭" onclick="closeAddForm();" class="input-gray" />															
+			            <div class="label_ltit">拆分商品:</div>
+			            <div class="label_rwbenx">
+							       <span class="label_rwb">
+							       <s:select id="membermanagerid" cssClass="validate[required]" name="inDetail.uuid" title="出库仓库"   list="inDetails" listKey="uuid" listValue="product_name" />
+							       </span>
+						       </div>
 			        </div>
-			       </div>																				
+			        
+			        <div class="label_hang">
+			            <div class="label_ltit">入库仓库:</div>
+			            <div class="label_rwbenx">
+							       <span class="label_rwb">
+							       <s:select id="membermanagerid" cssClass="validate[required]" name="inStock.store_id" title="出库仓库"   list="wares" listKey="uuid" listValue="ware_name" />
+							       </span>
+						       </div>
+			        </div>
+					<div class="label_hang">
+						<div class="label_ltit">拆分数量:</div>
+						<div class="label_rwben label_rwb nw">
+							<s:textfield name="inStock.splitNum" title="数量" cssClass="validate[required,custom[number],maxSize[11]]" />
+						</div>
+					</div>
+					<div class="label_hang label_button tac">
+						<s:hidden name="activePosm.active_id" value="%{active.uuid}" />
+						<c:if test="${it:checkPermit('QKJ_WARE_INSTOCK_SPILT',null)==true}">
+							<s:submit id="add" name="add" value="确定" action="inDetail_spilt" />
+						</c:if>
+					</div>
 				</div>
-			</td>
-		 	</tr>
-	</table>	
-	<s:hidden name="viewFlag" value="add" />
-</s:form>
+			</s:form>
+		</div>
+	</s:if>
 </div>
+</div>
+
 <s:action name="ref_foot" namespace="/manager" executeResult="true" />
 </body>
 <script type="text/javascript">
+$(function(){
+	checkState();
+ });
+function checkState(){
+	var state= $("#out").val();
+	if(state==4 || state==5 || state==6){
+		$("#state6").show();
+	}else{
+		$("#state6").hide();
+		
+	}
+	
+	
+}
+ 
 function flag(){
 	var num=$("#num").val();
 	if(num==null||num==""){
@@ -416,5 +447,11 @@ function setDataCase() {
 		$("#ladingItemnumCase").text((num_value/data_case)+'件');
 	}
 }
+
+$("#addPosm").click(function(){
+	$("#addPosmForm").dialog("open");
+});
+$("#addPosmForm").dialog({ autoOpen : false,
+	modal : true }); 
 </script>
 </html>

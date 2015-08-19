@@ -303,5 +303,14 @@
 			Where uuid = #uuid#
 		]]>
 	</update>
+	
+	<update id="qkjmanage_mdyGoFlag" parameterClass="closeOrder">
+		<![CDATA[
+			Update qkjm_r_closeorder
+			Set 
+			goflag=#goflag#
+			Where uuid = #uuid#
+		]]>
+	</update>
 	<!-- CloseOrder End -->
 </sqlMap>

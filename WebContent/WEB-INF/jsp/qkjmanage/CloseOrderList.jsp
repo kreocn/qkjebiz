@@ -145,6 +145,17 @@ cursor: pointer;
 								<span id="ship_status_${uuid}">${ship_status}</span>
 								<span id="active_remark_${uuid}">${remark}</span>
 							</span>
+							<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_OUTSTOCK',null)==true && goflag==0}">
+							<span class="opb lb op-area">
+								<a style="background-color: #FFF;border-color: #363636;color: #363636;" href="<s:url namespace="/qkjmanage" action="closeOrder_outStock"><s:param name="closeOrder.uuid" value="uuid"></s:param></s:url>">出库</a>
+							</span>
+							</c:if> 
+							
+							<!-- .outClass {
+background-color: #FFF;
+  border-color: #363636;
+  color: #363636;
+} -->
 						</s:if>
 						</td>
 						<td class="td2 nw" title="${sd_user_name} ${it:formatDate(sd_time,'yyyy-MM-dd HH:mm:ss')}">

@@ -1,4 +1,6 @@
 package com.qkj.ware.action;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -10,16 +12,20 @@ import org.iweb.sys.ContextHelper;
 import org.iweb.sys.ToolsUtil;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.qkj.ware.dao.InStockDAO;
 import com.qkj.ware.dao.OutDetailDAO;
 import com.qkj.ware.dao.OutDetailHDAO;
 import com.qkj.ware.dao.OutStockDAO;
 import com.qkj.ware.dao.OutStockHDAO;
 import com.qkj.ware.dao.StockDAO;
+import com.qkj.ware.domain.InDetail;
+import com.qkj.ware.domain.InStock;
 import com.qkj.ware.domain.OutDetail;
 import com.qkj.ware.domain.OutDetailH;
 import com.qkj.ware.domain.OutStock;
 import com.qkj.ware.domain.OutStockH;
 import com.qkj.ware.domain.Stock;
+import com.qkj.ware.domain.Warepowers;
 import com.qkjsys.ebiz.dao.WareDAO;
 import com.qkjsys.ebiz.domain.Ware;
 
@@ -44,9 +50,26 @@ public class OutStockAction extends ActionSupport {
 	private int recCount;
 	private int pageSize;
 	private int currPage;
+	private List<Warepowers> wps;
 	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;出库管理";
-	
-	
+	private String detailS = "0";
+
+	public String getDetailS() {
+		return detailS;
+	}
+
+	public void setDetailS(String detailS) {
+		this.detailS = detailS;
+	}
+
+	public List<Warepowers> getWps() {
+		return wps;
+	}
+
+	public void setWps(List<Warepowers> wps) {
+		this.wps = wps;
+	}
+
 	public String getPath() {
 		return path;
 	}
@@ -110,7 +133,7 @@ public class OutStockAction extends ActionSupport {
 	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
 	}
-	
+
 	public int getCurrPage() {
 		return currPage;
 	}
@@ -118,8 +141,7 @@ public class OutStockAction extends ActionSupport {
 	public void setCurrPage(int currPage) {
 		this.currPage = currPage;
 	}
-	
-	
+
 	public List<Ware> getWares() {
 		return wares;
 	}
@@ -127,7 +149,6 @@ public class OutStockAction extends ActionSupport {
 	public void setWares(List<Ware> wares) {
 		this.wares = wares;
 	}
-	
 
 	public List<Stock> getStocks() {
 		return stocks;
@@ -136,7 +157,6 @@ public class OutStockAction extends ActionSupport {
 	public void setStocks(List<Stock> stocks) {
 		this.stocks = stocks;
 	}
-	
 
 	public List<OutDetail> getOutDetails() {
 		return outDetails;
@@ -153,8 +173,7 @@ public class OutStockAction extends ActionSupport {
 	public void setOutDetail(OutDetail outDetail) {
 		this.outDetail = outDetail;
 	}
-	
-	
+
 	public OutStockH getOutStockh() {
 		return outStockh;
 	}
@@ -179,53 +198,45 @@ public class OutStockAction extends ActionSupport {
 		this.stock = stock;
 	}
 
+	private void getWare() {
+		WareDAO wd = new WareDAO();
+		Map<String, Object> mapware = new HashMap<String, Object>();
+		this.setWps(warepower.checkWarePower());
+		mapware.clear();
+		if (wps != null && wps.size() > 0) {
+			List<Integer> ud_list = new ArrayList<>();
+			for (int i = 0; i < wps.size(); i++) {
+				if (wps.get(i).getPrvg().contains("2")) {// 有入库权限则有入库单查询权限
+					ud_list.add(wps.get(i).getWare_id());
+				}
+			}
+			mapware.put("uuids", ud_list);
+		}
+		this.setWares(wd.list(mapware));
+	}
+
 	public String list() throws Exception {
 		ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_LIST");
-		String u = ContextHelper.getUserLoginUuid();
-		String code=ContextHelper.getUserLoginDept();
-		WareDAO wd=new WareDAO();
 		try {
 			map.clear();
-			if (outStock != null){
-				if(outStock!=null&&outStock.getReason()==-1){
-					outStock.setReason(null);
-				}
-				if(outStock!=null&&outStock.getSend()==-1){
-					outStock.setSend(null);
-				}else if(outStock.getSend()==-2){//正常订单
-					map.put("order","1" );
-				}
-				if(outStock.getUuid()==0){
-					map.putAll(ToolsUtil.getMapByBean(outStock));
-					map.put("uuid", null);
-				}else{
-					map.putAll(ToolsUtil.getMapByBean(outStock));
-				}
-			}	
+			if (outStock != null) map.putAll(ToolsUtil.getMapByBean(outStock));
 			map.putAll(ContextHelper.getDefaultRequestMap4Page());
 			this.setPageSize(ContextHelper.getPageSize(map));
-			this.setCurrPage(ContextHelper.getCurrPage(map));	
-			if(ContextHelper.isAdmin()){//管理员
-				this.setOutStocks(dao.list(map));
-				map.clear();
-				map.put("bug","bug");
-				map.put("type", "0");//非藏酒库
-				this.setWares(wd.list(map));
-			}else{
-				map.put("username",u);
-				map.put("dept_code", code);
-				this.setOutStocks(dao.listPower(map));
-				map.clear();
-				map.put("username",u);
-				map.put("dept_code", code);
-				map.put("sel", 1);
-				map.put("bug","bug");
-				this.setWares(wd.listByPower(map));
+			this.setCurrPage(ContextHelper.getCurrPage(map));
+
+			this.setWps(warepower.checkWarePower());
+			if (wps != null && wps.size() > 0) {
+				List<Integer> ud_list = new ArrayList<>();
+				for (int i = 0; i < wps.size(); i++) {
+					if (wps.get(i).getPrvg().contains("2")) {// 有入库权限则有出库单查询权限
+						ud_list.add(wps.get(i).getWare_id());
+					}
+				}
+				map.put("storeids", ud_list);
 			}
-			
+			this.setOutStocks(dao.list(map));
+			getWare();
 			this.setRecCount(dao.getResultCount());
-			
-			this.setOutStock(null);
 			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;出库列表";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
@@ -233,47 +244,28 @@ public class OutStockAction extends ActionSupport {
 		}
 		return SUCCESS;
 	}
-	
+
 	public String relist() throws Exception {
 		return SUCCESS;
 	}
 
 	public String load() throws Exception {
-		String u = ContextHelper.getUserLoginUuid();
-		String code=ContextHelper.getUserLoginDept();
 		try {
 			if (null == viewFlag) {
 				this.setOutStock(null);
 				setMessage("你没有选择任何操作!");
-			}else if("new".equals(viewFlag)){
-				//出库仓库
-				wareByPower(u, code);
-				this.setOutStock(null);
-				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/outStock/outStock_list'>出库列表</a>&nbsp;&gt;&nbsp;增加出库";
-			}else if ("add".equals(viewFlag)) {
-				this.setOutStock(null);
-				wareByPower(u, code);
+			} else if ("add".equals(viewFlag)) {
+				getWare();
 				this.setOutStock(null);
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/outStock/outStock_list'>出库列表</a>&nbsp;&gt;&nbsp;增加出库";
 			} else if ("mdy".equals(viewFlag) || "view".equals(viewFlag) || "print".equals(viewFlag)) {
-				if (outStock.getUuid()<0&&null==outStock.getOrdernum())
-					this.setOutStock(null);
+				map.clear();
+				if (outStock == null) this.setOutStock(null);
 				else {
-					if ("view".equals(viewFlag)) {
-						map.put("status", 2);
-					}
-					if(outStock.getUuid()>0){
-						map.clear();
-						map.put("uuid", outStock.getUuid());
-					}
-					this.setOutStock((OutStock)dao.list(map).get(0));
-					wareByPower(u, code);
-					StockDAO sdao=new StockDAO();
-					map.clear();
-					map.put("store_id", outStock.getStore_id());
-					this.setStocks(sdao.listBig(map));
-					
-					OutDetailDAO idao=new OutDetailDAO();
+					map.put("uuid", outStock.getUuid());
+					this.setOutStock((OutStock) dao.list(map).get(0));
+					getWare();
+					OutDetailDAO idao = new OutDetailDAO();
 					map.clear();
 					map.put("lading_id", outStock.getUuid());
 					this.setOutDetails(idao.list(map));
@@ -283,55 +275,15 @@ public class OutStockAction extends ActionSupport {
 				this.setOutStock(null);
 				setMessage("无操作类型!");
 			}
+			if(detailS==null||detailS.equals("")){
+				this.setDetailS("0");
+			}
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!load 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!load 读取数据错误:", e);
 		}
-		
-		
-		if(null == viewFlag){
-			return "success";
-		}else if("add".equals(viewFlag)){
-			return "add";
-		}else if("mdy".equals(viewFlag)){
-			if(outStock.getReason()!=3 && (outStock.getMember_name()==null||outStock.getMember_name().equals(""))){
-				return "next";
-			}else if((outStock.getBsreason()==null||outStock.getBsreason().equals(""))&&outStock.getReason()==3){
-				return "next";
-			}else{
-				if(outStock.getReason()==0){
-					return "sale";
-				}else{
-					return "other";
-				}
-			}
-		}
-		else{
-			return "success";
-		}
-		
-	}
+		return SUCCESS;
 
-	private void wareByPower(String u, String code) {
-		WareDAO wd=new WareDAO();
-		if(ContextHelper.isAdmin()){//管理员
-			map.clear();
-			map.put("bug","bug");
-			map.put("type", "0");//非藏酒库
-			this.setWares(wd.list(map));
-			this.setBorrowwares(wares);
-		}else{
-			map.clear();
-			map.put("username",u);
-			map.put("dept_code", code);
-			map.put("del", 1);
-			map.put("bug","bug");
-			this.setWares(wd.listByPower(map));
-			//借货仓库
-			map.clear();
-			map.put("bug","bug");
-			this.setBorrowwares(wd.list(map));
-		}
 	}
 
 	public String add() throws Exception {
@@ -339,33 +291,18 @@ public class OutStockAction extends ActionSupport {
 		try {
 			Date d = new Date();
 			String u = ContextHelper.getUserLoginUuid();
-			if(outStock.getReason().equals(0)){
-				//outStock.setOrdernum(ToolsUtil.getCommonUUID("XC"));
-				outStock.setBorrowStore_id(0);
-			}else if(outStock.getReason().equals(1)){
-				//outStock.setOrdernum(ToolsUtil.getCommonUUID("ZC"));
-				outStock.setBorrowStore_id(0);
-			}else if(outStock.getReason().equals(2)){//借货
-				//outStock.setOrdernum(ToolsUtil.getCommonUUID("JC"));
-			}else if(outStock.getReason().equals(3)){
-				//outStock.setOrdernum(ToolsUtil.getCommonUUID("SC"));
-				outStock.setBorrowStore_id(0);
-			}else{
-				//outStock.setOrdernum(ToolsUtil.getCommonUUID("ZC"));
-				outStock.setBorrowStore_id(0);
-			}
+			outStock.setGoreason(0);
 			outStock.setTake_id(u);
-			outStock.setTotal_price(0.0);
-			outStock.setMember_price(0.0);
 			outStock.setSend(2);
 			outStock.setAdd_user(u);
 			outStock.setAdd_timer(d);
 			outStock.setLm_user(u);
 			outStock.setLm_timer(new Date());
+			outStock.setSplit(0);
 			dao.add(outStock);
 			map.clear();
 			map.put("ordernum", outStock.getOrdernum());
-			this.setOutStock((OutStock)dao.list(map).get(0));
+			this.setOutStock((OutStock) dao.list(map).get(0));
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!add 数据添加失败:", e);
 			throw new Exception(this.getClass().getName() + "!add 数据添加失败:", e);
@@ -376,9 +313,6 @@ public class OutStockAction extends ActionSupport {
 	public String save() throws Exception {
 		ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_MDY");
 		try {
-			if(outStock.getReason()==1){
-				outStock.setMember_id(outStock.getMember_name());
-			}
 			Date d = new Date();
 			String u = ContextHelper.getUserLoginUuid();
 			outStock.setLm_user(u);
@@ -390,95 +324,109 @@ public class OutStockAction extends ActionSupport {
 		}
 		return SUCCESS;
 	}
-	
-	//取消出库
-	public String cencle() throws Exception{
+
+	/**
+	 * sunshanshan20150528修改订单确认
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String sure() throws Exception {
+		ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_SURE");
+		this.setOutStock((OutStock) dao.get(outStock.getUuid()));
+		dao.sure(outStock);
+		return SUCCESS;
+	}
+
+	/**
+	 * sunshanshan20150528修改订单取消
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String cencle() throws Exception {
 		ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_CENCLE");
-		try {
-			OutDetailDAO odao=new OutDetailDAO();
-			//修改单据状态
-			outStock.setSend(5);
-			dao.updateSend(outStock);
-			//修改库存
-			StockDAO stockdao=new StockDAO();
-			map.clear();
-			map.put("lading_id",outStock.getUuid());
-			this.setOutDetails(odao.list(map));
-			if(outDetails.size()>0){
-				for(int i=0;i<outDetails.size();i++){
-					this.setOutDetail(outDetails.get(i));
-					StockDAO sd=new StockDAO();
-					this.setStock((Stock)sd.get(outDetail.getProduct_id()));
-					map.clear();
-					map.put("uuid", stock.getUuid());
-					map.put("quantity", stock.getQuantity()+outDetail.getNum());
-					stockdao.updateTotleById(map);
-				}
-		
+		this.setOutStock((OutStock) dao.get(outStock.getUuid()));
+		if(outStock.getReason()==6){//调出仓库
+			List<InStock> ins=new ArrayList<>();
+			InStockDAO id=new InStockDAO();
+			if(outStock.getGoreason()==null || outStock.getGoreason()==0){
+				map.put("goldUuid", outStock.getUuid());
+			}else{
+				map.put("uuid", outStock.getGoldUuid());
 			}
-			
-		} catch (Exception e) {
-			log.error(this.getClass().getName() + "!del 数据删除失败:", e);
-			throw new Exception(this.getClass().getName() + "!del 数据删除失败:", e);
+			ins=id.list(map);
+			if(ins.size()>0){
+				boolean flag=true;
+				for(int i=0;i<ins.size();i++){
+					if(ins.get(i).getConfirm()!=null && ins.get(i).getConfirm()==1&& ins.get(i).getSend()!=1){//对方已经部分确认
+						this.setMessage("对方已经确认收货不能取消");
+						flag=false;
+						break;
+					}
+				}
+				if(flag==true){
+					dao.cencle(outStock);
+				}
+			}
+		}else{
+			dao.cencle(outStock);
 		}
 		return SUCCESS;
 	}
-	
+
 	public String del() throws Exception {
 		ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_DEL");
 		try {
-			this.setOutStock((OutStock)dao.get(outStock.getUuid()));
+			this.setOutStock((OutStock) dao.get(outStock.getUuid()));
 			this.setOutStockh(outStock);
-			OutStockHDAO mhd=new OutStockHDAO();
-			//mhd.add(outStockh);
-			
+			OutStockHDAO mhd = new OutStockHDAO();
+			// mhd.add(outStockh);
+
 			dao.delete(outStock);
 			setMessage("删除成功!ID=" + outStock.getUuid());
-			OutDetailDAO odao=new OutDetailDAO();
-			//修改库存
+			OutDetailDAO odao = new OutDetailDAO();
+			// 修改库存
 			map.clear();
-			map.put("lading_id",outStock.getUuid());
+			map.put("lading_id", outStock.getUuid());
 			this.setOutDetails(odao.list(map));
-			if(outDetails.size()>0){
-				for(int i=0;i<outDetails.size();i++){
+			if (outDetails.size() > 0) {
+				for (int i = 0; i < outDetails.size(); i++) {
 					this.setOutDetail(outDetails.get(i));
-					OutDetailHDAO hd=new OutDetailHDAO();
+					OutDetailHDAO hd = new OutDetailHDAO();
 					this.setOutDetailh(outDetail);
-					//hd.add(outDetailh);//填加历史
+					// hd.add(outDetailh);//填加历史
 				}
-				
-				//删除详表
+
+				// 删除详表
 				map.clear();
-				map.put("lading_id",outStock.getUuid());
+				map.put("lading_id", outStock.getUuid());
 				odao.deleteByLading(map);
 			}
-			
+
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!del 数据删除失败:", e);
 			throw new Exception(this.getClass().getName() + "!del 数据删除失败:", e);
 		}
 		return SUCCESS;
 	}
-	
+
 	private void setOutDetailh(OutDetail outDetail2) {
 		// TODO Auto-generated method stub
-		outDetailh=new OutDetailH();
+		outDetailh = new OutDetailH();
 		outDetailh.setLading_id(outDetail2.getLading_id());
 		outDetailh.setNum(outDetail2.getNum());
 		outDetailh.setPrice(outDetail2.getPrice());
 		outDetailh.setProduct_id(outDetail2.getProduct_id());
-		outDetailh.setTotel(outDetail2.getTotel());
-		
+
 	}
 
 	private void setOutStockh(OutStock outStock2) {
 		// TODO Auto-generated method stub
-		outStockh=new OutStockH();
+		outStockh = new OutStockH();
 		outStockh.setAdd_timer(outStock2.getAdd_timer());
 		outStockh.setAdd_user(outStock2.getAdd_user());
 		outStockh.setBsreason(outStock2.getBsreason());
-		outStockh.setCoo_check(outStock2.getCoo_check());
-		outStockh.setCoo_check_time(outStock2.getCoo_check_time());
 		outStockh.setDate(outStock2.getDate());
 		outStockh.setLm_timer(outStock2.getLm_timer());
 		outStockh.setLm_user(outStock2.getLm_user());
@@ -498,54 +446,53 @@ public class OutStockAction extends ActionSupport {
 		outStockh.setStore_id(outStock2.getStore_id());
 		outStockh.setTake_id(outStock2.getTake_id());
 		outStockh.setTotal_price(outStock2.getTotal_price());
-		
+
 	}
 
 	/**
 	 * 新增方法
 	 */
-	
 
-	//还货
+	// 还货
 	public String borrow() throws Exception {
 		ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_MDY");
 		String u = ContextHelper.getUserLoginUuid();
-		String code=ContextHelper.getUserLoginDept();
+		String code = ContextHelper.getUserLoginDept();
 		try {
-			if(outStock!=null&&outStock.getReason()!=null&&outStock.getReason()==1){
+			if (outStock != null && outStock.getReason() != null && outStock.getReason() == 1) {
 				outStock.setMember_id(outStock.getMember_name());
 			}
 			map.clear();
 			map.put("uuid", outStock.getUuid());
-			this.setOutStock((OutStock)dao.list(map).get(0));
-			int jStock=outStock.getBorrowStore_id();
-			int cStock=outStock.getStore_id();
-			
-			StockDAO stockdao=new StockDAO();
-			OutDetailDAO idao=new OutDetailDAO();
+			this.setOutStock((OutStock) dao.list(map).get(0));
+			int jStock = outStock.getBorrowStore_id();
+			int cStock = outStock.getStore_id();
+
+			StockDAO stockdao = new StockDAO();
+			OutDetailDAO idao = new OutDetailDAO();
 			map.clear();
 			map.put("lading_id", outStock.getUuid());
 			this.setOutDetails(idao.list(map));
-			if(outDetails.size()>0){
-				for(int i=0;i<outDetails.size();i++){
+			if (outDetails.size() > 0) {
+				for (int i = 0; i < outDetails.size(); i++) {
 					this.setOutDetail(outDetails.get(i));
-					//改库存出库仓库+库存，借库仓库—库存
-					this.setStock((Stock)stockdao.get(outDetail.getProduct_id()));
-					int product=stock.getProduct_id();
-					map.put("quantity", stock.getQuantity()+outDetail.getNum());
+					// 改库存出库仓库+库存，借库仓库—库存
+					this.setStock((Stock) stockdao.get(outDetail.getProduct_id()));
+					int product = stock.getProduct_id();
+					map.put("quantity", stock.getQuantity() + outDetail.getNum());
 					map.put("uuid", stock.getUuid());
 					stockdao.updatborrow(map);
-					
-					//借库仓库—库存
+
+					// 借库仓库—库存
 					map.clear();
-					map.put("product_id",product);
+					map.put("product_id", product);
 					map.put("store_id", outStock.getBorrowStore_id());
-					this.setStock((Stock)stockdao.list(map).get(0));
-					
-					map.put("quantity", stock.getQuantity()-outDetail.getNum());
+					this.setStock((Stock) stockdao.list(map).get(0));
+
+					map.put("quantity", stock.getQuantity() - outDetail.getNum());
 					map.put("uuid", stock.getUuid());
 					stockdao.updatborrow(map);
-					
+
 				}
 			}
 			outStock.setBoflag(1);
@@ -553,118 +500,24 @@ public class OutStockAction extends ActionSupport {
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
-		} 
+		}
 		return SUCCESS;
 	}
-	
-	
-	public String sale() throws Exception {
+
+	public String note() throws Exception {
 		ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_MDY");
 		try {
-			if(outStock.getReason()==1){
-				outStock.setMember_id(outStock.getMember_name());
-			}
-			if(outStock.getBsreason()!=null){
-				dao.updatebs(outStock);
-			}else{
-				dao.updateStockSale(outStock);
-			}
-			
-		} catch (Exception e) {
-			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
-			throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
-		}
-		return SUCCESS;
-	}
-	
-	
-	//确认
-		public String sure() throws Exception {
-			ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_ADD");
-			String u = ContextHelper.getUserLoginUuid();
-			try {
-				//修改库存
-				this.setOutStock((OutStock)dao.get(outStock.getUuid()));
-				OutDetailDAO odd=new OutDetailDAO();
-				map.clear();
-				map.put("lading_id", outStock.getUuid());
-				this.setOutDetails(odd.list(map));
-				if(outDetails.size()>0){
-					for(int i=0;i<outDetails.size();i++){
-						this.setOutDetail(outDetails.get(i));
-						StockDAO stockdao=new StockDAO();
-						map.clear();
-						map.put("uuid", outDetail.getProduct_id());//出库祥表的product_id是库存id
-						this.setStock((Stock)stockdao.fingByPro(map));
-						int quan=(stock.getQuantity()-stock.getFreezeNum())-outDetail.getNum();
-						stock.setQuantity(quan);
-						stockdao.save(stock);
-					}
-				}
-				//修改确认状态
-				outStock.setSend(4);
-				outStock.setManager_check(1);//确认
-				outStock.setManager_check_user(u);//确认人
-				outStock.setManager_check_time(new Date());//确认时间
-				dao.updateCheck(outStock);
-			} catch (Exception e) {
-				log.error(this.getClass().getName() + "!save 数据更新失败:", e);
-				throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
-			}
-			return SUCCESS;
-		}
-	
-		public String note() throws Exception {
-			ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_MDY");
-			try {
-				Date d = new Date();
-				String u = ContextHelper.getUserLoginUuid();
-				String note=outStock.getNote();
-				int uuid=outStock.getUuid();
-				this.setOutStock(null);
-				outStock=new OutStock();
-				outStock.setLm_user(u);
-				outStock.setLm_timer(new Date());
-				outStock.setUuid(uuid);
-				outStock.setNote(note);
-				dao.updateNote(outStock);
-			} catch (Exception e) {
-				log.error(this.getClass().getName() + "!save 数据更新失败:", e);
-				throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
-			}
-			return SUCCESS;
-		}
-		
-/*
-		//送审
-		public String chack() throws Exception {
-			ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_STATUS0");
-			try {
-				Date d = new Date();
-				String u = ContextHelper.getUserLoginUuid();
-				outStock.setManager_check(0);
-				outStock.setCoo_check(0);
-				outStock.setSend(3);
-				dao.updateCheck(outStock);
-			} catch (Exception e) {
-				log.error(this.getClass().getName() + "!save 数据更新失败:", e);
-				throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
-			}
-			return SUCCESS;
-		}
-		
-	//经理审核
-	
-	public String chackManage() throws Exception {
-		ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_MANAGE");
-		try {
 			Date d = new Date();
 			String u = ContextHelper.getUserLoginUuid();
-			outStock.setManager_check(1);
-			outStock.setCoo_check(0);
-			outStock.setManager_check_time(d);
-			outStock.setManager_check_user(u);
-			dao.updateCheckManage(outStock);
+			String note = outStock.getNote();
+			int uuid = outStock.getUuid();
+			this.setOutStock(null);
+			outStock = new OutStock();
+			outStock.setLm_user(u);
+			outStock.setLm_timer(new Date());
+			outStock.setUuid(uuid);
+			outStock.setNote(note);
+			dao.updateNote(outStock);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
@@ -672,24 +525,84 @@ public class OutStockAction extends ActionSupport {
 		return SUCCESS;
 	}
 	
-	//总监审核
-	public String chackCoo() throws Exception {
-		ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_COO");
-		try {
-			Date d = new Date();
-			String u = ContextHelper.getUserLoginUuid();
-			outStock.setCoo_check(1);
-			outStock.setCoo_check_time(d);
-			outStock.setCoo_check_user(u);
-			outStock.setSend(4);
-			dao.updateCheckCoo(outStock);
-		} catch (Exception e) {
-			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
-			throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
+	/**
+	 * 拆分20150715
+	 * @return
+	 * @throws Exception
+	 */
+	public String inSpilt() throws Exception{
+		ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_SPILT");
+		OutStock ins=new OutStock();
+		OutDetailDAO od=new OutDetailDAO();
+		ins=(OutStock)dao.get(outStock.getUuid());
+		this.setOutDetail((OutDetail) od.get(outDetail.getUuid()));
+		dao.addStock(ins,1,outStock.getUuid(),outDetail,outStock.getStore_id(),outStock.getSplitNum());
+		return SUCCESS;
+	}
+	
+	public String mdyRemark() throws Exception{
+		if(outStock!=null &&outStock.getStore_idR()!=null){
+			outStock.setRemark("仓库编号"+outStock.getStore_id()+"转入"+outStock.getStore_idR());
+			outStock.setStore_id(outStock.getStore_idR());
+			dao.mdyRemark(outStock);
 		}
 		return SUCCESS;
 	}
-	*/
-	
-	
+
+	/*
+	 * //送审
+	 * public String chack() throws Exception {
+	 * ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_STATUS0");
+	 * try {
+	 * Date d = new Date();
+	 * String u = ContextHelper.getUserLoginUuid();
+	 * outStock.setManager_check(0);
+	 * outStock.setCoo_check(0);
+	 * outStock.setSend(3);
+	 * dao.updateCheck(outStock);
+	 * } catch (Exception e) {
+	 * log.error(this.getClass().getName() + "!save 数据更新失败:", e);
+	 * throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
+	 * }
+	 * return SUCCESS;
+	 * }
+	 * 
+	 * //经理审核
+	 * 
+	 * public String chackManage() throws Exception {
+	 * ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_MANAGE");
+	 * try {
+	 * Date d = new Date();
+	 * String u = ContextHelper.getUserLoginUuid();
+	 * outStock.setManager_check(1);
+	 * outStock.setCoo_check(0);
+	 * outStock.setManager_check_time(d);
+	 * outStock.setManager_check_user(u);
+	 * dao.updateCheckManage(outStock);
+	 * } catch (Exception e) {
+	 * log.error(this.getClass().getName() + "!save 数据更新失败:", e);
+	 * throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
+	 * }
+	 * return SUCCESS;
+	 * }
+	 * 
+	 * //总监审核
+	 * public String chackCoo() throws Exception {
+	 * ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_COO");
+	 * try {
+	 * Date d = new Date();
+	 * String u = ContextHelper.getUserLoginUuid();
+	 * outStock.setCoo_check(1);
+	 * outStock.setCoo_check_time(d);
+	 * outStock.setCoo_check_user(u);
+	 * outStock.setSend(4);
+	 * dao.updateCheckCoo(outStock);
+	 * } catch (Exception e) {
+	 * log.error(this.getClass().getName() + "!save 数据更新失败:", e);
+	 * throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
+	 * }
+	 * return SUCCESS;
+	 * }
+	 */
+
 }

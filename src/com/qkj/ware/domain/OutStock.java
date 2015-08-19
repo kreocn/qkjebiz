@@ -1,9 +1,9 @@
 package com.qkj.ware.domain;
 
-import java.util.*;
+import java.util.Date;
 
 public class OutStock {
-	private int uuid;// (varchar)
+	private Integer uuid;// (varchar)
 	private String ordernum;// 订单号
 	private Date date;// (date)
 	private Integer store_id;// (int)
@@ -15,16 +15,13 @@ public class OutStock {
 	private Date add_timer;// (datetime)
 	private String lm_user;// (int)
 	private Date lm_timer;// (datetime)
-	private Integer reason;// (int)0销售用酒，1董事会用酒 ，借酒
+	private Integer reason;// (int)0销售用酒1招待用酒3报损4赠酒6调货出库5其它
 	private Integer send;// (int)2新单3待审核4结案5未出货6未返利
-	private Integer manager_check;// (int)渠道/运营经理确认   1:已确认
+	private Integer manager_check;// (int)渠道/运营经理确认 1:已确认
 	private String manager_check_user;// (varchar)
 	private Date manager_check_time;// (datetime)确认时间
-	private Integer coo_check;// (int)运营总监确认
-	private String coo_check_user;// (varchar)
-	private Date coo_check_time;// (datetime)确认时间
 	private String bsreason;
-	private Integer borrowStore_id; 
+	private Integer borrowStore_id;
 
 	private String member_id;
 	private String member_mebile;
@@ -33,28 +30,138 @@ public class OutStock {
 	private Double member_price;
 	private String dept_name;
 	private String dept_code;
-	private Integer boflag;//0未还1已还
+	private Integer boflag;// 0未还1已还
+	private Integer goldUuid;
+	private Integer goreason;
+	private Integer backStock;
+
+	private Integer splitUuid;
+	private Integer split;
+	private String remark;
+
+	private String ship_no;
+	private String ship_phone;
+	private String ship_type;
 
 	// 以下为非数据库字段
 	private String add_user_name;
 	private String lm_user_name;
 	private String ware_name;
 	private String manager_check_user_name;
-	private String coo_check_user_name;
 	private String operator_name;
 	private String take_name;
 	private Date date_start;
 	private Date date_end;
+	private String borrowStore_name;
+	private Integer store_idR;
+
+	public String getShip_no() {
+		return ship_no;
+	}
+
+	public void setShip_no(String ship_no) {
+		this.ship_no = ship_no;
+	}
+
+	public String getShip_phone() {
+		return ship_phone;
+	}
+
+	public void setShip_phone(String ship_phone) {
+		this.ship_phone = ship_phone;
+	}
+
+	public String getShip_type() {
+		return ship_type;
+	}
+
+	public void setShip_type(String ship_type) {
+		this.ship_type = ship_type;
+	}
+
+	private Integer splitNum;
+
+	public Integer getBackStock() {
+		return backStock;
+	}
+
+	public void setBackStock(Integer backStock) {
+		this.backStock = backStock;
+	}
+
+	public Integer getStore_idR() {
+		return store_idR;
+	}
+
+	public void setStore_idR(Integer store_idR) {
+		this.store_idR = store_idR;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public Integer getSplitNum() {
+		return splitNum;
+	}
+
+	public void setSplitNum(Integer splitNum) {
+		this.splitNum = splitNum;
+	}
+
+	public Integer getSplitUuid() {
+		return splitUuid;
+	}
+
+	public void setSplitUuid(Integer splitUuid) {
+		this.splitUuid = splitUuid;
+	}
+
+	public Integer getSplit() {
+		return split;
+	}
+
+	public void setSplit(Integer split) {
+		this.split = split;
+	}
+
+	public Integer getGoreason() {
+		return goreason;
+	}
+
+	public void setGoreason(Integer goreason) {
+		this.goreason = goreason;
+	}
+
+	public String getBorrowStore_name() {
+		return borrowStore_name;
+	}
+
+	public Integer getGoldUuid() {
+		return goldUuid;
+	}
+
+	public void setGoldUuid(Integer goldUuid) {
+		this.goldUuid = goldUuid;
+	}
+
+	public void setBorrowStore_name(String borrowStore_name) {
+		this.borrowStore_name = borrowStore_name;
+	}
 
 	public Date getDate() {
 		return date;
 	}
 
-	public int getUuid() {
+	public Integer getUuid() {
 		return uuid;
 	}
 
-	public void setUuid(int uuid) {
+	public void setUuid(Integer uuid) {
 		this.uuid = uuid;
 	}
 
@@ -166,30 +273,6 @@ public class OutStock {
 		this.manager_check_time = manager_check_time;
 	}
 
-	public Integer getCoo_check() {
-		return coo_check;
-	}
-
-	public void setCoo_check(Integer coo_check) {
-		this.coo_check = coo_check;
-	}
-
-	public String getCoo_check_user() {
-		return coo_check_user;
-	}
-
-	public void setCoo_check_user(String coo_check_user) {
-		this.coo_check_user = coo_check_user;
-	}
-
-	public Date getCoo_check_time() {
-		return coo_check_time;
-	}
-
-	public void setCoo_check_time(Date coo_check_time) {
-		this.coo_check_time = coo_check_time;
-	}
-
 	public String getAdd_user() {
 		return add_user;
 	}
@@ -286,14 +369,6 @@ public class OutStock {
 		this.manager_check_user_name = manager_check_user_name;
 	}
 
-	public String getCoo_check_user_name() {
-		return coo_check_user_name;
-	}
-
-	public void setCoo_check_user_name(String coo_check_user_name) {
-		this.coo_check_user_name = coo_check_user_name;
-	}
-
 	public String getDept_name() {
 		return dept_name;
 	}
@@ -357,9 +432,5 @@ public class OutStock {
 	public void setDate_end(Date date_end) {
 		this.date_end = date_end;
 	}
-	
-	
-	
-	
-	
+
 }

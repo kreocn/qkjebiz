@@ -61,15 +61,15 @@
 	<div class="label_main">
 		<div class="label_hang">
 		    <div class="label_ltit">会员编号:</div>
-		    <div class="label_rwben label_rwb">${lading.member_id}</div>
+		    <div class="label_rwben label_rwb">${lading.member_id}<s:hidden name="lading.member_id"/></div>
 		</div>
 		<div class="label_hang">
 		    <div class="label_ltit">会员手机:</div>
-		    <div class="label_rwben label_rwb">${lading.member_mobile}</div>
+		    <div class="label_rwben label_rwb">${lading.member_mobile}<s:hidden name="lading.member_mobile"/></div>
 		</div>
 		<div class="label_hang">
 		    <div class="label_ltit">会员名称:</div>
-		    <div class="label_rwben label_rwb">${lading.member_name}</div>
+		    <div class="label_rwben label_rwb">${lading.member_name}<s:hidden name="lading.member_name"/></div>
 		</div>
 	</div>
 	</s:elseif>

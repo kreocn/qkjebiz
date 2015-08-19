@@ -52,6 +52,16 @@ public class CloseOrderStep {
 	}
 
 	/**
+	 * 办事处通过
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public void check10(String userid) throws Exception {
+		mdyCloseOrderSDStatus(20, userid);
+	}
+	
+	/**
 	 * 大区经理通过
 	 * 
 	 * @return
@@ -123,7 +133,63 @@ public class CloseOrderStep {
 	public void check60(String userid) throws Exception {
 		mdyCloseOrderSMDStatus(60, userid);
 	}
+	
+	/**
+	 * 财务通过
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public void checkfd10(String userid) throws Exception {
+			mdyCloseOrderFDStatus(1, 10,userid);
+			closeOrder.setState(2);
+			dao.mdyPassStatus(closeOrder);
+			addProcess("CLOSEORDER_APPLY_PASS", "提货结案申请通过", userid);
+	}
 
+	
+	/**
+	 * 改财务审核状态通用权限
+	 * 
+	 * @return
+	 * @throws Exception
+	 * @date 2014-4-26 上午10:25:25
+	 */
+	public int mdyCloseOrderFDStatus(int flag, int smd_status,String userid) {
+		if (flag == 1) {// 申请
+			if (smd_status == 5) {
+				noteflag = "退回";
+			}
+			if (smd_status == 10) {
+				noteflag = "通过";
+			}
+			closeOrder.setFd_check_state(smd_status);
+			closeOrder.setFd_check_user(userid);
+			closeOrder.setFd_check_time(new Date());
+			closeOrder.setLm_user(userid);
+			closeOrder.setLm_time(new Date());
+			String note = "提货结案单--财务状态变更-" + noteflag;
+			addProcess("CLOSEORDER_MDY_FDSTATUS", note, userid);
+			return dao.mdyCloseOrderFDStatus(closeOrder);
+		} else {// 数据中心
+			if (smd_status == 5) {
+				noteflag = "退回";
+			}
+			if (smd_status == 10) {
+				noteflag = "通过";
+			}
+			closeOrder.setNd_check_state(smd_status);
+			closeOrder.setNd_check_time(new Date());
+			closeOrder.setNd_check_user(userid);
+			closeOrder.setLm_user(userid);
+			closeOrder.setLm_time(new Date());
+			String note = "提货结案单--数据中心状态变更-" + noteflag;
+			addProcess("CLOSEORDER_MDY_NDCSTATUS", note, userid);
+			return dao.mdyCloseOrderNDStatus(closeOrder);
+		}
+
+	}
+	
 	/**
 	 * 改销售部审批状态通用函数
 	 * 

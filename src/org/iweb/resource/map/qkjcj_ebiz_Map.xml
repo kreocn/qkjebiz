@@ -225,14 +225,21 @@
 	<typeAlias alias="ware" type="com.qkjsys.ebiz.domain.Ware" />
 	<select id="ebiz_getWares" resultClass="ware" parameterClass="java.util.Map">
 		<![CDATA[ 
-			Select * From qkj_t_warehouse
+			SELECT w.*,u.`USER_NAME` lm_user_name FROM qkj_t_warehouse w LEFT JOIN s_sys_user u ON (w.`lm_user`=u.`UUID`)
 		]]>
 		<dynamic prepend="WHERE">
-			<isNotNull prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotNull>
-			<isNotNull prepend="AND" property="ware_name"><![CDATA[ ware_name=#ware_name# ]]></isNotNull>
-			<isNotNull prepend="AND" property="ware_class"><![CDATA[ ware_class=#ware_class# ]]></isNotNull>
-			<isNotNull prepend="AND" property="bug"><![CDATA[ uuid<>6 ]]></isNotNull>
-			<isNotNull prepend="AND" property="type"><![CDATA[ `ware_class`=0 ]]></isNotNull>
+			<isNotNull prepend="AND" property="uuid"><![CDATA[ w.uuid=#uuid# ]]></isNotNull>
+			<isNotNull prepend="AND" property="ware_name"><![CDATA[ w.ware_name=#ware_name# ]]></isNotNull>
+			<isNotNull prepend="AND" property="ware_class"><![CDATA[ w.ware_class=#ware_class# ]]></isNotNull>
+			<isNotNull prepend="AND" property="bug"><![CDATA[ w.uuid<>6 ]]></isNotNull>
+			<isNotNull prepend="AND" property="type"><![CDATA[ w.`ware_class`=0 ]]></isNotNull>
+			<isNotNull prepend="AND" property="ware_instcode"><![CDATA[ w.`ware_instcode`=#ware_instcode# ]]></isNotNull>
+			
+			<isNotEmpty prepend="AND" property="uuids">
+			<![CDATA[ w.uuid In ]]>
+				<iterate property="uuids" open="(" close=")" conjunction=" , "> #uuids[]#</iterate>
+			</isNotEmpty>
+			
 		</dynamic>
 	</select>
 	<!-- 根据权限查询仓库且不包含破损库 -->
@@ -255,8 +262,8 @@
 	
 	<insert id="ebiz_addWare" parameterClass="ware">
 		<![CDATA[ 
-			Insert Into qkj_t_warehouse(ware_class, ware_name, address,map_data, short_note, note, lm_user, lm_time)
-			Values (#ware_class#, #ware_name#, #address#,#map_data#, #short_note#, #note#, #lm_user#, #lm_time#)
+			Insert Into qkj_t_warehouse(ware_class, ware_name, parent_ware,address,map_data, short_note, note, lm_user, lm_time,ware_instcode)
+			Values (#ware_class#, #ware_name#, #parent_ware#,#address#,#map_data#, #short_note#, #note#, #lm_user#, #lm_time#,#ware_instcode#)
 		]]>
 	</insert>
 	<update id="ebiz_mdyWare" parameterClass="ware">
@@ -264,9 +271,11 @@
 			Update qkj_t_warehouse
 			Set ware_class = #ware_class#,
 				ware_name = #ware_name#,
+				parent_ware=#parent_ware#,
 				address = #address#,
 				map_data = #map_data#,
 				short_note = #short_note#,
+				ware_instcode=#ware_instcode#,
 				note = #note#,
 				lm_user = #lm_user#,
 				lm_time = #lm_time#

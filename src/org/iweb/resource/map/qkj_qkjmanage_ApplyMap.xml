@@ -156,7 +156,8 @@
 				is_fullcheck=#is_fullcheck#,
 				apply_type=#apply_type#,
 				fullcheck_text=#fullcheck_text#,
-				is_material=#is_material# 
+				is_material=#is_material#,
+				total_price=#total_price# 
 			Where uuid = #uuid#
 		]]>
 	</update>
@@ -229,6 +230,25 @@
 				AND `status` = 1)a
 		)
 		WHERE t.uuid = #value#
+		]]>
+	</update>
+	
+	
+	<update id="qkjmanage_ApplyTotalPrice" parameterClass="java.util.Map">
+		<![CDATA[
+		UPDATE qkjm_r_apply t
+		SET total_price=#total_price# 
+		WHERE t.uuid = #uuid#
+		]]>
+	</update>
+	
+	
+	<update id="qkjmanage_mdyGoflag" parameterClass="apply">
+		<![CDATA[
+			Update qkjm_r_apply
+			Set 
+				goflag=#goflag#
+			Where uuid = #uuid#
 		]]>
 	</update>
 	<!-- ship info change -->

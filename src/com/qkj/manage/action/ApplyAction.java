@@ -13,6 +13,7 @@ import org.iweb.sys.ActionAttr;
 import org.iweb.sys.ContextHelper;
 import org.iweb.sys.Parameters;
 import org.iweb.sys.ToolsUtil;
+import org.iweb.sysvip.domain.Member;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.qkj.manage.dao.ActivePosmDAO;
@@ -21,7 +22,9 @@ import com.qkj.manage.dao.ApplyDAO;
 import com.qkj.manage.dao.ApplyPosmDAO;
 import com.qkj.manage.dao.ApplyProductDAO;
 import com.qkj.manage.dao.ApproveDAO;
+import com.qkj.manage.dao.CloseOrderProDAO;
 import com.qkj.manage.dao.ProcessDAO;
+import com.qkj.manage.dao.ProductDAO;
 import com.qkj.manage.domain.Active;
 import com.qkj.manage.domain.ActiveMemcost;
 import com.qkj.manage.domain.ActivePosm;
@@ -31,6 +34,11 @@ import com.qkj.manage.domain.ApplyPosm;
 import com.qkj.manage.domain.ApplyProduct;
 import com.qkj.manage.domain.Approve;
 import com.qkj.manage.domain.CloseOrder;
+import com.qkj.manage.domain.CloseOrderPro;
+import com.qkj.manage.domain.LadingItem;
+import com.qkj.manage.domain.Product;
+import com.qkj.ware.dao.OutStockDAO;
+import com.qkj.ware.domain.InStock;
 
 public class ApplyAction extends ActionSupport implements ActionAttr {
 	private static final long serialVersionUID = 1L;
@@ -46,6 +54,9 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 	private String isApprover;
 	private String message;
 	private String viewFlag;
+
+
+	private String is_total_price="0";
 	private int recCount;
 	private int pageSize;
 	private int currPage;
@@ -66,7 +77,13 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 	private List<ActivePosm> activePosms;
 	private List<ActiveMemcost> activeMemcosts;
 	private List<ApplyPosm> applyPosms;
+	public String getIs_total_price() {
+		return is_total_price;
+	}
 
+	public void setIs_total_price(String is_total_price) {
+		this.is_total_price = is_total_price;
+	}
 	public List<ApplyPosm> getApplyPosms() {
 		return applyPosms;
 	}
@@ -90,10 +107,6 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 	public void setOtherApplyProducts(List<ApplyProduct> otherApplyProducts) {
 		this.otherApplyProducts = otherApplyProducts;
 	}
-
-
-
-
 
 	public double getIndprice() {
 		return indprice;
@@ -284,7 +297,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
 		}
-		if (perWorkFlag == null || perWorkFlag.equals("null")) {
+		if (perWorkFlag == null || perWorkFlag.equals("null") ||perWorkFlag.equals("")) {
 			return "success";
 		} else {
 			perWorkFlag = null;
@@ -298,7 +311,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 
 	public String load() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_VIEW");
-		if ((perWorkF == null || perWorkF.equals("null")) && perWorkFlag == null) {
+		if ((perWorkF == null || perWorkF.equals("null")  ||perWorkF.equals("")) && (perWorkFlag == null || perWorkFlag.equals(""))) {
 			perWorkFlag = null;
 		} else {
 			perWorkFlag = "perWork";
@@ -326,18 +339,33 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 				else this.setIsApprover("false");
 				get_apply_depts();
 				this.setApplyUserSign(dao.listUserSign(apply.getUuid()));
-				
-				
-				
+
 				map.clear();
 				map.put("apply_id", apply.getUuid());
 				map.put("status", 1);
 				ApplyProductDAO adao = new ApplyProductDAO();
 				this.setApplyproduct(adao.list(map));
-				//this.setIndApplyProducts(independence(map, "海拔", 1));
+				// this.setIndApplyProducts(independence(map, "海拔", 1));
 				this.setOtherApplyProducts(independence(map, "海拔", 2));
 				ApplyPosmDAO apdao = new ApplyPosmDAO();
 				this.setApplyPosms(apdao.list(map));
+				if(!is_total_price.equals("1")){
+				for (int i = 0; i < applyproduct.size(); i++) {
+					if(i==0){
+						this.apply.setTotal_price(0);
+					}
+					double total_price=this.apply.getTotal_price()+applyproduct.get(i).getTotal_price();
+					this.apply.setTotal_price(total_price);
+				}
+				for (int i = 0; i < applyPosms.size(); i++) {
+					double total_price=this.apply.getTotal_price()+applyPosms.get(i).getTotal_price();
+					this.apply.setTotal_price(total_price);
+				}
+				map.clear();
+				map.put("uuid", apply.getUuid());
+				map.put("total_price", this.apply.getTotal_price());
+				dao.saveTotalPrice(map);
+				}
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/apply_list?viewFlag=relist'>至事由列表</a>&nbsp;&gt;&nbsp;至事由详情";
 			} else {
 				this.setApply(null);
@@ -359,7 +387,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 			} else {
 				this.setApply((Apply) dao.get(apply.getUuid()));
 				this.setApplyUserSign(dao.listUserSign(apply.getUuid()));
-				//this.setSign((CloseOrder) dao.sign(apply.getUuid()));
+				// this.setSign((CloseOrder) dao.sign(apply.getUuid()));
 			}
 
 		} catch (Exception e) {
@@ -454,7 +482,6 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
-
 	/**
 	 * 退回
 	 * 
@@ -472,7 +499,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
-	
+
 	/**
 	 * 主管审核通过
 	 * 
@@ -516,10 +543,56 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 	public String check20() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_CHECK20");
 		try {
+			dao.startTransaction();
 			check(30);
+			this.setApply((Apply) dao.get(apply.getUuid()));
+			dao.commitTransaction();
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!check20 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!check20 数据更新失败:", e);
+		} finally {
+			dao.endTransaction();
+		}
+		return SUCCESS;
+	}
+
+	public String outStock() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_OUTSTOCK");
+		try {
+			// 生成出库单
+			// this.setApply((Apply) dao.get(apply.getUuid()));
+			map.clear();
+			map.put("apply_id", apply.getUuid());
+			map.put("status", 1);
+			ApplyProductDAO adao = new ApplyProductDAO();
+			ProductDAO pd = new ProductDAO();
+			this.setApplyproduct(adao.list(map));
+			Product pdi = new Product();
+			List<Product> produs = new ArrayList<>();
+			if (applyproduct.size() > 0) {
+				for (int i = 0; i < applyproduct.size(); i++) {
+					ApplyProduct ladingItem = new ApplyProduct();
+					ladingItem = applyproduct.get(i);
+					List<Product> pros = new ArrayList<>();
+					map.clear();
+					map.put("uuid", ladingItem.getProduct_id());
+					pros = pd.list(map);
+					if (pros.size() > 0) {
+						pdi = pros.get(0);
+						pdi.setNum(ladingItem.getNum());
+						pdi.setDprice(ladingItem.getPer_price());
+						pdi.setDtotle(ladingItem.getTotal_price());
+						produs.add(pdi);
+					}
+				}
+				addOutStock(apply, produs);
+			}
+			if(produs.size()<=0){
+				this.setMessage("没有物料信息,不能生成出库单");
+			}
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!outStock 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!outStock 数据更新失败:", e);
 		}
 		return SUCCESS;
 	}
@@ -733,33 +806,55 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
-	
-	
-	
-	
+
+	/**
+	 * 生成出库单20150722sun
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public void addOutStock(Apply apply, List<Product> produs) throws Exception {
+		try {
+			dao.startTransaction();
+			OutStockDAO isa = new OutStockDAO();
+			LadingAction l = new LadingAction();
+			Integer goid = l.getWare(ContextHelper.getUserLoginDept());
+			isa.addStock(apply.getUuid(), goid, null, 2, 3, produs, null, false, null, null);// 生成销售用酒出库
+			
+			//修改状态
+			apply.setGoflag(4);
+			dao.mdyApplyGoflag(apply);
+			dao.commitTransaction();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}finally {
+			dao.endTransaction();
+		}
+		
+	}
+
 	private List<ApplyProduct> independence(Map<String, Object> map, String title, int flag) {
 		ApplyProductDAO adao = new ApplyProductDAO();
 		List<ApplyProduct> products = new ArrayList<>();
 		ApplyProduct pri = new ApplyProduct();
-	/*	if (flag == 1) {// 是需要独立显示的商品
-			map.put("title", title);
-			map.remove("othertitle");
-			products = adao.list(map);
-			if (products.size() > 0) {
-				for (int i = 0; i < products.size(); i++) {
-					pri = products.get(i);
-					indprice = indprice + pri.getTotal_price();
-				}
-			}
-		} else {*/
-			map.remove("title");
-			//map.put("othertitle", title);
-			products = adao.list(map);
-	/*	}*/
+		/*
+		 * if (flag == 1) {// 是需要独立显示的商品
+		 * map.put("title", title);
+		 * map.remove("othertitle");
+		 * products = adao.list(map);
+		 * if (products.size() > 0) {
+		 * for (int i = 0; i < products.size(); i++) {
+		 * pri = products.get(i);
+		 * indprice = indprice + pri.getTotal_price();
+		 * }
+		 * }
+		 * } else {
+		 */
+		map.remove("title");
+		// map.put("othertitle", title);
+		products = adao.list(map);
+		/* } */
 		return products;
 	}
-	
-	
-	
-	
+
 }

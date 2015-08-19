@@ -28,27 +28,84 @@
 	<div class="tab_right">
 		<div class="tab_warp main">
 			<div class="dq_step">	<a href="/manager/default">首页</a>&nbsp;&gt;&nbsp;查看订单</div>
+			
+			
+	<s:form id="serachForm" name="serachForm" action="stores_order_findOrder"  method="get" namespace="/qkjmanage" theme="simple">
+ 	<div class="label_con">
+ 	<div class="label_main">
+        <div class="label_hang">
+            <div class="label_ltit">编号:</div>
+            <div class="label_rwben"><s:textfield name='sotresorder.id' value=""/></div>
+        </div>
+        
+           <div class="label_hang">
+            <div class="label_ltit">订单状态:</div>
+            <div class="label_rwben label_rwb"><s:select id="fdsta" name="sotresorder.is_library" cssClass="selectKick"
+				 list="#{0:'未出库',1:'已出库'}"
+				 headerKey="" headerValue="--请选择--" />
+            </div>
+        </div>
+        
+        
+        <div class="label_hang">
+            <div class="label_ltit">订单时间:</div>
+            <div class="label_rwben2">
+            	<span class="label_rwb nw">
+				<input type="text" class="datepicker iI iI-f" name="sotresorder.time_begin" title="从" value="${it:formatDate(apply.apply_time_begin,'yyyy-MM-dd')}" />
+				</span>
+				<span class="label_rwb nw">
+				<input type="text" class="datepicker iI iI-t" name="sotresorder.time_end" title="到" value="${it:formatDate(apply.apply_time_end,'yyyy-MM-dd')}" />
+            	</span>
+            </div>
+        </div>
+        
+        
+        
+        <div class="label_hang tac">
+        	<s:checkbox id="search_mcondition" name="search_mcondition" fieldValue="true" value="true" cssClass="regular-checkbox" />
+			<label for="search_mcondition"></label>更多条件
+            <s:submit value="搜索" /> <s:reset value="重置" />
+        </div>
+	</div>
+ 	</div>
+ 	</s:form>
+			
+			
+			
+			
+			
+			
 			<div class="tab_warp">
+			
+				<s:form id="serachForm" name="serachForm" action="sotres_the_library" method="get" namespace="/qkjmanage" theme="simple">
+	
 				<table>
 					<tr id="coltr">
-			
-						<th class="td3">用户名称</th>
-						<th class="td3">订单总价</th>
-						<th class="td1">添加时间</th>
-						
-						<th class="td4">操作</th>
+				<th class="td1">全选<input type="checkbox" id="cbselect"></th>
+						<th class="td2">用户名称</th>
+						<th class="td3">订单状态</th>
+						<th class="td4">订单总价</th>
+						<th class="td5">添加时间</th>
+						<th class="td6">操作</th>
 					</tr>
 					<s:iterator value="storesorderlist" status="sta">
 						<tr>
-						
+							<td class="td1" >
+								<input type="checkbox" name="cb" value="${id}" <s:if test="1==is_library">checked="checked"</s:if> >
+							</td>
 							<td class="td2" >${user_name}</td>
-							<td class="td3">${total_price}</td>
-							<td class="td4">${add_time}</td>
+							<td class="td3" >	<s:if test="1==is_library">已出库</s:if>
+								<s:if test="0==is_library">待出库</s:if></td>
+							<td class="td4">${total_price}</td>
+							<td class="td5">${add_time}</td>
 							
-							<td class="td4 op-area"><a  class="input-blue"  href="/qkjmanage/stores_order_update_details.action?id=${id}" >查看详情</a> 		<c:if test="${it:checkPermit('QKJ_QKJMANAGE_STORES_FIND_ORDER_DEL',null)==true}"> <a  class="input-red" onclick="return isDel();" href="/qkjmanage/stores_order_delete.action?id=${id}"  >删除</a></c:if></td>
+							<td class="td6 op-area"><a class="input-gray"  href="/qkjmanage/stores_order_update_details_view.action?id=${id}" >打印</a> <a  class="input-blue"  href="/qkjmanage/stores_order_update_details.action?id=${id}" >查看详情</a> 		<c:if test="${it:checkPermit('QKJ_STORES_FIND_ORDER_DEL',null)==true}">
+							<s:if test="0==is_library"> <a  class="input-red" onclick="return isDel();" href="/qkjmanage/stores_order_delete.action?id=${id}"  >删除</a></s:if></c:if></td>
 						</tr>
 					</s:iterator>
 				</table>
+					<s:submit type="reset" value="批量出库"   cssClass="input-blue" />
+					</s:form>
 			</div>
 			<div id="listpage" class="pagination"></div>
 		</div>
@@ -57,6 +114,25 @@
 	<script type="text/javascript" src="<s:url value="/js/jqueryPlugins/select3/jquery.cityselect.js" />">
 </script>
 	<script type="text/javascript">
+	
+	$("#cbselect").change(function() { 
+		var num=0;
+		var arrChk=$("input[name='cb']:checked");
+		var arr=$("input[name='cb']");
+		var count=arr.size();
+
+	    $(arrChk).each(function(){
+	       num++;
+	    } ); 
+
+	    if(num == count){
+	    	 $("[name='cb']").removeAttr("checked");
+	    }
+	    else{
+	    
+	    	 $("[name='cb']").attr("checked",'true');
+	    }
+	})
 	$(function(){
 		$("#mmtype").citySelect({
 			url:'<s:url value="/js/jqueryPlugins/select3/mm.js" />',

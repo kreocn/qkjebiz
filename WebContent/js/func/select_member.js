@@ -97,7 +97,7 @@ var LoadMemberAutoComplete = function(){
 			$("#order_user_mobile").val(ui.item.order_user_mobile);
 			$("#order_user_name").val(ui.item.order_user_name);
 		} });
-
+		
 		// 会员姓名搜索
 		$("#order_user_name").autocomplete({ source : function(request, response){
 			$("#order_user_id").val("0")
@@ -142,6 +142,54 @@ var LoadMemberAutoComplete = function(){
 			$("#order_user_mobile").val(ui.item.order_user_mobile);
 			$("#order_user_name").val(ui.item.order_user_name);
 		} });
+		
+		
+		
+		// 会员姓名搜索
+		$("#order_user_name_nopermission").autocomplete({ source : function(request, response){
+			$("#order_user_id").val("0")
+			var term = request.term;
+			if (term in cache) {
+				response($.map(cache[term], function(item){
+					return { order_user_id : item.uuid,
+						
+					order_user_mobile : item.mobile,
+					order_user_name : item.member_name,
+					value : item.member_name,
+					label : selfobj.boldColorTerm(item.member_name, request.term)
+					};
+					
+				}));
+				return;
+			}
+
+			var ajax = new Common_Ajax();
+			ajax.config.action_url = selfobj.config.ajax_url_action;
+			ajax.config._success = function(data, textStatus){
+			
+				cache[term] = data;
+				response($.map(data, function(item){
+					return { order_user_id : item.uuid,
+					order_user_mobile : item.mobile,
+					order_user_name : item.member_name,
+					value : item.member_name,
+					label : selfobj.boldColorTerm(item.member_name, request.term) };
+				}));
+			};
+			ajax.addParameter("work", "AutoComplete");
+			ajax.addParameter("parameters", "privilege_id=QKJCJ_SYSEBIZ_AJAXLOAD_MEMBER_NOPERMISSION&member_name=" + encodeURI(request.term));
+			ajax.sendAjax();
+		},
+		minLength : 1,
+		select : function(event, ui){
+			selfobj.config._successCallback(event, ui);
+			// loadAddress(ui.item.order_user_id, true);
+		},
+		focus : function(event, ui){
+			$("#order_user_id").val(ui.item.order_user_id);
+			$("#order_user_mobile").val(ui.item.order_user_mobile);
+			$("#order_user_name_nopermission").val(ui.item.order_user_name);
+		} });		
 	};
 
 	this.boldColorTerm = function(str, term){

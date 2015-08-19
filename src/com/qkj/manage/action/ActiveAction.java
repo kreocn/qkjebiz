@@ -601,7 +601,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
 		}
-		if (perWorkFlag == null || perWorkFlag.equals("null")) {
+		if(perWorkFlag==null || perWorkFlag.equals("null") || perWorkFlag.equals("")){
 			return "success";
 		} else {
 			perWorkFlag = null;
@@ -610,7 +610,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	}
 
 	public String load() throws Exception {
-		if ((perWorkF == null || perWorkF.equals("null")) && perWorkFlag == null) {
+		if ((perWorkF == null || perWorkF.equals("null")  ||perWorkF.equals("")) && (perWorkFlag == null || perWorkFlag.equals(""))) {
 			perWorkFlag = null;
 		} else {
 			this.setNextUuid(0);
@@ -988,6 +988,28 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
+	
+	/**
+	 * 办事处审核通过
+	 * 
+	 * @return
+	 * @throws Exception
+	 * @date 2014-4-26 上午10:21:02
+	 */
+	public String mdyActiveSDStatus20() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_SDSTATUS20");
+		try {
+			// mdyActiveSDStatus(30);
+			cs.checkSkip(active, 0);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!mdyActiveSDStatus10 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!mdyActiveSDStatus10 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
 
 	/**
 	 * 大区经理审核通过
@@ -1023,6 +1045,29 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		try {
 			// mdyActiveSDStatus(40);
 			cs.checkSkip(active, 4);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!mdyActiveSDStatus30 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!mdyActiveSDStatus30 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+	
+	/**
+	 * 运营总监审核通过并送审到副总
+	 * 
+	 * @return
+	 * @throws Exception
+	 * @date 2014-4-26 上午10:21:02
+	 */
+	public String mdyActiveSDStatus30Two() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_SDSTATUS30");
+		try {
+			mdyActiveSDStatus(40);
+			mdyActiveSMDStatus(40,"2");
+			//cs.checkSkip(active, 4);
 			this.setBefUid(active.getUuid());
 			this.setUp(2);
 			nextActive();
@@ -1404,6 +1449,36 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		active.setLm_user(ContextHelper.getUserLoginUuid());
 		String note = "活动申请-销管审核状态变更-" + noteflag;
 		addProcess("ACTIVE_MDY_SMDSTATUS", note);
+		return dao.mdyActiveSMDStatus(active);
+	}
+	
+	public int mdyActiveSMDStatus(int smd_status,String user) {
+		if (smd_status == 5) {
+			noteflag = "退回";
+		}
+		if (smd_status == 10) {
+			noteflag = "已签收";
+		}
+		if (smd_status == 30) {
+			noteflag = "销管经理审核通过";
+		}
+		if (smd_status == 40) {
+			noteflag = "销管部经理审核通过";
+		}
+		if (smd_status == 50) {
+			noteflag = "销管副总审核通过";
+		}
+		
+		if (smd_status == 70) {
+			noteflag = "董事审核通过";
+		}
+		active.setFd_status(0);
+		active.setSmd_status(smd_status);
+		active.setSmd_time(new Date());
+		active.setSmd_user(user);
+		active.setLm_user(user);
+		String note = "活动申请-销管审核状态变更-" + noteflag;
+		addProcess("ACTIVE_MDY_SMDSTATUS", note,user);
 		return dao.mdyActiveSMDStatus(active);
 	}
 
@@ -1807,6 +1882,28 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
+	
+	/**
+	 * 销售部-结案 大区经理审核通过
+	 * 
+	 * @return
+	 * @throws Exception
+	 * @date 2014-4-26 上午10:29:40
+	 */
+	public String mdyCloseActiveSDStatus20() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS20");
+		try {
+			// mdyCloseActiveSDStatus(30);
+			cs.checkSkip(active, 10);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!mdyCloseActiveSDStatus10 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!mdyCloseActiveSDStatus10 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
 
 	/**
 	 * 销售部-结案 大区经理审核通过
@@ -1842,6 +1939,29 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		try {
 			// mdyCloseActiveSDStatus(40);
 			cs.checkSkip(active, 14);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!mdyCloseActiveSDStatus30 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!mdyCloseActiveSDStatus30 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+	
+	/**
+	 * 销售部-结案 运营总监审核通过
+	 * 
+	 * @return
+	 * @throws Exception
+	 * @date 2014-4-26 上午10:29:40
+	 */
+	public String mdyCloseActiveSDStatus30Two() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS30");
+		try {
+			mdyCloseActiveSDStatus(40);
+			mdyCloseActiveSMDStatus(40,"2");
+			//cs.checkSkip(active, 14);
 			this.setBefUid(active.getUuid());
 			this.setUp(2);
 			nextActive();
@@ -2080,6 +2200,33 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		addProcess("ACTIVE_CLOSE_SMDSTATUS", note);
 		return dao.mdyCloseActiveSMDStatus(active);
 	}
+	
+	public int mdyCloseActiveSMDStatus(int close_sd_status,String user) {
+		if (close_sd_status == 5) {
+			noteflag = "退回";
+		}
+		if (close_sd_status == 10) {
+			noteflag = "已签收";
+		}
+		if (close_sd_status == 30) {
+			noteflag = "销管经理审核通过";
+		}
+		if (close_sd_status == 40) {
+			noteflag = "销管部经理审核通过";
+		}
+		if (close_sd_status == 50) {
+			noteflag = "销管副总审核通过";
+		}
+		active.setClose_fd_status(0);
+		active.setClose_nd_status(0);
+		active.setClose_smd_status(close_sd_status);
+		active.setClose_smd_time(new Date());
+		active.setClose_smd_user(user);
+		active.setLm_user(user);
+		String note = "活动结案-销管审核状态变更" + noteflag;
+		addProcess("ACTIVE_CLOSE_SMDSTATUS", note,user);
+		return dao.mdyCloseActiveSMDStatus(active);
+	}
 
 	/**
 	 * 扣除随量积分动作(结案审核完成之后)
@@ -2164,6 +2311,14 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		if (active != null) {
 			pdao.addProcess(1, active.getUuid(), p_sign, p_note, active.getStatus(), active.getSd_status(), active.getSmd_status(), active.getClose_sd_status(),
 					active.getClose_smd_status(), ContextHelper.getUserLoginUuid());
+		}
+	}
+	
+	private void addProcess(String p_sign, String p_note,String user) {
+		ProcessDAO pdao = new ProcessDAO();
+		if (active != null) {
+			pdao.addProcess(1, active.getUuid(), p_sign, p_note, active.getStatus(), active.getSd_status(), active.getSmd_status(), active.getClose_sd_status(),
+					active.getClose_smd_status(), user);
 		}
 	}
 

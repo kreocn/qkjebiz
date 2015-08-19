@@ -182,6 +182,14 @@
 			Where uuid = #uuid#
 		]]>
 	</update>
+	
+	<update id="qkjmanage_mdyLadinGoflag" parameterClass="lading">
+		<![CDATA[
+			Update qkjm_r_lading
+			Set goflag=#goflag#
+			Where uuid = #uuid#
+		]]>
+	</update>
 
 	<update id="qkjmanage_mdyLadingRebatesFlag" parameterClass="lading">
 		<![CDATA[

@@ -152,6 +152,8 @@ display: none;
 						<span id="ship_status_${uuid}">${ship_status}</span>
 						<span id="check_note_${uuid}">${check_note}</span>
 					</span>
+					
+					
 					</s:if>
 				</td>
 				<td class="td4 op-area nw">
