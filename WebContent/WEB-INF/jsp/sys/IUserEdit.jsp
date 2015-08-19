@@ -96,7 +96,7 @@
 				
 				<div class="label_hang">
 	            	<div class="label_ltit" style="width:150px;">签字:</div>
-		            <div class="label_rwben">${user.filesystem_root}</div>
+		            <div class="label_rwben">${user.user_sign}</div>
 				</div>
 				
 				<div class="label_hline">
