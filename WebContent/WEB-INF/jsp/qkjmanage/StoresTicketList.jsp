@@ -31,10 +31,10 @@
  			<div class="label_main">
 				<div class="label_hang">
 				       <div class="label_ltit">酒票编号:</div>
-				       <div class="label_rwben"><s:textfield name="storesTicket.id"  title="酒票编号" /></div>
+				       <div class="label_rwben"><s:textfield name="storesTicket.id"  title="酒票编号" value=""/></div>
 				</div>
 				<div class="label_hang">
-				       <div class="label_ltit">客户名称:</div>
+				       <div class="label_ltit">酒票名称:</div>
 				       <div class="label_rwben"><s:textfield name="storesTicket.ticket_name"  title="酒票名称" cssClass="validate[maxSize[42]]"/></div>
 				</div>
 				<div class="label_hang">
@@ -75,7 +75,7 @@
 	            		<td class="td2">${ticket_name}</td>
 	            		<td class="td2">${start_time }</td>
 	            		<td class="td3">${end_time }</td>
-	            		<td class="td3">${login_name}</td>
+	            		<td class="td3">${user_name}</td>
 	            	
 	            		<td class="td5 op-area">
 					    		<a class="input-red" href="<s:url namespace="/qkjmanage" action="ticket_del"><s:param name="storesTicket.id" value="id"></s:param></s:url>" onclick="return isDel();">删除</a>

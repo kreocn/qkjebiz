@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+	<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags"%>
@@ -93,7 +93,7 @@
 							<td class="td5">${total_price}</td>
 							<td class="td6">${add_time}</td>
 							
-							<td class="td7 op-area"><a class="input-gray"  href="/qkjmanage/stores_order_update_details_view.action?id=${id}" >打印</a><a  class="input-blue"  href="/qkjmanage/stores_order_update_details.action?id=${id}" >查看详情</a> 		<c:if test="${it:checkPermit('QKJ_STORES_FIND_ORDER_DEL',null)==true}">
+							<td class="td7 op-area"><a class="input-gray"  href="/qkjmanage/stores_order_update_details_view.action?id=${id}" >打印</a> <a  class="input-blue"  href="/qkjmanage/stores_order_update_details.action?id=${id}" >查看详情</a> 		<c:if test="${it:checkPermit('QKJ_STORES_FIND_ORDER_DEL',null)==true}">
 							<s:if test="0==is_library"> <a  class="input-red" onclick="return isDel();" href="/qkjmanage/stores_order_delete.action?id=${id}"  >删除</a></s:if></c:if></td>
 						</tr>
 					</s:iterator>
