@@ -19,26 +19,26 @@ public class CloseOrderCheckSkip {
 	private static List<CloseOrerSkipStep> skipSteps = new ArrayList<>();
 	static {
 		// 北京
-		skipSteps.add(new CloseOrerSkipStep("3", 1, "check30", "mdyCloseOrderSMDStatus50")); // 申请 4总监 7跳过销管副总
-		skipSteps.add(new CloseOrerSkipStep("3", 1, "check0", "check20,mdyCloseOrderSMDStatus10")); // 跳过大区
+		skipSteps.add(new CloseOrerSkipStep("3",null,1, "check30", "mdyCloseOrderSMDStatus50")); // 申请 4总监 7跳过销管副总
+		skipSteps.add(new CloseOrerSkipStep("3",null,1, "check0", "check20,mdyCloseOrderSMDStatus10")); // 跳过大区
 		// 省外
-		skipSteps.add(new CloseOrerSkipStep("211", 1, "check30", "mdyCloseOrderSMDStatus50"));// 总监审后销管销管副总代审
-		skipSteps.add(new CloseOrerSkipStep("211", 1, "check0", "check20,mdyCloseOrderSMDStatus10"));// 跳过大区
+		skipSteps.add(new CloseOrerSkipStep("211",null, 1, "check30", "mdyCloseOrderSMDStatus50"));// 总监审后销管销管副总代审
+		skipSteps.add(new CloseOrerSkipStep("211",null, 1, "check0", "check20,mdyCloseOrderSMDStatus10"));// 跳过大区
 		// 西藏
-		skipSteps.add(new CloseOrerSkipStep("2302", 1, "check20", "mdyCloseOrderSMDStatus10"));// 大区审后销管经理代审
+		skipSteps.add(new CloseOrerSkipStep("2302",null, 1, "check20", "mdyCloseOrderSMDStatus10"));// 大区审后销管经理代审
 		// 新疆
-		skipSteps.add(new CloseOrerSkipStep("2203", 1, "check20", "mdyCloseOrderSMDStatus10"));// 大区审后销管经理代审
+		skipSteps.add(new CloseOrerSkipStep("2203",null, 1, "check20", "mdyCloseOrderSMDStatus10"));// 大区审后销管经理代审
 		//西北跳过销管部，销管副总流程
 		//skipSteps.add(new CloseOrerSkipStep("220", 1, "check30", "mdyCloseOrderSMDStatus50"));// 总监审后销管销管副总代审
-		skipSteps.add(new CloseOrerSkipStep("220", 1, "check30", "mdyCloseOrderSMDStatus40"));// 总监审后销管部经理代审
+		skipSteps.add(new CloseOrerSkipStep("220","2203", 1, "check30", "mdyCloseOrderSMDStatus50,checkfd10"));// 总监审后销管部经理代审
 		//传奇天估德401402
-		skipSteps.add(new CloseOrerSkipStep("4", 1, "check20", "check30,mdyCloseOrderSMDStatus40"));// 总监跳过销管部经理
+		skipSteps.add(new CloseOrerSkipStep("4",null, 1, "check20", "check30,mdyCloseOrderSMDStatus40"));// 总监跳过销管部经理
 		
 		//skipSteps.add(new CloseOrerSkipStep("402", 1, "mdyCloseOrderSMDStatus10", "check30,mdyCloseOrderSMDStatus40"));// 销管跳过总监销管部
 		//skipSteps.add(new CloseOrerSkipStep("403", 1, "check0", "check30,mdyCloseOrderSMDStatus40"));// 销管跳过总监销管部
 		//skipSteps.add(new CloseOrerSkipStep("404", 1, "check0", "check30,mdyCloseOrderSMDStatus40"));// 销管跳过总监销管部
-		
-		skipSteps.add(new CloseOrerSkipStep("40102", 1, "check0", "mdyCloseOrderSMDStatus10"));// 销管跳过销管
+		skipSteps.add(new CloseOrerSkipStep("4",null, 1, "check10", "mdyCloseOrderSMDStatus10"));
+		skipSteps.add(new CloseOrerSkipStep("40102",null, 1, "check0", "check10,mdyCloseOrderSMDStatus10"));// 销管跳过销管
 		//skipSteps.add(new CloseOrerSkipStep("406", 1, "mdyCloseOrderSMDStatus10", "check30,mdyCloseOrderSMDStatus40"));// 销管跳过大区
 		//skipSteps.add(new CloseOrerSkipStep("405", 1, "mdyCloseOrderSMDStatus10", "check30,mdyCloseOrderSMDStatus40"));// 销管跳过总监销管部
 		
@@ -74,10 +74,19 @@ public class CloseOrderCheckSkip {
 					String str = (String) CacheFactory.getCacheInstance().get(SysDBCacheLogic.CACHE_DEPT_PREFIX_PARENT + closerOrder.getApply_dept());//
 					String[] s = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
 					Boolean iskip = ToolsUtil.isIn(as.getSkip_dept(), s);// 判断在不在数组中
+					
+					Boolean isex=true;
+					if(as.getEx_dept()!=null){
+						//isex=ToolsUtil.isIn(as.getSkip_dept(), s);// 判断在不在数组中
+						if(ToolsUtil.isIn(as.getEx_dept(), s) || as.getEx_dept().equals(closerOrder.getApply_dept())){
+							isex=false;
+						}
+					}
+					
 					if (as.getSkip_dept().equals(closerOrder.getApply_dept())) {
 						iskip = true;
 					}
-					if (iskip == true) {// 是特殊部门
+					if (iskip == true && isex==true) {// 是特殊部门
 						if (method.equals(as.getStart_step())) {
 							specialStep(method, as);
 							falg = 1;

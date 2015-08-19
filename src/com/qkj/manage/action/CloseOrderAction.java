@@ -530,6 +530,24 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	}
 
 	/**
+	 * 办事处通过
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String check10() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_CHECK10");
+		try {
+			// mdyCloseOrderSDStatus(30,userid);
+			cocs.checkSkip(closeOrder, "check10");
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!check1 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!check1 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+	
+	/**
 	 * 大区经理通过
 	 * 
 	 * @return

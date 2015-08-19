@@ -489,7 +489,7 @@ function kselect(){
 	}
 	if(parseInt(num)==2){//总监
 		jnull();
-		document.getElementById("sd_status").options[4].selected = true; 
+		document.getElementById("sd_status").options[5].selected = true; 
 		document.getElementById("smd_sta").options[4].selected = true;
 		$("#userdept_codeid").val("");
 		$("#userdept_nameid").val("");
@@ -498,7 +498,7 @@ function kselect(){
 	if(parseInt(num)==3){//销管部经理待审西北
 		jnull();
 		document.getElementById("smd_sta").options[4].selected = true; 
-		document.getElementById("sd_status").options[5].selected = true;
+		document.getElementById("sd_status").options[6].selected = true;
 		$("#userdept_codeid").val("220");
 		$("#userdept_nameid").val("西北运营中心");
 		document.getElementById("apply_is_sub_dept").checked=true;
@@ -506,7 +506,7 @@ function kselect(){
 	}
 	if(parseInt(num)==4){//西北业务副总
 		jnull();
-		document.getElementById("sd_status").options[5].selected = true; 
+		document.getElementById("sd_status").options[6].selected = true; 
 		document.getElementById("smd_sta").options[0].selected = true;
 		$("#userdept_codeid").val("220");
 		$("#userdept_nameid").val("西北运营中心");
@@ -540,7 +540,7 @@ function kselect(){
 	}
 	if(parseInt(num)==10){//省外财
 		jnull();
-		document.getElementById("sd_status").options[5].selected = true; 
+		document.getElementById("sd_status").options[6].selected = true; 
 		document.getElementById("smd_sta").options[0].selected = true; 
 		document.getElementById("fdsta").options[1].selected = true;
 		$("#userdept_codeid").val("211");
@@ -567,7 +567,7 @@ function kselect(){
 	}
 	if(parseInt(num)==12){//青藏总监
 		jnull();
-		document.getElementById("sd_status").options[4].selected = true; 
+		document.getElementById("sd_status").options[5].selected = true; 
 		document.getElementById("smd_sta").options[4].selected = true;
 		$("#userdept_codeid").val("2302");
 		$("#userdept_nameid").val("西藏大区");
@@ -576,7 +576,7 @@ function kselect(){
 	
 	if(parseInt(num)==13){//新疆总监
 		jnull();
-		document.getElementById("sd_status").options[4].selected = true; 
+		document.getElementById("sd_status").options[5].selected = true; 
 		document.getElementById("smd_sta").options[4].selected = true;
 		$("#userdept_codeid").val("22030");
 		$("#userdept_nameid").val("新疆办事处");
@@ -584,7 +584,7 @@ function kselect(){
 	}
 	if(parseInt(num)==14){//西北总监
 		jnull();
-		document.getElementById("sd_status").options[4].selected = true; 
+		document.getElementById("sd_status").options[5].selected = true; 
 		document.getElementById("smd_sta").options[4].selected = true;
 		$("#userdept_codeid").val("220");
 		$("#userdept_nameid").val("西北运营中心");
@@ -608,7 +608,7 @@ function kselect(){
 	}
 	if(parseInt(num)==23){//
 		snull();
-		document.getElementById("clsdsta").options[4].selected = true; 
+		document.getElementById("clsdsta").options[5].selected = true; 
 		document.getElementById("clsmdsta").options[4].selected = true;
 		$("#userdept_codeid").val("");
 		$("#userdept_nameid").val("");
@@ -685,7 +685,7 @@ function kselect(){
 	}
 	if(parseInt(num)==34){//
 		snull();
-		document.getElementById("clsdsta").options[4].selected = true; 
+		document.getElementById("clsdsta").options[5].selected = true; 
 		document.getElementById("clsmdsta").options[4].selected = true;
 		$("#userdept_codeid").val("22030");
 		$("#userdept_nameid").val("新疆办事处");
@@ -693,7 +693,7 @@ function kselect(){
 	}
 	if(parseInt(num)==35){//
 		snull();
-		document.getElementById("clsdsta").options[4].selected = true; 
+		document.getElementById("clsdsta").options[5].selected = true; 
 		document.getElementById("clsmdsta").options[4].selected = true;
 		$("#userdept_codeid").val("220");
 		$("#userdept_nameid").val("西北运营中心");
