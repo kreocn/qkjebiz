@@ -75,7 +75,7 @@
 	            		<td class="td2">${ticket_name}</td>
 	            		<td class="td2">${start_time }</td>
 	            		<td class="td3">${end_time }</td>
-	            		<td class="td3">${login_name}</td>
+	            		<td class="td3">${user_name}</td>
 	            	
 	            		<td class="td5 op-area">
 					    		<a class="input-red" href="<s:url namespace="/qkjmanage" action="ticket_del"><s:param name="storesTicket.id" value="id"></s:param></s:url>" onclick="return isDel();">删除</a>

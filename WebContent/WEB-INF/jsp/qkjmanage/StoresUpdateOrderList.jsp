@@ -99,7 +99,7 @@
 							<td class="td4">${total_price}</td>
 							<td class="td5">${add_time}</td>
 							
-							<td class="td6 op-area"><a class="input-gray"  href="/qkjmanage/stores_order_update_details_view.action?id=${id}" >打印</a><a  class="input-blue"  href="/qkjmanage/stores_order_update_details.action?id=${id}" >查看详情</a> 		<c:if test="${it:checkPermit('QKJ_STORES_FIND_ORDER_DEL',null)==true}">
+							<td class="td6 op-area"><a class="input-gray"  href="/qkjmanage/stores_order_update_details_view.action?id=${id}" >打印</a> <a  class="input-blue"  href="/qkjmanage/stores_order_update_details.action?id=${id}" >查看详情</a> 		<c:if test="${it:checkPermit('QKJ_STORES_FIND_ORDER_DEL',null)==true}">
 							<s:if test="0==is_library"> <a  class="input-red" onclick="return isDel();" href="/qkjmanage/stores_order_delete.action?id=${id}"  >删除</a></s:if></c:if></td>
 						</tr>
 					</s:iterator>
