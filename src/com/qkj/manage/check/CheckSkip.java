@@ -17,42 +17,42 @@ public class CheckSkip {
 	private static List<SkipStep> skipSteps = new ArrayList<>();
 	static {
 		// 北京
-		skipSteps.add(new SkipStep("3", 1, 4, 7,false)); // 申请 4总监 7跳过销管副总
-		skipSteps.add(new SkipStep("3", 1, 14, 17,false));// 结案 14总监 17销管副总
-		skipSteps.add(new SkipStep("3", 1, 2, 3,false));// 结案 14总监 17跳过销管经理
-		skipSteps.add(new SkipStep("3", 1, 12, 13,false));// 结案 14总监 17跳过销管经理
+		skipSteps.add(new SkipStep("3",null, 1, 4, 7,false)); // 申请 4总监 7跳过销管副总
+		skipSteps.add(new SkipStep("3",null, 1, 14, 17,false));// 结案 14总监 17销管副总
+		skipSteps.add(new SkipStep("3",null,1, 2, 3,false));// 结案 14总监 17跳过销管经理
+		skipSteps.add(new SkipStep("3",null, 1, 12, 13,false));// 结案 14总监 17跳过销管经理
 		// 省外
-		skipSteps.add(new SkipStep("211", 1, 4, 7,false)); // 申请 4总监 7跳过销管副总
-		skipSteps.add(new SkipStep("211", 1, 14, 17,false));// 结案 14总监 17跳过大区
-		skipSteps.add(new SkipStep("211", 1, 2, 3,false));// 申请 2大区 3跳过销管经理
-		skipSteps.add(new SkipStep("211", 1, 12, 13,false));// 结案 12大区 13跳过销管经理
+		skipSteps.add(new SkipStep("211",null, 1, 4, 7,false)); // 申请 4总监 7跳过销管副总
+		skipSteps.add(new SkipStep("211",null, 1, 14, 17,false));// 结案 14总监 17跳过大区
+		skipSteps.add(new SkipStep("211", null,1, 2, 3,false));// 申请 2大区 3跳过销管经理
+		skipSteps.add(new SkipStep("211",null, 1, 12, 13,false));// 结案 12大区 13跳过销管经理
 		// 西藏
-		skipSteps.add(new SkipStep("2302", 1, 2, 3,false)); // 申请 2大区 3跳过销管经理
-		skipSteps.add(new SkipStep("2302", 1, 12, 13,false));// 结案 12大区 13跳过销管经理
+		skipSteps.add(new SkipStep("2302",null, 1, 2, 3,false)); // 申请 2大区 3跳过销管经理
+		skipSteps.add(new SkipStep("2302",null, 1, 12, 13,false));// 结案 12大区 13跳过销管经理
 		// 新疆
-		skipSteps.add(new SkipStep("2203", 1, 2, 3,false)); // 申请 2大区 3跳过销管经理
-		skipSteps.add(new SkipStep("2203", 1, 12, 13,false));// 结案 12大区 13跳过销管经理
+		skipSteps.add(new SkipStep("2203",null, 1, 2, 3,false)); // 申请 2大区 3跳过销管经理
+		skipSteps.add(new SkipStep("2203",null, 1, 12, 13,false));// 结案 12大区 13跳过销管经理
 		//西北（申请（办事外，总监）结案（办事处，销管，总监，财务））
-		skipSteps.add(new SkipStep("220", 1, 0, 2,"3",false)); // 申请
-		skipSteps.add(new SkipStep("220", 1, 4, 7,"9",false)); // 申请
-		skipSteps.add(new SkipStep("220", 1, 10, 12,false)); // 结案
-		skipSteps.add(new SkipStep("220", 1, 14, 17,false)); // 结案
+		skipSteps.add(new SkipStep("220","2203", 1, 0, 2,"3",false)); // 申请
+		skipSteps.add(new SkipStep("220","2203",1, 4, 7,"9",false)); // 申请
+		skipSteps.add(new SkipStep("220","2203",1, 10, 12,false)); // 结案
+		skipSteps.add(new SkipStep("220","2203",1, 14, 17,false)); // 结案
 		
 		//红酒
-		skipSteps.add(new SkipStep("312", 1, 1, 2,"3",false)); // 申请 直接到总监
-		skipSteps.add(new SkipStep("312", 1,11, 12, "13",false));// 结案 直接到总监
+		skipSteps.add(new SkipStep("312", null,1, 1, 2,"3",false)); // 申请 直接到总监
+		skipSteps.add(new SkipStep("312", null,1,11, 12, "13",false));// 结案 直接到总监
 		
 		//传奇天估德401402
-		skipSteps.add(new SkipStep("4", 1, 2, 4,"5",false));// 结案 14总监 17跳过销管副总
-		skipSteps.add(new SkipStep("4", 1, 12,4,"15",false));// 结案 14总监 17跳过销副总
+		skipSteps.add(new SkipStep("4",null, 1, 2, 4,"5",false));// 结案 14总监 17跳过销管副总
+		skipSteps.add(new SkipStep("4",null, 1, 12,14,"15",false));// 结案 14总监 17跳过销副总
 		
-		skipSteps.add(new SkipStep("40102", 1, 1, 3,false)); // 申请 2大区 3跳过大区
-		skipSteps.add(new SkipStep("40102", 1, 11, 13,false)); // 申请 2大区 3跳过大区
+		skipSteps.add(new SkipStep("4", "40102",1, 1, 3,false)); // 申请 2大区 3跳过大区
+		skipSteps.add(new SkipStep("4","40102", 1, 11, 13,false)); // 申请 2大区 3跳过大区
 		
-		//所有部门跳过办事处，西北除外
+		skipSteps.add(new SkipStep("40102",null, 1, 1, 0,"3",false)); // 申请 2大区 3跳过大区
+		skipSteps.add(new SkipStep("40102",null, 1, 11, 10,"13",false)); // 申请 2大区 3跳过大区
 		
-		skipSteps.add(new SkipStep("220", 1, 1, 0,true)); // 
-		skipSteps.add(new SkipStep("220", 1, 11, 10,true)); //
+		
 		
 	}
 
@@ -119,7 +119,13 @@ public class CheckSkip {
 					String str = (String) CacheFactory.getCacheInstance().get(SysDBCacheLogic.CACHE_DEPT_PREFIX_PARENT + active.getApply_dept());//
 					String[] s = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
 					Boolean iskip = ToolsUtil.isIn(as.getSkip_dept(), s);// 判断在不在数组中
-					
+					Boolean isex=true;
+					if(as.getEx_dept()!=null){
+						//isex=ToolsUtil.isIn(as.getSkip_dept(), s);// 判断在不在数组中
+						if(ToolsUtil.isIn(as.getEx_dept(), s) || as.getEx_dept().equals(active.getApply_dept())){
+							isex=false;
+						}
+					}
 					if (as.getSkip_dept().equals(active.getApply_dept())) {
 						iskip = true;
 					}
@@ -137,7 +143,7 @@ public class CheckSkip {
 						}
 					}
 					
-					if (iskip == true) {// 是特殊部门
+					if (iskip == true && isex==true) {// 是特殊部门
 						if (st == as.getStart_step() || (star!=null && st==star)) {
 							if(star!=null && st==star){
 								specialStep(st, asn);
