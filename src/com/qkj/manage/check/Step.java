@@ -84,8 +84,8 @@ public class Step {
 		CheckSkip s=new CheckSkip();
 		this.setActive(s.getActive());
 		Active ac = new Active();
-		active.setLm_user(ContextHelper.getUserLoginUuid());
-		mdyActiveFDStatus(1, 10);
+		active.setLm_user(userid);
+		mdyActiveFDStatus(1, 10,userid);
 		ac = (Active) dao.get(active.getUuid());
 		if (ac.getStatus() <= 2) {
 			active.setStatus(2);// 申请通过执行
@@ -140,7 +140,7 @@ public class Step {
 	public void step19(String userid){//结案财务
 		CheckSkip s=new CheckSkip();
 		this.setActive(s.getActive());
-		mdyActiveFDStatus(2, 10);
+		mdyActiveFDStatus(2, 10,userid);
 		active.setLm_user(userid);
 		dao.mdyCloseActivePass(active);
 		// 调整随量积分
@@ -150,7 +150,7 @@ public class Step {
 	}
 	
 	public void step20(String userid){//结案数据中心
-		mdyActiveFDStatus(3, 10);
+		mdyActiveFDStatus(3, 10,userid);
 	}
 	
 	
@@ -264,7 +264,7 @@ public class Step {
 	 * @throws Exception
 	 * @date 2014-4-26 上午10:25:25
 	 */
-	public int mdyActiveFDStatus(int flag, int smd_status) {
+	public int mdyActiveFDStatus(int flag, int smd_status,String userid) {
 		CheckSkip s=new CheckSkip();
 		this.setActive(s.getActive());
 		if (flag == 1) {// 申请
@@ -275,11 +275,11 @@ public class Step {
 				noteflag = "通过";
 			}
 			active.setFd_status(smd_status);
-			active.setFd_user(ContextHelper.getUserLoginUuid());
+			active.setFd_user(userid);
 			active.setFd_time(new Date());
-			active.setLm_user(ContextHelper.getUserLoginUuid());
+			active.setLm_user(userid);
 			String note = "申请--财务状态变更-" + noteflag;
-			addProcess("ACTIVE_MDY_FDSTATUS", note,ContextHelper.getUserLoginUuid());
+			addProcess("ACTIVE_MDY_FDSTATUS", note,userid);
 			return dao.mdyActiveFDStatus(active);
 		} else if (flag == 2) {// 结案
 			if (smd_status == 5) {
@@ -289,11 +289,11 @@ public class Step {
 				noteflag = ContextHelper.getUserLoginName() + "通过";
 			}
 			active.setClose_fd_status(smd_status);
-			active.setClose_fd_user(ContextHelper.getUserLoginUuid());
+			active.setClose_fd_user(userid);
 			active.setClose_fd_time(new Date());
-			active.setLm_user(ContextHelper.getUserLoginUuid());
+			active.setLm_user(userid);
 			String note = "结案--财务状态变更-" + noteflag;
-			addProcess("ACTIVE_MDY_FDCSTATUS", note,ContextHelper.getUserLoginUuid());
+			addProcess("ACTIVE_MDY_FDCSTATUS", note,userid);
 			return dao.mdyActiveFDCStatus(active);
 		} else {// 数据中心
 			if (smd_status == 5) {
@@ -303,11 +303,11 @@ public class Step {
 				noteflag = "通过";
 			}
 			active.setClose_nd_status(smd_status);
-			active.setClose_nd_user(ContextHelper.getUserLoginUuid());
+			active.setClose_nd_user(userid);
 			active.setClose_nd_time(new Date());
-			active.setLm_user(ContextHelper.getUserLoginUuid());
+			active.setLm_user(userid);
 			String note = "结案--数据中心状态变更-" + noteflag;
-			addProcess("ACTIVE_MDY_NDCSTATUS", note,ContextHelper.getUserLoginUuid());
+			addProcess("ACTIVE_MDY_NDCSTATUS", note,userid);
 			return dao.mdyActiveNDCStatus(active);
 		}
 

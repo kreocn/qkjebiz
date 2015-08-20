@@ -36,7 +36,7 @@ public class CheckSkip {
 		skipSteps.add(new SkipStep("220","2203", 1, 0, 2,"3",false)); // 申请
 		skipSteps.add(new SkipStep("220","2203",1, 4, 7,"9",false)); // 申请
 		//skipSteps.add(new SkipStep("220","2203",1, 10, 12,false)); // 结案
-		skipSteps.add(new SkipStep("220","2203",1, 14, 17,false)); // 结案
+		skipSteps.add(new SkipStep("220","2203",1, 14, 17,"19",false)); // 结案
 		
 		skipSteps.add(new SkipStep("220","2203",1, 7, 9,false)); // 结案
 		skipSteps.add(new SkipStep("220","2203",1, 17, 19,false)); // 结案
