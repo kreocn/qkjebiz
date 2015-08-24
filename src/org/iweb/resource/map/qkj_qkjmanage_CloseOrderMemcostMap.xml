@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "sql-map-2.dtd">
+<sqlMap>
+	<!-- closeOrderMemcost Start -->
+	<typeAlias alias="closeOrderMemcost" type="com.qkj.manage.domain.CloseOrderMemcost" />
+	<select id="qkjmanage_getCloseOrderMemcosts" resultClass="closeOrderMemcost" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select c.*,m.member_name,m.mobile member_mobile,p.with_score member_with_score
+			From qkjm_r_closeorder_memcost c,s_vip_member m,s_vip_capital p
+			WHERE c.member_id = m.uuid
+			AND p.member_id = c.member_id
+		]]>
+		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ c.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="close_id"><![CDATA[ c.close_id=#close_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="member_id"><![CDATA[ c.member_id=#member_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="status"><![CDATA[ c.status=#status# ]]></isNotEmpty>
+	</select>
+	<select id="qkjmanage_getCloseOrderMemcostsCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) 
+			From qkjm_r_closeorder_memcost c,s_vip_member m,s_vip_capital p
+			WHERE c.member_id = m.uuid
+			AND p.member_id = c.member_id
+		]]>
+		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ c.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="close_id"><![CDATA[ c.close_id=#close_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="member_id"><![CDATA[ c.member_id=#member_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="status"><![CDATA[ c.status=#status# ]]></isNotEmpty>
+	</select>
+	<insert id="qkjmanage_addCloseOrderMemcost" parameterClass="closeOrderMemcost">
+		<![CDATA[ 
+			Insert Into qkjm_r_closeorder_memcost(close_id,member_id,title,note,total_price,with_score,status)
+			Values (#close_id#,#member_id#,#title#,#note#,#total_price#,#with_score#,#status#)
+		]]>
+	</insert>
+
+	<delete id="qkjmanage_delCloseOrderMemcost" parameterClass="closeOrderMemcost">
+	<![CDATA[
+		Delete From qkjm_r_closeorder_memcost Where uuid=#uuid#
+	]]>
+	</delete>
+	<!-- closeOrderMemcost End -->
+</sqlMap>

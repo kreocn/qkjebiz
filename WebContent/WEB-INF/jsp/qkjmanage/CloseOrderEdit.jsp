@@ -214,6 +214,7 @@ s
 								</div>
 							</div>
 						</div>
+						<!-- 
 						<div class="label_main">
 							<div class="label_hang">
 								<div class="label_ltit">会员号:</div>
@@ -242,7 +243,7 @@ s
 									<br /> 选择预设地址:<select id="selectAddress"></select>
 								</div>
 							</div>
-						</div>
+						</div> -->
 						<s:if test="'mdy'==viewFlag && closeOrder.type==0">
 							<div class="label_main">
 								<fieldset class="clear">
@@ -317,6 +318,11 @@ s
 												</s:url>
 												<input type="button" id="product" onclick="window.location.href='${ladingAddProductsUrl}';" value="添加酒品/公司物料" />
 											</c:if>
+											
+											<c:if test="${closeOrder.state==0 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_ADD',null)==true}">
+												<input type="button" id="addPosm" value="添加物料" />
+											</c:if>
+									
 										</div>
 											<p class="lb_gstit">公司酒品/公司物料</p>
 											<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
@@ -342,39 +348,143 @@ s
 													</tr>
 												</s:iterator>
 											</table>
+											
+											<p class="lb_gstit">其它物料</p>
+											<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+												<tr>
+													<th>名目</th>
+													<th>名目说明</th>
+													<th>金额</th>
+													<c:if test="${closeOrder.state==0 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_DEL',null)==true}">
+														<th>操作</th>
+													</c:if>
+												</tr>
+												<s:iterator value="closePosms" status="sta">
+													<tr>
+														<td>${title}</td>
+														<td>${note}</td>
+														<td class="nw">￥${total_price}</td>
+														<c:if test="${closeOrder.state==0 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_DEL',null)==true}">
+														<td class="nw">
+																<a href="<s:url action="closePosm_del"><s:param name="closePosm.uuid" value="%{uuid}" /><s:param name="closePosm.closeOrder_id" value="%{closeOrder.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
+														</td></c:if>
+													</tr>
+												</s:iterator>
+											</table>
+											<p class="lb_gstit">公司费用合计</p>
+											<p class="lb_jwei">￥${closeOrder.totel_price}</p>
 									</div>
 									<div class="lb_gsfy">
 									<p class="lb_yjtit">
 									<c:if test="${closeOrder.state==0 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_ADD',null)==true}">
-										<input type="button" id="addPosm" value="添加物料" />
+										<input type="button" id="addMember" value="添加客户" />
 									</c:if>
 									</p>
-									<p class="lb_gstit">其它物料</p>
+									
+									<div class="lb_yjcon">
+									<p class="lb_gstit">参与活动客户</p>
 									<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
 										<tr>
+											<th>客户</th>
 											<th>名目</th>
 											<th>名目说明</th>
 											<th>金额</th>
-											<c:if test="${closeOrder.state==0 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_DEL',null)==true}">
-												<th>操作</th>
-											</c:if>
+											<th>操作</th>
 										</tr>
-										<s:iterator value="closePosms" status="sta">
+										<s:iterator value="CloseOrderMemcosts" status="sta">
 											<tr>
+												<td><a href="javascript:;" onclick="loadMemberInfo('${member_id}');">${member_name}</a></td>
 												<td>${title}</td>
 												<td>${note}</td>
 												<td class="nw">￥${total_price}</td>
-												<c:if test="${closeOrder.state==0 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_DEL',null)==true}">
 												<td class="nw">
-														<a href="<s:url action="closePosm_del"><s:param name="closePosm.uuid" value="%{uuid}" /><s:param name="closePosm.closeOrder_id" value="%{closeOrder.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
-												</td></c:if>
+													<c:if test="${closeOrder.state==0 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_DEL',null)==true}">
+														<a href="<s:url action="closeOrderMemcost_del"><s:param name="closeOrderMemcost.uuid" value="%{uuid}" /><s:param name="closeOrderMemcost.close_id" value="%{CloseOrder.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
+													</c:if>
+												</td>
 											</tr>
 										</s:iterator>
 									</table>
+
+									<p class="lb_gstit">客户预计费用合计</p>
+									<p class="lb_jwei">￥${CloseOrder.mt_price}</p>
 								</div>
-								
-									<p class="lb_gstit">费用合计</p>
-									<p class="lb_jwei">￥${closeOrder.totel_price}</p>
+									
+								</div>
+									<div class="clear"></div>
+									<p class="lb_yjbot">方案费用总计: ${closeOrder.totel_price} + ${closeOrder.mt_price} = ￥${closeOrder.totel_price+closeOrder.mt_price}</p>
+								</div>
+							</fieldset>
+							</s:if>
+							<div class="label_main">
+							<div class="label_hang">
+								<div class="label_ltit">需要填加费用?</div>
+								<div class="label_rwbenx">
+									<s:checkbox id="apply_is_fullcheck_box" name="is_fullcheck_box" cssClass="regular-checkbox" />
+									<label for="apply_is_fullcheck_box"></label>
+									<s:hidden id="apply_is_fullcheck" name="closeOrder.is_fullcheck" />
+								</div>
+							</div>
+						</div>
+					
+							<s:if test="%{closeOrder.state>=0&&closeOrder.is_fullcheck==1}">
+							<fieldset class="clear" style="display: none;">
+								<legend>费用信息</legend>
+								<div class="label_main">
+									<div class="label_hang">
+										<div class="label_ltit">随量费用:</div>
+									</div>
+									<div class="label_hang">
+										<div class="label_ltit" style="font-weight: normal;">当前结余:</div>
+										<div class="label_rwben label_rwb">
+											<s:textfield id="upprice" name="active.m_upprice" cssClass="validate[required,custom[number]]" />
+										</div>
+									</div>
+									<div class="label_hang">
+										<div class="label_ltit" style="font-weight: normal;">本期费用:</div>
+										<div class="label_rwben label_rwb">
+											<s:if test="%{active.m_price!=null}">
+												<s:textfield id="price" name="active.m_price" cssClass="validate[required,custom[number]]" />
+											</s:if>
+											<s:else>
+												<s:textfield id="price" name="active.m_price" value="%{active.it_price}" cssClass="validate[required,custom[number]]" />
+											</s:else>
+										</div>
+									</div>
+									<div class="label_hang">
+										<div class="label_ltit" style="font-weight: normal;">本期结余:</div>
+										<div class="label_rwben label_rwb">
+											<s:textfield id="bprice" name="active.m_bprice" readonly="true" />
+										</div>
+									</div>
+								</div>
+								<div class="label_main">
+									<div class="label_hang">
+										<div class="label_ltit">市场基金:</div>
+									</div>
+									<div class="label_hang">
+										<div class="label_ltit" style="font-weight: normal;">当前结余:</div>
+										<div class="label_rwben label_rwb">
+											<s:textfield id="fupprice" name="active.f_upprice" cssClass="validate[required,custom[number]]"></s:textfield>
+										</div>
+									</div>
+									<div class="label_hang">
+										<div class="label_ltit" style="font-weight: normal;">本期费用:</div>
+										<div class="label_rwben label_rwb">
+											<s:if test="%{active.f_price!=null}">
+												<s:textfield id="fprice" name="active.f_price" cssClass="validate[required,custom[number]]"></s:textfield>
+											</s:if>
+											<s:else>
+												<s:textfield id="fprice" name="active.f_price" value="%{active.mt_price}"></s:textfield>
+											</s:else>
+										</div>
+									</div>
+									<div class="label_hang">
+										<div class="label_ltit" style="font-weight: normal;">本期结余:</div>
+										<div class="label_rwben label_rwb">
+											<s:textfield id="fbprice" name="active.f_bprice" readonly="true"></s:textfield>
+										</div>
+									</div>
 								</div>
 							</fieldset>
 							<div style="height: 10px;"></div>
@@ -688,10 +798,62 @@ s
 					</div>
 				</s:form>
 			</div>
+			
+			<div id="addMemberForm" class="label_con idialog" title="添加参与客户">
+			<s:form id="addMemberFormTag" name="form_addMemberForm" cssClass="validFormDialog" action="closeOrderMemcost_add" namespace="/qkjmanage" method="post" theme="simple">
+				<div class="label_main">
+					<div class="label_hang">
+						<div class="label_ltit">会员编号:</div>
+						<div class="label_rwben label_rwb">
+							<s:textfield id="order_user_id" name="closeOrderMemcost.member_id" cssClass="validate[required,maxSize[85]]" />
+						</div>
+					</div>
+					<div class="label_hang">
+						<div class="label_ltit">会员手机:</div>
+						<div class="label_rwben label_rwb">
+							<s:textfield id="order_user_mobile" name="closeOrderMemcost.member_mobile" cssClass="validate[custom[mobile]]" />
+						</div>
+					</div>
+					<div class="label_hang">
+						<div class="label_ltit">会员名称:</div>
+						<div class="label_rwben label_rwb">
+							<s:textfield id="order_user_name" name="closeOrderMemcost.member_name" />
+						</div>
+					</div>
+					<div class="label_hang">
+						<div class="label_ltit">名目:</div>
+						<div class="label_rwben label_rwb">
+							<s:textfield id="CloseOrderMemcost_title" name="closeOrderMemcost.title" cssClass="validate[required]" />
+						</div>
+					</div>
+					<div class="label_hang">
+						<div class="label_ltit">名目说明:</div>
+						<div class="label_rwben label_rwb">
+							<s:textarea id="CloseOrderMemcost_note" name="closeOrderMemcost.note" cssClass="validate[required]" />
+						</div>
+					</div>
+					<div class="label_hang">
+						<div class="label_ltit">金额:</div>
+						<div class="label_rwben label_rwb nw">
+							<s:textfield id="CloseOrderMemcost_total_price" name="closeOrderMemcost.total_price" cssClass="validate[required]" />
+							元
+						</div>
+					</div>
+					<div class="label_hang label_button tac">
+						<s:hidden id="CloseOrderMemcost_CloseOrder_id" name="closeOrderMemcost.close_id" value="%{CloseOrder.uuid}" />
+						<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDERMEMCOST_ADD',null)==true}">
+							<input id="addMe" type="button" value="确定" />
+							<font id="addMemcost" color="red"></font>
+						</c:if>
+					</div>
+				</div>
+			</s:form>
+		</div>
+		
 		</div>
 	</div>
 	<s:action name="ref_foot" namespace="/manager" executeResult="true" />
-	
+	<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.ui.datepicker-zh.js" />"></script>
 </body>
 <script type="text/javascript">
 			$(function(){
@@ -819,6 +981,77 @@ var openCustomerView = function(customer_uuid) {
 		});
 
 	});
+	
+	$("#addMemberForm").dialog({ autoOpen : false,
+		modal : true });
+		$("#addMember").click(function(){
+			$("#addMemberForm").dialog("open");
+		});
+		
+		$("#addMe").click(function(){
+			 $.ajax({
+			     type:'POST',
+			     url: '/sysvip/getMember',
+			     data: "params="+$("#order_user_id").val(),
+			     beforeSend:function() {
+			    	 $("#addMemcost").text("正在验证...");
+			     },
+			     success: function(data){
+			    	 if(data=="false"){
+			 			alert("此客户不存在\n请到[会员管理>添加会员]处添加会员信息后再继续填写.");
+			 		} else if($("#CloseOrderMemcost_title").val()=='') {
+			 			alert("【名目】不许为空!");
+			 			$("#CloseOrderMemcost_title").focus();
+			 		} else if($("#CloseOrderMemcost_note").val()=='') {
+			 			alert("【名目说明】不许为空!");
+			 			$("#CloseOrderMemcost_note").focus();
+			 		} else if($("#CloseOrderMemcost_total_price").val()=='') {
+			 			alert("【金额】不许为空!");
+			 			$("#CloseOrderMemcost_total_price").focus();
+			 		} else {
+			 			$("#addMemberFormTag").submit();
+			 		}
+			    },
+			    complete:function(){
+			    	$("#addMemcost").text("");
+			    }				    
+			  });
+			});
+		
+		$(function(){
+			if ($("#apply_is_fullcheck").val() == 1) {
+				$("#apply_is_fullcheck_box").attr("checked", "checked");
+				$("#apply_fullcheck_text").show();
+			}
+			$("#apply_is_fullcheck_box").bind("click", function(){
+				if (!!$(this).attr("checked")) {
+					//alert("checked");
+					$("#apply_is_fullcheck").val(1);
+					$("#apply_fullcheck_text").show();
+				} else {
+					//alert("unchecked");
+					$("#apply_is_fullcheck").val(0);
+					$("#apply_fullcheck_text").hide();
+				}
+			});
+			
+			
+			$(function(){
+				if ($("#apply_is_material").val() == 1) {
+					$("#apply_is_material_box").attr("checked", "checked");
+					$("#apply_material_text").show();
+				}
+				$("#apply_is_material_box").bind("click", function(){
+					if ($("#apply_is_material").val() == 0) {
+						$("#is_material_p").text("请保存单据后再添加物料清单").css("color","red");
+						$("#apply_is_material").val("1")
+					} else if ($("#apply_is_material").val() == 1){
+						$("#is_material_p").text("").css("color","red");
+						$("#apply_is_material").val("0")
+						$("#apply_material_text").hide();
+					}
+				});
+			});
 
 </script>
 

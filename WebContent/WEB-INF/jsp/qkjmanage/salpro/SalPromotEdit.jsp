@@ -124,6 +124,15 @@
 							</span>
 						</div>
 					</div>
+					
+					<div class="label_hang">
+						<div class="label_ltit">结案截止日期:</div>
+						<div class="label_rwben2">
+							<span class="label_rwb nw"> <input class="datepicker validate[required,custom[date]]" type="text" name="salPromot.close_endtime"  value="${it:formatDate(salPromot.close_endtime,'yyyy-MM-dd')}" />
+							</span> 
+						</div>
+					</div>
+					
 					<div class="label_hang">
 						<div class="label_ltit">返利系数:</div>
 						<div class="label_rwben">
@@ -137,7 +146,7 @@
 				
 				<div class="label_main">
 					<div class="label_hang">
-						<div class="label_ltit">添加部门:</div>
+						<div class="label_ltit">发起部门:</div>
 						<div class="label_rwben nw">
 							<s:textfield id="useradddept_nameid" name="salPromot.add_user_dept_name" readonly="true" cssClass="validate[required]" />
 							<s:hidden id="useradddept_codeid" name="salPromot.add_user_dept" />
@@ -148,7 +157,7 @@
 				
 				<div class="label_main">
 					<div class="label_hang">
-						<div class="label_ltit">范围:</div>
+						<div class="label_ltit">执行部门:</div>
 						<div class="label_rwben nw">
 							<s:textfield id="userdept_nameid" name="salPromot.sal_scopDept_name" readonly="true" cssClass="validate[required]" />
 							<s:hidden id="userdept_codeid" name="salPromot.sal_scopDept" />

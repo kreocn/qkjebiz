@@ -52,6 +52,10 @@ public class CloseOrderDAO extends AbstractDAO {
 		return super.save("qkjmanage_mdyCloseOrderNDStatus", parameters);
 	}
 	
+	public int mdyCloseOrderMtPrice(String closeOrder_id) {
+		return super.save("qkjmanage_mdyCloseOrderMtPrice", closeOrder_id);
+	}
+	
 	public int mdyPassStatus(Object parameters){
 		return super.save("qkjmanage_mdyPassStatus", parameters);
 	}

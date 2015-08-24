@@ -13,6 +13,7 @@ public class CloseOrder {
 	private String member_address;// (varchar)收货地址
 	private String member_phone;// (varchar)手机号
 	private Double totel_price;// (decimal)商品总价格
+	private Double mt_price;
 	private String apply_dept;
 	private String add_user;// (varchar)填加人
 	private Date add_time;// (datetime)填加时间
@@ -40,11 +41,20 @@ public class CloseOrder {
 	private Integer ship_ware;// 发货仓库
 	private Date ship_date;// 发货时间
 	private String ship_no;// 运单号码
+	private String ship_cloud;
 	private String ship_type;// 物流名称
 	private String ship_phone;// 物流单号
 	private String remark;
 	private String close_note;
 	private Integer goflag;
+
+	private Double m_upprice;
+	private Double m_price;
+	private Double m_bprice;
+	private Double f_upprice;
+	private Double f_price;
+	private Double f_bprice;
+	private Integer is_fullcheck;
 
 	// 以下为非数据库字段
 	private String member_name;
@@ -77,6 +87,78 @@ public class CloseOrder {
 	private Date time60;
 	private Date time70;
 	private Date time80;
+
+	public Integer getIs_fullcheck() {
+		return is_fullcheck;
+	}
+
+	public void setIs_fullcheck(Integer is_fullcheck) {
+		this.is_fullcheck = is_fullcheck;
+	}
+
+	public Double getM_upprice() {
+		return m_upprice;
+	}
+
+	public void setM_upprice(Double m_upprice) {
+		this.m_upprice = m_upprice;
+	}
+
+	public Double getM_price() {
+		return m_price;
+	}
+
+	public void setM_price(Double m_price) {
+		this.m_price = m_price;
+	}
+
+	public Double getM_bprice() {
+		return m_bprice;
+	}
+
+	public void setM_bprice(Double m_bprice) {
+		this.m_bprice = m_bprice;
+	}
+
+	public Double getF_upprice() {
+		return f_upprice;
+	}
+
+	public void setF_upprice(Double f_upprice) {
+		this.f_upprice = f_upprice;
+	}
+
+	public Double getF_price() {
+		return f_price;
+	}
+
+	public void setF_price(Double f_price) {
+		this.f_price = f_price;
+	}
+
+	public Double getF_bprice() {
+		return f_bprice;
+	}
+
+	public void setF_bprice(Double f_bprice) {
+		this.f_bprice = f_bprice;
+	}
+
+	public Double getMt_price() {
+		return mt_price;
+	}
+
+	public void setMt_price(Double mt_price) {
+		this.mt_price = mt_price;
+	}
+
+	public String getShip_cloud() {
+		return ship_cloud;
+	}
+
+	public void setShip_cloud(String ship_cloud) {
+		this.ship_cloud = ship_cloud;
+	}
 
 	public Integer getGoflag() {
 		return goflag;

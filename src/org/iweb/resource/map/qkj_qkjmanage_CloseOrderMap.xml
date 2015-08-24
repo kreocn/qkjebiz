@@ -122,6 +122,14 @@
 			salPro_id=#salPro_id#,
 			apply_dept=#apply_dept#,
 			close_note=#close_note#,
+			
+			m_upprice=#m_upprice#,
+			m_price=#m_price#,
+			m_bprice=#m_bprice#,
+			f_upprice=#f_upprice#,
+			f_price=#f_price#,
+			f_bprice=#f_bprice#,
+				
 			close_num=#close_num#
 			Where uuid = #uuid#
 		]]>
@@ -296,6 +304,7 @@
 				ship_ware=#ship_ware#,
 				ship_date=#ship_date#,
 				ship_no=#ship_no#,
+				ship_cloud=#ship_cloud#,
 				ship_phone=#ship_phone#,
 				remark=#remark#,
 				ship_type=#ship_type#,
@@ -312,5 +321,19 @@
 			Where uuid = #uuid#
 		]]>
 	</update>
+	
+	<update id="qkjmanage_mdyCloseOrderMtPrice" parameterClass="string">
+		<![CDATA[
+		UPDATE qkjm_r_closeorder a
+		SET a.mt_price = (
+			SELECT IFNULL(SUM(total_price),0)
+			FROM qkjm_r_closeorder_memcost
+			WHERE close_id = #value#
+			AND `status` = 1
+		)
+		WHERE a.uuid = #value#
+		]]>
+	</update>
+	
 	<!-- CloseOrder End -->
 </sqlMap>
