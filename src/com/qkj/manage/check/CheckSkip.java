@@ -41,6 +41,14 @@ public class CheckSkip {
 		skipSteps.add(new SkipStep("220","2203",1, 7, 9,false)); // 结案
 		skipSteps.add(new SkipStep("220","2203",1, 17, 19,false)); // 结案
 		
+		skipSteps.add(new SkipStep("2202A",null,1, 1, 2,"3",false)); // 申请
+		skipSteps.add(new SkipStep("2202A",null,1, 11, 10,false)); // 结案
+		
+		skipSteps.add(new SkipStep("2202E",null,1, 1, 2,"3",false)); // 申请
+		skipSteps.add(new SkipStep("2202E",null,1, 11, 10,false)); // 结案
+		
+		skipSteps.add(new SkipStep("2202X",null,1, 1, 2,"3",false)); // 申请
+		skipSteps.add(new SkipStep("2202X",null,1, 11, 10,false)); // 结案
 		//红酒
 		skipSteps.add(new SkipStep("312", null,1, 1, 2,"3",false)); // 申请 直接到总监
 		skipSteps.add(new SkipStep("312", null,1,11, 12, "13",false));// 结案 直接到总监
