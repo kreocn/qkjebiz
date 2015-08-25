@@ -73,7 +73,9 @@ public class SalPromotPower{
 			map.put("sal_scopDept", member.getDept_code());
 			map.put("add_user_dept", ContextHelper.getUserLoginUuid());
 			map.put("status", 2);
-			map.put("closetime", sdf.format(da));
+			if(da!=null){
+				map.put("closetime", sdf.format(da));
+			}
 			map.put("proendtime", sdf.format(new Date()));
 			this.setSalpros(salp.listPower(map));
 		}
