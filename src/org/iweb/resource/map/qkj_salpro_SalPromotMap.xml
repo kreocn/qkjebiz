@@ -191,6 +191,7 @@
 		<dynamic prepend="WHERE">
 		<isNotEmpty prepend="AND" property="status"><![CDATA[ h.status=#status# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="proendtime"><![CDATA[ h.`close_endtime`>=#proendtime# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="closetime"><![CDATA[ #closetime#>=h.`startime` AND #closetime#<=h.endtime ]]></isNotEmpty>
 	</dynamic>
 	</select>
 	

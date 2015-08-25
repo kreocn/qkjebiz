@@ -62,7 +62,7 @@ public class SalPromotPower{
 	/**
 	 * 查询是否有权限选择促销活动
 	 */
-	public List<SalPromot> salProPower(String userId){
+	public List<SalPromot> salProPower(String userId,Date da){
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 		map.clear();
 		map.put("uuid", userId);
@@ -73,6 +73,7 @@ public class SalPromotPower{
 			map.put("sal_scopDept", member.getDept_code());
 			map.put("add_user_dept", ContextHelper.getUserLoginUuid());
 			map.put("status", 2);
+			map.put("closetime", sdf.format(da));
 			map.put("proendtime", sdf.format(new Date()));
 			this.setSalpros(salp.listPower(map));
 		}

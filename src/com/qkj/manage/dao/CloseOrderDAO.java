@@ -23,6 +23,10 @@ public class CloseOrderDAO extends AbstractDAO {
 		return super.save("qkjmanage_mdyCloseOrder", parameters);
 	}
 	
+	public int saveMember(Object parameters) {
+		return super.save("qkjmanage_mdyCloseOrderMember", parameters);
+	}
+	
 	public int updateTotal(int order_id) {
 		return super.save("qkjmanage_mdyCloseOrdertotelPrice", order_id);
 	}

@@ -12,6 +12,8 @@ public class CloseOrder {
 	private String member_id;// (varchar)收货人
 	private String member_address;// (varchar)收货地址
 	private String member_phone;// (varchar)手机号
+	private String member_title;
+	private String member_note;
 	private Double totel_price;// (decimal)商品总价格
 	private Double mt_price;
 	private String apply_dept;
@@ -87,6 +89,22 @@ public class CloseOrder {
 	private Date time60;
 	private Date time70;
 	private Date time80;
+
+	public String getMember_title() {
+		return member_title;
+	}
+
+	public void setMember_title(String member_title) {
+		this.member_title = member_title;
+	}
+
+	public String getMember_note() {
+		return member_note;
+	}
+
+	public void setMember_note(String member_note) {
+		this.member_note = member_note;
+	}
 
 	public Integer getIs_fullcheck() {
 		return is_fullcheck;

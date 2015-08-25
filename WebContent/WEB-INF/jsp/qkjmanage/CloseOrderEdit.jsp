@@ -377,7 +377,12 @@ s
 									<div class="lb_gsfy">
 									<p class="lb_yjtit">
 									<c:if test="${closeOrder.state==0 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_ADD',null)==true}">
+										<s:if test="%{closeOrder.member_id==null }">
 										<input type="button" id="addMember" value="添加客户" />
+										</s:if>
+										<s:else>
+										<input type="button" id="addMember" value="修改客户" />
+										</s:else>
 									</c:if>
 									</p>
 									
@@ -389,25 +394,33 @@ s
 											<th>名目</th>
 											<th>名目说明</th>
 											<th>金额</th>
-											<th>操作</th>
+											<!-- <th>操作</th> -->
 										</tr>
-										<s:iterator value="CloseOrderMemcosts" status="sta">
+										<tr>
+										<td>
+										<a href="javascript:;" onclick="loadMemberInfo('${closeOrder.member_id}');">${closeOrder.member_name}</a>
+										</td>
+										<td>${closeOrder.member_title}</td>
+										<td>${closeOrder.member_note}</td>
+										<td class="nw">￥${closeOrder.mt_price}</td>
+										</tr>
+										<!--<s:iterator value="CloseOrderMemcosts" status="sta">-->
 											<tr>
-												<td><a href="javascript:;" onclick="loadMemberInfo('${member_id}');">${member_name}</a></td>
-												<td>${title}</td>
-												<td>${note}</td>
-												<td class="nw">￥${total_price}</td>
-												<td class="nw">
-													<c:if test="${closeOrder.state==0 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_DEL',null)==true}">
+												<td><a href="javascript:;" onclick="loadMemberInfo('${closeOrder.member_id}');">${closeOrder.member_name}</a></td>
+												<td>${closeOrder.member_title}</td>
+												<td>${closeOrder.member_note}</td>
+												<td class="nw">￥${closeOrder.mt_price}</td>
+												<!-- <td class="nw">
+													<c:if test="${closeOrder.state==0 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_ADD',null)==true}">
 														<a href="<s:url action="closeOrderMemcost_del"><s:param name="closeOrderMemcost.uuid" value="%{uuid}" /><s:param name="closeOrderMemcost.close_id" value="%{CloseOrder.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
 													</c:if>
-												</td>
+												</td> -->
 											</tr>
-										</s:iterator>
+										<!--</s:iterator>-->
 									</table>
 
 									<p class="lb_gstit">客户预计费用合计</p>
-									<p class="lb_jwei">￥${CloseOrder.mt_price}</p>
+									<p class="lb_jwei">￥${closeOrder.mt_price}</p>
 								</div>
 									
 								</div>
@@ -427,8 +440,7 @@ s
 							</div>
 						</div>
 					
-							<s:if test="%{closeOrder.state>=0&&closeOrder.is_fullcheck==1}">
-							<fieldset class="clear" style="display: none;">
+							<fieldset id="apply_fullcheck_text" class="clear" style="display: none;">
 								<legend>费用信息</legend>
 								<div class="label_main">
 									<div class="label_hang">
@@ -437,24 +449,24 @@ s
 									<div class="label_hang">
 										<div class="label_ltit" style="font-weight: normal;">当前结余:</div>
 										<div class="label_rwben label_rwb">
-											<s:textfield id="upprice" name="active.m_upprice" cssClass="validate[required,custom[number]]" />
+											<s:textfield id="upprice" name="closeOrder.m_upprice" cssClass="validate[required,custom[number]]" />
 										</div>
 									</div>
 									<div class="label_hang">
 										<div class="label_ltit" style="font-weight: normal;">本期费用:</div>
 										<div class="label_rwben label_rwb">
-											<s:if test="%{active.m_price!=null}">
-												<s:textfield id="price" name="active.m_price" cssClass="validate[required,custom[number]]" />
+											<s:if test="%{closeOrder.m_price!=null}">
+												<s:textfield id="price" name="closeOrder.m_price" cssClass="validate[required,custom[number]]" />
 											</s:if>
 											<s:else>
-												<s:textfield id="price" name="active.m_price" value="%{active.it_price}" cssClass="validate[required,custom[number]]" />
+												<s:textfield id="price" name="closeOrder.m_price" value="%{closeOrder.it_price}" cssClass="validate[required,custom[number]]" />
 											</s:else>
 										</div>
 									</div>
 									<div class="label_hang">
 										<div class="label_ltit" style="font-weight: normal;">本期结余:</div>
 										<div class="label_rwben label_rwb">
-											<s:textfield id="bprice" name="active.m_bprice" readonly="true" />
+											<s:textfield id="bprice" name="closeOrder.m_bprice" readonly="true" />
 										</div>
 									</div>
 								</div>
@@ -465,30 +477,29 @@ s
 									<div class="label_hang">
 										<div class="label_ltit" style="font-weight: normal;">当前结余:</div>
 										<div class="label_rwben label_rwb">
-											<s:textfield id="fupprice" name="active.f_upprice" cssClass="validate[required,custom[number]]"></s:textfield>
+											<s:textfield id="fupprice" name="closeOrder.f_upprice" cssClass="validate[required,custom[number]]"></s:textfield>
 										</div>
 									</div>
 									<div class="label_hang">
 										<div class="label_ltit" style="font-weight: normal;">本期费用:</div>
 										<div class="label_rwben label_rwb">
-											<s:if test="%{active.f_price!=null}">
-												<s:textfield id="fprice" name="active.f_price" cssClass="validate[required,custom[number]]"></s:textfield>
+											<s:if test="%{closeOrder.f_price!=null}">
+												<s:textfield id="fprice" name="closeOrder.f_price" cssClass="validate[required,custom[number]]"></s:textfield>
 											</s:if>
 											<s:else>
-												<s:textfield id="fprice" name="active.f_price" value="%{active.mt_price}"></s:textfield>
+												<s:textfield id="fprice" name="closeOrder.f_price" value="%{closeOrder.mt_price}"></s:textfield>
 											</s:else>
 										</div>
 									</div>
 									<div class="label_hang">
 										<div class="label_ltit" style="font-weight: normal;">本期结余:</div>
 										<div class="label_rwben label_rwb">
-											<s:textfield id="fbprice" name="active.f_bprice" readonly="true"></s:textfield>
+											<s:textfield id="fbprice" name="closeOrder.f_bprice" readonly="true"></s:textfield>
 										</div>
 									</div>
 								</div>
 							</fieldset>
 							<div style="height: 10px;"></div>
-						</s:if>
 						
 						<div class="label_main">
 							<div class="label_hang">
@@ -634,16 +645,16 @@ s
 										销售部审核状态:
 										<s:if test="closeOrder.sd_state==0">初始状态</s:if>
 										<s:if test="closeOrder.sd_state==5">
-											<font class="message_error">审核退回</font>(${CloseOrder.sd_user_name} ${it:formatDate(CloseOrder.sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+											<font class="message_error">审核退回</font>(${closeOrder.sd_user_name} ${it:formatDate(closeOrder.sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 										<s:if test="closeOrder.sd_state==10">
 											<font class="message_warning">待审核</font>
 										</s:if>
 										<s:if test="closeOrder.sd_state==30">
-											<font class="message_pass">大区已审</font>(${CloseOrder.sd_user_name} ${it:formatDate(CloseOrder.sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+											<font class="message_pass">大区已审</font>(${closeOrder.sd_user_name} ${it:formatDate(closeOrder.sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 										<s:if test="closeOrder.sd_state==40">
-											<font class="message_pass">总监已审</font>(${CloseOrder.sd_user_name} ${it:formatDate(CloseOrder.sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+											<font class="message_pass">总监已审</font>(${closeOrder.sd_user_name} ${it:formatDate(closeOrder.sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 										<s:if test="closeOrder.sd_state==50">
-											<font class="message_pass">副总已审</font>(${CloseOrder.sd_user_name} ${it:formatDate(CloseOrder.sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+											<font class="message_pass">副总已审</font>(${closeOrder.sd_user_name} ${it:formatDate(closeOrder.sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 
 									</div>
 								</div>
@@ -712,11 +723,11 @@ s
 									</s:if>
 									<div class="statusInline">
 										财务部审核状态:
-										<s:if test="CloseOrder.fd_check_state==0">未确认</s:if>
-										<s:if test="CloseOrder.fd_check_state==5">
-											<font class="message_error">审核退回</font>(${CloseOrder.fd_user_name} ${it:formatDate(CloseOrder.fd_check_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
-										<s:if test="CloseOrder.fd_check_state==10">
-											<font class="message_pass">财务已审</font>(${CloseOrder.fd_user_name} ${it:formatDate(CloseOrder.fd_check_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+										<s:if test="closeOrder.fd_check_state==0">未确认</s:if>
+										<s:if test="closeOrder.fd_check_state==5">
+											<font class="message_error">审核退回</font>(${closeOrder.fd_user_name} ${it:formatDate(closeOrder.fd_check_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+										<s:if test="closeOrder.fd_check_state==10">
+											<font class="message_pass">财务已审</font>(${closeOrder.fd_user_name} ${it:formatDate(closeOrder.fd_check_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 									</div>
 								</div>
 							</div>
@@ -734,9 +745,9 @@ s
 										数据中心审核状态:
 										<s:if test="CloseOrder.nd_check_state==0">未确认</s:if>
 										<s:if test="CloseOrder.nd_check_state==5">
-											<font class="message_error">审核退回</font>(${CloseOrder.nd_user_name} ${it:formatDate(CloseOrder.nd_check_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+											<font class="message_error">审核退回</font>(${closeOrder.nd_user_name} ${it:formatDate(closeOrder.nd_check_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 										<s:if test="CloseOrder.nd_check_state==10">
-											<font class="message_pass">已审</font>(${CloseOrder.nd_user_name} ${it:formatDate(CloseOrder.nd_check_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+											<font class="message_pass">已审</font>(${closeOrder.nd_user_name} ${it:formatDate(closeOrder.nd_check_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 									</div>
 								</div>
 							</div>
@@ -800,47 +811,47 @@ s
 			</div>
 			
 			<div id="addMemberForm" class="label_con idialog" title="添加参与客户">
-			<s:form id="addMemberFormTag" name="form_addMemberForm" cssClass="validFormDialog" action="closeOrderMemcost_add" namespace="/qkjmanage" method="post" theme="simple">
+			<s:form id="addMemberFormTag" name="form_addMemberForm" cssClass="validFormDialog" action="closeOrder_saveMember" namespace="/qkjmanage" method="post" theme="simple">
 				<div class="label_main">
 					<div class="label_hang">
 						<div class="label_ltit">会员编号:</div>
 						<div class="label_rwben label_rwb">
-							<s:textfield id="order_user_id" name="closeOrderMemcost.member_id" cssClass="validate[required,maxSize[85]]" />
+							<s:textfield id="order_user_id" name="closeOrder.member_id" cssClass="validate[required,maxSize[85]]" />
 						</div>
 					</div>
 					<div class="label_hang">
 						<div class="label_ltit">会员手机:</div>
 						<div class="label_rwben label_rwb">
-							<s:textfield id="order_user_mobile" name="closeOrderMemcost.member_mobile" cssClass="validate[custom[mobile]]" />
+							<s:textfield id="order_user_mobile" name="closeOrder.member_phone" cssClass="validate[custom[mobile]]" />
 						</div>
 					</div>
 					<div class="label_hang">
 						<div class="label_ltit">会员名称:</div>
 						<div class="label_rwben label_rwb">
-							<s:textfield id="order_user_name" name="closeOrderMemcost.member_name" />
+							<s:textfield id="order_user_name" name="closeOrder.member_name" />
 						</div>
 					</div>
 					<div class="label_hang">
 						<div class="label_ltit">名目:</div>
 						<div class="label_rwben label_rwb">
-							<s:textfield id="CloseOrderMemcost_title" name="closeOrderMemcost.title" cssClass="validate[required]" />
+							<s:textfield id="CloseOrderMemcost_title" name="closeOrder.member_title" cssClass="validate[required]" />
 						</div>
 					</div>
 					<div class="label_hang">
 						<div class="label_ltit">名目说明:</div>
 						<div class="label_rwben label_rwb">
-							<s:textarea id="CloseOrderMemcost_note" name="closeOrderMemcost.note" cssClass="validate[required]" />
+							<s:textarea id="CloseOrderMemcost_note" name="closeOrder.member_note" cssClass="validate[required]" />
 						</div>
 					</div>
 					<div class="label_hang">
 						<div class="label_ltit">金额:</div>
 						<div class="label_rwben label_rwb nw">
-							<s:textfield id="CloseOrderMemcost_total_price" name="closeOrderMemcost.total_price" cssClass="validate[required]" />
+							<s:textfield id="CloseOrderMemcost_total_price" name="closeOrder.mt_price" cssClass="validate[required]" />
 							元
 						</div>
 					</div>
 					<div class="label_hang label_button tac">
-						<s:hidden id="CloseOrderMemcost_CloseOrder_id" name="closeOrderMemcost.close_id" value="%{CloseOrder.uuid}" />
+						<s:hidden id="CloseOrderMemcost_CloseOrder_id" name="closeOrder.uuid" value="%{closeOrder.uuid}" />
 						<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDERMEMCOST_ADD',null)==true}">
 							<input id="addMe" type="button" value="确定" />
 							<font id="addMemcost" color="red"></font>
@@ -1018,6 +1029,10 @@ var openCustomerView = function(customer_uuid) {
 			  });
 			});
 		
+
+</script>
+
+<script type="text/javascript">
 		$(function(){
 			if ($("#apply_is_fullcheck").val() == 1) {
 				$("#apply_is_fullcheck_box").attr("checked", "checked");
@@ -1036,23 +1051,48 @@ var openCustomerView = function(customer_uuid) {
 			});
 			
 			
-			$(function(){
-				if ($("#apply_is_material").val() == 1) {
-					$("#apply_is_material_box").attr("checked", "checked");
-					$("#apply_material_text").show();
-				}
-				$("#apply_is_material_box").bind("click", function(){
-					if ($("#apply_is_material").val() == 0) {
-						$("#is_material_p").text("请保存单据后再添加物料清单").css("color","red");
-						$("#apply_is_material").val("1")
-					} else if ($("#apply_is_material").val() == 1){
-						$("#is_material_p").text("").css("color","red");
-						$("#apply_is_material").val("0")
-						$("#apply_material_text").hide();
-					}
-				});
-			});
-
-</script>
+			
+			$("#approveFrom").dialog({ autoOpen : false,
+			modal : true });
+		});
+		
+		
+		$("#fupprice").bind("change", function(){
+			$("#fbprice").val($("#fupprice").val() - $("#fprice").val());
+		});
+		
+		$("#fprice").bind("change", function(){
+			$("#fbprice").val($("#fupprice").val() - $("#fprice").val());
+		});
+		
+		$("#upprice").bind("change", function(){
+			$("#bprice").val($("#upprice").val() - $("#price").val());
+		});
+		
+		$("#price").bind("change", function(){
+			$("#bprice").val($("#upprice").val() - $("#price").val());
+		});
+		
+		function loadMemberInfo(member_id){
+			$("#view_member_uuid").text("正在加载...");
+			$("#view_member_mobile").empty();
+			$("#view_member_name").empty();
+			$("#view_member_with_score").empty();
+			var ajax = new Common_Ajax();
+			ajax.config.action_url = ajax_url;
+			ajax.config._success = function(data, textStatus){
+				var m = data[0];
+				$("#view_member_uuid").text(m.uuid);
+				$("#view_member_mobile").text(m.mobile);
+				$("#view_member_name").text(m.member_name);
+				$("#view_member_with_score").text(m.with_score);
+				$("#viewMember").dialog("open");
+			};
+			ajax.addParameter("work", "AutoComplete");
+			ajax.addParameter("parameters", "privilege_id=QKJ_QKJMANAGER_AJAXLOAD_MEMBER&uuid=" + member_id);
+			ajax.sendAjax();
+		}
+	
+		</script>
 
 </html>

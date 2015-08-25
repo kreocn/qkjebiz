@@ -101,8 +101,8 @@
 	</select>
 	<insert id="qkjmanage_addCloseOrder" parameterClass="closeOrder">
 		<![CDATA[ 
-			Insert Into qkjm_r_closeorder(close_time,content,theme,member_id,member_address,member_phone,add_user,add_time,lm_time,lm_user,apply_dept,close_num,state,type,apply_id,close_note)
-			Values (#close_time#,#content#,#theme#,#member_id#,#member_address#,#member_phone#,#add_user#,#add_time#,#lm_time#,#lm_user#,#apply_dept#,#close_num#,#state#,#type#,#apply_id#,#close_note#)
+			Insert Into qkjm_r_closeorder(close_time,content,theme,member_id,member_address,member_phone,add_user,add_time,lm_time,lm_user,apply_dept,close_num,state,type,apply_id,close_note,is_fullcheck,m_upprice,m_price,m_bprice,f_upprice,f_price,f_bprice)
+			Values (#close_time#,#content#,#theme#,#member_id#,#member_address#,#member_phone#,#add_user#,#add_time#,#lm_time#,#lm_user#,#apply_dept#,#close_num#,#state#,#type#,#apply_id#,#close_note#,#is_fullcheck#,#m_upprice#,#m_price#,#m_bprice#,#f_upprice#,#f_price#,#f_bprice#)
 		]]>
 		<selectKey resultClass="int" keyProperty="uuid">
 		<![CDATA[ Select LAST_INSERT_ID() ]]>
@@ -114,9 +114,6 @@
 			Set close_time=#close_time#,
 			content=#content#,
 			theme=#theme#,
-			member_id=#member_id#,
-			member_address=#member_address#,
-			member_phone=#member_phone#,
 			lm_time=#lm_time#,
 			lm_user=#lm_user#,
 			salPro_id=#salPro_id#,
@@ -129,8 +126,22 @@
 			f_upprice=#f_upprice#,
 			f_price=#f_price#,
 			f_bprice=#f_bprice#,
-				
+			is_fullcheck=#is_fullcheck#,
 			close_num=#close_num#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<update id="qkjmanage_mdyCloseOrderMember" parameterClass="closeOrder">
+		<![CDATA[
+			Update qkjm_r_closeorder
+			Set 
+			member_id=#member_id#,
+			member_address=#member_address#,
+			member_phone=#member_phone#,
+			member_title=#member_title#,
+			mt_price=#mt_price#,
+			member_note=#member_note#
 			Where uuid = #uuid#
 		]]>
 	</update>

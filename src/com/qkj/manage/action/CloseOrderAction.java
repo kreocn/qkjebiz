@@ -342,17 +342,17 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 					this.setSalPromotsed(salps);// 已经选择的促销活动
 				}
 
-				if (closeOrder != null && closeOrder.getMember_id() != null) this.setSalPromots(sal.salProPower(closeOrder.getMember_id()));// 可选的促销活动
+				if (closeOrder != null && closeOrder.getMember_id() != null) this.setSalPromots(sal.salProPower(closeOrder.getMember_id(),closeOrder.getClose_time()));// 可选的促销活动
 
 				CloseOrderProDAO cdao = new CloseOrderProDAO();
 				map.clear();
 				map.put("order_id", closeOrder.getUuid());
 				this.setCloseOrderPros(cdao.list(map));
 				
-				CloseOrderMemcostDAO md=new CloseOrderMemcostDAO();
+				/*CloseOrderMemcostDAO md=new CloseOrderMemcostDAO();
 				map.clear();
 				map.put("close_id", closeOrder.getUuid());
-				this.setCloseOrderMemcosts(md.list(map));
+				this.setCloseOrderMemcosts(md.list(map));*/
 
 				CloseOrderPosmDAO closedao = new CloseOrderPosmDAO();
 				map.clear();
@@ -473,6 +473,18 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 		return SUCCESS;
 	}
 
+	public String saveMember() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_MDY");
+		try {
+			dao.saveMember(closeOrder);
+			addProcess("CLOSEORDER_MDY", "修改结案提货单客户", ContextHelper.getUserLoginUuid());
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+	
 	public String del() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_DEL");
 		int type = closeOrder.getType();
