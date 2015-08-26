@@ -53,7 +53,7 @@
 		</isEmpty>
 		
 		</dynamic>
-		<![CDATA[ order by priority desc LIMIT 1000 ]]>
+		<![CDATA[ order by uuid desc LIMIT 1000 ]]>
 	</select>
 	<select id="salpro_getSalPromotsCounts" resultClass="int" parameterClass="java.util.Map">
 		<![CDATA[ 
