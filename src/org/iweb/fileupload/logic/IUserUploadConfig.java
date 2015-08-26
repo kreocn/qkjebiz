@@ -7,6 +7,7 @@ import org.iweb.sys.domain.User;
 
 public class IUserUploadConfig extends UploadConfig {
 	private String message;
+	private boolean isUploadOss = true;
 
 	@Override
 	public String getMessage(String filename, String err) {
@@ -23,12 +24,18 @@ public class IUserUploadConfig extends UploadConfig {
 
 	@Override
 	public String getReNameRule(String filename, String ext) {
+		if(!ext.equals("jpg")){
+			isUploadOss=false;
+			message="文件格式必须为：jpg";
+		}else{
+			
+		}
 		return "ckframe/images/WebImages/qkjmanager/SIGN/" + filename;
 	}
 
 	@Override
 	public boolean isUploadOss() {
-		return true;
+		return isUploadOss;
 	}
 
 	@Override
