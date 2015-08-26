@@ -53,7 +53,7 @@
 		</isEmpty>
 		
 		</dynamic>
-		<![CDATA[ order by priority desc LIMIT 1000 ]]>
+		<![CDATA[ order by uuid desc LIMIT 1000 ]]>
 	</select>
 	<select id="salpro_getSalPromotsCounts" resultClass="int" parameterClass="java.util.Map">
 		<![CDATA[ 
@@ -97,8 +97,8 @@
 	</select>
 	<insert id="salpro_addSalPromot" parameterClass="salPromot">
 		<![CDATA[ 
-			Insert Into qkjm_r_salpromotion(sal_title,startime,endtime,sal_scop,sal_plan,add_user,add_time,lm_user,lm_time,rebate,priority,note,add_user_dept,sal_scopDept,sal_scopUs,status)
-			Values (#sal_title#,#startime#,#endtime#,#sal_scop#,#sal_plan#,#add_user#,#add_time#,#lm_user#,#lm_time#,#rebate#,#priority#,#note#,#add_user_dept#,#sal_scopDept#,#sal_scopUs#,#status#)
+			Insert Into qkjm_r_salpromotion(sal_title,startime,endtime,close_endtime,sal_scop,sal_plan,add_user,add_time,lm_user,lm_time,rebate,priority,note,add_user_dept,sal_scopDept,sal_scopUs,status)
+			Values (#sal_title#,#startime#,#endtime#,#close_endtime#,#sal_scop#,#sal_plan#,#add_user#,#add_time#,#lm_user#,#lm_time#,#rebate#,#priority#,#note#,#add_user_dept#,#sal_scopDept#,#sal_scopUs#,#status#)
 		]]>
 		<selectKey resultClass="int" keyProperty="uuid">
 		<![CDATA[ Select LAST_INSERT_ID() ]]>
@@ -110,6 +110,7 @@
 			Set sal_title=#sal_title#,
 			startime=#startime#,
 			endtime=#endtime#,
+			close_endtime=#close_endtime#,
 			sal_scop=#sal_scop#,
 			sal_plan=#sal_plan#,
 			lm_user=#lm_user#,
@@ -189,7 +190,8 @@
 		]]>
 		<dynamic prepend="WHERE">
 		<isNotEmpty prepend="AND" property="status"><![CDATA[ h.status=#status# ]]></isNotEmpty>
-		<isNotEmpty prepend="AND" property="proendtime"><![CDATA[ h.`endtime`>=#proendtime# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="proendtime"><![CDATA[ h.`close_endtime`>=#proendtime# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="closetime"><![CDATA[ #closetime#>=h.`startime` AND #closetime#<=h.endtime ]]></isNotEmpty>
 	</dynamic>
 	</select>
 	

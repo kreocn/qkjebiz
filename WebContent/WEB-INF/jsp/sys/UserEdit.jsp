@@ -52,6 +52,12 @@
 		       <div class="label_ltit">电子邮件:</div>
 		       <div class="label_rwbenx"><s:textfield id="user.email" title="电子邮件" name="user.email" /></div>
 			</div>
+			
+			<div class="label_hang">
+		       <div class="label_ltit">默认职务:</div>
+		       <div class="label_rwbenx"><s:select name="user.position" list="positions" listKey="uuid" listValue="position_name" headerKey="" headerValue="--请选择--" cssClass="validate[required]"/></div>
+			</div>
+			
 			<div class="label_hang">
 		       <div class="label_ltit">默认提交部门:</div>
 		       <div class="label_rwben2">

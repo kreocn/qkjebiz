@@ -35,6 +35,8 @@ public class Apply {
 	private Date sign_biz_time;
 	private String sign_user_name;
 	private Integer goflag;
+    private double total_price;
+
 
 	// 非数据库字段
 	private String apply_user_name;
@@ -51,7 +53,13 @@ public class Apply {
 	private Integer status_start;
 	private Integer status_end;
 	private Integer status_sp;
+	public double getTotal_price() {
+		return total_price;
+	}
 
+	public void setTotal_price(double total_price) {
+		this.total_price = total_price;
+	}
 	public Integer getGoflag() {
 		return goflag;
 	}

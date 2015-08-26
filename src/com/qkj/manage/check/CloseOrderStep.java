@@ -52,6 +52,16 @@ public class CloseOrderStep {
 	}
 
 	/**
+	 * 办事处通过
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public void check10(String userid) throws Exception {
+		mdyCloseOrderSDStatus(20, userid);
+	}
+	
+	/**
 	 * 大区经理通过
 	 * 
 	 * @return

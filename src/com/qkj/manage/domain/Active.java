@@ -49,6 +49,7 @@ public class Active {
 	private Integer ship_ware;// 发货仓库
 	private Date ship_date;// 发货时间
 	private String ship_no;// 运单号码
+	private String ship_cloud;// 云单号
 	private String ship_type;// 物流名称
 	private String ship_phone;// 物流单号
 	private Integer fd_status;
@@ -67,7 +68,7 @@ public class Active {
 	private Double f_upprice;
 	private Double f_price;
 	private Double f_bprice;
-	
+
 	private Double close_m_upprice;
 	private Double close_m_price;
 	private Double close_m_bprice;
@@ -110,7 +111,15 @@ public class Active {
 	private String close_fd_name;
 	private String close_nd_name;
 	private String member_id;
-	
+
+	public String getShip_cloud() {
+		return ship_cloud;
+	}
+
+	public void setShip_cloud(String ship_cloud) {
+		this.ship_cloud = ship_cloud;
+	}
+
 	public String getMember_id() {
 		return member_id;
 	}
@@ -902,7 +911,5 @@ public class Active {
 	public void setActive_type(Integer active_type) {
 		this.active_type = active_type;
 	}
-	
-	
 
 }

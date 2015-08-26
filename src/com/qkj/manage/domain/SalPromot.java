@@ -7,6 +7,7 @@ public class SalPromot {
 	private String sal_title;// (varchar)促销主题
 	private Date startime;// (date)开始时间
 	private Date endtime;// (date)结束时间
+	private Date close_endtime;//
 	private String sal_scop;// (varchar)范围
 	private String sal_plan;// (text)促销方案
 	private String add_user;// (varchar)添加人
@@ -40,6 +41,14 @@ public class SalPromot {
 	private String sal_scopDept_name;
 	private String add_user_dept_name;
 	private String fd_name;
+
+	public Date getClose_endtime() {
+		return close_endtime;
+	}
+
+	public void setClose_endtime(Date close_endtime) {
+		this.close_endtime = close_endtime;
+	}
 
 	public Integer getFd_status() {
 		return fd_status;

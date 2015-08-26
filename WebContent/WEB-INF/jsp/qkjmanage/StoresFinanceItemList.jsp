@@ -34,36 +34,6 @@
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	<s:form id="serachForm" name="serachForm" action="stores_order_finance_details"  method="get" namespace="/qkjmanage" theme="simple">
  	<div class="label_con">
  	<div class="label_main">
@@ -310,15 +280,7 @@
 		ajax.config.action_url = ajax_url_action;
 		ajax.config._success = function(data, textStatus){
 			show = new Array();
-			 show.push('<tr name="order'+id+'">');
-	        show.push('<table id="orderTable">');
-	        show.push('	<tr name="order'+id+'">');
-	        show.push('	<th colspan="5" class="td1">商品名称</th>');
-	        show.push('				<th colspan="2" class="td2">规格</th>');
-	        show.push('		<th colspan="2" class="td3">单价</th>');
-	        show.push('	<th colspan="2" class="td4">数量</th>');
-	        show.push('	<th colspan="2" class="td5">总价</th>');
-	        show.push('	</tr>');
+	
 			for (var i = 0; i < data.length; i++) {
 				var idd = data[i].idd;
 				var title=data[i].title;
@@ -328,10 +290,9 @@
 				var order_total_price=data[i].order_total_price;
 		        show.push('<tr name="order'+id+'">');
 		        show.push('<td colspan="5"  class="td1">'+title+'</td>');
-		        show.push('<td colspan="2" class="td2">'+spec+'</td>');
-		        show.push('<td colspan="2" class="td3">'+product_price+'</td>');
-		        show.push('<td colspan="2"  class="td4"  >'+order_num+'</td>');
-		        show.push('<td colspan="2" class="td5">'+order_total_price+'</td>');  
+		        show.push('<td colspan="2" class="td3">'+product_price+'（单价）</td>');
+		        show.push('<td colspan="2"  class="td4"  >'+order_num+'（数量）</td>');
+		        show.push('<td colspan="2" class="td5">'+order_total_price+'（总价）</td>');  
 		        show.push(' </tr>');
 			}
 			show.push('</table>')

@@ -139,6 +139,7 @@ cursor: pointer;
 							</span>
 							<span class="ship_hidden_info" style="display:none;">
 								<span id="ship_no_${uuid}">${ship_no}</span>
+								<span id="ship_cloud_${uuid}">${ship_cloud}</span>
 								<span id="ship_type_${uuid}">${ship_type}</span>
 								<span id="ship_date_${uuid}">${it:formatDate(ship_date,"yyyy-MM-dd")}</span>
 								<span id="ship_phone_${uuid}">${ship_phone}</span>
@@ -223,6 +224,12 @@ background-color: #FFF;
             <div class="label_ltit">运单号:</div>
             <div class="label_rwben"><s:textfield id="e_active_ship_no" cssClass="validate[maxSize[48]]" name="closeOrder.ship_no" title="运单号码" /></div>
         </div>
+        
+        <div class="label_hang">
+            <div class="label_ltit">云单号:</div>
+            <div class="label_rwben"><s:textfield id="e_active_ship_cloud" cssClass="validate[maxSize[48]]" name="closeOrder.ship_cloud" title="运单号码" /></div>
+        </div>
+        
 		<div class="label_hang">
             <div class="label_ltit">物流名称:</div>
             <div class="label_rwben"><s:textfield id="e_active_ship_type" name="closeOrder.ship_type" cssClass="validate[maxSize[32]]" title="物流类型/名称" /></div>
@@ -277,6 +284,7 @@ function setShipVal(p_uuid) {
 	$("#e_active_ship_phone").val($("#ship_phone_"+p_uuid).text());
 	$("#e_active_ship_type").val($("#ship_type_"+p_uuid).text());
 	$("#e_active_ship_no").val($("#ship_no_"+p_uuid).text());
+	$("#e_active_ship_cloud").val($("#ship_cloud_"+p_uuid).text());
 	$("#e_active_ship_date").val($("#ship_date_"+p_uuid).text());
 	$("#e_active_ship_status").val($("#ship_status_"+p_uuid).text());
 	$("#e_active_remark").text($("#active_remark_"+p_uuid).text());

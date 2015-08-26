@@ -54,7 +54,7 @@
 			</div>
 				<div class="label_main">
 			  <div class="label_hang">
-            <div class="label_ltit">申请时间:</div>
+            <div class="label_ltit">生效时间:</div>
             <div class="label_rwben2">
             	<span class="label_rwb nw">
 				<input type="text" class="datepicker iI iI-f" name="storesTicket.start_time" title="从" />
@@ -66,6 +66,7 @@
         </div>
         </div>
      	<s:submit type="reset" value="提交酒票"  cssClass="input-blue" />
+     	<span id="message"><s:property value="message" /></span>
               </s:form>
 		</div>
 	</div>

@@ -64,6 +64,9 @@ public class ApplyDAO extends AbstractDAO {
 	public int mdyApplyGoflag(Object parameters) {
 		return super.save("qkjmanage_mdyGoflag", parameters);
 	}
+	public void saveTotalPrice(Object parameters){
+	super.save("qkjmanage_ApplyTotalPrice", parameters);
+	}
 
 	public int getResultCount() {
 		return super.getResultCount();

@@ -89,10 +89,8 @@
     <c:when test="${it:checkPermit('QKJ_STORES_FIND_ORDER_DEL',null)==false}">${order_num}</c:when>  
                            </c:choose> 
                             </s:if>
-                            <s:if test="sotresorder.is_liqueur_ticket==1"> ${order_num}</s:if>
-                            <s:if test="sotresorder.is_library==1">
-                            ${order_num}
-                            </s:if>
+                            <s:if test="sotresorder.is_liqueur_ticket==1||sotresorder.is_library==1"> ${order_num}</s:if>
+                     
 							</td>
 							<td class="td5">${order_total_price}</td>
 						
@@ -114,7 +112,7 @@
 					<legend>是否</legend>
 			          			<div class="label_main">
 						<div class="label_hang">
-							<div class="label_ltit">是否需要开票</div>
+							<div class="label_ltit">是否需要开票：</div>
 							<div class="label_rwbenx">
 							<input type="hidden" value="${sotresorder.id}" name="storyit.id">
 						     <s:radio onclick="ticket(this);"  name="storyit.is_ticket" title="是否需要开票"  list="#{0:'否',1:'是'}" value="%{sotresorder.is_ticket}" cssClass="regular-radio" />
@@ -150,7 +148,7 @@
 						</div>
 					</div>
 						<div class="label_main">
-							<div class="label_ltit">是否欠款</div>
+							<div class="label_ltit">是否欠款：</div>
 							<div class="label_rwbenx">
 						     <s:radio onclick="arrears(this);"  name="storyit.is_arrears" title="是否欠款" value="%{sotresorder.is_arrears}"  list="#{0:'否',1:'是'}" cssClass="regular-radio" />
 							</div>
@@ -201,7 +199,7 @@
 	}
 	
 	var ticket = function(obj){
-		
+
 		if (getRadio("storyit.is_ticket") == 1) {
 			
 			document.getElementById("invoice").style.display = "";
@@ -220,7 +218,9 @@
 	}
 	$(function(){
 		var is_ticket=${sotresorder.is_ticket};
+
 		if(is_ticket==1){
+	
 			$("#invoice").css("display","")
 		}
 		var is_arrears=${sotresorder.is_arrears};

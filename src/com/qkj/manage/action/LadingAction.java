@@ -260,7 +260,7 @@ public class LadingAction extends ActionSupport {
 						}
 						this.setSalPromotsed(salps);//已经选择的促销活动
 					}
-					this.setSalPromots(sal.salProPower(lading.getMember_id()));//可选的促销活动
+					this.setSalPromots(sal.salProPower(lading.getMember_id(),null));//可选的促销活动
 					
 					//SalPromotDAO sdao = new SalPromotDAO();
 					//map.clear();
