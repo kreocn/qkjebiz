@@ -1,6 +1,7 @@
 package org.iweb.fileupload.logic;
 
 import org.iweb.sys.ContextHelper;
+import org.iweb.sys.ImageUtil;
 import org.iweb.sys.OSSUtil_IMG;
 import org.iweb.sys.dao.UserDAO;
 import org.iweb.sys.domain.User;
@@ -30,7 +31,7 @@ public class IUserUploadConfig extends UploadConfig {
 		}else{
 			
 		}
-		return "ckframe/images/WebImages/qkjmanager/SIGN/" + filename;
+		return "qkj_sign/" + filename;
 	}
 
 	@Override
@@ -47,6 +48,8 @@ public class IUserUploadConfig extends UploadConfig {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}*/
+		ImageUtil i=new ImageUtil();
+		i.disposeImage(src, in, 383, 276, 1);
 	}
 
 	@Override
