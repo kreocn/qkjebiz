@@ -1,5 +1,14 @@
 package org.iweb.fileupload.logic;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 import org.iweb.sys.ContextHelper;
 import org.iweb.sys.ImageUtil;
 import org.iweb.sys.OSSUtil_IMG;
@@ -48,8 +57,27 @@ public class IUserUploadConfig extends UploadConfig {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}*/
-		ImageUtil i=new ImageUtil();
-		i.disposeImage(src, in, 383, 276, 1);
+	
+		ByteArrayInputStream img = new ByteArrayInputStream(in);    //将b作为输入流；
+		BufferedImage image;
+		try {
+			image = ImageIO.read(img);
+			
+			BufferedImage tempImg = new BufferedImage(383, 276, BufferedImage.TYPE_INT_RGB); // 根据原图的大小生成空白画布
+			Graphics2D g = tempImg.createGraphics();
+			g.setColor(Color.white);
+			g.fillRect(0, 0, 383, 276);
+			g.drawImage(image, 0, 0, 383, 276,  Color.white, null);
+			g.dispose();
+
+			BufferedImage newImg = new BufferedImage(383, 276,  BufferedImage.TYPE_INT_RGB);
+			// 对图片进行缩小
+			newImg.getGraphics().drawImage(tempImg.getScaledInstance(383, 276, Image.SCALE_SMOOTH), 0, 0, null);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}     //将in作为输入流，读取图片存入image中，而这里in可以为ByteArrayInputStream();
 		
 		
 	}
