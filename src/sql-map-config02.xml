@@ -6,9 +6,9 @@
 		<dataSource type="JNDI">
 			<!-- 正式环境 DataSource Proxool -->
 			<!-- <property name="DataSource" value="java:/comp/env/qkj/mysql_druid_BJ01" /> -->
-			 <property name="DataSource" value="java:/comp/env/qkj/sqlServer_druid_huzhu" /> 
+			<!-- <property name="DataSource" value="java:/comp/env/qkj/sqlServer_druid_huzhu" /> --> 
 			<!-- 测试环境 DataSource Proxool -->
-			<!-- <property name="DataSource" value="java:/comp/env/qkj/mysql_druid_local203" /> -->
+			 <property name="DataSource" value="java:/comp/env/qkj/sqlServer_druid_huzhu204" /> 
 			<!-- 本机Tomcat本机测试环境 DataSource(ERP LOCAL TEST)&测试服务器 Proxool -->
 		  	<!-- <property name="DataSource" value="java:/comp/env/qkj/sqlServer_druid_BJ01" />  -->
 		</dataSource>

@@ -4,6 +4,14 @@
 	<typeAlias alias="storesOrderCustom" type="com.qkj.manage.domain.StoresOrderCustom" />
 		<typeAlias alias="storesOrder" type="com.qkj.manage.domain.StoresOrder" />
     <typeAlias alias="product" type="com.qkj.manage.domain.Product" />
+	
+		<select id="qkjmanage_getReportStroesOrder" resultClass="storesOrder" parameterClass="java.util.Map">
+		select report_time=convert(char(10), add_time, 110) , report_price=sum(total_price),report_num=COUNT(*)
+          from qkj_t_order
+          where convert(char(7), add_time, 120)=#add_time#
+         group by convert(char(10), add_time, 110) 
+	</select>
+	
 	<select id="qkjmanage_getProducts" resultClass="product" parameterClass="java.util.Map">
 		<![CDATA[ 
 			SELECT p.*,t.name brand_name FROM qkj_t_product p LEFT JOIN qkj_t_protype t ON (p.brand=t.id)

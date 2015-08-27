@@ -29,6 +29,35 @@ private String liqueur_ticket_code;
 private String is_li;//判断是否是使用酒票
 private String time_begin;
 private String time_end;
+
+private String report_price;
+private String report_time;
+private String report_num;
+
+public String getReport_price() {
+	return report_price;
+}
+
+public void setReport_price(String report_price) {
+	this.report_price = report_price;
+}
+
+public String getReport_time() {
+	return report_time;
+}
+
+public void setReport_time(String report_time) {
+	this.report_time = report_time;
+}
+
+public String getReport_num() {
+	return report_num;
+}
+
+public void setReport_num(String report_num) {
+	this.report_num = report_num;
+}
+
 public String getTime_begin() {
 	return time_begin;
 }
