@@ -44,6 +44,16 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
+		
+		<action name="closeOrder_saveMember" class="com.qkj.manage.action.CloseOrderAction" method="saveMember">
+			<result type="redirectAction">
+				<param name="actionName">closeOrder_load</param>
+				<param name="closeOrder.uuid">${closeOrder.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
 		<action name="closeOrder_del" class="com.qkj.manage.action.CloseOrderAction" method="del">
 			<result type="redirectAction" name="CLOSUCCESS">
 				<param name="actionName">closeOrder_list</param>

@@ -243,6 +243,8 @@ public class SalProStep {
 	 * @date 2014-4-26 上午10:25:25
 	 */
 	public int mdyFDStatus(int smd_status, String userid) {
+		SalProCheckSkip s=new SalProCheckSkip();
+		this.setSalPro(s.getSalPro());
 		if (smd_status == 5) {
 			noteflag = "退回";
 		}

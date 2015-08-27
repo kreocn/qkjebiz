@@ -6,8 +6,8 @@
 	<typeAlias alias="process" type="com.qkj.manage.domain.MyProcess" />
 	<select id="qkjmanage_getActives" resultClass="active" parameterClass="java.util.Map">
 		<![CDATA[ 
-			SELECT a.`uuid`,d.dept_cname apply_dept_name,au.user_name apply_user_name,a.`theme`,a.`it_price`,a.`mt_price`,a.`close_it_price`,a.`close_mt_price`,
-			a.`address`,a.`pass_time`,a.`close_pass_time`,a.`ship_no`,a.`ship_date`,a.`ship_type`,a.`ship_phone`,a.`ship_status`,a.`remark`,
+			SELECT a.`uuid`,a.ship_cloud,d.dept_cname apply_dept_name,au.user_name apply_user_name,a.`theme`,a.`it_price`,a.`mt_price`,a.`close_it_price`,a.`close_mt_price`,
+			a.`address`,a.`pass_time`,a.`close_pass_time`,a.`ship_no`,a.`ship_date`,a.`ship_type`,a.ship_phone,a.`ship_status`,a.`remark`,
 			a.`status`,a.`sd_status`,a.`sd_time`,a.`smd_status`,a.`smd_time`,a.`fd_status`,a.`fd_time`,a.`close_sd_status`,a.`close_sd_time`,a.`spe_remark`,
 			a.`close_fd_status`,a.`close_fd_time`,a.`close_smd_status`,a.`close_smd_time`,su.USER_NAME sd_user_name,smu.USER_NAME smd_user_name,
 			csu.USER_NAME close_sd_user_name,csmu.USER_NAME close_smd_user_name,fdu.`USER_NAME` fd_user_name,fdcu.`USER_NAME` close_fd_name,
@@ -597,6 +597,7 @@ SELECT MAX(a.baotime) baotime,MAX(a.stars) stars,MAX(a.sing) sing,MAX(a.spass) s
 				ship_ware=#ship_ware#,
 				ship_date=#ship_date#,
 				ship_no=#ship_no#,
+				ship_cloud=#ship_cloud#,
 				ship_phone=#ship_phone#,
 				remark=#remark#,
 				ship_type=#ship_type#,

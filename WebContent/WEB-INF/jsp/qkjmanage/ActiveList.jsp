@@ -237,6 +237,7 @@ cursor: pointer;
 				</span>
 				<span class="ship_hidden_info" style="display:none;">
 					<span id="ship_no_${uuid}">${ship_no}</span>
+					<span id="ship_cloud_${uuid }">${ship_cloud}</span>
 					<span id="ship_type_${uuid}">${ship_type}</span>
 					<span id="ship_date_${uuid}">${it:formatDate(ship_date,"yyyy-MM-dd")}</span>
 					<span id="ship_phone_${uuid}">${ship_phone}</span>
@@ -372,13 +373,17 @@ cursor: pointer;
             <div class="label_ltit">运单号:</div>
             <div class="label_rwben"><s:textfield id="e_active_ship_no" cssClass="validate[maxSize[48]]" name="active.ship_no" title="运单号码" /></div>
         </div>
+        <div class="label_hang">
+            <div class="label_ltit">云单号:</div>
+            <div class="label_rwben"><s:textfield id="e_active_ship_cloud" cssClass="validate[maxSize[48]]" name="active.ship_cloud" title="运单号码" /></div>
+        </div>
 		<div class="label_hang">
             <div class="label_ltit">物流名称:</div>
             <div class="label_rwben"><s:textfield id="e_active_ship_type" name="active.ship_type" cssClass="validate[maxSize[32]]" title="物流类型/名称" /></div>
         </div>
         <div class="label_hang">
             <div class="label_ltit">物流电话:</div>
-            <div class="label_rwben"><s:textfield id="e_ship_phone" name="active.ship_phone"  cssClass="validate[maxSize[48]]" title="物流电话" /></div>
+            <div class="label_rwben"><s:textfield id="e_active_ship_phone" name="active.ship_phone"  cssClass="validate[maxSize[48]]" title="物流电话" /></div>
         </div>
         <div class="label_hang">
             <div class="label_ltit">备注:</div>
@@ -444,6 +449,7 @@ function setShipVal(p_uuid) {
 	$("#e_active_ship_phone").val($("#ship_phone_"+p_uuid).text());
 	$("#e_active_ship_type").val($("#ship_type_"+p_uuid).text());
 	$("#e_active_ship_no").val($("#ship_no_"+p_uuid).text());
+	$("#e_active_ship_cloud").val($("#ship_cloud_"+p_uuid).text());
 	$("#e_active_ship_date").val($("#ship_date_"+p_uuid).text());
 	$("#e_active_ship_status").val($("#ship_status_"+p_uuid).text());
 	$("#e_active_remark").text($("#active_remark_"+p_uuid).text());
@@ -507,7 +513,7 @@ function kselect(){
 	if(parseInt(num)==4){//西北业务副总
 		jnull();
 		document.getElementById("sd_status").options[6].selected = true; 
-		document.getElementById("smd_sta").options[0].selected = true;
+		document.getElementById("smd_sta").options[5].selected = true;
 		$("#userdept_codeid").val("220");
 		$("#userdept_nameid").val("西北运营中心");
 		document.getElementById("apply_is_sub_dept").checked=true;
@@ -549,7 +555,7 @@ function kselect(){
 	}
 	if(parseInt(num)==11){//北京财
 		jnull();
-		document.getElementById("sd_status").options[5].selected = true; 
+		document.getElementById("sd_status").options[6].selected = true; 
 		document.getElementById("smd_sta").options[0].selected = true; 
 		document.getElementById("fdsta").options[1].selected = true; 
 		$("#userdept_codeid").val("3");
@@ -659,7 +665,7 @@ function kselect(){
 	}
 	if(parseInt(num)==31){//省外财
 		snull();
-		document.getElementById("clsdsta").options[5].selected = true; 
+		document.getElementById("clsdsta").options[6].selected = true; 
 		document.getElementById("clsmdsta").options[0].selected = true; 
 		document.getElementById("clfd").options[1].selected = true;
 		$("#userdept_codeid").val("211");
@@ -668,7 +674,7 @@ function kselect(){
 	}
 	if(parseInt(num)==32){//北京财
 		snull();
-		document.getElementById("clsdsta").options[5].selected = true; 
+		document.getElementById("clsdsta").options[6].selected = true; 
 		document.getElementById("clsmdsta").options[0].selected = true; 
 		document.getElementById("clfd").options[1].selected = true; 
 		$("#userdept_codeid").val("3");
