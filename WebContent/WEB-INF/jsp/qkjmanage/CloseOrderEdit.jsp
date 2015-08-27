@@ -214,7 +214,7 @@ s
 								</div>
 							</div>
 						</div>
-						<!-- 
+						
 						<div class="label_main">
 							<div class="label_hang">
 								<div class="label_ltit">会员号:</div>
@@ -234,8 +234,29 @@ s
 									<s:textfield id="order_user_name" name="closeOrder.member_name" title="姓名" controlName="姓名" cssClass="validate[required,maxSize[85]]" />
 								</div>
 							</div>
+							
+							<div class="label_hang">
+								<div class="label_ltit">名目:</div>
+								<div class="label_rwben label_rwb">
+									<s:textfield id="CloseOrderMemcost_title" name="closeOrder.member_title" cssClass="validate[required]" />
+								</div>
+							</div>
+							
+							<div class="label_hang">
+								<div class="label_ltit">金额:</div>
+								<div class="label_rwben label_rwb nw">
+									<s:textfield id="CloseOrderMemcost_total_price" name="closeOrder.mt_price" cssClass="validate[required]" />
+									元
+								</div>
+							</div>
 						</div>
 						<div class="label_main">
+							<div class="label_hang">
+								<div class="label_ltit">名目说明:</div>
+								<div class="label_rwbenx">
+									<s:textarea id="CloseOrderMemcost_note" name="closeOrder.member_note" cssClass="label_hang_linput validate[required,maxSize[128]]" />
+								</div>
+							</div>
 							<div class="label_hang">
 								<div class="label_ltit">配送地点:</div>
 								<div class="label_rwbenx">
@@ -243,7 +264,10 @@ s
 									<br /> 选择预设地址:<select id="selectAddress"></select>
 								</div>
 							</div>
-						</div> -->
+						</div>
+						
+						
+						
 						<s:if test="'mdy'==viewFlag && closeOrder.type==0">
 							<div class="label_main">
 								<fieldset class="clear">
@@ -319,9 +343,7 @@ s
 												<input type="button" id="product" onclick="window.location.href='${ladingAddProductsUrl}';" value="添加酒品/公司物料" />
 											</c:if>
 											
-											<c:if test="${closeOrder.state==0 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_ADD',null)==true}">
-												<input type="button" id="addPosm" value="添加物料" />
-											</c:if>
+											
 									
 										</div>
 											<p class="lb_gstit">公司酒品/公司物料</p>
@@ -349,7 +371,17 @@ s
 												</s:iterator>
 											</table>
 											
-											<p class="lb_gstit">其它物料</p>
+											<p class="lb_gstit">公司费用合计</p>
+											<p class="lb_jwei">￥${closeOrder.totel_price}</p>
+									</div>
+									<div class="lb_gsfy">
+									<p class="lb_yjtit">
+										<c:if test="${closeOrder.state==0 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_ADD',null)==true}">
+												<input type="button" id="addPosm" value="添加物料" />
+										</c:if>
+									</p>
+									
+									<p class="lb_gstit">其它物料</p>
 											<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
 												<tr>
 													<th>名目</th>
@@ -371,57 +403,6 @@ s
 													</tr>
 												</s:iterator>
 											</table>
-											<p class="lb_gstit">公司费用合计</p>
-											<p class="lb_jwei">￥${closeOrder.totel_price}</p>
-									</div>
-									<div class="lb_gsfy">
-									<p class="lb_yjtit">
-									<c:if test="${closeOrder.state==0 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_ADD',null)==true}">
-										<s:if test="%{closeOrder.member_id==null }">
-										<input type="button" id="addMember" value="添加客户" />
-										</s:if>
-										<s:else>
-										<input type="button" id="addMember" value="修改客户" />
-										</s:else>
-									</c:if>
-									</p>
-									
-									<div class="lb_yjcon">
-									<p class="lb_gstit">参与活动客户</p>
-									<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
-										<tr>
-											<th>客户</th>
-											<th>名目</th>
-											<th>名目说明</th>
-											<th>金额</th>
-											<!-- <th>操作</th> -->
-										</tr>
-										<tr>
-										<td>
-										<a href="javascript:;" onclick="loadMemberInfo('${closeOrder.member_id}');">${closeOrder.member_name}</a>
-										</td>
-										<td>${closeOrder.member_title}</td>
-										<td>${closeOrder.member_note}</td>
-										<td class="nw">￥${closeOrder.mt_price}</td>
-										</tr>
-										<!--<s:iterator value="CloseOrderMemcosts" status="sta">-->
-											<tr>
-												<td><a href="javascript:;" onclick="loadMemberInfo('${closeOrder.member_id}');">${closeOrder.member_name}</a></td>
-												<td>${closeOrder.member_title}</td>
-												<td>${closeOrder.member_note}</td>
-												<td class="nw">￥${closeOrder.mt_price}</td>
-												<!-- <td class="nw">
-													<c:if test="${closeOrder.state==0 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_ADD',null)==true}">
-														<a href="<s:url action="closeOrderMemcost_del"><s:param name="closeOrderMemcost.uuid" value="%{uuid}" /><s:param name="closeOrderMemcost.close_id" value="%{CloseOrder.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
-													</c:if>
-												</td> -->
-											</tr>
-										<!--</s:iterator>-->
-									</table>
-
-									<p class="lb_gstit">客户预计费用合计</p>
-									<p class="lb_jwei">￥${closeOrder.mt_price}</p>
-								</div>
 									
 								</div>
 									<div class="clear"></div>
