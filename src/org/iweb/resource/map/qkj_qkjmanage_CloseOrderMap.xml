@@ -127,7 +127,15 @@
 			f_price=#f_price#,
 			f_bprice=#f_bprice#,
 			is_fullcheck=#is_fullcheck#,
-			close_num=#close_num#
+			close_num=#close_num#,
+			
+			member_id=#member_id#,
+			member_address=#member_address#,
+			member_phone=#member_phone#,
+			member_title=#member_title#,
+			mt_price=#mt_price#,
+			member_note=#member_note#
+			
 			Where uuid = #uuid#
 		]]>
 	</update>
