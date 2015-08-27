@@ -50,6 +50,8 @@ public class IUserUploadConfig extends UploadConfig {
 		}*/
 		ImageUtil i=new ImageUtil();
 		i.disposeImage(src, in, 383, 276, 1);
+		
+		
 	}
 
 	@Override
