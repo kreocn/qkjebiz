@@ -139,11 +139,17 @@ display: none;
 				</td>
 				<td class="td4 op-area nw">
 					<s:if test="30<=status">
+					  
 					<a  href="javascript:;" data="${uuid}" class="mdyApplyShipInfo_Link input-nostyle">
 					<s:if test="0==ship_status">未发货</s:if>
 					<s:if test="10==ship_status"><span class="message_pass">已发货</span></s:if>
 		            <s:if test="20==ship_status"><span class="message_warning">已受理</span></s:if>
-		            </a>
+		                     <s:if test="30==ship_status"><span class="message_warning">待出库</span></s:if>
+		             <s:if test="40==ship_status"><span class="message_warning">部分出库</span></s:if>
+		                 <s:if test="50==ship_status"><span class="message_warning">已出库</span></s:if>
+		                    </a>
+		                    </s:if>
+		        
 					<span class="ship_hidden_info" style="display:none;">
 						<span id="ship_no_${uuid}">${ship_no}</span>
 						<span id="ship_type_${uuid}">${ship_type}</span>
@@ -154,7 +160,7 @@ display: none;
 					</span>
 					
 					
-					</s:if>
+				
 				</td>
 				<td class="td4 op-area nw">
 				<s:if test="apply_type==0">普通</s:if>
@@ -192,9 +198,13 @@ display: none;
         </div>
         <div class="label_hang">
             <div class="label_ltit">发货状态:</div>
-            <div class="label_rwben"><s:select id="form_apply_ship_status" name="apply.ship_status" list="#{0:'未发货',10:'已发货',20:'已受理' }" /></div>
+
+						<div class="label_rwben"><s:select id="form_apply_ship_status" name="apply.ship_status" list="#{0:'未出库',30:'已受理' }" /></div>
+
+      
+   
         </div>
-		<div class="label_hang">
+		<%-- <div class="label_hang">
             <div class="label_ltit">出库日期:</div>
             <div class="label_rwben"><span class="label_rwb"><input id="form_apply_ship_date" class="datepicker validate[custom[date]]" type="text" name="apply.ship_date" title="出库日期" value="${it:formatDate(apply.ship_date,'yyyy-MM-dd')}" /></span></div>
         </div>
@@ -209,7 +219,7 @@ display: none;
         <div class="label_hang">
             <div class="label_ltit">物流电话:</div>
             <div class="label_rwben"><span class="label_rwb"><s:textfield id="form_apply_ship_phone" name="apply.ship_phone" title="物流电话"  cssClass="validate[maxSize[48]]" /></span></div>
-        </div>
+        </div> --%>
         <div class="label_hang  label_button tac">
            	<s:hidden id="form_apply_uuid" name="apply.uuid" value="%{apply.uuid}" />
            	<c:if test="${it:checkPermit('QKJ_QKJMANAGE_ACTIVE_MDYAPPLYSHIPINFO',null)==true}">
