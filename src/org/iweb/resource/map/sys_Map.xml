@@ -344,6 +344,14 @@
 			Where title=#title#
 		]]>
 	</update>
+	
+	<update id="sys_imdyUserSign" parameterClass="user">
+		<![CDATA[
+			Update s_sys_user
+			Set user_sign=#user_sign#
+			Where uuid=#uuid#
+		]]>
+	</update>
 
 	<delete id="sys_delUser" parameterClass="user">
 	<![CDATA[

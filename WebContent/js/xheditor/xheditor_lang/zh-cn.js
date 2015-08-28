@@ -187,7 +187,7 @@ XHEDITOR.setLang({
         'progressTitle': '文件上传中(Esc取消上传)',
         'progressTip': '文件上传中，请稍候……',
         'countLimit': '请不要一次上传超过{$0}个文件',
-        'extLimit': '文件的扩展名必需为：{$0}',
+        'extLimit': '文件的扩展名必须为：{$0}',
         'typeLimit': '每次只能拖放上传同一类型文件',
         'apiError': '{$0} 上传接口发生错误！\r\n\r\n返回的错误内容为: \r\n\r\n{$1}'
     },

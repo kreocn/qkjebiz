@@ -10,8 +10,6 @@ import org.iweb.sys.ToolsUtil;
 import org.iweb.sys.cache.CacheFactory;
 import org.iweb.sys.cache.SysDBCacheLogic;
 
-import com.qkj.manage.action.CloseOrderAction;
-import com.qkj.manage.domain.Active;
 import com.qkj.manage.domain.CloseOrder;
 
 public class CloseOrderCheckSkip {
@@ -20,10 +18,10 @@ public class CloseOrderCheckSkip {
 	static {
 		// 北京
 		skipSteps.add(new CloseOrerSkipStep("3",null,1, "check30", "mdyCloseOrderSMDStatus50")); // 申请 4总监 7跳过销管副总
-		skipSteps.add(new CloseOrerSkipStep("3",null,1, "check0", "check20,mdyCloseOrderSMDStatus10")); // 跳过大区
+		skipSteps.add(new CloseOrerSkipStep("3",null,1, "check20", "mdyCloseOrderSMDStatus10")); // 跳过大区
 		// 省外
 		skipSteps.add(new CloseOrerSkipStep("211",null, 1, "check30", "mdyCloseOrderSMDStatus50"));// 总监审后销管销管副总代审
-		skipSteps.add(new CloseOrerSkipStep("211",null, 1, "check0", "check20,mdyCloseOrderSMDStatus10"));// 跳过大区
+		skipSteps.add(new CloseOrerSkipStep("211",null, 1, "check20", "mdyCloseOrderSMDStatus10"));// 跳过大区
 		// 西藏
 		skipSteps.add(new CloseOrerSkipStep("2302",null, 1, "check20", "mdyCloseOrderSMDStatus10"));// 大区审后销管经理代审
 		// 新疆
@@ -64,11 +62,11 @@ public class CloseOrderCheckSkip {
 			for (int i = 0; i < skipSteps.size(); i++) {
 				CloseOrerSkipStep as = new CloseOrerSkipStep();
 				as = skipSteps.get(i);
-				if(closerOrder.getType()==1){
+				/*if(closerOrder.getType()==1){
 					if(as.getStart_step().equals("check0")){
 						continue;
 					}
-				}
+				}*/
 				
 				if (as.getIsSub() == 1) {// 包含子部门
 					String str = (String) CacheFactory.getCacheInstance().get(SysDBCacheLogic.CACHE_DEPT_PREFIX_PARENT + closerOrder.getApply_dept());//

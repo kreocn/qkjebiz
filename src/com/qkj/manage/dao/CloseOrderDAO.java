@@ -23,6 +23,10 @@ public class CloseOrderDAO extends AbstractDAO {
 		return super.save("qkjmanage_mdyCloseOrder", parameters);
 	}
 	
+	public int saveMember(Object parameters) {
+		return super.save("qkjmanage_mdyCloseOrderMember", parameters);
+	}
+	
 	public int updateTotal(int order_id) {
 		return super.save("qkjmanage_mdyCloseOrdertotelPrice", order_id);
 	}
@@ -50,6 +54,10 @@ public class CloseOrderDAO extends AbstractDAO {
 	//数据中心
 	public int mdyCloseOrderNDStatus(Object parameters){
 		return super.save("qkjmanage_mdyCloseOrderNDStatus", parameters);
+	}
+	
+	public int mdyCloseOrderMtPrice(String closeOrder_id) {
+		return super.save("qkjmanage_mdyCloseOrderMtPrice", closeOrder_id);
 	}
 	
 	public int mdyPassStatus(Object parameters){
