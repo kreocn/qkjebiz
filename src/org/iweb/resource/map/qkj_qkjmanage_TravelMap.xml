@@ -5,7 +5,7 @@
 	<typeAlias alias="travel" type="com.qkj.manage.domain.Travel" />
 	<select id="qkjmanage_getTravels" resultClass="travel" parameterClass="java.util.Map">
 		<![CDATA[ 
-			SELECT t.*,ad.`dept_cname` apply_dept_name,au.`USER_NAME` apply_user_name,cu.`USER_NAME` check_user_name,
+			SELECT t.*,od.`state` state,od.`sd_state` sd_state,od.`sd_time` sd_time,od.`sd_user` sd_user,odsdu.`USER_NAME` sd_user_name,od.`smd_status` smd_status,od.`smd_time` smd_time,od.`smd_user` smd_user,odsmdu.`USER_NAME` smd_user_name,ad.`dept_cname` apply_dept_name,au.`USER_NAME` apply_user_name,cu.`USER_NAME` check_user_name,
 			acu.`USER_NAME` acheck_user_name,adu.`USER_NAME` add_user_name,cu.`user_sign` check_user_sign,acu.`user_sign` acheck_user_sign
 			FROM qkjm_r_travel t
 			LEFT JOIN s_sys_department ad ON(t.`apply_dept`=ad.`dept_code`)
@@ -13,6 +13,9 @@
 			LEFT JOIN s_sys_user cu ON(t.`check_user`=cu.`UUID`)
 			LEFT JOIN s_sys_user acu ON(t.`acheck_user`=acu.`UUID`)
 			LEFT JOIN s_sys_user adu ON(t.`add_user`=adu.`UUID`)
+			LEFT JOIN qkjm_r_closeorder od ON (od.`apply_id`=t.`uuid`)
+			LEFT JOIN s_sys_user odsdu ON(od.`sd_user`=odsdu.`UUID`)
+			LEFT JOIN s_sys_user odsmdu ON(od.`smd_user`=odsmdu.`UUID`)
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ t.uuid=#uuid# ]]></isNotEmpty>
