@@ -346,7 +346,7 @@ public class Step {
 		if (close_sd_status == 50) {
 			noteflag = "副总审核通过";
 		}
-		if (close_sd_status == 50) {
+		if (close_sd_status == 60) {
 			noteflag = "总经理审核通过";
 		}
 		active.setClose_fd_status(0);
