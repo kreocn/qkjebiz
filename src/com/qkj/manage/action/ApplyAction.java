@@ -291,24 +291,6 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 			this.setCurrPage(Integer.parseInt((ToolsUtil.isEmpty(map.get(Parameters.Current_Page_Str)) ? "1" : map.get(Parameters.Current_Page_Str)).toString()));
 			this.setApplys(dao.list(map));
-			OutStockDAO od=new OutStockDAO();
-			OutStock os=new OutStock();
-			List<OutStock> listos=new ArrayList<OutStock>();
-			for (Apply apply : applys) {
-				map.clear();
-				map.put("goldUuid",apply.getUuid());
-				listos=od.list(map);
-				if(listos.size()>0){
-					os=(OutStock) od.list(map).get(0);
-			    if(os.getSend()==2){
-			    	apply.setShip_status(30);
-			    }else if(os.getSend()==4&&os.getBoflag()==4){
-			    	apply.setShip_status(40);
-			    }else if(os.getSend()==4&&os.getBoflag()==0||os.getBoflag()==2){
-			    	apply.setShip_status(50);
-			    }
-				}
-			}
 			this.setRecCount(dao.getResultCount());
 			System.out.println(applys.size());
 			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;至事由列表";
