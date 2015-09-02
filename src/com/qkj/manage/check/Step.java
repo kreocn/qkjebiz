@@ -236,6 +236,9 @@ public class Step {
 		if (sd_status == 10) {
 			noteflag = "待审核";
 		}
+		if(sd_status==20){
+			noteflag="办事处审核通过";
+		}
 		if (sd_status == 30) {
 			noteflag = "大区审核通过";
 		}
@@ -329,6 +332,11 @@ public class Step {
 		if (close_sd_status == 10) {
 			noteflag = "待审核";
 		}
+		
+		if(close_sd_status==20){
+			noteflag="办事处审核通过";
+		}
+		
 		if (close_sd_status == 30) {
 			noteflag = "大区审核通过";
 		}
@@ -338,7 +346,7 @@ public class Step {
 		if (close_sd_status == 50) {
 			noteflag = "副总审核通过";
 		}
-		if (close_sd_status == 50) {
+		if (close_sd_status == 60) {
 			noteflag = "总经理审核通过";
 		}
 		active.setClose_fd_status(0);

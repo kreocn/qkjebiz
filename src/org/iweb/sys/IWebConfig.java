@@ -7,6 +7,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.TimeZone;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
@@ -44,6 +45,11 @@ public class IWebConfig extends HttpServlet implements javax.servlet.Servlet {
 	 */
 	public void init(ServletConfig config) throws ServletException {
 		try {
+			/**
+			 * 设置系统时区为中国
+			 */
+			final TimeZone zone = TimeZone.getTimeZone("GMT+8");
+			TimeZone.setDefault(zone);
 			/** ------------------------------- **/
 			/** 开始加载系统配置和系统参数 **/
 			/** ------------------------------- **/
