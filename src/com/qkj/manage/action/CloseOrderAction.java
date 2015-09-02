@@ -329,8 +329,9 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 				} else {
 					this.setCloseOrder(null);
 				}
-
+				
 				List<SalPromot> salps = new ArrayList<>();
+				List<String> dlist = new ArrayList<>();
 				if (salid != null) {
 					String stringarray[] = salid.split(",");
 					for (int i = 0; i < stringarray.length; i++) {
@@ -338,12 +339,13 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 						sp.setUuid(Integer.parseInt(stringarray[i]));
 						sp = (SalPromot) saldao.get(sp.getUuid());
 						salps.add(sp);
+						dlist.add(sp.getUuid().toString());
 					}
 					this.setSalPromotsed(salps);// 已经选择的促销活动
 				}
-
-				if (closeOrder != null && closeOrder.getMember_id() != null) this.setSalPromots(sal.salProPower(closeOrder.getMember_id(),closeOrder.getClose_time()));// 可选的促销活动
-
+				
+				if (closeOrder != null && closeOrder.getMember_id() != null) this.setSalPromots(sal.salProPower(closeOrder.getMember_id(),closeOrder.getClose_time(),dlist));// 可选的促销活动
+				
 				CloseOrderProDAO cdao = new CloseOrderProDAO();
 				map.clear();
 				map.put("order_id", closeOrder.getUuid());

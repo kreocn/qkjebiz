@@ -73,7 +73,7 @@
 		        <div class="label_hang">
 		            <div class="label_ltit">查询条件:</div>
 		            <div class="label_rwbenx">
-		            	<s:textarea id="condition" name="perWorkSelect.table_condition"  rows="3" title="查询字段" cssClass="label_hang_linput validate[required,maxSize[255]]" />
+		            	<s:textarea id="condition" name="perWorkSelect.table_condition"  rows="3" title="查询字段" cssClass="label_hang_linput validate[required,maxSize[500]]" />
 		            </div>
 		        </div>
 		      </div>

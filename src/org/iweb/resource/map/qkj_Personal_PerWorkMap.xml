@@ -30,7 +30,7 @@
 			<isNotEmpty prepend="AND" property="perUser"><![CDATA[ p.perUser=#perUser# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="roles"><![CDATA[ p.roles=#roles# ]]></isNotEmpty>
 		</dynamic>
-		<![CDATA[ ORDER BY p.uuid DESC	]]>
+		<![CDATA[ ORDER BY p.`perUser` DESC,p.uuid DESC	]]>
 	</select>
 	
 	<select id="personal_getPerWorkPowersCounts" resultClass="workPower" parameterClass="java.util.Map">

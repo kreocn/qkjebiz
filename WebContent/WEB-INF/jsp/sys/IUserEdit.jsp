@@ -105,7 +105,7 @@
 						<div class="label_rwbenx">
 							<s:submit id="save" name="save" value="保存" cssClass="input-blue"/>
 							<input type="button" value="修改密码" onclick="changePWD();" />
-							<s:hidden id="marketimgid"></s:hidden>
+							<!--<s:hidden id="marketimgid"></s:hidden>-->
 							
 							
 							<span id="message"><s:property value="message" /></span>
