@@ -40,6 +40,9 @@
 					</s:else> <s:if test="apply.status>=30">
 						<a class="input-gray" href="<s:url namespace="/qkjmanage" action="apply_print"><s:param name="apply.uuid" value="apply.uuid"></s:param></s:url>">转到打印页面</a>
 					</s:if>
+						<c:if test="${it:checkPermit('QKJ_QKJMANAGE_APPLY_OUTSTOCK',null)==true && apply.goflag==0}">
+						<a href="<s:url namespace="/qkjmanage" action="apply_outStock"><s:param name="apply.uuid" value="apply.uuid"></s:param></s:url>">成生出库单</a>
+					</c:if> 
 				</span>
 			</div>
 			<s:form id="editForm" name="editForm" cssClass="validForm" action="apply_load" namespace="/qkjmanage" method="post" theme="simple">
@@ -49,7 +52,15 @@
 							<div class="label_hang">
 								<div class="label_ltit">申请编号:</div>
 								<div class="label_rwben">
-									<span class="label_rwb">${apply.uuid}<s:hidden name="apply.uuid" /></span>
+									<span class="label_rwb">${apply.uuid}<s:hidden name="apply.uuid" />
+										<c:if test="${it:checkPermit('QKJ_QKJMANAGE_APPLY_OUTSTOCK',null)==true}">
+											(<s:if test='0==apply.goflag'>未出库</s:if>
+											<s:if test='1==apply.goflag'>已确认出库</s:if>
+											<s:if test='2==apply.goflag'>已部分出库</s:if>
+											<s:if test='3==apply.goflag'>已取消出库</s:if>
+											<s:if test='4==apply.goflag'>出库单已生成</s:if>)
+											<font color="red">${message }</font>
+										</c:if> </span>
 								</div>
 							</div>
 						</div>

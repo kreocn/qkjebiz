@@ -1,5 +1,9 @@
 package com.qkj.manage.action;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -16,6 +20,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import javax.imageio.ImageIO;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -37,6 +43,16 @@ import org.iweb.sys.domain.UserLoginInfo;
 import org.iweb.sysvip.dao.MemberCapitalDAO;
 import org.iweb.sysvip.domain.Member;
 import org.iweb.sysvip.domain.MemberCapital;
+import org.jbarcode.JBarcode;
+import org.jbarcode.encode.Code39Encoder;
+import org.jbarcode.encode.EAN13Encoder;
+import org.jbarcode.encode.EAN8Encoder;
+import org.jbarcode.encode.EANEncoder;
+import org.jbarcode.paint.BaseLineTextPainter;
+import org.jbarcode.paint.EAN13TextPainter;
+import org.jbarcode.paint.WideRatioCodedPainter;
+import org.jbarcode.paint.WidthCodedPainter;
+import org.jbarcode.util.ImageUtil;
 
 import com.aliyun.openservices.ots.protocol.OtsProtocol.StartTransactionRequest;
 import com.opensymphony.xwork2.ActionContext;
@@ -68,7 +84,7 @@ public class StoresAction  extends ActionSupport{
 	private String viewFlag;
 	private Member member;
 	private String message;
-
+    private String codeStr;
 
 	private List<StoresOrder> storesorderlist;
 	private Map<String, Object> map = new HashMap<String, Object>();
@@ -81,6 +97,13 @@ public class StoresAction  extends ActionSupport{
 	private Object cb[];
 	private String tick_code;
 	private List<StoresTicket> storesTickets;
+	public String getCodeStr() {
+		return codeStr;
+	}
+
+	public void setCodeStr(String codeStr) {
+		this.codeStr = codeStr;
+	}
 	public String getMessage() {
 		return message;
 	}
@@ -778,6 +801,68 @@ public class StoresAction  extends ActionSupport{
 		map.put("id", storesTicket.getId());
 		dao.delTicket(map);
 		return SUCCESS;
+	}
+	
+	public String codeList(){
+		
+		return SUCCESS;
+	}
+	
+	
+	
+	public String codeImage(){
+
+		try  
+	    {  
+		  JBarcode localJBarcode = new JBarcode(EAN13Encoder.getInstance(), WidthCodedPainter.getInstance(), EAN13TextPainter.getInstance());  
+		  codeStr=codeStr.substring(0,codeStr.length()-1);
+		
+	      BufferedImage localBufferedImage = localJBarcode.createBarcode(codeStr);  
+	     
+	      ByteArrayOutputStream out=new ByteArrayOutputStream();
+	      ImageIO.write(localBufferedImage,"png",out);
+	      byte[] b=out.toByteArray();
+	        ActionContext context = ActionContext.getContext();  
+			HttpServletResponse response = (HttpServletResponse) context.get(ServletActionContext.HTTP_RESPONSE);  
+	      response.getOutputStream().write(b);
+	   
+	    }  
+	    catch (Exception localException)  
+	    {  
+	      localException.printStackTrace();  
+	    }  
+		return null;
+		
+	}
+	
+	
+	static void saveToJPEG(BufferedImage paramBufferedImage, String paramString)  
+	{  
+	  saveToFile(paramBufferedImage, paramString, "jpeg");  
+	}  
+
+	static void saveToPNG(BufferedImage paramBufferedImage, String paramString)  
+	{  
+	  saveToFile(paramBufferedImage, paramString, "png");  
+	}  
+
+	static void saveToGIF(BufferedImage paramBufferedImage, String paramString)  
+	{  
+	  saveToFile(paramBufferedImage, paramString, "gif");  
+	}  
+
+	static void saveToFile(BufferedImage paramBufferedImage, String paramString1, String paramString2)  
+	{  
+	  try  
+	  {  
+	    FileOutputStream localFileOutputStream = new FileOutputStream("d:/images/" + paramString1);  
+	    ImageUtil.encodeAndWrite(paramBufferedImage, paramString2, localFileOutputStream, 96, 96);  
+	    localFileOutputStream.close();  
+	  }  
+	  catch (Exception localException)  
+	  {  
+	    localException.printStackTrace();  
+	  }  
 	}
 	/** 
 	 * * 两个Double数相加 * 

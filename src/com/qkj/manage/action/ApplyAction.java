@@ -39,6 +39,7 @@ import com.qkj.manage.domain.LadingItem;
 import com.qkj.manage.domain.Product;
 import com.qkj.ware.dao.OutStockDAO;
 import com.qkj.ware.domain.InStock;
+import com.qkj.ware.domain.OutStock;
 
 public class ApplyAction extends ActionSupport implements ActionAttr {
 	private static final long serialVersionUID = 1L;
