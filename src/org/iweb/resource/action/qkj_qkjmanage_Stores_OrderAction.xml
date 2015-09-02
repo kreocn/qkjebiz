@@ -17,4 +17,14 @@
 			</result>
 		</action>
 	</package>
+	
+	
+	<package name="qkjmanage_stores_report" extends="default" namespace="/storpt">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- Customer Start -->
+		<action name="stores_order_list_report" class="com.qkj.manage.action.StoresOrderAction" method="listReport">
+				<result>/WEB-INF/jsp/report/StoresOrderReport.jsp</result>
+		</action>
+		
+	</package>
 </struts>

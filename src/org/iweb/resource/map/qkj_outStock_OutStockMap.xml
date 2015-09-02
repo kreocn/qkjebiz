@@ -30,6 +30,7 @@
 			<isNotEmpty prepend="AND" property="manager_check_user"><![CDATA[ i.manager_check_user=#manager_check_user# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="date_start"><![CDATA[ i.date>=#date_start# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="date_end"><![CDATA[ i.date<=DATE_ADD(#date_end#,INTERVAL 1 day) ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="goldUuid"><![CDATA[ i.goldUuid=#goldUuid# ]]></isNotEmpty>
 			
 			<isNotEmpty prepend="AND" property="storeids">
 			<![CDATA[ i.store_id In ]]>

@@ -148,6 +148,9 @@ s
 										<s:if test="closeOrder.sd_state==10">
 											<font class="message_warning">待审核</font>
 										</s:if>
+										<s:if test="closeOrder.sd_state==20">
+											<font class="message_pass">办事处已审</font>(${closeOrder.sd_user_name})</s:if>
+											
 										<s:if test="closeOrder.sd_state==30">
 											<font class="message_pass">大区已审</font>(${closeOrder.sd_user_name})</s:if>
 										<s:if test="closeOrder.sd_state==40">
@@ -630,6 +633,9 @@ s
 										<s:if test="closeOrder.sd_state==10">
 											<font class="message_warning">待审核</font>
 										</s:if>
+										<s:if test="closeOrder.sd_state==20">
+											<font class="message_pass">办事处已审</font>(${closeOrder.sd_user_name} ${it:formatDate(closeOrder.sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+											
 										<s:if test="closeOrder.sd_state==30">
 											<font class="message_pass">大区已审</font>(${closeOrder.sd_user_name} ${it:formatDate(closeOrder.sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 										<s:if test="closeOrder.sd_state==40">

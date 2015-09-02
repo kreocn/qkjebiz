@@ -19,6 +19,7 @@ import org.iweb.sys.domain.UserLoginInfo;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.qkj.manage.dao.ProductDAO;
+import com.qkj.manage.dao.StoresDao;
 import com.qkj.manage.dao.StoresOrderDAO;
 import com.qkj.manage.domain.Product;
 import com.qkj.manage.domain.StoresOrder;
@@ -30,7 +31,21 @@ public class StoresOrderAction   extends ActionSupport{
 	private ProductDAO dao = new ProductDAO();
 	private StoresOrderDAO storesorderdao=new StoresOrderDAO();
 	private StoresOrder storyit;
-	
+	private StoresDao sdao=new StoresDao();
+	private List<StoresOrder> storesorderlist;
+	private String month;
+	public String getMonth() {
+		return month;
+	}
+	public void setMonth(String month) {
+		this.month = month;
+	}
+	public List<StoresOrder> getStoresorderlist() {
+		return storesorderlist;
+	}
+	public void setStoresorderlist(List<StoresOrder> storesorderlist) {
+		this.storesorderlist = storesorderlist;
+	}
 	public StoresOrder getStoryit() {
 		return storyit;
 	}
@@ -105,5 +120,16 @@ public class StoresOrderAction   extends ActionSupport{
 	public String update() throws Exception{
 		storesorderdao.update(storyit);
 		return SUCCESS;
+	}	
+	public String listReport() throws Exception {
+		ContextHelper.isPermit("SYS_RPT_STORES");
+		if(month==null){
+			map.put("add_time", "");
+		}else{
+			map.put("add_time", month);
+		}
+		this.setStoresorderlist(dao.listReport(map));
+		return SUCCESS;
+		
 	}
 }

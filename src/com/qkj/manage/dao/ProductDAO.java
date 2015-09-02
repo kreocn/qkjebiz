@@ -27,4 +27,10 @@ public class ProductDAO extends AbstractDAO {
 	public int getResultCount() {
 		return super.getResultCount();
 	}
+	
+	public List listReport(Map<String, Object> map) {
+		super.setDb_num(1);
+		return super.list("qkjmanage_getReportStroesOrder", map);
+	}
+	
 }

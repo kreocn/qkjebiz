@@ -75,7 +75,7 @@
 				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
 				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ o.user_id=#apply_userDouble# ]]></isNotEmpty>
 			</isNotEmpty>
-			order by add_time asc
+			ORDER BY add_time asc
 		</isEmpty>
 			
 			

@@ -166,6 +166,9 @@ background-color: #FFF;
 									<s:if test="sd_state==10">
 										<font class="message_warning">待审核</font>
 									</s:if>
+									<s:if test="sd_state==20">
+										<font class="message_pass">办事处已审</font>
+									</s:if>
 									<s:if test="sd_state==30">
 										<font class="message_pass">大区已审</font></s:if>
 									<s:if test="sd_state==40">
