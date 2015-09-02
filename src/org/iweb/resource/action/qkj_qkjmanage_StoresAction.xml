@@ -87,7 +87,12 @@
 				<param name="actionName">stores_ticket</param>
 			</result>
 		</action>
+					<action name="stores_code_list" class="com.qkj.manage.action.StoresAction" method="codeList">
+					      <result>/WEB-INF/jsp/qkjmanage/StoresCodeList.jsp</result>
+		</action>
 		
+					<action name="stores_code_image" class="com.qkj.manage.action.StoresAction" method="codeImage">
+		           </action>
 		<!-- Customer End -->
 	</package>
 </struts>
