@@ -206,6 +206,11 @@ public class CloseOrderStep {
 		if (sd_status == 10) {
 			noteflag = "待审核";
 		}
+		
+		if(sd_status==20){
+			noteflag="办事处审核通过";
+		}
+		
 		if (sd_status == 30) {
 			noteflag = "大区审核通过";
 		}

@@ -101,8 +101,8 @@
 	</select>
 	<insert id="qkjmanage_addCloseOrder" parameterClass="closeOrder">
 		<![CDATA[ 
-			Insert Into qkjm_r_closeorder(close_time,content,theme,member_id,member_address,member_phone,add_user,add_time,lm_time,lm_user,apply_dept,close_num,state,type,apply_id,close_note,is_fullcheck,m_upprice,m_price,m_bprice,f_upprice,f_price,f_bprice)
-			Values (#close_time#,#content#,#theme#,#member_id#,#member_address#,#member_phone#,#add_user#,#add_time#,#lm_time#,#lm_user#,#apply_dept#,#close_num#,#state#,#type#,#apply_id#,#close_note#,#is_fullcheck#,#m_upprice#,#m_price#,#m_bprice#,#f_upprice#,#f_price#,#f_bprice#)
+			Insert Into qkjm_r_closeorder(close_time,content,theme,member_id,member_address,member_phone,member_title,member_note,mt_price,add_user,add_time,lm_time,lm_user,apply_dept,close_num,state,type,apply_id,close_note,is_fullcheck,m_upprice,m_price,m_bprice,f_upprice,f_price,f_bprice)
+			Values (#close_time#,#content#,#theme#,#member_id#,#member_address#,#member_phone#,#member_title#,#member_note#,#mt_price#,#add_user#,#add_time#,#lm_time#,#lm_user#,#apply_dept#,#close_num#,#state#,#type#,#apply_id#,#close_note#,#is_fullcheck#,#m_upprice#,#m_price#,#m_bprice#,#f_upprice#,#f_price#,#f_bprice#)
 		]]>
 		<selectKey resultClass="int" keyProperty="uuid">
 		<![CDATA[ Select LAST_INSERT_ID() ]]>

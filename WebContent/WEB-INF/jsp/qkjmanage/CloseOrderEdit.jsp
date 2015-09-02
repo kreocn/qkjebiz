@@ -245,7 +245,7 @@ s
 							<div class="label_hang">
 								<div class="label_ltit">金额:</div>
 								<div class="label_rwben label_rwb nw">
-									<s:textfield id="CloseOrderMemcost_total_price" name="closeOrder.mt_price" />
+									<s:textfield id="CloseOrderMemcost_total_price" name="closeOrder.mt_price"  cssClass="validate[required,custom[number],maxSize[11]]" />
 									元
 								</div>
 							</div>

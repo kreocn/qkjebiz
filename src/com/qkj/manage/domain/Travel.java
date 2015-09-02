@@ -69,6 +69,18 @@ public class Travel {
 	private String acheck_user_name;
 	private String acheck_user_sign;
 	private String add_user_name;
+	
+	
+	private Integer state;
+	private Integer sd_state;
+	private String sd_user;
+	private Date sd_time;
+	private Integer smd_status;
+	private String smd_user;
+	private Date smd_time;
+	private String sd_user_name;
+	private String smd_user_name;
+	
 
 	// checkbox专用转换字段
 	private String[] apply_items;
@@ -77,6 +89,78 @@ public class Travel {
 	// 查询专用字段
 	
 	private Date travel_date_search;
+
+	public Integer getState() {
+		return state;
+	}
+
+	public void setState(Integer state) {
+		this.state = state;
+	}
+
+	public Integer getSd_state() {
+		return sd_state;
+	}
+
+	public void setSd_state(Integer sd_state) {
+		this.sd_state = sd_state;
+	}
+
+	public String getSd_user() {
+		return sd_user;
+	}
+
+	public void setSd_user(String sd_user) {
+		this.sd_user = sd_user;
+	}
+
+	public Date getSd_time() {
+		return sd_time;
+	}
+
+	public void setSd_time(Date sd_time) {
+		this.sd_time = sd_time;
+	}
+
+	public Integer getSmd_status() {
+		return smd_status;
+	}
+
+	public void setSmd_status(Integer smd_status) {
+		this.smd_status = smd_status;
+	}
+
+	public String getSmd_user() {
+		return smd_user;
+	}
+
+	public void setSmd_user(String smd_user) {
+		this.smd_user = smd_user;
+	}
+
+	public Date getSmd_time() {
+		return smd_time;
+	}
+
+	public void setSmd_time(Date smd_time) {
+		this.smd_time = smd_time;
+	}
+
+	public String getSd_user_name() {
+		return sd_user_name;
+	}
+
+	public void setSd_user_name(String sd_user_name) {
+		this.sd_user_name = sd_user_name;
+	}
+
+	public String getSmd_user_name() {
+		return smd_user_name;
+	}
+
+	public void setSmd_user_name(String smd_user_name) {
+		this.smd_user_name = smd_user_name;
+	}
 
 	public String getMember_id() {
 		return member_id;
