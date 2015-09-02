@@ -25,7 +25,8 @@ public class SalProCheckSkip {
 		// 西藏
 		skipSteps.add(new CloseOrerSkipStep("2302",null, 1, "check20", "mdyCloseOrderSMDStatus10"));// 大区审后销管经理代审
 		// 新疆
-		skipSteps.add(new CloseOrerSkipStep("2203",null, 1, "check20", "mdyCloseOrderSMDStatus10"));// 大区审后销管经理代审
+		//skipSteps.add(new CloseOrerSkipStep("221",null, 1, "check0", "check10,mdyCloseOrderSMDStatus10"));
+		skipSteps.add(new CloseOrerSkipStep("221",null, 1, "check20", "check30,mdyCloseOrderSMDStatus40"));
 		//西北
 		skipSteps.add(new CloseOrerSkipStep("220","2203", 1, "check30", "mdyCloseOrderSMDStatus40"));// 总监审后销管部经理代审
 		skipSteps.add(new CloseOrerSkipStep("220", "2203",1, "mdyCloseOrderSMDStatus50", "checkfd10"));// 销管副总审后财务代审
