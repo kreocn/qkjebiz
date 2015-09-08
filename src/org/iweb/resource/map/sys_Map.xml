@@ -228,6 +228,7 @@
 				dept_ename=#dept_ename#,
 				dept_cname=#dept_cname#,
 				descriptions=#descriptions#,
+				type=#type#,
 				lm_user=#lm_user#,
 				lm_time=#lm_time#
 			Where uuid=#uuid#
