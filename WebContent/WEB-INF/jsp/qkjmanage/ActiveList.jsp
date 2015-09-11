@@ -674,7 +674,7 @@ function kselect(){
 		document.getElementById("apply_is_sub_dept").checked=true;
 	}
 	
-	if(parseInt(num)==30){//西北财
+	if(parseInt(num)==300){//西北财
 		snull();
 		document.getElementById("clsdsta").options[0].selected = true; 
 		document.getElementById("clsmdsta").options[6].selected = true; 
