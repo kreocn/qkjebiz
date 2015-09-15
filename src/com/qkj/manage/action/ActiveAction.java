@@ -610,12 +610,6 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	}
 
 	public String load() throws Exception {
-		if ((perWorkF == null || perWorkF.equals("null")  ||perWorkF.equals("")) && (perWorkFlag == null || perWorkFlag.equals(""))) {
-			perWorkFlag = null;
-		} else {
-			this.setNextUuid(0);
-			perWorkFlag = "perWork";
-		}
 		try {
 			if (null == viewFlag) {
 				this.setActive(null);
@@ -666,6 +660,15 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				if (nextUuid != 0) {
 					this.setNextUuid(nextUuid);
 				}
+				
+				if ((perWorkF == null || perWorkF.equals("null")  ||perWorkF.equals("")) && (perWorkFlag == null || perWorkFlag.equals(""))) {
+					perWorkFlag = null;
+					this.setViewFlag(null);
+				} else {
+					this.setNextUuid(0);
+					perWorkFlag = "perWork";
+				}
+				
 				/* 检查当前用户是否已经审阅 */
 				if (apdao.userIsIn(approves, ContextHelper.getUserLoginUuid())) this.setIsApprover("true");
 				else this.setIsApprover("false");
