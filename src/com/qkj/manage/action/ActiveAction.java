@@ -13,7 +13,6 @@ import org.iweb.common.dao.CommonDAO;
 import org.iweb.sys.ActionAttr;
 import org.iweb.sys.ContextHelper;
 import org.iweb.sys.ToolsUtil;
-import org.iweb.sys.domain.User;
 import org.iweb.sysvip.dao.MemberCapitalDAO;
 import org.iweb.sysvip.domain.MemberCapital;
 
@@ -97,6 +96,15 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	// 个人工作标识
 	private String perWorkF;
 	private static String perWorkFlag = null;
+	public String per = "per";
+
+	public String getPer() {
+		return per;
+	}
+
+	public void setPer(String per) {
+		this.per = per;
+	}
 
 	public String getUserdepta() {
 		return userdepta;
@@ -601,7 +609,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
 		}
-		if(perWorkFlag==null || perWorkFlag.equals("null") || perWorkFlag.equals("")){
+		if (perWorkFlag == null || perWorkFlag.equals("null") || perWorkFlag.equals("") || per==null ||per.equals("null")) {
 			return "success";
 		} else {
 			perWorkFlag = null;
@@ -610,13 +618,19 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	}
 
 	public String load() throws Exception {
+		if ((perWorkF == null || perWorkF.equals("null") || perWorkF.equals("")) && (perWorkFlag == null || perWorkFlag.equals(""))) {
+			perWorkFlag = null;
+		} else {
+			this.setNextUuid(0);
+			perWorkFlag = "perWork";
+		}
 		try {
 			if (null == viewFlag) {
 				this.setActive(null);
 				setMessage("你没有选择任何操作!");
 			} else if ("add".equals(viewFlag)) {
 				this.setActive(null);
-				
+
 				get_apply_depts();
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/active_list?viewFlag=relist'>活动列表</a>&nbsp;&gt;&nbsp;增加活动";
 			} else if ("mdy".equals(viewFlag) || "view".equals(viewFlag)) {
@@ -626,7 +640,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				} else {
 					this.setActive(null);
 				}
-				get_apply_depts();//业务部门列表
+				get_apply_depts();// 业务部门列表
 				map.clear();
 				ProductDAO pdao = new ProductDAO();
 				map.put("status", 0);
@@ -660,15 +674,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				if (nextUuid != 0) {
 					this.setNextUuid(nextUuid);
 				}
-				
-				if ((perWorkF == null || perWorkF.equals("null")  ||perWorkF.equals("")) && (perWorkFlag == null || perWorkFlag.equals(""))) {
-					perWorkFlag = null;
-					this.setViewFlag(null);
-				} else {
-					this.setNextUuid(0);
-					perWorkFlag = "perWork";
-				}
-				
+
 				/* 检查当前用户是否已经审阅 */
 				if (apdao.userIsIn(approves, ContextHelper.getUserLoginUuid())) this.setIsApprover("true");
 				else this.setIsApprover("false");
@@ -706,7 +712,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 					}
 				}
 
-				if (active.getSd_status() >= 60 || active.getSmd_status()>=60) {// 总经理已审
+				if (active.getSd_status() >= 60 || active.getSmd_status() >= 60) {// 总经理已审
 					map.clear();
 					map.put("sq", "sq");
 					map.put("biz_id", active.getUuid());
@@ -747,7 +753,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 						this.setGuanActive((Active) t.get(0));
 					}
 				}
-				
+
 				if (active.getSmd_status() >= 40) {// 董事
 					map.clear();
 					map.put("sq", "sq");
@@ -758,8 +764,6 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 						this.setDongActive(t.get(0));
 					}
 				}
-				
-				
 
 				map.clear();
 				map.put("active_id", active.getUuid());
@@ -796,7 +800,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		try {
 			active.setUid(ToolsUtil.getCommonUUID("S"));
 			active.setAdd_user(ContextHelper.getUserLoginUuid());
-			//active.setApply_dept(ContextHelper.getUserLoginDept());
+			// active.setApply_dept(ContextHelper.getUserLoginDept());
 			active.setApply_user(ContextHelper.getUserLoginUuid());
 			active.setStatus(0);
 			active.setUuid((Integer) dao.add(active));
@@ -991,7 +995,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
-	
+
 	/**
 	 * 办事处审核通过
 	 * 
@@ -1057,7 +1061,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
-	
+
 	/**
 	 * 运营总监审核通过并送审到副总
 	 * 
@@ -1069,8 +1073,8 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_SDSTATUS30");
 		try {
 			mdyActiveSDStatus(40);
-			mdyActiveSMDStatus(40,"2");
-			//cs.checkSkip(active, 4);
+			mdyActiveSMDStatus(40, "2");
+			// cs.checkSkip(active, 4);
 			this.setBefUid(active.getUuid());
 			this.setUp(2);
 			nextActive();
@@ -1247,6 +1251,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	/**
 	 * 销管副总已审
 	 * mdyActiveSMDStatus70
+	 * 
 	 * @return
 	 * @throws Exception
 	 * @date 2014-4-26 上午10:29:40
@@ -1265,9 +1270,9 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
-	
+
 	/**
-	 *董事已审
+	 * 董事已审
 	 * 
 	 * @return
 	 * @throws Exception
@@ -1277,7 +1282,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_SMDSTATUS60");
 		try {
 			mdyActiveSMDStatus(70);
-			//cs.checkSkip(active, 7);
+			// cs.checkSkip(active, 7);
 			this.setBefUid(active.getUuid());
 			this.setUp(2);
 			nextActive();
@@ -1441,7 +1446,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		if (smd_status == 50) {
 			noteflag = "销管副总审核通过";
 		}
-		
+
 		if (smd_status == 70) {
 			noteflag = "董事审核通过";
 		}
@@ -1454,8 +1459,8 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		addProcess("ACTIVE_MDY_SMDSTATUS", note);
 		return dao.mdyActiveSMDStatus(active);
 	}
-	
-	public int mdyActiveSMDStatus(int smd_status,String user) {
+
+	public int mdyActiveSMDStatus(int smd_status, String user) {
 		if (smd_status == 5) {
 			noteflag = "退回";
 		}
@@ -1471,7 +1476,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		if (smd_status == 50) {
 			noteflag = "销管副总审核通过";
 		}
-		
+
 		if (smd_status == 70) {
 			noteflag = "董事审核通过";
 		}
@@ -1481,7 +1486,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		active.setSmd_user(user);
 		active.setLm_user(user);
 		String note = "活动申请-销管审核状态变更-" + noteflag;
-		addProcess("ACTIVE_MDY_SMDSTATUS", note,user);
+		addProcess("ACTIVE_MDY_SMDSTATUS", note, user);
 		return dao.mdyActiveSMDStatus(active);
 	}
 
@@ -1647,7 +1652,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 					}
 				}
 
-				if (active.getClose_sd_status() >= 60 || active.getClose_smd_status()>=60) {// 总经理已审
+				if (active.getClose_sd_status() >= 60 || active.getClose_smd_status() >= 60) {// 总经理已审
 					map.clear();
 					map.put("ja", "sq");
 					map.put("biz_id", active.getUuid());
@@ -1688,7 +1693,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 						this.setGuanActive((Active) t.get(0));
 					}
 				}
-				
+
 				if (active.getClose_smd_status() >= 70) {// 董事已审
 					map.clear();
 					map.put("ja", "sq");
@@ -1885,7 +1890,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
-	
+
 	/**
 	 * 销售部-结案 大区经理审核通过
 	 * 
@@ -1951,7 +1956,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
-	
+
 	/**
 	 * 销售部-结案 运营总监审核通过
 	 * 
@@ -1963,8 +1968,8 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS30");
 		try {
 			mdyCloseActiveSDStatus(40);
-			mdyCloseActiveSMDStatus(40,"2");
-			//cs.checkSkip(active, 14);
+			mdyCloseActiveSMDStatus(40, "2");
+			// cs.checkSkip(active, 14);
 			this.setBefUid(active.getUuid());
 			this.setUp(2);
 			nextActive();
@@ -2147,7 +2152,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
-	
+
 	/**
 	 * 销管部-董事审核通过
 	 * 
@@ -2159,7 +2164,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_SMDSTATUS60");
 		try {
 			mdyCloseActiveSMDStatus(70);
-			//cs.checkSkip(active, 17);
+			// cs.checkSkip(active, 17);
 			this.setBefUid(active.getUuid());
 			this.setUp(2);
 			nextActive();
@@ -2203,8 +2208,8 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		addProcess("ACTIVE_CLOSE_SMDSTATUS", note);
 		return dao.mdyCloseActiveSMDStatus(active);
 	}
-	
-	public int mdyCloseActiveSMDStatus(int close_sd_status,String user) {
+
+	public int mdyCloseActiveSMDStatus(int close_sd_status, String user) {
 		if (close_sd_status == 5) {
 			noteflag = "退回";
 		}
@@ -2227,7 +2232,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		active.setClose_smd_user(user);
 		active.setLm_user(user);
 		String note = "活动结案-销管审核状态变更" + noteflag;
-		addProcess("ACTIVE_CLOSE_SMDSTATUS", note,user);
+		addProcess("ACTIVE_CLOSE_SMDSTATUS", note, user);
 		return dao.mdyCloseActiveSMDStatus(active);
 	}
 
@@ -2316,8 +2321,8 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 					active.getClose_smd_status(), ContextHelper.getUserLoginUuid());
 		}
 	}
-	
-	private void addProcess(String p_sign, String p_note,String user) {
+
+	private void addProcess(String p_sign, String p_note, String user) {
 		ProcessDAO pdao = new ProcessDAO();
 		if (active != null) {
 			pdao.addProcess(1, active.getUuid(), p_sign, p_note, active.getStatus(), active.getSd_status(), active.getSmd_status(), active.getClose_sd_status(),
@@ -2351,7 +2356,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		Map<String, String> newMap = new HashMap<String, String>();
 		newMap = ContextHelper.getUserLoginInfo().getPermit_depts2();
 		Set<String> set = newMap.keySet();
-		List <Active> acs=new ArrayList<>();
+		List<Active> acs = new ArrayList<>();
 		for (String s : set) {
 			Active ac = new Active();
 			ac.setApply_dept(s);
