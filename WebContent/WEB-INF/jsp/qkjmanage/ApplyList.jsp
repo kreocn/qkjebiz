@@ -141,19 +141,33 @@ display: none;
 			
 					<s:if test="30<=status">
 					<a  href="javascript:;" data="${uuid}" class="mdyApplyShipInfo_Link input-nostyle">
-					<s:if test="1==goflag||2==goflag||3==goflag">
+					<s:if test="0==ship_status">未发货</s:if>
+		            <s:if test="10==ship_status"><span class="message_warning">已发货</span></s:if>
+		             <s:if test="20==ship_status"><span class="message_warning">已受理</span></s:if>
+
+				<%-- 	<s:if test="0==ship_status">未出库</s:if>
+		            <s:if test="20==ship_status"><span class="message_warning">已受理</span></s:if>
+		             <s:if test="30==ship_status"><span class="message_warning">待出库</span></s:if>
+		             <s:if test="40==ship_status"><span class="message_warning">部分出库</span></s:if>
+		                 <s:if test="50==ship_status"><span class="message_warning">已出库</span></s:if> --%>
+		                    </a>
+		                    </s:if>
+		        
+					<span class="ship_hidden_info" style="display:none;">
+					<%-- <s:if test="1==goflag||2==goflag||3==goflag">
 		                     <s:if test='1==goflag'>已确认出库</s:if>
 					        <s:if test='2==goflag'>已部分出库</s:if>
 				        	<s:if test='3==goflag'>已取消出库</s:if>
-				        		<span class="ship_hidden_info" style="display:none;">
+				        		<span class="ship_hidden_info" style="display:none;"> --%>
 						<span id="ship_no_${uuid}">${ship_no}</span>
 						<span id="ship_type_${uuid}">${ship_type}</span>
 						<span id="ship_date_${uuid}">${it:formatDate(ship_date,"yyyy-MM-dd")}</span>
 						<span id="ship_phone_${uuid}">${ship_phone}</span>
-						<span id="ship_goflag_${uuid}">${goflag}</span>
+						<span id="ship_status_${uuid}">${ship_status}</span>
+						<%-- <span id="ship_goflag_${uuid}">${goflag}</span> --%>
 						<span id="check_note_${uuid}">${check_note}</span>
 					</span>
-		               </s:if>
+		              <%--  </s:if>
 		               <s:else>
 		           <s:if test="0==ship_status">未发货</s:if>
 		               <s:if test="20==ship_status"><span class="message_warning">已受理</span></s:if>
@@ -171,7 +185,7 @@ display: none;
 		                   
 		        
 				
-					 </s:if>
+					 </s:if> --%>
 					
 				
 				</td>
@@ -209,14 +223,22 @@ display: none;
             <div class="label_ltit">审核意见:</div>
             <div><span id="form_apply_check_note"></span></div>
         </div>
-         <div id="form_apply_ship_status_div" class="label_hang">
+    <%--      <div id="form_apply_ship_status_div" class="label_hang">
             <div class="label_ltit">发货状态:</div>
      <div class="label_rwben"><s:select id="form_apply_ship_status" name="apply.ship_status" list="#{0:'未发货',10:'已发货',20:'已受理' }" /></div>
      </div>
          <div id="form_apply_goflag_div" class="label_hang">
             <div class="label_ltit">发货状态:</div>
        <div class="label_rwben"><s:select id="form_apply_goflag" name="apply.ship_status" list="#{1:'已确认发货',2:'已确认拆分',3:'已取消发货' }" /></div>
-	   </div>
+	   </div> --%>
+	   
+	     <div class="label_hang">
+       
+            <div class="label_ltit">发货状态:</div>
+						<div class="label_rwben"><s:select id="form_apply_ship_status" name="apply.ship_status" list="#{0:'未发货',10:'已发货',20:'已受理' }" /></div>
+     
+        </div>
+        
    <div class="label_hang">
             <div class="label_ltit">出库日期:</div>
             <div class="label_rwben"><span class="label_rwb"><input id="form_apply_ship_date" class="datepicker validate[custom[date]]" type="text" name="apply.ship_date" title="出库日期" value="${it:formatDate(apply.ship_date,'yyyy-MM-dd')}" /></span></div>
@@ -281,7 +303,7 @@ $(function(){
 });
 
 function setShipVal(p_uuid) {
-	$("#form_apply_ship_status_div").show();
+	/* $("#form_apply_ship_status_div").show(); */
 	$("#form_apply_uuid").val(p_uuid);
 	$("#form_apply_ship_phone").val($("#ship_phone_"+p_uuid).text());
 	$("#form_apply_ship_type").val($("#ship_type_"+p_uuid).text());
@@ -290,12 +312,12 @@ function setShipVal(p_uuid) {
 	$("#form_apply_ship_status").val($("#ship_status_"+p_uuid).text());
 	$("#form_apply_check_note").text($("#check_note_"+p_uuid).text());
 	$("#form_apply_goflag_div").hide();
-	if($("#ship_status_"+p_uuid).text()==""){
+/* 	if($("#ship_status_"+p_uuid).text()==""){
 		$("#form_apply_goflag_div").show();
 		$("#form_apply_goflag").attr("disabled","disabled");
 		$("#form_apply_goflag").val($("#ship_goflag_"+p_uuid).text());
 		$("#form_apply_ship_status_div").hide()
-	}
+	} */
 }
 </script>
 </body>
