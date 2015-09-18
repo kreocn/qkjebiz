@@ -29,17 +29,23 @@ public class CheckSkip {
 		// 西藏
 		skipSteps.add(new SkipStep("2302",null, 1, 2, 3,false)); // 申请 2大区 3跳过销管经理
 		skipSteps.add(new SkipStep("2302",null, 1, 12, 13,false));// 结案 12大区 13跳过销管经理
-		// 新疆
-		skipSteps.add(new SkipStep("2203",null, 1, 2, 3,false)); // 申请 2大区 3跳过销管经理
-		skipSteps.add(new SkipStep("2203",null, 1, 12, 13,false));// 结案 12大区 13跳过销管经理
-		//西北（申请（办事外，总监）结案（办事处，销管，总监，财务））
-		skipSteps.add(new SkipStep("220","2203", 1, 0, 2,"3",false)); // 申请
-		skipSteps.add(new SkipStep("220","2203",1, 4, 7,"9",false)); // 申请
-		//skipSteps.add(new SkipStep("220","2203",1, 10, 12,false)); // 结案
-		skipSteps.add(new SkipStep("220","2203",1, 14, 17,"19",false)); // 结案
+		// 新疆(大区，副总，财务)
+		skipSteps.add(new SkipStep("221",null, 1, 1, 0,"3",false)); //报审时，跳过办事处，销管
+		skipSteps.add(new SkipStep("221",null, 1, 2, 4,"5",false)); //大区时，跳过总监，销管部
 		
-		skipSteps.add(new SkipStep("220","2203",1, 7, 9,false)); // 结案
-		skipSteps.add(new SkipStep("220","2203",1, 17, 19,false)); // 结案
+		skipSteps.add(new SkipStep("221",null, 1, 11, 10,"13",false)); //报审时，跳过办事处，销管
+		skipSteps.add(new SkipStep("221",null, 1, 12, 14,"15",false)); //大区时，跳过总监，销管部
+		
+		//skipSteps.add(new SkipStep("2203",null, 1, 2, 3,false)); // 申请 2大区 3跳过销管经理
+		//skipSteps.add(new SkipStep("2203",null, 1, 12, 13,false));// 结案 12大区 13跳过销管经理
+		//西北（申请（办事外，总监）结案（办事处，销管，总监，财务））
+		skipSteps.add(new SkipStep("220",null, 1, 0, 2,"3",false)); // 申请
+		skipSteps.add(new SkipStep("220",null,1, 4, 7,"9",false)); // 申请
+		//skipSteps.add(new SkipStep("220","2203",1, 10, 12,false)); // 结案
+		skipSteps.add(new SkipStep("220",null,1, 14, 17,"19",false)); // 结案
+		
+		skipSteps.add(new SkipStep("220",null,1, 7, 9,false)); // 结案
+		skipSteps.add(new SkipStep("220",null,1, 17, 19,false)); // 结案
 		
 		skipSteps.add(new SkipStep("2202A",null,1, 1, 2,"3",false)); // 申请
 		skipSteps.add(new SkipStep("2202A",null,1, 11, 10,false)); // 结案

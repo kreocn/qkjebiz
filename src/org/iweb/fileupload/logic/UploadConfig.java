@@ -35,6 +35,10 @@ public class UploadConfig {
 	public boolean isReName() {
 		return true;
 	}
+	
+	public boolean isReBuffer() {
+		return false;
+	}
 
 	public String getMessage(String filename, String err) {
 		if (ToolsUtil.isEmpty(filename)) {
@@ -56,6 +60,9 @@ public class UploadConfig {
 
 	public void fileActionBefore(byte[] buffer) {
 
+	}
+	public byte[] fileActionBeforeBuffer(byte[] buffer) {
+		return buffer;
 	}
 
 	public void fileActionAfter(byte[] buffer, String filename, boolean successFlag) {

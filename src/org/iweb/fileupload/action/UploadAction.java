@@ -169,9 +169,14 @@ public class UploadAction extends ActionSupport {
 				if (config.isAutoRename()) {
 					filename = config.getReNameRule(filedataFileName, extensionName);
 				}
+				
 				if (config.isUploadOss()) {
 					// 上传到阿里云存储
 					// ByteArrayInputStream
+					if(config.isReBuffer()){
+						buffer=config.fileActionBeforeBuffer(buffer);
+						contentLength = (long) buffer.length;
+					}
 					InputStream bin = new ByteArrayInputStream(buffer);
 					if (OSSUtil_IMG.uploadFile(filename, bin, contentLength)) {
 						msg = "!" + OSSUtil_IMG.default_addr + filename;

@@ -65,6 +65,15 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 	// 个人工作标识
 	private String perWorkF;
 	private static String perWorkFlag;
+	public String per = "per";
+
+	public String getPer() {
+		return per;
+	}
+
+	public void setPer(String per) {
+		this.per = per;
+	}
 
 	private List<Active> getapply_depts;
 	private String userappid;
@@ -298,7 +307,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
 		}
-		if (perWorkFlag == null || perWorkFlag.equals("null") ||perWorkFlag.equals("")) {
+		if (perWorkFlag == null || perWorkFlag.equals("null") ||perWorkFlag.equals("") || per==null ||per.equals("null")) {
 			return "success";
 		} else {
 			perWorkFlag = null;

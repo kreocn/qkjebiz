@@ -783,13 +783,13 @@
 								</c:if>
 								</s:else>
 								
-								<!-- <c:if test="${(10==active.sd_status || 20==active.sd_status) && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS5',active.apply_dept)==true}">
+								<c:if test="${10==active.sd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS25',active.apply_dept)==true}">
 									<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
-								</c:if> -->
+								</c:if>
 								<c:if test="${30==active.sd_status && 30==active.smd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS30',active.apply_dept)==true}">
 									<s:submit id="mdyActiveSDStatus30" name="mdyActiveSDStatus30" cssClass="input-green" value="运营总监-审核通过" action="mdyActiveSDStatus30" onclick="return isOp('确定执行此操作?');" />
 									
-									<s:if test="active.apply_dept.substring(0,3)=='220' && active.apply_dept.substring(0,4)!='2203'">
+									<s:if test="active.apply_dept.substring(0,3)=='220'">
 									<s:submit cssClass="input-green" value="送审到副总" action="mdyActiveSDStatus30Two" onclick="return isOp('确定执行此操作?');" />
 									</s:if>
 									

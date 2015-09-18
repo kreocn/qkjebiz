@@ -228,6 +228,7 @@
 				dept_ename=#dept_ename#,
 				dept_cname=#dept_cname#,
 				descriptions=#descriptions#,
+				type=#type#,
 				lm_user=#lm_user#,
 				lm_time=#lm_time#
 			Where uuid=#uuid#
@@ -342,6 +343,14 @@
 				lm_user=#lm_user#,
 				lm_time=#lm_time#
 			Where title=#title#
+		]]>
+	</update>
+	
+	<update id="sys_imdyUserSign" parameterClass="user">
+		<![CDATA[
+			Update s_sys_user
+			Set user_sign=#user_sign#
+			Where uuid=#uuid#
 		]]>
 	</update>
 

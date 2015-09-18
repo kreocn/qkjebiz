@@ -148,6 +148,9 @@ s
 										<s:if test="closeOrder.sd_state==10">
 											<font class="message_warning">待审核</font>
 										</s:if>
+										<s:if test="closeOrder.sd_state==20">
+											<font class="message_pass">办事处已审</font>(${closeOrder.sd_user_name})</s:if>
+											
 										<s:if test="closeOrder.sd_state==30">
 											<font class="message_pass">大区已审</font>(${closeOrder.sd_user_name})</s:if>
 										<s:if test="closeOrder.sd_state==40">
@@ -238,14 +241,14 @@ s
 							<div class="label_hang">
 								<div class="label_ltit">名目:</div>
 								<div class="label_rwben label_rwb">
-									<s:textfield id="CloseOrderMemcost_title" name="closeOrder.member_title" cssClass="validate[required]" />
+									<s:textfield id="CloseOrderMemcost_title" name="closeOrder.member_title"/>
 								</div>
 							</div>
 							
 							<div class="label_hang">
 								<div class="label_ltit">金额:</div>
 								<div class="label_rwben label_rwb nw">
-									<s:textfield id="CloseOrderMemcost_total_price" name="closeOrder.mt_price" cssClass="validate[required]" />
+									<s:textfield id="CloseOrderMemcost_total_price" name="closeOrder.mt_price"  cssClass="validate[required,custom[number],maxSize[11]]" />
 									元
 								</div>
 							</div>
@@ -254,13 +257,13 @@ s
 							<div class="label_hang">
 								<div class="label_ltit">名目说明:</div>
 								<div class="label_rwbenx">
-									<s:textarea id="CloseOrderMemcost_note" name="closeOrder.member_note" cssClass="label_hang_linput validate[required,maxSize[128]]" />
+									<s:textarea id="CloseOrderMemcost_note" name="closeOrder.member_note" cssClass="label_hang_linput validate[maxSize[128]]" />
 								</div>
 							</div>
 							<div class="label_hang">
 								<div class="label_ltit">配送地点:</div>
 								<div class="label_rwbenx">
-									<s:textarea id="address" name="closeOrder.member_address" title="配送地点" rows="4" cssClass="label_hang_linput validate[required,maxSize[128]]"></s:textarea>
+									<s:textarea id="address" name="closeOrder.member_address" title="配送地点" rows="4" cssClass="label_hang_linput validate[maxSize[128]]"></s:textarea>
 									<br /> 选择预设地址:<select id="selectAddress"></select>
 								</div>
 							</div>
@@ -630,6 +633,9 @@ s
 										<s:if test="closeOrder.sd_state==10">
 											<font class="message_warning">待审核</font>
 										</s:if>
+										<s:if test="closeOrder.sd_state==20">
+											<font class="message_pass">办事处已审</font>(${closeOrder.sd_user_name} ${it:formatDate(closeOrder.sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+											
 										<s:if test="closeOrder.sd_state==30">
 											<font class="message_pass">大区已审</font>(${closeOrder.sd_user_name} ${it:formatDate(closeOrder.sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 										<s:if test="closeOrder.sd_state==40">

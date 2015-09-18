@@ -47,6 +47,10 @@ public class UserDAO extends AbstractDAO {
 	public void isave(Object parameters) {
 		super.save("sys_imdyUser", parameters);
 	}
+	
+	public void isaveSign(Object parameters) {
+		super.save("sys_imdyUserSign", parameters);
+	}
 
 	public int checkMember(User user) {
 		if (ToolsUtil.isEmpty(user.getTitle()) && ToolsUtil.isEmpty(user.getMobile()) && ToolsUtil.isEmpty(user.getEmail())) {

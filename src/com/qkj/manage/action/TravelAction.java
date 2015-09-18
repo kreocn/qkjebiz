@@ -69,6 +69,16 @@ public class TravelAction extends ActionSupport {
 	private String perWorkF;
 	private static String perWorkFlag=null;
 	
+	public String per = "per";
+
+	public String getPer() {
+		return per;
+	}
+
+	public void setPer(String per) {
+		this.per = per;
+	}
+	
 	public CloseOrder getCo() {
 		return co;
 	}
@@ -189,7 +199,7 @@ public class TravelAction extends ActionSupport {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
 		}
-		if(perWorkFlag==null || perWorkFlag.equals("null")){
+		if(perWorkFlag==null || perWorkFlag.equals("null") || per==null ||per.equals("null")){
 			return "success";
 		}else{
 			perWorkFlag=null;

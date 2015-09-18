@@ -80,6 +80,9 @@
 	              <th  class="td2">执行日期</th>
 	              <th  class="td3">业务审核状态</th>
 	              <th  class="td3">行政审核状态</th>
+	              <th class="td1">结案活动状态</th>
+				  <th class="td3">结案销售状态</th>
+				  <th class="td3">结案销管状态</th>
 	              <th  class="td4">操作</th>
 	              <th  class="td0">查看</th>
 	            </tr>
@@ -105,6 +108,74 @@
 								<s:if test="acheck_status==30"><span class="message_pass"  title="${acheck_user_name}">行政副总已审</span></s:if>
 								<s:if test="acheck_status==40"><span class="message_pass"  title="${acheck_user_name}">总经理已审</span></s:if>
 	            		</td>
+	            		
+	            		<td class="td1 nw">
+						<s:if test="state==0">新单</s:if>
+						<s:if test="state==1">审批中</s:if>
+						<s:if test="state==2">通过</s:if>
+						
+						<s:if test="state==2">
+							<span class="op-area">
+							<s:if test="ship_status==0"><a class="ship_info input-nostyle"  data="${uuid}">未发货</a></s:if>
+							<s:if test="ship_status==10"><a class="ship_info input-nostyle"  data="${uuid}"><span class="message_pass">已发货</span></a></s:if>
+							<s:if test="ship_status==99"><a class="ship_info input-nostyle"  data="${uuid}">&nbsp;其它&nbsp;</a></s:if>
+							</span>
+							<span class="ship_hidden_info" style="display:none;">
+								<span id="ship_no_${uuid}">${ship_no}</span>
+								<span id="ship_cloud_${uuid}">${ship_cloud}</span>
+								<span id="ship_type_${uuid}">${ship_type}</span>
+								<span id="ship_date_${uuid}">${it:formatDate(ship_date,"yyyy-MM-dd")}</span>
+								<span id="ship_phone_${uuid}">${ship_phone}</span>
+								<span id="ship_status_${uuid}">${ship_status}</span>
+								<span id="active_remark_${uuid}">${remark}</span>
+							</span>
+							<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_OUTSTOCK',null)==true && goflag==0}">
+							<span class="opb lb op-area">
+								<a style="background-color: #FFF;border-color: #363636;color: #363636;" href="<s:url namespace="/qkjmanage" action="closeOrder_outStock"><s:param name="closeOrder.uuid" value="uuid"></s:param></s:url>">出库</a>
+							</span>
+							</c:if> 
+							
+							<!-- .outClass {
+background-color: #FFF;
+  border-color: #363636;
+  color: #363636;
+} -->
+						</s:if>
+						</td>
+						<td class="td2 nw" title="${sd_user_name} ${it:formatDate(sd_time,'yyyy-MM-dd HH:mm:ss')}">
+						<s:if test="sd_state==0">新单</s:if>
+									<s:if test="sd_state==5">
+										<font class="message_error">审核退回</font></s:if>
+									<s:if test="sd_state==10">
+										<font class="message_warning">待审核</font>
+									</s:if>
+									<s:if test="sd_state==30">
+										<font class="message_pass">大区已审</font></s:if>
+									<s:if test="sd_state==40">
+										<font class="message_pass">总监已审</font></s:if>
+									<s:if test="sd_state==50">
+										<font class="message_pass">副总已审</font></s:if>
+						</td>
+						<td class="td2 nw" title="${smd_user_name} ${it:formatDate(smd_time,'yyyy-MM-dd HH:mm:ss')}">
+						<s:if test="smd_status==0">未签收</s:if>
+									<s:if test="smd_status==5">
+										<font class="message_error">审核退回</font></s:if>
+									<s:if test="smd_status==10">
+										<font class="message_warning">已签收</font>
+									</s:if>
+									<s:if test="smd_status==30">
+										<font class="message_pass">销管经理已审</font></s:if>
+									<s:if test="smd_status==40">
+										<font class="message_pass">销管部经理已审</font></s:if>
+									<s:if test="smd_status==50">
+										<font class="message_pass">销管副总已审</font></s:if>
+										<s:if test="smd_status==60">
+										<font class="message_pass">总经理已审</font></s:if>
+										<s:if test="smd_status==70">
+										<font class="message_pass">董事已审</font></s:if>
+						</td>
+						
+						
 	            		<td  class="td4 op-area nw">
 	            				<c:if test="${it:checkPermit('QKJ_QKJMANAGE_TRAVEL',null)==true}">
 				    	    		<a class="input-blue"  href="<s:url namespace="/qkjmanage" action="travel_load"><s:param name="viewFlag">mdy</s:param><s:param name="travel.uuid" value="uuid"></s:param></s:url>">修改</a>
@@ -152,7 +223,7 @@ function refurbish(){
 }
 
 $(function(){
-	$.fn.xhuploadinit("Travel",refurbish);
+	$.fn.xhupload("Travel",refurbish);
 	$("#marketimgid").xhupload();
 });
 

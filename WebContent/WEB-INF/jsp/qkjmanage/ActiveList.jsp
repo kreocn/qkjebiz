@@ -39,10 +39,10 @@ cursor: pointer;
             	<s:select id="sselect" onchange="kselect();" name="sselect"  cssClass="selectKick" headerKey="" headerValue="-----请选择-----" list="#{0:'(申)大区经理待审',1:'(申)销管经理待审',
             	2:'(申)运营总监待审',12:'(申)青藏-运营总监待审',13:'(申)新疆-运营总监待审',14:'(申)西北-运营总监待审',
             	3:'(申)西北-销管部经理待审',4:'(申)西北-业务副总待审',5:'(申)西北-销管副总待审',
-            	8:'(申)总经理待审',9:'(申)西北-财务待审',10:'(申)省外-财务待审',11:'(申)北京-财务待审',15:'(申)西藏-财务待审',
+            	8:'(申)总经理待审',9:'(申)西北-财务待审',90:'(申)新疆-财务待审',10:'(申)省外-财务待审',11:'(申)北京-财务待审',15:'(申)西藏-财务待审',
             	21:'(结)大区经理待审',22:'(结)销管经理待审',23:'(结)运营总监待审',33:'(结)青藏-运营总监待审',34:'(结)新疆-运营总监待审',35:'(结)西北-运营总监待审',
             	24:'(结)西北-销管部经理待审',25:'(结)西北-业务副总待审',26:'(结)西北-销管副总待审',
-            	29:'(结)总经理待审',30:'(结)西北-财务待审',31:'(结)省外-财务待审',32:'(结)北京-财务待审',36:'(结)西藏-财务待审'
+            	29:'(结)总经理待审',30:'(结)西北-财务待审',300:'(结)新疆-财务待审',31:'(结)省外-财务待审',32:'(结)北京-财务待审',36:'(结)西藏-财务待审'
             	}" />
             </div>
         </div>
@@ -544,6 +544,16 @@ function kselect(){
 		$("#userdept_nameid").val("西北运营中心");
 		document.getElementById("apply_is_sub_dept").checked=true;
 	}
+	
+	if(parseInt(num)==90){//西北财
+		jnull();
+		document.getElementById("sd_status").options[0].selected = true; 
+		document.getElementById("smd_sta").options[6].selected = true; 
+		document.getElementById("fdsta").options[1].selected = true;
+		$("#userdept_codeid").val("221");
+		$("#userdept_nameid").val("新疆区域");
+		document.getElementById("apply_is_sub_dept").checked=true;
+	}
 	if(parseInt(num)==10){//省外财
 		jnull();
 		document.getElementById("sd_status").options[6].selected = true; 
@@ -663,6 +673,17 @@ function kselect(){
 		$("#userdept_nameid").val("西北运营中心");
 		document.getElementById("apply_is_sub_dept").checked=true;
 	}
+	
+	if(parseInt(num)==300){//西北财
+		snull();
+		document.getElementById("clsdsta").options[0].selected = true; 
+		document.getElementById("clsmdsta").options[6].selected = true; 
+		document.getElementById("clfd").options[1].selected = true;
+		$("#userdept_codeid").val("221");
+		$("#userdept_nameid").val("新疆区域");
+		document.getElementById("apply_is_sub_dept").checked=true;
+	}
+	
 	if(parseInt(num)==31){//省外财
 		snull();
 		document.getElementById("clsdsta").options[6].selected = true; 
