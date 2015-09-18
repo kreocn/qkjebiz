@@ -117,9 +117,11 @@ display: none;
 			    <td class="td1 nw">${apply_user_name}</td>
 				<td class="td3 longnote" title="${title}">${it:subString(title,40)}</td>
 				<td class="td1 nw" title="${check_user_name}-${it:formatDate(check_time,'yyyy-MM-dd HH:mm:ss')}-${check_note}">
+				
 					<s:if test="-1==status"><span class="message_error">已作废|(${check_user_name})</span></s:if>
 					<s:if test="0==status">新申请</s:if>
 					<s:if test="5==status"><span class="message_error">已退回(${check_user_name})</span></s:if>
+					
 					<s:if test="%{apply_dept==1 || apply_dept.substring(0,2)!='30' || status>=20}">
 					<s:if test="10==status"><span class="message_warning">待审核</span></s:if>
 					<s:if test="20==status">
@@ -132,6 +134,8 @@ display: none;
 					<s:if test="10==status">
 					<s:if test="10==sp_check_status"><span class="message_pass">销管经理已审</span></s:if>
 					</s:if>
+					
+						<s:else ><span class="message_pass">经理/大区已审</span></s:else>
 					</s:else>
 					<s:if test="30==status"><span class="message_pass">总监已审</span></s:if>
 					<s:if test="40==status"><span class="message_pass">副总已审</span></s:if>
