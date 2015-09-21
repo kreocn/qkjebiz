@@ -84,10 +84,12 @@
 				<table>
 					<tr id="coltr">
 						<th class="td1">编号</th>
+						<th class="td1">发起部门</th>
+						<th class="td1">执行部门</th>
 						<th class="td1">主题</th>
 						<th class="td3">开始时间</th>
 						<th class="td3">结束时间</th>
-						<th class="td3">结案截止时间</th>
+						<th class="td4">结案截止时间</th>
 						<th class="td2">单据状态</th>
 						<th class="td2">销售审核</th>
 						<th class="td2">销管审核</th>
@@ -99,10 +101,12 @@
 					<s:iterator value="salPromots" status="sta">
 						<tr id="showtr${uuid}">
 							<td class="td1 nw"><s:property value="uuid" /></td>
+							<td class="td1 nw">${add_user_dept_name }</td>
+							<td class="td1 nw">${sal_scopDept_name }</td>
 							<td class="td1 nw" title="${sal_title}">${it:subString(sal_title,18)}</td>
 							<td class="td3 longnote"><s:date name="startime" format="yyyy-MM-dd" /></td>
 							<td class="td3 longnote"><s:date name="endtime" format="yyyy-MM-dd" /></td>
-							<td class="td3 longnote"><s:date name="close_endtime" format="yyyy-MM-dd" /></td>
+							<td class="td4 longnote"><s:date name="close_endtime" format="yyyy-MM-dd" /></td>
 							
 							<td class="td2 nw"><s:if test="status==0">新申请</s:if> <s:if test="status==1">审核中</s:if> <s:if test="status==2">审核通过</s:if></td>
 							<td class="td2 nw" title="${sd_name} ${it:formatDate(sd_time,'yyyy-MM-dd HH:mm:ss')}">

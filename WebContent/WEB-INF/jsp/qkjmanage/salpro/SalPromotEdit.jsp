@@ -285,7 +285,7 @@
 							</c:if>
 							
 							<s:if test="salPromot.status>0 && 'mdy' == viewFlag">
-								<c:if test="${it:checkPermit('QKJ_QKJMANAGE_SALPRO_APPROVE',null)==true}">
+								<c:if test="${it:checkPermit('QKJ_QKJMANAGE_SALPRO_APPROVE',salPromot.add_user_dept)==true}">
 								<input type="button" value="审阅" onclick="openApprove();" class="input-yellow" />
 								</c:if>
 							</s:if>
@@ -294,7 +294,7 @@
 							</s:if>
 							
 							<s:if test="salPromot.status>0 && 'mdy' == viewFlag">
-								<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK5',null)==true}">
+								<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK5',salPromot.add_user_dept)==true}">
 								<s:submit  cssClass="input-red" value="退回" action="mdySDStatus5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
 							</s:if>

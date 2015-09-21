@@ -34,7 +34,7 @@
 			
 			<isNotEmpty prepend="AND" property="proendtime"><![CDATA[ s.`endtime`>=#proendtime# ]]></isNotEmpty>
 			
-			<isNotEmpty prepend="AND" property="apply_depts" open="(" close=")">
+			<!-- <isNotEmpty prepend="AND" property="apply_depts" open="(" close=")">
 			<![CDATA[ s.add_user_dept In ]]>
 			<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
 			<isNotEmpty prepend="OR" property="apply_perdepts">
@@ -50,7 +50,7 @@
 				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
 				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ s.add_user=#apply_userDouble# ]]></isNotEmpty>
 			</isNotEmpty>
-		</isEmpty>
+		</isEmpty> -->
 		
 		</dynamic>
 		<![CDATA[ order by uuid desc LIMIT 1000 ]]>
@@ -74,7 +74,7 @@
 			<isNotEmpty prepend="AND" property="sd_status"><![CDATA[ sd_status=#sd_status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="fd_status"><![CDATA[ fd_status=#fd_status# ]]></isNotEmpty>
 			
-			<isNotEmpty prepend="AND" property="apply_depts" open="(" close=")">
+			<!-- <isNotEmpty prepend="AND" property="apply_depts" open="(" close=")">
 			<![CDATA[ add_user_dept In ]]>
 			<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
 			<isNotEmpty prepend="OR" property="apply_perdepts">
@@ -90,7 +90,7 @@
 				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
 				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ add_user=#apply_userDouble# ]]></isNotEmpty>
 			</isNotEmpty>
-		</isEmpty>
+		</isEmpty> -->
 
 		</dynamic>
 		<![CDATA[ LIMIT 1000 ]]>
