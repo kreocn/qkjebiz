@@ -329,6 +329,12 @@
 										</c:if>
 										<c:if test="${salPromot.sd_status==30 && salPromot.smd_status==30 && it:checkPermit('QKJ_QKJMANAGE_SALPRO_SDSTATUS40',salPromot.add_user_dept)==true}">
 											<s:submit value="运营总监审核通过" action="mdySDStatus30" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
+											
+											
+											<s:if test="salPromot.add_user_dept.substring(0,3)=='211' || (salPromot.add_user_dept.substring(0,1)==3 && salPromot.add_user_dept.substring(0,3)!='312')">
+											<s:submit cssClass="input-green" value="送审到副总" action="mdySDStatus30Two" onclick="return isOp('确定执行此操作?');" />
+											</s:if>
+											
 											<s:submit  cssClass="input-red" value="审核不通过" action="mdySDStatus5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
 										

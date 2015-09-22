@@ -56,6 +56,16 @@ public class SalProStep {
 	}
 
 	/**
+	 * 总监通过(送审到副总)
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public void check30Two(String userid) throws Exception {
+		mdyCloseOrderSDStatus(40, userid);
+	}
+	
+	/**
 	 * 总监通过
 	 * 
 	 * @return

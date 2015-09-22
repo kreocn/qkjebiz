@@ -19,9 +19,11 @@ public class SalProCheckSkip {
 		// 北京
 		skipSteps.add(new CloseOrerSkipStep("3",null,1, "check30", "mdyCloseOrderSMDStatus50")); // 申请 4总监 7跳过销管副总
 		skipSteps.add(new CloseOrerSkipStep("3", null,1, "status1", "mdyCloseOrderSMDStatus10")); // 跳过销管
+		skipSteps.add(new CloseOrerSkipStep("3",null,1, "check30Two", "mdyCloseOrderSMDStatus40")); // 申请 4总监 7跳过销部经理
 		// 省外
 		skipSteps.add(new CloseOrerSkipStep("211",null, 1, "check30", "mdyCloseOrderSMDStatus50"));// 总监审后销管销管副总代审
 		skipSteps.add(new CloseOrerSkipStep("211",null, 1, "status1", "mdyCloseOrderSMDStatus10")); // 跳过销管
+		skipSteps.add(new CloseOrerSkipStep("211",null,1, "check30Two", "mdyCloseOrderSMDStatus40")); // 申请 4总监 7跳过销部经理
 		// 西藏
 		skipSteps.add(new CloseOrerSkipStep("2302",null, 1, "check20", "mdyCloseOrderSMDStatus10"));// 大区审后销管经理代审
 		// 新疆

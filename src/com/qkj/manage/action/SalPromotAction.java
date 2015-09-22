@@ -481,6 +481,24 @@ public class SalPromotAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
+	
+	/**
+	 * 总监通过(送审到副总)
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String check30Two() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_SALPRO_SDSTATUS40");
+		try {
+			// mdyCloseOrderSDStatus(40,userid);
+			cocs.checkSkip(salPromot, "check30Two");
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!check1 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!check1 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
 
 	/**
 	 * 业务副总通过
