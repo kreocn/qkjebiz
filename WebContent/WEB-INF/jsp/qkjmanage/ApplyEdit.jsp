@@ -595,7 +595,7 @@
 										<s:else>
 										
 										<!-- 西北如果总金额大于0 直接到副总 -->
-										<s:if test="apply.apply_dept.substring(0,3)=='220' && apply.total_price>0">
+										<s:if test="apply.apply_dept.substring(0,3)=='220' && apply.total_price>30000">
 												<c:if test="${apply.status==20 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK30',apply.apply_dept)==true}">
 											<s:submit id="apply_check30" name="apply_check30" cssClass="input-green" value="副总-审核通过" action="apply_check30" onclick="return isOp('确定执行此操作?');" />
 											<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
