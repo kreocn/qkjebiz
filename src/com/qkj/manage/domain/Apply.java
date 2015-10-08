@@ -36,7 +36,7 @@ public class Apply {
 	private String sign_user_name;
 	private Integer goflag;
     private double total_price;
-    private Integer is_push;
+    private Integer is_push;//用于西北总监推送副总
 
 
 
