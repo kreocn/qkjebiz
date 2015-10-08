@@ -68,6 +68,10 @@ public class ApplyDAO extends AbstractDAO {
 	super.save("qkjmanage_ApplyTotalPrice", parameters);
 	}
 
+	
+	public void push(Object parameters){
+		super.save("qkjmanage_ApplyPush", parameters);
+		}
 	public int getResultCount() {
 		return super.getResultCount();
 	}

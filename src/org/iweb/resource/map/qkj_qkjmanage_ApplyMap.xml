@@ -168,7 +168,16 @@
 				check_user=#check_user#,
 				check_time=#check_time#,
 				check_note=#check_note#,
-				lm_user=#lm_user#
+				lm_user=#lm_user#,
+				is_push=#is_push# 
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+		<update id="qkjmanage_ApplyPush" parameterClass="apply">
+		<![CDATA[
+			Update qkjm_r_apply
+			Set is_push=1 
 			Where uuid = #uuid#
 		]]>
 	</update>

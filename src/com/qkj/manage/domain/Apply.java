@@ -36,6 +36,8 @@ public class Apply {
 	private String sign_user_name;
 	private Integer goflag;
     private double total_price;
+    private Integer is_push;
+
 
 
 	// 非数据库字段
@@ -53,6 +55,15 @@ public class Apply {
 	private Integer status_start;
 	private Integer status_end;
 	private Integer status_sp;
+	
+	public Integer getIs_push() {
+		return is_push;
+	}
+
+	public void setIs_push(Integer is_push) {
+		this.is_push = is_push;
+	}
+
 	public double getTotal_price() {
 		return total_price;
 	}
