@@ -609,8 +609,9 @@
 									   <s:else>
 										<c:if test="${apply.status==20 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK20',apply.apply_dept)==true}">
 													<s:submit id="apply_check20" name="apply_check20" value="总监审核通过" cssClass="input-green" action="apply_check20" onclick="return isOp('确定进行此操作?');" />
-											<s:submit id="apply_check20" name="apply_check20" value="推送副总" cssClass="input-green" action="apply_push" onclick="return isOp('确定进行此操作?');" />
-										
+												    <s:if test="apply.apply_dept.substring(0,3)=='220' ">
+											        <s:submit id="apply_check20" name="apply_check20" value="推送副总" cssClass="input-green" action="apply_push" onclick="return isOp('确定进行此操作?');" />
+										           </s:if>
 											<c:if test="${it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK5',null)==true}">
 												<s:submit id="apply_check5" name="apply_check5" value="审核不通过" cssClass="input-red" action="apply_check5" onclick="return isOp('确定进行此操作?');" />
 											</c:if>
