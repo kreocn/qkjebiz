@@ -484,6 +484,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 	public String check5() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_CHECK5");
 		try {
+			apply.setIs_push(0);
 			check(5);
 			spcheck(0);
 		} catch (Exception e) {
@@ -501,6 +502,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 	public String spt() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_SPT");
 		try {
+			apply.setIs_push(0);
 			check(5);
 			spcheck(0);
 		} catch (Exception e) {
@@ -865,6 +867,20 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 		products = adao.list(map);
 		/* } */
 		return products;
+	}
+	
+	
+	public String push() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_DEL");
+		try {
+			dao.push(apply);
+			apply.setIs_push(1);
+			check20();
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!del 数据删除失败:", e);
+			throw new Exception(this.getClass().getName() + "!del 数据删除失败:", e);
+		}
+		return SUCCESS;
 	}
 
 }
