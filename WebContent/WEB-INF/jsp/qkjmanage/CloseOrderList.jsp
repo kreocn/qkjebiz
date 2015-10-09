@@ -26,6 +26,7 @@ cursor: pointer;
 			</c:if>
 		</div>
 		<s:form id="serachForm" name="serachForm" action="closeOrder_list" method="get" namespace="/qkjmanage" theme="simple">
+		<s:hidden name="per" value="null"></s:hidden>
 			<div class="label_con">
 				<div class="label_main">
 					<div class="label_hang">
