@@ -132,11 +132,13 @@ display: none;
 					</s:if>
 					<s:else>
 					<s:if test="10==status && 10!=sp_check_status"><span class="message_warning">待审核</span></s:if>
+						
 					<s:if test="10==status">
+				
 					<s:if test="10==sp_check_status"><span class="message_pass">销管经理已审</span></s:if>
 					</s:if>
 					
-						<s:else ><span class="message_pass">经理/大区已审</span></s:else>
+						<s:elseif test="20==status"><span class="message_pass">经理/大区已审</span></s:elseif>
 					</s:else>
 					<s:if test="30==status"><span class="message_pass">总监已审</span></s:if>
 					<s:if test="40==status"><span class="message_pass">副总已审</span></s:if>
