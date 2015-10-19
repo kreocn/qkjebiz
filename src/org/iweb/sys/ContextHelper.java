@@ -430,6 +430,9 @@ public class ContextHelper {
 			} else {
 				String[] s = (String[]) JSONUtil.toObject(value, String[].class);// 转换成数组
 				flag = ToolsUtil.isIn(dept_code, s);// 判断在不在数组中
+				if(value.equals(dept_code)){//只有部门权限无子部门权限
+					flag =true;
+				}
 			}
 
 		}
