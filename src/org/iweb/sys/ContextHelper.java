@@ -398,42 +398,49 @@ public class ContextHelper {
 	public static boolean checkPermit2(String p_id, String dept_code) {
 		UserLoginInfo ulf = ContextHelper.getUserLoginInfo();
 		boolean flag = false;
-		if (dept_code == null || dept_code.equals("")) {
-			flag = ulf.getUser_prvg_map().containsKey(p_id);
-		} else {
-			String value = ulf.getUser_prvg_map().get(p_id);
-			if (value!=null && value.contains("#")) {// 权限中存在个人权限
-				String[] s = (String[]) JSONUtil.toObject(value, String[].class);// 转换成数组
-				if(s!=null&&value.contains(",")){
-					for(int i=0;i<s.length;i++){
-						if(s[i].contains("#")){
-							String code = value.substring(s[i].indexOf("#") + 1, s[i].length());
-							if (code != null && dept_code.equals(code)) {
-								flag = true;
-								break;
+		if(isAdmin()==true){
+			return true;
+		}else{
+			if (dept_code == null || dept_code.equals("")) {
+				flag = ulf.getUser_prvg_map().containsKey(p_id);
+			} else {
+				String value = ulf.getUser_prvg_map().get(p_id);
+				if (value!=null && value.contains("#")) {// 权限中存在个人权限
+					String[] s = (String[]) JSONUtil.toObject(value, String[].class);// 转换成数组
+					if(s!=null&&value.contains(",")){
+						for(int i=0;i<s.length;i++){
+							if(s[i].contains("#")){
+								String code = value.substring(s[i].indexOf("#") + 1, s[i].length());
+								if (code != null && dept_code.equals(code)) {
+									flag = true;
+									break;
+								}
+							}else{
+								if (s[i] != null && dept_code.equals(s[i])) {
+									flag = true;
+									break;
+								}
 							}
-						}else{
-							if (s[i] != null && dept_code.equals(s[i])) {
-								flag = true;
-								break;
-							}
+						}
+						
+					}else{
+						String code = value.substring(value.indexOf("#") + 1, value.length());
+						if (code != null && dept_code.equals(code)) {
+							flag = true;
 						}
 					}
 					
-				}else{
-					String code = value.substring(value.indexOf("#") + 1, value.length());
-					if (code != null && dept_code.equals(code)) {
-						flag = true;
+				} else {
+					String[] s = (String[]) JSONUtil.toObject(value, String[].class);// 转换成数组
+					flag = ToolsUtil.isIn(dept_code, s);// 判断在不在数组中
+					if(value.equals(dept_code)){//只有部门权限无子部门权限
+						flag =true;
 					}
 				}
-				
-			} else {
-				String[] s = (String[]) JSONUtil.toObject(value, String[].class);// 转换成数组
-				flag = ToolsUtil.isIn(dept_code, s);// 判断在不在数组中
-			}
 
+			}
+			return flag;
 		}
-		return isAdmin() || flag;
 	}
 
 	/**
