@@ -40,7 +40,7 @@ display: none;
             <div class="label_ltit">事(%):</div>
             <div class="label_rwben"><s:textfield name="apply.title"/></div>
         </div>
-        <div class="label_hang">
+    <div class="label_hang">
             <div class="label_ltit">申请时间:</div>
             <div class="label_rwben2">
             	<span class="label_rwb nw">
@@ -50,7 +50,8 @@ display: none;
 				<input type="text" class="datepicker iI iI-t" name="apply.apply_time_end" title="到" value="${it:formatDate(apply.apply_time_end,'yyyy-MM-dd')}" />
             	</span>
             </div>
-        </div>
+        </div> 
+       
         <div class="label_hang">
             <div class="label_ltit">申请部门:</div>
             <div class="label_rwben2">
@@ -66,7 +67,7 @@ display: none;
 				</span>
             </div>
         </div>
-        <div class="label_hang">
+      <div class="label_hang">
             <div class="label_ltit">审核时间:</div>
             <div class="label_rwben2">
             	<span class="label_rwb nw">
@@ -76,7 +77,7 @@ display: none;
 				<input  class="datepicker iI iI-t" type="text" name="apply.check_time_end" title="到" value="${it:formatDate(apply.check_time_end,'yyyy-MM-dd')}" />
             	</span>
             </div>
-        </div>
+        </div> 
         <div class="label_hang">
             <div class="label_ltit">状态:</div>
             <div class="label_rwben2">
