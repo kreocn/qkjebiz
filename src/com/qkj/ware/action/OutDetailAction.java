@@ -161,6 +161,23 @@ public class OutDetailAction extends ActionSupport {
 		}
 		return SUCCESS;
 	}
+	
+	public String listTwo() throws Exception {
+		ContextHelper.isPermit("QKJ_WARE_OUTSTOCK_LIST");
+		try {
+			map.clear();
+			if (outDetail != null) map.putAll(ToolsUtil.getMapByBean(outDetail));
+			map.putAll(ContextHelper.getDefaultRequestMap4Page());
+			this.setPageSize(ContextHelper.getPageSize(map));
+			this.setCurrPage(ContextHelper.getCurrPage(map));
+			this.setOutDetails(dao.listTwo(map));
+			this.setRecCount(dao.getResultCount());
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
+			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
+		}
+		return SUCCESS;
+	}
 
 	public String relist() throws Exception {
 		return SUCCESS;

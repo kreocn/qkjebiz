@@ -18,6 +18,16 @@
 
 		</dynamic>
 	</select>
+	
+	<select id="outDetail_getOutDetailsTwo" resultClass="outDetail" parameterClass="java.util.Map">
+		<![CDATA[ 
+				SELECT od.*,p.`title` product_name,p.`spec`,p.`case_spec`,os.`ordernum`,os.`goldUuid`,os.goreason,os.`store_id` store_id,os.`remark` remark,w.`ware_name` ware_name  FROM qkj_t_outdetail od 
+LEFT JOIN qkj_t_outstock os ON(od.`lading_id`=os.`uuid`)
+LEFT JOIN qkj_t_product p ON(p.`uuid`=od.`product_id`)
+LEFT JOIN qkj_t_warehouse w ON (w.`uuid`=os.`store_id`)
+		]]>
+	</select>
+	
 	<select id="outDetail_getOutDetailsCounts" resultClass="int" parameterClass="java.util.Map">
 		<![CDATA[ 
 			Select Count(*) From qkj_t_outdetail

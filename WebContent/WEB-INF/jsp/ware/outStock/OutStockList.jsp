@@ -21,6 +21,13 @@
 			<a href="<s:url namespace="/outStock" action="outStock_load"><s:param name="viewFlag">add</s:param></s:url>" >添加出库单</a>
 			</span>
 		</c:if>
+		
+		<c:if test="${it:checkPermit('QKJ_WARE_OUTSTOCK_LIST',null)==true}">
+			<span class="opb lb op-area">
+			<a href="<s:url namespace="/outStock" action="outDetail_listTwo"></s:url>" >出库详情</a>
+			</span>
+		</c:if>
+		
 	</div>
 	<!-- 条件查询 -->
 	<s:form id="serachForm" name="serachForm" action="outStock_list"  method="get" namespace="/outStock"  theme="simple">

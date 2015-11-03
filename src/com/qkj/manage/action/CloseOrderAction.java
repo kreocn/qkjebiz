@@ -1152,9 +1152,9 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 		}
 	}
 
-	public String number() {
+	public String number(String dept) {
 		String num = null;
-		String dept = ContextHelper.getUserLoginDept();
+		//String dept = ContextHelper.getUserLoginDept();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String nowdate = sdf.format(new Date());
 		map.clear();

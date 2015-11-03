@@ -301,9 +301,9 @@ public class TravelAction extends ActionSupport {
 					co.setMember_name(travel.getMembers_names());
 					co.setTheme("会员"+travel.getMembers_names()+"工业旅游结案");
 					co.setClose_time(new Date());
-					co.setClose_num(ca.number());// 单据编号
-					co.setApply_dept(ContextHelper.getUserLoginDept());
-					co.setAdd_user(ContextHelper.getUserLoginUuid());
+					co.setClose_num(ca.number(travel.getApply_dept()));// 单据编号
+					co.setApply_dept(travel.getApply_dept());//co.setApply_dept(ContextHelper.getUserLoginDept());20151103修改
+					co.setAdd_user(travel.getApply_user());
 					co.setAdd_time(new Date());
 					co.setLm_user(ContextHelper.getUserLoginUuid());
 					co.setLm_time(new Date());
