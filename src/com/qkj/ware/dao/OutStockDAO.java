@@ -263,9 +263,11 @@ public class OutStockDAO extends AbstractDAO {
 		outStock.setNote("出库");
 		if(sure==true && addUser!=null){//生成确认单据
 			outStock.setAdd_user(addUser);
+			outStock.setDept_code(ContextHelper.getUserLoginDept());
 			outStock.setLm_user(addUser);
 		}else{
 			outStock.setAdd_user(u);
+			outStock.setDept_code(ContextHelper.getUserLoginDept());
 			outStock.setLm_user(u);
 		}
 		outStock.setAdd_timer(new Date());
@@ -375,6 +377,7 @@ public class OutStockDAO extends AbstractDAO {
 			outStock.setUuid(null);
 			outStock.setOrdernum(numb);
 			outStock.setStore_id(store_id);
+			outStock.setDept_code(ContextHelper.getUserLoginDept());
 			outStock.setAdd_user(u);
 			outStock.setAdd_timer(d);
 			outStock.setLm_timer(d);

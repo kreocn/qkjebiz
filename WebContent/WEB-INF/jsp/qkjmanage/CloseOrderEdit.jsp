@@ -543,7 +543,7 @@ s
 							<div class="label_rwbenx">
 								<font color="red"><span id="messages"></span></font>
 								<s:if test="'add' == viewFlag">
-									<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_ADD',null)==true}">
+									<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_ADD',closeOrder.apply_dept)==true}">
 										<s:submit id="add" name="add" value="下一步&填写费用明细" action="closeOrder_add" cssClass="input-blue" />
 									</c:if>
 								</s:if>

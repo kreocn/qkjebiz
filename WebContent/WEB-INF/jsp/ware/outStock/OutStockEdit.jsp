@@ -187,7 +187,7 @@
 		     </div>
         </div>
         
-        
+        <s:if test="outStock.goreason!=5">
         	<div class="label_main">
 		        <div class="label_hang">
 		            <div class="label_ltit">运单号:</div>
@@ -208,7 +208,7 @@
 		            </div>
 		        </div>
 		     </div>
-        
+        </s:if>
         
         <s:if test="'mdy'==viewFlag">
         	<fieldset>

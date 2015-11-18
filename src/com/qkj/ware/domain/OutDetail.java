@@ -21,6 +21,35 @@ public class OutDetail {
 	private String ware_name;
 	private Integer store_id;
 	private String remark;
+	private Date datea;
+	
+	private Date out_time_start;
+	private Date out_time_end;
+
+	
+	public Date getOut_time_start() {
+		return out_time_start;
+	}
+
+	public void setOut_time_start(Date out_time_start) {
+		this.out_time_start = out_time_start;
+	}
+
+	public Date getOut_time_end() {
+		return out_time_end;
+	}
+
+	public void setOut_time_end(Date out_time_end) {
+		this.out_time_end = out_time_end;
+	}
+
+	public Date getDatea() {
+		return datea;
+	}
+
+	public void setDatea(Date datea) {
+		this.datea = datea;
+	}
 
 	public Integer getStore_id() {
 		return store_id;

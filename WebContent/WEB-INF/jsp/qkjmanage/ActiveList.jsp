@@ -96,7 +96,7 @@ cursor: pointer;
         <div class="label_hang">
             <div class="label_ltit">(申)销管状态:</div>
             <div class="label_rwben label_rwb"><s:select id="smd_sta" name="active.smd_status" cssClass="selectKick"
-				 list="#{0:'新单/未签收',5:'退回',10:'已签收',30:'销管经理已审',40:'销管部经理已审',50:'销管副总已审',70:'董事已审'}"
+				 list="#{0:'新单/未签收',5:'退回',10:'已签收',30:'销管经理已审',40:'销管部经理已审',50:'销管副总已审',70:'董事会已审'}"
 				 headerKey="" headerValue="--请选择--" />
             </div>
         </div>
@@ -119,7 +119,7 @@ cursor: pointer;
             <div class="label_ltit">(结)销管状态:</div>
             <div class="label_rwben label_rwb">
             	<s:select id="clsmdsta" name="active.close_smd_status" cssClass="selectKick"
-				 list="#{0:'新单/未签收',5:'退回',10:'已签收',30:'销管经理已审',40:'销管部经理已审',50:'销管副总已审',70:'董事已审'}"
+				 list="#{0:'新单/未签收',5:'退回',10:'已签收',30:'销管经理已审',40:'销管部经理已审',50:'销管副总已审',70:'董事会已审'}"
 				 headerKey="" headerValue="--请选择--" />
             </div>
         </div>
@@ -253,7 +253,15 @@ cursor: pointer;
 					<s:if test="sd_status==5"><font class="message_error" title="${sd_user_name} ${it:formatDate(sd_time,'yyyy-MM-dd HH:mm:ss')}">审核退回</font></s:if>
 					<s:if test="sd_status==10"><font class="message_warning">待审核</font></s:if>
 					<s:if test="sd_status==20"><font class="message_pass" title="${sd_user_name} ${it:formatDate(sd_time,'yyyy-MM-dd HH:mm:ss')}">办事处已审</font></s:if>
-					<s:if test="sd_status==30"><font class="message_pass" title="${sd_user_name} ${it:formatDate(sd_time,'yyyy-MM-dd HH:mm:ss')}">大区已审</font></s:if>
+					<s:if test="sd_status==30">
+					<s:if test="apply_dept.substring(0,1)==4">
+					<font class="message_pass" title="${sd_user_name} ${it:formatDate(sd_time,'yyyy-MM-dd HH:mm:ss')}">财务已审</font>
+					</s:if>
+					<s:else>
+					<font class="message_pass" title="${sd_user_name} ${it:formatDate(sd_time,'yyyy-MM-dd HH:mm:ss')}">大区已审</font>
+					</s:else>
+					
+					</s:if>
 					<s:if test="sd_status==40"><font class="message_pass" title="${sd_user_name} ${it:formatDate(sd_time,'yyyy-MM-dd HH:mm:ss')}">总监已审</font></s:if>
 					<s:if test="sd_status==50"><font class="message_pass" title="${sd_user_name} ${it:formatDate(sd_time,'yyyy-MM-dd HH:mm:ss')}">副总已审</font></s:if>
 					
@@ -263,7 +271,15 @@ cursor: pointer;
 				<s:if test="close_sd_status==5"><font class="message_error" title="${close_sd_user_name} ${it:formatDate(close_sd_time,'yyyy-MM-dd HH:mm:ss')}">审核退回</font></s:if>
 				<s:if test="close_sd_status==10"><font class="message_warning">待审核</font></s:if>
 				<s:if test="close_sd_status==20"><font class="message_pass" title="${close_sd_user_name} ${it:formatDate(close_sd_time,'yyyy-MM-dd HH:mm:ss')}">办事处已审</font></s:if>
-				<s:if test="close_sd_status==30"><font class="message_pass" title="${close_sd_user_name} ${it:formatDate(close_sd_time,'yyyy-MM-dd HH:mm:ss')}">大区已审</font></s:if>
+				<s:if test="close_sd_status==30">
+				<s:if test="apply_dept.substring(0,1)==4">
+				<font class="message_pass" title="${close_sd_user_name} ${it:formatDate(close_sd_time,'yyyy-MM-dd HH:mm:ss')}">财务已审</font>
+				</s:if>
+				<s:else>
+				<font class="message_pass" title="${close_sd_user_name} ${it:formatDate(close_sd_time,'yyyy-MM-dd HH:mm:ss')}">大区已审</font>
+				</s:else>
+				
+				</s:if>
 				<s:if test="close_sd_status==40"><font class="message_pass" title="${close_sd_user_name} ${it:formatDate(close_sd_time,'yyyy-MM-dd HH:mm:ss')}">总监已审</font></s:if>
 				<s:if test="close_sd_status==50"><font class="message_pass" title="${close_sd_user_name} ${it:formatDate(close_sd_time,'yyyy-MM-dd HH:mm:ss')}">副总已审</font></s:if>
 				<s:if test="close_sd_status==60"><font class="message_pass" title="${close_sd_user_name} ${it:formatDate(close_sd_time,'yyyy-MM-dd HH:mm:ss')}">总经理已审</font></s:if>
@@ -278,7 +294,7 @@ cursor: pointer;
 					<s:if test="smd_status==40"><font class="message_pass" title="${smd_user_name} ${it:formatDate(smd_time,'yyyy-MM-dd HH:mm:ss')}">销管部经理已审</font></s:if>
 					<s:if test="smd_status==50"><font class="message_pass" title="${smd_user_name} ${it:formatDate(smd_time,'yyyy-MM-dd HH:mm:ss')}">销管副总已审</font></s:if>
 					<s:if test="smd_status==60"><font class="message_pass" title="${smd_user_name} ${it:formatDate(smd_time,'yyyy-MM-dd HH:mm:ss')}">总经理已审</font></s:if>
-					<s:if test="smd_status==70"><font class="message_pass" title="${smd_user_name} ${it:formatDate(smd_time,'yyyy-MM-dd HH:mm:ss')}">董事已审</font></s:if>
+					<s:if test="smd_status==70"><font class="message_pass" title="${smd_user_name} ${it:formatDate(smd_time,'yyyy-MM-dd HH:mm:ss')}">董事会已审</font></s:if>
 				</s:if>
 				<s:if test="status>2">
 				<span class="span_label">
@@ -289,7 +305,7 @@ cursor: pointer;
 					<s:if test="close_smd_status==40"><font class="message_pass" title="${close_smd_user_name} ${it:formatDate(close_smd_time,'yyyy-MM-dd HH:mm:ss')}">销管部经理已审</font></s:if>
 					<s:if test="close_smd_status==50"><font class="message_pass" title="${close_smd_user_name} ${it:formatDate(close_smd_time,'yyyy-MM-dd HH:mm:ss')}">销管副总已审</font></s:if>
 					<s:if test="close_smd_status==60"><font class="message_pass" title="${close_smd_user_name} ${it:formatDate(close_smd_time,'yyyy-MM-dd HH:mm:ss')}">总经理已审</font></s:if>
-					<s:if test="close_smd_status==70"><font class="message_pass" title="${close_smd_user_name} ${it:formatDate(close_smd_time,'yyyy-MM-dd HH:mm:ss')}">董事已审</font></s:if>
+					<s:if test="close_smd_status==70"><font class="message_pass" title="${close_smd_user_name} ${it:formatDate(close_smd_time,'yyyy-MM-dd HH:mm:ss')}">董事会已审</font></s:if>
 				</span>
 				</s:if>
 			</td>
