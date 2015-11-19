@@ -179,6 +179,9 @@ public class Step {
 		if (smd_status == 50) {
 			noteflag = "销管副总审核通过";
 		}
+		if (smd_status == 60) {
+			noteflag = "总经理审核通过";
+		}
 		active.setFd_status(0);
 		active.setSmd_status(smd_status);
 		active.setSmd_time(new Date());
