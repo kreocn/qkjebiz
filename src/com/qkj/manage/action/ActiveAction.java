@@ -1281,8 +1281,8 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyActiveSMDStatus70() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_SMDSTATUS60");
 		try {
-			mdyActiveSMDStatus(70);
-			// cs.checkSkip(active, 7);
+			//mdyActiveSMDStatus(70);
+			cs.checkSkip(active, 31);
 			this.setBefUid(active.getUuid());
 			this.setUp(2);
 			nextActive();
@@ -2163,8 +2163,8 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	public String mdyCloseActiveSMDStatus60() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_SMDSTATUS60");
 		try {
-			mdyCloseActiveSMDStatus(70);
-			// cs.checkSkip(active, 17);
+			//mdyCloseActiveSMDStatus(70);
+			cs.checkSkip(active, 21);
 			this.setBefUid(active.getUuid());
 			this.setUp(2);
 			nextActive();

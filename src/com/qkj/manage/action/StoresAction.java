@@ -654,7 +654,7 @@ public class StoresAction  extends ActionSupport{
 		}
 		OutStockDAO isa = new OutStockDAO();
 		Integer goid=getWare(sotresorder.getLogin_dept());
-		isa.addStock(sotresorder.getId(), goid, null, 0, 5, produs,me,true,ContextHelper.getUserLoginDept(),ContextHelper.getUserLoginDept());//生成销售用酒出库
+		isa.addStock(sotresorder.getId(), goid, null, 0, 5, produs,me,true,ContextHelper.getUserLoginUuid(),ContextHelper.getUserLoginUuid());//生成销售用酒出库
 		
 	        }
 		if(cb!=null){

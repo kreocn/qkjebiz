@@ -38,7 +38,14 @@ cursor: pointer;
 	  	<tr id="showtr${uuid}">
 			<td class="td2 nw">${it:formatDate(biz_time,'yyyy-MM-dd hh:mm:ss')}</td>
 			<td class="td3 nw">${uname}</td>			
-			<td class="td1 nw tal">${biz_note}</td>			
+			<td class="td1 nw tal">
+			<s:if test="uname=='梁碧凌'">活动申请-销售审核状态变更-财务审核通过</s:if>
+			<s:elseif test="uname=='王兆三'">申请--财务状态变更-股份公司财务总监通过</s:elseif>
+			<s:else>
+			${biz_note}
+			</s:else>
+			
+			</td>			
 		    <td class="td0 op-area"><a onclick="showDetail('showtr${uuid}');" href="javascript:;" class="input-nostyle">查看</a></td>
 	  	</tr>
 	  	</s:iterator>

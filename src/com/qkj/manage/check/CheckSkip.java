@@ -63,13 +63,11 @@ public class CheckSkip {
 		skipSteps.add(new SkipStep("4",null, 1, 2, 4,"5",false));// 结案 14总监 17跳过销管副总
 		skipSteps.add(new SkipStep("4",null, 1, 12,14,"15",false));// 结案 14总监 17跳过销副总
 		
-		skipSteps.add(new SkipStep("4", "40102",1, 1, 3,false)); // 申请 2大区 3跳过大区
-		skipSteps.add(new SkipStep("4","40102", 1, 11, 13,false)); // 申请 2大区 3跳过大区
+		skipSteps.add(new SkipStep("4", null,1, 1, 3,false)); // 申请 2大区 3跳过大区
+		skipSteps.add(new SkipStep("4",null, 1, 11, 13,false)); // 申请 2大区 3跳过大区
 		
-		skipSteps.add(new SkipStep("40102",null, 1, 1, 0,"3",false)); // 申请 2大区 3跳过大区
-		skipSteps.add(new SkipStep("40102",null, 1, 11, 10,"13",false)); // 申请 2大区 3跳过大区
-		
-		
+		skipSteps.add(new SkipStep("405", null,1, 31, 9,false)); // 申请 ,结案，跳过财务
+		skipSteps.add(new SkipStep("405",null, 1, 21, 19,false)); // 申请 结案，跳过财务
 		
 	}
 

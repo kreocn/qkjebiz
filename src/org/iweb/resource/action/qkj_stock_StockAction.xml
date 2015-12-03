@@ -39,6 +39,8 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
+		<action name="stock_getProSto" class="com.qkj.ware.action.StockAction" method="getStorPro">
+		</action>
 		<!-- Stock End -->
 	</package>
 </struts>

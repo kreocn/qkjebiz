@@ -80,6 +80,10 @@ public class Step {
 		mdyActiveSMDStatus(60,userid);
 	}
 	
+	public void step31(String userid){//董事
+		mdyActiveSMDStatus(70,userid);
+	}
+	
 	public void step9(String userid){//财务
 		CheckSkip s=new CheckSkip();
 		this.setActive(s.getActive());
@@ -137,6 +141,10 @@ public class Step {
 		mdyCloseActiveSMDStatus(60,userid);
 	}
 	
+	public void step21(String userid){//结案销董事
+		mdyCloseActiveSMDStatus(70,userid);
+	}
+	
 	public void step19(String userid){//结案财务
 		CheckSkip s=new CheckSkip();
 		this.setActive(s.getActive());
@@ -178,6 +186,13 @@ public class Step {
 		}
 		if (smd_status == 50) {
 			noteflag = "销管副总审核通过";
+		}
+		if (smd_status == 60) {
+			noteflag = "总经理审核通过";
+		}
+		
+		if (smd_status == 70) {
+			noteflag = "董事审核通过";
 		}
 		active.setFd_status(0);
 		active.setSmd_status(smd_status);
@@ -388,6 +403,10 @@ public class Step {
 		}
 		if (close_sd_status == 60) {
 			noteflag = "总经理审核通过";
+		}
+		
+		if (close_sd_status == 70) {
+			noteflag = "董事审核通过";
 		}
 		
 		active.setClose_fd_status(0);

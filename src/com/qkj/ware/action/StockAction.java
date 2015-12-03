@@ -4,8 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.struts2.ServletActionContext;
 import org.iweb.sys.ContextHelper;
 import org.iweb.sys.ToolsUtil;
 
@@ -239,5 +243,28 @@ public class StockAction extends ActionSupport {
 			throw new Exception(this.getClass().getName() + "!del 数据删除失败:", e);
 		}
 		return SUCCESS;
+	}
+	
+	//根据仓库及产品查询库存：出库详情中使用
+	public void getStorPro() throws Exception{
+		try {
+			HttpServletResponse response = ServletActionContext.getResponse();
+			HttpServletRequest request = ServletActionContext.getRequest();
+			String store_id = request.getParameter("store_id");
+			String pro_id=request.getParameter("pro_id");
+			map.clear();
+			map.put("store_id", store_id);
+			map.put("product_id", pro_id);
+			List<Stock> s=new ArrayList<>();
+			s=dao.list(map);
+			Stock st=new Stock();
+			if(s.size()>0){
+				st=s.get(0);
+			}
+			ServletActionContext.getResponse().getWriter().print(st.getQuantity());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
 	}
 }

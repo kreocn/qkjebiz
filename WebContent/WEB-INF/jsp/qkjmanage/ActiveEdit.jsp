@@ -237,7 +237,15 @@
 									<s:if test="active.sd_status==20">
 										<font class="message_pass">办事处已审</font>(${active.sd_user_name})</s:if>
 									<s:if test="active.sd_status==30">
-										<font class="message_pass">大区已审</font>(${active.sd_user_name})</s:if>
+									
+									<s:if test="active.apply_dept.substring(0,1)==4">
+											<font class="message_pass">财务已审</font>(${active.sd_user_name})
+										</s:if>
+										<s:else>
+											<font class="message_pass">大区已审</font>(${active.sd_user_name})
+										</s:else>
+									
+										</s:if>
 									<s:if test="active.sd_status==40">
 										<font class="message_pass">总监已审</font>(${active.sd_user_name})</s:if>
 									<s:if test="active.sd_status==50">
@@ -263,15 +271,20 @@
 										<s:if test="active.smd_status==60">
 										<font class="message_pass">总经理已审</font>(${active.smd_user_name})</s:if>
 										<s:if test="active.smd_status==70">
-										<font class="message_pass">董事已审</font>(${active.smd_user_name})</s:if>
+										<font class="message_pass">董事会已审</font>(${active.smd_user_name})</s:if>
 								</div>
 								<div class="zhuangtai" <s:if test="%{active.fd_status!=0}">title="${it:formatDate(active.smd_time,'yyyy-MM-dd HH:mm:ss')}"</s:if>>
-									财务审核状态:
+								<s:if test="active.apply_dept.substring(0,1)==4">
+									股份公司：
+								</s:if>
+								<s:else>
+								财务审核状态:
+								</s:else>
 									<s:if test="active.fd_status==0">未确认</s:if>
 									<s:if test="active.fd_status==5">
 										<font class="message_error">审核退回</font>(${active.fd_user_name})</s:if>
 									<s:if test="active.fd_status==10">
-										<font class="message_pass">财务已审</font>(${active.fd_user_name})</s:if>
+										<font class="message_pass">已审</font>(${active.fd_user_name})</s:if>
 								</div>
 
 								<s:hidden name="active.status" />
@@ -712,10 +725,10 @@
 						</div>
 					</div>
 				</s:if>
-				<!-- 西北：（申请）办事处，总监（或副总）（结案）办事处，销管，总监（或副总） -->
+				<!-- 西北：（申请）办事处，总监（或副总）（结案）办事处，销管，大区，总监（或副总） -->
 				<!--北京：（其它）办事处，大区，总监，财务（红酒）总监，财务  -->
 				<!-- 省外：办事处，大区，总监 ，财务-->
-				<!-- 传奇：（城区市场）：大区，副总，总经理，董事，财务（其它）办事处，大区，副总，总经理，董事，财务 -->
+				<!-- 传奇：办事处，财务，副总，总经理，董事会，财务 -->
 				<!--新疆：跳过销管  -->
 				<div class="label_main">
 					<div class="label_hang">
@@ -746,7 +759,7 @@
 							</c:if>
 							<c:if test="${'mdy' == viewFlag && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_APPROVE',active.apply_dept)==true}">
 								<input type="button" value="审阅" onclick="openApprove();" />
-							</c:if>
+						   </c:if>
 							<c:if test="${'mdy' == viewFlag && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_HISTORY',null)==true}">
 								<input type="button" value="查看操作记录" class="input-gray" onclick="openCustomerView(${active.uuid});" />
 							
@@ -772,7 +785,7 @@
 								</c:if>
 								<s:if test="active.apply_dept.substring(0,1)==4">
 								<c:if test="${20==active.sd_status && 30==active.smd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS10',active.apply_dept)==true}">
-									<s:submit id="mdyActiveSDStatus10" name="mdyActiveSDStatus10" cssClass="input-green" value="经理/大区-审核通过" action="mdyActiveSDStatus10" onclick="return isOp('确定执行此操作?');" />
+									<s:submit id="mdyActiveSDStatus10" name="mdyActiveSDStatus10" cssClass="input-green" value="财务-审核通过" action="mdyActiveSDStatus10" onclick="return isOp('确定执行此操作?');" />
 									<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
 								</s:if>
@@ -811,7 +824,13 @@
 									<s:if test="active.sd_status==20">
 										<font class="message_pass">办事处已审</font>(${active.sd_user_name} ${it:formatDate(active.sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 									<s:if test="active.sd_status==30">
-										<font class="message_pass">大区已审</font>(${active.sd_user_name} ${it:formatDate(active.sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+										<s:if test="active.apply_dept.substring(0,1)==4">
+										<font class="message_pass">财务已审</font>(${active.sd_user_name} ${it:formatDate(active.sd_time,'yyyy-MM-dd HH:mm:ss')})
+										</s:if>
+										<s:else>
+										<font class="message_pass">大区已审</font>(${active.sd_user_name} ${it:formatDate(active.sd_time,'yyyy-MM-dd HH:mm:ss')})
+										</s:else>
+										</s:if>
 									<s:if test="active.sd_status==40">
 										<font class="message_pass">总监已审</font>(${active.sd_user_name} ${it:formatDate(active.sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 									<s:if test="active.sd_status==50">
@@ -844,8 +863,8 @@
 									<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
 								
-								<c:if test="${active.smd_status>=50 &&active.smd_status<70 && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SMDSTATUS60',active.apply_dept)==true}">
-									<s:submit id="mdyActiveSDStatus50" name="mdyActiveSDStatus50" cssClass="input-green" value="董事-审核通过" action="mdyActiveSMDStatus70" onclick="return isOp('确定执行此操作?');" />
+								<c:if test="${active.smd_status>=60 &&active.smd_status<70 && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SMDSTATUS60',active.apply_dept)==true}">
+									<s:submit id="mdyActiveSDStatus50" name="mdyActiveSDStatus50" cssClass="input-green" value="董事会-审核通过" action="mdyActiveSMDStatus70" onclick="return isOp('确定执行此操作?');" />
 									<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSMDStatus5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
 								<div class="statusInline">
@@ -865,7 +884,7 @@
 									<s:if test="active.smd_status==60">
 										<font class="message_pass">总经理已审</font>(${active.smd_user_name} ${it:formatDate(active.smd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 									<s:if test="active.smd_status==70">
-										<font class="message_pass">董事已审</font>(${active.smd_user_name} ${it:formatDate(active.smd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+										<font class="message_pass">董事会已审</font>(${active.smd_user_name} ${it:formatDate(active.smd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 								</div>
 							</div>
 						</div>
@@ -874,7 +893,25 @@
 				<s:if test="null != active&&(active.status>=1)">
 					<div class="label_main">
 						<div class="label_hang">
-							<div class="label_ltit">财务审核:</div>
+						<s:if test="active.apply_dept.substring(0,1)==4">
+						<div class="label_ltit">股份公司:</div>
+							<div class="label_rwbenx">
+								<c:if test="${active.smd_status>=70 && 10!=active.fd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_FDSTATUS10',active.apply_dept)==true}">
+									<s:submit id="mdyActiveFDSTATUS10" name="mdyActiveFDSTATUS10" cssClass="input-green" value="股份公司-审核通过" action="mdyActiveFDSTATUS10" onclick="return isOp('确定执行此操作?');" />
+									<s:submit id="mdyActiveFDStatus5" name="mdyActiveFDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveFDStatus" onclick="return isOp('确定执行此操作?');" />
+								</c:if>
+								<div class="statusInline">
+									股份公司审核状态:
+									<s:if test="active.fd_status==0">未确认</s:if>
+									<s:if test="active.fd_status==5">
+										<font class="message_error">审核退回</font>(${active.fd_user_name} ${it:formatDate(active.fd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+									<s:if test="active.fd_status==10">
+										<font class="message_pass">已审</font>(${active.fd_user_name} ${it:formatDate(active.fd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+								</div>
+							</div>
+						</s:if>
+						<s:else>
+						<div class="label_ltit">财务审核:</div>
 							<div class="label_rwbenx">
 							<!-- 
 								<s:if test="%{(active.apply_dept.substring(0,2)=='21' || active.apply_dept.substring(0,2)=='30') && active.smd_status!=50}">
@@ -896,6 +933,8 @@
 										<font class="message_pass">财务已审</font>(${active.fd_user_name} ${it:formatDate(active.fd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 								</div>
 							</div>
+						</s:else>
+							
 						</div>
 					</div>
 				</s:if>

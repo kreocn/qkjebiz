@@ -14,6 +14,98 @@ public class OutDetail {
 	private String product_name;
 	private Integer case_spec;
 	private String flag;
+	private String ordernum;
+	private Integer goldUuid;
+	private Integer goreason;
+	private String spec;
+	private String ware_name;
+	private Integer store_id;
+	private String remark;
+	private Date datea;
+	
+	private Date out_time_start;
+	private Date out_time_end;
+
+	
+	public Date getOut_time_start() {
+		return out_time_start;
+	}
+
+	public void setOut_time_start(Date out_time_start) {
+		this.out_time_start = out_time_start;
+	}
+
+	public Date getOut_time_end() {
+		return out_time_end;
+	}
+
+	public void setOut_time_end(Date out_time_end) {
+		this.out_time_end = out_time_end;
+	}
+
+	public Date getDatea() {
+		return datea;
+	}
+
+	public void setDatea(Date datea) {
+		this.datea = datea;
+	}
+
+	public Integer getStore_id() {
+		return store_id;
+	}
+
+	public void setStore_id(Integer store_id) {
+		this.store_id = store_id;
+	}
+
+	public String getWare_name() {
+		return ware_name;
+	}
+
+	public void setWare_name(String ware_name) {
+		this.ware_name = ware_name;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public String getSpec() {
+		return spec;
+	}
+
+	public void setSpec(String spec) {
+		this.spec = spec;
+	}
+
+	public Integer getGoldUuid() {
+		return goldUuid;
+	}
+
+	public void setGoldUuid(Integer goldUuid) {
+		this.goldUuid = goldUuid;
+	}
+
+	public Integer getGoreason() {
+		return goreason;
+	}
+
+	public void setGoreason(Integer goreason) {
+		this.goreason = goreason;
+	}
+
+	public String getOrdernum() {
+		return ordernum;
+	}
+
+	public void setOrdernum(String ordernum) {
+		this.ordernum = ordernum;
+	}
 
 	public String getFlag() {
 		return flag;

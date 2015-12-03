@@ -225,7 +225,7 @@
 						<s:submit name="leave_check9" cssClass="input-green" value="主管/办事处经理-审核通过" action="leave_check9" onclick="return isOp('确定执行此操作?');" />
 					</c:if>
 					
-					<c:if test="${leave.check_status==10 && it:checkPermit('QKJ_ADM_LEAVE_CHECKB5',leave.leave_dept)==true}">
+					<c:if test="${(leave.check_status==10 && it:checkPermit('QKJ_ADM_LEAVE_CHECKB5',leave.leave_dept)==true) || leave.check_status==10 && leave.leave_type==0 && leave.leave_dept.substring(0,3)=='211' && it:checkPermit('QKJ_ADM_LEAVE_CHECK9',leave.leave_dept)==true}">
 							<s:submit name="leave_check5" value="主管/办事处经理-审核不通过" action="leave_check5" cssClass="input-red" onclick="return isOp('确定执行此操作?');" />
 					</c:if>
 						

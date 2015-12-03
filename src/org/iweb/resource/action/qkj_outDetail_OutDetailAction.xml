@@ -9,6 +9,15 @@
 		<action name="outDetail_list" class="com.qkj.ware.action.OutDetailAction" method="list">
 			<result>/WEB-INF/jsp/ware/outDetail/OutDetailList.jsp</result>
 		</action>
+		<action name="outDetail_listTwo" class="com.qkj.ware.action.OutDetailAction" method="listTwo">
+			<result>/WEB-INF/jsp/ware/outStock/OutDetailList.jsp</result>
+		</action>
+		<action name="outDetail_excel" class="com.qkj.ware.action.OutDetailAction" method="excel">
+			<result type="redirectAction">
+				<param name="actionName">outDetail_listTwo</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
 		<action name="outDetail_relist" class="com.qkj.ware.action.OutDetailAction" method="relist">
 			<result type="redirectAction">
 				<param name="actionName">outDetail_list</param>

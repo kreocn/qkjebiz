@@ -8,6 +8,11 @@ public class OutDetailDAO extends AbstractDAO {
 		return super.list("outDetail_getOutDetails", map);
 	}
 	
+	public List listTwo(Map<String, Object> map) {
+		//setCountMapid("outDetail_getOutDetailsCounts");
+		return super.list("outDetail_getOutDetailsTwo", map);
+	}
+	
 	public Object get(Object uuid) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("uuid", uuid);
