@@ -120,6 +120,7 @@
 					<a href="javascript:;" onclick="ypri();window.print();">打印本页</a>
 					<a href="javascript:;" onclick="indprint();">打印海拔系列</a>
 					<a href="javascript:;" onclick="otherprint();">打印非海拔系列</a>
+					<a href="javascript:;" onclick="tastingprint();">打印品鉴酒</a>
 					<a href="javascript:;" onclick="nopri();window.print();">活动执行通知单</a>
 					
 					<a class="input-gray"  href="<s:url namespace="/qkjmanage" action="active_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a>
@@ -427,7 +428,24 @@
 										</tr>
 									</s:iterator>
 								</table>
-
+	                            <p  id="tasting1"  class="lb_gstit">品鉴酒</p>	
+								<table  id="tasting2"  width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+									<tr>
+										<th>品名</th>
+										<th>单价</th>
+										<th>数量(瓶)</th>
+										<th>合计</th>
+									</tr>
+									<s:iterator value="ActiveProductsTasting" status="sta">
+										<tr>
+											<td class="nw">${product_name}</td>
+											<td class="nw">￥${per_price}</td>
+											<td class="nw">${num}</td>
+											<td class="nw">￥${total_price}</td>
+											
+										</tr>
+									</s:iterator>
+								</table>
 								<p class="lb_gstit">公司销售物料(除酒品之外的其他费用,全部算物料)</p>
 								<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
 									<tr>
@@ -440,14 +458,16 @@
 											<td>${title}</td>
 											<td>${note}</td>
 											<td class="nw">￥${total_price}</td>
+										
 										</tr>
 									</s:iterator>
 								</table>
 
 								<p class="lb_gstit">公司预计费用合计</p>
 								<p id="totel1" class="lb_jwei">￥${active.it_price}</p>
-								<p id="indprice" class="lb_jwei kss ">￥${indprice} </p>
-								<p id="otherprice" class="lb_jwei kss">￥${active.it_price-indprice}</p>
+								<p id="indprice" class="lb_jwei kss ">￥${indprice+Posms} </p>
+								<p id="otherprice" class="lb_jwei kss">￥${active.it_price-indprice-tastingPrice}</p>
+								<p id="tastingprice" class="lb_jwei kss">￥${tastingPrice+Posms}</p>
 							</div>
 						</div>
 						<div class="lb_gsfy">
@@ -481,8 +501,9 @@
 						</div>
 						<div class="clear"></div>
 						<p id="totel2"  class="lb_yjbot">方案预计费用总计: ${active.it_price} + ${active.mt_price} = ￥${active.it_price+active.mt_price}</p>
-						<p id="indprice2" class="lb_yjbot kss">方案预计费用总计: ${indprice} + ${active.mt_price} = ￥${indprice+active.mt_price}</p>
-						<p id="otherprice2" class="lb_yjbot kss">方案预计费用总计: ${active.it_price-indprice} + ${active.mt_price} = ￥${active.it_price-indprice+active.mt_price}</p>
+						<p id="indprice2" class="lb_yjbot kss">方案预计费用总计: ${indprice+Posms} + ${active.mt_price} = ￥${indprice+Posms+active.mt_price}</p>
+						<p id="otherprice2" class="lb_yjbot kss">方案预计费用总计: ${active.it_price-indprice-tastingPrice} + ${active.mt_price} = ￥${active.it_price-indprice-tastingPrice+active.mt_price}</p>
+						<p id="tastingprice2" class="lb_yjbot kss">方案预计费用总计: ${tastingPrice+Posms} + ${active.mt_price} = ￥${tastingPrice+Posms+active.mt_price}</p>
 					</div>
 				</div>
 				<fieldset class="clear">
@@ -582,6 +603,8 @@
 		$("#otherprice").addClass("kss"); //添加样式
 		$("#indprice").addClass("kss"); //添加样式
 		$("#indprice2").addClass("kss"); //添加样式
+		$("#tastingprice").addClass("kss"); //添加样式
+		$("#tastingprice2").addClass("kss"); //添加样式
 	}
 	function otherprint(){
 		otherpri();
@@ -592,6 +615,21 @@
 		$("#otherprice").addClass("kss"); //添加样式
 		$("#indprice").addClass("kss"); //添加样式
 		$("#indprice2").addClass("kss"); //添加样式
+		$("#tastingprice").addClass("kss"); //添加样式
+		$("#tastingprice2").addClass("kss"); //添加样式
+	}
+	
+	function  tastingprint(){
+		tastingpri();
+		window.print();
+		$("#totel1").removeClass("kss"); //添加样式
+		$("#totel2").removeClass("kss"); //添加样式
+		$("#otherprice2").addClass("kss"); //添加样式
+		$("#otherprice").addClass("kss"); //添加样式
+		$("#indprice").addClass("kss"); //添加样式
+		$("#indprice2").addClass("kss"); //添加样式
+		$("#tastingprice").addClass("kss"); //添加样式
+		$("#tastingprice2").addClass("kss"); //添加样式
 	}
 	function nopri(){
 		$("#mprice").addClass("noprint"); //添加样式
@@ -604,6 +642,22 @@
 		$("#fprice").removeClass("noprint"); //添加样式
 		$("#hs").removeClass("kss"); //添加样式
 		$("#ks").addClass("kss"); //添加样式
+		
+		
+		$("#tasting1").removeClass("noprint"); //添加样式
+		$("#tasting2").removeClass("noprint"); //添加样式
+		$("#ind1").removeClass("noprint"); //添加样式
+		$("#ind2").removeClass("noprint"); //添加样式
+		$("#other1").removeClass("noprint"); //添加样式
+		$("#other2").removeClass("noprint"); //添加样式
+		$("#totel1").removeClass("kss"); //添加样式
+		$("#totel2").removeClass("kss"); //添加样式
+		$("#totel1").removeClass("noprint"); //添加样式
+		$("#totel2").removeClass("noprint"); //添加样式
+		
+		
+		
+		
 	}
 	
 	function yindpri(){
@@ -617,7 +671,8 @@
 		$("#ind2").removeClass("noprint"); //添加样式
 		$("#other2").addClass("noprint"); //添加样式
 		$("#other1").addClass("noprint"); //添加样式
-		
+		$("#tasting1").addClass("noprint"); //添加样式
+		$("#tasting2").addClass("noprint"); //添加样式
 		$("#totel1").addClass("noprint"); //添加样式
 		$("#totel2").addClass("noprint"); //添加样式
 		$("#indprice").removeClass("kss"); //添加样式
@@ -627,7 +682,8 @@
 		$("#indprice2").removeClass("noprint"); //添加样式
 		$("#otherprice").addClass("noprint"); //添加样式
 		$("#otherprice2").addClass("noprint"); //添加样式
-		
+		$("#tastingprice").addClass("noprint"); //添加样式
+		$("#tastingprice").addClass("noprint"); //添加样式
 	}
 	
 	function otherpri(){
@@ -640,6 +696,8 @@
 		$("#ind1").addClass("noprint"); //添加样式
 		$("#ind2").addClass("noprint"); //添加样式
 		
+		$("#tasting1").addClass("noprint"); //添加样式
+		$("#tasting2").addClass("noprint"); //添加样式
 		$("#totel1").addClass("noprint"); //添加样式
 		$("#totel2").addClass("noprint"); //添加样式
 		$("#otherprice").removeClass("kss"); //添加样式
@@ -648,7 +706,32 @@
 		$("#otherprice2").removeClass("noprint"); //添加样式
 		$("#indprice").addClass("noprint"); //添加样式
 		$("#indprice2").addClass("noprint"); //添加样式
+		$("#tastingprice").addClass("noprint"); //添加样式
+		$("#tastingprice").addClass("noprint"); //添加样式
+	}
+	
+	function tastingpri(){
+		$("#mprice").removeClass("noprint"); //添加样式
+		$("#fprice").removeClass("noprint"); //添加样式
+		$("#hs").removeClass("kss"); //添加样式
+		$("#ks").addClass("kss"); //添加样式
+		$("#tasting1").removeClass("noprint"); //添加样式
+		$("#tasting2").removeClass("noprint"); //添加样式
+		$("#other1").addClass("noprint"); //添加样式
+		$("#other2").addClass("noprint"); //添加样式
+		$("#ind1").addClass("noprint"); //添加样式
+		$("#ind2").addClass("noprint"); //添加样式
+		$("#totel1").addClass("noprint"); //添加样式
+		$("#totel2").addClass("noprint"); //添加样式
+		$("#otherprice").addClass("kss"); //添加样式
+		$("#otherprice2").addClass("kss"); //添加样式
+		$("#indprice").addClass("noprint"); //添加样式
+		$("#indprice2").addClass("noprint"); //添加样式
 		
+		$("#tastingprice").removeClass("noprint"); //添加样式
+		$("#tastingprice2").removeClass("noprint"); //添加样式
+		$("#tastingprice").removeClass("kss"); //添加样式
+		$("#tastingprice2").removeClass("kss"); //添加样式
 	}
 </script>
 </body>

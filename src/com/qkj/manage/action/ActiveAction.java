@@ -44,11 +44,32 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	private List<Active> actives;
 	private MyProcess myPro;
 	private List<MyProcess> myPros;
+    private double Posms;
+	public double getPosms() {
+		return Posms;
+	}
+
+	public void setPosms(double posms) {
+		Posms = posms;
+	}
 
 	private List<Product> products;
 	private List<ActiveProduct> activeProducts;
 	private List<ActiveProduct> indActiveProducts;
 	private List<ActiveProduct> otherActiveProducts;
+	private List<ActiveProduct> ActiveProductsTasting;
+   private double   tastingPrice=0;
+
+
+
+	public double getTastingPrice() {
+	return tastingPrice;
+}
+
+public void setTastingPrice(double tastingPrice) {
+	this.tastingPrice = tastingPrice;
+}
+
 	private List<ActivePosm> activePosms;
 	private List<ActiveMemcost> activeMemcosts;
 
@@ -150,10 +171,18 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 		return perWorkFlag;
 	}
 
+	
 	public static void setPerWorkFlag(String perWorkFlag) {
 		ActiveAction.perWorkFlag = perWorkFlag;
 	}
 
+	public List<ActiveProduct> getActiveProductsTasting() {
+		return ActiveProductsTasting;
+	}
+
+	public void setActiveProductsTasting(List<ActiveProduct> activeProductsTasting) {
+		ActiveProductsTasting = activeProductsTasting;
+	}
 	public int getNextUuid() {
 		return nextUuid;
 	}
@@ -653,7 +682,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				this.setActiveProducts(adao.list(map));
 				this.setIndActiveProducts(independence(map, "海拔", 1));
 				this.setOtherActiveProducts(independence(map, "海拔", 2));
-
+            
 				ActivePosmDAO podao = new ActivePosmDAO();
 				this.setActivePosms(podao.list(map));
 				ActiveMemcostDAO amdao = new ActiveMemcostDAO();
@@ -770,11 +799,19 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				map.put("status", 1);
 				ActiveProductDAO adao = new ActiveProductDAO();
 				this.setActiveProducts(adao.list(map));
-				this.setIndActiveProducts(independence(map, "海拔", 1));
-				this.setOtherActiveProducts(independence(map, "海拔", 2));
-
+				this.setIndActiveProducts(independenceTasting(map, "海拔", 1));
+				this.setOtherActiveProducts(independenceTasting(map, "海拔", 2));
+				this.setActiveProductsTasting(independenceTasting(map,"品鉴",3));
+				
+				for (ActiveProduct activeProduct : ActiveProductsTasting) {
+				
+					tastingPrice=tastingPrice+activeProduct.getTotal_price();
+				}
 				ActivePosmDAO podao = new ActivePosmDAO();
 				this.setActivePosms(podao.list(map));
+				for (ActivePosm ap : activePosms) {
+				     Posms=Posms+ap.getTotal_price();
+			}
 				ActiveMemcostDAO amdao = new ActiveMemcostDAO();
 				this.setActiveMemcosts(amdao.list(map));
 
@@ -1723,10 +1760,18 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 				map.put("active_id", active.getUuid());
 				map.put("status", 2);
 				this.setActiveProductsClose(adao.list(map));
-				this.setIndActiveProductsClose(independence(map, "海拔", 1));
-				this.setOtherActiveProductsClose(independence(map, "海拔", 2));
-
+				this.setIndActiveProductsClose(independenceTasting(map, "海拔", 1));
+				this.setOtherActiveProductsClose(independenceTasting(map, "海拔", 2));
+				this.setActiveProductsTasting(independenceTasting(map,"品鉴",3));
+				for (ActiveProduct activeProduct : ActiveProductsTasting) {
+					
+					tastingPrice=tastingPrice+activeProduct.getTotal_price();
+				}
 				this.setActivePosmsClose(podao.list(map));
+				
+				for (ActivePosm ap : activePosmsClose) {
+				     Posms=Posms+ap.getTotal_price();
+			}
 				this.setActiveMemcostsClose(amdao.list(map));
 				map.clear();
 				map.put("biz_id", active.getUuid());
@@ -2344,14 +2389,47 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 					indprice = indprice + pri.getTotal_price();
 				}
 			}
-		} else {
+		} else if (flag == 2) {
 			map.remove("title");
+			
 			map.put("othertitle", title);
 			products = adao.list(map);
 		}
 		return products;
 	}
 
+	
+	
+	private List<ActiveProduct> independenceTasting(Map<String, Object> map, String title, int flag) {
+		ActiveProductDAO adao = new ActiveProductDAO();
+		List<ActiveProduct> products = new ArrayList<>();
+		ActiveProduct pri = new ActiveProduct();
+		if (flag == 1) {// 是需要独立显示的商品
+			map.put("title", title);
+			map.remove("othertitle");
+			map.put("boobrand", "9");
+			products = adao.list(map);
+			if (products.size() > 0) {
+				for (int i = 0; i < products.size(); i++) {
+					pri = products.get(i);
+					indprice = indprice + pri.getTotal_price();
+				}
+			}
+		} else if (flag == 2) {
+			map.remove("title");
+			map.put("boobrand", "9");
+			map.put("othertitle", title);
+			products = adao.list(map);
+		}else if (flag==3){
+			map.remove("othertitle");
+			map.remove("boobrand");
+			map.put("brand", "9");
+			products = adao.list(map);
+		}
+		return products;
+	}
+	
+	
 	public void get_apply_depts() {
 		Map<String, String> newMap = new HashMap<String, String>();
 		newMap = ContextHelper.getUserLoginInfo().getPermit_depts2();
