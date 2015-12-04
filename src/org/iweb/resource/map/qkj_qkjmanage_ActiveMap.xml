@@ -22,7 +22,7 @@
 			LEFT JOIN s_sys_user fdu ON (a.`fd_user`=fdu.`UUID`)
 			LEFT JOIN s_sys_user fdcu ON (a.`close_fd_user`=fdcu.`UUID`)
 			LEFT JOIN s_sys_user ndcu ON (a.`close_nd_user`=ndcu.`UUID`)
-			WHERE a.`status`>=0 
+			WHERE a.`status`>=0  and a.activeType=0
 		]]>
 		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ a.uuid=#uuid# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="uid"><![CDATA[ a.uid=#uid# ]]></isNotEmpty>
@@ -81,6 +81,87 @@
 			]]></isNotEmpty>
 		<![CDATA[ ORDER BY a.add_time DESC LIMIT 1000 ]]>
 	</select>
+	
+	<select id="qkjmanage_getDesigns" resultClass="active" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT a.`uuid`,a.ship_cloud,d.dept_cname apply_dept_name,au.user_name apply_user_name,
+			a.`pass_time`,a.`close_pass_time`,a.`ship_no`,a.`ship_date`,a.`ship_type`,a.ship_phone,a.`ship_status`,a.`remark`,
+			a.`status`,a.`sd_status`,a.`sd_time`,a.`smd_status`,a.`smd_time`,a.`fd_status`,a.`fd_time`,a.`close_sd_status`,a.`close_sd_time`,a.`spe_remark`,
+			a.`close_fd_status`,a.`close_fd_time`,a.`close_smd_status`,a.`close_smd_time`,su.USER_NAME sd_user_name,smu.USER_NAME smd_user_name,
+			csu.USER_NAME close_sd_user_name,csmu.USER_NAME close_smd_user_name,fdu.`USER_NAME` fd_user_name,fdcu.`USER_NAME` close_fd_name,
+			ndcu.`USER_NAME` close_nd_name,a.design_type,a.design_name,a.design_num,a.design_price,a.close_design_num,a.close_design_price,close_design_total,design_total
+			FROM qkjm_r_active a
+			LEFT JOIN s_sys_department d ON (a.apply_dept = d.dept_code)
+			LEFT JOIN s_sys_user au ON (a.apply_user = au.uuid)
+			LEFT JOIN s_sys_user su ON (a.sd_user = su.UUID)
+			LEFT JOIN s_sys_user smu ON (a.smd_user = smu.UUID)
+			LEFT JOIN s_sys_user csu ON (a.close_sd_user = csu.UUID)
+			LEFT JOIN s_sys_user csmu ON (a.close_smd_user = csmu.UUID)
+			LEFT JOIN s_sys_user fdu ON (a.`fd_user`=fdu.`UUID`)
+			LEFT JOIN s_sys_user fdcu ON (a.`close_fd_user`=fdcu.`UUID`)
+			LEFT JOIN s_sys_user ndcu ON (a.`close_nd_user`=ndcu.`UUID`)
+			WHERE a.`status`>=0  and a.activeType=1
+		]]>
+		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ a.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="uid"><![CDATA[ a.uid=#uid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="apply_dept">
+			<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ a.apply_dept=#apply_dept#]]></isNotEqual>
+			<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ a.apply_dept LIKE CONCAT(#apply_dept#,'%') ]]></isEqual>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="apply_user"><![CDATA[ a.apply_user=#apply_user# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="design_name"><![CDATA[ a.design_name LIKE CONCAT('%',#design_name#,'%')  ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="design_type"><![CDATA[a.design_type LIKE CONCAT('%',#design_type#,'%')  ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="plan_start"><![CDATA[ a.plan_start=#plan_start# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="address"><![CDATA[ a.address=#address# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="sd_status"><![CDATA[ a.sd_status=#sd_status# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="smd_status"><![CDATA[ a.smd_status=#smd_status# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="fd_status"><![CDATA[ a.fd_status=#fd_status# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="close_fd_status"><![CDATA[ a.close_fd_status=#close_fd_status# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="close_nd_status"><![CDATA[ a.close_nd_status=#close_nd_status# ]]></isNotEmpty>
+
+		<isNotEmpty prepend="AND" property="apply_depts" open="(" close=")">
+			<![CDATA[ a.apply_dept In ]]>
+			<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
+			<isNotEmpty prepend="OR" property="apply_perdepts">
+				<![CDATA[ a.apply_dept In ]]>
+				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ a.apply_user=#apply_userDouble# ]]></isNotEmpty>
+			</isNotEmpty>
+		</isNotEmpty>
+		
+		<isEmpty  property="apply_depts">
+			<isNotEmpty prepend="AND" property="apply_perdepts">
+				<![CDATA[ a.apply_dept In ]]>
+				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ a.apply_user=#apply_userDouble# ]]></isNotEmpty>
+			</isNotEmpty>
+		</isEmpty>
+		
+		<isNotEmpty prepend="AND" property="close_sd_status"><![CDATA[ a.close_sd_status=#close_sd_status# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="close_smd_status"><![CDATA[ a.close_smd_status=#close_smd_status# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="status"><![CDATA[ a.status=#status# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="ship_status"><![CDATA[ a.ship_status=#ship_status# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="theme"><![CDATA[ a.theme LIKE CONCAT('%',#theme#,'%') ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="plan_start_begin"><![CDATA[ a.plan_start>=#plan_start_begin# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="plan_start_end"><![CDATA[ a.plan_end<=DATE_ADD(#plan_start_end#,INTERVAL 1 day) ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="pass_time_start"><![CDATA[ a.pass_time>=#pass_time_start# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="pass_time_end"><![CDATA[ a.pass_time<=DATE_ADD(#pass_time_end#,INTERVAL 1 day) ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="close_pass_time_start"><![CDATA[ a.close_pass_time>=#close_pass_time_start# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="close_pass_time_end"><![CDATA[ a.close_pass_time<=DATE_ADD(#close_pass_time_end#,INTERVAL 1 day) ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="flag"><![CDATA[ NOT ISNULL(a.`spe_remark`) AND a.`spe_remark`!="" ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="spere"><![CDATA[ (ISNULL(a.`spe_remark`) or a.`spe_remark`="") ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="member_id"><![CDATA[ 
+				EXISTS (
+					SELECT 1 
+					FROM qkjm_r_active_memcost mem,s_vip_member m 
+					WHERE mem.`member_id` = m.`UUID`
+					AND a.`uuid` = mem.`active_id`
+					AND m.`MEMBER_NAME` LIKE CONCAT('%',#member_id#,'%') 
+				)
+			]]></isNotEmpty>
+		<![CDATA[ ORDER BY a.add_time DESC LIMIT 1000 ]]>
+	</select>
+	
 	<select id="qkjmanage_getActivesCounts" resultClass="int" parameterClass="java.util.Map">
 	<![CDATA[ select COUNT(*) from (  ]]>
 		<![CDATA[ 
@@ -248,6 +329,8 @@
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="ja"><![CDATA[ s.`biz_status01`>=4 AND s.`biz_status01`<6 AND s.`process_id`=1 AND s.`biz_time`>(SELECT MAX(s.`biz_time`) FROM qkjm_h_process s WHERE s.`biz_id`=#biz_id# AND s.`biz_status01`=3 AND s.`process_id`=1) ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="sq"><![CDATA[ s.`biz_status01`>=1 AND s.`biz_status01`<=2 AND s.`process_id`=1 AND s.`biz_time`>(SELECT MAX(s.`biz_time`) FROM qkjm_h_process s WHERE s.`biz_id`=#biz_id# AND s.`biz_status01`=0 AND s.`process_id`=1)]]></isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="sd40"><![CDATA[ (s.`biz_status02`=40 and s.biz_sign='ACTIVE_MDY_SDSTATUS')]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="sd60"><![CDATA[ (s.`biz_status02`=60 or s.`biz_status03`=60)]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="smd40"><![CDATA[ s.`biz_status02`=40 and s.`biz_status03`=40 ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="smd50"><![CDATA[  s.`biz_status03`=50 AND s.`biz_sign`='ACTIVE_MDY_SMDSTATUS']]></isNotEmpty>
@@ -256,6 +339,8 @@
 			
 			<isNotEmpty prepend="AND" property="cai"><![CDATA[  a.`fd_status`=10 and s.biz_sign='ACTIVE_MDY_FDSTATUS' ]]></isNotEmpty>
 			<!-- 结案 -->
+			<isNotEmpty prepend="AND" property="csd30"><![CDATA[ (s.`biz_status04`=30 and s.biz_sign='ACTIVE_CLOSE_SDSTATUS') ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="csd40"><![CDATA[ (s.`biz_status04`=40 and s.biz_sign='ACTIVE_CLOSE_SDSTATUS') ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="csd60"><![CDATA[ (s.`biz_status04`=60 or  s.`biz_status05`=60) ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="csmd40"><![CDATA[ s.`biz_status04`=40 and s.`biz_status05`=40 ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="csmd50"><![CDATA[  s.`biz_status05`=50 and s.biz_sign='ACTIVE_CLOSE_SMDSTATUS']]></isNotEmpty>
@@ -269,6 +354,12 @@
 		</dynamic>
 		<![CDATA[ GROUP BY s.`biz_user` ORDER BY s.`biz_time` DESC  ]]>
 
+	</select>
+	
+	<select id="qkjmanage_getDesignStartClose" resultClass="process" parameterClass="java.util.Map">
+		<![CDATA[ 
+			select * from `qkjm_h_process`  where `process_id` =1 and  `biz_id` =#biz_id# and `biz_status01` =3
+		]]>
 	</select>
 
 	<select id="qkjmanage_getActivesHistory" resultClass="process" parameterClass="java.util.Map">
@@ -341,6 +432,17 @@ SELECT MAX(a.baotime) baotime,MAX(a.stars) stars,MAX(a.sing) sing,MAX(a.spass) s
 		<![CDATA[ Select LAST_INSERT_ID() ]]>
 		</selectKey>
 	</insert>
+	
+	<insert id="qkjmanage_addDesignActive" parameterClass="active">
+		<![CDATA[ 
+			Insert Into qkjm_r_active(design_type,design_name,design_num,design_total,design_price,assumed,store_material,store_size,activeType,uid,apply_dept,apply_user,theme,purpose,plan_start,plan_end,address,person,note,expect,add_user,add_time,active_type)
+			Values (#design_type#,#design_name#,#design_num#,#design_total#,#design_price#,#assumed#,#store_material#,#store_size#,1,#uid#,#apply_dept#,#apply_user#,1,1,#plan_start#,#plan_end#,1,1,#note#,' ',#add_user#,now(),10)
+		]]>
+		<selectKey resultClass="int" keyProperty="uuid">
+		<![CDATA[ Select LAST_INSERT_ID() ]]>
+		</selectKey>
+	</insert>
+	
 	<update id="qkjmanage_mdyActive" parameterClass="active">
 		<![CDATA[
 			Update qkjm_r_active
@@ -360,11 +462,46 @@ SELECT MAX(a.baotime) baotime,MAX(a.stars) stars,MAX(a.sing) sing,MAX(a.spass) s
 				m_bprice=#m_bprice#,
 				f_upprice=#f_upprice#,
 				f_price=#f_price#,
-				f_bprice=#f_bprice#,
-				active_type=#active_type#
+				f_bprice=#f_bprice#
 			Where uuid = #uuid#
 		]]>
 	</update>
+	
+	<update id="qkjmanage_mdyDesign" parameterClass="active">
+		<![CDATA[
+			Update qkjm_r_active
+			Set 
+				active_type=#active_type#,
+				design_type=#design_type#,
+				design_name=#design_name#,
+				design_num=#design_num#,
+				design_total=#design_total#,
+				design_price=#design_price#,
+				assumed=#assumed#,
+				plan_end=#plan_end#,
+				plan_start=#plan_start#,
+				store_material=#store_material#,
+				note=#note#,
+				store_size=#store_size#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<update id="qkjmanage_mdyCloseDesign" parameterClass="active">
+		<![CDATA[
+			Update qkjm_r_active
+			Set 
+				close_design_num=#close_design_num#,
+				close_design_price=#close_design_price#,
+				close_assumed=#close_assumed#,
+				close_store_material=#close_store_material#,
+				close_store_size=#close_store_size#,
+				close_design_total=#close_design_total#,
+				close_note=#close_note#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
 
 	<update id="qkjmanage_mdyActiveStatus" parameterClass="active">
 		<![CDATA[

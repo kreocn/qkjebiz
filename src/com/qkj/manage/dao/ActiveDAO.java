@@ -16,6 +16,12 @@ public class ActiveDAO extends AbstractDAO {
 		setCountMapid("qkjmanage_getActivesCounts");
 		return super.list("qkjmanage_getActives", map);
 	}
+	
+	public List DesignList(Map<String, Object> map) {
+		//System.out.println("#############2:"+super.getDb_num());
+		//setCountMapid("qkjmanage_getActivesCounts");
+		return super.list("qkjmanage_getDesigns", map);
+	}
 
 	public List nextList(Map<String, Object> map) {
 		return super.list("qkjmanage_getNextActive", map);
@@ -32,6 +38,10 @@ public class ActiveDAO extends AbstractDAO {
 	public List getbaotime(Map<String, Object> map) {
 		return super.list("qkjmanage_gettime", map);
 	}
+	
+	public List getDesignStartClose(Map<String, Object> map){
+		return super.list("qkjmanage_getDesignStartClose", map);
+	}
 
 	public Object get(Object uuid) {
 		return super.get("qkjmanage_getActive", uuid);
@@ -40,11 +50,23 @@ public class ActiveDAO extends AbstractDAO {
 	public Object add(Object parameters) {
 		return super.add("qkjmanage_addActive", parameters);
 	}
+	
+	public Object addDesign(Object parameters) {
+		return super.add("qkjmanage_addDesignActive", parameters);
+	}
 
 	public int save(Object parameters) {
 		return super.save("qkjmanage_mdyActive", parameters);
 	}
+	
+	public int saveDesign(Object parameters) {
+		return super.save("qkjmanage_mdyDesign", parameters);
+	}
 
+	public int saveCloseDesign(Object parameters) {
+		return super.save("qkjmanage_mdyCloseDesign", parameters);
+	}
+	
 	public int delete(Object parameters) {
 		return super.delete("qkjmanage_delActive", parameters);
 	}

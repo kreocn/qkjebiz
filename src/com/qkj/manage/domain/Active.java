@@ -112,6 +112,146 @@ public class Active {
 	private String close_nd_name;
 	private String member_id;
 
+	// 门头
+	private String design_type;
+	private String design_name;
+	private Integer design_num;
+	private Double design_price;
+	private String assumed;
+	private Double design_total;
+	private String store_material;
+	private String store_size;
+
+	private Integer close_design_num;
+	private Double close_design_price;
+	private String close_assumed;
+	private String close_store_material;
+	private String close_store_size;
+	private Double close_design_total;
+
+	public Double getDesign_total() {
+		return design_total;
+	}
+
+	public void setDesign_total(Double design_total) {
+		this.design_total = design_total;
+	}
+
+	public Double getClose_design_total() {
+		return close_design_total;
+	}
+
+	public void setClose_design_total(Double close_design_total) {
+		this.close_design_total = close_design_total;
+	}
+
+	private Integer activeType;
+
+	public Integer getClose_design_num() {
+		return close_design_num;
+	}
+
+	public void setClose_design_num(Integer close_design_num) {
+		this.close_design_num = close_design_num;
+	}
+
+	public Double getClose_design_price() {
+		return close_design_price;
+	}
+
+	public void setClose_design_price(Double close_design_price) {
+		this.close_design_price = close_design_price;
+	}
+
+	public String getClose_assumed() {
+		return close_assumed;
+	}
+
+	public void setClose_assumed(String close_assumed) {
+		this.close_assumed = close_assumed;
+	}
+
+	public String getClose_store_material() {
+		return close_store_material;
+	}
+
+	public void setClose_store_material(String close_store_material) {
+		this.close_store_material = close_store_material;
+	}
+
+	public String getClose_store_size() {
+		return close_store_size;
+	}
+
+	public void setClose_store_size(String close_store_size) {
+		this.close_store_size = close_store_size;
+	}
+
+	public Integer getActiveType() {
+		return activeType;
+	}
+
+	public void setActiveType(Integer activeType) {
+		this.activeType = activeType;
+	}
+
+	public String getDesign_type() {
+		return design_type;
+	}
+
+	public void setDesign_type(String design_type) {
+		this.design_type = design_type;
+	}
+
+	public String getDesign_name() {
+		return design_name;
+	}
+
+	public void setDesign_name(String design_name) {
+		this.design_name = design_name;
+	}
+
+	public Integer getDesign_num() {
+		return design_num;
+	}
+
+	public void setDesign_num(Integer design_num) {
+		this.design_num = design_num;
+	}
+
+	public Double getDesign_price() {
+		return design_price;
+	}
+
+	public void setDesign_price(Double design_price) {
+		this.design_price = design_price;
+	}
+
+	public String getAssumed() {
+		return assumed;
+	}
+
+	public void setAssumed(String assumed) {
+		this.assumed = assumed;
+	}
+
+
+	public String getStore_material() {
+		return store_material;
+	}
+
+	public void setStore_material(String store_material) {
+		this.store_material = store_material;
+	}
+
+	public String getStore_size() {
+		return store_size;
+	}
+
+	public void setStore_size(String store_size) {
+		this.store_size = store_size;
+	}
+
 	public String getShip_cloud() {
 		return ship_cloud;
 	}

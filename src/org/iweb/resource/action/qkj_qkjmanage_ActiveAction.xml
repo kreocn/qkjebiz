@@ -19,6 +19,11 @@
 				<param name="viewFlag">relist</param>
 			</result>
 		</action>
+		
+		<action name="design_list" class="com.qkj.manage.action.ActiveAction" method="designList">
+			<result>/WEB-INF/jsp/qkjmanage/DesignList.jsp</result>
+		</action>
+		
 		<action name="active_nextList" class="com.qkj.manage.action.ActiveAction" method="nextList">
 			<result type="redirectAction">
 				<param name="actionName">active_load</param>
@@ -38,10 +43,12 @@
 			</result>
 		</action>
 		<action name="active_load" class="com.qkj.manage.action.ActiveAction" method="load">
-			<result>/WEB-INF/jsp/qkjmanage/ActiveEdit.jsp</result>
+			<result name="SUCCESS">/WEB-INF/jsp/qkjmanage/ActiveEdit.jsp</result>
+			<result name="DESIGN">/WEB-INF/jsp/qkjmanage/DesignEdit.jsp</result>
 		</action>
 		<action name="active_view" class="com.qkj.manage.action.ActiveAction" method="loadView">
-			<result>/WEB-INF/jsp/qkjmanage/ActiveView.jsp</result>
+			<result name="SUCCESS">/WEB-INF/jsp/qkjmanage/ActiveView.jsp</result>
+			<result name="DESIGN">/WEB-INF/jsp/qkjmanage/DesignView.jsp</result>
 		</action>
 		<action name="active_add" class="com.qkj.manage.action.ActiveAction" method="add">
 			<result type="redirectAction">
@@ -51,6 +58,16 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
+		
+		<action name="design_add" class="com.qkj.manage.action.ActiveAction" method="designAdd">
+			<result type="redirectAction">
+				<param name="actionName">active_load</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
 		<action name="active_save" class="com.qkj.manage.action.ActiveAction" method="save">
 			<result type="redirectAction">
 				<param name="actionName">active_load</param>
@@ -59,6 +76,16 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
+		
+		<action name="design_save" class="com.qkj.manage.action.ActiveAction" method="designSave">
+			<result type="redirectAction">
+				<param name="actionName">active_load</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
 		<action name="mdyActiveType" class="com.qkj.manage.action.ActiveAction" method="saveType">
 			<result type="redirectAction">
 				<param name="actionName">active_load</param>
@@ -73,6 +100,14 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
+		
+		<action name="design_del" class="com.qkj.manage.action.ActiveAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">design_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
 		<action name="active_relist" class="com.qkj.manage.action.ActiveAction">
 			<result type="redirectAction">
 				<param name="actionName">active_list</param>
@@ -270,13 +305,25 @@
 
 		<!-- 以下开始为结案流程 -->
 		<action name="active_closeLoad" class="com.qkj.manage.action.ActiveAction" method="closeLoad">
-			<result>/WEB-INF/jsp/qkjmanage/ActiveEdit_Close.jsp</result>
+			<result name="SUCCESS">/WEB-INF/jsp/qkjmanage/ActiveEdit_Close.jsp</result>
+			<result name="DESIGN">/WEB-INF/jsp/qkjmanage/DesignEdit_Close.jsp</result>
 		</action>
 		<action name="active_closeView" class="com.qkj.manage.action.ActiveAction" method="closeViewLoad">
-			<result>/WEB-INF/jsp/qkjmanage/ActiveView_Close.jsp</result>
+			<result name="SUCCESS">/WEB-INF/jsp/qkjmanage/ActiveView_Close.jsp</result>
+			<result name="DESIGN">/WEB-INF/jsp/qkjmanage/DesignView_Close.jsp</result>
 		</action>
 		<!-- 结案单修改 -->
 		<action name="mdyCloseActive" class="com.qkj.manage.action.ActiveAction" method="mdyCloseActive">
+			<result type="redirectAction">
+				<param name="actionName">active_closeLoad</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="mdyCloseDesign" class="com.qkj.manage.action.ActiveAction" method="mdyCloseDesign">
 			<result type="redirectAction">
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>

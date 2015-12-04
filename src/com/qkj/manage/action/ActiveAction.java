@@ -90,6 +90,8 @@ public void setTastingPrice(double tastingPrice) {
 	private Active caiActive;
 	private Active shuActive;
 	private Active dongActive;
+	private Active zongjianActive;
+	private Active daquActive;
 
 	private Approve approve;
 	private List<Approve> approves;
@@ -118,6 +120,36 @@ public void setTastingPrice(double tastingPrice) {
 	private String perWorkF;
 	private static String perWorkFlag = null;
 	public String per = "per";
+
+	public MyProcess pro;// 门头
+
+	public MyProcess getPro() {
+		return pro;
+	}
+
+	public void setPro(MyProcess pro) {
+		this.pro = pro;
+	}
+
+	public Active getDaquActive() {
+		return daquActive;
+	}
+
+	public void setDaquActive(Active daquActive) {
+		this.daquActive = daquActive;
+	}
+
+	public Active getZongjianActive() {
+		return zongjianActive;
+	}
+
+	public void setZongjianActive(Active zongjianActive) {
+		this.zongjianActive = zongjianActive;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
 
 	public String getPer() {
 		return per;
@@ -628,7 +660,6 @@ public void setTastingPrice(double tastingPrice) {
 			this.setPageSize(ContextHelper.getPageSize(map));
 			this.setCurrPage(ContextHelper.getCurrPage(map));
 			this.setActives(dao.list(map));
-			System.out.println(actives.size());
 			this.setRecCount(dao.getResultCount());
 			if (recCount > 0) {
 				this.setMaxUid(actives.get(0).getUuid());
@@ -638,7 +669,7 @@ public void setTastingPrice(double tastingPrice) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
 		}
-		if (perWorkFlag == null || perWorkFlag.equals("null") || perWorkFlag.equals("") || per==null ||per.equals("null")) {
+		if (perWorkFlag == null || perWorkFlag.equals("null") || perWorkFlag.equals("") || per == null || per.equals("null")) {
 			return "success";
 		} else {
 			perWorkFlag = null;
@@ -653,19 +684,23 @@ public void setTastingPrice(double tastingPrice) {
 			this.setNextUuid(0);
 			perWorkFlag = "perWork";
 		}
+		int activetype = 0;
 		try {
 			if (null == viewFlag) {
 				this.setActive(null);
 				setMessage("你没有选择任何操作!");
 			} else if ("add".equals(viewFlag)) {
+				if (active != null && active.getActiveType() != null) {
+					activetype = active.getActiveType();
+				}
 				this.setActive(null);
-
 				get_apply_depts();
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/active_list?viewFlag=relist'>活动列表</a>&nbsp;&gt;&nbsp;增加活动";
 			} else if ("mdy".equals(viewFlag) || "view".equals(viewFlag)) {
 				if (!(active == null || active.getUuid() == null)) {
 					this.setActive((Active) dao.get(active.getUuid()));
 					code = active.getApply_dept();
+					activetype = active.getActiveType();
 				} else {
 					this.setActive(null);
 				}
@@ -716,14 +751,20 @@ public void setTastingPrice(double tastingPrice) {
 			log.error(this.getClass().getName() + "!load 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!load 读取数据错误:", e);
 		}
-		return SUCCESS;
+		if (activetype == 0) {
+			return "SUCCESS";
+		} else {
+			return "DESIGN";
+		}
+
 	}
 
 	public String loadView() throws Exception {
+		int activetype = 0;
 		try {
 			if (!(active == null || active.getUuid() == null)) {
 				this.setActive((Active) dao.get(active.getUuid()));
-
+				activetype = active.getActiveType();
 				ProductDAO pdao = new ProductDAO();
 				this.setProducts(pdao.list(null));
 				map.clear();
@@ -738,6 +779,16 @@ public void setTastingPrice(double tastingPrice) {
 					List<Active> cai = dao.listSing(map);
 					if (cai.size() > 0) {
 						this.setCaiActive((Active) cai.get(0));
+					}
+				}
+				if (active.getSd_status() >= 40) {// 总监已审
+					map.clear();
+					map.put("sq", "sq");
+					map.put("biz_id", active.getUuid());
+					map.put("sd40", "zong");
+					List<Active> n = dao.listSing(map);
+					if (n.size() > 0) {
+						this.setZongjianActive((Active) n.get(0));
 					}
 				}
 
@@ -829,7 +880,11 @@ public void setTastingPrice(double tastingPrice) {
 			log.error(this.getClass().getName() + "!load 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!load 读取数据错误:", e);
 		}
-		return SUCCESS;
+		if (activetype == 0) {
+			return "SUCCESS";
+		} else {
+			return "DESIGN";
+		}
 	}
 
 	public String add() throws Exception {
@@ -849,11 +904,41 @@ public void setTastingPrice(double tastingPrice) {
 		return SUCCESS;
 	}
 
+	public String designAdd() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_ADD");
+		try {
+			active.setUid(ToolsUtil.getCommonUUID("S"));
+			active.setAdd_user(ContextHelper.getUserLoginUuid());
+			// active.setApply_dept(ContextHelper.getUserLoginDept());
+			active.setApply_user(ContextHelper.getUserLoginUuid());
+			active.setUuid((Integer) dao.addDesign(active));
+			active.setStatus(0);
+			addProcess("ACTIVE_ADD", "新增活动");
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!add 数据添加失败:", e);
+			throw new Exception(this.getClass().getName() + "!add 数据添加失败:", e);
+		}
+		return SUCCESS;
+	}
+
 	public String save() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_MDY");
 		try {
 			active.setLm_user(ContextHelper.getUserLoginUuid());
 			dao.save(active);
+			addProcess("ACTIVE_MDY", "活动修改");
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+
+	public String designSave() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_MDY");
+		try {
+			active.setLm_user(ContextHelper.getUserLoginUuid());
+			dao.saveDesign(active);
 			addProcess("ACTIVE_MDY", "活动修改");
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
@@ -1318,7 +1403,7 @@ public void setTastingPrice(double tastingPrice) {
 	public String mdyActiveSMDStatus70() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_SMDSTATUS60");
 		try {
-			//mdyActiveSMDStatus(70);
+			// mdyActiveSMDStatus(70);
 			cs.checkSkip(active, 31);
 			this.setBefUid(active.getUuid());
 			this.setUp(2);
@@ -1592,10 +1677,12 @@ public void setTastingPrice(double tastingPrice) {
 			this.setNextUuid(0);
 			perWorkFlag = "perWork";
 		}
+		int activetype = 0;
 		try {
 			if (!(active == null || active.getUuid() == null)) {
 				this.setActive((Active) dao.get(active.getUuid()));
 				code = active.getApply_dept();
+				activetype = active.getActiveType();
 				ProductDAO pdao = new ProductDAO();
 				this.setProducts(pdao.list(null));
 
@@ -1650,15 +1737,20 @@ public void setTastingPrice(double tastingPrice) {
 			log.error(this.getClass().getName() + "!load 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!load 读取数据错误:", e);
 		}
-		return SUCCESS;
+		if (activetype == 0) {
+			return "SUCCESS";
+		} else {
+			return "DESIGN";
+		}
 	}
 
 	public String closeViewLoad() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE");
+		int activetype = 0;
 		try {
 			if (!(active == null || active.getUuid() == null)) {
 				this.setActive((Active) dao.get(active.getUuid()));
-
+				activetype = active.getActiveType();
 				ProductDAO pdao = new ProductDAO();
 				this.setProducts(pdao.list(null));
 
@@ -1686,6 +1778,28 @@ public void setTastingPrice(double tastingPrice) {
 					List<Active> shuC = dao.listSing(map);
 					if (shuC.size() > 0) {
 						this.setShuActive((Active) shuC.get(0));
+					}
+				}
+
+				if (active.getClose_sd_status() >= 20) {// 总监已审
+					map.clear();
+					map.put("ja", "sq");
+					map.put("biz_id", active.getUuid());
+					map.put("csd30", "zong");
+					List<Active> n = dao.listSing(map);
+					if (n.size() > 0) {
+						this.setDaquActive((Active) n.get(0));
+					}
+				}
+
+				if (active.getClose_sd_status() >= 40) {// 总监已审
+					map.clear();
+					map.put("ja", "sq");
+					map.put("biz_id", active.getUuid());
+					map.put("csd40", "zong");
+					List<Active> n = dao.listSing(map);
+					if (n.size() > 0) {
+						this.setZongjianActive((Active) n.get(0));
 					}
 				}
 
@@ -1779,6 +1893,14 @@ public void setTastingPrice(double tastingPrice) {
 				if (activets.size() > 0) {
 					this.setActiveTime((Active) activets.get(0));
 				}
+
+				map.clear();
+				map.put("biz_id", active.getUuid());
+				List<MyProcess> ps = new ArrayList<>();
+				ps = dao.getDesignStartClose(map);
+				if (ps.size() > 0) {
+					this.setPro(ps.get(0));
+				}
 			} else {
 				this.setActive(null);
 				this.setMessage("数据读取错误,请按照正确的方式进入页面!");
@@ -1787,7 +1909,11 @@ public void setTastingPrice(double tastingPrice) {
 			log.error(this.getClass().getName() + "!load 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!load 读取数据错误:", e);
 		}
-		return SUCCESS;
+		if (activetype == 0) {
+			return "SUCCESS";
+		} else {
+			return "DESIGN";
+		}
 	}
 
 	/**
@@ -1801,6 +1927,19 @@ public void setTastingPrice(double tastingPrice) {
 		try {
 			active.setLm_user(ContextHelper.getUserLoginUuid());
 			dao.mdyCloseActive(active);
+			addProcess("ACTIVE_CLOSE_MDY", "活动结案信息修改");
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!mdyCloseActive 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!mdyCloseActive 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+
+	public String mdyCloseDesign() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_MDY");
+		try {
+			active.setLm_user(ContextHelper.getUserLoginUuid());
+			dao.saveCloseDesign(active);
 			addProcess("ACTIVE_CLOSE_MDY", "活动结案信息修改");
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyCloseActive 数据更新失败:", e);
@@ -2208,7 +2347,7 @@ public void setTastingPrice(double tastingPrice) {
 	public String mdyCloseActiveSMDStatus60() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_SMDSTATUS60");
 		try {
-			//mdyCloseActiveSMDStatus(70);
+			// mdyCloseActiveSMDStatus(70);
 			cs.checkSkip(active, 21);
 			this.setBefUid(active.getUuid());
 			this.setUp(2);
@@ -2445,6 +2584,29 @@ public void setTastingPrice(double tastingPrice) {
 		this.setGetapply_depts(acs);
 		this.setUserappid(ContextHelper.getUserLoginUuid());
 		this.setUserdepta(ContextHelper.getUserLoginDept());
+	}
+
+	/**
+	 * 门头
+	 */
+
+	public String designList() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_LIST");
+		try {
+			map.clear();
+			if (active == null) active = new Active();
+			ContextHelper.setSearchDeptPermit4Search("QKJ_QKJMANAGE_ACTIVE_LIST", map, "apply_depts", "apply_user");
+			ContextHelper.SimpleSearchMap4Page("QKJ_QKJMANAGE_ACTIVE_LIST", map, active, viewFlag);
+			this.setPageSize(ContextHelper.getPageSize(map));
+			this.setCurrPage(ContextHelper.getCurrPage(map));
+			this.setActives(dao.DesignList(map));
+			this.setRecCount(dao.getResultCount());
+			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;门头活动列表";
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
+			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
+		}
+		return SUCCESS;
 	}
 
 	/**
