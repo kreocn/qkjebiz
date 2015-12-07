@@ -147,7 +147,7 @@ display: none;
 					</s:else>
 				</td>
 				<td class="td4 op-area nw">
-			
+		
 					<s:if test="30<=status">
 					<a  href="javascript:;" data="${uuid}" class="mdyApplyShipInfo_Link input-nostyle">
 					<s:if test="1==goflag||2==goflag||3==goflag">
@@ -165,6 +165,9 @@ display: none;
 		               </s:if>
 		               <s:else>
 		           <s:if test="0==ship_status">未发货</s:if>
+		           
+		              <s:if test="10==ship_status">已发货</s:if>
+		      
 		               <s:if test="20==ship_status"><span class="message_warning">已受理</span></s:if>
 		               	<span class="ship_hidden_info" style="display:none;">
 						<span id="ship_no_${uuid}">${ship_no}</span>
@@ -191,7 +194,7 @@ display: none;
 				<td class="td4 op-area">				
 					<c:if test="${it:checkPermit('QKJ_QKJMANAGE_APPLY_VIEW',null)==true}">
 						<s:if test="status>=30">
-										<a class="input-gray" href="<s:url namespace="/qkjmanage" action="apply_print"><s:param name="perWorkFlag">null</s:param><s:param name="apply.uuid" value="uuid"></s:param></s:url>">打印</a>
+							<a class="input-gray" href="<s:url namespace="/qkjmanage" action="apply_print"><s:param name="perWorkFlag">null</s:param><s:param name="apply.uuid" value="uuid"></s:param></s:url>">打印</a>
 						</s:if>					
 			    		<a class="input-blue" href="<s:url namespace="/qkjmanage" action="apply_load"><s:param name="perWorkFlag">null</s:param><s:param name="viewFlag">mdy</s:param><s:param name="apply.uuid" value="uuid"></s:param></s:url>">修改</a>
 			    	</c:if>
