@@ -221,13 +221,18 @@ display: none;
             <div class="label_ltit">审核意见:</div>
             <div><span id="form_apply_check_note"></span></div>
         </div>
+        
+        
+        
          <div id="form_apply_ship_status_div" class="label_hang">
             <div class="label_ltit">发货状态:</div>
      <div class="label_rwben"><s:select id="form_apply_ship_status" name="apply.ship_status" list="#{0:'未发货',10:'已发货',20:'已受理' }" /></div>
      </div>
+  
+  
          <div id="form_apply_goflag_div" class="label_hang">
             <div class="label_ltit">发货状态:</div>
-       <div class="label_rwben"><s:select id="form_apply_goflag" name="apply.ship_status" list="#{1:'已确认发货',2:'已确认拆分',3:'已取消发货' }" /></div>
+       <div class="label_rwben"><s:select id="form_apply_goflag"  list="#{1:'已确认发货',2:'已确认拆分',3:'已取消发货' }" /></div>
 	   </div>
    <div class="label_hang">
             <div class="label_ltit">出库日期:</div>
