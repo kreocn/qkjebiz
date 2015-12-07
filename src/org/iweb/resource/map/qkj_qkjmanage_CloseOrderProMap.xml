@@ -13,7 +13,8 @@
 			<isNotEmpty prepend="AND" property="product_id"><![CDATA[ product_id=#product_id# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="product_num"><![CDATA[ product_num=#product_num# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="product_price"><![CDATA[ product_price=#product_price# ]]></isNotEmpty>
-
+		<isNotEmpty prepend="AND" property="boobrand"><![CDATA[ p.brand not in(#boobrand#) ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="brand"><![CDATA[ p.brand=#brand# ]]></isNotEmpty>
 		</dynamic>
 		<![CDATA[ LIMIT 1000 ]]>
 	</select>

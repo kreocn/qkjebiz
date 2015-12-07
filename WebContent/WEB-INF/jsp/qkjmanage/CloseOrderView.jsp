@@ -41,7 +41,8 @@
 				
 			</span> 
 			<span class="opb lb op-area noprint">
-				<input type="button" onclick="window.print();" value="打印本页" />&nbsp;</span> 
+				<input type="button" onclick="prin();window.print();" value="打印本页" />&nbsp;<input type="button" onclick="tastingprint();window.print();" value="打印品鉴酒" />&nbsp;<input type="button" onclick="nottastingprint();window.print();" value="打印非品鉴酒" />&nbsp;</span> 
+
 		</div>
 		<s:form id="editForm" name="editForm" cssClass="validForm" action="apply_load" namespace="/qkjmanage" method="post" theme="simple">
 			<div class="label_con">
@@ -255,8 +256,8 @@
 						<fieldset class="clear">
 								<legend>结案单明细</legend>
 									<div class="lb_lgsfy">
-											<p class="lb_gstit">公司酒品/公司物料</p>
-											<table  class="lb_jpin">
+											<p class="lb_gstit" id="nottasting1" >公司酒品/公司物料</p>
+											<table  id="nottasting2"  class="lb_jpin">
 												<tr>
 													<th>品名</th>
 													<th>单价</th>
@@ -272,6 +273,25 @@
 													</tr>
 												</s:iterator>
 											</table>
+											<p class="lb_gstit" id="tasting1">品鉴酒</p>
+											<table id="tasting2" width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+												<tr>
+													<th>品名</th>
+													<th>单价</th>
+													<th>数量(瓶)</th>
+													<th>合计</th>
+												
+												</tr>
+												<s:iterator value="closeOrderProsTasting" status="sta">
+													<tr>
+														<td class="nw">${product_name}</td>
+														<td class="nw">￥${product_price}</td>
+														<td class="nw">${product_num}</td>
+														<td class="nw">￥${total_price}</td>
+													</tr>
+												</s:iterator>
+											</table>
+											
 									</div>
 									<div class="lb_gsfy">
 									<p class="lb_gstit">其它物料</p>
@@ -291,7 +311,9 @@
 									</table>
 								</div>
 									<p class="lb_gstit">费用合计</p>
-									<p class="lb_jwei">￥${closeOrder.totel_price}</p>
+									<p class="lb_jwei" id="total">￥${closeOrder.totel_price}</p>
+									<p class="lb_jwei" id="tastingPrice">￥${closeOrder.totel_price-proPrice}</p>
+									<p class="lb_jwei" id="nottastingPrice">￥${posmPrice+proPrice}</p>
 							</fieldset>
 							<div style="height: 10px;"></div>
 
@@ -326,7 +348,7 @@
 					<div class="label_hang">
 						<div class="label_ltit">相关操作:</div>
 						<div class="label_rwbenx">
-							<input type="button" onclick="window.print();" value="打印本页" />&nbsp;
+							<input type="button" onclick="prin();window.print();" value="打印本页" />&nbsp;
 							<!-- <input type="button" value="返回" onclick="linkurl('<s:url action="closeOrder_relist" namespace="/qkjmanage"><s:param name="viewFlag">relist</s:param></s:url>');" class="input-gray" />-->
 							 <input type="button" value="返回修改页面" onclick="linkurl('<s:url action="closeOrder_load" namespace="/qkjmanage"><s:param name="viewFlag">mdy</s:param><s:param name="closeOrder.uuid" value="%{closeOrder.uuid}"></s:param></s:url>');" />
 						</div>
@@ -379,5 +401,44 @@
 			$(":input[name='closeOrder.member_address']").val(c_data[$(this).getSelectedValue()]);
 		});
 	}
+	
+	
+	
+	
+	
+
+	function  tastingprint(){
+		$("#nottasting1").addClass("noprint");
+		$("#nottasting2").addClass("noprint");
+		$("#tasting1").removeClass("noprint");
+		$("#tasting2").removeClass("noprint");
+		$("#tastingPrice").addClass("noprint");
+		$("#total").addClass("noprint");
+		$("#nottastingPrice").removeClass("noprint");
+	}
+	
+	function  nottastingprint(){
+		
+		$("#tasting1").addClass("noprint");
+		$("#tasting2").addClass("noprint");
+	    $("#nottasting1").removeClass("noprint");
+		$("#nottasting2").removeClass("noprint");
+		
+		$("#tastingPrice").removeClass("noprint");
+		$("#total").addClass("noprint");
+		$("#nottastingPrice").addClass("noprint");
+	}
+	
+	function  prin(){
+		
+		$("#tasting1").removeClass("noprint");
+		$("#tasting2").removeClass("noprint");
+		$("#nottasting1").removeClass("noprint");
+		$("#nottasting2").removeClass("noprint");
+		$("#tastingPrice").addClass("noprint");
+		$("#total").removeClass("noprint");
+		$("#nottastingPrice").addClass("noprint");
+	}
+	
 </script>
 </html>
