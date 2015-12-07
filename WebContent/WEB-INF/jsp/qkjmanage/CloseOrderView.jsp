@@ -26,6 +26,10 @@
 .label_main {
   padding-bottom: 0;
 }
+
+.kss {
+	display: block;
+}
 </style>
 </head>
 
@@ -41,7 +45,10 @@
 				
 			</span> 
 			<span class="opb lb op-area noprint">
-				<input type="button" onclick="window.print();" value="打印本页" />&nbsp;</span> 
+				<input type="button" onclick="window.print();" value="打印本页" />&nbsp;
+				<input type="button" onclick="pinPrint();window.print(); location.reload();" value="打印品鉴系列" />&nbsp;
+				<input type="button" onclick="noPinPrint();window.print(); location.reload();" value="打印非品鉴系列" />&nbsp;
+				</span> 
 		</div>
 		<s:form id="editForm" name="editForm" cssClass="validForm" action="apply_load" namespace="/qkjmanage" method="post" theme="simple">
 			<div class="label_con">
@@ -256,7 +263,7 @@
 								<legend>结案单明细</legend>
 									<div class="lb_lgsfy">
 											<p class="lb_gstit">公司酒品/公司物料</p>
-											<table  class="lb_jpin">
+											<table  class="lb_jpin" id="print0">
 												<tr>
 													<th>品名</th>
 													<th>单价</th>
@@ -264,7 +271,7 @@
 													<th>合计</th>
 												</tr>
 												<s:iterator value="closeOrderPros" status="sta">
-													<tr>
+													<tr id="detailtr${uuid}">
 														<td class="nw">${product_name}</td>
 														<td class="nw">￥${product_price}</td>
 														<td class="nw">${product_num}</td>
@@ -291,7 +298,7 @@
 									</table>
 								</div>
 									<p class="lb_gstit">费用合计</p>
-									<p class="lb_jwei">￥${closeOrder.totel_price}</p>
+									<p class="lb_jwei" id="total">￥${closeOrder.totel_price}</p>
 							</fieldset>
 							<div style="height: 10px;"></div>
 
@@ -379,5 +386,43 @@
 			$(":input[name='closeOrder.member_address']").val(c_data[$(this).getSelectedValue()]);
 		});
 	}
+	
+	function pinPrint(){
+		var table=document.getElementById("print0"); 
+		var to=0;
+        for(var i=1 ;i<table.rows.length;i++)
+        {
+        	var name=table.rows[i].cells[0].innerHTML;
+        	if(name.indexOf("品鉴酒")!=-1 ||name=="股东赠酒礼盒"){
+        	}else{
+        		table.rows[i].style.display="none"; 
+        		to+=parseInt(table.rows[i].cells[3].innerHTML.substring(1));
+        	}
+        	
+        }
+        var z=$("#total").html().substring(1);
+        $("#total").html("￥"+(z-to));
+        
+	}
+	
+	function noPinPrint(){
+		var table=document.getElementById("print0"); 
+		var to=0;
+        for(var i=1 ;i<table.rows.length;i++)
+        {
+        	var name=table.rows[i].cells[0].innerHTML;
+        	if(name.indexOf("品鉴酒")!=-1 ||name=="股东赠酒礼盒"){
+        		table.rows[i].style.display="none"; 
+        		to+=parseInt(table.rows[i].cells[3].innerHTML.substring(1));
+        	}else{
+        		
+        	}
+        }
+        
+        var z=$("#total").html().substring(1);
+        $("#total").html("￥"+(z-to));
+        
+	}
+	
 </script>
 </html>
