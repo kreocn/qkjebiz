@@ -53,10 +53,14 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	private CloseOrder closeOrder;
 	private List<CloseOrder> closeOrders;
 	private List<CloseOrder> allsigns;
+	private double proPrice;
+
+    private double posmPrice;
 	private CloseOrder sign;
 	private List<SalPromot> salPromots;
 	private List<SalPromot> salPromotsed;
 	private List<CloseOrderPro> closeOrderPros;
+	private List<CloseOrderPro> closeOrderProsTasting;
 	private List<CloseOrderMemcost> CloseOrderMemcosts;
 	private List<CloseOrderPosm> closePosms;
 	private CloseOrderPro closeOrderPro;
@@ -76,7 +80,20 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	private String perWorkF;
 	private static String perWorkFlag = null;
 	public String per = "per";
+	public List<CloseOrderPro> getCloseOrderProsTasting() {
+		return closeOrderProsTasting;
+	}
 
+	public void setCloseOrderProsTasting(List<CloseOrderPro> closeOrderProsTasting) {
+		this.closeOrderProsTasting = closeOrderProsTasting;
+	}
+	public double getPosmPrice() {
+		return posmPrice;
+	}
+
+	public void setPosmPrice(double posmPrice) {
+		this.posmPrice = posmPrice;
+	}
 	public String getPer() {
 		return per;
 	}
@@ -84,7 +101,13 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	public void setPer(String per) {
 		this.per = per;
 	}
+	public double getProPrice() {
+		return proPrice;
+	}
 
+	public void setProPrice(double proPrice) {
+		this.proPrice = proPrice;
+	}
 	private List<Active> getapply_depts;
 	private String userappid;
 	private String userdepta;
@@ -359,7 +382,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 				map.clear();
 				map.put("order_id", closeOrder.getUuid());
 				this.setCloseOrderPros(cdao.list(map));
-				
+		
 				/*CloseOrderMemcostDAO md=new CloseOrderMemcostDAO();
 				map.clear();
 				map.put("close_id", closeOrder.getUuid());
@@ -432,13 +455,21 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 			CloseOrderProDAO cdao = new CloseOrderProDAO();
 			map.clear();
 			map.put("order_id", closeOrder.getUuid());
+			map.put("boobrand", "9");
 			this.setCloseOrderPros(cdao.list(map));
-
+			map.remove("boobrand");
+			map.put("brand", "9");
+			this.setCloseOrderProsTasting(cdao.list(map));
+           for (CloseOrderPro cop : closeOrderProsTasting) {
+			proPrice=proPrice+cop.getTotal_price();
+		}
 			CloseOrderPosmDAO closedao = new CloseOrderPosmDAO();
 			map.clear();
 			map.put("closeOrder_id", closeOrder.getUuid());
 			this.setClosePosms(closedao.list(map));
-
+            for (CloseOrderPosm cop : closePosms) {
+				posmPrice=posmPrice+cop.getTotal_price();
+			}
 			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/closeOrder_relist'>结案提货单列表</a>&nbsp;&gt;&nbsp;结案提货单详情";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!view 读取数据错误:", e);
