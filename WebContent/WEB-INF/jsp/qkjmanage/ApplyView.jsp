@@ -57,6 +57,13 @@
 
 	<s:action name="nav" namespace="/manage" executeResult="true" />
 	<div class="tab_right">
+	
+	<div class="tab_warp main noprint" >
+ 	<div class="dq_step">
+		<a href="<s:url namespace="/qkjmanage" action="apply_list"></s:url>">返回列表</a>
+		<a href="<s:url namespace="/qkjmanage" action="apply_load"><s:param name="viewFlag">mdy</s:param><s:param name="apply.uuid" value="%{apply.uuid}"></s:param></s:url>">返回修改页面</a>
+	</div>
+	</div>
 		<div class="tab_warp main printarea">
 			<div id="result">
 				<div class="itablemdy">
