@@ -41,7 +41,8 @@
 						<a class="input-gray" href="<s:url namespace="/qkjmanage" action="apply_print"><s:param name="apply.uuid" value="apply.uuid"></s:param></s:url>">转到打印页面</a>
 					</s:if>
 						<c:if test="${it:checkPermit('QKJ_QKJMANAGE_APPLY_OUTSTOCK',null)==true && apply.goflag==0}">
-						<a href="<s:url namespace="/qkjmanage" action="apply_outStock"><s:param name="apply.uuid" value="apply.uuid"></s:param></s:url>">成生出库单</a>
+						<%-- <a href="<s:url namespace="/qkjmanage" action="apply_outStock"><s:param name="apply.uuid" value="apply.uuid"></s:param></s:url>">成生出库单</a> --%>
+						<a id="outadd" href="javascript:;">成生出库单</a>
 					</c:if> 
 				</span>
 			</div>
@@ -693,6 +694,23 @@
 		</s:form>
 	</div>
 	
+	<div id="outStockFrom" class="label_con idialog" title="仓库列表">
+		<s:form  action="apply_outStock" namespace="/qkjmanage" method="post" theme="simple">
+			<input type="hidden" name="apply.uuid" value="${apply['uuid']}" />
+			<div class="label_main">
+				<div class="label_hang">
+					<div class="label_ltit">仓库列表:</div>
+				</div>
+			</div>
+			<div class="label_main" id="outSelect">
+				<%-- <s:select  name="outsstock.store_id" list="wares" listKey="uuid" listValue="ware_name"	 cssClass="validate[required]" /> --%>
+			</div>
+			<div class="label_main tac" style="padding: 5px 0;">
+				<s:submit value="确定" action="apply_outStock" />
+			</div>
+		</s:form>
+	</div>
+	
 			<!-- 添加销售物料(公司) -->
 		<div id="addPosmForm" class="label_con idialog" title="添加销售物料(公司)">
 			<s:form name="form_addPosmForm" cssClass="validFormDialog" action="applyPosm_add" namespace="/qkjmanage" method="post" theme="simple">
@@ -728,6 +746,11 @@
 	
 	<s:action name="ref_foot" namespace="/manager" executeResult="true" />
 	<script type="text/javascript">
+	$(function(){
+		$("#outStockFrom").dialog({ autoOpen : false,
+		modal : true });
+	});
+	
 		$(function(){
 			if ($("#apply_is_fullcheck").val() == 1) {
 				$("#apply_is_fullcheck_box").attr("checked", "checked");
@@ -751,6 +774,42 @@
 					$("#apply_is_material_box").attr("checked", "checked");
 					$("#apply_material_text").show();
 				}
+				
+				$("#outadd").click(function(){
+					 $.ajax({
+					     type:'POST',
+					     url: '/outStock/get_ware',
+					     data: "",
+					     success: function(data){
+					    	 
+					    	 if(data=="0"){
+					    		 alert("没有仓库权限");
+					    	 }else{
+					    		 var t="<select  name='outsstock.store_id'>";
+					    		 var s="";
+					    		 for(i=0; i<data.length;i++){
+					    			 t+="<option value='"+data[i].uuid+"'>"+data[i].ware_name
+						                                + "</option>";
+					    		 }
+					    		 t+="</select>";
+					    		 $("#outSelect").html(t);
+						    	 $("#outStockFrom").dialog("open"); 
+					    		
+					    	 }
+					    /* 	 var t=null;
+					    	 alert(data);
+					            for(i=0 ; i<data.length;i++){
+					               t.append(
+					                        "<option value='"+data[i].uuid+"'>"+data[i].ware_name
+					                                + "</option>");
+					            }
+					            
+					    	 $("#outDiv").html(t);
+					    	 $("#outStockFrom").dialog("open"); */
+					    }
+					  });
+					});
+				
 				$("#apply_is_material_box").bind("click", function(){
 					if ($("#apply_is_material").val() == 0) {
 						$("#is_material_p").text("请保存单据后再添加物料清单").css("color","red");
@@ -765,15 +824,9 @@
 			
 			
 			
-			
-			
-			
-			
 			$("#approveFrom").dialog({ autoOpen : false,
 			modal : true });
 		});
-		
-		
 		
 		
 		

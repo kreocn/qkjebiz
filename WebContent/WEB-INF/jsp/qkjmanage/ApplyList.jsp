@@ -149,24 +149,28 @@ display: none;
 				<td class="td4 op-area nw">
 		
 					<s:if test="30<=status">
-					<a  href="javascript:;" data="${uuid}" class="mdyApplyShipInfo_Link input-nostyle">
-					<s:if test="1==goflag||2==goflag||3==goflag">
+					
+					<s:if test="1==goflag||2==goflag||3==goflag||4==goflag">
+					<a  href="javascript:;" data="${uuid}" class="input-nostyle">
 		                     <s:if test='1==goflag'>已确认出库</s:if>
 					        <s:if test='2==goflag'>已部分出库</s:if>
 				        	<s:if test='3==goflag'>已取消出库</s:if>
-				        		<span class="ship_hidden_info" style="display:none;">
+				        	<s:if test='4==goflag'>出库单已生成</s:if>
+				       </a>
+				        		<%-- <span class="ship_hidden_info" style="display:none;">
 						<span id="ship_no_${uuid}">${ship_no}</span>
 						<span id="ship_type_${uuid}">${ship_type}</span>
 						<span id="ship_date_${uuid}">${it:formatDate(ship_date,"yyyy-MM-dd")}</span>
 						<span id="ship_phone_${uuid}">${ship_phone}</span>
 						<span id="ship_goflag_${uuid}">${goflag}</span>
 						<span id="check_note_${uuid}">${check_note}</span>
-					</span>
+					</span> --%>
 		               </s:if>
 		               <s:else>
-		           <s:if test="0==ship_status">未发货</s:if>
+		               <a  href="javascript:;" data="${uuid}" class="mdyApplyShipInfo_Link input-nostyle">
+		           		<s:if test="0==ship_status">未发货</s:if>
 		           
-		              <s:if test="10==ship_status">已发货</s:if>
+		              	<s:if test="10==ship_status">已发货</s:if>
 		      
 		               <s:if test="20==ship_status"><span class="message_warning">已受理</span></s:if>
 		               	<span class="ship_hidden_info" style="display:none;">
@@ -178,8 +182,9 @@ display: none;
 					
 						<span id="check_note_${uuid}">${check_note}</span>
 					</span>
+					 </a>
 					</s:else>
-		                    </a>
+		                   
 		                   
 		        
 				

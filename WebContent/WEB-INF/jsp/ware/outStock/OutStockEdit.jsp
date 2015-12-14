@@ -90,6 +90,25 @@
 	            <div class="label_rwbenx">
 		            <span class="label_rwbx">
 		            	<s:if test="outStock.split==1">拆分自编号${outStock.splitUuid }</s:if>
+		            	来源：
+		            	<s:if test="%{outStock.goreason==0 }">
+					(手动填加)
+					</s:if>
+		            	<s:if test="%{outStock.goreason==1 }">
+					(调货入库${goldUuid })
+					</s:if>
+					<s:if test="%{outStock.goreason==2 }">
+					(销售订单${goldUuid })
+					</s:if>
+					<s:if test="%{outStock.goreason==3 }">
+					<a href="<s:url namespace="/qkjmanage" action="apply_list"><s:param name="apply.uuid">${outStock.goldUuid }</s:param></s:url>">(至事由${outStock.goldUuid })</a>
+					</s:if>
+					<s:if test="%{outStock.goreason==4 }">
+					(提货结案单${goldUuid })
+					</s:if>
+					<s:if test="%{outStock.goreason==5 }">
+					(门店管理${goldUuid })
+					</s:if>
 					</span>
 	            </div>
 	        </div>

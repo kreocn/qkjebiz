@@ -1,13 +1,20 @@
 package com.qkj.ware.action;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONArray;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.struts2.ServletActionContext;
 import org.iweb.sys.ContextHelper;
 import org.iweb.sys.ToolsUtil;
 
@@ -203,16 +210,54 @@ public class OutStockAction extends ActionSupport {
 		Map<String, Object> mapware = new HashMap<String, Object>();
 		this.setWps(warepower.checkWarePower());
 		mapware.clear();
-		if (wps != null && wps.size() > 0) {
+		if (!ContextHelper.isAdmin()||wps != null && wps.size() > 0) {
 			List<Integer> ud_list = new ArrayList<>();
 			for (int i = 0; i < wps.size(); i++) {
 				if (wps.get(i).getPrvg().contains("2")) {// 有入库权限则有入库单查询权限
 					ud_list.add(wps.get(i).getWare_id());
 				}
 			}
+			if(ud_list.size()>0){
+			}else{
+				ud_list.add(0);
+			}
 			mapware.put("uuids", ud_list);
 		}
 		this.setWares(wd.list(mapware));
+	}
+	
+	public String getWareOut() throws IOException {
+		WareDAO wd = new WareDAO();
+		Map<String, Object> mapware = new HashMap<String, Object>();
+		HttpServletResponse response = ServletActionContext.getResponse();
+		HttpServletRequest request = ServletActionContext.getRequest();
+		this.setWps(warepower.checkWarePower());
+		mapware.clear();
+		if (!ContextHelper.isAdmin()||wps != null && wps.size() > 0) {
+			List<Integer> ud_list = new ArrayList<>();
+			for (int i = 0; i < wps.size(); i++) {
+				if (wps.get(i).getPrvg().contains("2")) {// 有入库权限则有入库单查询权限
+					ud_list.add(wps.get(i).getWare_id());
+				}
+			}
+			if(ud_list.size()>0){
+			}else{
+				ud_list.add(0);
+			}
+			mapware.put("uuids", ud_list);
+		}
+		this.setWares(wd.list(mapware));
+		
+		 if (null != wares && wares.size() > 0) {
+			 JSONArray jsonArray = JSONArray.fromObject(wares);
+			 System.out.println(jsonArray+"aaaaa"); 
+			 response.setContentType("text/json;charset=gbk");
+			 response.getWriter().print(jsonArray.toString());
+		 }else{
+			 response.getWriter().print("0");
+		 }
+			 
+		return null;
 	}
 
 	public String list() throws Exception {
@@ -225,12 +270,17 @@ public class OutStockAction extends ActionSupport {
 			this.setCurrPage(ContextHelper.getCurrPage(map));
 
 			this.setWps(warepower.checkWarePower());
-			if (wps != null && wps.size() > 0) {
+			if (!ContextHelper.isAdmin()||wps != null && wps.size() > 0) {
 				List<Integer> ud_list = new ArrayList<>();
 				for (int i = 0; i < wps.size(); i++) {
 					if (wps.get(i).getPrvg().contains("2")) {// 有入库权限则有出库单查询权限
 						ud_list.add(wps.get(i).getWare_id());
 					}
+				}
+				
+				if(ud_list.size()>0){
+				}else{
+					ud_list.add(0);
 				}
 				map.put("storeids", ud_list);
 			}

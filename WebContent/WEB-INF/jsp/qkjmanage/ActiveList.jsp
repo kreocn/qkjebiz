@@ -32,6 +32,7 @@ cursor: pointer;
 	</div>
 	<s:form id="serachForm" name="serachForm" action="active_list"  method="get" namespace="/qkjmanage" theme="simple">
 	<s:hidden name="per" value="null"></s:hidden>
+	<s:hidden id="sx" name="selectXiao" value="null"></s:hidden>
  	<div class="label_con">
  	<div class="label_main">
  		<div class="label_hang">
@@ -506,6 +507,7 @@ function kselect(){
 		jnull();
 		document.getElementById("smd_sta").options[3].selected = true; 
 		document.getElementById("sd_status").options[4].selected = true;
+		$("#sx").val("0");
 		$("#userdept_codeid").val("");
 		$("#userdept_nameid").val("");
 		document.getElementById("apply_is_sub_dept").checked=false;
@@ -635,6 +637,7 @@ function kselect(){
 		snull();
 		document.getElementById("clsmdsta").options[3].selected = true; 
 		document.getElementById("clsdsta").options[4].selected = true;
+		$("#sx").val("1");
 		$("#userdept_codeid").val("");
 		$("#userdept_nameid").val("");
 		document.getElementById("apply_is_sub_dept").checked=false;

@@ -40,17 +40,48 @@
 					</div>
 					<div class="label_hang">
 						<div class="label_ltit">单据性质:</div>
-						<div class="label_rwben">
+						<div class="label_rwben x">
 							<s:if test="%{outStock.reason==0}">销售出库
 					</s:if>
-							<s:if test="%{outStock.reason==1}">招待用酒
+					 <s:if test="%{outStock.reason==1}">招待用酒
 					</s:if>
-
-							<s:if test="%{outStock.reason==3 }">报损
+					<s:if test="%{outStock.reason==2 }">白条
 					</s:if>
-							<s:if test="%{outStock.reason==4 }">赠酒
+					<s:if test="%{outStock.reason==3 }">报损
 					</s:if>
-							<s:if test="%{outStock.reason==5 }">其它
+					<s:if test="%{outStock.reason==4 }">赠酒
+					</s:if>
+					<s:if test="%{outStock.reason==5 }">其它
+					</s:if>
+					<s:if test="%{outStock.reason==6 }">调货出库
+					</s:if>
+					<s:if test="%{outStock.reason==7 }">借货
+					<s:if test="4==outStock.send">
+					<s:if test="%{backStock==0 }">未还</s:if>
+					<s:if test="%{backStock==1 }">部分已还</s:if>
+					<s:if test="%{backStock==2 }">已还</s:if>
+					</s:if>
+					</s:if>
+					<s:if test="%{outStock.reason==8 }">还货
+					</s:if>
+					
+					
+					<%-- <s:if test="%{goreason==0 }">
+					</s:if> --%>
+					<s:if test="%{outStock.goreason==1 }">
+					(调货入库${outStock.goldUuid })
+					</s:if>
+					<s:if test="%{outStock.goreason==2 }">
+					(销售订单${outStock.goldUuid })
+					</s:if>
+					<s:if test="%{outStock.goreason==3 }">
+					<a href="<s:url namespace="/qkjmanage" action="apply_list"><s:param name="apply.uuid">${outStock.goldUuid }</s:param></s:url>">(至事由${outStock.goldUuid })</a>
+					</s:if>
+					<s:if test="%{outStock.goreason==4 }">
+					<a href="<s:url namespace="/qkjmanage" action="closeOrder_list"><s:param name="apply.uuid">${outStock.goldUuid }</s:param></s:url>">(提货结案单${outStock.goldUuid })</a>
+					</s:if>
+					<s:if test="%{outStock.goreason==5 }">
+					<a href="<s:url namespace="/qkjmanage" action="stores_list"><s:param name="sotresorder.uuid">${goldUuid }</s:param></s:url>">(门店管理${goldUuid })</a>
 					</s:if>
 						</div>
 					</div>
@@ -169,6 +200,8 @@
 		     </div>
 				</s:elseif>
 				<s:else>
+					<s:if test="%{outStock.goreason==3}"></s:if>
+					<s:else>
 					<!-- 其它出库，不审核，但要 填写目的地，收货人，联系方式，基本费用-->
 					<div class="label_main">
 						<div class="label_hang">
@@ -204,6 +237,8 @@
 							</div>
 						</div>
 					</div>
+					</s:else>
+					
 				</s:else>
 				
 				<div class="label_main">

@@ -34,6 +34,8 @@
 		<isNotEmpty prepend="AND" property="plan_start"><![CDATA[ a.plan_start=#plan_start# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="address"><![CDATA[ a.address=#address# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="sd_status"><![CDATA[ a.sd_status=#sd_status# ]]></isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="sd_statused"><![CDATA[ a.sd_status>=#sd_statused# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="smd_status"><![CDATA[ a.smd_status=#smd_status# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="fd_status"><![CDATA[ a.fd_status=#fd_status# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="close_fd_status"><![CDATA[ a.close_fd_status=#close_fd_status# ]]></isNotEmpty>
@@ -58,6 +60,8 @@
 		</isEmpty>
 		
 		<isNotEmpty prepend="AND" property="close_sd_status"><![CDATA[ a.close_sd_status=#close_sd_status# ]]></isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="close_sded_status"><![CDATA[ a.close_sd_status>=#close_sded_status# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="close_smd_status"><![CDATA[ a.close_smd_status=#close_smd_status# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="status"><![CDATA[ a.status=#status# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="ship_status"><![CDATA[ a.ship_status=#ship_status# ]]></isNotEmpty>
@@ -114,6 +118,8 @@
 		<isNotEmpty prepend="AND" property="plan_start"><![CDATA[ a.plan_start=#plan_start# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="address"><![CDATA[ a.address=#address# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="sd_status"><![CDATA[ a.sd_status=#sd_status# ]]></isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="sd_statused"><![CDATA[ a.sd_status>=#sd_statused# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="smd_status"><![CDATA[ a.smd_status=#smd_status# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="fd_status"><![CDATA[ a.fd_status=#fd_status# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="close_fd_status"><![CDATA[ a.close_fd_status=#close_fd_status# ]]></isNotEmpty>
@@ -138,6 +144,8 @@
 		</isEmpty>
 		
 		<isNotEmpty prepend="AND" property="close_sd_status"><![CDATA[ a.close_sd_status=#close_sd_status# ]]></isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="close_sded_status"><![CDATA[ a.close_sd_status>=#close_sded_status# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="close_smd_status"><![CDATA[ a.close_smd_status=#close_smd_status# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="status"><![CDATA[ a.status=#status# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="ship_status"><![CDATA[ a.ship_status=#ship_status# ]]></isNotEmpty>

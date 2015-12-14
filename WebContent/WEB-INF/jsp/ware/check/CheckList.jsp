@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -19,11 +20,11 @@
  	<div class="tab_warp main" >
 	<div class="dq_step">
 		${path}
-		<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_CHECK_ADD')">
+		<c:if test="${it:checkPermit('QKJ_WARE_STOCK_LIST',null)==true && it:checkWarePermit(null,'select')==true}">
 			<span class="opb lb op-area printhide">
 			<a id="addItem" onclick="commain();" >添加盘点</a>
 			</span>
-		</s:if>
+		</c:if>
 	</div>
 	<!-- 条件查询 -->
 	<s:form id="serachForm" name="serachForm" action="check_list"  method="get" namespace="/check" theme="simple">
@@ -130,9 +131,9 @@
 			            </div>																				
 			        </div>																				
 			        <div class="label_hang label_button tac">																				
-			           <s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_WARE_CHECK_ADD')">																				
+			           <c:if test="${it:checkPermit('QKJ_WARE_STOCK_LIST',null)==true && it:checkWarePermit(null,'select')==true}">																			
 							<s:submit id="add" name="add" value="确定" class="input-blue"  />																
-							</s:if>																
+							</c:if>																
 							<input type="button" value="关闭" onclick="closeAddForm();" class="input-gray" />																
 			        </div>																				
 				</div>

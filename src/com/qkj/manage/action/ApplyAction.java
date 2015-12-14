@@ -55,6 +55,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 	private String isApprover;
 	private String message;
 	private String viewFlag;
+	private OutStock outsstock;
 
 
 	private String is_total_price="0";
@@ -66,6 +67,14 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 	private String perWorkF;
 	private static String perWorkFlag;
 	public String per = "per";
+
+	public OutStock getOutsstock() {
+		return outsstock;
+	}
+
+	public void setOutsstock(OutStock outsstock) {
+		this.outsstock = outsstock;
+	}
 
 	public String getPer() {
 		return per;
@@ -830,7 +839,10 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 			dao.startTransaction();
 			OutStockDAO isa = new OutStockDAO();
 			LadingAction l = new LadingAction();
-			Integer goid = l.getWare(ContextHelper.getUserLoginDept());
+			Integer goid = null;
+			if(outsstock!=null && outsstock.getStore_id()!=null){
+				goid=outsstock.getStore_id();
+			}
 			isa.addStock(apply.getUuid(), goid, null, 2, 3, produs, null, false, null, null);// 生成销售用酒出库
 			
 			//修改状态
