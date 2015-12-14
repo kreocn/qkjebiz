@@ -140,6 +140,26 @@
 					</s:if>
 					<s:if test="%{reason==8 }">还货
 					</s:if>
+					
+					
+					<%-- <s:if test="%{goreason==0 }">
+					</s:if> --%>
+					<s:if test="%{goreason==1 }">
+					(调货入库${goldUuid })
+					</s:if>
+					<s:if test="%{goreason==2 }">
+					(销售订单${goldUuid })
+					</s:if>
+					<s:if test="%{goreason==3 }">
+					<a href="<s:url namespace="/qkjmanage" action="apply_list"><s:param name="apply.uuid">${goldUuid }</s:param></s:url>">(至事由${goldUuid })</a>
+					</s:if>
+					<s:if test="%{goreason==4 }">
+					<a href="<s:url namespace="/qkjmanage" action="closeOrder_list"><s:param name="apply.uuid">${goldUuid }</s:param></s:url>">(提货结案单${goldUuid })</a>
+					</s:if>
+					<s:if test="%{goreason==5 }">
+					<a href="<s:url namespace="/qkjmanage" action="stores_list"><s:param name="sotresorder.uuid">${goldUuid }</s:param></s:url>">(门店管理${goldUuid })</a>
+					</s:if>
+					
 				</td>
 				<td class="td4 op-area">
 					<c:if test="${it:checkWarePermit(store_id,'out')==true }">

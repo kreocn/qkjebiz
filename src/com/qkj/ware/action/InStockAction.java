@@ -213,12 +213,17 @@ public class InStockAction extends ActionSupport {
 
 			this.setWps(warepower.checkWarePower());
 			mapware.clear();
-			if (wps != null && wps.size() > 0) {
+			if (!ContextHelper.isAdmin()||wps != null && wps.size() > 0) {
 				List<Integer> ud_list = new ArrayList<>();
 				for (int i = 0; i < wps.size(); i++) {
 					if (wps.get(i).getPrvg().contains("1")) {// 有入库权限则有入库单查询权限
 						ud_list.add(wps.get(i).getWare_id());
 					}
+				}
+				
+				if(ud_list.size()>0){
+				}else{
+					ud_list.add(0);
 				}
 				map.put("storeids", ud_list);
 				mapware.put("uuids", ud_list);
@@ -279,12 +284,16 @@ public class InStockAction extends ActionSupport {
 		Map<String, Object> mapware = new HashMap<String, Object>();
 		this.setWps(warepower.checkWarePower());
 		mapware.clear();
-		if (wps != null && wps.size() > 0) {
+		if (!ContextHelper.isAdmin()||wps != null && wps.size() > 0) {
 			List<Integer> ud_list = new ArrayList<>();
 			for (int i = 0; i < wps.size(); i++) {
 				if (wps.get(i).getPrvg().contains("1")) {// 有入库权限则有入库单查询权限
 					ud_list.add(wps.get(i).getWare_id());
 				}
+			}
+			if(ud_list.size()>0){
+			}else{
+				ud_list.add(0);
 			}
 			mapware.put("uuids", ud_list);
 		}

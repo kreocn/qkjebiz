@@ -41,6 +41,7 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	private ApproveDAO apdao = new ApproveDAO();
 	private CheckSkip cs = new CheckSkip();
 	private Active active;
+	private String selectXiao;
 	private List<Active> actives;
 	private MyProcess myPro;
 	private List<MyProcess> myPros;
@@ -60,7 +61,13 @@ public class ActiveAction extends ActionSupport implements ActionAttr {
 	private List<ActiveProduct> ActiveProductsTasting;
    private double   tastingPrice=0;
 
+	public String getSelectXiao() {
+	return selectXiao;
+}
 
+public void setSelectXiao(String selectXiao) {
+	this.selectXiao = selectXiao;
+}
 
 	public double getTastingPrice() {
 	return tastingPrice;
@@ -657,11 +664,20 @@ public void setTastingPrice(double tastingPrice) {
 			} else if (flag != null && flag.equals("10")) {
 				map.put("spere", "无");
 			}
+			if(selectXiao!=null){
+				if(selectXiao.equals("0")){
+					map.put("sd_statused", active.getSd_status());
+					map.remove("sd_status");
+				}else if (selectXiao.equals("1")){
+					map.put("close_sded_status", active.getClose_sd_status());
+					map.remove("close_sd_status");
+				}
+			}
 			this.setPageSize(ContextHelper.getPageSize(map));
 			this.setCurrPage(ContextHelper.getCurrPage(map));
 			this.setActives(dao.list(map));
 			this.setRecCount(dao.getResultCount());
-			if (recCount > 0) {
+			if (recCount > 0&&actives.size()>0) {
 				this.setMaxUid(actives.get(0).getUuid());
 			}
 			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;活动列表";

@@ -147,24 +147,31 @@ display: none;
 					</s:else>
 				</td>
 				<td class="td4 op-area nw">
-			
+		
 					<s:if test="30<=status">
-					<a  href="javascript:;" data="${uuid}" class="mdyApplyShipInfo_Link input-nostyle">
-					<s:if test="1==goflag||2==goflag||3==goflag">
+					
+					<s:if test="1==goflag||2==goflag||3==goflag||4==goflag">
+					<a  href="javascript:;" data="${uuid}" class="input-nostyle">
 		                     <s:if test='1==goflag'>已确认出库</s:if>
 					        <s:if test='2==goflag'>已部分出库</s:if>
 				        	<s:if test='3==goflag'>已取消出库</s:if>
-				        		<span class="ship_hidden_info" style="display:none;">
+				        	<s:if test='4==goflag'>出库单已生成</s:if>
+				       </a>
+				        		<%-- <span class="ship_hidden_info" style="display:none;">
 						<span id="ship_no_${uuid}">${ship_no}</span>
 						<span id="ship_type_${uuid}">${ship_type}</span>
 						<span id="ship_date_${uuid}">${it:formatDate(ship_date,"yyyy-MM-dd")}</span>
 						<span id="ship_phone_${uuid}">${ship_phone}</span>
 						<span id="ship_goflag_${uuid}">${goflag}</span>
 						<span id="check_note_${uuid}">${check_note}</span>
-					</span>
+					</span> --%>
 		               </s:if>
 		               <s:else>
-		           <s:if test="0==ship_status">未发货</s:if>
+		               <a  href="javascript:;" data="${uuid}" class="mdyApplyShipInfo_Link input-nostyle">
+		           		<s:if test="0==ship_status">未发货</s:if>
+		           
+		              	<s:if test="10==ship_status">已发货</s:if>
+		      
 		               <s:if test="20==ship_status"><span class="message_warning">已受理</span></s:if>
 		               	<span class="ship_hidden_info" style="display:none;">
 						<span id="ship_no_${uuid}">${ship_no}</span>
@@ -175,8 +182,9 @@ display: none;
 					
 						<span id="check_note_${uuid}">${check_note}</span>
 					</span>
+					 </a>
 					</s:else>
-		                    </a>
+		                   
 		                   
 		        
 				
@@ -191,7 +199,7 @@ display: none;
 				<td class="td4 op-area">				
 					<c:if test="${it:checkPermit('QKJ_QKJMANAGE_APPLY_VIEW',null)==true}">
 						<s:if test="status>=30">
-										<a class="input-gray" href="<s:url namespace="/qkjmanage" action="apply_print"><s:param name="perWorkFlag">null</s:param><s:param name="apply.uuid" value="uuid"></s:param></s:url>">打印</a>
+							<a class="input-gray" href="<s:url namespace="/qkjmanage" action="apply_print"><s:param name="perWorkFlag">null</s:param><s:param name="apply.uuid" value="uuid"></s:param></s:url>">打印</a>
 						</s:if>					
 			    		<a class="input-blue" href="<s:url namespace="/qkjmanage" action="apply_load"><s:param name="perWorkFlag">null</s:param><s:param name="viewFlag">mdy</s:param><s:param name="apply.uuid" value="uuid"></s:param></s:url>">修改</a>
 			    	</c:if>
@@ -218,13 +226,18 @@ display: none;
             <div class="label_ltit">审核意见:</div>
             <div><span id="form_apply_check_note"></span></div>
         </div>
+        
+        
+        
          <div id="form_apply_ship_status_div" class="label_hang">
             <div class="label_ltit">发货状态:</div>
      <div class="label_rwben"><s:select id="form_apply_ship_status" name="apply.ship_status" list="#{0:'未发货',10:'已发货',20:'已受理' }" /></div>
      </div>
+  
+  
          <div id="form_apply_goflag_div" class="label_hang">
             <div class="label_ltit">发货状态:</div>
-       <div class="label_rwben"><s:select id="form_apply_goflag" name="apply.ship_status" list="#{1:'已确认发货',2:'已确认拆分',3:'已取消发货' }" /></div>
+       <div class="label_rwben"><s:select id="form_apply_goflag"  list="#{1:'已确认发货',2:'已确认拆分',3:'已取消发货' }" /></div>
 	   </div>
    <div class="label_hang">
             <div class="label_ltit">出库日期:</div>

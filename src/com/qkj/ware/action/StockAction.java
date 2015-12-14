@@ -151,12 +151,16 @@ public class StockAction extends ActionSupport {
 				this.setPageSize(ContextHelper.getPageSize(map));
 				this.setCurrPage(ContextHelper.getCurrPage(map));		
 				this.setWps(warepower.checkWarePower());
-				if(wps!=null && wps.size()>0){
+				if(!ContextHelper.isAdmin()||wps!=null && wps.size()>0){
 					List<Integer> ud_list = new ArrayList<>();
 					for(int i=0;i<wps.size();i++){
 						if(wps.get(i).getPrvg().contains("4")){//有查询权限
 							ud_list.add(wps.get(i).getWare_id());
 						}
+					}
+					if(ud_list.size()>0){
+					}else{
+						ud_list.add(0);
 					}
 					map.put("storeids", ud_list);
 					mapware.put("uuids", ud_list);
