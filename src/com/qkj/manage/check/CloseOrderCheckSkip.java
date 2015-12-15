@@ -22,6 +22,8 @@ public class CloseOrderCheckSkip {
 		// 省外
 		skipSteps.add(new CloseOrerSkipStep("211",null, 1, "check30", "mdyCloseOrderSMDStatus50"));// 总监审后销管销管副总代审
 		skipSteps.add(new CloseOrerSkipStep("211",null, 1, "check20", "mdyCloseOrderSMDStatus10"));// 跳过大区
+		
+		skipSteps.add(new CloseOrerSkipStep("2113", null,1, "check10", "check20,mdyCloseOrderSMDStatus10"));// 申请 三区跳过大区
 		// 西藏
 		skipSteps.add(new CloseOrerSkipStep("2302",null, 1, "check20", "mdyCloseOrderSMDStatus10"));// 大区审后销管经理代审
 		// 新疆

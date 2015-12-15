@@ -17,15 +17,18 @@ public class CheckSkip {
 	private static List<SkipStep> skipSteps = new ArrayList<>();
 	static {
 		// 北京
-		skipSteps.add(new SkipStep("3",null, 1, 4, 7,false)); // 申请 4总监 7跳过销管副总
+		skipSteps.add(new SkipStep("3",null, 1, 4, 7,"9",false)); // 申请 4总监 7跳过销管副总
 		skipSteps.add(new SkipStep("3",null, 1, 14, 17,false));// 结案 14总监 17销管副总
 		skipSteps.add(new SkipStep("3",null,1, 2, 3,false));// 结案 14总监 17跳过销管经理
 		skipSteps.add(new SkipStep("3",null, 1, 12, 13,false));// 结案 14总监 17跳过销管经理
 		// 省外
-		skipSteps.add(new SkipStep("211",null, 1, 4, 7,false)); // 申请 4总监 7跳过销管副总
+		skipSteps.add(new SkipStep("211",null, 1, 4, 7,"9",false)); // 申请 4总监 7跳过销管副总
 		skipSteps.add(new SkipStep("211",null, 1, 14, 17,false));// 结案 14总监 17跳过大区
 		skipSteps.add(new SkipStep("211", null,1, 2, 3,false));// 申请 2大区 3跳过销管经理
-		skipSteps.add(new SkipStep("211",null, 1, 12, 13,false));// 结案 12大区 13跳过销管经理
+		skipSteps.add(new SkipStep("211",null, 1, 12, 13,false));// 结案 12大区 13跳过销管经理2113
+		
+		skipSteps.add(new SkipStep("2113", null,1, 0, 2,"3",false));// 申请 三区跳过大区
+		skipSteps.add(new SkipStep("2113",null, 1, 10, 12,"13",false));// 结案  三区跳过大区
 		// 西藏
 		skipSteps.add(new SkipStep("2302",null, 1, 2, 3,false)); // 申请 2大区 3跳过销管经理
 		skipSteps.add(new SkipStep("2302",null, 1, 12, 13,false));// 结案 12大区 13跳过销管经理
