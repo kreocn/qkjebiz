@@ -730,6 +730,7 @@
 				<!-- 省外：(三区跳过大区)申请：办事处，大区，总监  结案：办事处，大区，总监 ，财务-->
 				<!-- 传奇：办事处，财务，副总，总经理，董事会，财务 -->
 				<!--新疆：跳过销管  -->
+				<s:if test="%{active.status!=100 }">
 				<div class="label_main">
 					<div class="label_hang">
 						<div class="label_ltit">相关操作:</div>
@@ -937,6 +938,7 @@
 							
 						</div>
 					</div>
+				</s:if>
 				</s:if>
 			</div>
 		</s:form>

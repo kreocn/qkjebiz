@@ -811,6 +811,7 @@
 						</div>
 					</div>
 				</s:if>
+				<s:if test="%{active.status!=100 }">
 				<div class="label_main noprint">
 					<div class="label_hang">
 						<div class="label_ltit">相关操作:</div>
@@ -1056,7 +1057,9 @@
 
 					</div>
 				</s:if>
+			</s:if>
 			</div>
+			
 		</s:form>
 	</div>
 </div>
