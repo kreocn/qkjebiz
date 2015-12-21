@@ -236,6 +236,7 @@
 						</c:if>
 					</c:if>
 				</s:if>
+				1
 				<c:if test="${leave.check_status==20 && it:checkPermit('QKJ_ADM_LEAVE_CHECK20',leave.leave_dept)==true}">
 					<s:submit name="leave_check20" cssClass="input-green" value="总监-审核通过" action="leave_check20" onclick="return isOp('确定执行此操作?');" />
 					<c:if test="${it:checkPermit('QKJ_ADM_LEAVE_CHECK5',leave.leave_dept)==true}">
