@@ -16,11 +16,6 @@
 				<param name="viewFlag">relist</param>
 			</result>
 		</action>
-		
-		<action name="apply_listt" class="com.qkj.manage.action.ApplyAction" method="listt">
-			<result name="success">/WEB-INF/jsp/qkjmanage/ApplyListT.jsp</result>
-		</action>
-		
 		<action name="apply_relist" class="com.qkj.manage.action.ApplyAction" method="relist">
 			<result type="redirectAction">
 				<param name="actionName">apply_list</param>
@@ -30,11 +25,6 @@
 		<action name="apply_load" class="com.qkj.manage.action.ApplyAction" method="load">
 			<result>/WEB-INF/jsp/qkjmanage/ApplyEdit.jsp</result>
 		</action>
-		
-		<action name="apply_loadt" class="com.qkj.manage.action.ApplyAction" method="load">
-			<result>/WEB-INF/jsp/qkjmanage/ApplyViewT.jsp</result>
-		</action>
-		
 		<action name="apply_print" class="com.qkj.manage.action.ApplyAction" method="view">
 			<result>/WEB-INF/jsp/qkjmanage/ApplyView.jsp</result>
 		</action>

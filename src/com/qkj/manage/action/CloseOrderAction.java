@@ -22,7 +22,6 @@ import com.qkj.manage.check.CloseOrderCheckSkip;
 import com.qkj.manage.dao.ApplyDAO;
 import com.qkj.manage.dao.ApproveDAO;
 import com.qkj.manage.dao.CloseOrderDAO;
-import com.qkj.manage.dao.CloseOrderMemcostDAO;
 import com.qkj.manage.dao.CloseOrderPosmDAO;
 import com.qkj.manage.dao.CloseOrderProDAO;
 import com.qkj.manage.dao.ProcessDAO;
@@ -562,6 +561,11 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 		try {
 			if (closeOrder != null && !ToolsUtil.isEmpty(closeOrder.getSalPro_id())) {
 				closeOrder.setSalPro_id(closeOrder.getSalPro_id().replaceAll(" ", ""));
+			}
+			if(ToolsUtil.isEmpty(closeOrder.getSalPro_id())){
+				CloseOrder co=new CloseOrder();
+				co=(CloseOrder) dao.get(closeOrder.getUuid());
+				closeOrder.setSalPro_id(co.getSalPro_id());
 			}
 			closeOrder.setLm_user(ContextHelper.getUserLoginUuid());
 			closeOrder.setLm_time(new Date());
