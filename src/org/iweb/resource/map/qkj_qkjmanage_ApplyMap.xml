@@ -47,6 +47,7 @@
 			<isNotEmpty prepend="AND" property="apply_time"><![CDATA[ a.apply_time=#apply_time# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="sp_check_status"><![CDATA[ a.sp_check_status=#sp_check_status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="status"><![CDATA[ a.status=#status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="appstatus"><![CDATA[ a.status>=#appstatus# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="ship_status"><![CDATA[ a.ship_status=#ship_status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="status_start"><![CDATA[ a.status>=#status_start# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="status_end"><![CDATA[ a.status<=#status_end# ]]></isNotEmpty>

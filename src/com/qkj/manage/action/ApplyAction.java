@@ -48,6 +48,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 	private ApplyDAO dao = new ApplyDAO();
 	private ApproveDAO adao = new ApproveDAO();
 	private Apply apply;
+	private CloseOrder closeOrder;
 	private List<Apply> applys;
 	private List<Apply> applyUserSign;
 	private Approve approve;
@@ -67,6 +68,14 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 	private String perWorkF;
 	private static String perWorkFlag;
 	public String per = "per";
+
+	public CloseOrder getCloseOrder() {
+		return closeOrder;
+	}
+
+	public void setCloseOrder(CloseOrder closeOrder) {
+		this.closeOrder = closeOrder;
+	}
 
 	public OutStock getOutsstock() {
 		return outsstock;
@@ -322,6 +331,44 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 			perWorkFlag = null;
 			return "perSuccess";
 		}
+	}
+	
+	
+	public String listt() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_LIST");
+		try {
+			map.clear();
+			if (apply == null) {
+				apply = new Apply();
+			}
+
+			// 特殊审核权限
+			if (apply.getStatus_sp() != null) {
+				if (apply.getStatus_sp() == 25) {
+					apply.setSp_check_status(10);
+					apply.setStatus(20);
+				} else if (apply.getStatus_sp() == 20) {
+					apply.setSp_check_status(0);
+					apply.setStatus(apply.getStatus_sp());
+				} else {
+					apply.setStatus(apply.getStatus_sp());
+					apply.setSp_check_status(null);
+				}
+			}
+			ContextHelper.setSearchDeptPermit4Search("QKJ_QKJMANAGE_APPLY_LIST", map, "apply_depts", "apply_user");
+			ContextHelper.SimpleSearchMap4Page("QKJ_QKJMANAGE_APPLY_LIST", map, apply, viewFlag);
+			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
+			this.setCurrPage(Integer.parseInt((ToolsUtil.isEmpty(map.get(Parameters.Current_Page_Str)) ? "1" : map.get(Parameters.Current_Page_Str)).toString()));
+			map.put("appstatus", 30);
+			this.setApplys(dao.list(map));
+			this.setRecCount(dao.getResultCount());
+			System.out.println(applys.size());
+			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;至事由列表";
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
+			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
+		}
+		return SUCCESS;
 	}
 
 	public String relist() throws Exception {

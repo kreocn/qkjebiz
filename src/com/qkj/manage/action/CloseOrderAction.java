@@ -19,6 +19,7 @@ import org.iweb.sysvip.domain.Member;
 import com.opensymphony.xwork2.ActionSupport;
 import com.qkj.manage.check.CheckSkip;
 import com.qkj.manage.check.CloseOrderCheckSkip;
+import com.qkj.manage.dao.ApplyDAO;
 import com.qkj.manage.dao.ApproveDAO;
 import com.qkj.manage.dao.CloseOrderDAO;
 import com.qkj.manage.dao.CloseOrderMemcostDAO;
@@ -30,6 +31,7 @@ import com.qkj.manage.dao.SalPromotDAO;
 import com.qkj.manage.dao.SalPromotPower;
 import com.qkj.manage.dao.TravelDAO;
 import com.qkj.manage.domain.Active;
+import com.qkj.manage.domain.Apply;
 import com.qkj.manage.domain.Approve;
 import com.qkj.manage.domain.CloseOrder;
 import com.qkj.manage.domain.CloseOrderMemcost;
@@ -55,10 +57,12 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	private List<CloseOrder> allsigns;
 	private double proPrice;
 
-    private double posmPrice;
+	private double posmPrice;
 	private CloseOrder sign;
 	private List<SalPromot> salPromots;
 	private List<SalPromot> salPromotsed;
+	private List<Apply> applysed;
+	private List<Apply> cApplys;
 	private List<CloseOrderPro> closeOrderPros;
 	private List<CloseOrderPro> closeOrderProsTasting;
 	private List<CloseOrderMemcost> CloseOrderMemcosts;
@@ -80,6 +84,23 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	private String perWorkF;
 	private static String perWorkFlag = null;
 	public String per = "per";
+
+	public List<Apply> getApplysed() {
+		return applysed;
+	}
+
+	public void setApplysed(List<Apply> applysed) {
+		this.applysed = applysed;
+	}
+
+	public List<Apply> getcApplys() {
+		return cApplys;
+	}
+
+	public void setcApplys(List<Apply> cApplys) {
+		this.cApplys = cApplys;
+	}
+
 	public List<CloseOrderPro> getCloseOrderProsTasting() {
 		return closeOrderProsTasting;
 	}
@@ -87,6 +108,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	public void setCloseOrderProsTasting(List<CloseOrderPro> closeOrderProsTasting) {
 		this.closeOrderProsTasting = closeOrderProsTasting;
 	}
+
 	public double getPosmPrice() {
 		return posmPrice;
 	}
@@ -94,6 +116,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	public void setPosmPrice(double posmPrice) {
 		this.posmPrice = posmPrice;
 	}
+
 	public String getPer() {
 		return per;
 	}
@@ -101,6 +124,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	public void setPer(String per) {
 		this.per = per;
 	}
+
 	public double getProPrice() {
 		return proPrice;
 	}
@@ -108,6 +132,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	public void setProPrice(double proPrice) {
 		this.proPrice = proPrice;
 	}
+
 	private List<Active> getapply_depts;
 	private String userappid;
 	private String userdepta;
@@ -326,7 +351,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
 		}
-		if (perWorkFlag == null || perWorkFlag.equals("null") || per==null ||per.equals("null")) {
+		if (perWorkFlag == null || perWorkFlag.equals("null") || per == null || per.equals("null")) {
 			return "success";
 		} else {
 			perWorkFlag = null;
@@ -353,6 +378,12 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 				this.setCloseOrder(null);
 				get_apply_depts();
 				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/closeOrder_relist'>结案提货单列表</a>&nbsp;&gt;&nbsp;增加结案提货单";
+			} else if ("addApply".equals(viewFlag)) {
+				this.setCloseOrder(null);
+				closeOrder = new CloseOrder();
+				closeOrder.setType(2);
+				get_apply_depts();
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/closeOrder_relist'>结案提货单列表</a>&nbsp;&gt;&nbsp;增加结案提货单";
 			} else if ("mdy".equals(viewFlag)) {
 				String salid = null;
 				if (!(closeOrder == null || closeOrder.getUuid() == null)) {
@@ -361,32 +392,56 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 				} else {
 					this.setCloseOrder(null);
 				}
-				
+
 				List<SalPromot> salps = new ArrayList<>();
+				List<Apply> applys = new ArrayList<>();
 				List<String> dlist = new ArrayList<>();
 				if (salid != null) {
-					String stringarray[] = salid.split(",");
-					for (int i = 0; i < stringarray.length; i++) {
-						SalPromot sp = new SalPromot();
-						sp.setUuid(Integer.parseInt(stringarray[i]));
-						sp = (SalPromot) saldao.get(sp.getUuid());
-						salps.add(sp);
-						dlist.add(sp.getUuid().toString());
+					if (closeOrder.getType() == 2) {
+						String stringarray[] = salid.split(",");
+						ApplyDAO ad = new ApplyDAO();
+						for (int i = 0; i < stringarray.length; i++) {
+							Apply ap = new Apply();
+							ap.setUuid(Integer.parseInt(stringarray[i]));
+							ap = (Apply) ad.get(ap.getUuid());
+							applys.add(ap);
+							dlist.add(ap.getUuid().toString());
+						}
+						this.setApplysed(applys);// 已经选择的至事由
+					} else {
+						String stringarray[] = salid.split(",");
+						for (int i = 0; i < stringarray.length; i++) {
+							SalPromot sp = new SalPromot();
+							sp.setUuid(Integer.parseInt(stringarray[i]));
+							sp = (SalPromot) saldao.get(sp.getUuid());
+							salps.add(sp);
+							dlist.add(sp.getUuid().toString());
+						}
+						this.setSalPromotsed(salps);// 已经选择的促销活动
 					}
-					this.setSalPromotsed(salps);// 已经选择的促销活动
+
 				}
+
+				if (closeOrder != null && closeOrder.getMember_id() != null) this.setSalPromots(sal.salProPower(closeOrder.getMember_id(), closeOrder.getClose_time(), dlist));// 可选的促销活动
 				
-				if (closeOrder != null && closeOrder.getMember_id() != null) this.setSalPromots(sal.salProPower(closeOrder.getMember_id(),closeOrder.getClose_time(),dlist));// 可选的促销活动
-				
+				/*if(closeOrder != null && closeOrder.getType()==2){
+					map.clear();
+					ContextHelper.setSearchDeptPermit4Search("QKJ_QKJMANAGE_APPLY_LIST", map, "apply_depts", "apply_user");
+					ApplyDAO aa=new ApplyDAO();
+					map.put("appstatus", 30);
+					this.setcApplys(aa.list(map));
+				}*/
 				CloseOrderProDAO cdao = new CloseOrderProDAO();
 				map.clear();
 				map.put("order_id", closeOrder.getUuid());
 				this.setCloseOrderPros(cdao.list(map));
-		
-				/*CloseOrderMemcostDAO md=new CloseOrderMemcostDAO();
-				map.clear();
-				map.put("close_id", closeOrder.getUuid());
-				this.setCloseOrderMemcosts(md.list(map));*/
+
+				/*
+				 * CloseOrderMemcostDAO md=new CloseOrderMemcostDAO();
+				 * map.clear();
+				 * map.put("close_id", closeOrder.getUuid());
+				 * this.setCloseOrderMemcosts(md.list(map));
+				 */
 
 				CloseOrderPosmDAO closedao = new CloseOrderPosmDAO();
 				map.clear();
@@ -460,15 +515,15 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 			map.remove("boobrand");
 			map.put("brand", "9");
 			this.setCloseOrderProsTasting(cdao.list(map));
-           for (CloseOrderPro cop : closeOrderProsTasting) {
-			proPrice=proPrice+cop.getTotal_price();
-		}
+			for (CloseOrderPro cop : closeOrderProsTasting) {
+				proPrice = proPrice + cop.getTotal_price();
+			}
 			CloseOrderPosmDAO closedao = new CloseOrderPosmDAO();
 			map.clear();
 			map.put("closeOrder_id", closeOrder.getUuid());
 			this.setClosePosms(closedao.list(map));
-            for (CloseOrderPosm cop : closePosms) {
-				posmPrice=posmPrice+cop.getTotal_price();
+			for (CloseOrderPosm cop : closePosms) {
+				posmPrice = posmPrice + cop.getTotal_price();
 			}
 			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/closeOrder_relist'>结案提货单列表</a>&nbsp;&gt;&nbsp;结案提货单详情";
 		} catch (Exception e) {
@@ -488,7 +543,11 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 			closeOrder.setLm_user(ContextHelper.getUserLoginUuid());
 			closeOrder.setLm_time(new Date());
 			closeOrder.setState(0);
-			closeOrder.setType(0);
+			if (closeOrder != null && closeOrder.getType() != null) {
+				closeOrder.setType(2);
+			} else {
+				closeOrder.setType(0);
+			}
 			dao.add(closeOrder);
 			addProcess("CLOSEORDER_ADD", "新增结案提货单", ContextHelper.getUserLoginUuid());
 		} catch (Exception e) {
@@ -514,6 +573,20 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
+	
+	public String savet() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_MDY");
+		try {
+			closeOrder.setLm_user(ContextHelper.getUserLoginUuid());
+			closeOrder.setLm_time(new Date());
+			dao.savet(closeOrder);
+			addProcess("CLOSEORDER_MDY", "修改结案提货单", ContextHelper.getUserLoginUuid());
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!save 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!save 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
 
 	public String saveMember() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_MDY");
@@ -526,7 +599,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
-	
+
 	public String del() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_DEL");
 		int type = closeOrder.getType();
@@ -1185,7 +1258,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 
 	public String number(String dept) {
 		String num = null;
-		//String dept = ContextHelper.getUserLoginDept();
+		// String dept = ContextHelper.getUserLoginDept();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String nowdate = sdf.format(new Date());
 		map.clear();
