@@ -285,7 +285,9 @@ s
 							<div class="label_main">
 								<fieldset class="clear">
 									<legend>已选择的至事由</legend>
+									<s:if test="closeOrder.state==0">
 									<input type="button"  onclick="window.location.href='<s:url namespace="/qkjmanage" action="apply_listt"><s:param name="closeOrder.uuid" value="closeOrder.uuid" /></s:url>';" value="添加至事由" />
+									</s:if>
 									<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
 										<tr>
 											<th>事</th>

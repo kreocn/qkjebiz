@@ -60,7 +60,7 @@
 	
 	<div class="tab_warp main noprint" >
  	<div class="dq_step">
-		<a class="input-blue" href="<s:url namespace="/qkjmanage" action="closeOrder_load"><s:param name="viewFlag">mdy</s:param><s:param name="closeOrder.uuid" value="closeOrder.uuid" /></s:url>">返回</a>
+		<input type="button" class="input-gray" value="返回" onclick="history.go(-1)" />
 	</div>
 	</div>
 		<div class="tab_warp main printarea">

@@ -23,7 +23,8 @@ display: none;
 <div class="tab_right">
  	<div class="tab_warp main" >
  	<div class="dq_step">
-		${path}${closeOrder.uuid }aa
+		${path}
+		<a class="input-blue" href="<s:url namespace="/qkjmanage" action="closeOrder_load"><s:param name="viewFlag">mdy</s:param><s:param name="closeOrder.uuid" value="closeOrder.uuid" /></s:url>">返回</a>
 	</div>
  	<s:form id="serachForm" name="serachForm" action="apply_listt"  method="get" namespace="/qkjmanage" theme="simple">
  	<s:hidden name="per" value="null"></s:hidden>
@@ -115,7 +116,7 @@ display: none;
 			    <td class="td1 nw">${it:formatDate(apply_time,'yyyy-MM-dd')}</td>
 			    <td class="td2 nw">${apply_dept_name}</td>
 			    <td class="td1 nw">${apply_user_name}</td>
-				<td class="td3 longnote" title="${title}">${it:subString(title,40)}</td>
+				<td class="td3 longnote" title="${title}"><a  href="<s:url namespace="/qkjmanage" action="apply_loadt"><s:param name="viewFlag">mdy</s:param><s:param name="apply.uuid" value="uuid"></s:param><s:param name="closeOrder.uuid" value="closeOrder.uuid" /></s:url>">${it:subString(title,40)}</a></td>
 				<td class="td1 nw" title="${check_user_name}-${it:formatDate(check_time,'yyyy-MM-dd HH:mm:ss')}-${check_note}">
 					<s:if test="-1==status"><span class="message_error">已作废|(${check_user_name})</span></s:if>
 					<s:if test="0==status">新申请</s:if>
