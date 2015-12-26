@@ -9,9 +9,9 @@
 			<!-- 测试环境 DataSource Proxool -->
 	 		<!-- <property name="DataSource" value="java:/comp/env/qkj/mysql_druid_local203" /> -->
 			<!-- 本机Tomcat本机测试环境 DataSource(ERP LOCAL TEST)&测试服务器 Proxool -->
-			<property name="DataSource" value="java:/comp/env/qkj/mysqlLocalCJ_druid" />
+			<!-- <property name="DataSource" value="java:/comp/env/qkj/mysqlLocalCJ_druid" /> -->
 			<!-- 正式测试环境 DataSource Proxool -->
-			<!-- <property name="DataSource" value="java:/comp/env/qkj/mysql_druid_BJ02" /> -->
+			<property name="DataSource" value="java:/comp/env/qkj/mysql_druid_BJ02" />
 		</dataSource>
 	</transactionManager>
 	<!-- 要想实现*通配符模式,可以修改com.ibatis.sqlmap.engine.builder.xml.SqlMapConfigParser类源代码中的addSqlMapNodelets()方法 -->
@@ -71,7 +71,7 @@
 	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_CloseOrderMemcostMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_IntegralPaymentMap.xml" />
 	
-	<sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_CheckSkipMap.xml" />
+	<!-- <sqlMap resource="org/iweb/resource/map/qkj_qkjmanage_CheckSkipMap.xml" /> -->
 	<!--行政管理 -->
 	<sqlMap resource="org/iweb/resource/map/qkj_adm_AssetsMap.xml" />
 	<sqlMap resource="org/iweb/resource/map/qkj_adm_AssetItemMap.xml" />
