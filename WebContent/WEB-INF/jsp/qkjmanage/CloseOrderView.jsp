@@ -205,12 +205,23 @@
 						</div>
 					</div>
 					<div class="label_main">
-						<div class="label_hang">
+					<s:if test="closeOrder.type==2">
+					<div class="label_hang">
+							<div class="label_ltit">收货人姓名:</div>
+							<div class="label_rwbenx">
+								${ closeOrder.m_name}
+							</div>
+						</div>
+					</s:if>
+					<s:else>
+					<div class="label_hang">
 							<div class="label_ltit">收货人姓名:</div>
 							<div class="label_rwbenx">
 								${ closeOrder.member_name}
 							</div>
 						</div>
+					</s:else>
+						
 						<div class="label_hang">
 							<div class="label_ltit">手机:</div>
 							<div class="label_rwb">
@@ -237,6 +248,24 @@
 						</div>
 					</div>
 					
+					<s:if test="closeOrder.type==2">
+						<div class="label_main">
+							<fieldset class="clear">
+								<legend>已参至事由</legend>
+								<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+									<!-- lading.promotions -->
+									<s:iterator value="applysed" status="sta">
+										<tr>
+											<td class="nw">${title}</td>
+											<td class="nw">申请时间：${it:formatDate(apply_time,'yyyy-MM-dd')}</td>
+										</tr>
+									</s:iterator>
+								</table>
+								
+							</fieldset>
+						</div>
+					</s:if>
+					<s:elseif test="closeOrder.type==0">
 					<div class="label_main">
 							<fieldset class="clear">
 								<legend>已参与促销活动</legend>
@@ -252,6 +281,8 @@
 								
 							</fieldset>
 						</div>
+					</s:elseif>
+					
 						
 						<fieldset class="clear">
 								<legend>结案单明细</legend>

@@ -487,7 +487,22 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 				this.setCloseOrder(null);
 			}
 
-			if (salid != null) {
+			if (closeOrder.getType() == 2) {
+				List<Apply> applys = new ArrayList<>();
+				List<String> dlist = new ArrayList<>();
+				String stringarray[] = salid.split(",");
+				ApplyDAO ad = new ApplyDAO();
+				for (int i = 0; i < stringarray.length; i++) {
+					Apply ap = new Apply();
+					ap.setUuid(Integer.parseInt(stringarray[i]));
+					ap = (Apply) ad.get(ap.getUuid());
+					applys.add(ap);
+					dlist.add(ap.getUuid().toString());
+				}
+				this.setApplysed(applys);// 已经选择的至事由
+			} 
+			
+			if (salid != null && closeOrder.getType() != 2) {
 				String stringarray[] = salid.split(",");
 				for (int i = 0; i < stringarray.length; i++) {
 					SalPromot sp = new SalPromot();
