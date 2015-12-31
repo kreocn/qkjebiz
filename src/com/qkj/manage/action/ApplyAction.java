@@ -408,7 +408,13 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 				this.setApplyUserSign(dao.listUserSign(apply.getUuid()));
 				// this.setSign((CloseOrder) dao.sign(apply.getUuid()));
 			}
-
+			map.clear();
+			map.put("apply_id", apply.getUuid());
+			map.put("status", 1);
+			ApplyProductDAO adao = new ApplyProductDAO();
+			this.setApplyproduct(adao.list(map));
+			// this.setIndApplyProducts(independence(map, "海拔", 1));
+			this.setOtherApplyProducts(independence(map, "海拔", 2));
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!view 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!view 读取数据错误:", e);

@@ -117,8 +117,25 @@
 								</div>
 							</div>
 						</div> --%>
-						
-						
+						<s:if test="otherApplyProducts.size>0">
+							<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+										<tr>
+											<th>品名</th>
+											<th>单价</th>
+											<th>数量(瓶)</th>
+											<th>合计</th>
+										</tr>
+										<s:iterator value="otherApplyProducts" status="sta">
+											<tr>
+												<td class="nw">${product_name}</td>
+												<td class="nw">￥${per_price}</td>
+												<td class="nw">${num}</td>
+												<td class="nw">￥${total_price}</td>
+											</tr>
+										</s:iterator>
+									</table>
+									</s:if>
+
 						<div class="apply_t">说明:</div>
 						<div id="apply_note_text" class="apply_n oneditor">${apply.note}</div>
 						<div class="check_note">
