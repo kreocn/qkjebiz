@@ -22,6 +22,9 @@ cursor: pointer;
 		<div class="dq_step">
 			${path}
 			<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_ADD',null)==true}">
+				<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="closeOrder_load"><s:param name="viewFlag">addApply</s:param></s:url>">结案提货单(至事由)</a></span>
+			</c:if>
+			<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_ADD',null)==true}">
 				<span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="closeOrder_load"><s:param name="viewFlag">add</s:param></s:url>">添加结案提货单</a></span>
 			</c:if>
 		</div>

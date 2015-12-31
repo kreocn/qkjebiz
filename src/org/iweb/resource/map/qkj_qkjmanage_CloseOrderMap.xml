@@ -17,7 +17,7 @@
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ c.uuid=#uuid# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="type"><![CDATA[ c.type=#type# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="type"><![CDATA[ (c.type=#type# or c.type=2) ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="apply_id"><![CDATA[ c.apply_id=#apply_id# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="add_time"><![CDATA[ c.add_time LIKE CONCAT(#add_time#,'%') ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="close_time"><![CDATA[ c.close_time=#close_time# ]]></isNotEmpty>
@@ -101,8 +101,8 @@
 	</select>
 	<insert id="qkjmanage_addCloseOrder" parameterClass="closeOrder">
 		<![CDATA[ 
-			Insert Into qkjm_r_closeorder(close_time,content,theme,member_id,member_address,member_phone,member_title,member_note,mt_price,add_user,add_time,lm_time,lm_user,apply_dept,close_num,state,type,apply_id,close_note,is_fullcheck,m_upprice,m_price,m_bprice,f_upprice,f_price,f_bprice)
-			Values (#close_time#,#content#,#theme#,#member_id#,#member_address#,#member_phone#,#member_title#,#member_note#,#mt_price#,#add_user#,#add_time#,#lm_time#,#lm_user#,#apply_dept#,#close_num#,#state#,#type#,#apply_id#,#close_note#,#is_fullcheck#,#m_upprice#,#m_price#,#m_bprice#,#f_upprice#,#f_price#,#f_bprice#)
+			Insert Into qkjm_r_closeorder(close_time,content,theme,member_id,member_address,member_phone,member_title,member_note,mt_price,add_user,add_time,lm_time,lm_user,apply_dept,close_num,state,type,apply_id,close_note,is_fullcheck,m_upprice,m_price,m_bprice,f_upprice,f_price,f_bprice,m_name)
+			Values (#close_time#,#content#,#theme#,#member_id#,#member_address#,#member_phone#,#member_title#,#member_note#,#mt_price#,#add_user#,#add_time#,#lm_time#,#lm_user#,#apply_dept#,#close_num#,#state#,#type#,#apply_id#,#close_note#,#is_fullcheck#,#m_upprice#,#m_price#,#m_bprice#,#f_upprice#,#f_price#,#f_bprice#,#m_name#)
 		]]>
 		<selectKey resultClass="int" keyProperty="uuid">
 		<![CDATA[ Select LAST_INSERT_ID() ]]>
@@ -119,6 +119,7 @@
 			salPro_id=#salPro_id#,
 			apply_dept=#apply_dept#,
 			close_note=#close_note#,
+			m_name=#m_name#,
 			
 			m_upprice=#m_upprice#,
 			m_price=#m_price#,
@@ -136,6 +137,17 @@
 			mt_price=#mt_price#,
 			member_note=#member_note#
 			
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<update id="qkjmanage_mdyCloseOrderT" parameterClass="closeOrder">
+		<![CDATA[
+			Update qkjm_r_closeorder
+			Set 
+			lm_time=#lm_time#,
+			lm_user=#lm_user#,
+			salPro_id=#salPro_id#
 			Where uuid = #uuid#
 		]]>
 	</update>

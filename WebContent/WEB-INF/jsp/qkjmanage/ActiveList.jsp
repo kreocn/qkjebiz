@@ -224,6 +224,7 @@ cursor: pointer;
 			</td>
 			<td class="td5 nw" title="${address}">${it:subString(address,6)}</td>
 			<td  class="td1">
+				<s:if test="status==100"><font class="message_error">已删除</font></s:if>
 				<s:if test="status==-1"><font class="message_error">已作废</font></s:if>
 				<s:if test="status==0">新申请</s:if>
 				<s:if test="status==1"><font class="message_warning">申请审批中</font></s:if>

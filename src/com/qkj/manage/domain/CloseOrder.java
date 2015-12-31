@@ -21,6 +21,7 @@ public class CloseOrder {
 	private Date add_time;// (datetime)填加时间
 	private Integer type;
 	private Integer apply_id;
+	private String m_name;
 
 	private Integer state;
 	private Integer sd_state;
@@ -89,6 +90,15 @@ public class CloseOrder {
 	private Date time60;
 	private Date time70;
 	private Date time80;
+
+	
+	public String getM_name() {
+		return m_name;
+	}
+
+	public void setM_name(String m_name) {
+		this.m_name = m_name;
+	}
 
 	public String getMember_title() {
 		return member_title;

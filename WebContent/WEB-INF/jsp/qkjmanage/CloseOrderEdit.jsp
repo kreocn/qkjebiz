@@ -219,24 +219,36 @@ s
 						</div>
 						
 						<div class="label_main">
+						<s:if test="'add' == viewFlag||closeOrder.type!=2">
 							<div class="label_hang">
 								<div class="label_ltit">会员号:</div>
 								<div class="label_rwb">
 									<s:textfield id="order_user_id" name="closeOrder.member_id" title="会员号" cssClass="validate[required]" />
 								</div>
 							</div>
+						</s:if>
 							<div class="label_hang">
 								<div class="label_ltit">手机:</div>
 								<div class="label_rwb">
 									<s:textfield id="order_user_mobile" name="closeOrder.member_phone" title="手机" controlName="手机" />
 								</div>
 							</div>
+							<s:if test="'add' == viewFlag||closeOrder.type!=2">
 							<div class="label_hang">
 								<div class="label_ltit">收货人姓名:</div>
 								<div class="label_rwb">
 									<s:textfield id="order_user_name" name="closeOrder.member_name" title="姓名" controlName="姓名" cssClass="validate[required,maxSize[85]]" />
 								</div>
 							</div>
+							</s:if>
+							<s:else>
+							<div class="label_hang">
+								<div class="label_ltit">收货人姓名:</div>
+								<div class="label_rwb">
+									<s:textfield  name="closeOrder.m_name" title="姓名" controlName="姓名" cssClass="validate[required,maxSize[85]]" />
+								</div>
+							</div>
+							</s:else>
 							
 							<div class="label_hang">
 								<div class="label_ltit">名目:</div>
@@ -269,7 +281,61 @@ s
 							</div>
 						</div>
 						
-						
+						<s:if test="'mdy'==viewFlag && closeOrder.type==2">
+							<div class="label_main">
+								<fieldset class="clear">
+									<legend>已选择的至事由</legend>
+									<s:if test="closeOrder.state==0">
+									<input type="button"  onclick="window.location.href='<s:url namespace="/qkjmanage" action="apply_listt"><s:param name="closeOrder.uuid" value="closeOrder.uuid" /></s:url>';" value="添加至事由" />
+									</s:if>
+									<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+										<tr>
+											<th>事</th>
+											<th>申请时间</th>
+											
+										</tr>
+										<!-- lading.promotions -->
+										<s:iterator value="applysed" status="sta">
+											<tr>
+												<td class="nw">
+												<a  href="<s:url namespace="/qkjmanage" action="apply_loadt"><s:param name="viewFlag">mdy</s:param><s:param name="apply.uuid" value="uuid"></s:param><s:param name="closeOrder.uuid" value="closeOrder.uuid" /></s:url>">${title}</a>
+												</td>
+												<td class="nw">${it:formatDate(apply_time,'yyyy-MM-dd')}</td>
+												<!-- <td><a href="javascript:;" onclick="openCustomerView(${uuid});">[查看详情]</a></td> -->
+											</tr>
+										</s:iterator>
+									</table>
+								</fieldset>
+							</div>
+							
+							<s:if test="closeOrder.state==0">
+								<%-- <div class="label_main">
+									<fieldset class="clear">
+										<legend>可选择至事由</legend>
+										<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+											<tr>
+												<th>选择</th>
+												<th>事</th>
+												<th>申请时间</th>
+												
+											</tr>
+											<!-- lading.promotions -->
+											<s:iterator value="cApplys" status="sta">
+												<tr>
+													<td class="nw"><input type="checkbox" name="closeOrder.salPro_id" value="${uuid}" /></td>
+													<td class="nw">
+													<a  href="<s:url namespace="/qkjmanage" action="apply_loadt"><s:param name="viewFlag">mdy</s:param><s:param name="apply.uuid" value="uuid"></s:param><s:param name="closeOrder.uuid" value="closeOrder.uuid" /></s:url>">${title}</a>
+													</td>
+													<td class="nw">${it:formatDate(apply_time,'yyyy-MM-dd')}</td>
+													<!-- <td><a href="javascript:;" onclick="openCustomerView(${uuid});">[查看详情]</a></td> -->
+												</tr>
+											</s:iterator>
+										</table>
+									</fieldset>
+								</div> --%>
+							</s:if>
+							
+						</s:if>
 						
 						<s:if test="'mdy'==viewFlag && closeOrder.type==0">
 							<div class="label_main">
@@ -542,7 +608,7 @@ s
 							<div class="label_ltit">相关操作:</div>
 							<div class="label_rwbenx">
 								<font color="red"><span id="messages"></span></font>
-								<s:if test="'add' == viewFlag">
+								<s:if test="'add' == viewFlag||'addApply' == viewFlag">
 									<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_ADD',closeOrder.apply_dept)==true}">
 										<s:submit id="add" name="add" value="下一步&填写费用明细" action="closeOrder_add" cssClass="input-blue" />
 									</c:if>
@@ -556,6 +622,11 @@ s
 											<s:submit id="mdyStatus0" name="mdyStatus0" value="报审" action="closeOrder_check0" onclick="return isOp('确定执行此操作?');" cssClass="input-yellow" />
 										</c:if>
 									</s:if>
+									<s:elseif test="closeOrder.type==2">
+										<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK0',null)==true && applysed.size()>0}">
+											<s:submit id="mdyStatus0" name="mdyStatus0" value="报审" action="closeOrder_check0" onclick="return isOp('确定执行此操作?');" cssClass="input-yellow" />
+										</c:if>
+									</s:elseif>
 									<s:else>
 										<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK0',null)==true}">
 											<s:submit id="mdyStatus0" name="mdyStatus0" value="报审" action="closeOrder_check0" onclick="return isOp('确定执行此操作?');" cssClass="input-yellow" />

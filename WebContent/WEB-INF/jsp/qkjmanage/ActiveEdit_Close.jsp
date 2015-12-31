@@ -728,7 +728,7 @@
 				<div class="label_main">
 					<div class="label_hang">
 						<div class="label_ltit">活动概况:</div>
-						<div class="label_rwbenx"></div>
+						<div class="label_rwbenx"><font color="red">为保证打印效果,请不要将word/excel的内容粘贴至此。</font></div>
 					</div>
 				</div>
 				<div class="label_main">
@@ -1057,6 +1057,7 @@
 					</div>
 				</s:if>
 			</div>
+			
 		</s:form>
 	</div>
 </div>
