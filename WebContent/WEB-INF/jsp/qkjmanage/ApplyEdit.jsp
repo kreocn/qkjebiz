@@ -209,7 +209,7 @@
 					<div class="label_main">
 						<div class="label_hang">
 							<div class="label_ltit">说明:</div>
-							<div class="label_rwbenx"><font color="red">为保证打印效果,请不要将word/excel的内容粘贴至此。</font></div>
+							<div class="label_rwbenx"></div>
 						</div>
 					</div>
 					</div>
