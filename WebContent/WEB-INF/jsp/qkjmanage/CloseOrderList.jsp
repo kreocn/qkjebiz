@@ -120,6 +120,7 @@ cursor: pointer;
 					<th class="td1">单据状态</th>
 					<th class="td2">销售状态</th>
 					<th class="td2">销管状态</th>
+					<th class="td3">类型</th>
 					<th class="td4">操作</th>
 					<th class="td0">查看</th>
 				</tr>
@@ -197,6 +198,12 @@ background-color: #FFF;
 										<font class="message_pass">总经理已审</font></s:if>
 										<s:if test="smd_status==70">
 										<font class="message_pass">董事已审</font></s:if>
+						</td>
+						
+						<td class="td3 nw">
+						<s:if test="type==0">促销活动</s:if>
+						<s:if test="type==1">工业旅游</s:if>
+						<s:if test="type==2">至事由</s:if>
 						</td>
 						<td class="td4 op-area">
 							<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_MDY',null)==true}">
