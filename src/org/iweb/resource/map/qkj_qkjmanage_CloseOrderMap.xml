@@ -18,6 +18,7 @@
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ c.uuid=#uuid# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="type"><![CDATA[ (c.type=#type# or c.type=2) ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="typeO"><![CDATA[ c.type=#typeO# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="apply_id"><![CDATA[ c.apply_id=#apply_id# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="add_time"><![CDATA[ c.add_time LIKE CONCAT(#add_time#,'%') ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="close_time"><![CDATA[ c.close_time=#close_time# ]]></isNotEmpty>
@@ -63,7 +64,8 @@
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ c.uuid=#uuid# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="type"><![CDATA[ c.type=#type# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="type"><![CDATA[ (c.type=#type# or c.type=2) ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="typeO"><![CDATA[ c.type=#typeO# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="apply_id"><![CDATA[ c.apply_id=#apply_id# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="add_time"><![CDATA[ c.add_time LIKE CONCAT(#add_time#,'%') ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="close_time"><![CDATA[ c.close_time=#close_time# ]]></isNotEmpty>
