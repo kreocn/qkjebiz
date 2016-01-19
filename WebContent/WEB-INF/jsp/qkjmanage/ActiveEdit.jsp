@@ -104,7 +104,7 @@
 }
 </style>
 
-<body>
+<body onload="check();">
 	<s:action name="nav" namespace="/manage" executeResult="true" />
 <div class="tab_right">
 	<div class="tab_warp main">
