@@ -46,10 +46,11 @@
 			<isNotEmpty prepend="AND" property="check_time_end"><![CDATA[ a.check_time<=DATE_ADD(#check_time_end#,INTERVAL 1 day) ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="apply_time"><![CDATA[ a.apply_time=#apply_time# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="sp_check_status"><![CDATA[ a.sp_check_status=#sp_check_status# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="status">
-			<![CDATA[ a.status=#status#]]>
-			<isEqual prepend="OR" property="status_sp" compareValue="20">
-		    <![CDATA[    (a.apply_dept LIKE '2113%' and a.status=10)]]>
+			<isNotEmpty prepend="AND" property="status"><![CDATA[ a.status=#status#]]></isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="status_sp">
+			<isEqual property="status_sp" compareValue="35">
+		    <![CDATA[(a.status=20 or   ( a.apply_dept LIKE '2113%' and a.status=10))]]>
 		  </isEqual>
 			</isNotEmpty>
 			<isNotEmpty prepend="AND" property="appstatus"><![CDATA[ a.status>=#appstatus# ]]></isNotEmpty>
@@ -94,10 +95,11 @@
 			<isNotEmpty prepend="AND" property="apply_time_end"><![CDATA[ apply_time<=DATE_ADD(#apply_time_end#,INTERVAL 1 day) ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="check_time_begin"><![CDATA[ check_time>=#check_time_begin# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="check_time_end"><![CDATA[ check_time<=DATE_ADD(#check_time_end#,INTERVAL 1 day) ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="status">
-			<![CDATA[ a.status=#status#]]>
-			<isEqual prepend="OR" property="status_sp" compareValue="20">
-		    <![CDATA[   ( a.apply_dept LIKE '2113%' and a.status=10)]]>
+			<isNotEmpty prepend="AND" property="status"><![CDATA[ a.status=#status#]]></isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="status_sp">
+			<isEqual  property="status_sp" compareValue="35">
+		    <![CDATA[(a.status=20 or   ( a.apply_dept LIKE '2113%' and a.status=10))]]>
 		  </isEqual>
 			</isNotEmpty>
 			<isNotEmpty prepend="AND" property="ship_status"><![CDATA[ ship_status=#ship_status# ]]></isNotEmpty>
