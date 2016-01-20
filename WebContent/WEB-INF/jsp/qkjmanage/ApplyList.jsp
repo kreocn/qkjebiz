@@ -82,7 +82,7 @@ display: none;
             <div class="label_ltit">状态:</div>
             <div class="label_rwben2">
             	<span class="label_rwb">
-            	<s:select name="apply.status_sp" title="状态" headerKey="" headerValue="-申请状态-" list="#{-1:'已作废',0:'新申请',5:'审核退回',10:'待审核',20:'经理/大区已审',25:'销管经理已审',30:'总监已审',40:'副总已审',50:'总经理已审'}" />
+            	<s:select name="apply.status_sp" title="状态" headerKey="" headerValue="-申请状态-" list="#{-1:'已作废',0:'新申请',5:'审核退回',10:'待审核',20:'经理/大区已审',25:'销管经理已审',30:'总监已审',35:'总监待审',40:'副总已审',50:'总经理已审'}" />
 				</span>
 				<span class="label_rwb">
 				<s:select name="apply.ship_status" headerKey="" headerValue="-发货状态-" list="#{0:'未发货',10:'已发货',20:'已受理' }" />
