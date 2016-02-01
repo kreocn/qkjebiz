@@ -34,7 +34,7 @@
 }
 
 .apply_n {
-	font-size: 16px; margin: 8px 5px; line-height: 30px;
+	font-size: 16px; margin: 8px 5px;  line-height: 30px;
 }
 
 .apply_n * {
