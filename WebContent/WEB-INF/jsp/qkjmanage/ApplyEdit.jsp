@@ -443,30 +443,41 @@
 									<s:else>
 								
 									<s:if test="apply.apply_type==1&&apply.apply_dept.substring(0,4)=='2202'">
-									
+								
 										<c:if test="${apply.status==10 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK9',apply.apply_dept)==true}">
 											<s:submit value="主管审核通过" cssClass="input-green" action="apply_check9" onclick="return isOp('确定进行此操作?');" />
 										</c:if>
-										
-										<c:if test="${apply.status==9 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK10',apply.apply_dept)==true}">
-						
-											<s:submit id="apply_check10" name="apply_check10" value="经理/大区审核通过" cssClass="input-green" action="apply_check10" onclick="return isOp('确定进行此操作?');" />
+										<c:if test="${apply.status==9 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK20',apply.apply_dept)==true}">
+											<s:submit id="apply_check20" name="apply_check20" value="总监审核通过" cssClass="input-green" action="apply_check20" onclick="return isOp('确定进行此操作?');" />
+											<c:if test="${it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK5',apply.apply_dept)==true}">
+												<s:submit id="apply_check5" name="apply_check5" value="审核不通过" cssClass="input-red" action="apply_check5" onclick="return isOp('确定进行此操作?');" />
+											</c:if>
 										</c:if>
+										
 										
 										<c:if test="${(apply.status==10 || apply.status==9) && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK5',null)==true}">
 												<s:submit id="apply_check5" name="apply_check5" value="审核不通过" cssClass="input-red" action="apply_check5" onclick="return isOp('确定进行此操作?');" />
 										</c:if>
 									
 									</s:if>
-									<s:elseif test="apply.apply_dept.substring(0,3)!='312'">
+									<s:elseif test="apply.apply_dept.substring(0,3)!='312'&&apply.apply_dept.substring(0,4)!='2202'">
+								
 										<c:if test="${apply.status==10 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK10',apply.apply_dept)==true}">
-										
 											<s:submit id="apply_check10" name="apply_check10" value="经理/大区审核通过" cssClass="input-green" action="apply_check10" onclick="return isOp('确定进行此操作?');" />
 										</c:if>
 										<c:if test="${apply.status==10 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK5',null)==true}">
 												<s:submit id="apply_check5" name="apply_check5" value="审核不通过" cssClass="input-red" action="apply_check5" onclick="return isOp('确定进行此操作?');" />
 										</c:if>
 									</s:elseif>
+										<s:elseif test="apply.apply_dept.substring(0,4)=='2202'">
+											<c:if test="${apply.status==10 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK20',apply.apply_dept)==true}">
+											<s:submit id="apply_check20" name="apply_check20" value="总监审核通过" cssClass="input-green" action="apply_check20" onclick="return isOp('确定进行此操作?');" />
+											<c:if test="${it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK5',apply.apply_dept)==true}">
+												<s:submit id="apply_check5" name="apply_check5" value="审核不通过" cssClass="input-red" action="apply_check5" onclick="return isOp('确定进行此操作?');" />
+											</c:if>
+										</c:if>
+										
+										</s:elseif>
 									</s:else>
 									<s:if test="apply.apply_dept.substring(0,4)=='2302'">
 										<!-- 西藏大区 -->
