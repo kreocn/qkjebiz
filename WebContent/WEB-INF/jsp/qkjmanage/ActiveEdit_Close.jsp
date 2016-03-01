@@ -211,7 +211,7 @@
 											<font class="message_pass">财务已审</font>(${active.close_sd_user_name})
 										</s:if>
 										<s:else>
-											<font class="message_pass">大区已审</font>(${active.close_sd_user_name})
+											<font class="message_pass">业务部经理已审</font>(${active.close_sd_user_name})
 										</s:else>
 									</s:if>
 								<s:if test="active.close_sd_status==40">
@@ -869,7 +869,7 @@
 								</s:if>
 								<s:else>
 								<c:if test="${20==active.close_sd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS10',active.apply_dept)==true}">
-									<s:submit cssClass="input-green" name="mdyCloseActiveSDStatus10" value="经理/大区-审核通过" action="mdyCloseActiveSDStatus10" onclick="return isOp('确定执行此操作?');" />
+									<s:submit cssClass="input-green" name="mdyCloseActiveSDStatus10" value="业务部经理-审核通过" action="mdyCloseActiveSDStatus10" onclick="return isOp('确定执行此操作?');" />
 									<s:submit cssClass="input-red" name="mdyCloseActiveSDStatus5" value="审核不通过" action="mdyCloseActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
 								</s:else>
@@ -907,7 +907,7 @@
 												<font class="message_pass">财务已审</font>(${active.close_sd_user_name} ${it:formatDate(active.close_sd_time,'yyyy-MM-dd HH:mm:ss')})
 											</s:if>
 											<s:else>
-												<font class="message_pass">大区已审</font>(${active.close_sd_user_name} ${it:formatDate(active.close_sd_time,'yyyy-MM-dd HH:mm:ss')})
+												<font class="message_pass">业务部经理已审</font>(${active.close_sd_user_name} ${it:formatDate(active.close_sd_time,'yyyy-MM-dd HH:mm:ss')})
 											</s:else>
 											
 										</s:if>

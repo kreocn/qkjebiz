@@ -16,11 +16,7 @@ public class CheckSkip {
 	private SkipStep skipStep;
 	private static List<SkipStep> skipSteps = new ArrayList<>();
 	static {
-		// 北京
-		skipSteps.add(new SkipStep("3",null, 1, 4, 7,"9",false)); // 申请 4总监 7跳过销管副总
-		skipSteps.add(new SkipStep("3",null, 1, 14, 17,false));// 结案 14总监 17销管副总
-		skipSteps.add(new SkipStep("3",null,1, 2, 3,false));// 结案 14总监 17跳过销管经理
-		skipSteps.add(new SkipStep("3",null, 1, 12, 13,false));// 结案 14总监 17跳过销管经理
+		
 		// 省外
 		skipSteps.add(new SkipStep("211",null, 1, 4, 7,"9",false)); // 申请 4总监 7跳过销管副总
 		skipSteps.add(new SkipStep("211",null, 1, 14, 17,false));// 结案 14总监 17跳过大区
@@ -72,6 +68,18 @@ public class CheckSkip {
 		skipSteps.add(new SkipStep("405", null,1, 31, 9,false)); // 申请 ,结案，跳过财务
 		skipSteps.add(new SkipStep("405",null, 1, 21, 19,false)); // 申请 结案，跳过财务
 		
+		
+		//陕西销售公司（申请（办事处=业务部经理=总经理=陈总）结案（办事处=业务部经理=总经理=陈总=财务））
+		skipSteps.add(new SkipStep("5", null,1, 2, 4,"7",false));// 申请 2大区 3跳过销管副总经理
+		skipSteps.add(new SkipStep("5",null, 1, 12, 14,"17",false));// 结案 12大区 13跳过销管副总经理
+		
+		skipSteps.add(new SkipStep("5", null,1, 8, 9,false));// 申请 总经理跳过财务
+		
+		// 北京
+				skipSteps.add(new SkipStep("3",null, 1, 8, 9,false)); // 申请总经理跳过财务
+				skipSteps.add(new SkipStep("3",null, 1, 12,14, "17",false));// 结案 14总监 17销管副总
+				skipSteps.add(new SkipStep("3",null,1, 2, 4,"7",false));// 结案 14总监 17跳过销管经理
+				
 	}
 
 	private Step step = new Step();

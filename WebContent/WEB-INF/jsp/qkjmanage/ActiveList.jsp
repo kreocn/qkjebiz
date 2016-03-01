@@ -38,11 +38,11 @@ cursor: pointer;
  		<div class="label_hang">
             <div class="label_ltit">快速查询:</div>
            <div class="label_rwben2" style="size: 30%">
-            	<s:select id="sselect" onchange="kselect();" name="sselect"  cssClass="selectKick" headerKey="" headerValue="-----请选择-----" list="#{0:'(申)大区经理待审',1:'(申)销管经理待审',
+            	<s:select id="sselect" onchange="kselect();" name="sselect"  cssClass="selectKick" headerKey="" headerValue="-----请选择-----" list="#{0:'(申)业务部经理经理待审',1:'(申)销管经理待审',
             	2:'(申)运营总监待审',12:'(申)青藏-运营总监待审',13:'(申)新疆-运营总监待审',14:'(申)西北-运营总监待审',
             	3:'(申)西北-销管部经理待审',4:'(申)西北-业务副总待审',5:'(申)西北-销管副总待审',
             	8:'(申)总经理待审',9:'(申)西北-财务待审',90:'(申)新疆-财务待审',10:'(申)省外-财务待审',11:'(申)北京-财务待审',15:'(申)西藏-财务待审',
-            	21:'(结)大区经理待审',22:'(结)销管经理待审',23:'(结)运营总监待审',33:'(结)青藏-运营总监待审',34:'(结)新疆-运营总监待审',35:'(结)西北-运营总监待审',
+            	21:'(结)业务部经理经理待审',22:'(结)销管经理待审',23:'(结)运营总监待审',33:'(结)青藏-运营总监待审',34:'(结)新疆-运营总监待审',35:'(结)西北-运营总监待审',
             	24:'(结)西北-销管部经理待审',25:'(结)西北-业务副总待审',26:'(结)西北-销管副总待审',
             	29:'(结)总经理待审',30:'(结)西北-财务待审',300:'(结)新疆-财务待审',31:'(结)省外-财务待审',32:'(结)北京-财务待审',36:'(结)西藏-财务待审'
             	}" />
@@ -90,7 +90,7 @@ cursor: pointer;
         <div class="label_hang">
             <div class="label_ltit">(申)销售状态:</div>
             <div class="label_rwben label_rwb">
-            	<s:select id="sd_status" name="active.sd_status" cssClass="selectKick" list="#{0:'新单',5:'退回',10:'待审核',20:'办事处',30:'大区已审',40:'总监已审',50:'副总已审',60:'总经理已审'}"
+            	<s:select id="sd_status" name="active.sd_status" cssClass="selectKick" list="#{0:'新单',5:'退回',10:'待审核',20:'办事处',30:'业务部经理已审',40:'总监已审',50:'副总已审',60:'总经理已审'}"
 				 headerKey="" headerValue="--请选择--" />
             </div>
         </div>
@@ -112,7 +112,7 @@ cursor: pointer;
             <div class="label_ltit">(结)销售状态:</div>
             <div class="label_rwben label_rwb">
             	<s:select id="clsdsta" name="active.close_sd_status" cssClass="selectKick"
-				 list="#{0:'新单',5:'退回',10:'待审核',20:'办事处已审',30:'大区已审',40:'总监已审',50:'副总已审',60:'总经理已审'}"
+				 list="#{0:'新单',5:'退回',10:'待审核',20:'办事处已审',30:'业务部经理已审',40:'总监已审',50:'副总已审',60:'总经理已审'}"
 				 headerKey="" headerValue="--请选择--" />
             </div>
         </div>
@@ -260,7 +260,7 @@ cursor: pointer;
 					<font class="message_pass" title="${sd_user_name} ${it:formatDate(sd_time,'yyyy-MM-dd HH:mm:ss')}">财务已审</font>
 					</s:if>
 					<s:else>
-					<font class="message_pass" title="${sd_user_name} ${it:formatDate(sd_time,'yyyy-MM-dd HH:mm:ss')}">大区已审</font>
+					<font class="message_pass" title="${sd_user_name} ${it:formatDate(sd_time,'yyyy-MM-dd HH:mm:ss')}">业务部经理已审</font>
 					</s:else>
 					
 					</s:if>
@@ -278,7 +278,7 @@ cursor: pointer;
 				<font class="message_pass" title="${close_sd_user_name} ${it:formatDate(close_sd_time,'yyyy-MM-dd HH:mm:ss')}">财务已审</font>
 				</s:if>
 				<s:else>
-				<font class="message_pass" title="${close_sd_user_name} ${it:formatDate(close_sd_time,'yyyy-MM-dd HH:mm:ss')}">大区已审</font>
+				<font class="message_pass" title="${close_sd_user_name} ${it:formatDate(close_sd_time,'yyyy-MM-dd HH:mm:ss')}">业务部经理已审</font>
 				</s:else>
 				
 				</s:if>

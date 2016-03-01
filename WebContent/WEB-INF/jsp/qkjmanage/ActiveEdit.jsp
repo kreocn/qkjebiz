@@ -242,7 +242,7 @@
 											<font class="message_pass">财务已审</font>(${active.sd_user_name})
 										</s:if>
 										<s:else>
-											<font class="message_pass">大区已审</font>(${active.sd_user_name})
+											<font class="message_pass">业务部经理已审</font>(${active.sd_user_name})
 										</s:else>
 									
 										</s:if>
@@ -725,9 +725,9 @@
 						</div>
 					</div>
 				</s:if>
-				<!-- 西北：（申请）办事处，总监（或副总）（结案）办事处，销管，大区，总监（或副总） -->
-				<!--北京：申请跳过财务（其它）办事处，大区，总监，财务（红酒）总监，财务  -->
-				<!-- 省外：(三区跳过大区)申请：办事处，大区，总监  结案：办事处，大区，总监 ，财务-->
+				<!-- 西北：（申请）办事处，总监（或副总）（结案）办事处，销管，业务部经理，总监（或副总） -->
+				<!--北京：申请跳过财务（其它）办事处，业务部经理，总监，财务（红酒）总监，财务  -->
+				<!-- 省外：(三区跳过业务部经理)申请：办事处，业务部经理，总监  结案：办事处，业务部经理，总监 ，财务-->
 				<!-- 传奇：办事处，财务，副总，总经理，董事会，财务 -->
 				<!--新疆：跳过销管  -->
 				<div class="label_main">
@@ -791,7 +791,7 @@
 								</s:if>
 								<s:else>
 								<c:if test="${20==active.sd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS10',active.apply_dept)==true}">
-									<s:submit id="mdyActiveSDStatus10" name="mdyActiveSDStatus10" cssClass="input-green" value="经理/大区-审核通过" action="mdyActiveSDStatus10" onclick="return isOp('确定执行此操作?');" />
+									<s:submit id="mdyActiveSDStatus10" name="mdyActiveSDStatus10" cssClass="input-green" value="业务部经理-审核通过" action="mdyActiveSDStatus10" onclick="return isOp('确定执行此操作?');" />
 									<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
 								</s:else>
@@ -828,7 +828,7 @@
 										<font class="message_pass">财务已审</font>(${active.sd_user_name} ${it:formatDate(active.sd_time,'yyyy-MM-dd HH:mm:ss')})
 										</s:if>
 										<s:else>
-										<font class="message_pass">大区已审</font>(${active.sd_user_name} ${it:formatDate(active.sd_time,'yyyy-MM-dd HH:mm:ss')})
+										<font class="message_pass">业务部经理已审</font>(${active.sd_user_name} ${it:formatDate(active.sd_time,'yyyy-MM-dd HH:mm:ss')})
 										</s:else>
 										</s:if>
 									<s:if test="active.sd_status==40">
