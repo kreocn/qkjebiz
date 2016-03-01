@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="adm_fixassets" extends="default" namespace="/adm">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- Assets Start -->
+		<action name="fixassets_list" class="com.qkj.adm.action.FixAssetsAction" method="list">
+			<result>/WEB-INF/jsp/adm/FixAssetsList.jsp</result>
+		</action>
+		<action name="assetstype_relist" class="com.qkj.adm.action.FixAssetsAction" method="relist">
+			<result type="redirectAction">
+				<param name="actionName">fixassets_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+		<action name="fixassets_load" class="com.qkj.adm.action.FixAssetsAction" method="load">
+			<result>/WEB-INF/jsp/adm/FixAssetsEdit.jsp</result>
+		</action>
+		<action name="fixassets_add" class="com.qkj.adm.action.FixAssetsAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">fixassets_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="fixassets_addP" class="com.qkj.adm.action.FixAssetsAction" method="addP">
+			<result type="redirectAction">
+				<param name="actionName">fixassets_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="fixassets_save" class="com.qkj.adm.action.FixAssetsAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">fixassets_load</param>
+				<param name="fixassets.uuid">${fixassets.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="fixassets_del" class="com.qkj.adm.action.FixAssetsAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">fixassets_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- Assets End -->
+	</package>
+</struts>

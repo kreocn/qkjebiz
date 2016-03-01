@@ -116,6 +116,7 @@ public class MarketAction extends ActionSupport implements ActionAttr {
 				Double x = market.getAbs();
 				Double y = market.getYaxis();
 				if (x == null || y == null) continue;
+				if(market.getAddress()!=null&&market.getAddress()!="")market.setAddress(market.getAddress().replace("\n",""));
 				info.append("bmap.put('qkj" + market.getUuid() + "', { x : " + market.getAbs() + ", y : " + market.getYaxis() + ", name : '" + market.getName() + "', area : '"
 						+ market.getArea() + "', lead : '" + market.getLead() + "', msg : '" + market.getAddress() + "<br />");
 				if (market.getPeople() != null && !market.getPeople().equals("")) {

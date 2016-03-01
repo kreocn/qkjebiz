@@ -56,15 +56,26 @@ var DialogIFrame = function(config){
 };
 
 var sobj02;
-var selectWarevar = function(dcode_id, dname_id){
+var selectWarevar = function(dcode_id, dname_id,type){
+	if(type!=null && type!="" && type==1){
+		sobj02 = new DialogIFrame({ src : '/adm/asset_select?objname=sobj02',
+			title : "选择资产类型",
+			width : 200,
+			height : 400 });
+			sobj02.selfAction = function(val1, val2){
+				$("#" + dcode_id).val(val1);
+				$("#" + dname_id).val(val2);
+			};
+	}else{
 		sobj02 = new DialogIFrame({ src : '/sysebiz/ware_select?objname=sobj02',
-		title : "选择仓库",
-		width : 200,
-		height : 400 });
-		sobj02.selfAction = function(val1, val2){
-			$("#" + dcode_id).val(val1);
-			$("#" + dname_id).val(val2);
-		};
+			title : "选择仓库",
+			width : 200,
+			height : 400 });
+			sobj02.selfAction = function(val1, val2){
+				$("#" + dcode_id).val(val1);
+				$("#" + dname_id).val(val2);
+			};
+	}
 
 	sobj02.create();
 	sobj02.open();

@@ -148,7 +148,7 @@ font-size: 14px;
 						<s:hidden title="仓库编码" id="userdept_codeid" name="inStock.store_idR" readonly="true" />
 						</span>
 						<span class="lb nw">
-						<img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectWarevar('userdept_codeid','userdept_nameid');" />
+						<img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectWarevar('userdept_codeid','userdept_nameid',null);" />
 						</span>
 		            </div>
 		        </div>
@@ -171,7 +171,7 @@ font-size: 14px;
 						<s:hidden title="仓库编码" id="userdept_codeid" name="inStock.goldId" readonly="true" />
 						</span>
 						<span class="lb nw">
-						<img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectWarevar('userdept_codeid','userdept_nameid');" />
+						<img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectWarevar('userdept_codeid','userdept_nameid',null);" />
 						</span>
 		            </div>
 		        </div>
