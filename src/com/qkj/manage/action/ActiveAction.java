@@ -815,7 +815,23 @@ public void setTastingPrice(double tastingPrice) {
 					map.put("sd60", "zong");
 					List<Active> n = dao.listSing(map);
 					if (n.size() > 0) {
-						this.setZongActive((Active) n.get(0));
+						if(n.size()>1){
+							if(n.get(0).getSing()==null ||  n.get(0).getSing().equals("")){
+								for(int i=1;i<n.size();i++){
+									if(n.get(i).getSing()!=null){
+										this.setZongActive((Active) n.get(i));
+										break;
+									}else{
+										continue;
+									}
+								}
+							}else{
+								this.setZongActive((Active) n.get(0));
+							}
+							
+						}else{
+							this.setZongActive((Active) n.get(0));
+						}
 					}
 				}
 

@@ -6,7 +6,7 @@
 	<typeAlias alias="process" type="com.qkj.manage.domain.MyProcess" />
 	<select id="qkjmanage_getActives" resultClass="active" parameterClass="java.util.Map">
 		<![CDATA[ 
-			SELECT a.`uuid`,a.ship_cloud,d.dept_cname apply_dept_name,au.user_name apply_user_name,a.`theme`,a.`it_price`,a.`mt_price`,a.`close_it_price`,a.`close_mt_price`,
+			SELECT a.`uuid`,a.apply_dept,a.ship_cloud,d.dept_cname apply_dept_name,au.user_name apply_user_name,a.`theme`,a.`it_price`,a.`mt_price`,a.`close_it_price`,a.`close_mt_price`,
 			a.`address`,a.`pass_time`,a.`close_pass_time`,a.`ship_no`,a.`ship_date`,a.`ship_type`,a.ship_phone,a.`ship_status`,a.`remark`,
 			a.`status`,a.`sd_status`,a.`sd_time`,a.`smd_status`,a.`smd_time`,a.`fd_status`,a.`fd_time`,a.`close_sd_status`,a.`close_sd_time`,a.`spe_remark`,
 			a.`close_fd_status`,a.`close_fd_time`,a.`close_smd_status`,a.`close_smd_time`,su.USER_NAME sd_user_name,smu.USER_NAME smd_user_name,

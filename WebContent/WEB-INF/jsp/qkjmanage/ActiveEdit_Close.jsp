@@ -240,7 +240,13 @@
 									<font class="message_pass">总经理已审</font>(${active.close_smd_user_name})</s:if>
 									
 									<s:if test="active.close_smd_status==70">
-									<font class="message_pass">董事会已审</font>(${active.close_smd_user_name})</s:if>
+									<s:if test="active.apply_dept.substring(0,1)==5">
+									<font class="message_pass">副总已审</font>
+									</s:if>
+									<s:else>
+									<font class="message_pass">董事会已审</font>
+									</s:else>
+									(${active.close_smd_user_name})</s:if>
 							</div>
 							<div class="zhuangtai" <s:if test="%{active.close_fd_status!=0}">title="${it:formatDate(active.close_fd_time,'yyyy-MM-dd HH:mm:ss')}"</s:if>>
 								<s:if test="active.apply_dept.substring(0,1)==4">
@@ -942,7 +948,14 @@
 									<s:submit cssClass="input-red" name="mdyCloseActiveSDStatus5" value="审核不通过" action="mdyCloseActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
 								<c:if test="${active.close_smd_status>=60 && active.close_smd_status<70 && it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SMDSTATUS60',active.apply_dept)==true}">
-									<s:submit cssClass="input-green" name="mdyCloseActiveSDStatus50" value="董事会-审核通过" action="mdyCloseActiveSMDStatus60" onclick="return isOp('确定执行此操作?');" />
+								<s:if test="active.apply_dept.substring(0,1)==5">
+								<s:submit cssClass="input-green" name="mdyCloseActiveSDStatus50" value="副总-审核通过" action="mdyCloseActiveSMDStatus60" onclick="return isOp('确定执行此操作?');" />
+								</s:if>
+								<s:else>
+								<s:submit cssClass="input-green" name="mdyCloseActiveSDStatus50" value="董事会-审核通过" action="mdyCloseActiveSMDStatus60" onclick="return isOp('确定执行此操作?');" />
+								
+								</s:else>
+									
 									<s:submit cssClass="input-red" name="mdyCloseActiveSDStatus5" value="审核不通过" action="mdyCloseActiveSMDStatus5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
 								<s:if test="active.close_smd_status>0">
@@ -963,7 +976,13 @@
 										<s:if test="active.close_smd_status==60">
 											<font class="message_pass">总经理已审</font>(${active.close_smd_user_name} ${it:formatDate(active.close_smd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 											<s:if test="active.close_smd_status==70">
-											<font class="message_pass">董事会已审</font>(${active.close_sd_user_name} ${it:formatDate(active.close_sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+											<s:if test="active.apply_dept.substring(0,1)==5">
+											<font class="message_pass">副总已审</font>
+											</s:if>
+											<s:else>
+											<font class="message_pass">董事会已审</font>
+											</s:else>
+											(${active.close_sd_user_name} ${it:formatDate(active.close_sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 									</div>
 								</s:if>
 							</div>

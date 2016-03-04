@@ -16,9 +16,6 @@ public class CloseOrderCheckSkip {
 	private CloseOrerSkipStep skipStep;
 	private static List<CloseOrerSkipStep> skipSteps = new ArrayList<>();
 	static {
-		// 北京
-		skipSteps.add(new CloseOrerSkipStep("3",null,1, "check30", "mdyCloseOrderSMDStatus50")); // 申请 4总监 7跳过销管副总
-		skipSteps.add(new CloseOrerSkipStep("3",null,1, "check20", "mdyCloseOrderSMDStatus10")); // 跳过大区
 		// 省外
 		skipSteps.add(new CloseOrerSkipStep("211",null, 1, "check30", "mdyCloseOrderSMDStatus50"));// 总监审后销管销管副总代审
 		skipSteps.add(new CloseOrerSkipStep("211",null, 1, "check20", "mdyCloseOrderSMDStatus10"));// 跳过大区
@@ -43,6 +40,11 @@ public class CloseOrderCheckSkip {
 		//skipSteps.add(new CloseOrerSkipStep("406", 1, "mdyCloseOrderSMDStatus10", "check30,mdyCloseOrderSMDStatus40"));// 销管跳过大区
 		//skipSteps.add(new CloseOrerSkipStep("405", 1, "mdyCloseOrderSMDStatus10", "check30,mdyCloseOrderSMDStatus40"));// 销管跳过总监销管部
 		
+		//陕西 办事处，部经理，总经理，财务
+		skipSteps.add(new CloseOrerSkipStep("5",null, 1, "check20", "check30,mdyCloseOrderSMDStatus50"));// 跳过大区
+		
+		// 北京
+		skipSteps.add(new CloseOrerSkipStep("3",null,1, "check20", "check30,mdyCloseOrderSMDStatus50")); // 跳过大区
 	}
 
 	private String str;
