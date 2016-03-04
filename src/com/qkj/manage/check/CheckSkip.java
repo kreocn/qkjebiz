@@ -73,7 +73,7 @@ public class CheckSkip {
 		skipSteps.add(new SkipStep("5", null,1, 2, 4,"7",false));// 申请 2大区 3跳过销管副总经理
 		skipSteps.add(new SkipStep("5",null, 1, 12, 14,"17",false));// 结案 12大区 13跳过销管副总经理
 		
-		skipSteps.add(new SkipStep("5", null,1, 8, 9,false));// 申请 总经理跳过财务
+		skipSteps.add(new SkipStep("5", null,1, 31, 9,false));// 申请 总经理跳过财务
 		
 		// 北京
 				skipSteps.add(new SkipStep("3",null, 1, 8, 9,false)); // 申请总经理跳过财务
