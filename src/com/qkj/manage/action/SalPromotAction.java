@@ -11,6 +11,9 @@ import org.iweb.sys.ActionAttr;
 import org.iweb.sys.ContextHelper;
 import org.iweb.sys.Parameters;
 import org.iweb.sys.ToolsUtil;
+import org.iweb.sys.dao.DepartmentDAO;
+import org.iweb.sys.domain.Department;
+import org.iweb.sys.logic.DeptLogic;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.qkj.manage.check.SalProCheckSkip;
@@ -31,6 +34,7 @@ public class SalPromotAction extends ActionSupport implements ActionAttr {
 
 	private SalPromot salPromot;
 	private List<SalPromot> salPromots;
+	private List<Department> depts;
 
 	private Approve approve;
 	private List<Approve> approves;
@@ -49,6 +53,14 @@ public class SalPromotAction extends ActionSupport implements ActionAttr {
 	private String perWorkF;
 	private static String perWorkFlag = null;
 	
+	public List<Department> getDepts() {
+		return depts;
+	}
+
+	public void setDepts(List<Department> depts) {
+		this.depts = depts;
+	}
+
 	public String per = "per";
 
 	public String getPer() {
@@ -209,6 +221,8 @@ public class SalPromotAction extends ActionSupport implements ActionAttr {
 			} else {
 				map.put("add_user_dept", code);
 			}*/
+			DepartmentDAO depdao=new DepartmentDAO();
+			this.setDepts(depdao.list(null));
 			this.setSalPromots(dao.list(map));
 			this.setRecCount(dao.getResultCount());
 			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;促销活动列表";
@@ -254,6 +268,21 @@ public class SalPromotAction extends ActionSupport implements ActionAttr {
 				map.put("int_id", salPromot.getUuid());
 				map.put("approve_type", 4);
 				this.setApproves(apdao.list(map));
+			
+				if(salPromot.getSal_scopDept()!=null && salPromot.getSal_scopDept().contains(",")){
+					String dept[]=salPromot.getSal_scopDept().split(",");
+					String name="";
+					for(int i=0;i<dept.length;i++){
+						DepartmentDAO depdao=new DepartmentDAO();
+						map.clear();
+						map.put("dept_code", dept[i]);
+						this.setDepts(depdao.list(map));
+						if(depts.size()>=1){
+							name+=depts.get(0).getDept_cname()+",";
+						}
+					}
+					salPromot.setSal_scopDept_name(name.substring(0,name.length() - 1));
+				}
 
 				/* 检查当前用户是否已经审阅 */
 				if (apdao.userIsIn(approves, ContextHelper.getUserLoginUuid())) this.setIsApprover("true");

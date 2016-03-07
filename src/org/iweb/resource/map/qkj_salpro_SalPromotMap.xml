@@ -186,6 +186,8 @@
 			 )
 			UNION ALL 
 			SELECT * FROM qkjm_r_salpromotion a WHERE a.`sal_scopUs`=1 AND  LOCATE(a.`sal_scopDept`,#sal_scopDept#)>0
+			UNION ALL 
+			SELECT * FROM qkjm_r_salpromotion a WHERE a.`sal_scopUs`=1 AND  a.`sal_scopDept` LIKE  CONCAT('%',#sal_scopDept#,'%')
 			) h LEFT JOIN s_sys_department d ON(d.`dept_code`=h.`sal_scopDept`)
 		]]>
 		<dynamic prepend="WHERE">

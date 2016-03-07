@@ -91,16 +91,17 @@ public class SalPromotPower{
 			this.setMember(members.get(0));
 			map.clear();
 			map.put("sal_scopDept", member.getDept_code());
-			map.put("add_user_dept", ContextHelper.getUserLoginUuid());
+			/*map.put("add_user_dept", ContextHelper.getUserLoginUuid());*/
 			map.put("status", 2);
 			if(sal_id!=null){
 				map.put("sal_id", sal_id);
 			}
-			if(da!=null){
+			/*if(da!=null){
 				map.put("closetime", sdf.format(da));
-			}
+			}*/
 			map.put("proendtime", sdf.format(new Date()));
 			this.setSalpros(salp.listPower(map));
+			
 		}
 		return salpros;
 	}
