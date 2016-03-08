@@ -85,7 +85,7 @@
 					<tr id="coltr">
 						<th class="td1">编号</th>
 						<th class="td1">发起部门</th>
-						<th class="td1">执行部门</th>
+						<!-- <th class="td1">执行部门</th> -->
 						<th class="td1">主题</th>
 						<th class="td3">开始时间</th>
 						<th class="td3">结束时间</th>
@@ -102,7 +102,7 @@
 						<tr id="showtr${uuid}">
 							<td class="td1 nw"><s:property value="uuid" /></td>
 							<td class="td1 nw">${add_user_dept_name }</td>
-							<td class="td1 nw">${sal_scopDept_name }</td>
+							<%-- <td class="td1 nw">${sal_scopDept_name }</td> --%>
 							<td class="td1 nw" title="${sal_title}">${it:subString(sal_title,18)}</td>
 							<td class="td3 longnote"><s:date name="startime" format="yyyy-MM-dd" /></td>
 							<td class="td3 longnote"><s:date name="endtime" format="yyyy-MM-dd" /></td>

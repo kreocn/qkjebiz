@@ -74,7 +74,7 @@ var sobj01;
 var selectDept = function(dcode_id, dname_id, isLoad, p_m,b_m,u_pid){
 	if(u_pid!=null && u_pid!=""){
 		if(u_pid=="sp"){
-			sobj01 = new DialogIFrame({ src : '/sys/dept_permit_select?objname=sobj01&special='+u_pid,
+			sobj01 = new DialogIFrame({ src : '/sys/dept_permit_select02?objname=sobj01&special='+u_pid,
 				title : "选择部门",
 				width : 200,
 				height : 400 });

@@ -158,12 +158,11 @@
 				<div class="label_main">
 					<div class="label_hang">
 						<div class="label_ltit">执行部门:</div>
-						<div class="label_rwben nw">
-							<s:textfield id="userdept_nameid" name="salPromot.sal_scopDept_name" readonly="true" cssClass="validate[required]" />
+						<div class="label_rwbenx">
+							<s:textfield id="userdept_nameid" name="salPromot.sal_scopDept_name" readonly="true" cssClass="validate[required]" cssStyle="width:400px;" />
 							<s:hidden id="userdept_codeid" name="salPromot.sal_scopDept" />
-							
+							<img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true,null,null,'sp');" />							
 						</div>
-						<img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true,null,null,'sp');" />
 					</div>
 				</div>
 				<div class="label_main">
