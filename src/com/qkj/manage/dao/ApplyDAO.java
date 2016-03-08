@@ -75,4 +75,7 @@ public class ApplyDAO extends AbstractDAO {
 	public int getResultCount() {
 		return super.getResultCount();
 	}
+	public Object adds(Map<String, Object> map) {
+		return super.add("qkjmanage_addyijiao", map);
+	}
 }

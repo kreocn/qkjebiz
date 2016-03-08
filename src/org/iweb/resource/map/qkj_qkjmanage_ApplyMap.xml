@@ -273,6 +273,17 @@
 			Where uuid = #uuid#
 		]]>
 	</update>
+	
+	
+	
+	
+	
+	<insert id="qkjmanage_addyijiao" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Insert Into qkj_linshi(name,code)
+			Values (#name#,#code#)
+		]]>
+	</insert>
 	<!-- ship info change -->
 	<!-- Apply End -->
 </sqlMap>
