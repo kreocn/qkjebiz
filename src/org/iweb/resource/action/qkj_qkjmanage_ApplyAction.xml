@@ -226,5 +226,18 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
+		
+		
+		
+		
+				<action name="apply_yijiao" class="com.qkj.manage.action.ApplyAction" method="yijiao">
+		
+		         	<result type="redirectAction">
+				<param name="actionName">apply_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		        </action>
+		
+		
 	</package>
 </struts>

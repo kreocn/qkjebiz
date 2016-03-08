@@ -93,6 +93,7 @@ display: none;
         	<s:checkbox id="search_mcondition" name="search_mcondition" fieldValue="true" value="true" cssClass="regular-checkbox" />
 			<label for="search_mcondition"></label>更多条件
             <s:submit value="搜索" /> <s:reset value="重置" />
+            <p>因系统调整，请各位业务经理将不属于自己的至事由移交记录,请不要重复提交，该功能将于下周关闭</p>
         </div>
 	</div>
  	</div>
@@ -196,12 +197,16 @@ display: none;
 				<s:if test="apply_type==0">普通</s:if>
 				<s:else>媒体投放</s:else>
 				</td>
-				<td class="td4 op-area">				
+				<td class="td4 op-area">			
+				
+				<a class="input-red" href="<s:url namespace="/qkjmanage" action="apply_yijiao"><s:param name="apply.uuid" value="uuid"></s:param></s:url>" >移交记录</a>
+					
 					<c:if test="${it:checkPermit('QKJ_QKJMANAGE_APPLY_VIEW',null)==true}">
 						<s:if test="status>=30">
 							<a class="input-gray" href="<s:url namespace="/qkjmanage" action="apply_print"><s:param name="perWorkFlag">null</s:param><s:param name="apply.uuid" value="uuid"></s:param></s:url>">打印</a>
 						</s:if>					
 			    		<a class="input-blue" href="<s:url namespace="/qkjmanage" action="apply_load"><s:param name="perWorkFlag">null</s:param><s:param name="viewFlag">mdy</s:param><s:param name="apply.uuid" value="uuid"></s:param></s:url>">修改</a>
+			    	    
 			    	</c:if>
 			    	<c:if test="${(status==0||status==5) && it:checkPermit('QKJ_QKJMANAGE_APPLY_DEL',null)==true}">
 			    		<a class="input-red" href="<s:url namespace="/qkjmanage" action="apply_del"><s:param name="apply.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
@@ -319,6 +324,8 @@ function setShipVal(p_uuid) {
 		$("#form_apply_ship_status_div").hide()
 	}
 }
+
+
 </script>
 </body>
 </html>

@@ -7,14 +7,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.struts2.ServletActionContext;
 import org.iweb.sys.ActionAttr;
 import org.iweb.sys.ContextHelper;
 import org.iweb.sys.Parameters;
 import org.iweb.sys.ToolsUtil;
+import org.iweb.sys.domain.UserLoginInfo;
 import org.iweb.sysvip.domain.Member;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.qkj.manage.dao.ActivePosmDAO;
 import com.qkj.manage.dao.ActiveProductDAO;
@@ -951,4 +957,19 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 		return SUCCESS;
 	}
 
+	
+	public String yijiao() throws Exception {
+		map.clear();
+		map.put("code", apply.getUuid());
+	
+		UserLoginInfo ulf = new UserLoginInfo();
+		ActionContext context = ActionContext.getContext();  
+		HttpServletRequest request = (HttpServletRequest) context.get(ServletActionContext.HTTP_REQUEST);  
+		HttpServletResponse response = (HttpServletResponse) context.get(ServletActionContext.HTTP_RESPONSE);  
+		ulf=(UserLoginInfo) request.getSession().getAttribute(Parameters.UserLoginInfo_Session_Str);
+		map.put("name", ulf.getDept_cname());
+		dao.adds(map);
+		return SUCCESS;
+	}
+	
 }
