@@ -271,7 +271,7 @@
 										<s:if test="active.smd_status==60">
 										<font class="message_pass">总经理已审</font>(${active.smd_user_name})</s:if>
 										<s:if test="active.smd_status==70">
-										<s:if test="active.apply_dept.substring(0,1)==5">
+										<s:if test="active.apply_dept.substring(0,1)!=4">
 										<font class="message_pass">副总已审</font>(${active.smd_user_name})</s:if>
 										<s:else>
 										<font class="message_pass">董事会已审</font>(${active.smd_user_name})
@@ -807,7 +807,7 @@
 								<c:if test="${10==active.sd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS25',active.apply_dept)==true}">
 									<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
-								<c:if test="${30==active.sd_status && 30==active.smd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS30',active.apply_dept)==true}">
+								<c:if test="${30==active.sd_status && 30==active.smd_status && active.apply_dept.substring(0,3)=='312' && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS30',active.apply_dept)==true}">
 									<s:submit id="mdyActiveSDStatus30" name="mdyActiveSDStatus30" cssClass="input-green" value="运营总监-审核通过" action="mdyActiveSDStatus30" onclick="return isOp('确定执行此操作?');" />
 									
 									<s:if test="active.apply_dept.substring(0,3)=='220'">
@@ -866,13 +866,25 @@
 									<s:submit id="mdyActiveSMDStatus40" name="mdyActiveSMDStatus40" cssClass="input-green" value="销管副总-审核通过" action="mdyActiveSMDStatus40" onclick="return isOp('确定执行此操作?');" />
 									<s:submit id="mdyActiveSMDStatus5" name="mdyActiveSMDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSMDStatus5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
+								
+								<s:if test="active.apply_dept.substring(0,3)!='312' && active.apply_dept.substring(0,1)!=4">
+								<c:if test="${30>=active.sd_status && active.smd_status<60 && 30==active.smd_status  && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS50',active.apply_dept)==true}">
+									<s:submit id="mdyActiveSDStatus50" name="mdyActiveSDStatus50" cssClass="input-green" value="总经理-审核通过" action="mdyActiveSDStatus50" onclick="return isOp('确定执行此操作?');" />
+									<s:if test="active.apply_dept.substring(0,3)=='220'">
+									<s:submit cssClass="input-green" value="送审到副总" action="mdyActiveSDStatus30Two" onclick="return isOp('确定执行此操作?');" />
+									</s:if>
+									<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
+								</c:if>
+								</s:if>
+								<s:else>
 								<c:if test="${active.smd_status==50 && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS50',active.apply_dept)==true}">
 									<s:submit id="mdyActiveSDStatus50" name="mdyActiveSDStatus50" cssClass="input-green" value="总经理-审核通过" action="mdyActiveSDStatus50" onclick="return isOp('确定执行此操作?');" />
 									<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
 								</c:if>
+								</s:else>
 								
 								<c:if test="${active.smd_status>=60 &&active.smd_status<70 && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SMDSTATUS60',active.apply_dept)==true}">
-									<s:if test="active.apply_dept.substring(0,1)==5">
+									<s:if test="active.apply_dept.substring(0,1)!=4">
 									<s:submit id="mdyActiveSDStatus50" name="mdyActiveSDStatus50" cssClass="input-green" value="副总-审核通过" action="mdyActiveSMDStatus70" onclick="return isOp('确定执行此操作?');" />
 									</s:if>
 									<s:else>
@@ -897,7 +909,7 @@
 									<s:if test="active.smd_status==60">
 										<font class="message_pass">总经理已审</font>(${active.smd_user_name} ${it:formatDate(active.smd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 									<s:if test="active.smd_status==70">
-									<s:if test="active.apply_dept.substring(0,1)==5">
+									<s:if test="active.apply_dept.substring(0,1)!=4">
 									<font class="message_pass">副总已审</font>
 									</s:if>
 									<s:else>
