@@ -1217,7 +1217,7 @@ public void setTastingPrice(double tastingPrice) {
 	}
 
 	/**
-	 * 运营总监审核通过并送审到副总
+	 * 总经理审核通过并送审到副总
 	 * 
 	 * @return
 	 * @throws Exception
@@ -1226,8 +1226,8 @@ public void setTastingPrice(double tastingPrice) {
 	public String mdyActiveSDStatus30Two() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_SDSTATUS30");
 		try {
-			mdyActiveSDStatus(40);
-			mdyActiveSMDStatus(40, "2");
+			mdyActiveSMDStatus(60);
+			//mdyActiveSMDStatus(40, "2");
 			// cs.checkSkip(active, 4);
 			this.setBefUid(active.getUuid());
 			this.setUp(2);
@@ -1599,6 +1599,10 @@ public void setTastingPrice(double tastingPrice) {
 		}
 		if (smd_status == 50) {
 			noteflag = "销管副总审核通过";
+		}
+		
+		if (smd_status == 60) {
+			noteflag = "总经理审核通过";
 		}
 
 		if (smd_status == 70) {
@@ -2174,7 +2178,7 @@ public void setTastingPrice(double tastingPrice) {
 	}
 
 	/**
-	 * 销售部-结案 运营总监审核通过
+	 * 销售部-结案 总经理审核通过
 	 * 
 	 * @return
 	 * @throws Exception
@@ -2183,8 +2187,8 @@ public void setTastingPrice(double tastingPrice) {
 	public String mdyCloseActiveSDStatus30Two() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS30");
 		try {
-			mdyCloseActiveSDStatus(40);
-			mdyCloseActiveSMDStatus(40, "2");
+			mdyCloseActiveSMDStatus(60);
+			//mdyCloseActiveSMDStatus(40, "2");
 			// cs.checkSkip(active, 14);
 			this.setBefUid(active.getUuid());
 			this.setUp(2);
@@ -2414,6 +2418,11 @@ public void setTastingPrice(double tastingPrice) {
 		if (close_sd_status == 50) {
 			noteflag = "销管副总审核通过";
 		}
+		
+		if (close_sd_status == 60) {
+			noteflag = "总经理审核通过";
+		}
+		
 		active.setClose_fd_status(0);
 		active.setClose_nd_status(0);
 		active.setClose_smd_status(close_sd_status);

@@ -134,7 +134,13 @@
 									<span class="message_pass">总经理已审</span>
 								</s:if>
 								<s:if test="smd_status==70">
-									<span class="message_pass">董事已审</span>
+								 <s:if test="add_user_dept.substring(0,1)!=4">
+										<span class="message_pass">副总已审</span>
+										</s:if>
+										<s:else>
+										<span class="message_pass">董事已审</span>
+										</s:else>
+									
 								</s:if>
 								</td>
 
