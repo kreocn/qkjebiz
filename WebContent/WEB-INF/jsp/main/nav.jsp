@@ -35,11 +35,9 @@ $(function(){
 
 var sobj02Dep;
 var createUserDept = function() {
-	//http://localhost:8888/qkjmanage/customer_load?viewFlag=mdy&customer.uuid=3
 	var w_width = $(window).width();
 	var w_height = $(window).height();
-	sobj02Dep = new DialogIFrame({
-		src:'',
+	sobj02Dep = new DialogIFrame({ src : '',
 		title:"修改当前部门",
 		width:w_width*0.20,
 		height:w_height*0.65
