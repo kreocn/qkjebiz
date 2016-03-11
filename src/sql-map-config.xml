@@ -12,6 +12,7 @@
 			  <property name="DataSource" value="java:/comp/env/qkj/mysqlLocalCJ_druid" />
 			<!-- 正式测试环境 DataSource Proxool -->
 			<!-- <property name="DataSource" value="java:/comp/env/qkj/mysql_druid_BJ02" /> -->
+			 <!-- <property name="DataSource" value="java:/comp/env/qkj/mysqlLocalCJ_druid" />  -->
 		</dataSource>
 	</transactionManager>
 	<!-- 要想实现*通配符模式,可以修改com.ibatis.sqlmap.engine.builder.xml.SqlMapConfigParser类源代码中的addSqlMapNodelets()方法 -->
