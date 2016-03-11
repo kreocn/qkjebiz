@@ -682,8 +682,8 @@ s
 										<c:if test="${closeOrder.sd_state==10 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK5',closeOrder.apply_dept)==true}">
 											<s:submit id="mdyStatus5" name="mdyStatus5" cssClass="input-red" value="审核不通过" action="closeOrder_check5" onclick="return isOp('确定执行此操作?');" />
 										</c:if> -->
-										<c:if test="${closeOrder.sd_state==30 && closeOrder.smd_status==30 && closeOrder.apply_dept.substring(0,3)=='312' && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK30',closeOrder.apply_dept)==true}">
-										<s:if test="closeOrder.apply_dept.substring(0,3)=='312' && closeOrder.apply_dept.substring(0,1)==4">
+										<c:if test="${closeOrder.sd_state==30 && closeOrder.smd_status==30 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK30',closeOrder.apply_dept)==true}">
+										<s:if test="closeOrder.apply_dept.substring(0,1)!=2 && closeOrder.apply_dept.substring(0,1)!=5 && closeOrder.apply_dept.substring(0,1)!=3 || closeOrder.apply_dept.substring(0,3)!='312'">
 											<s:submit id="mdyStatus30" name="mdyStatus30" value="运营总监审核通过" action="closeOrder_check30" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
 											<s:submit id="mdyStatus5" name="mdyStatus5" cssClass="input-red" value="审核不通过" action="closeOrder_check5" onclick="return isOp('确定执行此操作?');" />
 										</s:if>
@@ -737,7 +737,7 @@ s
 										</c:if>
 										
 										<s:if test="closeOrder.apply_dept.substring(0,3)!='312' && closeOrder.apply_dept.substring(0,1)!=4">
-											<c:if test="${closeOrder.sd_state==30 && closeOrder.smd_status==30 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK60',closeOrder.apply_dept)==true}">
+											<c:if test="${(closeOrder.sd_state==30 && closeOrder.smd_status==30 || closeOrder.smd_status==50) && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK60',closeOrder.apply_dept)==true}">
 												<s:submit id="mdyCloseOrderSDStatus50" name="mdyCloseOrderSDStatus50" cssClass="input-green" value="总经理-审核通过" action="mdyCloseOrderSMDStatus60" onclick="return isOp('确定执行此操作?');" />
 												<s:submit id="mdyCloseOrderSDStatus5" name="mdyCloseOrderSDStatus5" cssClass="input-red" value="审核不通过" action="mdyCloseOrderSMDStatus5" onclick="return isOp('确定执行此操作?');" />
 											</c:if>
