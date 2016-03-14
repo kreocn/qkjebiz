@@ -5,13 +5,16 @@
 	<typeAlias alias="fixassets" type="com.qkj.adm.domain.FixAssets" />
 	<select id="adm_getFixAssetss" resultClass="fixassets" parameterClass="java.util.Map">
 		<![CDATA[ 
-			SELECT t.*,f.`typea` type_title FROM qkja_r_fixassets t LEFT JOIN qkja_r_assetstype f ON (t.`typea`=f.`uuid`)
+			SELECT t.*,f.`typea` type_title,m.dept_cname own_userdept_name,u.USER_NAME own_user_name  FROM qkja_r_fixassets t LEFT JOIN qkja_r_assetstype f ON (t.`typea`=f.`uuid`)
+			LEFT JOIN s_sys_department m ON(m.dept_code=t.`own_userdept`)
+			LEFT JOIN s_sys_user u ON(u.uuid=t.`own_user`)
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ t.uuid LIKE CONCAT('%',#uuid#,'%') ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="title"><![CDATA[ t.title LIKE CONCAT('%',#title#,'%') ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="p_company"><![CDATA[ t.p_company LIKE CONCAT('%',#p_company#,'%') ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="company"><![CDATA[ t.company=#company# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="typea"><![CDATA[ t.typea=#typea# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="p_time_start"><![CDATA[ t.p_time>=#p_time_start# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="p_time_end"><![CDATA[ t.p_time<=DATE_ADD(#p_time_end#,INTERVAL 1 day) ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="residue_num_begin"><![CDATA[ t.residue_num >= #residue_num_begin# ]]></isNotEmpty>
@@ -31,12 +34,13 @@
 			<isNotEmpty prepend="AND" property="p_time_end"><![CDATA[ t.p_time<=DATE_ADD(#p_time_end#,INTERVAL 1 day) ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="residue_num_begin"><![CDATA[ t.residue_num >= #residue_num_begin# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="residue_num_end"><![CDATA[ t.residue_num <= #residue_num_end# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="typea"><![CDATA[ t.typea=#typea# ]]></isNotEmpty>
 		</dynamic>
 	</select>
 	<insert id="adm_addFixAssets" parameterClass="fixassets">
 		<![CDATA[ 
-			Insert Into qkja_r_fixassets(uuid,typea,p_mobile,p_company,warrantytime,title,num,company,p_time,p_scrap,price_scope,add_time,add_user,model,spec,price)
-			Values (#uuid#,#typea#,#p_mobile#,#p_company#,#warrantytime#,#title#,#num#,#company#,#p_time#,#p_scrap#,#price_scope#,#add_time#,#add_user#,#model#,#spec#,#price#)
+			Insert Into qkja_r_fixassets(uuid,typea,p_mobile,p_company,warrantytime,title,num,company,p_time,p_scrap,price_scope,add_time,add_user,model,spec,price,position,own_user,use_time,own_userdept)
+			Values (#uuid#,#typea#,#p_mobile#,#p_company#,#warrantytime#,#title#,#num#,#company#,#p_time#,#p_scrap#,#price_scope#,#add_time#,#add_user#,#model#,#spec#,#price#,#position#,#own_user#,#use_time#,#own_userdept#)
 		]]>
 	</insert>
 	<update id="adm_mdyFixAssets" parameterClass="fixassets">
@@ -56,7 +60,11 @@
 				spec=#spec#,
 				price=#price#,
 				lm_user=#lm_user#,
-				lm_time=#lm_time#
+				lm_time=#lm_time#,
+				use_time=#use_time#,
+				position=#position#,
+				own_user=#own_user#,
+				own_userdept=#own_userdept#
 			Where uuid = #uuid#
 		]]>
 	</update>

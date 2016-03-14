@@ -23,7 +23,7 @@ public class FixAssetsDAO extends AbstractDAO {
 	}
 
 	public int delete(Object parameters) {
-		return super.delete("adm_delFix Assets", parameters);
+		return super.delete("adm_delFixAssets", parameters);
 	}
 
 	public int getResultCount() {

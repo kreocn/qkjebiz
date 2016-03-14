@@ -169,6 +169,7 @@ public class FixAssetsAction extends ActionSupport {
 			fixassets.setAdd_time(new Date());
 			fixassets.setLm_user(ContextHelper.getUserLoginUuid());
 			fixassets.setLm_time(new Date());
+			fixassets.setUse_time(new Date());//领用时间
 			dao.add(fixassets);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!add 数据添加失败:", e);
@@ -204,6 +205,7 @@ public class FixAssetsAction extends ActionSupport {
 		try {
 			fixassets.setLm_user(ContextHelper.getUserLoginUuid());
 			fixassets.setLm_time(new Date());
+			fixassets.setUse_time(new Date());//领用时间
 			dao.save(fixassets);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!save 数据更新失败:", e);

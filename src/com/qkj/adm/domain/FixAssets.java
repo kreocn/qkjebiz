@@ -22,16 +22,70 @@ public class FixAssets {
 	private String warrantytime;
 	private String p_mobile;
 	private String p_company;
+	private Date use_time;
+	private String own_user;
+	private String position;
+	private String own_userdept;
 
 	// 非数据库字段
 	private Integer residue_num;// 剩余数量
 	private String type_title;// 类型名称
+	private String own_user_name;
 
+	private String own_userdept_name;
 	// 查询字段
 	private Integer residue_num_begin;
 	private Integer residue_num_end;
 	private Date p_time_start;// (datetime)采购时间
 	private Date p_time_end;// (datetime)采购时间
+
+	public String getOwn_userdept() {
+		return own_userdept;
+	}
+
+	public void setOwn_userdept(String own_userdept) {
+		this.own_userdept = own_userdept;
+	}
+
+	public String getOwn_userdept_name() {
+		return own_userdept_name;
+	}
+
+	public void setOwn_userdept_name(String own_userdept_name) {
+		this.own_userdept_name = own_userdept_name;
+	}
+
+	public String getOwn_user_name() {
+		return own_user_name;
+	}
+
+	public void setOwn_user_name(String own_user_name) {
+		this.own_user_name = own_user_name;
+	}
+
+	public Date getUse_time() {
+		return use_time;
+	}
+
+	public void setUse_time(Date use_time) {
+		this.use_time = use_time;
+	}
+
+	public String getOwn_user() {
+		return own_user;
+	}
+
+	public void setOwn_user(String own_user) {
+		this.own_user = own_user;
+	}
+
+	public String getPosition() {
+		return position;
+	}
+
+	public void setPosition(String position) {
+		this.position = position;
+	}
 
 	public String getType_title() {
 		return type_title;

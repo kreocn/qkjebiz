@@ -36,9 +36,8 @@
 		</action>
 		<action name="assetstype_save" class="com.qkj.adm.action.AssetsTypeAction" method="save">
 			<result type="redirectAction">
-				<param name="actionName">assetstype_load</param>
-				<param name="assetstype.uuid">${assetstype.uuid}</param>
-				<param name="viewFlag">mdy</param>
+				<param name="actionName">assetstype_list</param>
+				<param name="viewFlag">relist</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>

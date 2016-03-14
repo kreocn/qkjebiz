@@ -9,7 +9,7 @@
 		<action name="fixassets_list" class="com.qkj.adm.action.FixAssetsAction" method="list">
 			<result>/WEB-INF/jsp/adm/FixAssetsList.jsp</result>
 		</action>
-		<action name="assetstype_relist" class="com.qkj.adm.action.FixAssetsAction" method="relist">
+		<action name="fixassetstype_relist" class="com.qkj.adm.action.FixAssetsAction" method="relist">
 			<result type="redirectAction">
 				<param name="actionName">fixassets_list</param>
 				<param name="viewFlag">relist</param>

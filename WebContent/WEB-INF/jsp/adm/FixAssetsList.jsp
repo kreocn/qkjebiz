@@ -36,6 +36,17 @@
 							<div class="label_rwben"><select name="assets.typec" title="子类别" class="dist" disabled="disabled"></select></div>
 				       </div>
 				</div> --%>
+				
+				<div class="label_hang">
+							<div class="label_ltit">资产分类:</div>
+							<div class="label_rwben2">
+								<span class="label_rwb"> <s:textfield title="资产名称" id="userasset_nameid" name="fixassets.type_title" readonly="true" /> <s:hidden title="资产编号" id="userasset_codeid" name="fixassets.typea" readonly="true" />
+								</span> <span class="lb nw"> <img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectWarevar('userasset_codeid','userasset_nameid',1);" />
+								</span>
+							</div>
+						</div>
+						
+						
 				<div class="label_hang">
 				       <div class="label_ltit">资产名称:</div>
 				       <div class="label_rwben"><s:textfield name="fixassets.title"  title="资产名称" cssClass="validate[maxSize[128]]" /></div>
@@ -54,14 +65,14 @@
 				       		<div class="label_rwben"><input id="assets_p_time_start" class="datepicker validate[custom[date]]" type="text" name="fixassets.p_time_start" title="采购时间" value="${it:formatDate(assets.p_time_start,'yyyy-MM-dd')}" /></div><span style="float:left;">&nbsp;-&nbsp;</span><div class="label_rwben"><input id="assets_p_time_end" class="datepicker validate[custom[date]]" type="text" name="assets.p_time_end" title="采购时间" value="${it:formatDate(assets.p_time_end,'yyyy-MM-dd')}" /></div>
 				       </div>
 				</div>
-				<div class="label_hang">
+				<%-- <div class="label_hang">
 				       <div class="label_ltit">剩余数量:</div>
 				       <div class="label_rwben">
 				       		<s:textfield name="fixassets.residue_num_begin" cssStyle="width:40%;float:left;"  title="剩余数量" cssClass="validate[custom[integer],maxSize[10]]" />
 				       		<span style="float:left;">&nbsp;-&nbsp;</span>
 				       		<s:textfield name="fixassets.residue_num_end"  cssStyle="width:40%;float:left;" title="剩余数量" cssClass="validate[custom[integer],maxSize[10]]" />
 				       	</div>
-				</div>
+				</div> --%>
 				<div class="label_hang label_button tac">
 		        	<s:checkbox id="search_mcondition" name="search_mcondition" fieldValue="true" value="true" cssClass="regular-checkbox" />
 					<label for="search_mcondition"></label>更多条件
