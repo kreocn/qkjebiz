@@ -57,9 +57,15 @@ public class CheckSkip {
 		skipSteps.add(new SkipStep("5", null,1, 31, 9,false));// 申请 总经理跳过财务
 		
 		// 北京
-		skipSteps.add(new SkipStep("3",null, 1, 8, 9,false)); // 申请总经理跳过财务
-		skipSteps.add(new SkipStep("3",null, 1, 12,13,false));// 结案 跳过销管
-		skipSteps.add(new SkipStep("3",null,1, 2, 3,false));// 结案跳过销管
+		skipSteps.add(new SkipStep("3","312", 1, 31, 9,false)); // 申请副总跳过财务
+		skipSteps.add(new SkipStep("3","312", 1, 2, 8,false)); // 申请总经理
+		skipSteps.add(new SkipStep("3","312", 1, 12,18,false)); // 申请总经理
+		
+		skipSteps.add(new SkipStep("312",null,1, 1, 2,"3",false));// 结案跳过销管
+		skipSteps.add(new SkipStep("312",null,1, 4, 9,false));// 结案跳过销管
+		skipSteps.add(new SkipStep("312",null,1, 11, 12,"13",false));// 结案跳过销管
+		skipSteps.add(new SkipStep("312",null,1, 14, 18,false));// 结案跳过销管
+		
 		
 	}
 
