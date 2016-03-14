@@ -88,7 +88,13 @@
 										<span class="message_pass" title="${it:formatDate(salPromot.smd_time,'yyyy-MM-dd HH:mm:ss')}">总经理已审(${salPromot.smd_name })</span>
 									</s:if>
 									<s:if test="salPromot.smd_status==70">
+									 <s:if test="salPromot.add_user_dept.substring(0,1)!=4">
+										<span class="message_pass" title="${it:formatDate(salPromot.smd_time,'yyyy-MM-dd HH:mm:ss')}">副总已审(${salPromot.smd_name })</span>
+										</s:if>
+										<s:else>
 										<span class="message_pass" title="${it:formatDate(salPromot.smd_time,'yyyy-MM-dd HH:mm:ss')}">董事已审(${salPromot.smd_name })</span>
+										</s:else>
+										
 									</s:if>
 								</div>
 								
@@ -158,12 +164,11 @@
 				<div class="label_main">
 					<div class="label_hang">
 						<div class="label_ltit">执行部门:</div>
-						<div class="label_rwben nw">
-							<s:textfield id="userdept_nameid" name="salPromot.sal_scopDept_name" readonly="true" cssClass="validate[required]" />
+						<div class="label_rwbenx">
+							<s:textfield id="userdept_nameid" name="salPromot.sal_scopDept_name" readonly="true" cssClass="validate[required]" cssStyle="width:400px;" />
 							<s:hidden id="userdept_codeid" name="salPromot.sal_scopDept" />
-							
+							<img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true,null,null,'sp');" />							
 						</div>
-						<img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true,null,null,'sp');" />
 					</div>
 				</div>
 				<div class="label_main">
@@ -328,14 +333,15 @@
 											<s:submit  cssClass="input-red" value="审核不通过" action="mdySDStatus5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
 										<c:if test="${salPromot.sd_status==30 && salPromot.smd_status==30 && it:checkPermit('QKJ_QKJMANAGE_SALPRO_SDSTATUS40',salPromot.add_user_dept)==true}">
+											<s:if test="salPromot.add_user_dept.substring(0,1)!=2 && salPromot.add_user_dept.substring(0,1)!=5 && salPromot.add_user_dept.substring(0,1)!=3 || salPromot.add_user_dept.substring(0,3)!='312'">
 											<s:submit value="运营总监审核通过" action="mdySDStatus30" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
-											
 											
 											<s:if test="salPromot.add_user_dept.substring(0,3)=='211' || (salPromot.add_user_dept.substring(0,1)==3 && salPromot.add_user_dept.substring(0,3)!='312')">
 											<s:submit cssClass="input-green" value="送审到副总" action="mdySDStatus30Two" onclick="return isOp('确定执行此操作?');" />
 											</s:if>
 											
 											<s:submit  cssClass="input-red" value="审核不通过" action="mdySDStatus5" onclick="return isOp('确定执行此操作?');" />
+										</s:if>
 										</c:if>
 										
 										<c:if test="${40==salPromot.sd_status && salPromot.smd_status>=40  && it:checkPermit('QKJ_QKJMANAGE_SALPRO_SDSTATUS50',salPromot.add_user_dept)==true}">
@@ -381,12 +387,27 @@
 											<s:submit cssClass="input-green" value="销管副总-审核通过" action="mdySMDStatus50" onclick="return isOp('确定执行此操作?');" />
 											<s:submit cssClass="input-red" value="审核不通过" action="mdySMDStatus5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
+										<s:if test="salPromot.add_user_dept.substring(0,3)!='312' && salPromot.add_user_dept.substring(0,1)!=4">
+										<c:if test="${(salPromot.sd_status==30 && salPromot.smd_status==30 || salPromot.smd_status==50) && it:checkPermit('QKJ_QKJMANAGE_SALPRO_SMDSTATUS60',salPromot.add_user_dept)==true}">
+											<s:submit cssClass="input-green" value="总经理-审核通过" action="mdySMDStatus60" onclick="return isOp('确定执行此操作?');" />
+											<s:submit cssClass="input-red" value="审核不通过" action="mdySMDStatus5" onclick="return isOp('确定执行此操作?');" />
+										</c:if>
+										</s:if>
+										<s:else>
 										<c:if test="${salPromot.smd_status==50 && it:checkPermit('QKJ_QKJMANAGE_SALPRO_SMDSTATUS60',salPromot.add_user_dept)==true}">
 											<s:submit cssClass="input-green" value="总经理-审核通过" action="mdySMDStatus60" onclick="return isOp('确定执行此操作?');" />
 											<s:submit cssClass="input-red" value="审核不通过" action="mdySMDStatus5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
+										</s:else>
+										
 										<c:if test="${salPromot.smd_status>=50 && salPromot.smd_status<70 && it:checkPermit('QKJ_QKJMANAGE_SALPRO_SMDSTATUS70',salPromot.add_user_dept)==true}">
-											<s:submit cssClass="input-green" value="董事-审核通过" action="mdySMDStatus70" onclick="return isOp('确定执行此操作?');" />
+										 <s:if test="salPromot.add_user_dept.substring(0,1)!=4">
+										<s:submit cssClass="input-green" value="副总-审核通过" action="mdySMDStatus70" onclick="return isOp('确定执行此操作?');" />
+										</s:if>
+										<s:else>
+										<s:submit cssClass="input-green" value="董事-审核通过" action="mdySMDStatus70" onclick="return isOp('确定执行此操作?');" />
+										</s:else>
+											
 											<s:submit cssClass="input-red" value="审核不通过" action="mdySMDStatus5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
 									</s:if>

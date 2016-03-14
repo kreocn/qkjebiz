@@ -389,12 +389,12 @@
 										<c:if test="${it:checkPermit('QKJ_QKJMANAGE_TRAVEL_CHECK5',null)==true && travel.check_status==10}">
 												<s:submit id="travel_mdyCheckStatus5" cssClass="input-red" name="travel_mdyCheckStatus5" value="审核不通过" action="travel_mdyCheckStatus5" onclick="return isOp('确定要执行此操作?');" />
 											</c:if>
-										<c:if test="${it:checkPermit('QKJ_QKJMANAGE_TRAVEL_CHECK20',null)==true && travel.check_status==20}">
+										<%-- <c:if test="${it:checkPermit('QKJ_QKJMANAGE_TRAVEL_CHECK20',null)==true && travel.check_status==20}">
 											<s:submit id="travel_mdyCheckStatus20" cssClass="input-green" name="travel_mdyCheckStatus20" value="总监审核通过" action="travel_mdyCheckStatus20" onclick="return isOp('确定要执行此操作?');" />
 											<c:if test="${it:checkPermit('QKJ_QKJMANAGE_TRAVEL_CHECK5',null)==true}">
 												<s:submit id="travel_mdyCheckStatus5" cssClass="input-red" name="travel_mdyCheckStatus5" value="审核不通过" action="travel_mdyCheckStatus5" onclick="return isOp('确定要执行此操作?');" />
 											</c:if>
-										</c:if>
+										</c:if> --%>
 										<c:if test="${it:checkPermit('QKJ_QKJMANAGE_TRAVEL_CHECK30',null)==true && travel.check_status==30}">
 											<s:submit id="travel_mdyCheckStatus30" cssClass="input-green" name="travel_mdyCheckStatus30" value="业务副总审核通过" action="travel_mdyCheckStatus30" onclick="return isOp('确定要执行此操作?');" />
 											<c:if test="${it:checkPermit('QKJ_QKJMANAGE_TRAVEL_CHECK5',null)==true}">
@@ -414,13 +414,15 @@
 													<s:submit id="travel_mdyACheckStatus5" cssClass="input-red" name="travel_mdyACheckStatus5" value="审核不通过" action="travel_mdyACheckStatus5" onclick="return isOp('确定要执行此操作?');" />
 												</c:if>
 											</c:if>
-											<c:if test="${it:checkPermit('QKJ_QKJMANAGE_TRAVEL_ACHECK30',null)==true && travel.acheck_status==30}">
+											
+										</s:if>
+										
+										<c:if test="${it:checkPermit('QKJ_QKJMANAGE_TRAVEL_ACHECK30',null)==true && travel.check_status==20 &&  travel.acheck_status!=40}">
 												<s:submit id="travel_mdyACheckStatus30" cssClass="input-green" name="travel_mdyACheckStatus30" value="总经理审核通过" action="travel_mdyACheckStatus30" onclick="return isOp('确定要执行此操作?');" />
 												<c:if test="${it:checkPermit('QKJ_QKJMANAGE_TRAVEL_ACHECK5',null)==true}">
 													<s:submit id="travel_mdyACheckStatus5" cssClass="input-red" name="travel_mdyACheckStatus5" value="审核不通过" action="travel_mdyACheckStatus5" onclick="return isOp('确定要执行此操作?');" />
 												</c:if>
 											</c:if>
-										</s:if>
 									</s:else>
 								</s:elseif>
 								<input type="button" class="input-gray" value="返回" onclick="location.href='<s:url action="travel_relist" namespace="/qkjmanage" />';" />

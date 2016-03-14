@@ -234,6 +234,11 @@
 		<action name="dept_permit_select" class="org.iweb.sys.action.SysSelectAction" method="dept_permit_select">
 			<result>/WEB-INF/jsp/sys/DeptPermitSelect.jsp</result>
 		</action>
+		
+		<action name="dept_permit_select02" class="org.iweb.sys.action.SysSelectAction" method="dept_permit_select">
+			<result>/WEB-INF/jsp/sys/DeptPermitSelect2.jsp</result>
+		</action>
+		
 		<action name="dept_select_all_v02" class="org.iweb.sys.action.SysSelectAction" method="dept_select_all">
 			<result>/WEB-INF/jsp/sys/DeptPermitSelect.jsp</result>
 		</action>

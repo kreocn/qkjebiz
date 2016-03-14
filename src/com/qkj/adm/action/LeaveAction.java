@@ -320,6 +320,7 @@ public class LeaveAction extends ActionSupport implements ActionAttr {
 		try {
 			// 只有省外运营中心的出差申请单才需要办事处经理审核
 			if (leave.getLeave_type() == 0 && leave.getLeave_dept().startsWith("211")) check(15);
+			if ( leave.getLeave_dept().startsWith("314")) check(15);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!check9 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!check9 数据更新失败:", e);

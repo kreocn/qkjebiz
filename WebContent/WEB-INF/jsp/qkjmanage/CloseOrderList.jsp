@@ -203,7 +203,14 @@ background-color: #FFF;
 										<s:if test="smd_status==60">
 										<font class="message_pass">总经理已审</font></s:if>
 										<s:if test="smd_status==70">
+										<s:if test="apply_dept.substring(0,1)=='4'">
 										<font class="message_pass">董事已审</font></s:if>
+										<s:else>
+										<font class="message_pass">副总已审</font>
+										</s:else>
+										</s:if>
+										
+										
 						</td>
 						
 						<td class="td3 nw">
