@@ -276,6 +276,10 @@
 			</isNotEmpty>
 		</isNotEmpty> -->
 		
+		<isNotEmpty prepend="AND" property="dept_codeds">  
+               <![CDATA[ ud.`dept_code` in ($dept_codeds$)   ]]>
+            </isNotEmpty>  
+		
 		<isEmpty  property="dept_codes">
 			<isNotEmpty prepend="AND" property="apply_perdepts">
 				<![CDATA[ ud.`dept_code` In ]]>

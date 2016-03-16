@@ -93,7 +93,6 @@ display: none;
         	<s:checkbox id="search_mcondition" name="search_mcondition" fieldValue="true" value="true" cssClass="regular-checkbox" />
 			<label for="search_mcondition"></label>更多条件
             <s:submit value="搜索" /> <s:reset value="重置" />
-            <p>因系统调整，请各位业务经理将不属于自己的至事由移交记录,请不要重复提交，该功能将于下周关闭</p>
         </div>
 	</div>
  	</div>
@@ -199,7 +198,6 @@ display: none;
 				</td>
 				<td class="td4 op-area">			
 				
-				<a class="input-red" href="<s:url namespace="/qkjmanage" action="apply_yijiao"><s:param name="apply.uuid" value="uuid"></s:param></s:url>" >移交记录</a>
 					
 					<c:if test="${it:checkPermit('QKJ_QKJMANAGE_APPLY_VIEW',null)==true}">
 						<s:if test="status>=30">

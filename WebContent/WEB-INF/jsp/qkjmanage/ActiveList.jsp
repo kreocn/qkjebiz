@@ -648,7 +648,7 @@ function kselect(){
 		snull();
 		document.getElementById("clsdsta").options[5].selected = true; 
 		document.getElementById("clsmdsta").options[4].selected = true; 
-		$("#userdept_codeid").val("6");
+		$("#userdept_codeid").val("5");
 		$("#userdept_nameid").val("陕西销售公司");
 		document.getElementById("apply_is_sub_dept").checked=true;
 	}

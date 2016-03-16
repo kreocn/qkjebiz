@@ -17,6 +17,25 @@
 	clear: both;
 }
 </style>
+
+<style type="text/css">
+.asset{
+border-style: solid ; 
+border-width: 10px ; 
+border-color: pink ;
+background-color:#fff;
+
+position: absolute ;
+height:200px ;
+width:200px ;
+bottom:35px; 
+height:400px;
+overflow:auto;
+
+display: none;
+}
+
+</style>
 </head>
 <body>
 	<s:action name="nav" namespace="/manage" executeResult="true" />
@@ -145,24 +164,29 @@
 							<div class="label_ltit">领用人部门:</div>
 							<div class="label_rwben2">
 								<span class="label_rwb"> <s:textfield title="部门名称" id="userdept_nameid" name="fixassets.own_userdept_name" readonly="true" /> <s:hidden title="部门代码" id="userdept_codeid" name="fixassets.own_userdept" readonly="true" />
-								</span> <span class="lb nw"> <img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true);" /> <span
+								</span> <span class="lb nw"> <img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true,null,null,'asset');" /> <span
 									id="ajax_member_message"></span>
 								</span>
 							</div>
 						</div>
 						<div class="label_hang">
-							<div class="label_ltit">申请人:</div>
-							<div class="label_rwben label_rwb">
-								
-								
-								<select id="membermanagerid" class="selectKick" name="fixassets.own_user">
+							<div class="label_ltit">领用人:</div>
+							<div class="label_rwben label_rwb" style="position:relative;">
+								<s:textfield name=""  title="" cssClass="validate[maxSize[32]]" onclick="assetDiv();"/>
+								<div id="asset" class="asset">
+								<!-- <input type="checkbox" checked="checked" value=""> -->
+								</div>
+								<%-- <select id="membermanagerid" class="selectKick" name="fixassets.own_user">
 								<s:if test="%{fixassets.own_user!=null}">
 								<option value="${fixassets.own_user_name }">${ fixassets.own_user_name}</option>
 								</s:if>
 								<s:else>
 								<option>---请选择---</option>
 								</s:else>
-								</select>
+								</select> --%>
+							</div>
+							
+							<div id="asset" style="height: 800px;width: 600px;">
 							</div>
 						</div>
 
@@ -193,37 +217,6 @@
 				</div>
 			</s:form>
 
-			<div id="mdyAssetItemsOwn" style="background-color: #EEEEEE; border: 1 solid #000000; width: 130; height: 25; overflow: auto" onmouseover=this.style.height= "130"; onmouseout=haiwa.style.height='25';>
-
-				<script type="text/javascript">
-			d = new dTree('d');
-			d.config.check = 2;
-			d.config.useIcons = false;
-			d.config.isAddNoRootNode = true;
-			
-			d.add('0', '-1', '仓库列表');
-			<s:iterator value="types">
-			document.write("<div style=\"height:25px;cursor:default;font-family: Tahoma; font-size: 12px; "+  
-					"font-weight: bold\"  ><input type='checkbox' style='height:15px;' name='ck' id=ck"+i+"><label for='ck"+i+"'>第"+i+"项</label></div>");  
-			</s:iterator>
-			d.add();
-			document.write(d);
-		</script>
-				<SCRIPT language=JavaScript>  
-<s:iterator value="ownusers">
-d.add('<s:property value="uuid" />','<s:property value="parent_type" />',
-		'<s:property value="typea" />', 'javascript:void(0);', '<s:property value="typea" />');
-</s:iterator>
-
-
-var i=0;  
-for(i=0;i<ownusers.size;i++)  
-{  
-document.write("<div style=\"height:25px;cursor:default;font-family: Tahoma; font-size: 12px; "+  
-"font-weight: bold\"  ><input type='checkbox' style='height:15px;' name='ck' id=ck"+i+"><label for='ck"+i+"'>第"+i+"项</label></div>");  
-}  
-</SCRIPT>
-			</div>
 
 			<%-- <div id="mdyAssetItemsOwn" title="修改领用信息">
 <s:form id="form_ownAssetItems" name="form_ownAssetItems" action="assetItem_own" namespace="/adm" onsubmit="return validator(this);" method="post" theme="simple">
