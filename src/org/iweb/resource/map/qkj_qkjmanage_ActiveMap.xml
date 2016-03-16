@@ -758,6 +758,15 @@ SELECT MAX(a.baotime) baotime,MAX(a.stars) stars,MAX(a.sing) sing,MAX(a.spass) s
 			Where uuid = #uuid#
 		]]>
 	</update>
+	
+	<update id="qkjmanage_mdyFstatus" parameterClass="active">
+		<![CDATA[
+			Update qkjm_r_active
+			Set fstauts=#fstauts#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
 	<!-- ship info change -->
 		<select id="qkjmanage_getsvipActive" resultClass="active" parameterClass="java.util.Map">
 		<![CDATA[ 

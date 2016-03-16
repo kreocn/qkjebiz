@@ -12,7 +12,10 @@ import org.apache.commons.logging.LogFactory;
 import org.iweb.common.dao.CommonDAO;
 import org.iweb.sys.ActionAttr;
 import org.iweb.sys.ContextHelper;
+import org.iweb.sys.JSONUtil;
 import org.iweb.sys.ToolsUtil;
+import org.iweb.sys.cache.CacheFactory;
+import org.iweb.sys.cache.SysDBCacheLogic;
 import org.iweb.sysvip.dao.MemberCapitalDAO;
 import org.iweb.sysvip.domain.MemberCapital;
 
@@ -1226,9 +1229,11 @@ public void setTastingPrice(double tastingPrice) {
 	public String mdyActiveSDStatus30Two() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_SDSTATUS30");
 		try {
-			mdyActiveSMDStatus(60);
+			mdyActiveSDStatus(60);
 			//mdyActiveSMDStatus(40, "2");
 			// cs.checkSkip(active, 4);
+			active.setFstauts(0);//西北不推送副总
+			dao.savefstatus(active);
 			this.setBefUid(active.getUuid());
 			this.setUp(2);
 			nextActive();
@@ -1273,6 +1278,14 @@ public void setTastingPrice(double tastingPrice) {
 		try {
 			// mdyActiveSMDStatus(60);
 			cs.checkSkip(active, 8);
+			
+			String str = (String) CacheFactory.getCacheInstance().get(SysDBCacheLogic.CACHE_DEPT_PREFIX_PARENT + active.getApply_dept());//
+			String[] s = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
+			Boolean iskip = ToolsUtil.isIn("220", s);// 判断在不在数组中
+			if(iskip==true){
+				active.setFstauts(1);//西北不推送副总
+			}
+			dao.savefstatus(active);
 			this.setBefUid(active.getUuid());
 			this.setUp(2);
 			nextActive();
@@ -1282,6 +1295,29 @@ public void setTastingPrice(double tastingPrice) {
 		}
 		return SUCCESS;
 	}
+	
+	/**
+	 * 集团副总审核通过
+	 * 
+	 * @return
+	 * @throws Exception
+	 * @date 2014-4-26 上午10:21:02
+	 */
+	public String mdyActiveSDStatus60() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_SDSTATUS60");
+		try {
+			// mdyActiveSMDStatus(60);
+			cs.checkSkip(active, 40);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!mdyActiveSDStatus50 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!mdyActiveSDStatus50 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+
 
 	/**
 	 * 改销售部审批状态通用函数
@@ -1306,7 +1342,7 @@ public void setTastingPrice(double tastingPrice) {
 		if (sd_status == 50) {
 			noteflag = "副总审核通过";
 		}
-		if (sd_status == 50) {
+		if (sd_status == 60) {
 			noteflag = "总经理审核通过";
 		}
 		active.setSd_status(sd_status);
@@ -2187,9 +2223,11 @@ public void setTastingPrice(double tastingPrice) {
 	public String mdyCloseActiveSDStatus30Two() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS30");
 		try {
-			mdyCloseActiveSMDStatus(60);
+			mdyCloseActiveSDStatus(60);
 			//mdyCloseActiveSMDStatus(40, "2");
 			// cs.checkSkip(active, 14);
+			active.setFstauts(0);//西北不推送副总
+			dao.savefstatus(active);
 			this.setBefUid(active.getUuid());
 			this.setUp(2);
 			nextActive();
@@ -2234,6 +2272,37 @@ public void setTastingPrice(double tastingPrice) {
 		try {
 			// mdyCloseActiveSMDStatus(60);
 			cs.checkSkip(active, 18);
+			String str = (String) CacheFactory.getCacheInstance().get(SysDBCacheLogic.CACHE_DEPT_PREFIX_PARENT + active.getApply_dept());//
+			String[] s = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
+			Boolean iskip = ToolsUtil.isIn("220", s);// 判断在不在数组中
+			if(iskip==true){
+				active.setFstauts(1);//西北不推送副总
+			}
+			dao.savefstatus(active);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!mdyCloseActiveSDStatus50 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!mdyCloseActiveSDStatus50 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+	
+	
+	/**
+	 * 销售部-结案 集团副总审核通过
+	 * 
+	 * @return
+	 * @throws Exception
+	 * @date 2014-4-26 上午10:29:40
+	 */
+	public String mdyCloseActiveSDStatus60() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS60");
+		try {
+			// mdyCloseActiveSMDStatus(60);
+			cs.checkSkip(active, 41);
+			
 			this.setBefUid(active.getUuid());
 			this.setUp(2);
 			nextActive();
@@ -2267,7 +2336,7 @@ public void setTastingPrice(double tastingPrice) {
 		if (close_sd_status == 50) {
 			noteflag = "副总审核通过";
 		}
-		if (close_sd_status == 50) {
+		if (close_sd_status == 60) {
 			noteflag = "总经理审核通过";
 		}
 		active.setClose_fd_status(0);
