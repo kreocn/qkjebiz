@@ -32,6 +32,7 @@ cursor: pointer;
 	</div>
 	<s:form id="serachForm" name="serachForm" action="active_list"  method="get" namespace="/qkjmanage" theme="simple">
 	<s:hidden name="per" value="null"></s:hidden>
+	<s:hidden id="fstauts" name="active.fstauts"></s:hidden>
 	<s:hidden id="sx" name="selectXiao" value="null"></s:hidden>
  	<div class="label_con">
  	<div class="label_main">
@@ -604,6 +605,7 @@ function kselect(){
 		document.getElementById("fdsta").options[1].selected = true;
 		$("#userdept_codeid").val("5");
 		$("#userdept_nameid").val("陕西销售公司");
+		$("#fstauts").val("1");
 		document.getElementById("apply_is_sub_dept").checked=true;
 	}
 	
@@ -614,6 +616,7 @@ function kselect(){
 		document.getElementById("fdsta").options[1].selected = true;
 		$("#userdept_codeid").val("2");
 		$("#userdept_nameid").val("北京天佑德");
+		$("#fstauts").val("1");
 		document.getElementById("apply_is_sub_dept").checked=true;
 	}
 	

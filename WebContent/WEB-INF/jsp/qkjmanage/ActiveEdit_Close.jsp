@@ -885,7 +885,7 @@
 										<c:if test="${(30==active.close_sd_status && 30==active.close_smd_status) && it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS50',active.apply_dept)==true}">
 											<s:submit cssClass="input-green" name="mdyCloseActiveSDStatus50" value="总经理-审核通过" action="mdyCloseActiveSDStatus50" onclick="return isOp('确定执行此操作?');" />
 
-											<s:if test="active.apply_dept.substring(0,3)=='220'">
+											<s:if test="active.apply_dept.substring(0,1)!=3">
 												<s:submit cssClass="input-green" value="送审到副总" action="mdyCloseActiveSDStatus30Two" onclick="return isOp('确定执行此操作?');" />
 											</s:if>
 

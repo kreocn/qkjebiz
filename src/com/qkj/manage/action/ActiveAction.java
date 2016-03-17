@@ -1278,13 +1278,7 @@ public void setTastingPrice(double tastingPrice) {
 		try {
 			// mdyActiveSMDStatus(60);
 			cs.checkSkip(active, 8);
-			
-			String str = (String) CacheFactory.getCacheInstance().get(SysDBCacheLogic.CACHE_DEPT_PREFIX_PARENT + active.getApply_dept());//
-			String[] s = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
-			Boolean iskip = ToolsUtil.isIn("220", s);// 判断在不在数组中
-			if(iskip==true){
-				active.setFstauts(1);//西北不推送副总
-			}
+			active.setFstauts(1);//西北不推送副总
 			dao.savefstatus(active);
 			this.setBefUid(active.getUuid());
 			this.setUp(2);
@@ -2272,12 +2266,7 @@ public void setTastingPrice(double tastingPrice) {
 		try {
 			// mdyCloseActiveSMDStatus(60);
 			cs.checkSkip(active, 18);
-			String str = (String) CacheFactory.getCacheInstance().get(SysDBCacheLogic.CACHE_DEPT_PREFIX_PARENT + active.getApply_dept());//
-			String[] s = (String[]) JSONUtil.toObject(str, String[].class);// 转换成数组
-			Boolean iskip = ToolsUtil.isIn("220", s);// 判断在不在数组中
-			if(iskip==true){
-				active.setFstauts(1);//西北不推送副总
-			}
+			active.setFstauts(1);//西北不推送副总
 			dao.savefstatus(active);
 			this.setBefUid(active.getUuid());
 			this.setUp(2);
