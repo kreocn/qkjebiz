@@ -1000,7 +1000,7 @@
 											<s:else>
 											<font class="message_pass">董事会已审</font>
 											</s:else>
-											(${active.close_sd_user_name} ${it:formatDate(active.close_sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+											(${active.close_smd_user_name} ${it:formatDate(active.close_smd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 									</div>
 								</s:if>
 							</div>
