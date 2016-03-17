@@ -98,7 +98,7 @@ cursor: pointer;
         <div class="label_hang">
             <div class="label_ltit">(申)销管状态:</div>
             <div class="label_rwben label_rwb"><s:select id="smd_sta" name="active.smd_status" cssClass="selectKick"
-				 list="#{0:'新单/未签收',5:'退回',10:'已签收',30:'销管经理已审',40:'销管部经理已审',50:'销管副总已审',60:'总经理已审',70:'董事会已审'}"
+				 list="#{0:'新单/未签收',5:'退回',10:'已签收',30:'销管经理已审',40:'销管部经理已审',50:'销管副总已审',60:'总经理已审',70:'副总/董事已审'}"
 				 headerKey="" headerValue="--请选择--" />
             </div>
         </div>
@@ -121,7 +121,7 @@ cursor: pointer;
             <div class="label_ltit">(结)销管状态:</div>
             <div class="label_rwben label_rwb">
             	<s:select id="clsmdsta" name="active.close_smd_status" cssClass="selectKick"
-				 list="#{0:'新单/未签收',5:'退回',10:'已签收',30:'销管经理已审',40:'销管部经理已审',50:'销管副总已审',60:'总经理已审',70:'董事会已审'}"
+				 list="#{0:'新单/未签收',5:'退回',10:'已签收',30:'销管经理已审',40:'销管部经理已审',50:'销管副总已审',60:'总经理已审',70:'副总/董事已审'}"
 				 headerKey="" headerValue="--请选择--" />
             </div>
         </div>
@@ -683,14 +683,35 @@ function kselect(){
 	
 	
 	
-	if(parseInt(num)==30){//西北财
+
+	if(parseInt(num)==30){//甘肃财
 		snull();
 		document.getElementById("clsdsta").options[0].selected = true; 
-		document.getElementById("clsmdsta").options[7].selected = true; 
+		document.getElementById("clsmdsta").options[8].selected = true; 
 		document.getElementById("clfd").options[1].selected = true;
-		$("#userdept_codeid").val("");
-		$("#userdept_nameid").val("");
-		document.getElementById("apply_is_sub_dept").checked=false;
+		$("#userdept_codeid").val("220");
+		$("#userdept_nameid").val("甘肃销售公司");
+		document.getElementById("apply_is_sub_dept").checked=true;
+	}
+	
+	if(parseInt(num)==31){//陕西财
+		snull();
+		document.getElementById("clsdsta").options[0].selected = true; 
+		document.getElementById("clsmdsta").options[8].selected = true; 
+		document.getElementById("clfd").options[1].selected = true;
+		$("#userdept_codeid").val("5");
+		$("#userdept_nameid").val("陕西销售公司");
+		document.getElementById("apply_is_sub_dept").checked=true;
+	}
+	
+	if(parseInt(num)==32){//北京
+		snull();
+		document.getElementById("clsdsta").options[0].selected = true; 
+		document.getElementById("clsmdsta").options[8].selected = true; 
+		document.getElementById("clfd").options[1].selected = true;
+		$("#userdept_codeid").val("3");
+		$("#userdept_nameid").val("北京天佑德");
+		document.getElementById("apply_is_sub_dept").checked=true;
 	}
 
 	
