@@ -32,7 +32,8 @@ cursor: pointer;
 	</div>
 	<s:form id="serachForm" name="serachForm" action="active_list"  method="get" namespace="/qkjmanage" theme="simple">
 	<s:hidden name="per" value="null"></s:hidden>
-	<s:hidden id="fstauts" name="active.fstauts"></s:hidden>
+	<s:hidden id="sdfstauts" name="sd_fstauts"></s:hidden>
+	<s:hidden id="smdfstauts" name="smd_fstauts"></s:hidden>
 	<s:hidden id="sx" name="selectXiao" value="null"></s:hidden>
  	<div class="label_con">
  	<div class="label_main">
@@ -489,6 +490,7 @@ function jnull(){
 	document.getElementById("membermanagerid").options[0].selected = true;
 	$("#userdept_codeid").val("");
 	$("#userdept_nameid").val("");
+	$("#sdfstauts").val("");
 	document.getElementById("apply_is_sub_dept").checked=false;
 	document.getElementById("status").options[2].selected = true;
 }
@@ -499,6 +501,7 @@ function snull(){
 	document.getElementById("membermanagerid").options[0].selected = true;
 	$("#userdept_codeid").val("");
 	$("#userdept_nameid").val("");
+	$("#smdfstauts").val("");
 	document.getElementById("apply_is_sub_dept").checked=false;
 	document.getElementById("status").options[5].selected = true;
 }
@@ -600,23 +603,25 @@ function kselect(){
 	
 	if(parseInt(num)==51){//shanxi财
 		jnull();
-		document.getElementById("sd_status").options[8].selected = true; 
+		document.getElementById("sd_status").options[0].selected = true; 
 		document.getElementById("smd_sta").options[0].selected = true;  
 		document.getElementById("fdsta").options[1].selected = true;
 		$("#userdept_codeid").val("5");
 		$("#userdept_nameid").val("陕西销售公司");
-		$("#fstauts").val("1");
+		$("#sdfstauts").val("1");
+		$("#smdfstauts").val("");
 		document.getElementById("apply_is_sub_dept").checked=true;
 	}
 	
 	if(parseInt(num)==52){//shanxi财
 		jnull();
-		document.getElementById("sd_status").options[8].selected = true; 
+		document.getElementById("sd_status").options[0].selected = true; 
 		document.getElementById("smd_sta").options[0].selected = true;  
 		document.getElementById("fdsta").options[1].selected = true;
-		$("#userdept_codeid").val("2");
+		$("#userdept_codeid").val("3");
 		$("#userdept_nameid").val("北京天佑德");
-		$("#fstauts").val("1");
+		$("#sdfstauts").val("1");
+		$("#smdfstauts").val("");
 		document.getElementById("apply_is_sub_dept").checked=true;
 	}
 	
@@ -717,31 +722,37 @@ function kselect(){
 	
 	if(parseInt(num)==30){//甘肃财
 		snull();
-		document.getElementById("clsdsta").options[8].selected = true; 
+		document.getElementById("clsdsta").options[0].selected = true; 
 		document.getElementById("clsmdsta").options[0].selected = true; 
 		document.getElementById("clfd").options[1].selected = true;
 		$("#userdept_codeid").val("220");
 		$("#userdept_nameid").val("甘肃销售公司");
+		$("#smdfstauts").val("1");
+		$("#sdfstauts").val("");
 		document.getElementById("apply_is_sub_dept").checked=true;
 	}
 	
 	if(parseInt(num)==31){//陕西财
 		snull();
-		document.getElementById("clsdsta").options[8].selected = true; 
+		document.getElementById("clsdsta").options[0].selected = true; 
 		document.getElementById("clsmdsta").options[0].selected = true; 
 		document.getElementById("clfd").options[1].selected = true;
 		$("#userdept_codeid").val("5");
 		$("#userdept_nameid").val("陕西销售公司");
+		$("#smdfstauts").val("1");
+		$("#sdfstauts").val("");
 		document.getElementById("apply_is_sub_dept").checked=true;
 	}
 	
 	if(parseInt(num)==32){//北京
 		snull();
-		document.getElementById("clsdsta").options[8].selected = true; 
+		document.getElementById("clsdsta").options[0].selected = true; 
 		document.getElementById("clsmdsta").options[0].selected = true; 
 		document.getElementById("clfd").options[1].selected = true;
 		$("#userdept_codeid").val("3");
 		$("#userdept_nameid").val("北京天佑德");
+		$("#sdfstauts").val("");
+		$("#smdfstauts").val("1");
 		document.getElementById("apply_is_sub_dept").checked=true;
 	}
 

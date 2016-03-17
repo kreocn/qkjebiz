@@ -932,7 +932,6 @@
 												<s:else>
 													<font class="message_pass">业务部经理已审</font>(${active.close_sd_user_name} ${it:formatDate(active.close_sd_time,'yyyy-MM-dd HH:mm:ss')})
 											</s:else>
-
 											</s:if>
 											<s:if test="active.close_sd_status==40">
 												<font class="message_pass">总监已审</font>(${active.close_sd_user_name} ${it:formatDate(active.close_sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>

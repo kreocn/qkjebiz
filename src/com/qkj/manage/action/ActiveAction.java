@@ -126,10 +126,28 @@ public void setTastingPrice(double tastingPrice) {
 	private int up;
 	private int nextFlag;
 	private int nextUuid = 0;
+	private Integer sd_fstauts;
+	private Integer smd_fstauts;
 	// 个人工作标识
 	private String perWorkF;
 	private static String perWorkFlag = null;
 	public String per = "per";
+
+	public Integer getSd_fstauts() {
+		return sd_fstauts;
+	}
+
+	public void setSd_fstauts(Integer sd_fstauts) {
+		this.sd_fstauts = sd_fstauts;
+	}
+
+	public Integer getSmd_fstauts() {
+		return smd_fstauts;
+	}
+
+	public void setSmd_fstauts(Integer smd_fstauts) {
+		this.smd_fstauts = smd_fstauts;
+	}
 
 	public MyProcess pro;// 门头
 
@@ -666,6 +684,12 @@ public void setTastingPrice(double tastingPrice) {
 				map.put("flag", "有");
 			} else if (flag != null && flag.equals("10")) {
 				map.put("spere", "无");
+			}
+			if(sd_fstauts!=null && sd_fstauts==1){
+				map.put("sd_fstauts", 1);
+			}
+			if(smd_fstauts!=null && smd_fstauts==1){
+				map.put("smd_fstauts", 1);
 			}
 			if(selectXiao!=null){
 				if(selectXiao.equals("0")){

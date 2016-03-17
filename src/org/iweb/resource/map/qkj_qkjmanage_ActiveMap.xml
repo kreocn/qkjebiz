@@ -25,6 +25,7 @@
 			WHERE a.`status`>=0  and a.activeType=0
 		]]>
 		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ a.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="fstauts"><![CDATA[ a.fstauts=#fstauts# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="uid"><![CDATA[ a.uid=#uid# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="apply_dept">
 			<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ a.apply_dept=#apply_dept#]]></isNotEqual>
@@ -83,6 +84,9 @@
 					AND m.`MEMBER_NAME` LIKE CONCAT('%',#member_id#,'%') 
 				)
 			]]></isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="sd_fstauts"><![CDATA[(a.sd_status>=70 or (a.sd_status>=60 and a.fstauts=1))]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="smd_fstauts"><![CDATA[(a.close_sd_status>=70 or (a.close_sd_status>=60 and a.fstauts=1))]]></isNotEmpty>
 		<![CDATA[ ORDER BY a.add_time DESC LIMIT 1000 ]]>
 	</select>
 	
@@ -107,6 +111,7 @@
 			WHERE a.`status`>=0  and a.activeType=1
 		]]>
 		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ a.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="fstauts"><![CDATA[ a.fstauts=#fstauts# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="uid"><![CDATA[ a.uid=#uid# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="apply_dept">
 			<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ a.apply_dept=#apply_dept#]]></isNotEqual>
@@ -167,6 +172,9 @@
 					AND m.`MEMBER_NAME` LIKE CONCAT('%',#member_id#,'%') 
 				)
 			]]></isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="sd_fstauts"><![CDATA[(a.sd_status>=70 or (a.sd_status>=60 and a.fstauts=1))]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="smd_fstauts"><![CDATA[(a.close_sd_status>=70 or (a.close_sd_status>=60 and a.fstauts=1))]]></isNotEmpty>
 		<![CDATA[ ORDER BY a.add_time DESC LIMIT 1000 ]]>
 	</select>
 	
@@ -187,6 +195,7 @@
 			WHERE a.`status`>=0 
 		]]>
 		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ a.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="fstauts"><![CDATA[ a.fstauts=#fstauts# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="uid"><![CDATA[ a.uid=#uid# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="apply_dept">
 			<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ a.apply_dept=#apply_dept#]]></isNotEqual>
@@ -239,7 +248,8 @@
 					AND m.`MEMBER_NAME` LIKE CONCAT('%',#member_id#,'%') 
 				)
 			]]></isNotEmpty>
-			
+			<isNotEmpty prepend="AND" property="sd_fstauts"><![CDATA[(a.sd_status>=70 or (a.sd_status>=60 and a.fstauts=1))]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="smd_fstauts"><![CDATA[(a.close_sd_status>=70 or (a.close_sd_status>=60 and a.fstauts=1))]]></isNotEmpty>
 			<![CDATA[ LIMIT 1000 ) b ]]>
 	</select>
 	
