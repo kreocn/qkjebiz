@@ -8,7 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>活动申请单列表--<s:text name="APP_NAME" /></title>
 <s:action name="ref_head" namespace="/manager" executeResult="true" />
-
+ 
 </head>
 <style type="text/css">
 .ship_info {
@@ -708,8 +708,8 @@ function kselect(){
 		$("#userdept_codeid").val("");
 		$("#userdept_nameid").val("");
 		document.getElementById("apply_is_sub_dept").checked=false;
-	}
 	
+	}
 	
 	
 	if(parseInt(num)==30){//甘肃财
