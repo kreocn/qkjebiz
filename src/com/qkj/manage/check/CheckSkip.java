@@ -19,13 +19,8 @@ public class CheckSkip {
 		
 		//西北（申请（办事外，总监）结案（办事处，销管，总监，财务））
 		skipSteps.add(new SkipStep("220",null, 1, 0, 2,"3",false)); // 申请
-		skipSteps.add(new SkipStep("220",null,1, 4, 7,"9",false)); // 申请
 		skipSteps.add(new SkipStep("220",null,1,8,9,false)); // 申请
-		//skipSteps.add(new SkipStep("220","2203",1, 10, 12,false)); // 结案
-		skipSteps.add(new SkipStep("220",null,1, 14, 17,"19",false)); // 结案
-		
-		skipSteps.add(new SkipStep("220",null,1, 7, 9,false)); // 结案
-		skipSteps.add(new SkipStep("220",null,1, 17, 19,false)); // 结案
+		skipSteps.add(new SkipStep("220",null,1, 40, 9,false)); // 结案
 		
 		skipSteps.add(new SkipStep("2202A",null,1, 1, 2,"3",false)); // 申请
 		skipSteps.add(new SkipStep("2202A",null,1, 11, 10,false)); // 结案
@@ -54,17 +49,14 @@ public class CheckSkip {
 		skipSteps.add(new SkipStep("5", null,1, 2, 3,false));// 申请  跳过销管
 		skipSteps.add(new SkipStep("5",null, 1, 12, 13,false));// 结案  跳过销管
 	
-		skipSteps.add(new SkipStep("5", null,1, 31, 9,false));// 申请 总经理跳过财务
+		//skipSteps.add(new SkipStep("5", null,1, 40, 9,false));// 申请 总经理跳过财务
 		
 		// 北京
-		skipSteps.add(new SkipStep("3","312", 1, 31, 9,false)); // 申请副总跳过财务
-		skipSteps.add(new SkipStep("3","312", 1, 2, 8,false)); // 申请总经理
-		skipSteps.add(new SkipStep("3","312", 1, 12,18,false)); // 申请总经理
-		
+		//skipSteps.add(new SkipStep("3","312", 1, 40, 9,false)); // 申请副总跳过财务
+		skipSteps.add(new SkipStep("3","312", 1, 2, 3,false)); // 申请销管
+		skipSteps.add(new SkipStep("3","312", 1, 12, 13,false)); // 申请销管
 		skipSteps.add(new SkipStep("312",null,1, 1, 2,"3",false));// 结案跳过销管
-		skipSteps.add(new SkipStep("312",null,1, 4, 9,false));// 结案跳过销管
 		skipSteps.add(new SkipStep("312",null,1, 11, 12,"13",false));// 结案跳过销管
-		skipSteps.add(new SkipStep("312",null,1, 14, 18,false));// 结案跳过销管
 		
 		
 	}

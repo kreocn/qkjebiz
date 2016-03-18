@@ -226,6 +226,17 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
+		
+		<!-- 集团副总审核通过 -->
+		<action name="mdyActiveSDStatus60" class="com.qkj.manage.action.ActiveAction" method="mdyActiveSDStatus60">
+			<result type="redirectAction">
+				<param name="actionName">active_load</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
 
 		<!-- 销售管理部申请单流程 -->
 		<!-- 审核退回 -->
@@ -432,6 +443,17 @@
 		</action>
 		<!-- 销售部-结案:总经理审核通过 -->
 		<action name="mdyCloseActiveSDStatus50" class="com.qkj.manage.action.ActiveAction" method="mdyCloseActiveSDStatus50">
+			<result type="redirectAction">
+				<param name="actionName">active_closeLoad</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<!-- 销售部-结案:总经理审核通过 -->
+		<action name="mdyCloseActiveSDStatus60" class="com.qkj.manage.action.ActiveAction" method="mdyCloseActiveSDStatus60">
 			<result type="redirectAction">
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>

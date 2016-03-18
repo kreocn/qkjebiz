@@ -660,7 +660,8 @@ public class SalPromotAction extends ActionSupport implements ActionAttr {
 	public String mdyCloseOrderSMDStatus60() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_SALPRO_SMDSTATUS60");
 		try {
-			mdySMDStatus(60, ContextHelper.getUserLoginUuid());
+			mdySDStatus(60, ContextHelper.getUserLoginUuid());
+			mdyFDStatus(10,"2");
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!check1 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!check1 数据更新失败:", e);
@@ -713,7 +714,7 @@ public class SalPromotAction extends ActionSupport implements ActionAttr {
 	public String checkfd5() throws Exception {
 		// ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_CHECK40");
 		try {
-			mdyFDStatus(5);
+			mdyFDStatus(5,ContextHelper.getUserLoginUuid());
 			mdyStatus(0);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!check1 数据更新失败:", e);
@@ -761,6 +762,14 @@ public class SalPromotAction extends ActionSupport implements ActionAttr {
 		}
 		if (sd_status == 50) {
 			noteflag = "总经理审核通过";
+		}
+		
+		if (sd_status == 60) {
+			noteflag = "总经理审核通过";
+		}
+		
+		if (sd_status == 70) {
+			noteflag = "集团副总审核通过";
 		}
 		salPromot.setSd_status(sd_status);
 		salPromot.setSd_time(new Date());
@@ -842,7 +851,7 @@ public class SalPromotAction extends ActionSupport implements ActionAttr {
 	 * @throws Exception
 	 * @date 2014-4-26 上午10:25:25
 	 */
-	public int mdyFDStatus(int smd_status) {
+	public int mdyFDStatus(int smd_status,String user) {
 		if (smd_status == 5) {
 			noteflag = "退回";
 		}
@@ -850,13 +859,13 @@ public class SalPromotAction extends ActionSupport implements ActionAttr {
 			noteflag = "通过";
 		}
 		salPromot.setFd_status(smd_status);
-		salPromot.setFd_user(ContextHelper.getUserLoginUuid());
+		salPromot.setFd_user(user);
 		salPromot.setFd_time(new Date());
 
-		salPromot.setLm_user(ContextHelper.getUserLoginUuid());
+		salPromot.setLm_user(user);
 		salPromot.setLm_time(new Date());
 		String note = "促销活动--财务状态变更-" + noteflag;
-		addProcess("SALPRO_MDY_FDSTATUS", note, ContextHelper.getUserLoginUuid());
+		addProcess("SALPRO_MDY_FDSTATUS", note, user);
 		return dao.savefdStatus(salPromot);
 	}
 
