@@ -31,7 +31,10 @@ public class CloseOrderCheckSkip {
 		skipSteps.add(new CloseOrerSkipStep("5",null, 1, "check20", "mdyCloseOrderSMDStatus10"));// 跳过大区
 		
 		// 北京
-		skipSteps.add(new CloseOrerSkipStep("3",null,1, "check20", "mdyCloseOrderSMDStatus10")); // 跳过大区
+		skipSteps.add(new CloseOrerSkipStep("3","312",1, "check20", "check60")); // 跳过大区
+		
+		skipSteps.add(new CloseOrerSkipStep("312",null,1, "check0", "check10,check20")); // 跳过大区
+		skipSteps.add(new CloseOrerSkipStep("312",null,1, "check30", "check60")); // 跳过大区
 	}
 
 	private String str;

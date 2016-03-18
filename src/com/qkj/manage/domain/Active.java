@@ -76,7 +76,7 @@ public class Active {
 	private Double close_f_price;
 	private Double close_f_bprice;
 	private Integer active_type;
-
+	private Integer fstauts;
 	// 非数据库字段
 	private String apply_dept_name;
 	private String apply_user_name;
@@ -128,6 +128,14 @@ public class Active {
 	private String close_store_material;
 	private String close_store_size;
 	private Double close_design_total;
+
+	public Integer getFstauts() {
+		return fstauts;
+	}
+
+	public void setFstauts(Integer fstauts) {
+		this.fstauts = fstauts;
+	}
 
 	public Double getDesign_total() {
 		return design_total;

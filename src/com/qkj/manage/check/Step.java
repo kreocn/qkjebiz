@@ -77,7 +77,11 @@ public class Step {
 	}
 	
 	public void step8(String userid){//总经理
-		mdyActiveSMDStatus(60,userid);
+		mdyActiveSDStatus(60,userid);
+	}
+	
+	public void step40(String userid){//集团副总
+		mdyActiveSDStatus(70,userid);
 	}
 	
 	public void step31(String userid){//董事
@@ -137,8 +141,12 @@ public class Step {
 		mdyCloseActiveSMDStatus(50,userid);
 	}
 	
-	public void step18(String userid){//结案销总经理
-		mdyCloseActiveSMDStatus(60,userid);
+	public void step18(String userid){//结案总经理
+		mdyCloseActiveSDStatus(60,userid);
+	}
+	
+	public void step41(String userid){//结案集团副总
+		mdyCloseActiveSDStatus(70,userid);
 	}
 	
 	public void step21(String userid){//结案销董事
@@ -187,10 +195,6 @@ public class Step {
 		if (smd_status == 50) {
 			noteflag = "销管副总审核通过";
 		}
-		if (smd_status == 60) {
-			noteflag = "总经理审核通过";
-		}
-		
 		if (smd_status == 70) {
 			noteflag = "董事审核通过";
 		}
@@ -265,6 +269,10 @@ public class Step {
 		}
 		if (sd_status == 60) {
 			noteflag = "总经理审核通过";
+		}
+		
+		if (sd_status == 70) {
+			noteflag = "集团副总审核通过";
 		}
 		active.setSd_status(sd_status);
 		active.setSd_time(new Date());
@@ -364,6 +372,10 @@ public class Step {
 		if (close_sd_status == 60) {
 			noteflag = "总经理审核通过";
 		}
+		
+		if (close_sd_status == 70) {
+			noteflag = "集团副总审核通过";
+		}
 		active.setClose_fd_status(0);
 		active.setClose_nd_status(0);
 		active.setClose_sd_status(close_sd_status);
@@ -400,9 +412,6 @@ public class Step {
 		}
 		if (close_sd_status == 50) {
 			noteflag = "销管副总审核通过";
-		}
-		if (close_sd_status == 60) {
-			noteflag = "总经理审核通过";
 		}
 		
 		if (close_sd_status == 70) {

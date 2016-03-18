@@ -59,6 +59,10 @@ public class ActiveDAO extends AbstractDAO {
 		return super.save("qkjmanage_mdyActive", parameters);
 	}
 	
+	public int savefstatus(Object parameters) {
+		return super.save("qkjmanage_mdyFstatus", parameters);
+	}
+	
 	public int saveDesign(Object parameters) {
 		return super.save("qkjmanage_mdyDesign", parameters);
 	}
