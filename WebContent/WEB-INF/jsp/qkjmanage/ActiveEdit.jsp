@@ -812,7 +812,7 @@
 									</s:if>
 									<s:else>
 										<c:if test="${active.smd_status==50 && active.sd_status<60 && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS50',active.apply_dept)==true}">
-											<s:submit  cssClass="input-green" value="总经理-审核通过" action="mdyActiveSDStatus50" onclick="return isOp('确定执行此操作?');" />
+											<s:submit  cssClass="input-green" value="总经理-审核通过" action="mdyActiveSDStatus30Two" onclick="return isOp('确定执行此操作?');" />
 											<s:submit cssClass="input-red" value="审核不通过" action="mdyActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
 									</s:else>
