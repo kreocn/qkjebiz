@@ -55,7 +55,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	private List<CloseOrder> closeOrders;
 	private List<CloseOrder> allsigns;
 	private double proPrice;
-
+    private String finance="1";
 	private double posmPrice;
 	private CloseOrder sign;
 	private List<SalPromot> salPromots;
@@ -83,7 +83,13 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	private String perWorkF;
 	private static String perWorkFlag = null;
 	public String per = "per";
+	 public String getFinance() {
+			return finance;
+		}
 
+		public void setFinance(String finance) {
+			this.finance = finance;
+		}
 	public List<Apply> getApplysed() {
 		return applysed;
 	}
@@ -333,6 +339,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	}
 
 	public String list() throws Exception {
+	
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_LIST");
 		try {
@@ -342,6 +349,11 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 			ContextHelper.SimpleSearchMap4Page("QKJ_QKJMANAGE_CLOSEORDER_LIST", map, closeOrder, viewFlag);
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 			map.put("type", 0);
+			map.put("finance", finance);
+			if(finance.equals("2")){
+				map.remove("is_sub_dept");
+				map.remove("state");
+			}
 			this.setCloseOrders(dao.list(map));
 			this.setRecCount(dao.getResultCount());
 			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;结案提货单列表";

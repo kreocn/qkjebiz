@@ -51,6 +51,25 @@
 					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ c.add_user=#apply_userDouble# ]]></isNotEmpty>
 				</isNotEmpty>
 			</isEmpty>
+			
+			<isEqual property="finance" compareValue="2">
+             
+              	<isNotEmpty prepend="AND" property="finance">
+            <![CDATA[   (c.sd_state=60 or c.sd_state=80 or    (c.apply_dept like  '312%' and c.sd_state=40) )  and fd_check_state=0      ]]>
+              
+              </isNotEmpty>
+              
+               </isEqual>
+			
+			<isEqual property="finance" compareValue="3">
+             
+              	<isNotEmpty prepend="AND" property="finance">
+            <![CDATA[   c.apply_dept not like  '312%'       ]]>
+              
+              </isNotEmpty>
+              
+               </isEqual>
+			
 		</dynamic>
 		<![CDATA[ ORDER BY c.add_time DESC LIMIT 1000 ]]>
 	</select>

@@ -30,11 +30,13 @@ public class CloseOrderCheckSkip {
 		//陕西 办事处，部经理，总经理，财务
 		skipSteps.add(new CloseOrerSkipStep("5",null, 1, "check20", "mdyCloseOrderSMDStatus10"));// 跳过大区
 		
-		// 北京
-		skipSteps.add(new CloseOrerSkipStep("3","312",1, "check20", "check60")); // 跳过大区
 		
-		skipSteps.add(new CloseOrerSkipStep("312",null,1, "check0", "check10,check20")); // 跳过大区
-		skipSteps.add(new CloseOrerSkipStep("312",null,1, "check30", "check60")); // 跳过大区
+		skipSteps.add(new CloseOrerSkipStep("2202",null, 1, "check50", "checkfd10"));// 跳过大区
+		skipSteps.add(new CloseOrerSkipStep("2202",null, 1, "check70", "checkfd10"));// 跳过大区
+		// 北京
+		skipSteps.add(new CloseOrerSkipStep("3","312",1, "check20", "mdyCloseOrderSMDStatus10")); // 跳过大区
+		skipSteps.add(new CloseOrerSkipStep("312",null,1, "check0", "check20,mdyCloseOrderSMDStatus10")); // 跳过大区
+
 	}
 
 	private String str;
