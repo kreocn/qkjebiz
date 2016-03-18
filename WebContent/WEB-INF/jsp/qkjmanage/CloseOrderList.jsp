@@ -35,10 +35,7 @@ cursor: pointer;
 					<div class="label_hang">
 			            <div class="label_ltit">快速查询:</div>
 			           <div class="label_rwben2" style="size: 30%">
-			            	<s:select id="sselect" onchange="kselect();" name="sselect"  cssClass="selectKick" headerKey="" headerValue="-----请选择-----" list="#{0:'大区经理待审',1:'销管经理待审',
-			            	2:'运营总监待审',
-			            	3:'销管部经理待审',4:'业务副总待审',5:'销管副总待审',
-			            	6:'总经理待审'
+			            	<s:select id="sselect" onchange="kselect();" name="sselect"  cssClass="selectKick" headerKey="" headerValue="-----请选择-----" list="#{0:'业务经理待审',1:'销管经理待审', 2:'运营总监待审', 3:'业务副总待审',4:'销管副总待审',5:'总经理待审',6:'集团副总待审'
 			            	}" />
 			            </div>
 			        </div>
@@ -85,7 +82,7 @@ cursor: pointer;
 					<div class="label_hang">
 						<div class="label_ltit">销售状态:</div>
 						<div class="label_rwben label_rwb">
-							<s:select id="check_sdstate" name="closeOrder.sd_state" cssClass="selectKick" list="#{5:'退回',10:'待审核',30:'大区审核通过',40:'总监审核通过',50:'业务副总通过'}" headerKey="" headerValue="--请选择--" />
+							<s:select id="check_sdstate" name="closeOrder.sd_state" cssClass="selectKick" list="#{5:'退回',10:'待审核',20:'办事处通过',30:'大区审核通过',40:'总监审核通过',50:'业务副总通过',60:'总经理审核通过',80:'集团董事审核通过'}" headerKey="" headerValue="--请选择--" />
 						</div>
 					</div>
 					<div class="label_hang">
@@ -321,19 +318,19 @@ function kselect(){
 	var num=$("#sselect").val();
 	document.getElementById("check_state").options[2].selected = true; 
 	if(parseInt(num)==0){//(申)大区经理待审
-		document.getElementById("check_sdstate").options[2].selected = true; 
+		document.getElementById("check_sdstate").options[3].selected = true; 
 		document.getElementById("check_smdstate").options[2].selected = true;
 	}
 	if(parseInt(num)==1){//(申)销管经理待审
-		document.getElementById("check_sdstate").options[3].selected = true; 
+		document.getElementById("check_sdstate").options[4].selected = true; 
 		document.getElementById("check_smdstate").options[2].selected = true;
 	}
 	if(parseInt(num)==2){//总监
-		document.getElementById("check_sdstate").options[3].selected = true; 
+		document.getElementById("check_sdstate").options[4].selected = true; 
 		document.getElementById("check_smdstate").options[3].selected = true;
 	}
 	if(parseInt(num)==3){//销管部经理待审西北
-		document.getElementById("check_sdstate").options[4].selected = true; 
+		document.getElementById("check_sdstate").options[5].selected = true; 
 		document.getElementById("check_smdstate").options[3].selected = true;
 		
 	}
