@@ -82,7 +82,7 @@ display: none;
             <div class="label_ltit">状态:</div>
             <div class="label_rwben2">
             	<span class="label_rwb">
-            	<s:select name="apply.status_sp" title="状态" headerKey="" headerValue="-申请状态-" list="#{-1:'已作废',0:'新申请',5:'审核退回',10:'待审核',20:'业务经理已审',25:'销管经理已审',30:'总监已审',35:'总监待审',40:'副总已审',50:'总经理已审'}" />
+            	<s:select name="apply.status_sp" title="状态" headerKey="" headerValue="-申请状态-" list="#{-1:'已作废',0:'新申请',5:'审核退回',10:'待审核',20:'业务部经理已审',25:'销管经理已审',30:'总监已审',35:'总监待审',40:'副总已审',50:'总经理已审'}" />
 				</span>
 				<span class="label_rwb">
 				<s:select name="apply.ship_status" headerKey="" headerValue="-发货状态-" list="#{0:'未发货',10:'已发货',20:'已受理' }" />
@@ -93,7 +93,6 @@ display: none;
         	<s:checkbox id="search_mcondition" name="search_mcondition" fieldValue="true" value="true" cssClass="regular-checkbox" />
 			<label for="search_mcondition"></label>更多条件
             <s:submit value="搜索" /> <s:reset value="重置" />
-            <p>因系统调整，请各位业务经理将不属于自己的至事由移交记录,请不要重复提交，该功能将于下周关闭</p>
         </div>
 	</div>
  	</div>
@@ -128,7 +127,7 @@ display: none;
 					<s:if test="%{apply_dept==1 || apply_dept.substring(0,2)!='30' || status>=20}">
 					<s:if test="10==status"><span class="message_warning">待审核</span></s:if>
 					<s:if test="20==status">
-					<s:if test="0==sp_check_status || 5==sp_check_status"><span class="message_pass">业务经理已审</span></s:if>
+					<s:if test="0==sp_check_status || 5==sp_check_status"><span class="message_pass">业务部经理已审</span></s:if>
 					<s:elseif test="10==sp_check_status"><span class="message_pass">销管经理已审</span></s:elseif>
 					</s:if>
 					</s:if>
@@ -140,7 +139,7 @@ display: none;
 					<s:if test="10==sp_check_status"><span class="message_pass">销管经理已审</span></s:if>
 					</s:if>
 					
-						<s:elseif test="20==status"><span class="message_pass">业务经理已审</span></s:elseif>
+						<s:elseif test="20==status"><span class="message_pass">业务部经理已审</span></s:elseif>
 					</s:else>
 					<s:if test="30==status"><span class="message_pass">总监已审</span></s:if>
 					<s:if test="40==status"><span class="message_pass">副总已审</span></s:if>
@@ -198,9 +197,6 @@ display: none;
 				<s:else>媒体投放</s:else>
 				</td>
 				<td class="td4 op-area">			
-				
-				<a class="input-red" href="<s:url namespace="/qkjmanage" action="apply_yijiao"><s:param name="apply.uuid" value="uuid"></s:param></s:url>" >移交记录</a>
-					
 					<c:if test="${it:checkPermit('QKJ_QKJMANAGE_APPLY_VIEW',null)==true}">
 						<s:if test="status>=30">
 							<a class="input-gray" href="<s:url namespace="/qkjmanage" action="apply_print"><s:param name="perWorkFlag">null</s:param><s:param name="apply.uuid" value="uuid"></s:param></s:url>">打印</a>
