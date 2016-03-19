@@ -153,6 +153,11 @@ s
 											<font class="message_pass">总监已审</font>(${closeOrder.sd_user_name})</s:if>
 										<s:if test="closeOrder.sd_state==50">
 											<font class="message_pass">副总已审</font>(${closeOrder.sd_user_name})</s:if>
+										<s:if test="closeOrder.sd_state==60 || closeOrder.sd_state==70">
+											<font class="message_pass">总经理已审</font>(${closeOrder.sd_user_name})</s:if>
+											
+											<s:if test="closeOrder.sd_state==80">
+											<font class="message_pass">集团副总已审</font>(${closeOrder.sd_user_name})</s:if>
 									</div>
 
 									<div class="zhuangtai" title="${it:formatDate(closeOrder.smd_time,'yyyy-MM-dd HH:mm:ss')}">
@@ -169,8 +174,6 @@ s
 											<font class="message_pass">销管部经理已审</font>(${closeOrder.smd_user_name})</s:if>
 										<s:if test="closeOrder.smd_status==50">
 											<font class="message_pass">销管副总已审</font>(${closeOrder.smd_user_name})</s:if>
-										<s:if test="closeOrder.smd_status==60">
-											<font class="message_pass">总经理已审</font>(${closeOrder.smd_user_name})</s:if>
 										<s:if test="closeOrder.smd_status==70">
 										<s:if test="closeOrder.apply_dept.substring(0,1)!=4">
 										<font class="message_pass">副总已审</font>

@@ -184,6 +184,10 @@ background-color: #FFF;
 										<font class="message_pass">总监已审</font></s:if>
 									<s:if test="sd_state==50">
 										<font class="message_pass">副总已审</font></s:if>
+										<s:if test="sd_state==60 || sd_state==70">
+										<font class="message_pass">总经理已审</font></s:if>
+										<s:if test="sd_state==80">
+										<font class="message_pass">集团副总已审</font></s:if>
 						</td>
 						<td class="td2 nw" title="${smd_user_name} ${it:formatDate(smd_time,'yyyy-MM-dd HH:mm:ss')}">
 						<s:if test="smd_status==0">未签收</s:if>
@@ -198,8 +202,7 @@ background-color: #FFF;
 										<font class="message_pass">销管部经理已审</font></s:if>
 									<s:if test="smd_status==50">
 										<font class="message_pass">销管副总已审</font></s:if>
-										<s:if test="smd_status==60">
-										<font class="message_pass">总经理已审</font></s:if>
+										
 										<s:if test="smd_status==70">
 										<s:if test="apply_dept.substring(0,1)=='4'">
 										<font class="message_pass">董事已审</font></s:if>
