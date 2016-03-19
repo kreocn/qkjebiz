@@ -44,10 +44,10 @@ cursor: pointer;
             	2:'(申)红酒-运营总监待审',3:'(申)红酒-销管副总待审',
             	8:'(申)甘肃-总经理待审',10:'(申)陕西-总经理待审',11:'(申)北京-总经理待审',12:'(申)传奇-总经理待审',
             	51:'(申)陕西-财务待审',52:'(申)北京-财务待审',
-            	13:'(申)董事-待审',14:'(申)集团副总-待审',
+            	14:'(申)集团副总/董事-待审',
             	21:'(结)业务部经理经理待审',22:'(结)销管经理待审',23:'(结)红酒-运营总监待审',24:'(结)红酒-销管副总待审',
             	29:'(结)甘肃-总经理待审',41:'(结)陕西-总经理待审',42:'(结)北京-总经理待审',43:'(结)传奇-总经理待审',
-            	44:'(结)董事-待审',45:'(结)集团副总-待审',
+            	45:'(结)集团副总/董事-待审',
             	30:'(结)甘肃-财务待审',31:'(结)陕西-财务待审',32:'(结)北京-财务待审'
             	}" />
             </div>
@@ -186,6 +186,13 @@ cursor: pointer;
             <div class="label_ltit">sp:</div>
             <div class="label_rwben label_rwb">
             	<s:select name="flag"  cssClass="selectKick" headerKey="" headerValue="--请选择--" list="#{0:'有',10:'无'}" />
+            </div>
+        </div>
+        
+        <div class="label_hang">
+            <div class="label_ltit">推送副总:</div>
+            <div class="label_rwben label_rwb">
+            	<s:select id="fstauts" name="active.fstauts"  cssClass="selectKick" headerKey="" headerValue="--请选择--" list="#{1:'否',0:'是'}" />
             </div>
         </div>
         
@@ -492,6 +499,7 @@ function jnull(){
 	$("#userdept_nameid").val("");
 	$("#sdfstauts").val("");
 	document.getElementById("apply_is_sub_dept").checked=false;
+	document.getElementById("fstauts").options[0].selected = true; 
 	document.getElementById("status").options[2].selected = true;
 }
 function snull(){
@@ -502,6 +510,7 @@ function snull(){
 	$("#userdept_codeid").val("");
 	$("#userdept_nameid").val("");
 	$("#smdfstauts").val("");
+	document.getElementById("fstauts").options[0].selected = true; 
 	document.getElementById("apply_is_sub_dept").checked=false;
 	document.getElementById("status").options[5].selected = true;
 }
@@ -510,6 +519,11 @@ function snull(){
 	
 function kselect(){
 	var num=$("#sselect").val();
+	if(num==null || num==""){
+		jnull();
+		snull();
+		document.getElementById("status").options[0].selected = true;
+	}
 	if(parseInt(num)==0){//(申)大区经理待审
 		jnull();
 		document.getElementById("sd_status").options[4].selected = true; 
@@ -598,6 +612,7 @@ function kselect(){
 		document.getElementById("smd_sta").options[0].selected = true; 
 		$("#userdept_codeid").val("");
 		$("#userdept_nameid").val("");
+		document.getElementById("fstauts").options[2].selected = true; 
 		document.getElementById("apply_is_sub_dept").checked=false;
 	}
 	
@@ -715,6 +730,7 @@ function kselect(){
 		document.getElementById("clsmdsta").options[0].selected = true; 
 		$("#userdept_codeid").val("");
 		$("#userdept_nameid").val("");
+		document.getElementById("fstauts").options[2].selected = true; 
 		document.getElementById("apply_is_sub_dept").checked=false;
 	
 	}

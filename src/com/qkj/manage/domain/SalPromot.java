@@ -31,6 +31,7 @@ public class SalPromot {
 	private Integer fd_status;
 	private String fd_user;
 	private Date fd_time;
+	private Integer fstauts;
 
 	// 以下为非数据库字段
 	private String sd_name;
@@ -41,6 +42,14 @@ public class SalPromot {
 	private String sal_scopDept_name;
 	private String add_user_dept_name;
 	private String fd_name;
+
+	public Integer getFstauts() {
+		return fstauts;
+	}
+
+	public void setFstauts(Integer fstauts) {
+		this.fstauts = fstauts;
+	}
 
 	public Date getClose_endtime() {
 		return close_endtime;

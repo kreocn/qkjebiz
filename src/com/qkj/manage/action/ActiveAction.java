@@ -1401,6 +1401,7 @@ public void setTastingPrice(double tastingPrice) {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_SMDSTATUS");
 		try {
 			mdyActiveSMDStatus(5);
+			mdyActiveFDStatus(1, 0);
 			mdyStatus(0);
 			this.setBefUid(active.getUuid());
 			this.setUp(2);
@@ -1521,6 +1522,21 @@ public void setTastingPrice(double tastingPrice) {
 		}
 		return SUCCESS;
 	}
+	
+	public String mdyActiveFDSTATUS10Two() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_FDSTATUS10");
+		try {
+			//cs.checkSkip(active, 9);
+			mdyActiveFDStatus(1,10);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
 
 	/**
 	 * 申请财务退回mdyActiveFDStatus5
@@ -1555,6 +1571,20 @@ public void setTastingPrice(double tastingPrice) {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_FDCSTATUS10");
 		try {
 			cs.checkSkip(active, 19);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+	
+	public String mdyActiveFDCSTATUS10Two() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_FDCSTATUS10");
+		try {
+			mdyActiveFDStatus(2,10);
 			this.setBefUid(active.getUuid());
 			this.setUp(2);
 			nextActive();
@@ -2133,6 +2163,7 @@ public void setTastingPrice(double tastingPrice) {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS5");
 		try {
 			mdyCloseActiveSDStatus(5);
+			mdyActiveFDStatus(2, 0);
 			mdyStatus(3);
 			this.setBefUid(active.getUuid());
 			this.setUp(2);
@@ -2378,6 +2409,7 @@ public void setTastingPrice(double tastingPrice) {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_SMDSTATUS5");
 		try {
 			mdyCloseActiveSMDStatus(5);
+			mdyActiveFDStatus(2, 0);
 			mdyStatus(3);
 			this.setBefUid(active.getUuid());
 			this.setUp(2);

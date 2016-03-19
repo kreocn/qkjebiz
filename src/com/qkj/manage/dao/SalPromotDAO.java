@@ -23,6 +23,10 @@ public class SalPromotDAO extends AbstractDAO {
 		return super.save("salpro_mdySalPromot", parameters);
 	}
 	
+	public int saveFstatus(Object parameters) {
+		return super.save("salpro_mdyFstauts", parameters);
+	}
+	
 	public int saveStatus(Object parameters) {
 		return super.save("salpro_mdyStatus", parameters);
 	}

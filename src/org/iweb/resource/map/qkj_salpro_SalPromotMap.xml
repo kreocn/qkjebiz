@@ -171,6 +171,15 @@
 			Where uuid = #uuid#
 		]]>
 	</update>
+	
+	<update id="salpro_mdyFstauts" parameterClass="salPromot">
+		<![CDATA[
+			Update qkjm_r_salpromotion
+			Set 
+			fstauts=#fstauts#
+			Where uuid = #uuid#
+		]]>
+	</update>
 
 
 	<delete id="salpro_delSalPromot" parameterClass="salPromot">
