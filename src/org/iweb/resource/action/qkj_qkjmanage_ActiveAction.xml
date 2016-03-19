@@ -303,6 +303,16 @@
 			</result>
 		</action>
 		
+		<action name="mdyActiveFDSTATUS10Two" class="com.qkj.manage.action.ActiveAction" method="mdyActiveFDSTATUS10Two">
+			<result type="redirectAction">
+				<param name="actionName">active_load</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
 		<!-- 财务审核退回 -->
 		<action name="mdyActiveFDStatus" class="com.qkj.manage.action.ActiveAction" method="mdyActiveFDStatus">
 			<result type="redirectAction">
@@ -529,6 +539,16 @@
 		
 		<!-- 财务审核通过 -->
 		<action name="mdyActiveFDCSTATUS10" class="com.qkj.manage.action.ActiveAction" method="mdyActiveFDCSTATUS10">
+			<result type="redirectAction">
+				<param name="actionName">active_closeLoad</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="mdyActiveFDCSTATUS10Two" class="com.qkj.manage.action.ActiveAction" method="mdyActiveFDCSTATUS10Two">
 			<result type="redirectAction">
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>

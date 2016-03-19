@@ -22,6 +22,9 @@ public class CheckSkip {
 		skipSteps.add(new SkipStep("220",null,1,8,9,false)); // 申请
 		skipSteps.add(new SkipStep("220",null,1, 40, 9,false)); // 结案
 		
+		skipSteps.add(new SkipStep("220",null,1,18,100,false)); // 申请
+		skipSteps.add(new SkipStep("220",null,1, 41, 100,false)); // 结案
+		
 		skipSteps.add(new SkipStep("2202A",null,1, 1, 2,"3",false)); // 申请
 		skipSteps.add(new SkipStep("2202A",null,1, 11, 10,false)); // 结案
 		

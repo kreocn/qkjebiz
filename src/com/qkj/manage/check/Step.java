@@ -102,6 +102,13 @@ public class Step {
 		addProcess("ACTIVE_APPLY_PASS", "活动申请通过",userid);
 	}
 	
+	public void step900(String userid){
+		mdyMemberCapital();
+		active.setStatus(2);
+		dao.mdyActivePass(active);
+		addProcess("ACTIVE_CLOSE_PASS", "活动申请通过",userid);
+	}
+	
 	/**
 	 * 结案流程开始
 	 */
@@ -164,6 +171,15 @@ public class Step {
 		active.setStatus(5);
 		addProcess("ACTIVE_CLOSE_PASS", "活动结案通过",userid);
 	}
+	
+	public void step100(String userid){
+		mdyMemberCapital();
+		active.setStatus(5);
+		dao.mdyCloseActivePass(active);
+		addProcess("ACTIVE_CLOSE_PASS", "活动结案通过",userid);
+	}
+	
+	
 	
 	public void step20(String userid){//结案数据中心
 		mdyActiveFDStatus(3, 10,userid);

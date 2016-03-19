@@ -548,8 +548,8 @@ SELECT MAX(a.baotime) baotime,MAX(a.stars) stars,MAX(a.sing) sing,MAX(a.spass) s
 				smd_user=#smd_user#,
 				smd_time=#smd_time#,
 				remark=#remark#,
-				lm_user=#lm_user#,
-				fd_status=#fd_status#
+				lm_user=#lm_user#
+				
 			Where uuid = #uuid#
 		]]>
 	</update>
@@ -691,9 +691,8 @@ SELECT MAX(a.baotime) baotime,MAX(a.stars) stars,MAX(a.sing) sing,MAX(a.spass) s
 				close_sd_user=#close_sd_user#,
 				close_sd_time=#close_sd_time#,
 				remark=#remark#,
-				lm_user=#lm_user#,
-				close_fd_status=#close_fd_status#,
-				close_nd_user=#close_nd_user#
+				lm_user=#lm_user#
+				
 			Where uuid = #uuid#
 		]]>
 	</update>
@@ -704,9 +703,8 @@ SELECT MAX(a.baotime) baotime,MAX(a.stars) stars,MAX(a.sing) sing,MAX(a.spass) s
 				close_smd_user=#close_smd_user#,
 				close_smd_time=#close_smd_time#,
 				remark=#remark#,
-				lm_user=#lm_user#,
-				close_fd_status=#close_fd_status#,
-				close_nd_status=#close_nd_status#
+				lm_user=#lm_user#
+				
 			Where uuid = #uuid#
 		]]>
 	</update>
