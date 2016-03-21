@@ -271,13 +271,16 @@
 				<div class="label_main">
 					<div class="label_hang label_hang_sign">
 						<div class="label_ltit">财务部:</div>
+						<s:if test="caiActive!=null && caiActive!=''">
 						<div class="label_rwbenx label_rwb_sign">
 							(签字/日期)
-							<s:if test="caiActive!=null">
 								<span class="user_sign"><img src="${caiActive.puser_sign}" /></span>
-
-							</s:if>
 						</div>
+						</s:if>
+						<s:else>
+						<s:if test="active.fd_user!=2">${active.fd_user_name}${it:formatDate(active.fd_time,'yyyy-MM-dd')}</s:if>
+						
+						</s:else>
 					</div>
 				</div>
 
@@ -315,7 +318,7 @@
 					<div class="label_hang label_hang_sign">
 						<div class="label_ltit">总经理:</div>
 						<div class="label_rwbenx label_rwb_sign">
-							(签字/日期)aaaaaaaaaaaaaaaaaaa
+							(签字/日期)
 							<s:if test="zongActive!=null">
 								<span class="user_sign"><img src="${zongActive.puser_sign}" /></span>
 							</s:if>

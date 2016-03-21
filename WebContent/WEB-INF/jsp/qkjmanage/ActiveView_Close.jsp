@@ -241,13 +241,15 @@
 					<div class="label_main">
 						<div class="label_hang label_hang_sign">
 							<div class="label_ltit">财务部:</div>
+							<s:if test="caiActive!=null">
 							<div class="label_rwbenx label_rwb_sign">
 								(签字/日期)
-								<s:if test="caiActive!=null">
 									<span class="user_sign"><img src="${caiActive.puser_sign}" /></span>
-
-								</s:if>
 							</div>
+							</s:if>
+							<s:else>
+								<s:if test="active.close_sd_user!=2">${active.close_sd_user_name}${it:formatDate(active.close_fd_time,'yyyy-MM-dd')}</s:if>
+							</s:else>
 						</div>
 					</div>
 					<div class="label_main label_main_sep"></div>

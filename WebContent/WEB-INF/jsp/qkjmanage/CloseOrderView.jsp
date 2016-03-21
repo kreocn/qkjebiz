@@ -113,13 +113,17 @@
 				<div class="label_main">
 					<div class="label_hang label_hang_sign">
 						<div class="label_ltit">财务部:</div>
+						<s:if test="sign!=null && sign.sign50!=null">
 						<div class="label_rwbenx label_rwb_sign">
 							(签字/日期)
-							<s:if test="sign!=null && sign.sign50!=null">
+							
 								<span class="user_sign"><img src="${sign.sign50}" /></span>
 								<span class="vab">${it:formatDate(sign.time50,'yyyy-MM-dd')}</span>
-							</s:if>
 						</div>
+						</s:if>
+							<s:else>
+							${closeOrder.fd_user_name}${it:formatDate(closeOrder.fd_check_time,'yyyy-MM-dd')}
+							</s:else>
 					</div>
 					<div class="label_hang label_hang_sign">
 						<div class="label_ltit">数据中心:</div>
