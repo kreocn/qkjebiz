@@ -344,23 +344,23 @@ cursor: pointer;
 			<a  class="daisuc"></a>
 			</s:else>
 			</td>
-			<td class="td3">
+			<td class="td5">
 			<s:if test="%{close_fd_status==10}"><!-- 已审 -->
-			<a href="javascript:;"  data="${uuid}" class="success"></a>
-			<span id="leave_cause${uuid}" style="display:none;" class="leave_cause_shows">
+			<a href="javascript:;"  data="${uuid}" class="closesuccess"></a>
+			<span id="leave_causeclose${uuid}" style="display:none;" class="leave_cause_shows">
 				操作人:${close_fd_name}<br/> 操作时间：${it:formatDate(close_fd_time,'yyyy-MM-dd hh:mm:ss')}
 			</span>
 			</s:if>
 			<s:elseif test="%{close_fd_status==5}"><a  class="nosuc"></a></s:elseif>
 			<s:else>
 			<a href="javascript:;"  data="${uuid}" class="daisuc"></a>
-			<span id="leave_cause${uuid}" style="display:none;" class="leave_cause_shows">
+			<span id="leave_causeclose${uuid}" style="display:none;" class="leave_cause_shows">
 				操作人:${close_fd_name}<br/> 操作时间：${it:formatDate(close_fd_time,'yyyy-MM-dd hh:mm:ss')}
 			</span>
 			</s:else>
 			</td>
 			
-			<td class="td5">
+			<td class="td3">
 			<s:if test="%{spe_remark!=null && spe_remark!=''}">
 			<a  class="nonull"></a>
 			</s:if>
@@ -452,6 +452,13 @@ $(".success").tooltip({
 	items: "[data]",
 	content: function() {
 		return "<div class='show_dialog'>" + $("#leave_cause" + $(this).attr("data")).html() + "</div>";
+  }
+});
+
+$(".closesuccess").tooltip({
+	items: "[data]",
+	content: function() {
+		return "<div class='show_dialog'>" + $("#leave_causeclose" + $(this).attr("data")).html() + "</div>";
   }
 });
 $(".nosuc").tooltip({
@@ -680,7 +687,7 @@ function kselect(){
 
 	if(parseInt(num)==29){//甘肃总经理
 		snull();
-		document.getElementById("clsdsta").options[5].selected = true; 
+		document.getElementById("clsdsta").options[0].selected = true; 
 		document.getElementById("clsmdsta").options[4].selected = true; 
 		$("#userdept_codeid").val("220");
 		$("#userdept_nameid").val("甘肃销售公司");
