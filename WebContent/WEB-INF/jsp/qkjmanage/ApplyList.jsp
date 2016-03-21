@@ -82,7 +82,7 @@ display: none;
             <div class="label_ltit">状态:</div>
             <div class="label_rwben2">
             	<span class="label_rwb">
-            	<s:select name="apply.status_sp" title="状态" headerKey="" headerValue="-申请状态-" list="#{-1:'已作废',0:'新申请',5:'审核退回',10:'待审核',20:'业务部经理已审',25:'销管经理已审',30:'总监已审',35:'总监待审',40:'副总已审',50:'总经理已审'}" />
+            	<s:select name="apply.status_sp" title="状态" headerKey="" headerValue="-申请状态-" list="#{-1:'已作废',0:'新申请',5:'审核退回',10:'待审核',20:'业务部经理已审',25:'销管经理已审',30:'总监已审',35:'总监待审',40:'副总已审',50:'总经理已审',70:'营销副总待审'}" />
 				</span>
 				<span class="label_rwb">
 				<s:select name="apply.ship_status" headerKey="" headerValue="-发货状态-" list="#{0:'未发货',10:'已发货',20:'已受理' }" />
@@ -122,29 +122,19 @@ display: none;
 					<s:if test="-1==status"><span class="message_error">已作废|(${check_user_name})</span></s:if>
 					<s:if test="0==status">新申请</s:if>
 					<s:if test="5==status"><span class="message_error">已退回(${check_user_name})</span></s:if>
-					<s:else>
-					
-					<s:if test="%{apply_dept==1 || apply_dept.substring(0,2)!='30' || status>=20}">
 					<s:if test="10==status"><span class="message_warning">待审核</span></s:if>
-					<s:if test="20==status">
-					<s:if test="0==sp_check_status || 5==sp_check_status"><span class="message_pass">业务部经理已审</span></s:if>
-					<s:elseif test="10==sp_check_status"><span class="message_pass">销管经理已审</span></s:elseif>
-					</s:if>
-					</s:if>
-					<s:else>
-					<s:if test="10==status && 10!=sp_check_status"><span class="message_warning">待审核</span></s:if>
-						
-					<s:if test="10==status">
-				
-					<s:if test="10==sp_check_status"><span class="message_pass">销管经理已审</span></s:if>
-					</s:if>
 					
-						<s:elseif test="20==status"><span class="message_pass">业务部经理已审</span></s:elseif>
-					</s:else>
-					<s:if test="30==status"><span class="message_pass">总监已审</span></s:if>
+					<s:if test="%{apply_dept.substring(0,1)==4}">
 					<s:if test="40==status"><span class="message_pass">副总已审</span></s:if>
+						<s:if test="50==status"><span class="message_pass">总经理已审</span></s:if>
+						<s:if test="60==status"><span class="message_pass">董事已审</span></s:if>
+					</s:if>
+			      <s:else>
+					<s:if test="20==status"><span class="message_pass">业务部经理已审</span></s:if>
 					<s:if test="50==status"><span class="message_pass">总经理已审</span></s:if>
-					</s:else>
+					<s:if test="70==status"><span class="message_warning">营销中心副总待审</span></s:if>
+					<s:if test="80==status"><span class="message_pass">营销中心副总已审</span></s:if>
+			</s:else>
 				</td>
 				<td class="td4 op-area nw">
 		
