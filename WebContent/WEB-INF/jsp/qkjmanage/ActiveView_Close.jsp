@@ -304,8 +304,8 @@
 					<div class="label_main label_main_sep"></div>
 					<div class="label_main">
 						<div class="label_hang label_hang_sign">
-							<s:if test="active.apply_dept.substring(0,1)==5">
-								<div class="label_ltit">业务副总</div>
+							<s:if test="active.apply_dept.substring(0,1)!=4">
+								<div class="label_ltit">营销中心副总</div>
 							</s:if>
 							<s:else>
 								<div class="label_ltit">董事:</div>

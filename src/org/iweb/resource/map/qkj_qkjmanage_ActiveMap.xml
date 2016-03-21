@@ -353,7 +353,7 @@
 			<isNotEmpty prepend="AND" property="smd40"><![CDATA[ s.`biz_status02`=40 and s.`biz_status03`=40 ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="smd50"><![CDATA[  s.`biz_status03`=50 AND s.`biz_sign`='ACTIVE_MDY_SMDSTATUS']]></isNotEmpty>
 			
-			<isNotEmpty prepend="AND" property="smd70"><![CDATA[  s.`biz_status03`=70 AND s.`biz_sign`='ACTIVE_MDY_SMDSTATUS']]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="smd70"><![CDATA[  ((s.`biz_status03`=70 AND s.`biz_sign`='ACTIVE_MDY_SMDSTATUS') or s.`biz_status02`=70 )]]></isNotEmpty>
 			
 			<isNotEmpty prepend="AND" property="cai"><![CDATA[  a.`fd_status`=10 and s.biz_sign='ACTIVE_MDY_FDSTATUS' ]]></isNotEmpty>
 			<!-- 结案 -->
@@ -362,7 +362,7 @@
 			<isNotEmpty prepend="AND" property="csd60"><![CDATA[ (s.`biz_status04`=60 or  s.`biz_status05`=60) ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="csmd40"><![CDATA[ s.`biz_status04`=40 and s.`biz_status05`=40 ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="csmd50"><![CDATA[  s.`biz_status05`=50 and s.biz_sign='ACTIVE_CLOSE_SMDSTATUS']]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="csd70"><![CDATA[  s.`biz_status05`=70 and s.biz_sign='ACTIVE_CLOSE_SMDSTATUS']]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="csd70"><![CDATA[  ((s.`biz_status05`=70 and s.biz_sign='ACTIVE_CLOSE_SMDSTATUS') or s.`biz_status04`=70)]]></isNotEmpty>
 			
 			<isNotEmpty prepend="AND" property="biz_id">
 			<![CDATA[ s.`biz_id`=#biz_id# ]]>

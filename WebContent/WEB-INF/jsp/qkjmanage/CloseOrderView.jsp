@@ -199,7 +199,7 @@
 				<div class="label_main label_main_sep"></div>
 				<div class="label_main">
 					<div class="label_hang label_hang_sign">
-						<div class="label_ltit">副总经理:</div>
+						<div class="label_ltit">营销副总经理:</div>
 						<div class="label_rwbenx label_rwb_sign">
 							(签字/日期)
 							<s:if test="sign!=null && sign.sign80!=null">

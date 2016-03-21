@@ -893,7 +893,7 @@ public void setTastingPrice(double tastingPrice) {
 					}
 				}
 
-				if (active.getSmd_status() >= 40) {// 董事
+				if (active.getSmd_status() >= 40 || active.getSd_status()>=60) {// 董事
 					map.clear();
 					map.put("sq", "sq");
 					map.put("biz_id", active.getUuid());
@@ -1965,7 +1965,7 @@ public void setTastingPrice(double tastingPrice) {
 					}
 				}
 
-				if (active.getClose_smd_status() >= 70) {// 董事已审
+				if (active.getClose_smd_status() >= 70  || active.getClose_sd_status() >= 60) {// 董事已审
 					map.clear();
 					map.put("ja", "sq");
 					map.put("biz_id", active.getUuid());

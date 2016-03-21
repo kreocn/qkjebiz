@@ -315,7 +315,7 @@
 					<div class="label_hang label_hang_sign">
 						<div class="label_ltit">总经理:</div>
 						<div class="label_rwbenx label_rwb_sign">
-							(签字/日期)
+							(签字/日期)aaaaaaaaaaaaaaaaaaa
 							<s:if test="zongActive!=null">
 								<span class="user_sign"><img src="${zongActive.puser_sign}" /></span>
 							</s:if>
@@ -327,7 +327,7 @@
 				<div class="label_main">
 					<div class="label_hang label_hang_sign">
 					
-					<div class="label_ltit">董事:</div>
+					<div class="label_ltit">营销副总/董事:</div>
 						<div class="label_rwbenx label_rwb_sign">
 							(签字/日期)
 							<s:if test="dongActive!=null">

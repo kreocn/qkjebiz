@@ -36,7 +36,7 @@ cursor: pointer;
 					<div class="label_hang">
 			            <div class="label_ltit">快速查询:</div>
 			           <div class="label_rwben2" style="size: 30%">
-			            	<s:select id="sselect" onchange="kselect();" name="sselect"  cssClass="selectKick" headerKey="" headerValue="-----请选择-----" list="#{0:'业务经理待审',1:'销管经理待审', 2:'运营总监待审', 3:'总经理待审',4:'营销中心副总待审',5:'财务待审'
+			            	<s:select id="sselect" onchange="kselect();" name="sselect"  cssClass="selectKick" headerKey="" headerValue="-----请选择-----" list="#{0:'业务部经理待审',1:'销管经理待审', 2:'运营总监待审', 3:'总经理待审',4:'营销中心副总待审',5:'财务待审'
 			            	}" />
 			            </div>
 			        </div>
@@ -83,7 +83,7 @@ cursor: pointer;
 					<div class="label_hang">
 						<div class="label_ltit">销售状态:</div>
 						<div class="label_rwben label_rwb">
-							<s:select id="check_sdstate" name="closeOrder.sd_state" cssClass="selectKick" list="#{5:'退回',10:'待审核',20:'办事处通过',30:'业务经理审核通过',40:'总监审核通过',50:'业务副总通过',60:'总经理审核通过',70:'总经理已推送副总',80:'集团董事审核通过'}" headerKey="" headerValue="--请选择--" />
+							<s:select id="check_sdstate" name="closeOrder.sd_state" cssClass="selectKick" list="#{5:'退回',10:'待审核',20:'办事处通过',30:'业务部经理审核通过',40:'总监审核通过',50:'业务副总通过',60:'总经理审核通过',70:'总经理已推送副总',80:'集团董事审核通过'}" headerKey="" headerValue="--请选择--" />
 						</div>
 					</div>
 					<div class="label_hang">
@@ -179,7 +179,7 @@ background-color: #FFF;
 										<font class="message_pass">办事处已审</font>
 									</s:if>
 									<s:if test="sd_state==30">
-										<font class="message_pass">业务经理已审</font></s:if>
+										<font class="message_pass">业务部经理已审</font></s:if>
 									<s:if test="sd_state==40">
 										<font class="message_pass">总监已审</font></s:if>
 									<s:if test="sd_state==50">
