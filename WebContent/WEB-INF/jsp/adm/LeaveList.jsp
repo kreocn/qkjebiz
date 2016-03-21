@@ -32,7 +32,7 @@ max-width: 650px !important;
  		<div class="label_hang">
             <div class="label_ltit">快速查询:</div>
            		<div class="label_rwben2" style="size: 30%">
-	            	<s:select id="sselect" onchange="kselect();" name="sselect"  cssClass="selectKick" headerKey="" headerValue="-----请选择-----" list="#{0:'主管/办事处待审',1:'经理/大区待审',
+	            	<s:select id="sselect" onchange="kselect();" name="sselect"  cssClass="selectKick" headerKey="" headerValue="-----请选择-----" list="#{0:'主管/办事处待审',1:'业务部经理待审',
 	            	2:'西北-运营总监待审',3:'省外-运营总监待审',4:'北京-运营总监待审',5:'青藏-运营总监待审',
 	            	6:'西北-业务副总待审',7:'人事经理待审',8:'行政副总待审',9:'总经理待审'
 	            	}" />
@@ -87,7 +87,7 @@ max-width: 650px !important;
         </div>
         <div class="label_hang">
             <div class="label_ltit">业务审核状态:</div>
-            <div class="label_rwben label_rwb"><s:select id="check" name="leave.check_status" list="#{0:'新申请',5:'已退回',10:'待审核',15:'主管/办事处已审',20:'经理/大区已审',30:'总监已审',40:'业务副总已审' }" headerKey="" headerValue="--请选择--"  /></div>
+            <div class="label_rwben label_rwb"><s:select id="check" name="leave.check_status" list="#{0:'新申请',5:'已退回',10:'待审核',15:'主管/办事处已审',20:'业务部经理已审',30:'总监已审',40:'业务副总已审' }" headerKey="" headerValue="--请选择--"  /></div>
         </div>
         <div class="label_hang">
             <div class="label_ltit">人事审核状态:</div>
@@ -145,7 +145,7 @@ max-width: 650px !important;
 			<s:if test="check_status==5"><span class="message_error" title="${check_user_name}">已退回</span></s:if>
 			<s:if test="check_status==10"><span class="message_warning">待审核</span></s:if>
 			<s:if test="check_status==15"><span class="message_pass" title="${check_user_name}">主管/办事处已审</span></s:if>
-			<s:if test="check_status==20"><span class="message_pass" title="${check_user_name}">经理/大区已审</span></s:if>
+			<s:if test="check_status==20"><span class="message_pass" title="${check_user_name}">业务部经理已审</span></s:if>
 			<s:if test="check_status==30"><span class="message_pass" title="${check_user_name}">总监已审</span></s:if>
 			<s:if test="check_status==40"><span class="message_pass" title="${check_user_name}">业务副总已审</span></s:if>
 		</td>
@@ -310,7 +310,7 @@ function kselect(){
 		$("#userdept_nameid").val("");
 		document.getElementById("leave_is_sub_dept").checked=false;
 	}
-	if(parseInt(num)==1){//经理/大区待审
+	if(parseInt(num)==1){//业务部经理待审
 		document.getElementById("check").options[3].selected = true; 
 		document.getElementById("acheck").options[1].selected = true;
 		$("#userdept_codeid").val("");
