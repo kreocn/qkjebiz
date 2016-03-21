@@ -227,7 +227,7 @@
 			</result>
 		</action>
 		
-		<!-- 集团副总审核通过 -->
+		<!-- 营销中心副总审核通过 -->
 		<action name="mdyActiveSDStatus60" class="com.qkj.manage.action.ActiveAction" method="mdyActiveSDStatus60">
 			<result type="redirectAction">
 				<param name="actionName">active_load</param>

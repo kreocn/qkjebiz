@@ -733,7 +733,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 	
 	
 	/**
-	 * 集团副总审核通过
+	 * 营销中心副总审核通过
 	 * 
 	 * @return
 	 * @throws Exception

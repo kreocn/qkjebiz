@@ -769,7 +769,7 @@ public class SalPromotAction extends ActionSupport implements ActionAttr {
 		}
 		
 		if (sd_status == 70) {
-			noteflag = "集团副总审核通过";
+			noteflag = "营销中心副总审核通过";
 		}
 		salPromot.setSd_status(sd_status);
 		salPromot.setSd_time(new Date());

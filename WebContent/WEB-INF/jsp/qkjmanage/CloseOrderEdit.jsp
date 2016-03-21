@@ -157,7 +157,7 @@ s
 											<font class="message_pass">总经理已审</font>(${closeOrder.sd_user_name})</s:if>
 											
 											<s:if test="closeOrder.sd_state==80">
-											<font class="message_pass">集团副总已审</font>(${closeOrder.sd_user_name})</s:if>
+											<font class="message_pass">营销中心副总已审</font>(${closeOrder.sd_user_name})</s:if>
 									</div>
 
 									<div class="zhuangtai" title="${it:formatDate(closeOrder.smd_time,'yyyy-MM-dd HH:mm:ss')}">
@@ -705,7 +705,7 @@ s
 										</c:if>
 									
 									<c:if test="${closeOrder.sd_state==70 && closeOrder.apply_dept.substring(0,3)!='312'&&  it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK60',closeOrder.apply_dept)==true}">
-											<s:submit id="mdyStatus60" name="mdyStatus60" cssClass="input-green" value="集团副总审核通过" action="closeOrder_check70" onclick="return isOp('确定执行此操作?');" />
+											<s:submit id="mdyStatus60" name="mdyStatus60" cssClass="input-green" value="营销中心副总审核通过" action="closeOrder_check70" onclick="return isOp('确定执行此操作?');" />
 											<s:submit id="mdyStatus6" name="mdyStatus6" cssClass="input-red" value="审核不通过" action="closeOrder_check6" onclick="return isOp('确定执行此操作?');" />
 									</c:if>
 										
@@ -732,7 +732,7 @@ s
                                                <s:if test="closeOrder.sd_state==70">
 											<font class="message_pass">总经理已推送副总</font>(${closeOrder.sd_user_name} ${it:formatDate(closeOrder.sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
                                            <s:if test="closeOrder.sd_state==80">
-											<font class="message_pass">集团副总审核 </font>(${closeOrder.sd_user_name} ${it:formatDate(closeOrder.sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+											<font class="message_pass">营销中心副总审核 </font>(${closeOrder.sd_user_name} ${it:formatDate(closeOrder.sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 									</div>
 								</div>
 							</div>

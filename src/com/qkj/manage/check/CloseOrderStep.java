@@ -128,7 +128,7 @@ public class CloseOrderStep {
 	
 	
 	/**
-	 *集团副总通过
+	 *营销中心副总通过
 	 * 
 	 * @return
 	 * @throws Exception
@@ -253,7 +253,7 @@ public class CloseOrderStep {
 			noteflag = "推送副总";
 		}
 		if (sd_status == 80) {
-			noteflag = "集团副总审核通过";
+			noteflag = "营销中心副总审核通过";
 		}
 		closeOrder.setSd_state(sd_status);
 		closeOrder.setSd_time(new Date());

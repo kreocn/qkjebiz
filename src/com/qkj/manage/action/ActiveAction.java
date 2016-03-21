@@ -1315,7 +1315,7 @@ public void setTastingPrice(double tastingPrice) {
 	}
 	
 	/**
-	 * 集团副总审核通过
+	 * 营销中心副总审核通过
 	 * 
 	 * @return
 	 * @throws Exception
@@ -2335,7 +2335,7 @@ public void setTastingPrice(double tastingPrice) {
 	
 	
 	/**
-	 * 销售部-结案 集团副总审核通过
+	 * 销售部-结案 营销中心副总审核通过
 	 * 
 	 * @return
 	 * @throws Exception

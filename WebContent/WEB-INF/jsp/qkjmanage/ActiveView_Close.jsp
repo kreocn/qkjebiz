@@ -134,7 +134,7 @@
 										<font class="message_pass">总经理已审</font>(${active.close_sd_user_name})</s:if>
 										
 										<s:if test="active.close_sd_status==70">
-										<font class="message_pass">集团副总已审</font>(${active.close_sd_user_name})</s:if>
+										<font class="message_pass">营销中心副总已审</font>(${active.close_sd_user_name})</s:if>
 								</div>
 								<div class="zhuangtai" title="${it:formatDate(active.close_smd_time,'yyyy-MM-dd HH:mm:ss')}">
 									销管部状态:

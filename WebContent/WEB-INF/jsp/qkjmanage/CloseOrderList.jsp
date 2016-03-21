@@ -36,7 +36,7 @@ cursor: pointer;
 					<div class="label_hang">
 			            <div class="label_ltit">快速查询:</div>
 			           <div class="label_rwben2" style="size: 30%">
-			            	<s:select id="sselect" onchange="kselect();" name="sselect"  cssClass="selectKick" headerKey="" headerValue="-----请选择-----" list="#{0:'业务经理待审',1:'销管经理待审', 2:'运营总监待审', 3:'总经理待审',4:'集团副总待审',5:'财务待审'
+			            	<s:select id="sselect" onchange="kselect();" name="sselect"  cssClass="selectKick" headerKey="" headerValue="-----请选择-----" list="#{0:'业务经理待审',1:'销管经理待审', 2:'运营总监待审', 3:'总经理待审',4:'营销中心副总待审',5:'财务待审'
 			            	}" />
 			            </div>
 			        </div>
@@ -187,7 +187,7 @@ background-color: #FFF;
 										<s:if test="sd_state==60 || sd_state==70">
 										<font class="message_pass">总经理已审</font></s:if>
 										<s:if test="sd_state==80">
-										<font class="message_pass">集团副总已审</font></s:if>
+										<font class="message_pass">营销中心副总已审</font></s:if>
 						</td>
 						<td class="td2 nw" title="${smd_user_name} ${it:formatDate(smd_time,'yyyy-MM-dd HH:mm:ss')}">
 						<s:if test="smd_status==0">未签收</s:if>
