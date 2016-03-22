@@ -1251,7 +1251,7 @@ public void setTastingPrice(double tastingPrice) {
 	 * @date 2014-4-26 上午10:21:02
 	 */
 	public String mdyActiveSDStatus30Two() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_SDSTATUS30");
+		//ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_SDSTATUS30");
 		try {
 			mdyActiveSDStatus(60);
 			//mdyActiveSMDStatus(40, "2");
@@ -2270,7 +2270,7 @@ public void setTastingPrice(double tastingPrice) {
 	 * @date 2014-4-26 上午10:29:40
 	 */
 	public String mdyCloseActiveSDStatus30Two() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS30");
+		//ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS30");
 		try {
 			mdyCloseActiveSDStatus(60);
 			//mdyCloseActiveSMDStatus(40, "2");

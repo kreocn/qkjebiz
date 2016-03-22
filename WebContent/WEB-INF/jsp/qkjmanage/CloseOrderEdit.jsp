@@ -701,12 +701,12 @@ s
 										      <s:if test="closeOrder.apply_dept.substring(0,1)!='3' ">
 												<s:submit id="mdyStatus70" name="mdyStatus70" cssClass="input-red" value="推送副总" action="closeOrder_check60" onclick="return isOp('确定执行此操作?');" />
 											</s:if>
-											<s:submit id="mdyStatus6" name="mdyStatus6" cssClass="input-red" value="审核不通过" action="closeOrder_check6" onclick="return isOp('确定执行此操作?');" />
+											<s:submit id="mdyStatus6" name="mdyStatus6" cssClass="input-red" value="审核不通过" action="closeOrder_check5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
 									
-									<c:if test="${closeOrder.sd_state==70 && closeOrder.apply_dept.substring(0,3)!='312'&&  it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK60',closeOrder.apply_dept)==true}">
+									<c:if test="${closeOrder.sd_state==70 && closeOrder.apply_dept.substring(0,3)!='312'&&  it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_SDCHECK70',closeOrder.apply_dept)==true}">
 											<s:submit id="mdyStatus60" name="mdyStatus60" cssClass="input-green" value="营销中心副总审核通过" action="closeOrder_check70" onclick="return isOp('确定执行此操作?');" />
-											<s:submit id="mdyStatus6" name="mdyStatus6" cssClass="input-red" value="审核不通过" action="closeOrder_check6" onclick="return isOp('确定执行此操作?');" />
+											<s:submit id="mdyStatus6" name="mdyStatus6" cssClass="input-red" value="审核不通过" action="closeOrder_check5" onclick="return isOp('确定执行此操作?');" />
 									</c:if>
 										
 									</s:if>

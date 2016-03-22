@@ -739,7 +739,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 	 * @throws Exception
 	 */
 	public String check60() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_CHECK50");
+		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_CHECK40");
 		try {
 			check(70);
 		} catch (Exception e) {
@@ -757,7 +757,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 	 * @throws Exception
 	 */
 	public String check70() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_CHECK50");
+		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_CHECK70");
 		try {
 			check(80);
 		} catch (Exception e) {

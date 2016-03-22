@@ -798,7 +798,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	 * @throws Exception
 	 */
 	public String check60() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_CHECK70");
+		//ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_CHECK60");
 		try {
 			// mdyCloseOrderSDStatus(50,userid);
 			cocs.checkSkip(closeOrder, "check60");
@@ -817,7 +817,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 	 * @throws Exception
 	 */
 	public String check70() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_CHECK70");
+		ContextHelper.isPermit("QKJ_QKJMANAGE_CLOSEORDER_SDCHECK70");
 		try {
 			// mdyCloseOrderSDStatus(50,userid);
 			cocs.checkSkip(closeOrder, "check70");
