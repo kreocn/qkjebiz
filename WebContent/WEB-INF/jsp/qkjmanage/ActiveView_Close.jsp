@@ -247,9 +247,6 @@
 									<span class="user_sign"><img src="${caiActive.puser_sign}" /></span>
 							</div>
 							</s:if>
-							<s:else>
-								<s:if test="active.close_sd_user!=2">${active.close_fd_name}${it:formatDate(active.close_fd_time,'yyyy-MM-dd')}</s:if>
-							</s:else>
 						</div>
 					</div>
 					<div class="label_main label_main_sep"></div>
@@ -306,12 +303,7 @@
 					<div class="label_main label_main_sep"></div>
 					<div class="label_main">
 						<div class="label_hang label_hang_sign">
-							<s:if test="active.apply_dept.substring(0,1)!=4">
 								<div class="label_ltit">营销中心副总</div>
-							</s:if>
-							<s:else>
-								<div class="label_ltit">董事:</div>
-							</s:else>
 							<div class="label_rwbenx label_rwb_sign">
 								(签字/日期)
 								<s:if test="dongActive!=null">

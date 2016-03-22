@@ -83,13 +83,13 @@ cursor: pointer;
 					<div class="label_hang">
 						<div class="label_ltit">销售状态:</div>
 						<div class="label_rwben label_rwb">
-							<s:select id="check_sdstate" name="closeOrder.sd_state" cssClass="selectKick" list="#{5:'退回',10:'待审核',20:'办事处通过',30:'业务部经理审核通过',40:'总监审核通过',50:'业务副总通过',60:'总经理审核通过',70:'总经理已推送副总',80:'集团董事审核通过'}" headerKey="" headerValue="--请选择--" />
+							<s:select id="check_sdstate" name="closeOrder.sd_state" cssClass="selectKick" list="#{5:'退回',10:'待审核',20:'办事处通过',30:'业务部经理审核通过',40:'总监审核通过',50:'业务副总通过',60:'总经理审核通过',70:'总经理已推送副总',80:'营销副总审核通过'}" headerKey="" headerValue="--请选择--" />
 						</div>
 					</div>
 					<div class="label_hang">
 						<div class="label_ltit">销管状态:</div>
 						<div class="label_rwben label_rwb">
-							<s:select id="check_smdstate" name="closeOrder.smd_status" cssClass="selectKick" list="#{5:'退回',10:'已签收',30:'销管经理已审',40:'销管部经理已审',50:'销管副总通过',60:'总经理通过',70:'董事通过'}" headerKey="" headerValue="--请选择--" />
+							<s:select id="check_smdstate" name="closeOrder.smd_status" cssClass="selectKick" list="#{5:'退回',10:'已签收',30:'销管经理已审',40:'销管部经理已审',50:'销管副总通过',60:'总经理通过'}" headerKey="" headerValue="--请选择--" />
 						</div>
 					</div>
 					<div class="label_hang">
@@ -202,15 +202,6 @@ background-color: #FFF;
 										<font class="message_pass">销管部经理已审</font></s:if>
 									<s:if test="smd_status==50">
 										<font class="message_pass">销管副总已审</font></s:if>
-										
-										<s:if test="smd_status==70">
-										<s:if test="apply_dept.substring(0,1)=='4'">
-										<font class="message_pass">董事已审</font></s:if>
-										<s:else>
-										<font class="message_pass">副总已审</font>
-										</s:else>
-										</s:if>
-										
 										
 						</td>
 						
