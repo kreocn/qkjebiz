@@ -540,7 +540,7 @@
 					                    <!-- 陕西销售公司  end -->
 					                    
 					                  <!-- 传奇天佑德 start -->    
-					                    <!-- 传奇天佑德 流程：业务部经理（10）| 副总 （20）| 总经理（20）| 董事50-->   
+					                    <!-- 传奇天佑德 流程：业务部经理（10）| 副总 （20）| 总经理（20）| 营销中心副总50-->   
 					                    	<s:if test="apply.apply_dept.substring(0,1)==4">
 					                    		<c:if test="${apply.status==10 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK10',apply.apply_dept)==true}">
 											<s:submit id="apply_check10" name="apply_check10" value="业务部经理审核通过" cssClass="input-green" action="apply_check10" onclick="return isOp('确定进行此操作?');" />
@@ -556,7 +556,7 @@
 										</c:if>
 									
 										<c:if test="${apply.status==50 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK50',apply.apply_dept)==true}">
-											<s:submit id="apply_check40" name="apply_check40" cssClass="input-green" value="董事-审核通过" action="apply_check50" onclick="return isOp('确定执行此操作?');" />
+											<s:submit id="apply_check70" name="apply_check70" cssClass="input-green" value="营销中心副总-审核通过" action="apply_check70" onclick="return isOp('确定执行此操作?');" />
 											<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
 					               
