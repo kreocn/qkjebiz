@@ -174,14 +174,7 @@ s
 											<font class="message_pass">销管部经理已审</font>(${closeOrder.smd_user_name})</s:if>
 										<s:if test="closeOrder.smd_status==50">
 											<font class="message_pass">销管副总已审</font>(${closeOrder.smd_user_name})</s:if>
-										<s:if test="closeOrder.smd_status==70">
-										<s:if test="closeOrder.apply_dept.substring(0,1)!=4">
-										<font class="message_pass">副总已审</font>
-										</s:if>
-										<s:else>
-										<font class="message_pass">董事已审</font>
-										</s:else>
-											(${closeOrder.smd_user_name})</s:if>
+										
 									</div>
 
 									<div class="zhuangtai" <s:if test="%{closeOrder.fd_check_state!=0}">title="${it:formatDate(closeOrder.fd_check_time,'yyyy-MM-dd HH:mm:ss')}"</s:if>>
@@ -755,10 +748,7 @@ s
 											<s:submit id="mdyCloseOrderSMDStatus40" name="mdyCloseOrderSMDStatus40" cssClass="input-green" value="销管副总-审核通过" action="mdyCloseOrderSMDStatus50" onclick="return isOp('确定执行此操作?');" />
 											<s:submit id="mdyCloseOrderSMDStatus5" name="mdyCloseOrderSMDStatus5" cssClass="input-red" value="审核不通过" action="mdyCloseOrderSMDStatus5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
-										<c:if test="${closeOrder.smd_status>=50  && closeOrder.smd_status<70 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK70',closeOrder.apply_dept)==true}">
-										<s:submit id="mdyCloseOrderSDStatus50" name="mdyCloseOrderSDStatus50" cssClass="input-green" value="董事审核通过" action="mdyCloseOrderSMDStatus70" onclick="return isOp('确定执行此操作?');" />
-											<s:submit id="mdyCloseOrderSDStatus5" name="mdyCloseOrderSDStatus5" cssClass="input-red" value="审核不通过" action="mdyCloseOrderSMDStatus5" onclick="return isOp('确定执行此操作?');" />
-										</c:if>
+										
 									</s:if>
 									<div class="statusInline">
 										销管部审核状态:
@@ -774,8 +764,7 @@ s
 											<font class="message_pass">销管部经理已审</font>(${closeOrder.smd_user_name} ${it:formatDate(closeOrder.smd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 										<s:if test="closeOrder.smd_status==50">
 											<font class="message_pass">销管副总已审</font>(${closeOrder.smd_user_name} ${it:formatDate(closeOrder.smd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
-										<s:if test="closeOrder.smd_status==70">
-										<font class="message_pass">董事已审</font>(${closeOrder.smd_user_name} ${it:formatDate(closeOrder.smd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+										
 									</div>
 								</div>
 							</div>

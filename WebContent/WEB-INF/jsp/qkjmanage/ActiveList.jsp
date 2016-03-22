@@ -44,10 +44,10 @@ cursor: pointer;
             	2:'(申)红酒-运营总监待审',3:'(申)红酒-销管副总待审',
             	8:'(申)甘肃-总经理待审',10:'(申)陕西-总经理待审',11:'(申)北京-总经理待审',12:'(申)传奇-总经理待审',
             	51:'(申)陕西-财务待审',52:'(申)北京-财务待审',
-            	14:'(申)营销中心副总/董事-待审',
+            	14:'(申)营销中心副总-待审',
             	21:'(结)业务部经理经理待审',22:'(结)销管经理待审',23:'(结)红酒-运营总监待审',24:'(结)红酒-销管副总待审',
             	29:'(结)甘肃-总经理待审',41:'(结)陕西-总经理待审',42:'(结)北京-总经理待审',43:'(结)传奇-总经理待审',
-            	45:'(结)营销中心副总/董事-待审',
+            	45:'(结)营销中心副总-待审',
             	30:'(结)甘肃-财务待审',31:'(结)陕西-财务待审',32:'(结)北京-财务待审'
             	}" />
             </div>
@@ -101,7 +101,7 @@ cursor: pointer;
         <div class="label_hang">
             <div class="label_ltit">(申)销管状态:</div>
             <div class="label_rwben label_rwb"><s:select id="smd_sta" name="active.smd_status" cssClass="selectKick"
-				 list="#{0:'新单/未签收',5:'退回',10:'已签收',30:'销管经理已审',40:'销管部经理已审',50:'销管副总已审',70:'董事会已审'}"
+				 list="#{0:'新单/未签收',5:'退回',10:'已签收',30:'销管经理已审',40:'销管部经理已审',50:'销管副总已审'}"
 				 headerKey="" headerValue="--请选择--" />
             </div>
         </div>
@@ -124,7 +124,7 @@ cursor: pointer;
             <div class="label_ltit">(结)销管状态:</div>
             <div class="label_rwben label_rwb">
             	<s:select id="clsmdsta" name="active.close_smd_status" cssClass="selectKick"
-				 list="#{0:'新单/未签收',5:'退回',10:'已签收',30:'销管经理已审',40:'销管部经理已审',50:'销管副总已审',70:'董事会已审'}"
+				 list="#{0:'新单/未签收',5:'退回',10:'已签收',30:'销管经理已审',40:'销管部经理已审',50:'销管副总已审'}"
 				 headerKey="" headerValue="--请选择--" />
             </div>
         </div>
@@ -309,9 +309,6 @@ cursor: pointer;
 					<s:if test="smd_status==30"><font class="message_pass" title="${smd_user_name} ${it:formatDate(smd_time,'yyyy-MM-dd HH:mm:ss')}">销管经理已审</font></s:if>
 					<s:if test="smd_status==40"><font class="message_pass" title="${smd_user_name} ${it:formatDate(smd_time,'yyyy-MM-dd HH:mm:ss')}">销管部经理已审</font></s:if>
 					<s:if test="smd_status==50"><font class="message_pass" title="${smd_user_name} ${it:formatDate(smd_time,'yyyy-MM-dd HH:mm:ss')}">销管副总已审</font></s:if>
-					<s:if test="smd_status==70"><font class="message_pass" title="${smd_user_name} ${it:formatDate(smd_time,'yyyy-MM-dd HH:mm:ss')}">
-					董事会已审
-					</font></s:if>
 				</s:if>
 				<s:if test="status>2">
 				<span class="span_label">
@@ -321,9 +318,6 @@ cursor: pointer;
 					<s:if test="close_smd_status==30"><font class="message_pass" title="${close_smd_user_name} ${it:formatDate(close_smd_time,'yyyy-MM-dd HH:mm:ss')}">销管经理已审</font></s:if>
 					<s:if test="close_smd_status==40"><font class="message_pass" title="${close_smd_user_name} ${it:formatDate(close_smd_time,'yyyy-MM-dd HH:mm:ss')}">销管部经理已审</font></s:if>
 					<s:if test="close_smd_status==50"><font class="message_pass" title="${close_smd_user_name} ${it:formatDate(close_smd_time,'yyyy-MM-dd HH:mm:ss')}">销管副总已审</font></s:if>
-					<s:if test="close_smd_status==70"><font class="message_pass" title="${close_smd_user_name} ${it:formatDate(close_smd_time,'yyyy-MM-dd HH:mm:ss')}">
-					董事会已审
-					</font></s:if>
 				</span>
 				</s:if>
 			</td>
