@@ -248,7 +248,7 @@
 							</div>
 							</s:if>
 							<s:else>
-								<s:if test="active.close_sd_user!=2">${active.close_sd_user_name}${it:formatDate(active.close_fd_time,'yyyy-MM-dd')}</s:if>
+								<s:if test="active.close_sd_user!=2">${active.close_fd_name}${it:formatDate(active.close_fd_time,'yyyy-MM-dd')}</s:if>
 							</s:else>
 						</div>
 					</div>
