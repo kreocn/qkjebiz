@@ -142,9 +142,19 @@ public class FixAssetsAction extends ActionSupport {
 					this.setFixassets((FixAssets) dao.get(fixassets.getUuid()));
 					
 					UserDAO udao = new UserDAO();
+					User u=new User();
 					map.clear();
 					ContextHelper.setSearchDeptPermit4Search(map, "dept_codes", "uuid");
-					this.setOwnusers(udao.list(map));
+					if(fixassets.getOwn_user()!=null && fixassets.getOwn_user()!=""){
+						String[] uuid=fixassets.getOwn_user().split(",");
+						String name="";
+						for(int i=0;i<uuid.length;i++){
+							u=(User) udao.get(uuid[i]);
+							name+=u.getUser_name()+",";
+						}
+						fixassets.setOwn_user_name(name.substring(0,name.length()-1));
+					}
+					//this.setOwnusers(udao.list(map));
 					
 					path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/adm/assets_list?viewFlag=relist'>资产列表</a>&nbsp;&gt;&nbsp;修改资产";
 				} else {

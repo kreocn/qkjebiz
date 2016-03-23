@@ -226,16 +226,16 @@ var loadManagers2 = function(dept_code, curr_apply_user, b_m){
 		uc.innerHTML="";
 		 var checkBox="";
 		if(l==1){// 如果只有一个结果,那么直接选中
-			   checkBox="<input type='checkbox' checked='checked' name='fixassets.own_user' value='"+$(data)[0].uuid+"'>"+$(data)[0].user_name;
+			   checkBox="<input type='checkbox' checked='checked' name='userst'  username='"+$(data)[0].user_name+"' value='"+$(data)[0].uuid+"'>"+$(data)[0].user_name;
 		          
 		}else if (l > 1) {
 			$.each(data, function(i, n){
-				checkBox+="<li><input type='checkbox' name='fixassets.own_user' value='"+n.uuid+"'>"+n.user_name+"</li>";
+				checkBox+="<li><input type='checkbox' name='userst' username='"+n.user_name+"' value='"+n.uuid+"'>"+n.user_name+"</li>";
 				
 			});
 			
 		}
-		
+		checkBox+=" <input type='button' value='确定'  onclick='sureuser();'/> <input type='button' value='取消' onclick='cancleuser();'/>";
 		uc.html(checkBox);    
 		uc.show();
 	};

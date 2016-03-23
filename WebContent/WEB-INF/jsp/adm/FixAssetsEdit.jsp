@@ -160,21 +160,18 @@ display: none;
 							</div>
 						</div>
 
-						<div class="label_hang">
-							<div class="label_ltit">领用人部门:</div>
-							<div class="label_rwben2">
-								<span class="label_rwb"> <s:textfield title="部门名称" id="userdept_nameid" name="fixassets.own_userdept_name" readonly="true" /> <s:hidden title="部门代码" id="userdept_codeid" name="fixassets.own_userdept" readonly="true" />
-								</span> <span class="lb nw"> <img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true,null,null,'asset');" /> <span
-									id="ajax_member_message"></span>
-								</span>
-							</div>
-						</div>
+						
 						<div class="label_hang">
 							<div class="label_ltit">领用人:</div>
-							<div class="label_rwben label_rwb" style="position:relative;">
-								<s:textfield name=""  title="" cssClass="validate[maxSize[32]]" onclick="assetDiv();"/>
+							<div class="label_rwbenx" style="position:relative;">
+								<s:textfield id="assetusername" name="fixassets.own_user_name"  onclick="assetDiv();"/>
+								<span class="lb nw"> <img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true,null,null,'asset');" /> <span
+									id="ajax_member_message"></span>
+								</span>
+								<s:hidden id="assetuser" name="fixassets.own_user"></s:hidden>
 								<div id="asset" class="asset">
 								<!-- <input type="checkbox" checked="checked" value=""> -->
+								
 								</div>
 								<%-- <select id="membermanagerid" class="selectKick" name="fixassets.own_user">
 								<s:if test="%{fixassets.own_user!=null}">
@@ -184,9 +181,6 @@ display: none;
 								<option>---请选择---</option>
 								</s:else>
 								</select> --%>
-							</div>
-							
-							<div id="asset" style="height: 800px;width: 600px;">
 							</div>
 						</div>
 
@@ -300,6 +294,23 @@ function createMdyOwnDialog(item_id) {
 	$("#assetItem_own_user").val(i_own);
 	$("#assetItem_use_time").val(i_date);
 	$("#mdyAssetItemsOwn").dialog("open");
+}
+
+function sureuser(){
+	var newindexflag=[];
+	var username=[];
+ $("input[name=userst]:checked").each(function(){ 
+		newindexflag.push($(this).val()); 
+		username.push($(this).attr("username")); 
+	});  
+	
+	$("#assetuser").val(newindexflag);
+	$("#assetusername").val(username);
+	document.getElementById('asset').style.display = "none";
+}
+
+function cancleuser(){
+	document.getElementById('asset').style.display = "none";
 }
 </script>
 </body>
