@@ -30,15 +30,13 @@ cursor: pointer;
 		</div>
 		<s:form id="serachForm" name="serachForm" action="closeOrder_list" method="get" namespace="/qkjmanage" theme="simple">
 		<s:hidden name="per" value="null"></s:hidden>
+		    <s:hidden name="finance" id="finance" value="1"></s:hidden>
 			<div class="label_con">
 				<div class="label_main">
 					<div class="label_hang">
 			            <div class="label_ltit">快速查询:</div>
 			           <div class="label_rwben2" style="size: 30%">
-			            	<s:select id="sselect" onchange="kselect();" name="sselect"  cssClass="selectKick" headerKey="" headerValue="-----请选择-----" list="#{0:'大区经理待审',1:'销管经理待审',
-			            	2:'运营总监待审',
-			            	3:'销管部经理待审',4:'业务副总待审',5:'销管副总待审',
-			            	6:'总经理待审'
+			            	<s:select id="sselect" onchange="kselect();" name="sselect"  cssClass="selectKick" headerKey="" headerValue="-----请选择-----" list="#{0:'业务部经理待审',1:'销管经理待审', 2:'运营总监待审', 3:'总经理待审',4:'营销中心副总待审',5:'财务待审'
 			            	}" />
 			            </div>
 			        </div>
@@ -85,13 +83,13 @@ cursor: pointer;
 					<div class="label_hang">
 						<div class="label_ltit">销售状态:</div>
 						<div class="label_rwben label_rwb">
-							<s:select id="check_sdstate" name="closeOrder.sd_state" cssClass="selectKick" list="#{5:'退回',10:'待审核',30:'大区审核通过',40:'总监审核通过',50:'业务副总通过'}" headerKey="" headerValue="--请选择--" />
+							<s:select id="check_sdstate" name="closeOrder.sd_state" cssClass="selectKick" list="#{5:'退回',10:'待审核',20:'办事处通过',30:'业务部经理审核通过',40:'总监审核通过',50:'业务副总通过',60:'总经理审核通过',70:'总经理已推送副总',80:'营销副总审核通过'}" headerKey="" headerValue="--请选择--" />
 						</div>
 					</div>
 					<div class="label_hang">
 						<div class="label_ltit">销管状态:</div>
 						<div class="label_rwben label_rwb">
-							<s:select id="check_smdstate" name="closeOrder.smd_status" cssClass="selectKick" list="#{5:'退回',10:'已签收',30:'销管经理已审',40:'销管部经理已审',50:'销管副总通过',60:'总经理通过',70:'董事通过'}" headerKey="" headerValue="--请选择--" />
+							<s:select id="check_smdstate" name="closeOrder.smd_status" cssClass="selectKick" list="#{5:'退回',10:'已签收',30:'销管经理已审',40:'销管部经理已审',50:'销管副总通过',60:'总经理通过'}" headerKey="" headerValue="--请选择--" />
 						</div>
 					</div>
 					<div class="label_hang">
@@ -181,11 +179,15 @@ background-color: #FFF;
 										<font class="message_pass">办事处已审</font>
 									</s:if>
 									<s:if test="sd_state==30">
-										<font class="message_pass">大区已审</font></s:if>
+										<font class="message_pass">业务部经理已审</font></s:if>
 									<s:if test="sd_state==40">
 										<font class="message_pass">总监已审</font></s:if>
 									<s:if test="sd_state==50">
 										<font class="message_pass">副总已审</font></s:if>
+										<s:if test="sd_state==60 || sd_state==70">
+										<font class="message_pass">总经理已审</font></s:if>
+										<s:if test="sd_state==80">
+										<font class="message_pass">营销中心副总已审</font></s:if>
 						</td>
 						<td class="td2 nw" title="${smd_user_name} ${it:formatDate(smd_time,'yyyy-MM-dd HH:mm:ss')}">
 						<s:if test="smd_status==0">未签收</s:if>
@@ -200,16 +202,6 @@ background-color: #FFF;
 										<font class="message_pass">销管部经理已审</font></s:if>
 									<s:if test="smd_status==50">
 										<font class="message_pass">销管副总已审</font></s:if>
-										<s:if test="smd_status==60">
-										<font class="message_pass">总经理已审</font></s:if>
-										<s:if test="smd_status==70">
-										<s:if test="apply_dept.substring(0,1)=='4'">
-										<font class="message_pass">董事已审</font></s:if>
-										<s:else>
-										<font class="message_pass">副总已审</font>
-										</s:else>
-										</s:if>
-										
 										
 						</td>
 						
@@ -319,38 +311,44 @@ function setShipVal(p_uuid) {
  
 function kselect(){
 	var num=$("#sselect").val();
+	document.getElementById("finance").value="1";
 	document.getElementById("check_state").options[2].selected = true; 
+	$("#userdept_codeid").val("");
+	$("#userdept_nameid").val("");
+	document.getElementById("apply_is_sub_dept").checked=false;
 	if(parseInt(num)==0){//(申)大区经理待审
-		document.getElementById("check_sdstate").options[2].selected = true; 
+		document.getElementById("check_sdstate").options[3].selected = true; 
 		document.getElementById("check_smdstate").options[2].selected = true;
 	}
 	if(parseInt(num)==1){//(申)销管经理待审
-		document.getElementById("check_sdstate").options[3].selected = true; 
+		document.getElementById("check_sdstate").options[4].selected = true; 
 		document.getElementById("check_smdstate").options[2].selected = true;
 	}
 	if(parseInt(num)==2){//总监
-		document.getElementById("check_sdstate").options[3].selected = true; 
+		document.getElementById("check_sdstate").options[4].selected = true; 
 		document.getElementById("check_smdstate").options[3].selected = true;
+		$("#userdept_codeid").val("312");
+		$("#userdept_nameid").val("红酒事业部");
+		document.getElementById("apply_is_sub_dept").checked=true;
 	}
 	if(parseInt(num)==3){//销管部经理待审西北
 		document.getElementById("check_sdstate").options[4].selected = true; 
 		document.getElementById("check_smdstate").options[3].selected = true;
+		document.getElementById("finance").value="3";
 		
 	}
 	if(parseInt(num)==4){//西北业务副总
-		document.getElementById("check_sdstate").options[4].selected = true; 
-		document.getElementById("check_smdstate").options[0].selected = true;
+		document.getElementById("check_sdstate").options[8].selected = true; 
+		document.getElementById("check_smdstate").options[3].selected = true;
 	}
 	if(parseInt(num)==5){//西北销管副总
-		document.getElementById("check_sdstate").options[4].selected = true; 
-		document.getElementById("check_smdstate").options[0].selected = true; 
-	}
-	
-	if(parseInt(num)==6){//总经理
 		document.getElementById("check_sdstate").options[0].selected = true; 
-		document.getElementById("check_smdstate").options[5].selected = true; 
-	
+		document.getElementById("check_smdstate").options[0].selected = true;
+		document.getElementById("finance").value="2";
+		
 	}
+	
+	
 	
 	document.getElementById("serachForm").action="/qkjmanage/closeOrder_list";
 	document.getElementById("serachForm").submit();

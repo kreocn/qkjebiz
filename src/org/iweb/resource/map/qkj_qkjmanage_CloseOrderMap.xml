@@ -51,6 +51,25 @@
 					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ c.add_user=#apply_userDouble# ]]></isNotEmpty>
 				</isNotEmpty>
 			</isEmpty>
+			
+			<isEqual property="finance" compareValue="2">
+             
+              	<isNotEmpty prepend="AND" property="finance">
+            <![CDATA[   (c.sd_state=60 or c.sd_state=80 or    (c.apply_dept like  '312%' and c.sd_state=40) )  and fd_check_state=0      ]]>
+              
+              </isNotEmpty>
+              
+               </isEqual>
+			
+			<isEqual property="finance" compareValue="3">
+             
+              	<isNotEmpty prepend="AND" property="finance">
+            <![CDATA[   c.apply_dept not like  '312%'       ]]>
+              
+              </isNotEmpty>
+              
+               </isEqual>
+			
 		</dynamic>
 		<![CDATA[ ORDER BY c.add_time DESC LIMIT 1000 ]]>
 	</select>
@@ -299,7 +318,7 @@
 			SELECT NULL sign50,NULL time50,NULL sign40,NULL time40, NULL sign60,NULL time60,u.`user_sign` sign70,s.`biz_time` time70,null sign30,null time30,null sign80,null time80,NULL sign20,NULL time20 FROM qkjm_h_process s  
 			LEFT JOIN qkjm_r_closeorder a ON (a.`uuid`=s.`biz_id`)
 			LEFT JOIN s_sys_user u ON (s.`biz_user`=u.`UUID`)
-			WHERE s.`process_id`=4 AND s.`biz_status03`=60 AND s.`biz_sign`='CLOSEORDER_MDY_SMDSTATUS' AND NOT ISNULL(u.`user_sign`) AND s.`biz_id`=#biz_id# 
+			WHERE s.`process_id`=4 AND ((s.`biz_status03`=60 AND s.`biz_sign`='CLOSEORDER_MDY_SMDSTATUS') or (s.biz_status02=60 and s.biz_sign='CLOSEORDER_MDY_SDSTATUS') or (s.biz_status02=70 and s.biz_sign='CLOSEORDER_MDY_SDSTATUS')) AND NOT ISNULL(u.`user_sign`) AND s.`biz_id`=#biz_id# 
 			AND s.`biz_time`>(SELECT MAX(p.`biz_time`) biz_time FROM qkjm_h_process p WHERE p.process_id=4 AND p.biz_status01=0 AND p.`biz_id`=#biz_id#)
 			union all
 			
@@ -314,7 +333,7 @@
 			SELECT NULL sign50,NULL time50,NULL sign40,NULL time40, NULL sign60,NULL time60,NULL sign70,NULL time70,NULL sign30,NULL time30,u.`user_sign` sign80,s.`biz_time` time80,NULL sign20,NULL time20 FROM qkjm_h_process s  
 			LEFT JOIN qkjm_r_closeorder a ON (a.`uuid`=s.`biz_id`)
 			LEFT JOIN s_sys_user u ON (s.`biz_user`=u.`UUID`)
-			WHERE s.`process_id`=4 AND s.`biz_status03`=70 AND s.`biz_sign`='CLOSEORDER_MDY_SMDSTATUS' AND NOT ISNULL(u.`user_sign`) AND s.`biz_id`=#biz_id# 
+			WHERE s.`process_id`=4 AND ((s.`biz_status03`=70 AND s.`biz_sign`='CLOSEORDER_MDY_SMDSTATUS') or (s.biz_status02=80 and s.biz_sign='CLOSEORDER_MDY_SDSTATUS')) AND NOT ISNULL(u.`user_sign`) AND s.`biz_id`=#biz_id# 
 			AND s.`biz_time`>(SELECT MAX(p.`biz_time`) biz_time FROM qkjm_h_process p WHERE p.process_id=4 AND p.biz_status01=0 AND p.`biz_id`=#biz_id#)
 			
 			union all 

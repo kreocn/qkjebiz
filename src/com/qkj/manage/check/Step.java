@@ -80,7 +80,7 @@ public class Step {
 		mdyActiveSDStatus(60,userid);
 	}
 	
-	public void step40(String userid){//集团副总
+	public void step40(String userid){//营销中心副总
 		mdyActiveSDStatus(70,userid);
 	}
 	
@@ -100,6 +100,13 @@ public class Step {
 		}
 		dao.mdyActivePass(active);
 		addProcess("ACTIVE_APPLY_PASS", "活动申请通过",userid);
+	}
+	
+	public void step900(String userid){
+		mdyMemberCapital();
+		active.setStatus(2);
+		dao.mdyActivePass(active);
+		addProcess("ACTIVE_CLOSE_PASS", "活动申请通过",userid);
 	}
 	
 	/**
@@ -145,7 +152,7 @@ public class Step {
 		mdyCloseActiveSDStatus(60,userid);
 	}
 	
-	public void step41(String userid){//结案集团副总
+	public void step41(String userid){//结案营销中心副总
 		mdyCloseActiveSDStatus(70,userid);
 	}
 	
@@ -164,6 +171,15 @@ public class Step {
 		active.setStatus(5);
 		addProcess("ACTIVE_CLOSE_PASS", "活动结案通过",userid);
 	}
+	
+	public void step100(String userid){
+		mdyMemberCapital();
+		active.setStatus(5);
+		dao.mdyCloseActivePass(active);
+		addProcess("ACTIVE_CLOSE_PASS", "活动结案通过",userid);
+	}
+	
+	
 	
 	public void step20(String userid){//结案数据中心
 		mdyActiveFDStatus(3, 10,userid);
@@ -272,7 +288,7 @@ public class Step {
 		}
 		
 		if (sd_status == 70) {
-			noteflag = "集团副总审核通过";
+			noteflag = "营销中心副总审核通过";
 		}
 		active.setSd_status(sd_status);
 		active.setSd_time(new Date());
@@ -374,7 +390,7 @@ public class Step {
 		}
 		
 		if (close_sd_status == 70) {
-			noteflag = "集团副总审核通过";
+			noteflag = "营销中心副总审核通过";
 		}
 		active.setClose_fd_status(0);
 		active.setClose_nd_status(0);

@@ -44,10 +44,10 @@ cursor: pointer;
             	2:'(申)红酒-运营总监待审',3:'(申)红酒-销管副总待审',
             	8:'(申)甘肃-总经理待审',10:'(申)陕西-总经理待审',11:'(申)北京-总经理待审',12:'(申)传奇-总经理待审',
             	51:'(申)陕西-财务待审',52:'(申)北京-财务待审',
-            	14:'(申)集团副总/董事-待审',
+            	14:'(申)营销中心副总-待审',
             	21:'(结)业务部经理经理待审',22:'(结)销管经理待审',23:'(结)红酒-运营总监待审',24:'(结)红酒-销管副总待审',
             	29:'(结)甘肃-总经理待审',41:'(结)陕西-总经理待审',42:'(结)北京-总经理待审',43:'(结)传奇-总经理待审',
-            	45:'(结)集团副总/董事-待审',
+            	45:'(结)营销中心副总-待审',
             	30:'(结)甘肃-财务待审',31:'(结)陕西-财务待审',32:'(结)北京-财务待审'
             	}" />
             </div>
@@ -94,14 +94,14 @@ cursor: pointer;
         <div class="label_hang">
             <div class="label_ltit">(申)销售状态:</div>
             <div class="label_rwben label_rwb">
-            	<s:select id="sd_status" name="active.sd_status" cssClass="selectKick" list="#{0:'新单',5:'退回',10:'待审核',20:'办事处',30:'业务部经理已审',40:'总监已审',50:'副总已审',60:'总经理已审',70:'集团副总已审'}"
+            	<s:select id="sd_status" name="active.sd_status" cssClass="selectKick" list="#{0:'新单',5:'退回',10:'待审核',20:'办事处',30:'业务部经理已审',40:'总监已审',50:'副总已审',60:'总经理已审',70:'营销中心副总已审'}"
 				 headerKey="" headerValue="--请选择--" />
             </div>
         </div>
         <div class="label_hang">
             <div class="label_ltit">(申)销管状态:</div>
             <div class="label_rwben label_rwb"><s:select id="smd_sta" name="active.smd_status" cssClass="selectKick"
-				 list="#{0:'新单/未签收',5:'退回',10:'已签收',30:'销管经理已审',40:'销管部经理已审',50:'销管副总已审',70:'董事会已审'}"
+				 list="#{0:'新单/未签收',5:'退回',10:'已签收',30:'销管经理已审',40:'销管部经理已审',50:'销管副总已审'}"
 				 headerKey="" headerValue="--请选择--" />
             </div>
         </div>
@@ -116,7 +116,7 @@ cursor: pointer;
             <div class="label_ltit">(结)销售状态:</div>
             <div class="label_rwben label_rwb">
             	<s:select id="clsdsta" name="active.close_sd_status" cssClass="selectKick"
-				 list="#{0:'新单',5:'退回',10:'待审核',20:'办事处已审',30:'业务部经理已审',40:'总监已审',50:'副总已审',60:'总经理已审',70:'集团副总已审'}"
+				 list="#{0:'新单',5:'退回',10:'待审核',20:'办事处已审',30:'业务部经理已审',40:'总监已审',50:'副总已审',60:'总经理已审',70:'营销中心副总已审'}"
 				 headerKey="" headerValue="--请选择--" />
             </div>
         </div>
@@ -124,7 +124,7 @@ cursor: pointer;
             <div class="label_ltit">(结)销管状态:</div>
             <div class="label_rwben label_rwb">
             	<s:select id="clsmdsta" name="active.close_smd_status" cssClass="selectKick"
-				 list="#{0:'新单/未签收',5:'退回',10:'已签收',30:'销管经理已审',40:'销管部经理已审',50:'销管副总已审',70:'董事会已审'}"
+				 list="#{0:'新单/未签收',5:'退回',10:'已签收',30:'销管经理已审',40:'销管部经理已审',50:'销管副总已审'}"
 				 headerKey="" headerValue="--请选择--" />
             </div>
         </div>
@@ -278,7 +278,7 @@ cursor: pointer;
 					<s:if test="sd_status==40"><font class="message_pass" title="${sd_user_name} ${it:formatDate(sd_time,'yyyy-MM-dd HH:mm:ss')}">总监已审</font></s:if>
 					<s:if test="sd_status==50"><font class="message_pass" title="${sd_user_name} ${it:formatDate(sd_time,'yyyy-MM-dd HH:mm:ss')}">副总已审</font></s:if>
 					<s:if test="sd_status==60"><font class="message_pass" title="${sd_user_name} ${it:formatDate(sd_time,'yyyy-MM-dd HH:mm:ss')}">总经理已审</font></s:if>
-					<s:if test="sd_status==70"><font class="message_pass" title="${sd_user_name} ${it:formatDate(sd_time,'yyyy-MM-dd HH:mm:ss')}">集团副总已审</font></s:if>
+					<s:if test="sd_status==70"><font class="message_pass" title="${sd_user_name} ${it:formatDate(sd_time,'yyyy-MM-dd HH:mm:ss')}">营销中心副总已审</font></s:if>
 					
 				</s:if>
 				<s:if test="status>2">
@@ -298,7 +298,7 @@ cursor: pointer;
 				<s:if test="close_sd_status==40"><font class="message_pass" title="${close_sd_user_name} ${it:formatDate(close_sd_time,'yyyy-MM-dd HH:mm:ss')}">总监已审</font></s:if>
 				<s:if test="close_sd_status==50"><font class="message_pass" title="${close_sd_user_name} ${it:formatDate(close_sd_time,'yyyy-MM-dd HH:mm:ss')}">副总已审</font></s:if>
 				<s:if test="close_sd_status==60"><font class="message_pass" title="${close_sd_user_name} ${it:formatDate(close_sd_time,'yyyy-MM-dd HH:mm:ss')}">总经理已审</font></s:if>
-				<s:if test="close_sd_status==70"><font class="message_pass" title="${close_sd_user_name} ${it:formatDate(close_sd_time,'yyyy-MM-dd HH:mm:ss')}">集团副总已审</font></s:if>
+				<s:if test="close_sd_status==70"><font class="message_pass" title="${close_sd_user_name} ${it:formatDate(close_sd_time,'yyyy-MM-dd HH:mm:ss')}">营销中心副总已审</font></s:if>
 				</s:if>
 			</td>
 			<td  class="td3">
@@ -309,9 +309,6 @@ cursor: pointer;
 					<s:if test="smd_status==30"><font class="message_pass" title="${smd_user_name} ${it:formatDate(smd_time,'yyyy-MM-dd HH:mm:ss')}">销管经理已审</font></s:if>
 					<s:if test="smd_status==40"><font class="message_pass" title="${smd_user_name} ${it:formatDate(smd_time,'yyyy-MM-dd HH:mm:ss')}">销管部经理已审</font></s:if>
 					<s:if test="smd_status==50"><font class="message_pass" title="${smd_user_name} ${it:formatDate(smd_time,'yyyy-MM-dd HH:mm:ss')}">销管副总已审</font></s:if>
-					<s:if test="smd_status==70"><font class="message_pass" title="${smd_user_name} ${it:formatDate(smd_time,'yyyy-MM-dd HH:mm:ss')}">
-					董事会已审
-					</font></s:if>
 				</s:if>
 				<s:if test="status>2">
 				<span class="span_label">
@@ -321,9 +318,6 @@ cursor: pointer;
 					<s:if test="close_smd_status==30"><font class="message_pass" title="${close_smd_user_name} ${it:formatDate(close_smd_time,'yyyy-MM-dd HH:mm:ss')}">销管经理已审</font></s:if>
 					<s:if test="close_smd_status==40"><font class="message_pass" title="${close_smd_user_name} ${it:formatDate(close_smd_time,'yyyy-MM-dd HH:mm:ss')}">销管部经理已审</font></s:if>
 					<s:if test="close_smd_status==50"><font class="message_pass" title="${close_smd_user_name} ${it:formatDate(close_smd_time,'yyyy-MM-dd HH:mm:ss')}">销管副总已审</font></s:if>
-					<s:if test="close_smd_status==70"><font class="message_pass" title="${close_smd_user_name} ${it:formatDate(close_smd_time,'yyyy-MM-dd HH:mm:ss')}">
-					董事会已审
-					</font></s:if>
 				</span>
 				</s:if>
 			</td>
@@ -344,23 +338,23 @@ cursor: pointer;
 			<a  class="daisuc"></a>
 			</s:else>
 			</td>
-			<td class="td3">
+			<td class="td5">
 			<s:if test="%{close_fd_status==10}"><!-- 已审 -->
-			<a href="javascript:;"  data="${uuid}" class="success"></a>
-			<span id="leave_cause${uuid}" style="display:none;" class="leave_cause_shows">
+			<a href="javascript:;"  data="${uuid}" class="closesuccess"></a>
+			<span id="leave_causeclose${uuid}" style="display:none;" class="leave_cause_shows">
 				操作人:${close_fd_name}<br/> 操作时间：${it:formatDate(close_fd_time,'yyyy-MM-dd hh:mm:ss')}
 			</span>
 			</s:if>
 			<s:elseif test="%{close_fd_status==5}"><a  class="nosuc"></a></s:elseif>
 			<s:else>
 			<a href="javascript:;"  data="${uuid}" class="daisuc"></a>
-			<span id="leave_cause${uuid}" style="display:none;" class="leave_cause_shows">
+			<span id="leave_causeclose${uuid}" style="display:none;" class="leave_cause_shows">
 				操作人:${close_fd_name}<br/> 操作时间：${it:formatDate(close_fd_time,'yyyy-MM-dd hh:mm:ss')}
 			</span>
 			</s:else>
 			</td>
 			
-			<td class="td5">
+			<td class="td3">
 			<s:if test="%{spe_remark!=null && spe_remark!=''}">
 			<a  class="nonull"></a>
 			</s:if>
@@ -452,6 +446,13 @@ $(".success").tooltip({
 	items: "[data]",
 	content: function() {
 		return "<div class='show_dialog'>" + $("#leave_cause" + $(this).attr("data")).html() + "</div>";
+  }
+});
+
+$(".closesuccess").tooltip({
+	items: "[data]",
+	content: function() {
+		return "<div class='show_dialog'>" + $("#leave_causeclose" + $(this).attr("data")).html() + "</div>";
   }
 });
 $(".nosuc").tooltip({
@@ -680,7 +681,7 @@ function kselect(){
 
 	if(parseInt(num)==29){//甘肃总经理
 		snull();
-		document.getElementById("clsdsta").options[5].selected = true; 
+		document.getElementById("clsdsta").options[0].selected = true; 
 		document.getElementById("clsmdsta").options[4].selected = true; 
 		$("#userdept_codeid").val("220");
 		$("#userdept_nameid").val("甘肃销售公司");

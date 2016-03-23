@@ -733,15 +733,33 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 	
 	
 	/**
-	 * 集团副总审核通过
+	 * 总经理推送副总
 	 * 
 	 * @return
 	 * @throws Exception
 	 */
 	public String check60() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_CHECK50");
+		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_CHECK40");
 		try {
 			check(70);
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!check50 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!check50 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+	
+	
+	/**
+	 * 集团副总审核通过
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String check70() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_CHECK70");
+		try {
+			check(80);
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!check50 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!check50 数据更新失败:", e);

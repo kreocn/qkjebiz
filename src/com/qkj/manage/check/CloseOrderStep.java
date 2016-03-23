@@ -90,6 +90,8 @@ public class CloseOrderStep {
 	public void check40(String userid) throws Exception {
 		mdyCloseOrderSDStatus(50, userid);
 	}
+	
+	
 
 	/**
 	 * 销售管理经理已审
@@ -102,6 +104,38 @@ public class CloseOrderStep {
 		mdyCloseOrderSMDStatus(30, userid);
 	}
 
+	
+	/**
+	 * 总经理通过
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public void check50(String userid) throws Exception {
+		mdyCloseOrderSDStatus(60, userid);
+	}
+	
+	
+	/**
+	 *推送副总
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public void check60(String userid) throws Exception {
+		mdyCloseOrderSDStatus(70, userid);
+	}
+	
+	
+	/**
+	 *营销中心副总通过
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public void check70(String userid) throws Exception {
+		mdyCloseOrderSDStatus(80, userid);
+	}
 	/**
 	 * 销管部经理已审
 	 * 
@@ -124,15 +158,7 @@ public class CloseOrderStep {
 		mdyCloseOrderSMDStatus(50, userid);
 	}
 
-	/**
-	 * 总经理通过
-	 * 
-	 * @return
-	 * @throws Exception
-	 */
-	public void check60(String userid) throws Exception {
-		mdyCloseOrderSMDStatus(60, userid);
-	}
+	
 	
 	/**
 	 * 财务通过
@@ -220,8 +246,14 @@ public class CloseOrderStep {
 		if (sd_status == 50) {
 			noteflag = "副总审核通过";
 		}
-		if (sd_status == 50) {
+		if (sd_status == 60) {
 			noteflag = "总经理审核通过";
+		}
+		if (sd_status == 70) {
+			noteflag = "推送副总";
+		}
+		if (sd_status == 80) {
+			noteflag = "营销中心副总审核通过";
 		}
 		closeOrder.setSd_state(sd_status);
 		closeOrder.setSd_time(new Date());

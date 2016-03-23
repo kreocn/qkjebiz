@@ -22,8 +22,13 @@ public class CheckSkip {
 		skipSteps.add(new SkipStep("220",null,1,8,9,false)); // 申请
 		skipSteps.add(new SkipStep("220",null,1, 40, 9,false)); // 结案
 		
+<<<<<<< HEAD
 		skipSteps.add(new SkipStep("220",null,1,18,19,false)); // 申请
 		skipSteps.add(new SkipStep("220",null,1, 41, 19,false)); // 结案
+=======
+		skipSteps.add(new SkipStep("220",null,1,18,100,false)); // 申请
+		skipSteps.add(new SkipStep("220",null,1, 41, 100,false)); // 结案
+>>>>>>> dev
 		
 		skipSteps.add(new SkipStep("2202A",null,1, 1, 2,"3",false)); // 申请
 		skipSteps.add(new SkipStep("2202A",null,1, 11, 10,false)); // 结案
@@ -41,12 +46,14 @@ public class CheckSkip {
 		skipSteps.add(new SkipStep("4",null, 1, 2, 4,"5",false));// 结案 14总监 17跳过销管副总
 		skipSteps.add(new SkipStep("4",null, 1, 12,14,"15",false));// 结案 14总监 17跳过销副总
 		
-		skipSteps.add(new SkipStep("4", null,1, 1, 3,false)); // 申请 2大区 3跳过大区
-		skipSteps.add(new SkipStep("4",null, 1, 11, 13,false)); // 申请 2大区 3跳过大区
+		skipSteps.add(new SkipStep("4", null,1, 1, 5,false)); // 申请 2大区 3跳过大区
+		skipSteps.add(new SkipStep("4",null, 1, 11, 15,false)); // 申请 2大区 3跳过大区
 		
-		skipSteps.add(new SkipStep("405", null,1, 31, 9,false)); // 申请 ,结案，跳过财务
+		skipSteps.add(new SkipStep("4",null,1, 41, 100,false)); //结案副总通过
+		skipSteps.add(new SkipStep("4",null,1, 40, 900,false)); //申请副总通过
+		/*skipSteps.add(new SkipStep("405", null,1, 31, 9,false)); // 申请 ,结案，跳过财务
 		skipSteps.add(new SkipStep("405",null, 1, 21, 19,false)); // 申请 结案，跳过财务
-		
+*/		
 		
 		//陕西销售公司（申请（办事处=业务部经理=总经理=陈总）结案（办事处=业务部经理=总经理=陈总=财务））
 		skipSteps.add(new SkipStep("5", null,1, 2, 3,false));// 申请  跳过销管

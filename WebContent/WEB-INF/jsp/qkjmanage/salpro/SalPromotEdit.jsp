@@ -70,7 +70,7 @@
 											<span class="message_pass" title="${it:formatDate(salPromot.sd_time,'yyyy-MM-dd HH:mm:ss')}">总经理已审(${salPromot.sd_name })</span>
 										</s:if>
 										<s:if test="salPromot.sd_status==70">
-											<span class="message_pass" title="${it:formatDate(salPromot.sd_time,'yyyy-MM-dd HH:mm:ss')}">集团副总已审(${salPromot.sd_name })</span>
+											<span class="message_pass" title="${it:formatDate(salPromot.sd_time,'yyyy-MM-dd HH:mm:ss')}">营销中心副总已审(${salPromot.sd_name })</span>
 										</s:if>
 									</div>
 
@@ -360,7 +360,7 @@
 											<s:if test="salPromot.sd_status==60">
 											<font class="message_pass">总经理已审</font>(${salPromot.sd_name} ${it:formatDate(salPromot.sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 											<s:if test="salPromot.sd_status==70">
-											<font class="message_pass">集团副总已审</font>(${salPromot.sd_name} ${it:formatDate(salPromot.sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+											<font class="message_pass">营销中心副总已审</font>(${salPromot.sd_name} ${it:formatDate(salPromot.sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 
 									</div>
 								</div>

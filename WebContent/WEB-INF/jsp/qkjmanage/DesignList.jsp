@@ -77,7 +77,7 @@
 						<div class="label_hang">
 							<div class="label_ltit">(申)销售状态:</div>
 							<div class="label_rwben label_rwb">
-								<s:select id="sd_status" name="active.sd_status" cssClass="selectKick" list="#{0:'新单',5:'退回',10:'待审核',20:'办事处',30:'大区已审',40:'总监已审',50:'副总已审',60:'总经理已审',70:'集团副总已审'}" headerKey="" headerValue="--请选择--" />
+								<s:select id="sd_status" name="active.sd_status" cssClass="selectKick" list="#{0:'新单',5:'退回',10:'待审核',20:'办事处',30:'大区已审',40:'总监已审',50:'副总已审',60:'总经理已审',70:'营销中心副总已审'}" headerKey="" headerValue="--请选择--" />
 							</div>
 						</div>
 						<div class="label_hang">
@@ -96,7 +96,7 @@
 						<div class="label_hang">
 							<div class="label_ltit">(结)销售状态:</div>
 							<div class="label_rwben label_rwb">
-								<s:select id="clsdsta" name="active.close_sd_status" cssClass="selectKick" list="#{0:'新单',5:'退回',10:'待审核',20:'办事处已审',30:'大区已审',40:'总监已审',50:'副总已审',60:'总经理已审',70:'集团副总已审'}" headerKey="" headerValue="--请选择--" />
+								<s:select id="clsdsta" name="active.close_sd_status" cssClass="selectKick" list="#{0:'新单',5:'退回',10:'待审核',20:'办事处已审',30:'大区已审',40:'总监已审',50:'副总已审',60:'总经理已审',70:'营销中心副总已审'}" headerKey="" headerValue="--请选择--" />
 							</div>
 						</div>
 						<div class="label_hang">
@@ -205,7 +205,7 @@
 										<font class="message_pass" title="${sd_user_name} ${it:formatDate(sd_time,'yyyy-MM-dd HH:mm:ss')}">总经理已审</font>
 									</s:if>
 									<s:if test="sd_status==70">
-										<font class="message_pass" title="${sd_user_name} ${it:formatDate(sd_time,'yyyy-MM-dd HH:mm:ss')}">集团副总已审</font>
+										<font class="message_pass" title="${sd_user_name} ${it:formatDate(sd_time,'yyyy-MM-dd HH:mm:ss')}">营销中心副总已审</font>
 									</s:if>
 
 								</s:if> <s:if test="status>2">
@@ -238,7 +238,7 @@
 										<font class="message_pass" title="${close_sd_user_name} ${it:formatDate(close_sd_time,'yyyy-MM-dd HH:mm:ss')}">总经理已审</font>
 									</s:if>
 									<s:if test="close_sd_status==70">
-										<font class="message_pass" title="${close_sd_user_name} ${it:formatDate(close_sd_time,'yyyy-MM-dd HH:mm:ss')}">集团副总已审</font>
+										<font class="message_pass" title="${close_sd_user_name} ${it:formatDate(close_sd_time,'yyyy-MM-dd HH:mm:ss')}">营销中心副总已审</font>
 									</s:if>
 								</s:if></td>
 							<td class="td3"><s:if test="status<=2">

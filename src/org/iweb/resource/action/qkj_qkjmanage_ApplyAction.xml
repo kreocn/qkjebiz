@@ -161,6 +161,17 @@
 			</result>
 		</action>
 		
+		
+		<action name="apply_check70" class="com.qkj.manage.action.ApplyAction" method="check70">
+			<result type="redirectAction">
+				<param name="actionName">apply_load</param>
+				<param name="apply.uuid">${apply.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="is_total_price">1</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
 		<action name="apply_approve" class="com.qkj.manage.action.ApplyAction" method="approve">
 			<result type="redirectAction">
 				<param name="actionName">apply_load</param>

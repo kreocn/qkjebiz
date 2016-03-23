@@ -186,11 +186,11 @@
 									<font class="message_pass">总监已审</font>(${active.sd_user_name})</s:if>
 								<s:if test="active.sd_status==50">
 									<font class="message_pass">副总已审</font>(${active.sd_user_name})</s:if>
-								<s:if test="active.sd_status==60">
+							<s:if test="active.sd_status==60">
 									<font class="message_pass">总经理已审</font>(${active.sd_user_name})</s:if>
 									
 									<s:if test="active.sd_status==70">
-									<font class="message_pass">集团副总已审</font>(${active.sd_user_name})</s:if>
+									<font class="message_pass">营销中心副总已审</font>(${active.sd_user_name})</s:if>
 							</div>
 							<div class="zhuangtai" title="${it:formatDate(active.smd_time,'yyyy-MM-dd HH:mm:ss')}">
 								销管部审核:
@@ -271,13 +271,12 @@
 				<div class="label_main">
 					<div class="label_hang label_hang_sign">
 						<div class="label_ltit">财务部:</div>
+						<s:if test="caiActive!=null && caiActive!=''">
 						<div class="label_rwbenx label_rwb_sign">
 							(签字/日期)
-							<s:if test="caiActive!=null">
 								<span class="user_sign"><img src="${caiActive.puser_sign}" /></span>
-
-							</s:if>
 						</div>
+						</s:if>
 					</div>
 				</div>
 
@@ -327,7 +326,7 @@
 				<div class="label_main">
 					<div class="label_hang label_hang_sign">
 					
-					<div class="label_ltit">董事:</div>
+					<div class="label_ltit">营销副总:</div>
 						<div class="label_rwbenx label_rwb_sign">
 							(签字/日期)
 							<s:if test="dongActive!=null">

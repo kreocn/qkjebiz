@@ -893,7 +893,7 @@ public void setTastingPrice(double tastingPrice) {
 					}
 				}
 
-				if (active.getSmd_status() >= 40) {// 董事
+				if (active.getSmd_status() >= 40 || active.getSd_status()>=60) {// 董事
 					map.clear();
 					map.put("sq", "sq");
 					map.put("biz_id", active.getUuid());
@@ -1251,7 +1251,7 @@ public void setTastingPrice(double tastingPrice) {
 	 * @date 2014-4-26 上午10:21:02
 	 */
 	public String mdyActiveSDStatus30Two() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_SDSTATUS30");
+		//ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_SDSTATUS30");
 		try {
 			mdyActiveSDStatus(60);
 			//mdyActiveSMDStatus(40, "2");
@@ -1315,7 +1315,7 @@ public void setTastingPrice(double tastingPrice) {
 	}
 	
 	/**
-	 * 集团副总审核通过
+	 * 营销中心副总审核通过
 	 * 
 	 * @return
 	 * @throws Exception
@@ -1401,6 +1401,7 @@ public void setTastingPrice(double tastingPrice) {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_SMDSTATUS");
 		try {
 			mdyActiveSMDStatus(5);
+			mdyActiveFDStatus(1, 0);
 			mdyStatus(0);
 			this.setBefUid(active.getUuid());
 			this.setUp(2);
@@ -1521,6 +1522,21 @@ public void setTastingPrice(double tastingPrice) {
 		}
 		return SUCCESS;
 	}
+	
+	public String mdyActiveFDSTATUS10Two() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_FDSTATUS10");
+		try {
+			//cs.checkSkip(active, 9);
+			mdyActiveFDStatus(1,10);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
 
 	/**
 	 * 申请财务退回mdyActiveFDStatus5
@@ -1555,6 +1571,20 @@ public void setTastingPrice(double tastingPrice) {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_FDCSTATUS10");
 		try {
 			cs.checkSkip(active, 19);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+	
+	public String mdyActiveFDCSTATUS10Two() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_FDCSTATUS10");
+		try {
+			mdyActiveFDStatus(2,10);
 			this.setBefUid(active.getUuid());
 			this.setUp(2);
 			nextActive();
@@ -1935,7 +1965,7 @@ public void setTastingPrice(double tastingPrice) {
 					}
 				}
 
-				if (active.getClose_smd_status() >= 70) {// 董事已审
+				if (active.getClose_smd_status() >= 70  || active.getClose_sd_status() >= 60) {// 董事已审
 					map.clear();
 					map.put("ja", "sq");
 					map.put("biz_id", active.getUuid());
@@ -2133,6 +2163,7 @@ public void setTastingPrice(double tastingPrice) {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS5");
 		try {
 			mdyCloseActiveSDStatus(5);
+			mdyActiveFDStatus(2, 0);
 			mdyStatus(3);
 			this.setBefUid(active.getUuid());
 			this.setUp(2);
@@ -2239,7 +2270,7 @@ public void setTastingPrice(double tastingPrice) {
 	 * @date 2014-4-26 上午10:29:40
 	 */
 	public String mdyCloseActiveSDStatus30Two() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS30");
+		//ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS30");
 		try {
 			mdyCloseActiveSDStatus(60);
 			//mdyCloseActiveSMDStatus(40, "2");
@@ -2304,7 +2335,7 @@ public void setTastingPrice(double tastingPrice) {
 	
 	
 	/**
-	 * 销售部-结案 集团副总审核通过
+	 * 销售部-结案 营销中心副总审核通过
 	 * 
 	 * @return
 	 * @throws Exception
@@ -2378,6 +2409,7 @@ public void setTastingPrice(double tastingPrice) {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_SMDSTATUS5");
 		try {
 			mdyCloseActiveSMDStatus(5);
+			mdyActiveFDStatus(2, 0);
 			mdyStatus(3);
 			this.setBefUid(active.getUuid());
 			this.setUp(2);

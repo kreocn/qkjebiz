@@ -741,6 +741,10 @@ input[type="button"].input-blue,input[type="submit"].input-blue,input[type="rese
 	border: 0; display: inline-block; width: 16px; height: 16px; background: url("../../../images/icon/ico_warn.png") transparent no-repeat 0 0px;
 }
 
+.success,.tab_warp .closesuccess {
+	border: 0; display: inline-block; width: 16px; height: 16px; background: url("../../../images/icon/ico_warn.png") transparent no-repeat 0 0px;
+}
+
 .nosuc,.tab_warp .nosuc {
 	border: 0; display: inline-block; width: 16px; height: 16px; background: url("../../../images/icon/ico_warn.png") transparent no-repeat 0 -50px;
 }
