@@ -66,6 +66,27 @@
 			Where uuid = #uuid#
 		]]>
 	</update>
+	
+	<update id="adm_mdyUserNum" parameterClass="fixassets">
+		<![CDATA[
+			Update qkja_r_fixassets
+			Set 
+				num=#num#,
+				own_user=#own_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<update id="adm_mdyPositionNum" parameterClass="fixassets">
+		<![CDATA[
+			Update qkja_r_fixassets
+			Set 
+				num=#num#,
+				position=#position#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
 	<delete id="adm_delFixAssets" parameterClass="fixassets">
 	<![CDATA[
 		Delete From qkja_r_fixassets Where uuid=#uuid#

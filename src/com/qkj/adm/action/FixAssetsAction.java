@@ -235,4 +235,132 @@ public class FixAssetsAction extends ActionSupport {
 		}
 		return SUCCESS;
 	}
+	
+	public String userSplit() throws Exception {
+		ContextHelper.isPermit("QKJ_ADM_ASSETS_ADD");
+		try {
+			dao.startTransaction();
+			FixAssets f=new FixAssets();
+			if(!(fixassets == null || fixassets.getUuid() == null || fixassets.getOwn_user()==null)){
+				String user[]=fixassets.getOwn_user().split(",");
+				f=(FixAssets) dao.get(fixassets.getUuid());
+				if(user.length==f.getNum()){//人数和数量相等则平均
+					FixAssets fc=new FixAssets();
+					fc.setUuid(f.getUuid());
+					fc.setNum(1);
+					fc.setOwn_user(user[0]);
+					dao.mdyUserNum(fc);
+				for(int i=1;i<user.length;i++){
+						f.setUuid(ToolsUtil.getUUID("M"));
+						f.setAdd_user(ContextHelper.getUserLoginUuid());
+						f.setAdd_time(new Date());
+						f.setLm_user(ContextHelper.getUserLoginUuid());
+						f.setLm_time(new Date());
+						f.setNum(1);
+						f.setOwn_user(user[i]);
+						dao.add(f);
+					}
+				
+				}else if(user.length<f.getNum()){//人数小于数量
+					int a=0;
+					if(f.getNum() % user.length== 0) {//可以整除
+						a=f.getNum()/user.length;
+						FixAssets fc=new FixAssets();
+						fc.setUuid(f.getUuid());
+						fc.setNum(a);
+						fc.setOwn_user(user[0]);
+						dao.mdyUserNum(fc);
+					}else{
+						a=(int) Math.floor(f.getNum()/user.length);
+						FixAssets fc=new FixAssets();
+						fc.setUuid(f.getUuid());
+						fc.setNum(a+1);
+						fc.setOwn_user(user[0]);
+						dao.mdyUserNum(fc);
+					}
+					for (int i=1;i<user.length;i++){
+						f.setUuid(ToolsUtil.getUUID("M"));
+						f.setAdd_user(ContextHelper.getUserLoginUuid());
+						f.setAdd_time(new Date());
+						f.setLm_user(ContextHelper.getUserLoginUuid());
+						f.setLm_time(new Date());
+						f.setNum(a);
+						f.setOwn_user(user[i]);
+						dao.add(f);
+					}
+				}
+			} 
+			dao.commitTransaction();
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!add 数据添加失败:", e);
+			throw new Exception(this.getClass().getName() + "!add 数据添加失败:", e);
+		}finally {
+			dao.endTransaction();
+		}
+		return SUCCESS;
+	}
+	
+	public String positionSplit() throws Exception {
+		ContextHelper.isPermit("QKJ_ADM_ASSETS_ADD");
+		try {
+			dao.startTransaction();
+			FixAssets f=new FixAssets();
+			if(!(fixassets == null || fixassets.getUuid() == null || fixassets.getPosition()==null)){
+				String position[]=fixassets.getPosition().split(",");
+				f=(FixAssets) dao.get(fixassets.getUuid());
+				if(position.length==f.getNum()){//人数和数量相等则平均
+					FixAssets fc=new FixAssets();
+					fc.setUuid(f.getUuid());
+					fc.setNum(1);
+					fc.setPosition(position[0]);
+					dao.mdyPositionNum(fc);
+				for(int i=1;i<position.length;i++){
+						f.setUuid(ToolsUtil.getUUID("M"));
+						f.setAdd_user(ContextHelper.getUserLoginUuid());
+						f.setAdd_time(new Date());
+						f.setLm_user(ContextHelper.getUserLoginUuid());
+						f.setLm_time(new Date());
+						f.setNum(1);
+						f.setPosition(position[i]);
+						dao.add(f);
+					}
+				
+				}else if(position.length<f.getNum()){//人数小于数量
+					int a=0;
+					if(f.getNum() % position.length== 0) {//可以整除
+						a=f.getNum()/position.length;
+						FixAssets fc=new FixAssets();
+						fc.setUuid(f.getUuid());
+						fc.setNum(a);
+						fc.setPosition(position[0]);
+						dao.mdyPositionNum(fc);
+					}else{
+						a=(int) Math.floor(f.getNum()/position.length);
+						FixAssets fc=new FixAssets();
+						fc.setUuid(f.getUuid());
+						fc.setNum(a+1);
+						fc.setPosition(position[0]);
+						dao.mdyPositionNum(fc);
+					}
+					for (int i=1;i<position.length;i++){
+						f.setUuid(ToolsUtil.getUUID("M"));
+						f.setAdd_user(ContextHelper.getUserLoginUuid());
+						f.setAdd_time(new Date());
+						f.setLm_user(ContextHelper.getUserLoginUuid());
+						f.setLm_time(new Date());
+						f.setNum(a);
+						f.setPosition(position[i]);
+						dao.add(f);
+					}
+				}
+			} 
+			dao.commitTransaction();
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!add 数据添加失败:", e);
+			throw new Exception(this.getClass().getName() + "!add 数据添加失败:", e);
+		}finally {
+			dao.endTransaction();
+		}
+		return SUCCESS;
+	}
 }

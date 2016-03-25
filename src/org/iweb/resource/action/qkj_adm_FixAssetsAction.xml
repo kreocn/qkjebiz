@@ -47,6 +47,23 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
+		
+		<action name="fixassets_usersplit" class="com.qkj.adm.action.FixAssetsAction" method="userSplit">
+			<result type="redirectAction">
+				<param name="actionName">fixassets_load</param>
+				<param name="fixassets.uuid">${fixassets.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="fixassets_positionsplit" class="com.qkj.adm.action.FixAssetsAction" method="positionSplit">
+			<result type="redirectAction">
+				<param name="actionName">fixassets_load</param>
+				<param name="fixassets.uuid">${fixassets.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
 		<!-- Assets End -->
 	</package>
 </struts>

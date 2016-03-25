@@ -25,7 +25,15 @@ public class FixAssetsDAO extends AbstractDAO {
 	public int delete(Object parameters) {
 		return super.delete("adm_delFixAssets", parameters);
 	}
-
+	
+	public int mdyUserNum(Object parameters) {
+		return super.save("adm_mdyUserNum", parameters);
+	}
+	
+	public int mdyPositionNum(Object parameters) {
+		return super.save("adm_mdyPositionNum", parameters);
+	}
+	
 	public int getResultCount() {
 		return super.getResultCount();
 	}

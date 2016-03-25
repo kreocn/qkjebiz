@@ -19,22 +19,10 @@
 </style>
 
 <style type="text/css">
-.asset{
-border-style: solid ; 
-border-width: 10px ; 
-border-color: pink ;
-background-color:#fff;
-
-position: absolute ;
-height:200px ;
-width:200px ;
-bottom:35px; 
-height:400px;
-overflow:auto;
-
-display: none;
+.asset {
+	border-style: solid; border-width: 1px; border-color: pink; background-color: #fff; position: relative; width: 200px;  height: 200px;
+	overflow: auto; display: none;
 }
-
 </style>
 </head>
 <body>
@@ -156,33 +144,18 @@ display: none;
 						<div class="label_hang">
 							<div class="label_ltit">所在位置:</div>
 							<div class="label_rwbenx">
-								<s:textfield name="fixassets.position" title="所在位置" cssClass="validate[maxSize[32]]" />
+								<%-- <s:textfield name="fixassets.position" title="所在位置" cssClass="validate[maxSize[32]]" /> --%>
+								${fixassets.position }
+							</div>
+						</div>
+						<div class="label_hang">
+							<div class="label_ltit">领用人:</div>
+							<div class="label_rwbenx">
+								${fixassets.own_user_name }
 							</div>
 						</div>
 
-						
-						<div class="label_hang">
-							<div class="label_ltit">领用人:</div>
-							<div class="label_rwbenx" style="position:relative;">
-								<s:textfield id="assetusername" name="fixassets.own_user_name"  onclick="assetDiv();"/>
-								<span class="lb nw"> <img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true,null,null,'asset');" /> <span
-									id="ajax_member_message"></span>
-								</span>
-								<s:hidden id="assetuser" name="fixassets.own_user"></s:hidden>
-								<div id="asset" class="asset">
-								<!-- <input type="checkbox" checked="checked" value=""> -->
-								
-								</div>
-								<%-- <select id="membermanagerid" class="selectKick" name="fixassets.own_user">
-								<s:if test="%{fixassets.own_user!=null}">
-								<option value="${fixassets.own_user_name }">${ fixassets.own_user_name}</option>
-								</s:if>
-								<s:else>
-								<option>---请选择---</option>
-								</s:else>
-								</select> --%>
-							</div>
-						</div>
+
 
 						<div class="label_main">
 							<div class="label_hang">
@@ -194,6 +167,8 @@ display: none;
 									<s:if test="null != fixassets && 'mdy' == viewFlag">
 										<c:if test="${it:checkPermit('QKJ_ADM_ASSETS_MDY',null)==true}">
 											<s:submit id="save" name="save" value="保存" action="fixassets_save" cssClass="input-blue" />
+											<input type="button" value="领用人拆分" onclick="createMdyOwnDialog('${fixassets.uuid}');" />
+											<input type="button" value="位置拆分" onclick="createMdyPosDialog('${fixassets.uuid}');" />
 										</c:if>
 										<c:if test="${it:checkPermit('QKJ_ADM_ASSETS_DEL',null)==true}">
 											<s:submit id="delete" name="delete" value="删除" action="fixassets_del" onclick="return isDel();" cssClass="input-red" />
@@ -210,108 +185,178 @@ display: none;
 					</div>
 				</div>
 			</s:form>
-
-
-			<%-- <div id="mdyAssetItemsOwn" title="修改领用信息">
-<s:form id="form_ownAssetItems" name="form_ownAssetItems" action="assetItem_own" namespace="/adm" onsubmit="return validator(this);" method="post" theme="simple">
-<table class="ilisttable" width="100%">
-	<tr>
-		<td align="right">所属人:</td>
-		<td><s:select id="assetItem_own_user" name="assetItem.own_user" title="所属人" headerKey="" headerValue="--请选择--" list="ownusers" listKey="uuid" listValue="user_name" /></td>
-	</tr>
-	<tr>
-		<td align="right">领用时间:</td>
-		<td><input class="datepicker validate[required,custom[date]]"  id="assetItem_use_time" type="text" name="assetItem.use_time" title="领用时间" value="${it:formatDate(assetItem.use_time,'yyyy-MM-dd')}" /></td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-	    <td>
-			<s:hidden name="assetItem.asset_id" value="%{assets.uuid}" />
-			<s:hidden id="assetItem_uuid_add_own" name="assetItem.uuid"/>
-			<c:if test="${it:checkPermit('QKJ_ADM_ASSETITEM_OWN',null)==true}">
-				<s:submit id="assetItem_own" name="assetItem_own" value="确定" action="assetItem_own" />
-			</c:if>
-		</td>
-    </tr>
-</table>
-</s:form>
-</div> --%>
 		</div>
+
+		<div id="mdyAssetItemsOwn" class="label_con idialog" title="修改领用信息">
+			<s:form id="form_ownAssetItems" name="form_ownAssetItems" onSubmit="return num();" cssClass="validFormDialog" action="fixassets_split" namespace="/adm" method="post" theme="simple">
+				<div class="label_main">
+					<div class="label_hang">
+						<div class="label_ltit">领用人:</div>
+						<div class="label_rwbenx">
+							<s:textfield id="assetusername" name="fixassets.own_user_name" readonly="true"  size="80px;"/>
+							<span class="lb nw"> <img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true,null,null,'asset');" /> <span id="ajax_member_message"></span>
+							</span>
+							<s:hidden id="assetuser" name="fixassets.own_user"></s:hidden>
+							<div id="asset" class="asset">
+								<!-- <input type="checkbox" checked="checked" value=""> -->
+							</div>
+
+						</div>
+					</div>
+					
+				</div>
+				<div class="label_hang label_button tac">
+						<s:hidden name="fixassets.uuid" value="%{fixassets.uuid}" />
+							<s:submit  value="确定拆分" action="fixassets_usersplit"/>
+					</div>
+			</s:form>
+		</div>
+		
+		<div id="mdyAssetItemsPos" class="label_con idialog" title="修改领用信息">
+			<s:form id="form_ownAssetItems" name="form_ownAssetItems" onSubmit="return ponum();" cssClass="validFormDialog" action="fixassets_split" namespace="/adm" method="post" theme="simple">
+				<div class="label_main">
+					<div class="label_hang">
+						<div class="label_ltit">所在位置:</div>
+						<div class="label_rwbenx">
+							<s:textfield id="assetposit" name="fixassets.position"  size="80px;"/>
+						</div>
+					</div>
+					
+				</div>
+				<div class="label_hang label_button tac">
+						<s:hidden name="fixassets.uuid" value="%{fixassets.uuid}" />
+							<s:submit  value="确定拆分" action="fixassets_positionsplit"/>
+					</div>
+			</s:form>
+		</div>
+		
 	</div>
 	<!-- 以下为dialog div内容 -->
 	<s:action name="ref_foot" namespace="/manager" executeResult="true" />
 	<script type="text/javascript" src="<s:url value="/js/jqueryPlugins/select3/jquery.cityselect.js" />"></script>
 	<script type="text/javascript">
-$(function(){
-	$("#mmtype").citySelect({
-		url:'<s:url value="/js/jqueryPlugins/select3/mm.js" />',
-		prov:"${assets.typea}",
-		city:"${assets.typeb}",
-		dist:" ${assets.typec}",
-		nodata:"none"
-	});
-	$("#assets_price").bind("keyup",function(){
-		$("#assets_price_scope").val($("#assets_price").val()*$("#assets_num").val());
-	});
-	$("#assets_num").bind("keyup",function(){
-		$("#assets_price_scope").val($("#assets_price").val()*$("#assets_num").val());
-	});
- });
-</script>
+		$(function(){
+			$("#mmtype").citySelect({ url : '<s:url value="/js/jqueryPlugins/select3/mm.js" />',
+			prov : "${assets.typea}",
+			city : "${assets.typeb}",
+			dist : " ${assets.typec}",
+			nodata : "none" });
+			$("#assets_price").bind("keyup", function(){
+				$("#assets_price_scope").val($("#assets_price").val() * $("#assets_num").val());
+			});
+			$("#assets_num").bind("keyup", function(){
+				$("#assets_price_scope").val($("#assets_price").val() * $("#assets_num").val());
+			});
+		});
+	</script>
 	<script type="text/javascript">
-$(function(){
-	$("#addAssetItems").dialog({
-	      autoOpen: false,
-	      height: 220,
-	      width: 600,
-	      modal: true
-	});
-	$("#mdyAssetItemsOwn").dialog({
-	      autoOpen: false,
-	      height:190,
-	      width: 600,
-	      modal: true
-	});
-});
+		$(function(){
+			$("#addAssetItems").dialog({ autoOpen : false,
+			height : 220,
+			width : 600,
+			modal : true });
+			$("#mdyAssetItemsOwn").dialog({ autoOpen : false,
+			height : 350,
+			width : 600,
+			modal : true });
+			$("#mdyAssetItemsPos").dialog({ autoOpen : false,
+				height : 350,
+				width : 600,
+				modal : true });
+		});
 
-function openAddAssetItems() {
-	$("#assetItem_model").val($("#assets_model").val());
-	$("#assetItem_spec").val($("#assets_spec").val());
-	$("#assetItem_price").val($("#assets_price").val());
-	$("#addAssetItems").dialog("open");
-}
+		function openAddAssetItems(){
+			$("#assetItem_model").val($("#assets_model").val());
+			$("#assetItem_spec").val($("#assets_spec").val());
+			$("#assetItem_price").val($("#assets_price").val());
+			$("#addAssetItems").dialog("open");
+		}
 
-function createMdyOwnDialog(item_id) {
-	var tr_id = "assetItems_" + item_id;
-	var td_objs = $("#"+tr_id + " td");
-	var i_use = $(td_objs[4]).attr("data");
-	var i_own = $(td_objs[5]).attr("data");
-	var i_date = $(td_objs[6]).text();
-	$("#assetItem_uuid_add_own").val(item_id);
-	//alert(i_use + "---" + i_own + "---" + i_date); 
-	//assetItem_is_use assetItem_own_user assetItem_use_time
-	$("#assetItem_is_use").val(i_use);
-	$("#assetItem_own_user").val(i_own);
-	$("#assetItem_use_time").val(i_date);
-	$("#mdyAssetItemsOwn").dialog("open");
-}
+		function createMdyOwnDialog(item_id){
+			var tr_id = "assetItems_" + item_id;
+			var td_objs = $("#" + tr_id + " td");
+			var i_use = $(td_objs[4]).attr("data");
+			var i_own = $(td_objs[5]).attr("data");
+			var i_date = $(td_objs[6]).text();
+			$("#assetItem_uuid_add_own").val(item_id);
+			//alert(i_use + "---" + i_own + "---" + i_date); 
+			//assetItem_is_use assetItem_own_user assetItem_use_time
+			$("#assetItem_is_use").val(i_use);
+			$("#assetItem_own_user").val(i_own);
+			$("#assetItem_use_time").val(i_date);
+			$("#mdyAssetItemsOwn").dialog("open");
+		}
+		
+		function createMdyPosDialog(item_id){
+			$("#mdyAssetItemsPos").dialog("open");
+		}
 
-function sureuser(){
-	var newindexflag=[];
-	var username=[];
- $("input[name=userst]:checked").each(function(){ 
-		newindexflag.push($(this).val()); 
-		username.push($(this).attr("username")); 
-	});  
-	
-	$("#assetuser").val(newindexflag);
-	$("#assetusername").val(username);
-	document.getElementById('asset').style.display = "none";
-}
+		function sureuser(){
+			var newindexflag = [];
+			var username = [];
+			$("input[name=userst]:checked").each(function(){
+				newindexflag.push($(this).val());
+				username.push($(this).attr("username"));
+			});
 
-function cancleuser(){
-	document.getElementById('asset').style.display = "none";
-}
-</script>
+			$("#assetuser").val($("#assetuser").val()+","+newindexflag);
+			$("#assetusername").val($("#assetusername").val()+","+username);
+			/* document.getElementById('asset').style.display = "none"; */
+		}
+		
+		function sureusers(id){
+			
+				if(document.getElementById(id).checked) {
+				     // do something
+				     if($("#assetuser").val()!=null && $("#assetuser").val()!=''){
+				    	 $("#assetuser").val($("#assetuser").val()+","+document.getElementById(id).value);
+							$("#assetusername").val($("#assetusername").val()+","+$('#'+id).attr('username'));
+				     }else{
+				    	 $("#assetuser").val(document.getElementById(id).value);
+							$("#assetusername").val($('#'+id).attr('username'));
+				     }
+					
+				 }else{
+					 var name=$("#assetusername").val();
+					 var uuid=$("#assetuser").val();
+					 var n=$('#'+id).attr('username')+",";
+					 var u=id+",";
+					 if(name.indexOf(n) >=0 ){
+						 $("#assetusername").val( $("#assetusername").val().replace(n,''));
+						}else{
+							$("#assetusername").val( $("#assetusername").val().replace(","+$('#'+id).attr('username'),''));
+						}
+					 if(uuid.indexOf(u) >=0 ){
+						 $("#assetuser").val($("#assetuser").val().replace(u,''));
+					 }else{
+						 $("#assetuser").val($("#assetuser").val().replace(","+id,''));
+					 }
+					
+				 }
+			
+			
+			/* document.getElementById('asset').style.display = "none"; */
+		}
+		function num(){
+			var newdept= $("#assetuser").val().split(",");   
+			var n=${fixassets.num};
+			if((newdept.length)>n){
+				alert("领用人数不能超过物品数量!");
+				return false;
+			}
+		}
+		
+		function ponum(){
+			var newdept= $("#assetposit").val().split(",");   
+			var n=${fixassets.num};
+			if((newdept.length)>n){
+				alert("所在位置不能超过物品数量!");
+				return false;
+			}
+		}
+		function cancleuser(){
+			document.getElementById('asset').style.display = "none";
+		}
+	</script>
 </body>
 </html>
