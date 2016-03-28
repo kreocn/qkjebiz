@@ -18,7 +18,7 @@
 	<div class="dq_step">
 		${path}
 		<c:if test="${it:checkPermit('QKJ_ADM_ASSETS_ADD',null)==true}">
-			<span class="opb lb op-area"><a href="<s:url namespace="/adm" action="fixassets_load"><s:param name="viewFlag">add</s:param></s:url>" >添加固定资产</a></span>
+			<span class="opb lb op-area"><a href="<s:url namespace="/adm" action="fixassets_load"><s:param name="viewFlag">add</s:param></s:url>" >添加资产</a></span>
 		</c:if>
 	</div>
 	<s:form id="serachForm" name="serachForm" action="fixassets_list"  method="get" namespace="/adm" theme="simple">

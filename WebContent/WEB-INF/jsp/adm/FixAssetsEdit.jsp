@@ -186,7 +186,7 @@
 				</div>
 			</s:form>
 		</div>
-
+	<s:if test="null != fixassets && 'mdy' == viewFlag">
 		<div id="mdyAssetItemsOwn" class="label_con idialog" title="修改领用信息">
 			<s:form id="form_ownAssetItems" name="form_ownAssetItems" onSubmit="return num();" cssClass="validFormDialog" action="fixassets_split" namespace="/adm" method="post" theme="simple">
 				<div class="label_main">
@@ -229,7 +229,7 @@
 					</div>
 			</s:form>
 		</div>
-		
+		</s:if>
 	</div>
 	<!-- 以下为dialog div内容 -->
 	<s:action name="ref_foot" namespace="/manager" executeResult="true" />
