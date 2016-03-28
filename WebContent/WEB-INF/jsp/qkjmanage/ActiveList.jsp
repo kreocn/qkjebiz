@@ -287,12 +287,7 @@ cursor: pointer;
 				<s:if test="close_sd_status==10"><font class="message_warning">待审核</font></s:if>
 				<s:if test="close_sd_status==20"><font class="message_pass" title="${close_sd_user_name} ${it:formatDate(close_sd_time,'yyyy-MM-dd HH:mm:ss')}">办事处已审</font></s:if>
 				<s:if test="close_sd_status==30">
-				<s:if test="apply_dept.substring(0,1)==4">
-				<font class="message_pass" title="${close_sd_user_name} ${it:formatDate(close_sd_time,'yyyy-MM-dd HH:mm:ss')}">财务已审</font>
-				</s:if>
-				<s:else>
 				<font class="message_pass" title="${close_sd_user_name} ${it:formatDate(close_sd_time,'yyyy-MM-dd HH:mm:ss')}">业务部经理已审</font>
-				</s:else>
 				
 				</s:if>
 				<s:if test="close_sd_status==40"><font class="message_pass" title="${close_sd_user_name} ${it:formatDate(close_sd_time,'yyyy-MM-dd HH:mm:ss')}">总监已审</font></s:if>
@@ -322,7 +317,7 @@ cursor: pointer;
 				</s:if>
 			</td>
 			<td class="td5">
-			<s:if test="%{fd_status==10}"><!-- 已审 -->
+			<s:if test="%{fd_status>=10}"><!-- 已审 -->
 			<a href="javascript:;"  data="${uuid}" class="success"></a>
 			<span id="leave_cause${uuid}" style="display:none;" class="leave_cause_shows">
 				操作人:${fd_user_name}<br/> 操作时间：${it:formatDate(fd_time,'yyyy-MM-dd hh:mm:ss')}
@@ -339,7 +334,7 @@ cursor: pointer;
 			</s:else>
 			</td>
 			<td class="td5">
-			<s:if test="%{close_fd_status==10}"><!-- 已审 -->
+			<s:if test="%{close_fd_status>=10}"><!-- 已审 -->
 			<a href="javascript:;"  data="${uuid}" class="closesuccess"></a>
 			<span id="leave_causeclose${uuid}" style="display:none;" class="leave_cause_shows">
 				操作人:${close_fd_name}<br/> 操作时间：${it:formatDate(close_fd_time,'yyyy-MM-dd hh:mm:ss')}

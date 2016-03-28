@@ -184,7 +184,7 @@
 								<s:iterator value="activeSing" status="sta">
 									<div class="zhuangtai bgcw">
 										<s:if test="puser_sign!=null ">
-											<s:if test="caiActive==null||guanActive==null ||fuActive==null">
+											<%-- <s:if test="caiActive==null||guanActive==null ||fuActive==null">
 												<s:if test="caiActive!=null">
 													<s:if test="%{caiActive.puser_sign!=puser_sign}">
 														<span class="user_sign"><img src="${puser_sign}" /></span>
@@ -213,7 +213,10 @@
 													<span class="user_sign"><img src="${puser_sign}" /></span>
 													<span class="vab">${it:formatDate(biz_time,'yyyy-MM-dd HH:mm:ss')}</span>
 												</s:if>
-											</s:else>
+											</s:else> --%>
+											
+											<span class="user_sign"><img src="${puser_sign}" /></span>
+													<span class="vab">${it:formatDate(biz_time,'yyyy-MM-dd HH:mm:ss')}</span>
 										</s:if>
 									</div>
 								</s:iterator>
@@ -241,12 +244,10 @@
 					<div class="label_main">
 						<div class="label_hang label_hang_sign">
 							<div class="label_ltit">财务部:</div>
-							<s:if test="caiActive!=null">
 							<div class="label_rwbenx label_rwb_sign">
 								(签字/日期)
 									<span class="user_sign"><img src="${caiActive.puser_sign}" /></span>
 							</div>
-							</s:if>
 						</div>
 					</div>
 					<div class="label_main label_main_sep"></div>

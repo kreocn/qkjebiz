@@ -1523,6 +1523,71 @@ public void setTastingPrice(double tastingPrice) {
 		return SUCCESS;
 	}
 	
+	
+	/**
+	 * 传奇财务会计
+	 * 
+	 * @return
+	 * @throws Exception
+	 * @date 2014-4-26 上午10:29:40
+	 */
+	public String mdyActiveFDSTATUS901() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_FDSTATUS10");
+		try {
+			cs.checkSkip(active, 901);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+	
+	/**
+	 * 传奇财务经理
+	 * 
+	 * @return
+	 * @throws Exception
+	 * @date 2014-4-26 上午10:29:40
+	 */
+	public String mdyActiveFDSTATUS902() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_FDSTATUS20");
+		try {
+			cs.checkSkip(active, 902);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+	
+	
+	/**
+	 * 传奇财务营销中心
+	 * 
+	 * @return
+	 * @throws Exception
+	 * @date 2014-4-26 上午10:29:40
+	 */
+	public String mdyActiveFDSTATUS903() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_FDSTATUS30");
+		try {
+			cs.checkSkip(active, 903);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+	
 	public String mdyActiveFDSTATUS10Two() throws Exception {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_FDSTATUS10");
 		try {
@@ -1571,6 +1636,69 @@ public void setTastingPrice(double tastingPrice) {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_FDCSTATUS10");
 		try {
 			cs.checkSkip(active, 19);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+	
+	/**
+	 * 结案财务已审会计
+	 * 
+	 * @return
+	 * @throws Exception
+	 * @date 2014-4-26 上午10:29:40
+	 */
+	public String mdyActiveFDCSTATUS101() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_FDCSTATUS10");
+		try {
+			cs.checkSkip(active, 101);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+	
+	/**
+	 * 结案财务已审财务经历
+	 * 
+	 * @return
+	 * @throws Exception
+	 * @date 2014-4-26 上午10:29:40
+	 */
+	public String mdyActiveFDCSTATUS102() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_FDCSTATUS20");
+		try {
+			cs.checkSkip(active, 102);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!mdyActiveSMDStatus40 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+	
+	/**
+	 * 结案财务已审财务营销中心
+	 * 
+	 * @return
+	 * @throws Exception
+	 * @date 2014-4-26 上午10:29:40
+	 */
+	public String mdyActiveFDCSTATUS103() throws Exception {
+		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_FDCSTATUS30");
+		try {
+			cs.checkSkip(active, 103);
 			this.setBefUid(active.getUuid());
 			this.setUp(2);
 			nextActive();
