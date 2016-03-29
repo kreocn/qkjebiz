@@ -217,6 +217,10 @@
 									<font class="message_error">审核退回</font>(${active.fd_user_name})</s:if>
 								<s:if test="active.fd_status==10">
 									<font class="message_pass">财务已审</font>(${active.fd_user_name})</s:if>
+									<s:if test="active.fd_status==20">
+									<font class="message_pass">财务经理已审</font>(${active.fd_user_name})</s:if>
+									<s:if test="active.fd_status==30">
+									<font class="message_pass">营销中心财务已审</font>(${active.fd_user_name})</s:if>
 							</div>
 							<s:hidden name="active.status" />
 							<s:hidden name="active.sd_status" />
@@ -285,10 +289,10 @@
 						<div class="label_ltit">销管部经理:</div>
 						<div class="label_rwbenx label_rwb_sign">
 							(签字/日期)
-							<s:if test="guanActive!=null">
+							<%-- <s:if test="guanActive!=null">
 								<span class="user_sign"><img src="${guanActive.puser_sign}" /></span>
 
-							</s:if>
+							</s:if> --%>
 						</div>
 					</div>
 				</div>

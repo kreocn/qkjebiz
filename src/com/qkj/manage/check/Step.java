@@ -102,6 +102,37 @@ public class Step {
 		addProcess("ACTIVE_APPLY_PASS", "活动申请通过",userid);
 	}
 	
+	public void step901(String userid){//财务传奇会计
+		CheckSkip s=new CheckSkip();
+		this.setActive(s.getActive());
+		Active ac = new Active();
+		active.setLm_user(userid);
+		mdyActiveFDStatus(1, 10,userid);
+	}
+	
+	public void step902(String userid){//财务传奇财务经理
+		CheckSkip s=new CheckSkip();
+		this.setActive(s.getActive());
+		Active ac = new Active();
+		active.setLm_user(userid);
+		mdyActiveFDStatus(1, 20,userid);
+	}
+	
+	public void step903(String userid){//财务营销中心财务
+		CheckSkip s=new CheckSkip();
+		this.setActive(s.getActive());
+		Active ac = new Active();
+		active.setLm_user(userid);
+		mdyActiveFDStatus(1, 30,userid);
+		ac = (Active) dao.get(active.getUuid());
+		if (ac.getStatus() <= 2) {
+			active.setStatus(2);// 申请通过执行
+		}
+		dao.mdyActivePass(active);
+		addProcess("ACTIVE_APPLY_PASS", "活动申请通过",userid);
+	}
+	
+	
 	public void step900(String userid){
 		mdyMemberCapital();
 		active.setStatus(2);
@@ -179,6 +210,29 @@ public class Step {
 		addProcess("ACTIVE_CLOSE_PASS", "活动结案通过",userid);
 	}
 	
+	public void step101(String userid){//结案财务会计
+		CheckSkip s=new CheckSkip();
+		this.setActive(s.getActive());
+		mdyActiveFDStatus(2, 10,userid);
+	}
+	
+	public void step102(String userid){//结案财务经理
+		CheckSkip s=new CheckSkip();
+		this.setActive(s.getActive());
+		mdyActiveFDStatus(2, 20,userid);
+	}
+	
+	public void step103(String userid){//结案财务
+		CheckSkip s=new CheckSkip();
+		this.setActive(s.getActive());
+		mdyActiveFDStatus(2, 30,userid);
+		active.setLm_user(userid);
+		dao.mdyCloseActivePass(active);
+		// 调整随量积分
+		mdyMemberCapital();
+		active.setStatus(5);
+		addProcess("ACTIVE_CLOSE_PASS", "活动结案通过",userid);
+	}
 	
 	
 	public void step20(String userid){//结案数据中心
@@ -316,6 +370,14 @@ public class Step {
 			if (smd_status == 10) {
 				noteflag = "通过";
 			}
+			
+			if (smd_status == 20) {
+				noteflag = "财务经理通过";
+			}
+			
+			if (smd_status == 30) {
+				noteflag = "营销中心财务通过";
+			}
 			active.setFd_status(smd_status);
 			active.setFd_user(userid);
 			active.setFd_time(new Date());
@@ -329,6 +391,12 @@ public class Step {
 			}
 			if (smd_status == 10) {
 				noteflag = ContextHelper.getUserLoginName() + "通过";
+			}
+			if (smd_status == 20) {
+				noteflag = ContextHelper.getUserLoginName() + "财务经理通过";
+			}
+			if (smd_status == 30) {
+				noteflag = ContextHelper.getUserLoginName() + "营销中心财务通过";
 			}
 			active.setClose_fd_status(smd_status);
 			active.setClose_fd_user(userid);
