@@ -1611,7 +1611,7 @@ public void setTastingPrice(double tastingPrice) {
 	 * @date 2014-4-26 上午10:29:40
 	 */
 	public String mdyActiveFDStatus() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_FDSTATUS10");
+		//ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVE_FDSTATUS10");
 		try {
 			mdyActiveFDStatus(1, 5);
 			mdyStatus(0);
@@ -1731,7 +1731,7 @@ public void setTastingPrice(double tastingPrice) {
 	 * @date 2014-4-26 上午10:29:40
 	 */
 	public String mdyActiveFDCSTATUS() throws Exception {
-		ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_FDCSTATUS10");
+		//ContextHelper.isPermit("QKJ_QKJMANAGE_ACTIVECLOSE_FDCSTATUS10");
 		try {
 			mdyActiveFDStatus(2, 5);
 			mdyStatus(3);

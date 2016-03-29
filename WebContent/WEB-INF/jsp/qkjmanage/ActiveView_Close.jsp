@@ -161,6 +161,10 @@
 										<font class="message_error">审核退回</font>(${active.close_fd_name})</s:if>
 									<s:if test="active.close_fd_status==10">
 										<font class="message_pass">财务已审</font>(${active.close_fd_name})</s:if>
+										<s:if test="active.close_fd_status==20">
+										<font class="message_pass">财务经理已审</font>(${active.close_fd_name})</s:if>
+										<s:if test="active.close_fd_status==30">
+										<font class="message_pass">营销中心财务已审</font>(${active.close_fd_name})</s:if>
 								</div>
 								<div class="zhuangtai" title="${it:formatDate(active.close_smd_time,'yyyy-MM-dd HH:mm:ss')}">
 									数据中心审核状态:
@@ -269,10 +273,9 @@
 							<div class="label_ltit">销管部经理:</div>
 							<div class="label_rwbenx label_rwb_sign">
 								(签字/日期)
-								<s:if test="guanActive!=null">
+								<%-- <s:if test="guanActive!=null">
 									<span class="user_sign"><img src="${guanActive.puser_sign}" /></span>
-
-								</s:if>
+								</s:if> --%>
 							</div>
 						</div>
 					</div>
