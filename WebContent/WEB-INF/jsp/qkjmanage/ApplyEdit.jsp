@@ -434,10 +434,8 @@
 											</c:if>
 										</c:if>
 					                     	</s:if>
-
 					                     <!-- 青稞酒销售公司流程：业务部经理（10）| 总经理 （20）| 营销中心副总（70）-->        
-
-					                	<s:elseif test="apply.apply_dept.substring(0,1)==2">
+					                	<s:elseif test="apply.apply_dept.substring(0,1)==2&&apply.apply_dept.substring(0,3)!=220">
 					                	<c:if test="${apply.status==10 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK10',apply.apply_dept)==true}">
 											<s:submit id="apply_check10" name="apply_check10" value="业务部经理审核通过" cssClass="input-green" action="apply_check10" onclick="return isOp('确定进行此操作?');" />
 											<s:submit id="apply_check5" name="apply_check5" value="审核不通过" cssClass="input-red" action="apply_check5" onclick="return isOp('确定进行此操作?');" />
@@ -448,6 +446,18 @@
 											<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
 
+					                	<c:if test="${apply.status==70 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK70',apply.apply_dept)==true}">
+										<s:submit id="apply_check70" name="apply_check70" cssClass="input-green" value=" 营销中心副总-审核通过" action="apply_check70" onclick="return isOp('确定执行此操作?');" />
+											<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
+										</c:if>
+					                	</s:elseif>
+					                	
+					                	   	<s:elseif test="apply.apply_dept.substring(0,3)==220">
+					                	<c:if test="${apply.status==10 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK40',apply.apply_dept)==true}">
+										<s:submit id="apply_check40" name="apply_check40" cssClass="input-green" value="总经理-审核通过" action="apply_check40" onclick="return isOp('确定执行此操作?');" />
+											<s:submit id="apply_check60" name="apply_check60" cssClass="input-red" value="推送副总" action="apply_check60" onclick="return isOp('确定执行此操作?');" />
+											<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
+										</c:if>
 					                	<c:if test="${apply.status==70 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK70',apply.apply_dept)==true}">
 										<s:submit id="apply_check70" name="apply_check70" cssClass="input-green" value=" 营销中心副总-审核通过" action="apply_check70" onclick="return isOp('确定执行此操作?');" />
 											<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
@@ -479,11 +489,19 @@
 					                	</s:if>
 					                	  <!-- 北京天佑德 流程（红酒）：副总（10）| 总经理 （10）-->   
 					                	<s:elseif test="apply.apply_dept.substring(0,3)=='312'">
-					                	<c:if test="${apply.status==10 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK30',apply.apply_dept)==true}">
+					                	  	<s:if test="apply.apply_dept.substring(0,5)=='31205'">
+					                	  		<c:if test="${apply.status==10 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK30',apply.apply_dept)==true}">
 											<s:submit id="apply_check30" name="apply_check30" cssClass="input-green" value="副总-审核通过" action="apply_check30" onclick="return isOp('确定执行此操作?');" />
 											<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
-					                	<c:if test="${apply.status==10 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK40',apply.apply_dept)==true}">
+					                	  	</s:if>
+					                	  <s:else>
+					                	<c:if test="${apply.status==10 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK20',apply.apply_dept)==true}">
+											<s:submit id="apply_check20" name="apply_check20" cssClass="input-green" value="运营总监-审核通过" action="apply_check20" onclick="return isOp('确定执行此操作?');" />
+											<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
+										</c:if>
+										</s:else>
+					                	<c:if test="${apply.status>=10 && apply.status<50 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK40',apply.apply_dept)==true}">
 											<s:submit id="apply_check40" name="apply_check40" cssClass="input-green" value="总经理-审核通过" action="apply_check40" onclick="return isOp('确定执行此操作?');" />
 											<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
