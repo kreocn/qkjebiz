@@ -217,6 +217,10 @@
 									<font class="message_error">审核退回</font>(${active.fd_user_name})</s:if>
 								<s:if test="active.fd_status==10">
 									<font class="message_pass">财务已审</font>(${active.fd_user_name})</s:if>
+									<s:if test="active.fd_status==20">
+									<font class="message_pass">财务经理已审</font>(${active.fd_user_name})</s:if>
+									<s:if test="active.fd_status==30">
+									<font class="message_pass">营销中心财务已审</font>(${active.fd_user_name})</s:if>
 							</div>
 							<s:hidden name="active.status" />
 							<s:hidden name="active.sd_status" />
@@ -234,7 +238,7 @@
 										<s:if test="puser_sign==null">	(${puser_name})</s:if>
 										<s:else>
 											<span class="user_sign">
-											<s:if test="caiActive==null||guanActive==null ||fuActive==null">
+											<%-- <s:if test="caiActive==null||guanActive==null ||fuActive==null">
 											<s:if test="caiActive!=null"><s:if test="%{caiActive.puser_sign!=puser_sign}"><img src="${puser_sign}" /></s:if></s:if>
 											<s:elseif test="guanActive!=null"><s:if test="%{guanActive.puser_sign!=puser_sign}"><img src="${puser_sign}" /></s:if></s:elseif>
 											<s:elseif test="fuActive!=null"><s:if test="%{fuActive.puser_sign!=puser_sign}"><img src="${puser_sign}" /></s:if></s:elseif>
@@ -244,13 +248,14 @@
 											<s:if test="%{caiActive.puser_sign!=puser_sign && guanActive.puser_sign!=puser_sign && fuActive.puser_sign!=puser_sign}">
 											<img src="${puser_sign}" />
 											</s:if>
-											</s:else>
+											</s:else> --%>
+											<img src="${puser_sign}" />
 											</span>
 										</s:else>
 										<span class="vab">
-										<s:if test="%{caiActive.puser_sign!=puser_sign && guanActive.puser_sign!=puser_sign && fuActive.puser_sign!=puser_sign}">
+										<%-- <s:if test="%{caiActive.puser_sign!=puser_sign && guanActive.puser_sign!=puser_sign && fuActive.puser_sign!=puser_sign}"> --%>
 										${it:formatDate(biz_time,'yyyy-MM-dd HH:mm:ss')}
-										</s:if>
+										<%-- </s:if> --%>
 										</span>
 									</s:if>
 								</div>
@@ -271,12 +276,10 @@
 				<div class="label_main">
 					<div class="label_hang label_hang_sign">
 						<div class="label_ltit">财务部:</div>
-						<s:if test="caiActive!=null && caiActive!=''">
 						<div class="label_rwbenx label_rwb_sign">
 							(签字/日期)
 								<span class="user_sign"><img src="${caiActive.puser_sign}" /></span>
 						</div>
-						</s:if>
 					</div>
 				</div>
 
@@ -286,10 +289,10 @@
 						<div class="label_ltit">销管部经理:</div>
 						<div class="label_rwbenx label_rwb_sign">
 							(签字/日期)
-							<s:if test="guanActive!=null">
+							<%-- <s:if test="guanActive!=null">
 								<span class="user_sign"><img src="${guanActive.puser_sign}" /></span>
 
-							</s:if>
+							</s:if> --%>
 						</div>
 					</div>
 				</div>
