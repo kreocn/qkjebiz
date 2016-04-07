@@ -18,20 +18,20 @@ public class CheckSkip {
 	static {
 		
 		//西北（申请（办事外，总监）结案（办事处，销管，总监，财务））
-		skipSteps.add(new SkipStep("220",null, 1, 0, 2,"3",false)); // 申请
+		skipSteps.add(new SkipStep("220",null, 1, 0, 2,false)); // 申请
 		skipSteps.add(new SkipStep("220",null,1,8,9,false)); // 申请
 		skipSteps.add(new SkipStep("220",null,1, 40, 9,false)); // 结案
 		
 		skipSteps.add(new SkipStep("220",null,1,18,100,false)); // 申请
 		skipSteps.add(new SkipStep("220",null,1, 41, 100,false)); // 结案
 		
-		skipSteps.add(new SkipStep("2202A",null,1, 1, 2,"3",false)); // 申请
+		skipSteps.add(new SkipStep("2202A",null,1, 1, 2,false)); // 申请
 		skipSteps.add(new SkipStep("2202A",null,1, 11, 10,false)); // 结案
 		
-		skipSteps.add(new SkipStep("2202E",null,1, 1, 2,"3",false)); // 申请
+		skipSteps.add(new SkipStep("2202E",null,1, 1, 2,false)); // 申请
 		skipSteps.add(new SkipStep("2202E",null,1, 11, 10,false)); // 结案
 		
-		skipSteps.add(new SkipStep("2202X",null,1, 1, 2,"3",false)); // 申请
+		skipSteps.add(new SkipStep("2202X",null,1, 1, 2,false)); // 申请
 		skipSteps.add(new SkipStep("2202X",null,1, 11, 10,false)); // 结案
 		//红酒
 		skipSteps.add(new SkipStep("312", null,1, 1, 2,"3",false)); // 申请 直接到总监
