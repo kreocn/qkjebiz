@@ -968,7 +968,7 @@
 									</c:if>
 									</s:if>
 									<s:else>
-									<c:if test="${30==active.close_smd_status && active.close_sd_status==40 && active.close_fd_status==10  && it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SMDSTATUS50',active.apply_dept)==true}">
+									<c:if test="${30==active.close_smd_status && active.close_sd_status==40 && active.close_fd_status==0  && it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SMDSTATUS50',active.apply_dept)==true}">
 										<s:submit id="mdyCloseActiveSMDStatus50" name="mdyCloseActiveSMDStatus50" cssClass="input-green" value="销管部经理-审核通过" action="mdyCloseActiveSMDStatus50" onclick="return isOp('确定执行此操作?');" />
 										<s:submit id="mdyCloseActiveSMDStatus5" name="mdyCloseActiveSMDStatus5" cssClass="input-red" value="审核不通过" action="mdyCloseActiveSMDStatus5" onclick="return isOp('确定执行此操作?');" />
 									</c:if>
@@ -1008,12 +1008,12 @@
 									<div class="label_ltit">股份公司:</div>
 									<div class="label_rwbenx">
 										<!-- 财务 -->
-											<c:if test="${active.close_sd_status>=30 && 0==active.close_fd_status &&it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_FDCSTATUS10',null)==true}">
+											<%-- <c:if test="${active.close_sd_status>=30 && 0==active.close_fd_status &&it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_FDCSTATUS10',null)==true}">
 												<s:submit  cssClass="input-green" value="会计-审核通过" action="mdyActiveFDCSTATUS101" onclick="return isOp('确定执行此操作?');" />
 												<s:submit id="mdyActiveFDCStatus5" name="mdyActiveFDCStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveFDCSTATUS" onclick="return isOp('确定执行此操作?');" />
-											</c:if>
+											</c:if> --%>
 											
-											<c:if test="${active.close_smd_status>=40 && 10==active.close_fd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_FDCSTATUS20',null)==true}">
+											<c:if test="${active.close_smd_status>=30 && active.close_fd_status<20 && it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_FDCSTATUS20',null)==true}">
 												<s:submit  cssClass="input-green" value="财务经理-审核通过" action="mdyActiveFDCSTATUS20" onclick="return isOp('确定执行此操作?');" />
 												<s:submit id="mdyActiveFDCStatus5" name="mdyActiveFDCStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveFDCSTATUS" onclick="return isOp('确定执行此操作?');" />
 											</c:if>
