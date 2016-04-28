@@ -584,7 +584,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 	}
 
 	/**
-	 * 主管审核通过
+	 * 办事处审核通过
 	 * 
 	 * @return
 	 * @throws Exception
