@@ -178,6 +178,9 @@ background-color: #FFF;
 									<s:if test="sd_state==20">
 										<font class="message_pass">办事处已审</font>
 									</s:if>
+									
+									<s:if test="sd_state==26">
+										<font class="message_pass">区域经理已审</font></s:if>
 									<s:if test="sd_state==30">
 										<font class="message_pass">业务部经理已审</font></s:if>
 									<s:if test="sd_state==40">

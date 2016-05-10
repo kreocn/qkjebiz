@@ -234,6 +234,9 @@
 										</s:if>
 										<s:if test="active.sd_status==20">
 											<font class="message_pass">办事处已审</font>(${active.sd_user_name})</s:if>
+											
+											<s:if test="active.sd_status==26">
+											<font class="message_pass">区域经理已审</font>(${active.sd_user_name})</s:if>
 										<s:if test="active.sd_status==30">
 
 												<font class="message_pass">业务部经理已审</font>(${active.sd_user_name})
@@ -782,10 +785,25 @@
 										
 									</s:if>
 									<s:else>
+									
+										<s:if test="active.apply_dept.substring(0,5)=='31411'">
+										<c:if test="${20==active.sd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS26',active.apply_dept)==true}">
+											<s:submit cssClass="input-green" value="区域经理-审核通过" action="mdyActiveSDStatus26" onclick="return isOp('确定执行此操作?');" />
+											<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
+										</c:if>
+										
+										<c:if test="${26==active.sd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS10',active.apply_dept)==true}">
+											<s:submit id="mdyActiveSDStatus10" name="mdyActiveSDStatus10" cssClass="input-green" value="业务部经理-审核通过" action="mdyActiveSDStatus10" onclick="return isOp('确定执行此操作?');" />
+											<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
+										</c:if>
+										</s:if>
+										<s:else>
 										<c:if test="${20==active.sd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS10',active.apply_dept)==true}">
 											<s:submit id="mdyActiveSDStatus10" name="mdyActiveSDStatus10" cssClass="input-green" value="业务部经理-审核通过" action="mdyActiveSDStatus10" onclick="return isOp('确定执行此操作?');" />
 											<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
+										</s:else>
+										
 									</s:else>
 
 									<c:if test="${10==active.sd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS25',active.apply_dept)==true}">

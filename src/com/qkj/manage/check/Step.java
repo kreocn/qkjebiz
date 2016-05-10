@@ -55,6 +55,9 @@ public class Step {
 		mdyActiveSDStatus(20,userid);
 	}
 	
+	public void step26(String userid){//区域经理
+		mdyActiveSDStatus(26,userid);
+	}
 	public void step2(String userid){//经理大区
 		mdyActiveSDStatus(30,userid);
 	}
@@ -157,6 +160,10 @@ public class Step {
 	
 	public void step12(String userid){//结案大区审
 		mdyCloseActiveSDStatus(30,userid);
+	}
+	
+	public void step266(String userid){//区域经理
+		mdyCloseActiveSDStatus(26,userid);
 	}
 	
 	public void step13(String userid){//结案销管经理
@@ -328,6 +335,10 @@ public class Step {
 		if(sd_status==20){
 			noteflag="办事处审核通过";
 		}
+		if (sd_status == 26) {
+			noteflag = "区域经理审核通过";
+		}
+		
 		if (sd_status == 30) {
 			noteflag = "大区审核通过";
 		}
@@ -442,6 +453,9 @@ public class Step {
 		
 		if(close_sd_status==20){
 			noteflag="办事处审核通过";
+		}
+		if (close_sd_status == 26) {
+			noteflag = "区域经理审核通过";
 		}
 		
 		if (close_sd_status == 30) {

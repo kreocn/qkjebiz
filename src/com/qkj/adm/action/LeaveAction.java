@@ -327,6 +327,22 @@ public class LeaveAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
+	
+	/**
+	 * 区域经理审核
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String check26() throws Exception {
+		try {
+			check(26);
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!check10 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!check10 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
 
 	/**
 	 * 大区经理审核

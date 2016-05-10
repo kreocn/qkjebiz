@@ -426,6 +426,22 @@ public class TravelAction extends ActionSupport {
 		}
 		return SUCCESS;
 	}
+	
+	/**
+	 * 区域审核通过
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String mdyCheckStatus26() throws Exception {
+		try {
+			mdyCheckStatus(26);
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!mdyCheckStatus10 数据修改失败:", e);
+			throw new Exception(this.getClass().getName() + "!mdyCheckStatus10 数据修改失败:", e);
+		}
+		return SUCCESS;
+	}
 
 	/**
 	 * 大区审核通过

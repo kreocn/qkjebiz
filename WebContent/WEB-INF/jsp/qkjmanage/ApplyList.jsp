@@ -123,7 +123,7 @@ display: none;
 					<s:if test="0==status">新申请</s:if>
 					<s:if test="5==status"><span class="message_error">已退回(${check_user_name})</span></s:if>
 					<s:if test="10==status"><span class="message_warning">待审核</span></s:if>
-					
+					<s:if test="9==status"><span class="message_pass">办事处已审</span></s:if>
 					<s:if test="%{apply_dept.substring(0,1)==4}">
 					<s:if test="40==status"><span class="message_pass">副总已审</span></s:if>
 						<s:if test="50==status"><span class="message_pass">总经理已审</span></s:if>

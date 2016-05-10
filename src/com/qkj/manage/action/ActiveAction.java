@@ -1198,6 +1198,27 @@ public void setTastingPrice(double tastingPrice) {
 		}
 		return SUCCESS;
 	}
+	
+	/**
+	 * 区域经理审核通过
+	 * 
+	 * @return
+	 * @throws Exception
+	 * @date 2014-4-26 上午10:21:02
+	 */
+	public String mdyActiveSDStatus26() throws Exception {
+		try {
+			// mdyActiveSDStatus(30);
+			cs.checkSkip(active, 26);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!mdyActiveSDStatus10 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!mdyActiveSDStatus10 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
 
 	/**
 	 * 大区经理审核通过
@@ -2336,6 +2357,28 @@ public void setTastingPrice(double tastingPrice) {
 		try {
 			// mdyCloseActiveSDStatus(30);
 			cs.checkSkip(active, 10);
+			this.setBefUid(active.getUuid());
+			this.setUp(2);
+			nextActive();
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!mdyCloseActiveSDStatus10 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!mdyCloseActiveSDStatus10 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
+	
+	
+	/**
+	 * 销售部-结案 区域经理审核通过
+	 * 
+	 * @return
+	 * @throws Exception
+	 * @date 2014-4-26 上午10:29:40
+	 */
+	public String mdyCloseActiveSDStatus26() throws Exception {
+		try {
+			// mdyCloseActiveSDStatus(30);
+			cs.checkSkip(active, 266);
 			this.setBefUid(active.getUuid());
 			this.setUp(2);
 			nextActive();

@@ -716,6 +716,23 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 		}
 		return SUCCESS;
 	}
+	
+	/**
+	 * 区域经理通过
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String check26() throws Exception {
+		try {
+			// mdyCloseOrderSDStatus(30,userid);
+			cocs.checkSkip(closeOrder, "check26");
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!check1 数据更新失败:", e);
+			throw new Exception(this.getClass().getName() + "!check1 数据更新失败:", e);
+		}
+		return SUCCESS;
+	}
 
 	/**
 	 * 大区经理通过

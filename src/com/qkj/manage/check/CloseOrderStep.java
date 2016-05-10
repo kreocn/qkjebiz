@@ -62,6 +62,16 @@ public class CloseOrderStep {
 	}
 	
 	/**
+	 * 区域经理通过
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public void check26(String userid) throws Exception {
+		mdyCloseOrderSDStatus(26, userid);
+	}
+	
+	/**
 	 * 大区经理通过
 	 * 
 	 * @return
@@ -235,6 +245,10 @@ public class CloseOrderStep {
 		
 		if(sd_status==20){
 			noteflag="办事处审核通过";
+		}
+		
+		if (sd_status == 26) {
+			noteflag = "区域经理审核通过";
 		}
 		
 		if (sd_status == 30) {

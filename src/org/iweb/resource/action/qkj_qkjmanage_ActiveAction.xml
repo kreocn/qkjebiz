@@ -175,6 +175,17 @@
 			</result>
 		</action>
 		
+		<!-- 区域经理审核通过 -->
+		<action name="mdyActiveSDStatus26" class="com.qkj.manage.action.ActiveAction" method="mdyActiveSDStatus26">
+			<result type="redirectAction">
+				<param name="actionName">active_load</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
 		<!-- 大区经理审核通过 -->
 		<action name="mdyActiveSDStatus10" class="com.qkj.manage.action.ActiveAction" method="mdyActiveSDStatus10">
 			<result type="redirectAction">
@@ -433,6 +444,17 @@
 		
 		<!-- 销售部-结案:办事处经理审核通过 -->
 		<action name="mdyCloseActiveSDStatus20" class="com.qkj.manage.action.ActiveAction" method="mdyCloseActiveSDStatus20">
+			<result type="redirectAction">
+				<param name="actionName">active_closeLoad</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<!-- 销售部-结案:区域经理审核通过 -->
+		<action name="mdyCloseActiveSDStatus26" class="com.qkj.manage.action.ActiveAction" method="mdyCloseActiveSDStatus26">
 			<result type="redirectAction">
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
