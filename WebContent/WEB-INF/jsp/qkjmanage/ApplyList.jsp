@@ -134,6 +134,7 @@ display: none;
 					<s:if test="40==status"><span class="message_pass">副总已审</span></s:if>
 					</s:elseif>
 			      <s:else>
+			      <s:if test="26==status"><span class="message_pass">区域经理已审</span></s:if>
 			        <s:if test="30==status"><span class="message_pass">总监已审</span></s:if>
 			        <s:if test="9==status"><span class="message_pass">办事处已审</span></s:if>
 					<s:if test="20==status"><span class="message_pass">业务部经理已审</span></s:if>

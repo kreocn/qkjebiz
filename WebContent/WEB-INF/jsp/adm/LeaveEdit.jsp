@@ -45,6 +45,8 @@
 				<s:if test="leave.check_status==5"><span class="message_error">已退回(${leave.check_user_name})</span></s:if>
 				<s:if test="leave.check_status==10"><span class="message_warning">待审核</span></s:if>
 				<s:if test="leave.check_status==15"><span class="message_pass">主管/办事处已审(${leave.check_user_name})</span></s:if>
+				
+				<s:if test="leave.check_status==26"><span class="message_pass">区域经理审核通过(${leave.check_user_name})</span></s:if>
 				<s:if test="leave.check_status==20"><span class="message_pass">业务部经理审核通过(${leave.check_user_name})</span></s:if>
 				<s:if test="leave.check_status==30"><span class="message_pass">总监已审(${leave.check_user_name})</span></s:if>
 				<s:if test="leave.check_status==40"><span class="message_pass">业务副总已审(${leave.check_user_name})</span></s:if>
@@ -220,7 +222,7 @@
 				</c:if>
 				
 				<!-- {0:'新申请',5:'已退回',10:'待审核',20:'业务部经理审核通过',30:'总监已审',40:'业务副总已审' } -->
-				<s:if test="leave.check_status>=10 && leave.check_status<20">
+				<s:if test="leave.check_status>=10 && leave.check_status<27">
 					<c:if test="${leave.check_status==10 && leave.leave_type==0 && leave.leave_dept.substring(0,3)=='211' && it:checkPermit('QKJ_ADM_LEAVE_CHECK9',leave.leave_dept)==true}">
 						<!-- 添加办事处经理已审 -->
 						<s:submit name="leave_check9" cssClass="input-green" value="主管/办事处经理-审核通过" action="leave_check9" onclick="return isOp('确定执行此操作?');" />
@@ -228,31 +230,47 @@
 					
 					<c:if test="${leave.check_status==10  && leave.leave_dept.substring(0,3)=='314' && it:checkPermit('QKJ_ADM_LEAVE_CHECK9',leave.leave_dept)==true}">
 						<!-- 添加办事处经理已审 -->
-			
 						<s:submit name="leave_check9" cssClass="input-green" value="主管/办事处经理-审核通过" action="leave_check9" onclick="return isOp('确定执行此操作?');" />
 					</c:if>
 			
 					<c:if test="${(leave.check_status==10 && it:checkPermit('QKJ_ADM_LEAVE_CHECKB5',leave.leave_dept)==true) || leave.check_status==10 && leave.leave_type==0 && leave.leave_dept.substring(0,3)=='211' && it:checkPermit('QKJ_ADM_LEAVE_CHECK9',leave.leave_dept)==true}">
 							<s:submit name="leave_check5" value="主管/办事处经理-审核不通过" action="leave_check5" cssClass="input-red" onclick="return isOp('确定执行此操作?');" />
 					</c:if>
-						<c:if test="${leave.leave_dept.substring(0,3)!='314' }">
-					<c:if test="${it:checkPermit('QKJ_ADM_LEAVE_CHECK10',leave.leave_dept)==true}">
-						<s:submit name="leave_check10" cssClass="input-green" value="业务部经理审核通过" action="leave_check10" onclick="return isOp('确定执行此操作?');" />
-						<c:if test="${it:checkPermit('QKJ_ADM_LEAVE_CHECK5',leave.leave_dept)==true}">
-							<s:submit name="leave_check5" value="业务部经理审核通过" action="leave_check5" cssClass="input-red" onclick="return isOp('确定执行此操作?');" />
+					<c:if test="${leave.leave_dept.substring(0,3)!='314' }">
+						<c:if test="${it:checkPermit('QKJ_ADM_LEAVE_CHECK10',leave.leave_dept)==true}">
+							<s:submit name="leave_check10" cssClass="input-green" value="业务部经理审核通过" action="leave_check10" onclick="return isOp('确定执行此操作?');" />
+							<c:if test="${it:checkPermit('QKJ_ADM_LEAVE_CHECK5',leave.leave_dept)==true}">
+								<s:submit name="leave_check5" value="业务部经理审核通过" action="leave_check5" cssClass="input-red" onclick="return isOp('确定执行此操作?');" />
+							</c:if>
 						</c:if>
 					</c:if>
+					
+				<c:if test="${leave.leave_dept.substring(0,3)=='314' }">
+				<s:if test="leave.leave_dept.substring(0,5)=='31411'">
+					<c:if test="${leave.check_status==15 &&  it:checkPermit('QKJ_ADM_LEAVE_CHECK26',leave.leave_dept)==true}">
+							<s:submit name="leave_check10" cssClass="input-green" value="区域经理审核通过" action="leave_check26" onclick="return isOp('确定执行此操作?');" />
+							<c:if test="${it:checkPermit('QKJ_ADM_LEAVE_CHECK5',leave.leave_dept)==true}">
+								<s:submit name="leave_check5" value="区域经理审核通过" action="leave_check5" cssClass="input-red" onclick="return isOp('确定执行此操作?');" />
+							</c:if>
 					</c:if>
-	
-				<c:if test="${leave.leave_dept.substring(0,3)=='314' && leave.check_status==15 &&  it:checkPermit('QKJ_ADM_LEAVE_CHECK10',leave.leave_dept)==true}">
-			
-				<c:if test="${it:checkPermit('QKJ_ADM_LEAVE_CHECK10',leave.leave_dept)==true}">
-						<s:submit name="leave_check10" cssClass="input-green" value="业务部经理审核通过" action="leave_check10" onclick="return isOp('确定执行此操作?');" />
-						<c:if test="${it:checkPermit('QKJ_ADM_LEAVE_CHECK5',leave.leave_dept)==true}">
-							<s:submit name="leave_check5" value="业务部经理审核通过" action="leave_check5" cssClass="input-red" onclick="return isOp('确定执行此操作?');" />
-						</c:if>
+					
+					<c:if test="${leave.check_status==26 &&  it:checkPermit('QKJ_ADM_LEAVE_CHECK10',leave.leave_dept)==true}">
+							<s:submit name="leave_check10" cssClass="input-green" value="业务部经理审核通过" action="leave_check10" onclick="return isOp('确定执行此操作?');" />
+							<c:if test="${it:checkPermit('QKJ_ADM_LEAVE_CHECK5',leave.leave_dept)==true}">
+								<s:submit name="leave_check5" value="业务部经理审核通过" action="leave_check5" cssClass="input-red" onclick="return isOp('确定执行此操作?');" />
+							</c:if>
 					</c:if>
+				</s:if>
+				<s:else>
+					<c:if test="${leave.check_status==15 &&  it:checkPermit('QKJ_ADM_LEAVE_CHECK10',leave.leave_dept)==true}">
+							<s:submit name="leave_check10" cssClass="input-green" value="业务部经理审核通过" action="leave_check10" onclick="return isOp('确定执行此操作?');" />
+							<c:if test="${it:checkPermit('QKJ_ADM_LEAVE_CHECK5',leave.leave_dept)==true}">
+								<s:submit name="leave_check5" value="业务部经理审核通过" action="leave_check5" cssClass="input-red" onclick="return isOp('确定执行此操作?');" />
+							</c:if>
+					</c:if>
+				</s:else>
 				</c:if>
+				
 				</s:if>
 				
 				<s:if test="leave.leave_dept.substring(0,4)=='2113'">
@@ -309,7 +327,7 @@
 						</c:if>
 					</c:if>
 					<s:if test="leave.leave_dept.substring(0,1)==3||leave.leave_dept.substring(0,1)==5">
-						<c:if test="${leave.check_status>=20 && leave.acheck_status!=30 && it:checkPermit('QKJ_ADM_LEAVE_ACHECK20',leave.leave_dept)==true}">
+						<c:if test="${leave.check_status>=20 && leave.check_status!=26 && leave.acheck_status!=30 && it:checkPermit('QKJ_ADM_LEAVE_ACHECK20',leave.leave_dept)==true}">
 						<s:submit name="leave_acheck20" cssClass="input-green" value="总经理-审核通过" action="leave_acheck20" onclick="return isOp('确定执行此操作?');" />
 						<c:if test="${it:checkPermit('QKJ_ADM_LEAVE_CHECK5',leave.leave_dept)==true}">
 							<s:submit name="leave_check5" value="总经理-审核不通过" action="leave_check5" cssClass="input-red" onclick="return isOp('确定执行此操作?');" />

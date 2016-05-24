@@ -418,6 +418,9 @@ public class UserLoginAction extends ActionSupport {
 													flag = ToolsUtil.isIn(userDept.getDept_code(), a);// 判断在不在数组中
 													if (flag == false) {
 														String[] all1 = (String[]) ArrayUtils.addAll(s, a);
+														if(all1==null && v!=null){
+															all1[0]=v;
+														}
 														String[] all = (String[]) ArrayUtils.add(all1, userDept.getDept_code());
 														ud_dept_map.put(roles_prvg.getPrivilege_id(), JSONUtil.toJsonString(all));
 													}

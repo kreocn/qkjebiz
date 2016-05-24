@@ -145,6 +145,7 @@ max-width: 650px !important;
 			<s:if test="check_status==5"><span class="message_error" title="${check_user_name}">已退回</span></s:if>
 			<s:if test="check_status==10"><span class="message_warning">待审核</span></s:if>
 			<s:if test="check_status==15"><span class="message_pass" title="${check_user_name}">主管/办事处已审</span></s:if>
+			<s:if test="check_status==26"><span class="message_pass" title="${check_user_name}">区域经理已审</span></s:if>
 			<s:if test="check_status==20"><span class="message_pass" title="${check_user_name}">业务部经理已审</span></s:if>
 			<s:if test="check_status==30"><span class="message_pass" title="${check_user_name}">总监已审</span></s:if>
 			<s:if test="check_status==40"><span class="message_pass" title="${check_user_name}">业务副总已审</span></s:if>
