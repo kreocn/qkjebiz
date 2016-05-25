@@ -513,15 +513,28 @@
 					                	  	 <s:else>
 					                	  	 	<s:if test="apply.apply_dept.substring(0,5)=='31203'">
 					                	  		<c:if test="${apply.status==10 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK9',apply.apply_dept)==true}">
-											<s:submit id="apply_check9" name="apply_check9" cssClass="input-green" value="办事处-审核通过" action="apply_check9" onclick="return isOp('确定执行此操作?');" />
-											<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
-										</c:if>
+													<s:submit id="apply_check9" name="apply_check9" cssClass="input-green" value="办事处-审核通过" action="apply_check9" onclick="return isOp('确定执行此操作?');" />
+													<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
+												</c:if>
 									
-										   <c:if test="${apply.status==9 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK20',apply.apply_dept)==true}">
-											<s:submit id="apply_check20" name="apply_check20" cssClass="input-green" value="运营总监-审核通过" action="apply_check20" onclick="return isOp('确定执行此操作?');" />
-											<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
-										</c:if>
-					                	  	</s:if>
+										   		<c:if test="${apply.status==9 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK20',apply.apply_dept)==true}">
+													<s:submit id="apply_check20" name="apply_check20" cssClass="input-green" value="运营总监-审核通过" action="apply_check20" onclick="return isOp('确定执行此操作?');" />
+													<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
+												</c:if>
+					                	  		</s:if>
+					                	  		<s:elseif test="apply.apply_dept.substring(0,5)=='31204'">
+					                	  		
+										
+					                	  		<c:if test="${apply.status==10 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK10',apply.apply_dept)==true}">
+													<s:submit id="apply_check10" name="apply_check10" value="业务部经理审核通过" cssClass="input-green" action="apply_check10" onclick="return isOp('确定进行此操作?');" />
+													<s:submit id="apply_check5" name="apply_check5" value="审核不通过" cssClass="input-red" action="apply_check5" onclick="return isOp('确定进行此操作?');" />
+												</c:if>
+									
+										   		<c:if test="${apply.status==20 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK20',apply.apply_dept)==true}">
+													<s:submit id="apply_check20" name="apply_check20" cssClass="input-green" value="运营总监-审核通过" action="apply_check20" onclick="return isOp('确定执行此操作?');" />
+													<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
+												</c:if>
+					                	  		</s:elseif>
 					                	  	</s:else>
 					                	  	
 					                	  <s:else>
@@ -634,7 +647,7 @@
 									<c:if test="${'mdy' == viewFlag && it:checkPermit('QKJ_QKJMANAGE_APPLY_APPROVE',apply.apply_dept)==true}">
 										<input type="button" value="审阅" onclick="openApprove();" />
 									</c:if>
-									<c:if test="${apply.status>=10 && it:checkPermit('QKJ_QKJMANAGE_APPLY_SPT',apply.apply_dept)==true}">
+									<c:if test="${apply.status>=9 && it:checkPermit('QKJ_QKJMANAGE_APPLY_SPT',apply.apply_dept)==true}">
 										<s:submit id="delete" name="delete" value="退回" action="apply_spt" cssClass="input-red" onclick="return isOp('确定执行此操作?将退回到未审核状态');" />
 									</c:if>
 									<s:if test="apply.status>=40&&apply.status!=70">

@@ -130,6 +130,7 @@ display: none;
 						<s:if test="60==status"><span class="message_pass">董事已审</span></s:if>
 					</s:if>
 			      <s:elseif test="%{apply_dept.substring(0,3)==312}">
+			      	<s:if test="20==status"><span class="message_pass">业务部经理已审</span></s:if>
 			       <s:if test="30==status"><span class="message_pass">总监已审</span></s:if>
 					<s:if test="40==status"><span class="message_pass">副总已审</span></s:if>
 					</s:elseif>
