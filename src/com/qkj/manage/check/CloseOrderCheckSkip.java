@@ -36,6 +36,11 @@ public class CloseOrderCheckSkip {
 		// 北京
 		skipSteps.add(new CloseOrerSkipStep("3","312",1, "check20", "mdyCloseOrderSMDStatus10")); // 跳过大区
 		skipSteps.add(new CloseOrerSkipStep("312",null,1, "check0", "check20,mdyCloseOrderSMDStatus10")); // 跳过大区
+		
+		//红酒
+				skipSteps.add(new CloseOrerSkipStep("312","31203", 1, "check0", "check10")); // 红酒跳过办事处
+				
+				skipSteps.add(new CloseOrerSkipStep("312",null,1,"check20", "mdyCloseOrderSMDStatus10")); // 申请销管
 
 	}
 

@@ -430,7 +430,7 @@
 										<c:if test="${apply.status==9 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK20',apply.apply_dept)==true}">
 											<s:submit id="apply_check20" name="apply_check20" value="业务部经理审核通过" cssClass="input-green" action="apply_check20" onclick="return isOp('确定进行此操作?');" />
 											<c:if test="${it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK5',apply.apply_dept)==true}">
-												<s:submit id="apply_check5" name="apply_check5" value="业务部经理审核通过" cssClass="input-red" action="apply_check5" onclick="return isOp('确定进行此操作?');" />
+												<s:submit id="apply_check5" name="apply_check5" value="业务部经理审核不通过" cssClass="input-red" action="apply_check5" onclick="return isOp('确定进行此操作?');" />
 											</c:if>
 										</c:if>
 					                     	</s:if>
@@ -517,7 +517,11 @@
 													<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
 												</c:if>
 									
-										   		<c:if test="${apply.status==9 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK20',apply.apply_dept)==true}">
+										   		<c:if test="${apply.status==9 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK10',apply.apply_dept)==true}">
+													<s:submit id="apply_check10" name="apply_check10" value="业务部经理审核通过" cssClass="input-green" action="apply_check10" onclick="return isOp('确定进行此操作?');" />
+													<s:submit id="apply_check5" name="apply_check5" value="审核不通过" cssClass="input-red" action="apply_check5" onclick="return isOp('确定进行此操作?');" />
+												</c:if>
+												<c:if test="${apply.status==20 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK20',apply.apply_dept)==true}">
 													<s:submit id="apply_check20" name="apply_check20" cssClass="input-green" value="运营总监-审核通过" action="apply_check20" onclick="return isOp('确定执行此操作?');" />
 													<s:submit id="apply_check5" name="apply_check5" cssClass="input-red" value="审核不通过" action="apply_check5" onclick="return isOp('确定执行此操作?');" />
 												</c:if>

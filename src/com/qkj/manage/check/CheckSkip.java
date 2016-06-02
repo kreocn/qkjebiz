@@ -58,11 +58,11 @@ public class CheckSkip {
 		skipSteps.add(new SkipStep("3","312", 1, 2, 3,false)); // 申请销管
 		skipSteps.add(new SkipStep("3","312", 1, 12, 13,false)); // 申请销管
 		//红酒
-		skipSteps.add(new SkipStep("312","31203",1, 1, 2,"3",false)); // 申请 直接到总监
-		skipSteps.add(new SkipStep("312","31203",1,11, 12, "13",false));// 结案 直接到总监
-				
-		skipSteps.add(new SkipStep("31203", null,1, 0, 3,false)); // 申请 直接到总监
-		skipSteps.add(new SkipStep("31203", null,1,10, 13,false));// 结案 直接到总监
+		skipSteps.add(new SkipStep("312","31203", 1, 1, 0,false)); // 红酒跳过办事处
+		skipSteps.add(new SkipStep("312","31203", 1, 11, 10,false)); // 申请销管
+		
+		skipSteps.add(new SkipStep("312",null, 1, 2, 3,false)); // 申请销管
+		skipSteps.add(new SkipStep("312",null, 1, 12, 13,false)); // 申请销管
 		
 	}
 
