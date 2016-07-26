@@ -22,6 +22,7 @@ import com.qkj.manage.check.CloseOrderCheckSkip;
 import com.qkj.manage.dao.ApplyDAO;
 import com.qkj.manage.dao.ApproveDAO;
 import com.qkj.manage.dao.CloseOrderDAO;
+import com.qkj.manage.dao.CloseOrderMemcostDAO;
 import com.qkj.manage.dao.CloseOrderPosmDAO;
 import com.qkj.manage.dao.CloseOrderProDAO;
 import com.qkj.manage.dao.ProcessDAO;
@@ -433,7 +434,7 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 
 				}
 
-				if (closeOrder != null && closeOrder.getMember_id() != null) this.setSalPromots(sal.salProPower(closeOrder.getMember_id(),null, dlist));// 可选的促销活动
+				if (closeOrder != null && closeOrder.getApply_dept() != null) this.setSalPromots(sal.salProPower(closeOrder.getApply_dept(),null, dlist));// 可选的促销活动
 				
 				/*if(closeOrder != null && closeOrder.getType()==2){
 					map.clear();
@@ -447,12 +448,12 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 				map.put("order_id", closeOrder.getUuid());
 				this.setCloseOrderPros(cdao.list(map));
 
-				/*
-				 * CloseOrderMemcostDAO md=new CloseOrderMemcostDAO();
-				 * map.clear();
-				 * map.put("close_id", closeOrder.getUuid());
-				 * this.setCloseOrderMemcosts(md.list(map));
-				 */
+				
+				 CloseOrderMemcostDAO md=new CloseOrderMemcostDAO();
+				 map.clear();
+				 map.put("close_id", closeOrder.getUuid());
+				 this.setCloseOrderMemcosts(md.list(map));
+				 
 
 				CloseOrderPosmDAO closedao = new CloseOrderPosmDAO();
 				map.clear();
@@ -551,6 +552,11 @@ public class CloseOrderAction extends ActionSupport implements ActionAttr {
 			for (CloseOrderPosm cop : closePosms) {
 				posmPrice = posmPrice + cop.getTotal_price();
 			}
+			
+			CloseOrderMemcostDAO md=new CloseOrderMemcostDAO();
+			 map.clear();
+			 map.put("close_id", closeOrder.getUuid());
+			 this.setCloseOrderMemcosts(md.list(map));
 			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/closeOrder_relist'>结案提货单列表</a>&nbsp;&gt;&nbsp;结案提货单详情";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!view 读取数据错误:", e);

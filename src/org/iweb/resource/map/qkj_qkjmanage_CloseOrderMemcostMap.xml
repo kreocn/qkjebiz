@@ -29,8 +29,8 @@
 	</select>
 	<insert id="qkjmanage_addCloseOrderMemcost" parameterClass="closeOrderMemcost">
 		<![CDATA[ 
-			Insert Into qkjm_r_closeorder_memcost(close_id,member_id,title,note,total_price,with_score,status)
-			Values (#close_id#,#member_id#,#title#,#note#,#total_price#,#with_score#,#status#)
+			Insert Into qkjm_r_closeorder_memcost(close_id,member_id,title,note,total_price,with_score,status,address)
+			Values (#close_id#,#member_id#,#title#,#note#,#total_price#,#with_score#,#status#,#address#)
 		]]>
 	</insert>
 

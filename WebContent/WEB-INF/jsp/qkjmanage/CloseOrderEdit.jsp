@@ -217,7 +217,7 @@ s
 							</div>
 						</div>
 
-						<div class="label_main">
+						<%-- <div class="label_main">
 							<s:if test="'add' == viewFlag||closeOrder.type!=2">
 								<div class="label_hang">
 									<div class="label_ltit">会员号:</div>
@@ -278,7 +278,7 @@ s
 									<br /> 选择预设地址:<select id="selectAddress"></select>
 								</div>
 							</div>
-						</div>
+						</div> --%>
 
 						<s:if test="'mdy'==viewFlag && closeOrder.type==2">
 							<div class="label_main">
@@ -405,6 +405,7 @@ s
 													<s:param name="totalName">closeOrderPro.total_price</s:param>
 												</s:url>
 												<input type="button" id="product" onclick="window.location.href='${ladingAddProductsUrl}';" value="添加酒品/公司物料" />
+												<input type="button" id="addPosm" value="添加物料" />
 											</c:if>
 
 
@@ -433,17 +434,7 @@ s
 												</tr>
 											</s:iterator>
 										</table>
-
-										<p class="lb_gstit">公司费用合计</p>
-										<p class="lb_jwei">￥${closeOrder.totel_price}</p>
-									</div>
-									<div class="lb_gsfy">
-										<p class="lb_yjtit">
-											<c:if test="${closeOrder.state==0 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_ADD',null)==true}">
-												<input type="button" id="addPosm" value="添加物料" />
-											</c:if>
-										</p>
-
+										
 										<p class="lb_gstit">其它物料</p>
 										<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
 											<tr>
@@ -466,7 +457,46 @@ s
 											</s:iterator>
 										</table>
 
+										<p class="lb_gstit">公司费用合计</p>
+										<p class="lb_jwei">￥${closeOrder.totel_price}</p>
 									</div>
+									
+									<div class="lb_gsfy">
+									<p class="lb_yjtit">
+										参与客户&预计费用
+										<c:if test="${closeOrder.state==0 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_ADD',null)==true}">
+											<input type="button" id="addMember" value="添加客户" />
+										</c:if>
+									</p>
+									<div class="lb_yjcon">
+										<p class="lb_gstit">参与活动客户</p>
+										<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+											<tr>
+												<th>客户</th>
+												<th>名目</th>
+												<th>名目说明</th>
+												<th>金额</th>
+												<th>地址</th>
+												<th>操作</th>
+											</tr>
+											<s:iterator value="CloseOrderMemcosts" status="sta">
+												<tr>
+													<td><a href="javascript:;" onclick="loadMemberInfo('${member_id}');">${member_name}</a></td>
+													<td>${title}</td>
+													<td>${note}</td>
+													<td>￥${total_price}</td>
+													<td>${address}</td>
+													<td class="nw">
+															<a href="<s:url action="closeOrderMemcost_del"><s:param name="closeOrderMemcost.uuid" value="%{uuid}" /><s:param name="closeOrderMemcost.close_id" value="%{closeOrder.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
+														</td>
+												</tr>
+											</s:iterator>
+										</table>
+
+										<p class="lb_gstit">客户预计费用合计</p>
+										<p class="lb_jwei">￥${closeOrder.mt_price}</p>
+									</div>
+								</div>
 									<div class="clear"></div>
 									<p class="lb_yjbot">方案费用总计: ${closeOrder.totel_price} + ${closeOrder.mt_price} = ￥${closeOrder.totel_price+closeOrder.mt_price}</p>
 								</div>
@@ -658,7 +688,7 @@ s
 								<div class="label_ltit">销售审核:</div>
 								<div class="label_rwbenx">
 									<s:if test="closeOrder.state<2">
-										<c:if test="${closeOrder.sd_state==10 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK10',closeOrder.apply_dept)==true}">
+										<c:if test="${closeOrder.sd_state==10 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK10',null)==true}">
 											<s:submit value="办事处-审核通过" action="closeOrder_check10" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
 											<s:submit id="mdyStatus5" name="mdyStatus5" cssClass="input-red" value="审核不通过" action="closeOrder_check5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
@@ -703,7 +733,15 @@ s
 											<s:submit id="mdyStatus50" name="mdyStatus50" value="业务副总审核通过" action="closeOrder_check40" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
 											<s:submit id="mdyStatus5" name="mdyStatus5" cssClass="input-red" value="审核不通过" action="closeOrder_check5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
-											<c:if test="${closeOrder.sd_state==30 &&30==closeOrder.smd_status && closeOrder.apply_dept.substring(0,3)!='312' && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK60',closeOrder.apply_dept)==true}">
+											<c:if test="${closeOrder.sd_state==30 &&30==closeOrder.smd_status  && closeOrder.sd_state<60 && closeOrder.apply_dept.substring(0,3)!='312' && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK60',closeOrder.apply_dept)==true}">
+											<s:submit id="mdyStatus60" name="mdyStatus60" cssClass="input-green" value="总经理-审核通过" action="closeOrder_check50" onclick="return isOp('确定执行此操作?');" />
+										      <s:if test="closeOrder.apply_dept.substring(0,1)!='3' ">
+												<s:submit id="mdyStatus70" name="mdyStatus70" cssClass="input-red" value="推送副总" action="closeOrder_check60" onclick="return isOp('确定执行此操作?');" />
+											</s:if>
+											<s:submit id="mdyStatus6" name="mdyStatus6" cssClass="input-red" value="审核不通过" action="closeOrder_check5" onclick="return isOp('确定执行此操作?');" />
+										</c:if>
+										
+										<c:if test="${closeOrder.sd_state>=20 && closeOrder.sd_state<60 && closeOrder.apply_dept.substring(0,1)=='5' && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK60',closeOrder.apply_dept)==true}">
 											<s:submit id="mdyStatus60" name="mdyStatus60" cssClass="input-green" value="总经理-审核通过" action="closeOrder_check50" onclick="return isOp('确定执行此操作?');" />
 										      <s:if test="closeOrder.apply_dept.substring(0,1)!='3' ">
 												<s:submit id="mdyStatus70" name="mdyStatus70" cssClass="input-red" value="推送副总" action="closeOrder_check60" onclick="return isOp('确定执行此操作?');" />
@@ -889,51 +927,56 @@ s
 			</div>
 
 			<div id="addMemberForm" class="label_con idialog" title="添加参与客户">
-				<s:form id="addMemberFormTag" name="form_addMemberForm" cssClass="validFormDialog" action="closeOrder_saveMember" namespace="/qkjmanage" method="post" theme="simple">
+				<s:form id="addMemberFormTag" name="form_addMemberForm" cssClass="validFormDialog" action="closeOrderMemcost_add" namespace="/qkjmanage" method="post" theme="simple">
 					<div class="label_main">
 						<div class="label_hang">
 							<div class="label_ltit">会员编号:</div>
 							<div class="label_rwben label_rwb">
-								<s:textfield id="order_user_id" name="closeOrder.member_id" cssClass="validate[required,maxSize[85]]" />
+								<s:textfield id="order_user_id" name="closeOrderMemcost.member_id" cssClass="validate[required,maxSize[85]]" />
 							</div>
 						</div>
 						<div class="label_hang">
 							<div class="label_ltit">会员手机:</div>
 							<div class="label_rwben label_rwb">
-								<s:textfield id="order_user_mobile" name="closeOrder.member_phone" cssClass="validate[custom[mobile]]" />
+								<s:textfield id="order_user_mobile" name="closeOrderMemcost.member_mobile" cssClass="validate[custom[mobile]]" />
 							</div>
 						</div>
 						<div class="label_hang">
 							<div class="label_ltit">会员名称:</div>
 							<div class="label_rwben label_rwb">
-								<s:textfield id="order_user_name" name="closeOrder.member_name" />
+								<s:textfield id="order_user_name" name="closeOrderMemcost.member_name" />
 							</div>
 						</div>
 						<div class="label_hang">
 							<div class="label_ltit">名目:</div>
 							<div class="label_rwben label_rwb">
-								<s:textfield id="CloseOrderMemcost_title" name="closeOrder.member_title" cssClass="validate[required]" />
+								<s:textfield id="CloseOrderMemcost_title" name="closeOrderMemcost.title" cssClass="validate[required]" />
 							</div>
 						</div>
 						<div class="label_hang">
 							<div class="label_ltit">名目说明:</div>
 							<div class="label_rwben label_rwb">
-								<s:textarea id="CloseOrderMemcost_note" name="closeOrder.member_note" cssClass="validate[required]" />
+								<s:textarea id="CloseOrderMemcost_note" name="closeOrderMemcost.note" cssClass="validate[required]" />
 							</div>
 						</div>
 						<div class="label_hang">
 							<div class="label_ltit">金额:</div>
 							<div class="label_rwben label_rwb nw">
-								<s:textfield id="CloseOrderMemcost_total_price" name="closeOrder.mt_price" cssClass="validate[required]" />
+								<s:textfield id="CloseOrderMemcost_total_price" name="closeOrderMemcost.total_price" cssClass="validate[required]" />
 								元
 							</div>
 						</div>
+						
+						<div class="label_hang">
+							<div class="label_ltit">地址:</div>
+							<div class="label_rwben label_rwb nw">
+								<s:textarea id="CloseOrderMemcost_address" name="closeOrderMemcost.address"/>
+							</div>
+						</div>
 						<div class="label_hang label_button tac">
-							<s:hidden id="CloseOrderMemcost_CloseOrder_id" name="closeOrder.uuid" value="%{closeOrder.uuid}" />
-							<c:if test="${it:checkPermit('QKJ_QKJMANAGE_CLOSEORDERMEMCOST_ADD',null)==true}">
+							<s:hidden id="CloseOrderMemcost_CloseOrder_id" name="closeOrderMemcost.close_id" value="%{closeOrder.uuid}" />
 								<input id="addMe" type="button" value="确定" />
 								<font id="addMemcost" color="red"></font>
-							</c:if>
 						</div>
 					</div>
 				</s:form>

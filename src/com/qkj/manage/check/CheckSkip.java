@@ -35,17 +35,13 @@ public class CheckSkip {
 		skipSteps.add(new SkipStep("2202X",null,1, 11, 10,false)); // 结案
 		
 		//传奇天估德401402
-		skipSteps.add(new SkipStep("4", "401",1, 1,3,false)); // 申请 2大区 3跳过大区
-		skipSteps.add(new SkipStep("4","401", 1, 11,13,false)); // 申请 2大区 3跳过大区
-		
-		skipSteps.add(new SkipStep("4", null,1, 0,4,false)); // 申请 2大区 3跳过大区
-		skipSteps.add(new SkipStep("4",null, 1, 10,14,false)); // 申请 2大区 3跳过大区
-		
+		skipSteps.add(new SkipStep("4", null,1, 1,0,"3",false)); // 申请 2大区 3跳过大区
+		skipSteps.add(new SkipStep("4",null, 1, 11,10,"13",false)); // 申请 2大区 3跳过大区
 		skipSteps.add(new SkipStep("4", null,1, 8,900,false)); // 申请 总经理通过
 		skipSteps.add(new SkipStep("4",null, 1, 18,100,false)); // 申请 总经理通过
+		skipSteps.add(new SkipStep("4", null,1, 2,4,false)); // 申请 总经理通过
+		skipSteps.add(new SkipStep("4",null, 1, 12,14,false)); // 申请 总经理通过
 		
-		skipSteps.add(new SkipStep("401", null,1, 1,4,"3",false)); // 申请 总经理通过
-		skipSteps.add(new SkipStep("401",null, 1, 11,14,"13",false)); // 申请 总经理通过
 		
 		//陕西销售公司（申请（办事处=业务部经理=总经理=陈总）结案（办事处=业务部经理=总经理=陈总=财务））
 		skipSteps.add(new SkipStep("5", null,1, 2, 3,false));// 申请  跳过销管

@@ -82,27 +82,37 @@ public class SalPromotPower{
 		return salpros;
 	}
 	
-	public List<SalPromot> salProPower(String userId,Date da,List<String> sal_id){
+	public List<SalPromot> salProPower(String userDept,Date da,List<String> sal_id){
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+		
 		map.clear();
+		map.put("sal_scopDept", userDept);
+		map.put("status", 2);
+		if(sal_id!=null){
+			map.put("sal_id", sal_id);
+		}
+		map.put("proendtime", sdf.format(new Date()));
+		this.setSalpros(salp.listPower(map));
+		
+		/*map.clear();
 		map.put("uuid", userId);
-		this.setMembers(mdao.list(map));
-		if(members.size()>0){
+		this.setMembers(mdao.list(map));*/
+		/*if(members.size()>0){
 			this.setMember(members.get(0));
 			map.clear();
 			map.put("sal_scopDept", member.getDept_code());
-			/*map.put("add_user_dept", ContextHelper.getUserLoginUuid());*/
+			map.put("add_user_dept", ContextHelper.getUserLoginUuid());
 			map.put("status", 2);
 			if(sal_id!=null){
 				map.put("sal_id", sal_id);
 			}
-			/*if(da!=null){
+			if(da!=null){
 				map.put("closetime", sdf.format(da));
-			}*/
+			}
 			map.put("proendtime", sdf.format(new Date()));
 			this.setSalpros(salp.listPower(map));
 			
-		}
+		}*/
 		return salpros;
 	}
 	

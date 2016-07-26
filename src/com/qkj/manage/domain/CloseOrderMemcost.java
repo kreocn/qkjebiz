@@ -9,6 +9,8 @@ public class CloseOrderMemcost {
 	private Double total_price;// (decimal)金额
 	private Integer with_score;// (int)使用随量积分
 	private Integer status;// (int)状态 1 申请列表 2结案列表
+	
+	private String address;
 
 	// 非数据库字段
 	private String member_name;
@@ -103,4 +105,12 @@ public class CloseOrderMemcost {
 		this.status = status;
 	}
 
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	
 }

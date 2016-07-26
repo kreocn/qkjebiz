@@ -325,8 +325,8 @@
 												</s:iterator>
 											</table>
 											
-									</div>
-									<div class="lb_gsfy">
+											
+											
 									<p class="lb_gstit">其它物料</p>
 									<table class="lb_jpin">
 										<tr>
@@ -342,11 +342,51 @@
 											</tr>
 										</s:iterator>
 									</table>
-								</div>
+								
 									<p class="lb_gstit">费用合计</p>
 									<p class="lb_jwei" id="total">￥${closeOrder.totel_price}</p>
 									<p class="lb_jwei" id="tastingPrice">￥${closeOrder.totel_price-proPrice}</p>
 									<p class="lb_jwei" id="nottastingPrice">￥${posmPrice+proPrice}</p>
+									</div>
+									
+									
+									<div class="lb_gsfy">
+									<p class="lb_yjtit">
+										参与客户&预计费用
+											<input type="button" id="addMember" value="添加客户" />
+									</p>
+									<div class="lb_yjcon">
+										<p class="lb_gstit">参与活动客户</p>
+										<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+											<tr>
+												<th>客户</th>
+												<th>名目</th>
+												<th>名目说明</th>
+												<th>金额</th>
+												<th>地址</th>
+												<th>操作</th>
+											</tr>
+											<s:iterator value="CloseOrderMemcosts" status="sta">
+												<tr>
+													<td><a href="javascript:;" onclick="loadMemberInfo('${member_id}');">${member_name}</a></td>
+													<td>${title}</td>
+													<td>${note}</td>
+													<td>￥${total_price}</td>
+													<td>${address}</td>
+													<td class="nw">
+															<a href="<s:url action="closeOrderMemcost_del"><s:param name="closeOrderMemcost.uuid" value="%{uuid}" /><s:param name="closeOrderMemcost.close_id" value="%{closeOrder.uuid}" /></s:url>" onclick="return isDel();">[删除]</a>
+														</td>
+												</tr>
+											</s:iterator>
+										</table>
+
+										<p class="lb_gstit">客户预计费用合计</p>
+										<p class="lb_jwei">￥${closeOrder.mt_price}</p>
+									</div>
+								
+									<div class="clear"></div>
+									<p class="lb_yjbot">方案费用总计: ${closeOrder.totel_price} + ${closeOrder.mt_price} = ￥${closeOrder.totel_price+closeOrder.mt_price}</p>
+								</div>
 							</fieldset>
 							<div style="height: 10px;"></div>
 
