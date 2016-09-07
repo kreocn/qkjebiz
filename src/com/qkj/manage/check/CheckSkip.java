@@ -18,7 +18,7 @@ public class CheckSkip {
 	static {
 		
 		//西北（申请（办事外，总监）结案（办事处，销管，总监，财务））
-		skipSteps.add(new SkipStep("220",null, 1, 0, 2,false)); // 申请
+		//skipSteps.add(new SkipStep("220",null, 1, 0, 2,false)); // 申请
 		skipSteps.add(new SkipStep("220",null,1,8,9,false)); // 申请
 		skipSteps.add(new SkipStep("220",null,1, 40, 9,false)); // 结案
 		

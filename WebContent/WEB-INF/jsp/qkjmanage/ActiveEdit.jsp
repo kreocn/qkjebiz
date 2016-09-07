@@ -778,8 +778,10 @@
 										</s:if>
 										<s:else> --%>
 										<c:if test="${20==active.sd_status  && 10!=active.fd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS10',active.apply_dept)==true}">
-											<s:submit id="mdyActiveSDStatus10" name="mdyActiveSDStatus10" cssClass="input-green" value="财务-审核通过" action="mdyActiveFDSTATUS10Two" onclick="return isOp('确定执行此操作?');" />
-											<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
+											<s:if test="active.apply_dept.substring(0,5)=='22025' || active.apply_dept.substring(0,5)=='22029' || active.apply_dept.substring(0,5)=='2202H'|| active.apply_dept.substring(0,5)=='22023'">
+												<s:submit id="mdyActiveSDStatus10" name="mdyActiveSDStatus10" cssClass="input-green" value="业务部经理-审核通过" action="mdyActiveSDStatus10" onclick="return isOp('确定执行此操作?');" />
+												<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
+											</s:if>
 										</c:if>
 										<%-- </s:else> --%>
 										

@@ -35,6 +35,7 @@ public class GetProductsAjax extends Ajax {
 					EncryptAES aes = (EncryptAES) EncryptFactory.getEncrypt("AES");
 					// jsonstr = aes.decrypt(hu.getOneHtml("http://images.qkjchina.com/CacheFiles/zTree_Products" + parameter.get("product_type") + ".dat", "UTF-8"));
 					jsonstr = aes.decrypt((String) CacheFactory.getCacheInstance().get(SysDBCacheLogic.CACHE_PRODTREE_PREFIX + parameter.get("product_type")));
+					//jsonstr = (String) CacheFactory.getCacheInstance().get(SysDBCacheLogic.CACHE_PRODTREE_PREFIX + parameter.get("product_type"));
 					log.info("获取产品树成功.");
 				} catch (Exception e) {
 					jsonstr = "NOFILE";

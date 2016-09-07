@@ -385,8 +385,10 @@
 									</s:if>
 									<s:else>
 										<c:if test="${20==active.close_sd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS10',active.apply_dept)==true}">
+										<s:if test="active.apply_dept.substring(0,5)=='22025' || active.apply_dept.substring(0,5)=='22029' || active.apply_dept.substring(0,5)=='2202H'|| active.apply_dept.substring(0,5)=='22023'">
 											<s:submit cssClass="input-green" name="mdyCloseActiveSDStatus10" value="经理/大区-审核通过" action="mdyCloseActiveSDStatus10" onclick="return isOp('确定执行此操作?');" />
 											<s:submit cssClass="input-red" name="mdyCloseActiveSDStatus5" value="审核不通过" action="mdyCloseActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
+										</s:if>
 										</c:if>
 									</s:else>
 
@@ -410,6 +412,7 @@
 									</c:if>
 									
 									<s:if test="active.apply_dept.substring(0,3)!='312' && active.apply_dept.substring(0,1)!=4">
+									<s:if test="active.apply_dept.substring(0,5)=='22025' || active.apply_dept.substring(0,5)=='22029' || active.apply_dept.substring(0,5)=='2202H'|| active.apply_dept.substring(0,5)=='22023'">
 										<c:if test="${(30==active.close_sd_status && 30==active.close_smd_status) && it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS50',active.apply_dept)==true}">
 											<s:submit cssClass="input-green" name="mdyCloseActiveSDStatus50" value="总经理-审核通过" action="mdyCloseActiveSDStatus50" onclick="return isOp('确定执行此操作?');" />
 
@@ -419,6 +422,18 @@
 
 											<s:submit cssClass="input-red" name="mdyCloseActiveSDStatus5" value="审核不通过" action="mdyCloseActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
+									</s:if>
+									<s:else>
+									<c:if test="${(active.close_sd_status>=20 && 30==active.close_smd_status) && it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS50',active.apply_dept)==true}">
+											<s:submit cssClass="input-green" name="mdyCloseActiveSDStatus50" value="总经理-审核通过" action="mdyCloseActiveSDStatus50" onclick="return isOp('确定执行此操作?');" />
+
+											<s:if test="active.apply_dept.substring(0,1)!=3">
+												<s:submit cssClass="input-green" value="送审到副总" action="mdyCloseActiveSDStatus30Two" onclick="return isOp('确定执行此操作?');" />
+											</s:if>
+
+											<s:submit cssClass="input-red" name="mdyCloseActiveSDStatus5" value="审核不通过" action="mdyCloseActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
+										</c:if>
+									</s:else>
 									</s:if>
 									<s:else>
 										<c:if test="${active.close_smd_status==50 && active.close_sd_status<60&& it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS50',active.apply_dept)==true}">

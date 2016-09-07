@@ -188,6 +188,7 @@ public final class SysDBCacheLogic extends SysCacheLogic {
 				fnode.append("var zNodes").append(s_mapping[i]).append("=").append(typenode[i]).append(";");
 				// 生成独立JSON
 				cache.put(CACHE_PRODTREE_PREFIX + s_mapping[i], aes.encrypt(typenode[i].toString()));
+				//cache.put(CACHE_PRODTREE_PREFIX + s_mapping[i], typenode[i].toString());
 			}
 			log.info("缓存产品树数据完成");
 		} else {
