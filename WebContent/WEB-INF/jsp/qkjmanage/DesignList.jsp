@@ -219,6 +219,11 @@
 									<s:if test="close_sd_status==20">
 										<font class="message_pass" title="${close_sd_user_name} ${it:formatDate(close_sd_time,'yyyy-MM-dd HH:mm:ss')}">办事处已审</font>
 									</s:if>
+									
+									<s:if test="close_sd_status==25">
+										<font class="message_pass" title="${close_sd_user_name} ${it:formatDate(close_sd_time,'yyyy-MM-dd HH:mm:ss')}">初审通过</font>
+									</s:if>
+									
 									<s:if test="close_sd_status==30">
 										<s:if test="apply_dept.substring(0,1)==4">
 											<font class="message_pass" title="${close_sd_user_name} ${it:formatDate(close_sd_time,'yyyy-MM-dd HH:mm:ss')}">财务已审</font>

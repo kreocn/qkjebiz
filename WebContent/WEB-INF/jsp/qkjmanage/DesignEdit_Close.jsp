@@ -97,6 +97,10 @@
 									</s:if>
 									<s:if test="active.close_sd_status==20">
 										<font class="message_pass">办事处已审</font>(${active.close_sd_user_name})</s:if>
+										
+										<s:if test="active.close_sd_status==25">
+										<font class="message_pass">初审通过</font>(${active.close_sd_user_name})</s:if>
+										
 									<s:if test="active.close_sd_status==30">
 										<s:if test="active.apply_dept.substring(0,1)==4">
 											<font class="message_pass">财务已审</font>(${active.close_sd_user_name})
@@ -384,11 +388,13 @@
 										</c:if>
 									</s:if>
 									<s:else>
-										<c:if test="${20==active.close_sd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS10',active.apply_dept)==true}">
-										<s:if test="active.apply_dept.substring(0,5)=='22025' || active.apply_dept.substring(0,5)=='22029' || active.apply_dept.substring(0,5)=='2202H'|| active.apply_dept.substring(0,5)=='22023'">
+										<c:if test="${20==active.close_sd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUSCS10',active.apply_dept)==true}">
+										<%-- <s:if test="active.apply_dept.substring(0,5)=='22025' || active.apply_dept.substring(0,5)=='22029' || active.apply_dept.substring(0,5)=='2202H'|| active.apply_dept.substring(0,5)=='22023'">
 											<s:submit cssClass="input-green" name="mdyCloseActiveSDStatus10" value="经理/大区-审核通过" action="mdyCloseActiveSDStatus10" onclick="return isOp('确定执行此操作?');" />
 											<s:submit cssClass="input-red" name="mdyCloseActiveSDStatus5" value="审核不通过" action="mdyCloseActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
-										</s:if>
+										</s:if> --%>
+											<s:submit cssClass="input-green"  value="初审-审核通过" action="mdyCloseActiveSDStatuscs10" onclick="return isOp('确定执行此操作?');" />
+												<s:submit cssClass="input-red"  value="审核不通过" action="mdyCloseActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
 									</s:else>
 
@@ -467,6 +473,9 @@
 											</s:if>
 											<s:if test="active.close_sd_status==20">
 												<font class="message_pass">办事处已审</font>(${active.close_sd_user_name} ${it:formatDate(active.close_sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
+												
+												<s:if test="active.close_sd_status==25">
+												<font class="message_pass">初审通过</font>(${active.close_sd_user_name} ${it:formatDate(active.close_sd_time,'yyyy-MM-dd HH:mm:ss')})</s:if>
 
 											<s:if test="active.close_sd_status==30">
 												<s:if test="active.apply_dept.substring(0,1)==4">

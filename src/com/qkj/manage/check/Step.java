@@ -158,6 +158,10 @@ public class Step {
 		mdyCloseActiveSDStatus(20,userid);
 	}
 	
+	public void step155(String userid){//结案初审
+		mdyCloseActiveSDStatus(25,userid);
+	}
+	
 	public void step12(String userid){//结案大区审
 		mdyCloseActiveSDStatus(30,userid);
 	}
