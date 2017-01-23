@@ -246,7 +246,7 @@
 					</c:if>
 					
 				<c:if test="${leave.leave_dept.substring(0,3)=='314' }">
-				<%-- <s:if test="leave.leave_dept.substring(0,5)=='31411'">
+				 <s:if test="leave.leave_dept.substring(0,5)=='31401'">
 					<c:if test="${leave.check_status==15 &&  it:checkPermit('QKJ_ADM_LEAVE_CHECK26',leave.leave_dept)==true}">
 							<s:submit name="leave_check10" cssClass="input-green" value="区域经理审核通过" action="leave_check26" onclick="return isOp('确定执行此操作?');" />
 							<c:if test="${it:checkPermit('QKJ_ADM_LEAVE_CHECK5',leave.leave_dept)==true}">
@@ -261,7 +261,7 @@
 							</c:if>
 					</c:if>
 				</s:if>
-				<s:else> --%>
+				<s:else>
 					<s:if test="leave.leave_dept.substring(0,5)=='31403'">
 					
 					<c:if test="${leave.check_status==10 &&  it:checkPermit('QKJ_ADM_LEAVE_CHECK10',leave.leave_dept)==true}">
@@ -281,7 +281,7 @@
 					</c:if>
 					</s:else>
 					
-				<%-- </s:else> --%>
+				</s:else> 
 				</c:if>
 				
 				</s:if>
