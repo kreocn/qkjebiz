@@ -473,7 +473,7 @@
 					                    	<s:if test="apply.apply_dept.substring(0,1)==3">
 					                	<s:if test="apply.apply_dept.substring(0,3)=='314'||apply.apply_dept.substring(0,3)=='315'||apply.apply_dept.substring(0,3)=='316'">
 					                	
-					                	<s:if test="apply.apply_dept.substring(0,5)=='31401'">
+					                	<s:if test="apply.apply_dept.substring(0,3)=='314'">
 					                	<c:if test="${apply.status==10 && it:checkPermit('QKJ_QKJMANAGE_APPLY_CHECK26',apply.apply_dept)==true}">
 											<s:submit  value="区域经理审核通过" cssClass="input-green" action="apply_check26" onclick="return isOp('确定进行此操作?');" />
 											<s:submit id="apply_check5" name="apply_check5" value="审核不通过" cssClass="input-red" action="apply_check5" onclick="return isOp('确定进行此操作?');" />

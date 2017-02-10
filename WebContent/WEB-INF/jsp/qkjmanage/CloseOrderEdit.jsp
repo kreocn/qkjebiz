@@ -689,7 +689,7 @@ s
 								<div class="label_rwbenx">
 									<s:if test="closeOrder.state<2">
 										<c:if test="${closeOrder.sd_state==10 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK10',null)==true}">
-											<s:submit value="办事处-审核通过" action="closeOrder_check10" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
+											<s:submit value="办事处/负责人-审核通过" action="closeOrder_check10" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
 											<s:submit id="mdyStatus5" name="mdyStatus5" cssClass="input-red" value="审核不通过" action="closeOrder_check5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
 
@@ -700,7 +700,7 @@ s
 											</c:if>
 										</s:if>
 										<s:else>
-											<s:if test="closeOrder.apply_dept.substring(0,5)==31401">
+											<s:if test="closeOrder.apply_dept.substring(0,3)==314">
 												<c:if test="${closeOrder.sd_state==20 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK26',closeOrder.apply_dept)==true}">
 													<s:submit value="区域经理审核通过" action="closeOrder_check26" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
 													<s:submit id="mdyStatus5" name="mdyStatus5" cssClass="input-red" value="审核不通过" action="closeOrder_check5" onclick="return isOp('确定执行此操作?');" />

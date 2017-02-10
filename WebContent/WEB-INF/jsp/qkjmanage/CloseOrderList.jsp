@@ -176,7 +176,7 @@ background-color: #FFF;
 										<font class="message_warning">待审核</font>
 									</s:if>
 									<s:if test="sd_state==20">
-										<font class="message_pass">办事处已审</font>
+										<font class="message_pass">办事处/负责人已审</font>
 									</s:if>
 									
 									<s:if test="sd_state==26">
