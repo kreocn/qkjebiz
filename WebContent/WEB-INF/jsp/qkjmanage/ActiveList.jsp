@@ -570,8 +570,7 @@ function kselect(){
 	
 	if(parseInt(num)==10){//陕西总经理
 		jnull();
-		document.getElementById("sd_status").options[5].selected = true; 
-		document.getElementById("smd_sta").options[4].selected = true; 
+		document.getElementById("sd_status").options[4].selected = true; 
 		$("#userdept_codeid").val("5");
 		$("#userdept_nameid").val("陕西销售公司");
 		document.getElementById("apply_is_sub_dept").checked=true;
@@ -688,8 +687,7 @@ function kselect(){
 	
 	if(parseInt(num)==41){//陕西总经理
 		snull();
-		document.getElementById("clsdsta").options[5].selected = true; 
-		document.getElementById("clsmdsta").options[4].selected = true; 
+		document.getElementById("clsdsta").options[4].selected = true; 
 		$("#userdept_codeid").val("5");
 		$("#userdept_nameid").val("陕西销售公司");
 		document.getElementById("apply_is_sub_dept").checked=true;

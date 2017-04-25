@@ -765,7 +765,7 @@
 							<div class="label_hang">
 								<div class="label_ltit">销售审核:</div>
 								<div class="label_rwbenx">
-									<c:if test="${10==active.sd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS20',null)==true}">
+									<c:if test="${10==active.sd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVE_SDSTATUS20',active.apply_dept)==true}">
 										<s:submit cssClass="input-green" value="办事处/负责人-审核通过" action="mdyActiveSDStatus20" onclick="return isOp('确定执行此操作?');" />
 										<s:submit id="mdyActiveSDStatus5" name="mdyActiveSDStatus5" cssClass="input-red" value="审核不通过" action="mdyActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
 									</c:if>
