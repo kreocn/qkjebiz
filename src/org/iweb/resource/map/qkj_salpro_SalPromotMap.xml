@@ -190,7 +190,7 @@
 
 	<select id="salpro_getSalPromotsPower" resultClass="salPromot" parameterClass="java.util.Map">
 		<![CDATA[ 
-			SELECT h.*,d.`dept_cname` sal_scopDept_name FROM (SELECT * FROM qkjm_r_salpromotion a WHERE a.`sal_scopUs`=2 AND 
+			SELECT DISTINCT h.uuid,h.*,d.`dept_cname` sal_scopDept_name FROM (SELECT * FROM qkjm_r_salpromotion a WHERE a.`sal_scopUs`=2 AND 
 			(a.`add_user_dept` LIKE CONCAT(#add_user_dept#,'%')  OR LOCATE(#add_user_dept#,a.`sal_scopDept`)>0
 			 )
 			UNION ALL 
