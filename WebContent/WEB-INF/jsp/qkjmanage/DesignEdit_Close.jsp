@@ -396,6 +396,11 @@
 											<s:submit cssClass="input-green"  value="初审-审核通过" action="mdyCloseActiveSDStatuscs10" onclick="return isOp('确定执行此操作?');" />
 												<s:submit cssClass="input-red"  value="审核不通过" action="mdyCloseActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
+										
+										<c:if test="${25==active.close_sd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS10',active.apply_dept)==true}">
+											<s:submit cssClass="input-green" name="mdyCloseActiveSDStatus10" value="经理/大区-审核通过" action="mdyCloseActiveSDStatus10" onclick="return isOp('确定执行此操作?');" />
+											<s:submit cssClass="input-red" name="mdyCloseActiveSDStatus5" value="审核不通过" action="mdyCloseActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
+										</c:if>
 									</s:else>
 
 									<c:if test="${10==active.close_sd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS25',active.apply_dept)==true}">
@@ -431,6 +436,8 @@
 									</s:if>
 									<s:else>
 									<c:if test="${(active.close_sd_status>=20 && 30==active.close_smd_status) && it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS50',active.apply_dept)==true}">
+											
+											<s:if test="active.apply_dept.substring(0,4)!='2201'">
 											<s:submit cssClass="input-green" name="mdyCloseActiveSDStatus50" value="总经理-审核通过" action="mdyCloseActiveSDStatus50" onclick="return isOp('确定执行此操作?');" />
 
 											<s:if test="active.apply_dept.substring(0,1)!=3">
@@ -438,6 +445,20 @@
 											</s:if>
 
 											<s:submit cssClass="input-red" name="mdyCloseActiveSDStatus5" value="审核不通过" action="mdyCloseActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
+											</s:if>
+											<s:else>
+											<c:if test="${active.close_sd_status>25}">
+											<s:submit cssClass="input-green" name="mdyCloseActiveSDStatus50" value="总经理-审核通过" action="mdyCloseActiveSDStatus50" onclick="return isOp('确定执行此操作?');" />
+
+											<s:if test="active.apply_dept.substring(0,1)!=3">
+												<s:submit cssClass="input-green" value="送审到副总" action="mdyCloseActiveSDStatus30Two" onclick="return isOp('确定执行此操作?');" />
+											</s:if>
+
+											<s:submit cssClass="input-red" name="mdyCloseActiveSDStatus5" value="审核不通过" action="mdyCloseActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
+											</c:if>
+											</s:else>
+											
+											
 										</c:if>
 									</s:else>
 									</s:if>

@@ -79,7 +79,7 @@ public class OutStock {
 		this.ship_type = ship_type;
 	}
 
-	private Integer splitNum;
+	private Double splitNum;
 
 	public Integer getBackStock() {
 		return backStock;
@@ -105,11 +105,12 @@ public class OutStock {
 		this.remark = remark;
 	}
 
-	public Integer getSplitNum() {
+	
+	public Double getSplitNum() {
 		return splitNum;
 	}
 
-	public void setSplitNum(Integer splitNum) {
+	public void setSplitNum(Double splitNum) {
 		this.splitNum = splitNum;
 	}
 

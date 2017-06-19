@@ -23,6 +23,7 @@ public class CloseOrder {
 	private Integer typeO;
 	private Integer apply_id;
 	private String m_name;
+	private Integer cost_types;
 
 	private Integer state;
 	private Integer sd_state;
@@ -731,6 +732,14 @@ public class CloseOrder {
 
 	public void setFd_check_time(Date fd_check_time) {
 		this.fd_check_time = fd_check_time;
+	}
+
+	public Integer getCost_types() {
+		return cost_types;
+	}
+
+	public void setCost_types(Integer cost_types) {
+		this.cost_types = cost_types;
 	}
 
 }

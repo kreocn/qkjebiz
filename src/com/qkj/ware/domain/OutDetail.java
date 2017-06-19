@@ -6,7 +6,7 @@ public class OutDetail {
 	private Integer uuid;// (int)
 	private Integer lading_id;// (varchar)
 	private Integer product_id;// (int)
-	private Integer num;// (int)
+	private Double num;// (int)
 	private Double price;// (decimal)
 	private Double totel;// (int)
 
@@ -139,11 +139,13 @@ public class OutDetail {
 		this.product_id = product_id;
 	}
 
-	public Integer getNum() {
+	
+
+	public Double getNum() {
 		return num;
 	}
 
-	public void setNum(Integer num) {
+	public void setNum(Double num) {
 		this.num = num;
 	}
 

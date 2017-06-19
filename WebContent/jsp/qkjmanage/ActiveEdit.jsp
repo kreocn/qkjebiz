@@ -354,6 +354,13 @@ var openCustomerView = function(customer_uuid) {
 			            </div>
 			        </div>
 			        <div class="label_hang">
+			            <div class="label_ltit">费用类型:</div>
+			            <div class="label_rwben label_rwb">
+			            	<s:select id="sd_status" name="active.cost_types" cssClass="selectKick validate[required]" list="#{1:'渠道建设',2:'消费者建设',3:'基础运营',4:'品牌费用'}"
+							 headerKey="" headerValue="--请选择--" />
+			            </div>
+			        </div>
+			        <div class="label_hang">
 			            <div class="label_rwben">
 			            	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_ACTIVE_MDYTYPE')">
 										<s:submit  value="修改类型" action="mdyActiveType"/>

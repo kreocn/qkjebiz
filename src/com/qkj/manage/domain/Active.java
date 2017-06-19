@@ -68,6 +68,7 @@ public class Active {
 	private Double f_upprice;
 	private Double f_price;
 	private Double f_bprice;
+	private Integer cost_types;
 
 	private Double close_m_upprice;
 	private Double close_m_price;
@@ -1058,6 +1059,14 @@ public class Active {
 
 	public void setActive_type(Integer active_type) {
 		this.active_type = active_type;
+	}
+
+	public Integer getCost_types() {
+		return cost_types;
+	}
+
+	public void setCost_types(Integer cost_types) {
+		this.cost_types = cost_types;
 	}
 
 }

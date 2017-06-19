@@ -213,7 +213,7 @@ public class AllotDetailAction extends ActionSupport {
 		ContextHelper.isPermit("QKJ_WARE_ALLOT_ADD");
 		try {
 			//判断库存是否足够
-			int pnum=0;//借货总数量
+			Double pnum=0.00;//借货总数量
 			StockDAO stockdao=new StockDAO();
 			map.clear();
 			map.put("uuid", allotDetail.getStock_id());//出库祥表库存id
@@ -248,7 +248,7 @@ public class AllotDetailAction extends ActionSupport {
 			if(allot!=null&&allot.getReason().equals("2")&&pnum<allotDetail.getNum()){
 				setMessage("还货数量不能大于总借货数量！");
 			}else{
-				int quan=(stock.getQuantity()-stock.getFreezeNum())-allotDetail.getNum();
+				Double quan=(stock.getQuantity()-stock.getFreezeNum())-allotDetail.getNum();
 				stock.setQuantity(quan);
 				if(quan>=0){
 					dao.add(allotDetail);
@@ -298,7 +298,7 @@ public class AllotDetailAction extends ActionSupport {
 		// TODO Auto-generated method stub
 		allotDh=new AllotDetailH();
 		allotDh.setLading_id(allotDetail2.getLading_id());
-		allotDh.setNum(allotDetail2.getNum());
+		//allotDh.setNum(allotDetail2.getNum());
 		allotDh.setStock_id(allotDetail2.getStock_id());
 	}
 }

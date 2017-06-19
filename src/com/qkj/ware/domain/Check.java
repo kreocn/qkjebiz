@@ -9,7 +9,7 @@ public class Check {
 	private Integer product_id;// (int)商品名称
 	private Integer store_id;// (int)所在仓库
 	private Date date;
-	private Integer quantity;// (int)库存数量
+	private Double quantity;// (int)库存数量
 	private Integer num;// (int)盘点实际数量
 	private Integer zdnum;
 	private Integer znum;
@@ -46,11 +46,12 @@ public class Check {
 		this.store_id = store_id;
 	}
 
-	public Integer getQuantity() {
+
+	public Double getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(Integer quantity) {
+	public void setQuantity(Double quantity) {
 		this.quantity = quantity;
 	}
 

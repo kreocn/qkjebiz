@@ -26,6 +26,7 @@
 		]]>
 		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ a.uuid=#uuid# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="fstauts"><![CDATA[ a.fstauts=#fstauts# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="cost_types"><![CDATA[ a.cost_types=#cost_types# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="uid"><![CDATA[ a.uid=#uid# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="apply_dept">
 			<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ a.apply_dept=#apply_dept#]]></isNotEqual>
@@ -196,6 +197,7 @@
 		]]>
 		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ a.uuid=#uuid# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="fstauts"><![CDATA[ a.fstauts=#fstauts# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="cost_types"><![CDATA[ a.cost_types=#cost_types# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="uid"><![CDATA[ a.uid=#uid# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="apply_dept">
 			<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ a.apply_dept=#apply_dept#]]></isNotEqual>
@@ -443,8 +445,8 @@ SELECT MAX(a.baotime) baotime,MAX(a.stars) stars,MAX(a.sing) sing,MAX(a.spass) s
 
 	<insert id="qkjmanage_addActive" parameterClass="active">
 		<![CDATA[ 
-			Insert Into qkjm_r_active(uid,apply_dept,apply_user,theme,purpose,plan_start,plan_end,address,person,note,expect,add_user,add_time,remark,active_type)
-			Values (#uid#,#apply_dept#,#apply_user#,#theme#,#purpose#,#plan_start#,#plan_end#,#address#,#person#,#note#,#expect#,#add_user#,now(),#remark#,#active_type#)
+			Insert Into qkjm_r_active(uid,apply_dept,apply_user,theme,purpose,plan_start,plan_end,address,person,note,expect,add_user,add_time,remark,active_type,cost_types)
+			Values (#uid#,#apply_dept#,#apply_user#,#theme#,#purpose#,#plan_start#,#plan_end#,#address#,#person#,#note#,#expect#,#add_user#,now(),#remark#,#active_type#,#cost_types#)
 		]]>
 		<selectKey resultClass="int" keyProperty="uuid">
 		<![CDATA[ Select LAST_INSERT_ID() ]]>
@@ -480,7 +482,8 @@ SELECT MAX(a.baotime) baotime,MAX(a.stars) stars,MAX(a.sing) sing,MAX(a.spass) s
 				m_bprice=#m_bprice#,
 				f_upprice=#f_upprice#,
 				f_price=#f_price#,
-				f_bprice=#f_bprice#
+				f_bprice=#f_bprice#,
+				cost_types=#cost_types#
 			Where uuid = #uuid#
 		]]>
 	</update>

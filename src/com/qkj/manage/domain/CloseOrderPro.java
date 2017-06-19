@@ -6,7 +6,7 @@ public class CloseOrderPro {
 	private Integer uuid;// (int)
 	private Integer order_id;// (int)结案单编号
 	private Integer product_id;// (int)产品id
-	private Integer product_num;// (int)数量瓶
+	private Double product_num;// (int)数量瓶
 	private Double product_price;// (decimal)单价
 	private Double total_price;// (decimal)总价
 
@@ -37,11 +37,12 @@ public class CloseOrderPro {
 		this.product_id = product_id;
 	}
 
-	public Integer getProduct_num() {
+
+	public Double getProduct_num() {
 		return product_num;
 	}
 
-	public void setProduct_num(Integer product_num) {
+	public void setProduct_num(Double product_num) {
 		this.product_num = product_num;
 	}
 

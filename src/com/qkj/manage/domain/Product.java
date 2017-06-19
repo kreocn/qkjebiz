@@ -31,7 +31,7 @@ public class Product {
 	private Date lm_time;// (timestamp)
 	private String brand_name;
 
-	private Integer num;
+	private Double num;
 	private Double dprice;
 	private Double dtotle;
 
@@ -51,13 +51,16 @@ public class Product {
 		this.dtotle = dtotle;
 	}
 
-	public Integer getNum() {
+
+	public Double getNum() {
 		return num;
 	}
 
-	public void setNum(Integer num) {
+	public void setNum(Double num) {
 		this.num = num;
 	}
+
+
 
 	private Double update_price;
 	public String getUnit() {

@@ -4,7 +4,7 @@ private int id;
 private String order_id;
 private String title;
 private Double product_price;
-private int order_num;
+private Double order_num;
 private Double order_total_price;
 private String  integration;
 private String prod_code;
@@ -43,9 +43,7 @@ public String getTitle() {
 public Double getProduct_price() {
 	return product_price;
 }
-public int getOrder_num() {
-	return order_num;
-}
+
 public Double getOrder_total_price() {
 	return order_total_price;
 }
@@ -76,9 +74,7 @@ public void setTitle(String title) {
 public void setProduct_price(Double product_price) {
 	this.product_price = product_price;
 }
-public void setOrder_num(int order_num) {
-	this.order_num = order_num;
-}
+
 public void setOrder_total_price(Double order_total_price) {
 	this.order_total_price = order_total_price;
 }
@@ -96,6 +92,14 @@ public void setProduct_id(String product_id) {
 }
 public void setSpec(String spec) {
 	this.spec = spec;
+}
+
+public Double getOrder_num() {
+	return order_num;
+}
+
+public void setOrder_num(Double order_num) {
+	this.order_num = order_num;
 }
 
 }

@@ -17,6 +17,7 @@
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ c.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="cost_types"><![CDATA[ c.cost_types=#cost_types# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="type"><![CDATA[ (c.type=#type# or c.type=2) ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="typeO"><![CDATA[ c.type=#typeO# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="apply_id"><![CDATA[ c.apply_id=#apply_id# ]]></isNotEmpty>
@@ -122,8 +123,8 @@
 	</select>
 	<insert id="qkjmanage_addCloseOrder" parameterClass="closeOrder">
 		<![CDATA[ 
-			Insert Into qkjm_r_closeorder(close_time,content,theme,member_id,member_address,member_phone,member_title,member_note,mt_price,add_user,add_time,lm_time,lm_user,apply_dept,close_num,state,type,apply_id,close_note,is_fullcheck,m_upprice,m_price,m_bprice,f_upprice,f_price,f_bprice,m_name)
-			Values (#close_time#,#content#,#theme#,#member_id#,#member_address#,#member_phone#,#member_title#,#member_note#,#mt_price#,#add_user#,#add_time#,#lm_time#,#lm_user#,#apply_dept#,#close_num#,#state#,#type#,#apply_id#,#close_note#,#is_fullcheck#,#m_upprice#,#m_price#,#m_bprice#,#f_upprice#,#f_price#,#f_bprice#,#m_name#)
+			Insert Into qkjm_r_closeorder(close_time,content,theme,member_id,member_address,member_phone,member_title,member_note,mt_price,add_user,add_time,lm_time,lm_user,apply_dept,close_num,state,type,apply_id,close_note,is_fullcheck,m_upprice,m_price,m_bprice,f_upprice,f_price,f_bprice,m_name,cost_types)
+			Values (#close_time#,#content#,#theme#,#member_id#,#member_address#,#member_phone#,#member_title#,#member_note#,#mt_price#,#add_user#,#add_time#,#lm_time#,#lm_user#,#apply_dept#,#close_num#,#state#,#type#,#apply_id#,#close_note#,#is_fullcheck#,#m_upprice#,#m_price#,#m_bprice#,#f_upprice#,#f_price#,#f_bprice#,#m_name#,#cost_types#)
 		]]>
 		<selectKey resultClass="int" keyProperty="uuid">
 		<![CDATA[ Select LAST_INSERT_ID() ]]>
@@ -156,7 +157,9 @@
 			member_phone=#member_phone#,
 			member_title=#member_title#,
 			mt_price=#mt_price#,
-			member_note=#member_note#
+			member_note=#member_note#,
+			
+			cost_types=#cost_types#
 			
 			Where uuid = #uuid#
 		]]>

@@ -5,7 +5,7 @@ public class ApplyProduct {
 	private String apply_id;// (varchar)申请单ID
 	private Integer product_id;// (int)产品ID
 	private Double per_price;// (decimal)单价
-	private Integer num;// (int)数量
+	private Double num;// (int)数量
 	private Double total_price;// (decimal)总价
 	private Integer status;// (int)状态 1 申请列表 2结案列表
 
@@ -61,11 +61,12 @@ public class ApplyProduct {
 		this.per_price = per_price;
 	}
 
-	public Integer getNum() {
+
+	public Double getNum() {
 		return num;
 	}
 
-	public void setNum(Integer num) {
+	public void setNum(Double num) {
 		this.num = num;
 	}
 

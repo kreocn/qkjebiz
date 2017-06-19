@@ -6,7 +6,7 @@ public class AllotDetail {
 	private Integer uuid;// (int)
 	private String lading_id;// (varchar)
 	private Integer stock_id;// (int)
-	private Integer num;// (int)
+	private Double num;// (int)
     private Integer bnum;
    
 	// 以下为非数据库字段
@@ -47,11 +47,11 @@ public class AllotDetail {
 		this.stock_id = stock_id;
 	}
 
-	public Integer getNum() {
+	public Double getNum() {
 		return num;
 	}
 
-	public void setNum(Integer num) {
+	public void setNum(Double num) {
 		this.num = num;
 	}
 

@@ -6,7 +6,7 @@ public class Stock {
 	private Integer uuid;// (int)
 	private Integer product_id;// (int)
 	private Integer store_id;// (int)
-	private Integer quantity;// (int)
+	private Double quantity;// (int)
 	private Integer freezeNum;
 
 	private Integer cnum;
@@ -78,11 +78,11 @@ public class Stock {
 		this.store_id = store_id;
 	}
 
-	public Integer getQuantity() {
+	public Double getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(Integer quantity) {
+	public void setQuantity(Double quantity) {
 		this.quantity = quantity;
 	}
 

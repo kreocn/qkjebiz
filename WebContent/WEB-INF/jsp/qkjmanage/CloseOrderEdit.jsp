@@ -215,6 +215,13 @@ s
 									</span>
 								</div>
 							</div>
+							<div class="label_hang">
+					            <div class="label_ltit">费用类型:</div>
+					            <div class="label_rwben label_rwb">
+					            	<s:select name="closeOrder.cost_types" cssClass="selectKick validate[required]" list="#{1:'渠道建设',2:'消费者建设',3:'基础运营',4:'品牌费用'}"
+									 headerKey="" headerValue="--请选择--" />
+					            </div>
+					     </div>
 						</div>
 
 						<%-- <div class="label_main">
@@ -734,11 +741,23 @@ s
 											<s:submit id="mdyStatus5" name="mdyStatus5" cssClass="input-red" value="审核不通过" action="closeOrder_check5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
 											<c:if test="${closeOrder.sd_state>=20 &&30==closeOrder.smd_status  && closeOrder.sd_state<60 && closeOrder.apply_dept.substring(0,3)!='312' && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK60',closeOrder.apply_dept)==true}">
+											<s:if test="active.apply_dept.substring(0,4)!='2201'">
 											<s:submit id="mdyStatus60" name="mdyStatus60" cssClass="input-green" value="总经理-审核通过" action="closeOrder_check50" onclick="return isOp('确定执行此操作?');" />
 										      <s:if test="closeOrder.apply_dept.substring(0,1)!='3' ">
 												<s:submit id="mdyStatus70" name="mdyStatus70" cssClass="input-red" value="推送副总" action="closeOrder_check60" onclick="return isOp('确定执行此操作?');" />
 											</s:if>
 											<s:submit id="mdyStatus6" name="mdyStatus6" cssClass="input-red" value="审核不通过" action="closeOrder_check5" onclick="return isOp('确定执行此操作?');" />
+											</s:if>
+											<s:else>
+											<c:if test="${closeOrder.sd_state>20}">
+											<s:submit id="mdyStatus60" name="mdyStatus60" cssClass="input-green" value="总经理-审核通过" action="closeOrder_check50" onclick="return isOp('确定执行此操作?');" />
+										      <s:if test="closeOrder.apply_dept.substring(0,1)!='3' ">
+												<s:submit id="mdyStatus70" name="mdyStatus70" cssClass="input-red" value="推送副总" action="closeOrder_check60" onclick="return isOp('确定执行此操作?');" />
+											</s:if>
+											<s:submit id="mdyStatus6" name="mdyStatus6" cssClass="input-red" value="审核不通过" action="closeOrder_check5" onclick="return isOp('确定执行此操作?');" />
+											</c:if>
+											</s:else>
+											
 										</c:if>
 										
 										<c:if test="${closeOrder.sd_state>=20 && closeOrder.sd_state<60 && closeOrder.apply_dept.substring(0,1)=='5' && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK60',closeOrder.apply_dept)==true}">

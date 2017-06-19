@@ -119,7 +119,7 @@ public class InStockDAO extends AbstractDAO {
 						stockdao.save(stock);
 					} else {
 						int pro = inDetail.getProduct_id();
-						int num = inDetail.getNum();
+						Double num = inDetail.getNum();
 						int stor = inStock.getStore_id();
 						newStock.setProduct_id(pro);
 						newStock.setQuantity(num);
@@ -335,7 +335,7 @@ public class InStockDAO extends AbstractDAO {
 		ldao.mdyTotalPrice(inStock.getUuid());
 	}
 
-	public void addStock(InStock ins, Integer spilt, Integer splitUuid, InDetail inDe,List<InDetail> inDes,Integer store_id, Integer num) {
+	public void addStock(InStock ins, Integer spilt, Integer splitUuid, InDetail inDe,List<InDetail> inDes,Integer store_id, Double num) {
 		// TODO Auto-generated method stub
 		try {
 			InDetailDAO idao = new InDetailDAO();
@@ -420,7 +420,7 @@ public class InStockDAO extends AbstractDAO {
 			//填加待确认的入库单
 			InStock insa=new InStock();
 			insa=inStock;
-			addStock(insa,2,inStock.getUuid(),null,inDetails,inStock.getStore_id(),0);
+			addStock(insa,2,inStock.getUuid(),null,inDetails,inStock.getStore_id(),(double) 0);
 			super.commitTransaction();
 		} catch (Exception e) {
 			// TODO: handle exception

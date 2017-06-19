@@ -6,7 +6,7 @@ public class InDetail {
 	private Integer uuid;// (int)
 	private Integer lading_id;// (varchar)入库单号
 	private Integer product_id;// (int)商品id
-	private Integer num;// (int)入库数量
+	private Double num;// (int)入库数量
 	private Double price;// (decimal)单价
 	private Double total;// (decimal)总计
 
@@ -38,11 +38,11 @@ public class InDetail {
 		this.product_id = product_id;
 	}
 
-	public Integer getNum() {
+	public Double getNum() {
 		return num;
 	}
 
-	public void setNum(Integer num) {
+	public void setNum(Double num) {
 		this.num = num;
 	}
 

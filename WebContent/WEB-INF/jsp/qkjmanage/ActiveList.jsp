@@ -146,7 +146,7 @@ cursor: pointer;
         <div class="label_hang">
             <div class="label_ltit">发货状态:</div>
             <div class="label_rwben label_rwb">
-            	<s:select name="active.ship_status"  cssClass="selectKick" headerKey="" headerValue="-发货状态-" list="#{0:'未发货',10:'已发货',99:'其他' }" />
+            	<s:select name="active.ship_status"  cssClass="selectKick" headerKey="" headerValue="-发货状态-" list="#{0:'未发货',10:'已发货',20:'已受理',99:'其他' }" />
             </div>
         </div>
         <div class="label_hang">
@@ -247,6 +247,7 @@ cursor: pointer;
 				<span class="op-area">
 				<s:if test="ship_status==0"><a class="ship_info input-nostyle"  data="${uuid}">未发货</a></s:if>
 				<s:if test="ship_status==10"><a class="ship_info input-nostyle"  data="${uuid}"><span class="message_pass">已发货</span></a></s:if>
+				<s:if test="ship_status==20"><a class="ship_info input-nostyle"  data="${uuid}"><span class="message_pass">已受理</span></a></s:if>
 				<s:if test="ship_status==99"><a class="ship_info input-nostyle"  data="${uuid}">&nbsp;其它&nbsp;</a></s:if>
 				</span>
 				<span class="ship_hidden_info" style="display:none;">
@@ -390,7 +391,7 @@ cursor: pointer;
 	<div class="label_main">
         <div class="label_hang">
             <div class="label_ltit">发货状态:</div>
-            <div class="label_rwben"><s:select id="e_active_ship_status" name="active.ship_status" list="#{0:'未发货',10:'已发货',99:'其他' }" /></div>
+            <div class="label_rwben"><s:select id="e_active_ship_status" name="active.ship_status" list="#{0:'未发货',10:'已发货',20:'已受理',99:'其他' }" /></div>
         </div>
 		<div class="label_hang">
             <div class="label_ltit">出库日期:</div>

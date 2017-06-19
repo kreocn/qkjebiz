@@ -465,7 +465,7 @@ public class OutStockAction extends ActionSupport {
 		// TODO Auto-generated method stub
 		outDetailh = new OutDetailH();
 		outDetailh.setLading_id(outDetail2.getLading_id());
-		outDetailh.setNum(outDetail2.getNum());
+		//outDetailh.setNum(outDetail2.getNum());
 		outDetailh.setPrice(outDetail2.getPrice());
 		outDetailh.setProduct_id(outDetail2.getProduct_id());
 

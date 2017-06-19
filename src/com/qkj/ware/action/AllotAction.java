@@ -449,7 +449,7 @@ public class AllotAction extends ActionSupport {
 				this.setAllotDetail(allotDetails.get(i));
 				StockDAO sdao=new StockDAO();
 				this.setStock((Stock)sdao.get(allotDetail.getStock_id()));
-				int totle=stock.getQuantity();
+				Double totle=stock.getQuantity();
 				//调出仓库－库存
 				stock.setQuantity(totle-allotDetail.getNum());
 				map.clear();
@@ -466,7 +466,7 @@ public class AllotAction extends ActionSupport {
 				map.put("product_id", stock.getProduct_id());
 				map.put("store_id", godeid);
 				this.setStocks(sdao.list(map));
-				int gnum=0;//调入仓库库存
+				Double gnum=0.00;//调入仓库库存
 				if(stocks.size()>0){
 					this.setStock(stocks.get(0));
 					stock.setQuantity(stock.getQuantity()+allotDetail.getNum());
@@ -584,7 +584,7 @@ public class AllotAction extends ActionSupport {
 		// TODO Auto-generated method stub
 		allotDh=new AllotDetailH();
 		allotDh.setLading_id(allotDetail2.getLading_id());
-		allotDh.setNum(allotDetail2.getNum());
+		//allotDh.setNum(allotDetail2.getNum());
 		allotDh.setStock_id(allotDetail2.getStock_id());
 		
 	}

@@ -16,6 +16,7 @@ import org.apache.struts2.ServletActionContext;
 import org.iweb.sys.ActionAttr;
 import org.iweb.sys.ContextHelper;
 import org.iweb.sys.Parameters;
+import org.iweb.sys.SendMessage;
 import org.iweb.sys.ToolsUtil;
 import org.iweb.sys.domain.UserLoginInfo;
 import org.iweb.sysvip.domain.Member;
@@ -758,6 +759,7 @@ public class ApplyAction extends ActionSupport implements ActionAttr {
 		ContextHelper.isPermit("QKJ_QKJMANAGE_APPLY_CHECK40");
 		try {
 			check(70);
+			SendMessage.sms_api1("15056617999","","商务系统有新的至事由审批单等待您的审批！","1");
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!check50 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!check50 数据更新失败:", e);

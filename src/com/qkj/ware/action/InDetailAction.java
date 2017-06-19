@@ -265,7 +265,7 @@ public class InDetailAction extends ActionSupport {
 		// TODO Auto-generated method stub
 		inDetailh=new InDetailH();
 		inDetailh.setLading_id(inDetail2.getLading_id());
-		inDetailh.setNum(inDetail2.getNum());
+		//inDetailh.setNum(inDetail2.getNum());
 		inDetailh.setPrice(inDetail2.getPrice());
 		inDetailh.setProduct_id(inDetail2.getProduct_id());
 		inDetailh.setTotal(inDetail2.getTotal());

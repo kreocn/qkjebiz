@@ -5,7 +5,7 @@ public class LadingItem {
 	private Integer lading_id;// (varchar)
 	private Integer product_id;// (int)
 	private Double per_price;// (decimal)
-	private Integer num;// (int)
+	private Double num;// (int)
 	private Double total_price;// (decimal)
 
 	// 以下为非数据库字段
@@ -70,11 +70,11 @@ public class LadingItem {
 		this.per_price = per_price;
 	}
 
-	public Integer getNum() {
+	public Double getNum() {
 		return num;
 	}
 
-	public void setNum(Integer num) {
+	public void setNum(Double num) {
 		this.num = num;
 	}
 

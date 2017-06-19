@@ -351,7 +351,7 @@ public class OutStockDAO extends AbstractDAO {
 		saveTotal(outStock);
 	}
 
-	public void addStock(OutStock ins, Integer spilt, Integer splitUuid, OutDetail outDe, Integer store_id, Integer num) {
+	public void addStock(OutStock ins, Integer spilt, Integer splitUuid, OutDetail outDe, Integer store_id, Double num) {
 		// TODO Auto-generated method stub
 		try {
 			OutDetailDAO idao = new OutDetailDAO();

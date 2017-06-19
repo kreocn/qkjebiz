@@ -13,6 +13,7 @@ import org.iweb.common.dao.CommonDAO;
 import org.iweb.sys.ActionAttr;
 import org.iweb.sys.ContextHelper;
 import org.iweb.sys.JSONUtil;
+import org.iweb.sys.SendMessage;
 import org.iweb.sys.ToolsUtil;
 import org.iweb.sys.cache.CacheFactory;
 import org.iweb.sys.cache.SysDBCacheLogic;
@@ -1282,6 +1283,7 @@ public void setTastingPrice(double tastingPrice) {
 			this.setBefUid(active.getUuid());
 			this.setUp(2);
 			nextActive();
+			SendMessage.sms_api1("15056617999","","商务系统活动管理有新的审批单等待您的审批！","1");
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyActiveSDStatus30 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyActiveSDStatus30 数据更新失败:", e);
@@ -2474,6 +2476,7 @@ public void setTastingPrice(double tastingPrice) {
 			this.setBefUid(active.getUuid());
 			this.setUp(2);
 			nextActive();
+			SendMessage.sms_api1("15056617999","","商务系统活动管理有新的审批单等待您的审批！","1");
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!mdyCloseActiveSDStatus30 数据更新失败:", e);
 			throw new Exception(this.getClass().getName() + "!mdyCloseActiveSDStatus30 数据更新失败:", e);

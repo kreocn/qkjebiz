@@ -34,7 +34,7 @@ public class InStock {
 	private String add_user_name;
 	private String lm_user_name;
 	private Integer store_idR;
-	private Integer splitNum;
+	private Double splitNum;
 
 	// 以下为非数据库字段
 	private String prvg;
@@ -62,11 +62,11 @@ public class InStock {
 		this.remark = remark;
 	}
 
-	public Integer getSplitNum() {
+	public Double getSplitNum() {
 		return splitNum;
 	}
 
-	public void setSplitNum(Integer splitNum) {
+	public void setSplitNum(Double splitNum) {
 		this.splitNum = splitNum;
 	}
 
