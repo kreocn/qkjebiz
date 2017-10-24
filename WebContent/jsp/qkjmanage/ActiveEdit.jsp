@@ -421,6 +421,16 @@ var openCustomerView = function(customer_uuid) {
 							 headerKey="" headerValue="--请选择--"/>
 			            </div>
 			        </div>
+			        <div class="label_hang">
+			            <div class="label_ltit">费用类型:</div>
+			            <div class="label_rwben label_rwb">
+							 <s:if test="active.cost_types==1">渠道建设</s:if>
+							 <s:elseif test="active.cost_types==2">消费者建设</s:elseif>
+							 <s:elseif test="active.cost_types==3">基础运营</s:elseif>
+							 <s:elseif test="active.cost_types==4">品牌费用</s:elseif>
+							 <s:else>无</s:else>
+			            </div>
+			        </div>
 					</div>
 					<div class="label_main">
 						<div class="label_hang">

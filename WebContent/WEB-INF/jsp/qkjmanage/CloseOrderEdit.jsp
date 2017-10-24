@@ -215,6 +215,7 @@ s
 									</span>
 								</div>
 							</div>
+							<s:if test="closeOrder.state==0">
 							<div class="label_hang">
 					            <div class="label_ltit">费用类型:</div>
 					            <div class="label_rwben label_rwb">
@@ -222,6 +223,19 @@ s
 									 headerKey="" headerValue="--请选择--" />
 					            </div>
 					     </div>
+					      </s:if>
+					      <s:else>
+					      <div class="label_hang">
+					            <div class="label_ltit">费用类型:</div>
+					            <div class="label_rwben label_rwb">
+					            	<s:if test="closeOrder.cost_types==1">渠道建设</s:if>
+									 <s:elseif test="closeOrder.cost_types==2">消费者建设</s:elseif>
+									 <s:elseif test="closeOrder.cost_types==3">基础运营</s:elseif>
+									 <s:elseif test="closeOrder.cost_types==4">品牌费用</s:elseif>
+									 <s:else>无</s:else>
+					            </div>
+					     </div>
+					      </s:else>
 						</div>
 
 						<%-- <div class="label_main">
@@ -712,7 +726,7 @@ s
 													<s:submit value="区域经理审核通过" action="closeOrder_check26" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
 													<s:submit id="mdyStatus5" name="mdyStatus5" cssClass="input-red" value="审核不通过" action="closeOrder_check5" onclick="return isOp('确定执行此操作?');" />
 												</c:if>
-												<c:if test="${closeOrder.sd_state==26 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK20',closeOrder.apply_dept)==true}">
+												<c:if test="${closeOrder.sd_state==26 && closeOrder.smd_status==30 && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK20',closeOrder.apply_dept)==true}">
 												<s:submit id="mdyStatus20" name="mdyStatus20" value="业务部经理审核通过" action="closeOrder_check20" onclick="return isOp('确定执行此操作?');" cssClass="input-green" />
 												<s:submit id="mdyStatus5" name="mdyStatus5" cssClass="input-red" value="审核不通过" action="closeOrder_check5" onclick="return isOp('确定执行此操作?');" />
 											</c:if>

@@ -675,7 +675,8 @@ SELECT MAX(a.baotime) baotime,MAX(a.stars) stars,MAX(a.sing) sing,MAX(a.spass) s
 				close_m_bprice=#close_m_bprice#,
 				close_f_upprice=#close_f_upprice#,
 				close_f_price=#close_f_price#,
-				close_f_bprice=#close_f_bprice#
+				close_f_bprice=#close_f_bprice#,
+				cost_types=#cost_types#
 			Where uuid = #uuid#
 		]]>
 	</update>

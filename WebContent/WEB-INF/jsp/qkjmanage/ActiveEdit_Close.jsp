@@ -318,8 +318,11 @@
 						<div class="label_hang">
 					            <div class="label_ltit">费用类型:</div>
 					            <div class="label_rwben label_rwb">
-					            	<s:select name="active.cost_types" cssClass="selectKick validate[required]" list="#{1:'渠道建设',2:'消费者建设',3:'基础运营',4:'品牌费用'}"
-									 headerKey="" headerValue="--请选择--" />
+									 <s:if test="active.cost_types==1">渠道建设</s:if>
+									 <s:elseif test="active.cost_types==2">消费者建设</s:elseif>
+									 <s:elseif test="active.cost_types==3">基础运营</s:elseif>
+									 <s:elseif test="active.cost_types==4">品牌费用</s:elseif>
+									 <s:else>无</s:else>
 					            </div>
 					     </div>
 					</div>
@@ -919,7 +922,7 @@
 											<s:submit cssClass="input-green" value="区域经理-审核通过" action="mdyCloseActiveSDStatus26" onclick="return isOp('确定执行此操作?');" />
 											<s:submit cssClass="input-red" name="mdyCloseActiveSDStatus5" value="审核不通过" action="mdyCloseActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
-										<c:if test="${26==active.close_sd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS10',active.apply_dept)==true}">
+										<c:if test="${26==active.close_sd_status  && active.close_smd_status==30  && it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS10',active.apply_dept)==true}">
 											<s:submit cssClass="input-green" name="mdyCloseActiveSDStatus10" value="业务部经理-审核通过" action="mdyCloseActiveSDStatus10" onclick="return isOp('确定执行此操作?');" />
 											<s:submit cssClass="input-red" name="mdyCloseActiveSDStatus5" value="审核不通过" action="mdyCloseActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>

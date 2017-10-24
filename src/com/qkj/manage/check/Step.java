@@ -49,6 +49,7 @@ public class Step {
 		mdyActiveSDStatus(10,userid);
 		// 销售管理部默认为已签收
 		mdyActiveSMDStatus(10,userid);
+		mdyActiveFDStatus(1, 0,userid);
 	}
 	
 	public void step0(String userid){//办事处
@@ -152,6 +153,7 @@ public class Step {
 		mdyCloseActiveSDStatus(10,userid);
 		// 同时销管部的流程变成已签收
 		mdyCloseActiveSMDStatus(10,userid);
+		mdyActiveFDStatus(2, 0,userid);
 	}
 	
 	public void step10(String userid){//结案办事处审
