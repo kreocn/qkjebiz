@@ -94,7 +94,7 @@ cursor: pointer;
         <div class="label_hang">
             <div class="label_ltit">(申)销售状态:</div>
             <div class="label_rwben label_rwb">
-            	<s:select id="sd_status" name="active.sd_status" cssClass="selectKick" list="#{0:'新单',5:'退回',10:'待审核',20:'办事处',30:'业务部经理已审',40:'总监已审',50:'副总已审',60:'总经理已审',70:'营销中心副总已审'}"
+            	<s:select id="sd_status" name="active.sd_status" cssClass="selectKick" list="#{0:'新单',5:'退回',10:'待审核',20:'办事处',26:'区域经理已审',30:'业务部经理已审',40:'总监已审',50:'副总已审',60:'总经理已审',70:'营销中心副总已审'}"
 				 headerKey="" headerValue="--请选择--" />
             </div>
         </div>
@@ -116,7 +116,7 @@ cursor: pointer;
             <div class="label_ltit">(结)销售状态:</div>
             <div class="label_rwben label_rwb">
             	<s:select id="clsdsta" name="active.close_sd_status" cssClass="selectKick"
-				 list="#{0:'新单',5:'退回',10:'待审核',20:'办事处已审',30:'业务部经理已审',40:'总监已审',50:'副总已审',60:'总经理已审',70:'营销中心副总已审'}"
+				 list="#{0:'新单',5:'退回',10:'待审核',20:'办事处已审',26:'区域经理已审',30:'业务部经理已审',40:'总监已审',50:'副总已审',60:'总经理已审',70:'营销中心副总已审'}"
 				 headerKey="" headerValue="--请选择--" />
             </div>
         </div>
@@ -579,7 +579,7 @@ function kselect(){
 	
 	if(parseInt(num)==11){//北京总经理
 		jnull();
-		document.getElementById("sd_status").options[5].selected = true; 
+		document.getElementById("sd_status").options[6].selected = true; 
 		document.getElementById("smd_sta").options[4].selected = true; 
 		$("#userdept_codeid").val("3");
 		$("#userdept_nameid").val("北京天估德");
@@ -694,9 +694,9 @@ function kselect(){
 		document.getElementById("apply_is_sub_dept").checked=true;
 	}
 	
-	if(parseInt(num)==42){//总经理
+	if(parseInt(num)==42){//北京总经理
 		snull();
-		document.getElementById("clsdsta").options[5].selected = true; 
+		document.getElementById("clsdsta").options[6].selected = true; 
 		document.getElementById("clsmdsta").options[4].selected = true; 
 		$("#userdept_codeid").val("3");
 		$("#userdept_nameid").val("北京天佑德");

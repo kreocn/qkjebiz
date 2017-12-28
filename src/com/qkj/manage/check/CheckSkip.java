@@ -19,20 +19,11 @@ public class CheckSkip {
 		
 		//西北（申请（办事外，总监）结案（办事处，销管，总监，财务））
 		//skipSteps.add(new SkipStep("220",null, 1, 0, 2,false)); // 申请
-		skipSteps.add(new SkipStep("220",null,1,8,9,false)); // 申请
-		skipSteps.add(new SkipStep("220",null,1, 40, 9,false)); // 结案
+		skipSteps.add(new SkipStep("220",null,1,8,900,false)); // 申请
+		skipSteps.add(new SkipStep("220",null,1, 40, 900,false)); // 申请
 		
-		skipSteps.add(new SkipStep("220",null,1,18,100,false)); // 申请
+		skipSteps.add(new SkipStep("220",null,1,18,100,false)); // 结案
 		skipSteps.add(new SkipStep("220",null,1, 41, 100,false)); // 结案
-		
-		skipSteps.add(new SkipStep("2202A",null,1, 1, 2,false)); // 申请
-		skipSteps.add(new SkipStep("2202A",null,1, 11, 10,false)); // 结案
-		
-		skipSteps.add(new SkipStep("2202E",null,1, 1, 2,false)); // 申请
-		skipSteps.add(new SkipStep("2202E",null,1, 11, 10,false)); // 结案
-		
-		skipSteps.add(new SkipStep("2202X",null,1, 1, 2,false)); // 申请
-		skipSteps.add(new SkipStep("2202X",null,1, 11, 10,false)); // 结案
 		
 		//传奇天估德401402
 		skipSteps.add(new SkipStep("4", null,1, 1,0,"3",false)); // 申请 2大区 3跳过大区
@@ -44,15 +35,11 @@ public class CheckSkip {
 		
 		
 		//陕西销售公司（申请（办事处=业务部经理=总经理=陈总）结案（办事处=业务部经理=总经理=陈总=财务））
-		skipSteps.add(new SkipStep("5", null,1, 2, 3,false));// 申请  跳过销管
-		skipSteps.add(new SkipStep("5",null, 1, 12, 13,false));// 结案  跳过销管
 	
 		//skipSteps.add(new SkipStep("5", null,1, 40, 9,false));// 申请 总经理跳过财务
 		
 		// 北京
 		//skipSteps.add(new SkipStep("3","312", 1, 40, 9,false)); // 申请副总跳过财务
-		skipSteps.add(new SkipStep("3","312", 1, 2, 3,false)); // 申请销管
-		skipSteps.add(new SkipStep("3","312", 1, 12, 13,false)); // 申请销管
 		//红酒
 		skipSteps.add(new SkipStep("312","31203", 1, 1, 0,false)); // 红酒跳过办事处
 		skipSteps.add(new SkipStep("312","31203", 1, 11, 10,false)); // 申请销管

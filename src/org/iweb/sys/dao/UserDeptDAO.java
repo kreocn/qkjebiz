@@ -11,6 +11,10 @@ public class UserDeptDAO extends AbstractDAO {
 	public void add(Object parameters) {
 		super.add("sys_addUserDept", parameters);
 	}
+	
+	public void addLoginInfo(Object parameters) {
+		super.add("sys_addUserLoginInfo", parameters);
+	}
 
 	public Object get(Object uuid) {
 		Map<String, Object> map = new HashMap<String, Object>();

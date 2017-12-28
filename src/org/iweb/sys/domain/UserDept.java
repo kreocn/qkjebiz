@@ -18,6 +18,8 @@ public class UserDept {
 	private String position_name;
 
 	private List<UserRole> user_roles_list;
+	
+	private Date login_time;
 
 	public Integer getDepsubover() {
 		return depsubover;
@@ -113,6 +115,14 @@ public class UserDept {
 
 	public void setLm_time(Date lm_time) {
 		this.lm_time = lm_time;
+	}
+
+	public Date getLogin_time() {
+		return login_time;
+	}
+
+	public void setLogin_time(Date login_time) {
+		this.login_time = login_time;
 	}
 
 }

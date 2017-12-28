@@ -18,8 +18,6 @@ public class CloseOrderCheckSkip {
 	static {
 		
 		//西北跳过销管部，销管副总流程
-		//skipSteps.add(new CloseOrerSkipStep("220", 1, "check30", "mdyCloseOrderSMDStatus50"));// 总监审后销管销管副总代审
-		//skipSteps.add(new CloseOrerSkipStep("220",null, 1, "check30", "mdyCloseOrderSMDStatus50,checkfd10"));// 总监审后销管部经理代审
 		//传奇天估德401402
 		skipSteps.add(new CloseOrerSkipStep("4",null, 1, "check20", "check30,mdyCloseOrderSMDStatus40"));// 总监跳过销管部经理
 		
@@ -28,14 +26,14 @@ public class CloseOrderCheckSkip {
 		skipSteps.add(new CloseOrerSkipStep("40102",null, 1, "check0", "check10,mdyCloseOrderSMDStatus10"));// 销管跳过销管
 		
 		//陕西 办事处，部经理，总经理，财务
-		skipSteps.add(new CloseOrerSkipStep("5",null, 1, "check20", "mdyCloseOrderSMDStatus10"));// 跳过大区
+		//skipSteps.add(new CloseOrerSkipStep("5",null, 1, "check20", "mdyCloseOrderSMDStatus10"));// 跳过大区
 		
 		
-		skipSteps.add(new CloseOrerSkipStep("2202",null, 1, "check50", "checkfd10"));// 跳过大区
+	/*	skipSteps.add(new CloseOrerSkipStep("2202",null, 1, "check50", "checkfd10"));// 跳过大区
 		skipSteps.add(new CloseOrerSkipStep("2202",null, 1, "check70", "checkfd10"));// 跳过大区
-		// 北京
-		skipSteps.add(new CloseOrerSkipStep("3","312",1, "check20", "mdyCloseOrderSMDStatus10")); // 跳过大区
-		skipSteps.add(new CloseOrerSkipStep("312",null,1, "check0", "check20,mdyCloseOrderSMDStatus10")); // 跳过大区
+*/		// 北京
+		//skipSteps.add(new CloseOrerSkipStep("3","312",1, "check20", "mdyCloseOrderSMDStatus10")); // 跳过大区
+		//skipSteps.add(new CloseOrerSkipStep("312",null,1, "check0", "check20,mdyCloseOrderSMDStatus10")); // 跳过大区
 		
 		//红酒
 				skipSteps.add(new CloseOrerSkipStep("312","31203", 1, "check0", "check10")); // 红酒跳过办事处

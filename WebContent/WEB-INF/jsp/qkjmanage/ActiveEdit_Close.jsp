@@ -956,7 +956,7 @@
 									<s:if test="active.apply_dept.substring(0,3)!='312' && active.apply_dept.substring(0,1)!=4">
 									
 										<s:if test="active.apply_dept.substring(0,1)==5">
-										<c:if test="${(active.close_sd_status>=20) && active.close_sd_status<60  && it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS50',active.apply_dept)==true}">
+										<c:if test="${(active.close_sd_status>=20 && 30==active.close_smd_status) && active.close_sd_status<60  && it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS50',active.apply_dept)==true}">
 											<s:submit cssClass="input-green" name="mdyCloseActiveSDStatus50" value="总经理-审核通过" action="mdyCloseActiveSDStatus50" onclick="return isOp('确定执行此操作?');" />
 
 											<s:if test="active.apply_dept.substring(0,1)!=3">

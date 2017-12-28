@@ -507,4 +507,16 @@
 	</delete>
 	
 	<!-- SYS_MENU End -->
+	
+	
+	
+	
+	<!-- SYS_loginInfo Start -->
+	<insert id="sys_addUserLoginInfo" parameterClass="userDept">
+		<![CDATA[ 
+			INSERT INTO s_sys_userLoginMsg (user_id,dept_code,position,login_time) VALUES(#user_id#,#dept_code#,#position#,#login_time#)
+		]]>
+	</insert>
+	
+	<!-- SYS_loginInfo End -->
 </sqlMap>

@@ -1,6 +1,7 @@
 package org.iweb.sys.action;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -110,6 +111,12 @@ public class UserLoginAction extends ActionSupport {
 						.getUser().getPasswords())) {
 					setUserLoginInfo(user, 0);
 					this.setMessage("Login Successful");
+					userDept=new UserDept();//登录历史
+					userDept.setUser_id(user.getUuid());
+					userDept.setDept_code(user.getDept_code());
+					userDept.setPosition(user.getPosition());
+					userDept.setLogin_time(new Date());
+					udDao.addLoginInfo(userDept);
 					return SUCCESS;
 				}
 			} else if (l.size() == 0) {

@@ -774,7 +774,7 @@ s
 											
 										</c:if>
 										
-										<c:if test="${closeOrder.sd_state>=20 && closeOrder.sd_state<60 && closeOrder.apply_dept.substring(0,1)=='5' && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK60',closeOrder.apply_dept)==true}">
+										<c:if test="${closeOrder.sd_state>=20 && 30==closeOrder.smd_status && closeOrder.sd_state<60 && closeOrder.apply_dept.substring(0,1)=='5' && it:checkPermit('QKJ_QKJMANAGE_CLOSEORDER_CHECK60',closeOrder.apply_dept)==true}">
 											<s:submit id="mdyStatus60" name="mdyStatus60" cssClass="input-green" value="总经理-审核通过" action="closeOrder_check50" onclick="return isOp('确定执行此操作?');" />
 										      <s:if test="closeOrder.apply_dept.substring(0,1)!='3' ">
 												<s:submit id="mdyStatus70" name="mdyStatus70" cssClass="input-red" value="推送副总" action="closeOrder_check60" onclick="return isOp('确定执行此操作?');" />
