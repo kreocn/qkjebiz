@@ -231,6 +231,7 @@
 					</s:elseif>
 					<input type="button" value="返回" onclick="linkurl('<s:url action="user_list" namespace="/sys" />');"  class="input-gray"/>
 					<input type="button" value="修改密码"  onclick="changePWD();" class="input-yellow"/>
+					<input type="button" value="调离"  onclick="changeDept();" class="input-yellow"/>
 					<span id="message"><s:property value="message" /></span>
 		       </div>
 			</div>
@@ -266,6 +267,68 @@
 		</table>
 	</s:form>
 </div>
+
+<div id="changeDeptdiv" style="display: none;" title="调离">
+	<s:form name="form2" cssClass="validForm" action="user_change_dept" namespace="/sys" onsubmit="return validator(this);" method="post" theme="simple">
+		<table class="ilisttable" width="100%" >
+		  <tr>
+		    <td width="25%" align="right">角色ID:</td>
+		    <td>${user.uuid}<s:hidden  name="user.uuid" /><s:hidden name="viewFlag" value="mdy" /></td>	
+		  </tr>
+		  <tr>
+		    <td width="25%" align="right">部门ID:</td>
+		    <td>${user.dept_code}<s:hidden  name="user.dept_code" /></td>	
+		  </tr>
+		  <tr>
+		    <td align="right">用户名:</td>
+		    <td>${user.title}<s:hidden id="user.title" name="user.title" /></td>
+		  </tr>
+		  <tr>
+		    <td align="right">新部门:</td>
+		    <td>
+		    <div class="label_rwben2">
+		       		<span class="label_rwb">
+					<s:textfield title="部门名称" id="dldept_nameid" readonly="true" />
+					<s:hidden title="部门代码" id="dldept_codeid" name="user.new_dept_code" readonly="true" />
+					</span>
+					<span class="lb nw">
+					<img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept('dldept_codeid','dldept_nameid',true);" />
+					</span>
+		      </div>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td align="right">交接部门:</td>
+		    <td>
+		    <div class="label_rwben2">
+            	<span class="label_rwb">
+				<s:textfield title="部门名称" id="vindept_nameid" readonly="true" />
+				<s:hidden title="部门代码" id="vindept_codeid" name="user.vin_apply_dept" readonly="true" />
+				</span>
+				<span class="lb nw">
+				<img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept('vindept_codeid','vindept_nameid',true);" />
+				</span>
+            </div>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td align="right">交接人:</td>
+		    <td>
+            <div class="label_rwben label_rwb">
+            	<s:select id="membermanagerid" cssClass="selectKick" name="user.vin_apply_user" list="#{}" headerKey="" headerValue="--请选择--" />
+            </div>
+		    </td>
+		  </tr>
+		  <tr>
+		  	<td>&nbsp;</td>
+			<td class="buttonarea">
+				<s:submit value="确定" />
+			</td>	    
+		  </tr>
+		</table>
+	</s:form>
+</div>
+
 <s:action name="ref_foot" namespace="/manager" executeResult="true" />
 <script type="text/javascript" src="<s:url value="/js/div.js" />"></script>
 <script type="text/javascript" src="<s:url value="/js/optiontransferselect.js" />"></script>
@@ -277,10 +340,21 @@ $(function(){
 	      height: 220,
 	      modal: true
 	});
+	
+	$("#changeDeptdiv").dialog({
+	      autoOpen: false,
+	      width: 420,
+	      height: 270,
+	      modal: true
+	});
+	
 	addTransferSelect("aroles","uroles");
 });
 function changePWD() {	
 	$("#changePWDdiv").dialog("open");
+}
+function changeDept() {	
+	$("#changeDeptdiv").dialog("open");
 }
 function checkPWD2(obj) {
 	if (obj.passwords.value!=obj.passwords2.value) {

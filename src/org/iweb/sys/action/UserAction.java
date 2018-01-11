@@ -30,6 +30,8 @@ import org.iweb.sys.domain.UserRole;
 import org.iweb.sys.exception.PermitException;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.qkj.manage.dao.ActiveDAO;
+import com.qkj.manage.domain.Active;
 
 public class UserAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
@@ -523,6 +525,79 @@ public class UserAction extends ActionSupport {
 			u.setEmail(user.getEmail());
 		}
 		this.setAjaxResult(((Integer) dao.checkMember(u)).toString());
+		return SUCCESS;
+	}
+	
+	/**
+	 * 调离
+	 * @return
+	 * @throws Exception
+	 */
+	public String changeDEPT() throws Exception {
+		if(user!=null&&user.getUuid()!=null&&user.getDept_code()!=null&&user.getNew_dept_code()!=null&&user.getVin_apply_dept()!=null&&user.getVin_apply_user()!=null){
+			try {
+				dao.startTransaction();
+				//修改活动
+				map.clear();
+				String countSQL = "update qkjm_r_active set apply_user='"+user.getVin_apply_user()+"',apply_dept='"+user.getVin_apply_dept()+"' where apply_user='"+user.getUuid()+"' and apply_dept='"+user.getDept_code()+"'";
+				map.put("sqltext", countSQL);
+				dao.changeUserDept(map);
+				log.info("活动："+user.getUuid()+"交接给"+user.getVin_apply_user()+"成功！");
+				//修改至事由
+				map.clear();
+				countSQL = "update qkjm_r_apply set apply_user='"+user.getVin_apply_user()+"',apply_dept='"+user.getVin_apply_dept()+"' "
+						+ "where apply_user='"+user.getUuid()+"' and apply_dept='"+user.getDept_code()+"'";
+				map.put("sqltext", countSQL);
+				dao.changeUserDept(map);
+				log.info("至事由："+user.getUuid()+"交接给"+user.getVin_apply_user()+"成功！");
+				//修改提货结案
+				map.clear();
+				countSQL = "update qkjm_r_closeorder set add_user='"+user.getVin_apply_user()+"', apply_dept='"+user.getVin_apply_dept()+"' "
+						+ "where add_user='"+user.getUuid()+"' and apply_dept='"+user.getDept_code()+"'";
+				map.put("sqltext", countSQL);
+				dao.changeUserDept(map);
+				log.info("提货结案："+user.getUuid()+"交接给"+user.getVin_apply_user()+"成功！");
+				//修改所属会员
+				map.clear();
+				countSQL = "update s_vip_member set MANAGER='"+user.getVin_apply_user()+"',DEPT_CODE='"+user.getVin_apply_dept()+"'"
+						+ " where  MANAGER='"+user.getUuid()+"'and DEPT_CODE='"+user.getDept_code()+"'";
+				map.put("sqltext", countSQL);
+				dao.changeUserDept(map);
+				log.info("会员："+user.getUuid()+"交接给"+user.getVin_apply_user()+"成功！");
+				
+				
+				//修改默认部门
+				map.clear();
+				countSQL = "update s_sys_user set DEPT_CODE='"+user.getNew_dept_code()+"'"
+						+ " where   uuid='"+user.getUuid()+"'";
+				map.put("sqltext", countSQL);
+				dao.changeUserDept(map);
+				log.info(""+user.getUuid()+"修改默认部门："+user.getDept_code()+"成功！");
+				
+				//修改权限部门
+				map.clear();
+				countSQL = "update s_sys_userdept set dept_code='"+user.getNew_dept_code()+"'"
+						+ " where dept_code='"+user.getDept_code()+"' and user_id='"+user.getUuid()+"'";
+				map.put("sqltext", countSQL);
+				dao.changeUserDept(map);
+				log.info(""+user.getUuid()+"权限部门："+user.getDept_code()+"成功！");
+				
+				//修改工时
+				map.clear();
+				countSQL = "update qkja_r_leave set leave_dept='"+user.getNew_dept_code()+"' "
+						+ "where leave_user='"+user.getUuid()+"'";
+				map.put("sqltext", countSQL);
+				dao.changeUserDept(map);
+				log.info(""+user.getUuid()+"工时："+user.getDept_code()+"成功！");
+				
+				dao.commitTransaction();
+			} catch (Exception e) {
+				// TODO: handle exception
+			} finally {
+				dao.endTransaction();
+			}
+
+		}
 		return SUCCESS;
 	}
 }

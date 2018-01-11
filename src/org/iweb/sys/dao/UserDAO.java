@@ -59,6 +59,11 @@ public class UserDAO extends AbstractDAO {
 			return (int) super.get("sys_checkMember", user);
 		}
 	}
+	
+	
+	public void changeUserDept(Map<String, Object> map) {
+		super.save("vin_change_userDept", map);
+	}
 
 	public int getResultCount() {
 		return super.getResultCount();

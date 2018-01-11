@@ -168,6 +168,14 @@
 				<param name="viewFlag">mdy</param>
 			</result>
 		</action>
+		
+		<action name="user_change_dept" class="org.iweb.sys.action.UserAction" method="changeDEPT">
+			<result type="redirectAction">
+				<param name="actionName">user_load</param>
+				<param name="user.uuid">${user.uuid}</param>
+				<param name="viewFlag">mdy</param>
+			</result>
+		</action>
 
 		<action name="iuser_load" class="org.iweb.sys.action.UserAction" method="iload">
 			<result>/WEB-INF/jsp/sys/IUserEdit.jsp</result>

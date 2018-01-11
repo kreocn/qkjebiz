@@ -40,7 +40,10 @@ public class User {
 	private String position_name;
 	private String deptFlag;
 	private String is_sub_dept;
-
+	
+	private String new_dept_code;//调离的新部门
+	private String vin_apply_dept;//交接的部门
+	private String vin_apply_user;//交接人
 	// 以下为查询专用字段
 	private String[] positions;
 
@@ -298,6 +301,30 @@ public class User {
 
 	public void setSenior_name(String senior_name) {
 		this.senior_name = senior_name;
+	}
+
+	public String getNew_dept_code() {
+		return new_dept_code;
+	}
+
+	public void setNew_dept_code(String new_dept_code) {
+		this.new_dept_code = new_dept_code;
+	}
+
+	public String getVin_apply_dept() {
+		return vin_apply_dept;
+	}
+
+	public void setVin_apply_dept(String vin_apply_dept) {
+		this.vin_apply_dept = vin_apply_dept;
+	}
+
+	public String getVin_apply_user() {
+		return vin_apply_user;
+	}
+
+	public void setVin_apply_user(String vin_apply_user) {
+		this.vin_apply_user = vin_apply_user;
 	}
 
 }

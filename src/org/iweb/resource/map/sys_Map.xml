@@ -519,4 +519,9 @@
 	</insert>
 	
 	<!-- SYS_loginInfo End -->
+	
+	<!-- 调离通用 -->
+	<update id="vin_change_userDept" parameterClass="java.util.Map">
+		$sqltext$
+	</update>
 </sqlMap>
