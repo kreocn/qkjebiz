@@ -871,7 +871,7 @@
 
 									<s:if test="active.apply_dept.substring(0,3)=='220'"><!-- 甘肃 隆东（办事处，大区，销冠，财务，总经理）其它（办事处，销冠，财务，总经理）-->
 										<s:if test="active.apply_dept.substring(0,4)=='2201'"><!-- 甘肃 隆东-->
-											<c:if test="${20==active.close_sd_status  && 10==active.close_fd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS10',active.apply_dept)==true}">
+											<c:if test="${20==active.close_sd_status  && active.close_smd_status>=30 && it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS10',active.apply_dept)==true}">
 												<s:submit cssClass="input-green" name="mdyCloseActiveSDStatus10" value="业务部经理-审核通过" action="mdyCloseActiveSDStatus10" onclick="return isOp('确定执行此操作?');" />
 											<s:submit cssClass="input-red" name="mdyCloseActiveSDStatus5" value="审核不通过" action="mdyCloseActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
 											</c:if>
