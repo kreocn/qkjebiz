@@ -974,9 +974,12 @@
 											<s:submit cssClass="input-red" name="mdyCloseActiveSDStatus5" value="审核不通过" action="mdyCloseActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
 										</c:if>
 									</s:if>
-									<s:else>
-									
-									</s:else>
+									<s:elseif test="active.apply_dept.substring(0,1)==3"><!-- 北京总经理 -->
+									<c:if test="${active.close_sd_status==30 && 30==active.close_smd_status && it:checkPermit('QKJ_QKJMANAGE_ACTIVECLOSE_SDSTATUS50',active.apply_dept)==true}">
+											<s:submit cssClass="input-green" name="mdyCloseActiveSDStatus50" value="总经理-审核通过" action="mdyCloseActiveSDStatus50" onclick="return isOp('确定执行此操作?');" />
+											<s:submit cssClass="input-red" name="mdyCloseActiveSDStatus5" value="审核不通过" action="mdyCloseActiveSDStatus5" onclick="return isOp('确定执行此操作?');" />
+										</c:if>
+									</s:elseif>
 										
 									</s:if>
 									<s:else>
