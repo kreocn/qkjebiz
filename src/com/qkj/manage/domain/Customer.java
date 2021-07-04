@@ -55,10 +55,21 @@ public class Customer {
 	private String add_user_name;
 	private Integer recode_count; // 当前客户的回访次数
 	private String is_sub_dept;
+   private String member_id;//会员id
+
+
 
 	//
 	private String[] distributions;
 	private String[] failed_reasons;
+	private String is_recode;
+	public String getMember_id() {
+	return member_id;
+}
+
+public void setMember_id(String member_id) {
+	this.member_id = member_id;
+}
 
 	public Integer getRecode_count() {
 		return recode_count;
@@ -484,4 +495,12 @@ public class Customer {
 		this.sale_type = sale_type;
 	}
 
+	public String getIs_recode() {
+		return is_recode;
+	}
+
+	public void setIs_recode(String is_recode) {
+		this.is_recode = is_recode;
+	}
+	
 }

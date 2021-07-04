@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="warepower_warepower" extends="default" namespace="/warepower">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- Warepower Start -->
+		<action name="ware_power" class="com.qkjsys.ebiz.action.WareAction" method="ware_power">
+			<result>/WEB-INF/jsp/ware/warepower/WarePower.jsp</result>
+		</action>
+		<action name="warepower_list" class="com.qkj.ware.action.WarepowerAction" method="list">
+			<result>/WEB-INF/jsp/ware/warepower/WarepowerList.jsp</result>
+		</action>
+		<action name="warepower_relist" class="com.qkj.ware.action.WarepowerAction" method="relist">
+			<result type="redirectAction">
+				<param name="actionName">warepower_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+		<action name="warepower_load" class="com.qkj.ware.action.WarepowerAction" method="load">
+			<result>/WEB-INF/jsp/ware/warepower/WarepowerEdit.jsp</result>
+		</action>
+		<action name="Check_User" class="com.qkj.ware.action.WarepowerAction" method="checkUser">
+		</action>
+		<action name="warepower_add" class="com.qkj.ware.action.WarepowerAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">ware_power</param>
+				<param name="ware.uuid">${ware.uuid}</param>
+				<param name="ware.ware_name">${ware.ware_name}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="warepower_save" class="com.qkj.ware.action.WarepowerAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">ware_power</param>
+				<param name="ware.uuid">${ware.uuid}</param>
+				<param name="ware.ware_name">${ware.ware_name}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="warepower_del" class="com.qkj.ware.action.WarepowerAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">ware_power</param>
+				<param name="ware.uuid">${ware.uuid}</param>
+				<param name="ware.ware_name">${ware.ware_name}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- Warepower End -->
+	</package>
+</struts>

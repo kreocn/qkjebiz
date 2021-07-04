@@ -3,13 +3,11 @@
  */
 package org.iweb.ajax.data;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.iweb.common.dao.AjaxDAO;
-import org.iweb.sys.ContextHelper;
 import org.iweb.sys.ToolsUtil;
 import org.iweb.sysvip.MemberStatusFactory;
 
@@ -41,6 +39,7 @@ public class MemberAjax extends Ajax {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.iweb.ajax.data.Ajax#getResult()
 	 */
 	@Override

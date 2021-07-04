@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "sql-map-2.dtd">
+<sqlMap>
+	<!-- Active Start -->
+	<typeAlias alias="entert" type="com.qkj.manage.domain.Entertain" />
+	<typeAlias alias="entertpro" type="com.qkj.manage.domain.EntertainProduct" />
+	<typeAlias alias="entertmem" type="com.qkj.manage.domain.EntertMember" />
+	<select id="qkjmanage_getEnterts" resultClass="entert" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT a.*,d.dept_cname apply_dept_name, au.USER_NAME apply_user_name
+			FROM qkj_t_entertain a
+			LEFT JOIN s_sys_department d ON (a.apply_dept = d.dept_code)
+			LEFT JOIN s_sys_user au ON (a.apply_user = au.uuid)
+			WHERE 1=1
+		]]>
+		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ a.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="apply_dept">
+			<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ a.apply_dept=#apply_dept#]]></isNotEqual>
+			<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ a.apply_dept LIKE CONCAT(#apply_dept#,'%') ]]></isEqual>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="apply_user"><![CDATA[ a.apply_user=#apply_user# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="apply_depts" open="(" close=")">
+			<![CDATA[ a.apply_dept In ]]>
+			<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
+			<isNotEmpty prepend="OR" property="apply_perdepts">
+				<![CDATA[ a.apply_dept In ]]>
+				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ a.apply_user=#apply_userDouble# ]]></isNotEmpty>
+			</isNotEmpty>
+		</isNotEmpty>
+		
+		<isEmpty  property="apply_depts">
+			<isNotEmpty prepend="AND" property="apply_perdepts">
+				<![CDATA[ a.apply_dept In ]]>
+				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ a.apply_user=#apply_userDouble# ]]></isNotEmpty>
+			</isNotEmpty>
+		</isEmpty>
+		
+		<isNotEmpty prepend="AND" property="plan_start_begin"><![CDATA[ a.apply_date>=#plan_start_begin# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="plan_start_end"><![CDATA[ a.apply_date<=#plan_start_end# ]]></isNotEmpty>
+		<![CDATA[ ORDER BY a.add_time DESC LIMIT 1000 ]]>
+	</select>
+	
+	<insert id="qkjmanage_addEntert" parameterClass="entert">
+		<![CDATA[ 
+			Insert Into qkj_t_entertain(apply_dept,apply_user,apply_date,add_user,add_time,remark,state)
+			Values (#apply_dept#,#apply_user#,#apply_date#,#add_user#,now(),#remark#,#state#)
+		]]>
+		<selectKey resultClass="int" keyProperty="uuid">
+		<![CDATA[ Select LAST_INSERT_ID() ]]>
+		</selectKey>
+	</insert>
+	
+	<update id="qkjmanage_mdyEntert" parameterClass="entert">
+		<![CDATA[
+			Update qkj_t_entertain
+			Set 
+				apply_dept=#apply_dept#,
+				apply_user=#apply_user#,
+				apply_date=#apply_date#,
+				remark=#remark#,
+				lm_user=#lm_user#,
+				state=#state#,
+				lm_time=#lm_time#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<update id="qkjmanage_mdyEntertState" parameterClass="entert">
+		<![CDATA[
+			Update qkj_t_entertain
+			Set 
+				state=#state#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<delete id="qkjmanage_delEntert" parameterClass="entert">
+	<![CDATA[
+		Delete From qkj_t_entertain Where uuid=#uuid#
+	]]>
+	</delete>
+	
+	<select id="qkjmanage_getEntertProducts" resultClass="entertpro" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT a.*,p.title product_name,p.case_spec case_spec,d.dept_cname apply_dept_name,e.apply_date apply_date,e.uuid euuid,u.USER_NAME apply_user_name,e.state estate
+			FROM qkj_t_entertain_product a
+			left join qkj_t_product p on (a.product_id=p.uuid)
+			join qkj_t_entertain e on (a.enter_id=e.uuid)
+			left join s_sys_department d on (e.apply_dept=d.dept_code)
+			left join s_sys_user u on (u.UUID=e.apply_user)
+			WHERE 1=1
+		]]>
+		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ a.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="enter_id"><![CDATA[ a.enter_id=#enter_id# ]]></isNotEmpty>
+		<![CDATA[ order by d.dept_code ]]>
+	</select>
+	
+	<select id="qkjmanage_getEntertsReport" resultClass="entertpro" parameterClass="java.util.Map">
+		<![CDATA[ 
+			select sum(p.num) proNum,e.*,pro.title product_name,pro.case_spec case_spec,d.dept_cname apply_dept_name from qkj_t_entertain_product p 
+			join qkj_t_entertain e on (p.enter_id=e.uuid)
+			left join qkj_t_product pro on (pro.uuid=p.product_id)
+			left join s_sys_department d on (e.apply_dept=d.dept_code)
+			where 1=1
+		]]>
+		
+		<isNotEmpty prepend="AND" property="apply_dept">
+			<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ e.apply_dept=#apply_dept#]]></isNotEqual>
+			<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ e.apply_dept LIKE CONCAT(#apply_dept#,'%') ]]></isEqual>
+		</isNotEmpty>
+		<![CDATA[ GROUP BY e.apply_dept,p.product_id ]]>
+	</select>
+
+	<insert id="qkjmanage_addEntertProduct" parameterClass="entertpro">
+		<![CDATA[ 
+			Insert Into qkj_t_entertain_product(enter_id,product_id,per_price,num,total_price,remark)
+			Values (#enter_id#,#product_id#,#per_price#,#num#,#total_price#,#remark#)
+		]]>
+		<selectKey resultClass="int" keyProperty="uuid">
+		<![CDATA[ Select LAST_INSERT_ID() ]]>
+		</selectKey>
+	</insert>
+	
+	
+	<delete id="qkjmanage_delEntertProduct" parameterClass="entertpro">
+	<![CDATA[
+		Delete From qkj_t_entertain_product Where uuid=#uuid#
+	]]>
+	</delete>
+	
+	
+	<select id="qkjmanage_getEntertMems" resultClass="entertmem" parameterClass="java.util.Map">
+		<![CDATA[ 
+			select a.* FROM qkj_t_entertain_member a where 1=1
+		]]>
+		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ a.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="enter_id"><![CDATA[ a.enter_id=#enter_id# ]]></isNotEmpty>
+	</select>
+	
+
+	<insert id="qkjmanage_addEntertMem" parameterClass="entertmem">
+		<![CDATA[ 
+			Insert Into qkj_t_entertain_member(enter_id,member_id,title,note,total_price,member_mobile,member_address,member_name)
+			Values (#enter_id#,#member_id#,#title#,#note#,#total_price#,#member_mobile#,#member_address#,#member_name#)
+		]]>
+		<selectKey resultClass="int" keyProperty="uuid">
+		<![CDATA[ Select LAST_INSERT_ID() ]]>
+		</selectKey>
+	</insert>
+	
+	
+	<delete id="qkjmanage_delEntertmem" parameterClass="entertmem">
+	<![CDATA[
+		Delete From qkj_t_entertain_member Where uuid=#uuid#
+	]]>
+	</delete>
+
+	<!-- Active End -->
+</sqlMap>

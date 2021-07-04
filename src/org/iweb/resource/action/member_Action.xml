@@ -6,7 +6,7 @@
 	<package name="Member" extends="default" namespace="/member">
 		<default-interceptor-ref name="myStack" />
 		<action name="login" class="org.iweb.sysvip.action.MemberLoginAction" method="login">
-			<result>/jsp/member/login.jsp</result>
+			<result>/WEB-INF/jsp/member/login.jsp</result>
 		</action>
 
 		<action name="check_login" class="org.iweb.sysvip.action.MemberLoginAction" method="checkLogin">
@@ -22,16 +22,16 @@
 		</action>
 
 		<action name="top_minfo" class="org.iweb.sysvip.action.MemberLoginAction" method="minfo">
-			<result>/jsp/m_c/top_minfo.jsp</result>
+			<result>/WEB-INF/jsp/m_c/top_minfo.jsp</result>
 		</action>
 
 		<action name="member_login_out" class="org.iweb.sysvip.action.MemberLoginAction" method="member_login_out">
-			<result>/jsp/m_c/member_log_out.jsp</result>
+			<result>/WEB-INF/jsp/m_c/member_log_out.jsp</result>
 		</action>
 
 		<!-- 空方法拦截 -->
 		<action name="login_footer" class="org.iweb.member.action.MemberCommonAction">
-			<result>/jsp/m_c/login_footer.jsp</result>
+			<result>/WEB-INF/jsp/m_c/login_footer.jsp</result>
 		</action>
 	</package>
 </struts>

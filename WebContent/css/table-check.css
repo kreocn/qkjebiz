@@ -1,0 +1,57 @@
+@charset "utf-8";
+
+.iprint-table {
+border-collapse: collapse; border-spacing: 0px; font-size: 16px;width: 100%;
+}
+
+.iprint-table th,.iprint-table tr,.iprint-table td {
+border: #8B8B8B solid 1px;
+}
+
+.iprint-table td {
+text-align: center;
+}
+
+.table_title {
+font-size: 24px; font-weight: bold; border: none; text-align: center; line-height: 40px; height: 40px;
+}
+
+.table_title2 {
+text-align: right; font-size: 16px; line-height: 25px; height: 25px; 
+}
+
+.title {
+font-size: 24px; font-weight: bold; border: none;
+}
+
+.sign_tr {
+position: relative;
+}
+
+.sh {
+display: inline-block; position: absolute; left: 10px; top: 10px; text-align: left;
+}
+
+.st {
+position: absolute; right: 0; bottom: 0; display: inline-block; text-align: left;
+}
+
+.sign_area {
+width: 160px; display: inline-block;
+}
+
+.date_area {
+width: 120px; display: inline-block;
+}
+
+.al {
+text-align: left !important;
+}
+
+.ib {
+font-size: 14px; padding-left: 10px;
+}
+
+.ib2 {
+margin-left: 42px;
+}

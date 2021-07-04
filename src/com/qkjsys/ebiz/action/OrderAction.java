@@ -49,6 +49,11 @@ public class OrderAction extends ActionSupport {
 	private String viewFlag;
 	private int recCount;
 	private int pageSize;
+	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;客户藏酒";
+	
+	public String getPath() {
+		return path;
+	}
 
 	public List<MemberCellar> getMemberCellars() {
 		return memberCellars;
@@ -142,6 +147,10 @@ public class OrderAction extends ActionSupport {
 		this.pageSize = pageSize;
 	}
 
+	public void setPath(String path) {
+		this.path = path;
+	}
+
 	public String list() throws Exception {
 		ContextHelper.isPermit("QKJCJ_SYSEBIZ_ORDER_LIST");
 		try {
@@ -149,12 +158,13 @@ public class OrderAction extends ActionSupport {
 			if (order == null) {
 				order = new Order();
 			}
-			ContextHelper.setSearchDeptPermit4Search(map, "dept_codes", "manager");
+			ContextHelper.setSearchDeptPermit4Search("QKJCJ_SYSEBIZ_ORDER_LIST",map, "dept_codes", "manager");
 			ContextHelper.SimpleSearchMap4Page("QKJCJ_SYSEBIZ_ORDER_LIST", map, order, viewFlag);
 
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 			this.setOrders(dao.list(map));
 			this.setRecCount(dao.getResultCount());
+			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;订单列表";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
@@ -169,6 +179,7 @@ public class OrderAction extends ActionSupport {
 				setMessage("你没有选择任何操作!");
 			} else if ("add".equals(viewFlag)) {
 				this.setOrder(null);
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/sysebiz/order_list?viewFlag=relist'>订单列表</a>&nbsp;&gt;&nbsp;添加订单";
 			} else if ("mdy".equals(viewFlag)) {
 				map.clear();
 				map.put("uuid", order.getUuid());
@@ -186,6 +197,7 @@ public class OrderAction extends ActionSupport {
 				map.put("order_id", order.getUuid());
 				OrderActnDAO oad = new OrderActnDAO();
 				this.setOrderActns(oad.list(map));
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/sysebiz/order_list?viewFlag=relist'>订单列表</a>&nbsp;&gt;&nbsp;修改订单";
 			} else if ("print".equals(viewFlag)) {
 				map.clear();
 				map.put("uuid", order.getUuid());

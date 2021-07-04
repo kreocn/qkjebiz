@@ -3,13 +3,15 @@
 <sqlMap>
 	<!-- Apply Start -->
 	<typeAlias alias="apply" type="com.qkj.manage.domain.Apply" />
+	<typeAlias alias="closeOrder" type="com.qkj.manage.domain.CloseOrder" />
 	<select id="qkjmanage_getApplys" resultClass="apply" parameterClass="java.util.Map">
 		<![CDATA[ 
-			SELECT a.*,au.USER_NAME apply_user_name,cu.USER_NAME check_user_name,cu.`user_sign` check_user_sign,ad.dept_cname apply_dept_name
+			SELECT a.*,au.USER_NAME apply_user_name,cu.USER_NAME check_user_name,cu.`user_sign` check_user_sign,ad.dept_cname apply_dept_name,su.`USER_NAME` sp_check_user_name
 			FROM qkjm_r_apply a
 			LEFT JOIN s_sys_user au ON(a.apply_user=au.UUID)
 			LEFT JOIN s_sys_department ad ON(a.apply_dept = ad.dept_code)
 			LEFT JOIN s_sys_user cu ON(a.check_user=cu.UUID)
+			LEFT JOIN s_sys_user su ON(a.sp_check_user = su.`UUID`)
 		]]>
 		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ a.uuid=#uuid# ]]></isNotEmpty>
@@ -19,17 +21,42 @@
 				<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ a.apply_dept=#apply_dept#]]></isNotEqual>
 				<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ a.apply_dept LIKE CONCAT(#apply_dept#,'%') ]]></isEqual>
 			</isNotEmpty>
-			<isNotEmpty prepend="AND" property="apply_depts">
-				<![CDATA[ a.apply_dept In ]]>
+			
+			<isNotEmpty prepend="AND" property="apply_depts" open="(" close=")">
+			<![CDATA[ a.apply_dept In ]]>
 				<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
+				<isNotEmpty prepend="OR" property="apply_perdepts" open="(" close=")">
+							<![CDATA[ a.apply_dept In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ a.apply_user=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
 			</isNotEmpty>
+			<isEmpty property="apply_depts">
+				<isNotEmpty prepend="AND" property="apply_perdepts">
+						<![CDATA[ a.apply_dept In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ a.apply_user=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
+			</isEmpty>
+			
 			<isNotEmpty prepend="AND" property="apply_user"><![CDATA[ a.apply_user=#apply_user# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="apply_time_begin"><![CDATA[ a.apply_time>=#apply_time_begin# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="apply_time_end"><![CDATA[ a.apply_time<=DATE_ADD(#apply_time_end#,INTERVAL 1 day) ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="check_time_begin"><![CDATA[ a.check_time>=#check_time_begin# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="check_time_end"><![CDATA[ a.check_time<=DATE_ADD(#check_time_end#,INTERVAL 1 day) ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="apply_time"><![CDATA[ a.apply_time=#apply_time# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="status"><![CDATA[ a.status=#status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="sp_check_status"><![CDATA[ a.sp_check_status=#sp_check_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="status"><![CDATA[ a.status=#status#]]></isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="status_sp">
+			<isEqual property="status_sp" compareValue="35">
+		    <![CDATA[(a.status=20 or   ( a.apply_dept LIKE '2113%' and a.status=10))]]>
+		  </isEqual>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="appstatus"><![CDATA[ a.status>=#appstatus# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="ship_status"><![CDATA[ a.ship_status=#ship_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="status_start"><![CDATA[ a.status>=#status_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="status_end"><![CDATA[ a.status<=#status_end# ]]></isNotEmpty>
 		</dynamic>
 		<![CDATA[ Order By uuid Desc	]]>
 	</select>
@@ -45,22 +72,85 @@
 				<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ apply_dept=#apply_dept#]]></isNotEqual>
 				<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ apply_dept LIKE CONCAT(#apply_dept#,'%') ]]></isEqual>
 			</isNotEmpty>
-			<isNotEmpty prepend="AND" property="apply_depts">
-				<![CDATA[ apply_dept In ]]>
+			
+			<isNotEmpty prepend="AND" property="apply_depts" open="(" close=")">
+			<![CDATA[ apply_dept In ]]>
 				<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
+				<isNotEmpty prepend="OR" property="apply_perdepts">
+							<![CDATA[ apply_dept In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ apply_user=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
 			</isNotEmpty>
+			<isEmpty property="apply_depts">
+				<isNotEmpty prepend="AND" property="apply_perdepts">
+						<![CDATA[ apply_dept In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ apply_user=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
+			</isEmpty>
+			
 			<isNotEmpty prepend="AND" property="apply_user"><![CDATA[ apply_user=#apply_user# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="apply_time_begin"><![CDATA[ apply_time>=#apply_time_begin# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="apply_time_end"><![CDATA[ apply_time<=DATE_ADD(#apply_time_end#,INTERVAL 1 day) ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="check_time_begin"><![CDATA[ check_time>=#check_time_begin# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="check_time_end"><![CDATA[ check_time<=DATE_ADD(#check_time_end#,INTERVAL 1 day) ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="status"><![CDATA[ status=#status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="status"><![CDATA[ a.status=#status#]]></isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="status_sp">
+			<isEqual  property="status_sp" compareValue="35">
+		    <![CDATA[(a.status=20 or   ( a.apply_dept LIKE '2113%' and a.status=10))]]>
+		  </isEqual>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="ship_status"><![CDATA[ ship_status=#ship_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="status_start"><![CDATA[ status>=#status_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="status_end"><![CDATA[ status<=#status_end# ]]></isNotEmpty>
 		</dynamic>
 	</select>
+	
+	<select id="qkjmanage_getApplysUserSign" resultClass="apply" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT a.user_sign,a.biz_time sign_biz_time,a.biz_user,a.USER_NAME sign_user_name FROM (SELECT u.`user_sign`,p.`biz_time`,p.`biz_user`,u.`USER_NAME` FROM qkjm_r_apply a LEFT JOIN qkjm_h_process p ON (a.`uuid`=p.`biz_id`)
+			LEFT JOIN s_sys_user u ON (u.`UUID`=p.`biz_user`)
+			WHERE p.`process_id`=2  AND p.`biz_id`=#biz_id# AND (p.`biz_status01`>10 OR p.biz_status02>=10)
+			AND p.`biz_time`>(SELECT MAX(p.`biz_time`) biz_time FROM qkjm_h_process p WHERE p.process_id=2 AND p.biz_status01=10 AND p.`biz_id`=#biz_id#)
+			ORDER BY p.`biz_time` DESC) a GROUP BY a.biz_user order by a.biz_time asc
+		]]>
+	</select>
+	
+	<select id="qkjmanage_getApplysSign" resultClass="closeOrder" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT 	MAX(sign60) sign60,MAX(time60) time60,MAX(sign70) sign70,MAX(time70) time70,MAX(sign80) sign80,MAX(time80) time80 FROM (
+			SELECT u.`user_sign` sign60,s.`biz_time` time60,NULL sign70,NULL time70,null sign80,null time80 FROM qkjm_h_process s  
+			LEFT JOIN qkjm_r_apply a ON (a.`uuid`=s.`biz_id`)
+			LEFT JOIN s_sys_user u ON (s.`biz_user`=u.`UUID`)
+			WHERE s.`process_id`=2 AND s.`biz_status01`=40 AND s.`biz_sign`='APPLY_CHANGE_STATUS' AND NOT ISNULL(u.`user_sign`) AND s.`biz_id`=#biz_id# 
+			AND s.`biz_time`>(SELECT MAX(p.`biz_time`) biz_time FROM qkjm_h_process p WHERE p.process_id=2 AND p.biz_status01=0 AND p.`biz_id`=#biz_id#)
+			
+			UNION ALL 
+			SELECT NULL sign60,NULL time60,u.`user_sign` sign70,s.`biz_time` time70,null sign80,null time80 FROM qkjm_h_process s  
+			LEFT JOIN qkjm_r_apply a ON (a.`uuid`=s.`biz_id`)
+			LEFT JOIN s_sys_user u ON (s.`biz_user`=u.`UUID`)
+			WHERE s.`process_id`=2 AND s.`biz_status01`=50 AND s.`biz_sign`='APPLY_CHANGE_STATUS' AND NOT ISNULL(u.`user_sign`) AND s.`biz_id`=#biz_id# 
+			AND s.`biz_time`>(SELECT MAX(p.`biz_time`) biz_time FROM qkjm_h_process p WHERE p.process_id=2 AND p.biz_status01=0 AND p.`biz_id`=#biz_id#)
+			
+			union all 
+			
+			SELECT NULL sign60,NULL time60,NULL sign70,NULL time70,u.`user_sign` sign80,s.`biz_time` time80 FROM qkjm_h_process s  
+			LEFT JOIN qkjm_r_apply a ON (a.`uuid`=s.`biz_id`)
+			LEFT JOIN s_sys_user u ON (s.`biz_user`=u.`UUID`)
+			WHERE s.`process_id`=2 AND s.`biz_status01`=60 AND s.`biz_sign`='APPLY_CHANGE_STATUS' AND NOT ISNULL(u.`user_sign`) AND s.`biz_id`=#biz_id# 
+			AND s.`biz_time`>(SELECT MAX(p.`biz_time`) biz_time FROM qkjm_h_process p WHERE p.process_id=2 AND p.biz_status01=0 AND p.`biz_id`=#biz_id#)
+			
+			)a
+		]]>
+		
+	</select>
+	
 	<insert id="qkjmanage_addApply" parameterClass="apply">
 		<![CDATA[ 
-			Insert Into qkjm_r_apply(touser,title,note,apply_dept,apply_user,apply_time,status,lm_user,is_fullcheck,fullcheck_text)
-			Values (#touser#,#title#,#note#,#apply_dept#,#apply_user#,#apply_time#,#status#,#lm_user#,#is_fullcheck#,#fullcheck_text#)
+			Insert Into qkjm_r_apply(touser,title,note,apply_dept,apply_user,apply_time,status,lm_user,is_fullcheck,fullcheck_text,apply_type,is_material)
+			Values (#touser#,#title#,#note#,#apply_dept#,#apply_user#,#apply_time#,#status#,#lm_user#,#is_fullcheck#,#fullcheck_text#,#apply_type#,#is_material#)
 		]]>
 		<selectKey resultClass="int" keyProperty="uuid">
 		<![CDATA[ 
@@ -73,10 +163,14 @@
 			Update qkjm_r_apply
 			Set title=#title#,
 				touser=#touser#,
+				apply_dept=#apply_dept#,
 				note=#note#,
 				lm_user=#lm_user#,
 				is_fullcheck=#is_fullcheck#,
-				fullcheck_text=#fullcheck_text#
+				apply_type=#apply_type#,
+				fullcheck_text=#fullcheck_text#,
+				is_material=#is_material#,
+				total_price=#total_price# 
 			Where uuid = #uuid#
 		]]>
 	</update>
@@ -87,14 +181,109 @@
 				check_user=#check_user#,
 				check_time=#check_time#,
 				check_note=#check_note#,
+				lm_user=#lm_user#,
+				is_push=#is_push# 
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+		<update id="qkjmanage_ApplyPush" parameterClass="apply">
+		<![CDATA[
+			Update qkjm_r_apply
+			Set is_push=1 
+			Where uuid = #uuid#
+		]]>
+	</update>
+
+	<update id="qkjmanage_spcheckApply" parameterClass="apply">
+		<![CDATA[
+			Update qkjm_r_apply
+			Set sp_check_status=#sp_check_status#,
+				sp_check_user=#sp_check_user#,
+				sp_check_time=#sp_check_time#,
+				check_note=#check_note#,
+				status=#status#,
+				check_user=#check_user#,
+				check_time=#check_time#,
+				check_note=#check_note#,
 				lm_user=#lm_user#
 			Where uuid = #uuid#
 		]]>
 	</update>
+
 	<delete id="qkjmanage_delApply" parameterClass="apply">
 	<![CDATA[
 		Delete From qkjm_r_apply Where uuid=#uuid#
 	]]>
 	</delete>
+
+	<!-- ship info change -->
+	<update id="qkjmanage_mdyApplyShipInfo" parameterClass="apply">
+		<![CDATA[
+			Update qkjm_r_apply
+			Set ship_status=#ship_status#,
+				ship_ware=#ship_ware#,
+				ship_date=#ship_date#,
+				ship_no=#ship_no#,
+				ship_phone=#ship_phone#,
+				ship_type=#ship_type#,
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	
+	
+	
+	<update id="qkjmanage_mdyApplyItPrice" parameterClass="string">
+		<![CDATA[
+		UPDATE qkjm_r_apply t
+		SET t.it_price = (
+			SELECT IFNULL(SUM(a.total_price),0)
+			FROM (
+				SELECT m.total_price
+				FROM qkjm_r_apply_posm m
+				WHERE m.apply_id = #value#
+				AND `status` = 1
+				UNION ALL
+				SELECT p.total_price
+				FROM qkjm_r_apply_product p
+				WHERE p.apply_id = #value#
+				AND `status` = 1)a
+		)
+		WHERE t.uuid = #value#
+		]]>
+	</update>
+	
+	
+	<update id="qkjmanage_ApplyTotalPrice" parameterClass="java.util.Map">
+		<![CDATA[
+		UPDATE qkjm_r_apply t
+		SET total_price=#total_price# 
+		WHERE t.uuid = #uuid#
+		]]>
+	</update>
+	
+	
+	<update id="qkjmanage_mdyGoflag" parameterClass="apply">
+		<![CDATA[
+			Update qkjm_r_apply
+			Set 
+				goflag=#goflag#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	
+	
+	
+	
+	<insert id="qkjmanage_addyijiao" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Insert Into qkj_linshi(name,code)
+			Values (#name#,#code#)
+		]]>
+	</insert>
+	<!-- ship info change -->
 	<!-- Apply End -->
 </sqlMap>

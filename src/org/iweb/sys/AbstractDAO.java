@@ -10,14 +10,24 @@ import org.apache.commons.logging.LogFactory;
 public abstract class AbstractDAO {
 
 	protected static Log log = LogFactory.getLog(AbstractDAO.class);
-
 	private int resultCount = 0;
-
-	private DBHelper db = DBHelper.getInstance();
-
+	private int db_num = 0;
 	private boolean isCount = true;
-
 	private boolean isShowParameter = true;
+	private List<String> map_ids;
+	private List<Object> parameters;
+
+	public int getDb_num() {
+		return db_num;
+	}
+
+	public void setDb_num(int db_num) {
+		this.db_num = db_num;
+	}
+
+	public DBHelper getDb() {
+		return DBHelper.getInstance(db_num);
+	}
 
 	public boolean isShowParameter() {
 		return isShowParameter;
@@ -49,7 +59,7 @@ public abstract class AbstractDAO {
 	protected Object add(String map_id, Object parameters) {
 		Object obj;
 		try {
-			obj = db.insert(map_id, parameters);
+			obj = getDb().insert(map_id, parameters);
 			showLog(map_id, "add", parameters, null);
 		} catch (Exception e) {
 			showLog(map_id, "add", parameters, e);
@@ -62,7 +72,7 @@ public abstract class AbstractDAO {
 	protected int save(String map_id, Object parameters) {
 		int i = 0;
 		try {
-			i = db.update(map_id, parameters);
+			i = getDb().update(map_id, parameters);
 			showLog(map_id, "update", parameters, null);
 		} catch (Exception e) {
 			showLog(map_id, "update", parameters, e);
@@ -74,7 +84,7 @@ public abstract class AbstractDAO {
 	protected int delete(String map_id, Object parameters) {
 		int i = 0;
 		try {
-			i = db.delete(map_id, parameters);
+			i = getDb().delete(map_id, parameters);
 			showLog(map_id, "delete", parameters, null);
 		} catch (Exception e) {
 			showLog(map_id, "delete", parameters, e);
@@ -86,7 +96,7 @@ public abstract class AbstractDAO {
 	protected int procedure(String map_id, Object parameters) {
 		int i = 0;
 		try {
-			i = db.procedure(map_id, parameters);
+			i = getDb().procedure(map_id, parameters);
 			showLog(map_id, "procedure", parameters, null);
 		} catch (Exception e) {
 			showLog(map_id, "procedure", parameters, e);
@@ -100,7 +110,7 @@ public abstract class AbstractDAO {
 		List resultList;
 		try {
 			if (map == null) {
-				resultList = db.getResultList(map_id);
+				resultList = getDb().getResultList(map_id);
 			} else if (null != map && map.containsKey(Parameters.Current_Page_Str)) {
 				try {
 					Current_Page = Integer.parseInt(map.get(Parameters.Current_Page_Str).toString());
@@ -122,14 +132,14 @@ public abstract class AbstractDAO {
 					}
 					map.remove(Parameters.Page_Size_Str);
 					map.remove(Parameters.Current_Page_Str);
-					resultList = db.getResultListByPage(map_id, map, Page_Size, Current_Page);
+					resultList = getDb().getResultListByPage(map_id, map, Page_Size, Current_Page);
 				} else {
 					map.remove(Parameters.Current_Page_Str);
-					resultList = db.getResultListByPage(map_id, map, Current_Page);
+					resultList = getDb().getResultListByPage(map_id, map, Current_Page);
 				}
 				if (isCount) {
 					if (ToolsUtil.isEmpty(getCountMapid())) {
-						resultCount = db.getResultList(map_id, map).size();
+						resultCount = getDb().getResultList(map_id, map).size();
 						System.out.println("CountMapid is Empty!");
 					} else {
 						try {
@@ -137,13 +147,13 @@ public abstract class AbstractDAO {
 							// System.out.println("CountMapid is Current!");
 						} catch (Exception e) {
 							log.warn("getCountMapid 错误:", e);
-							resultCount = db.getResultList(map_id, map).size();
+							resultCount = getDb().getResultList(map_id, map).size();
 							// System.out.println("CountMapid is Failed!");
 						}
 					}
 				}
 			} else {
-				resultList = db.getResultList(map_id, map);
+				resultList = getDb().getResultList(map_id, map);
 				if (isCount) {
 					resultCount = resultList.size();
 				}
@@ -154,6 +164,7 @@ public abstract class AbstractDAO {
 			showLog(map_id, "list", map, e);
 			throw new RuntimeException(e);
 		}
+
 		return resultList;
 	}
 
@@ -164,13 +175,11 @@ public abstract class AbstractDAO {
 	 * @date 2014-3-20 下午2:48:04
 	 */
 	protected List listByObject(String map_id, Object parameters) {
-		if (parameters instanceof Map) {
-			return list(map_id, (Map) parameters);
-		}
+		if (parameters instanceof Map) { return list(map_id, (Map) parameters); }
 		List resultList;
 		try {
 			resultList = null;
-			resultList = db.getResultList(map_id, parameters);
+			resultList = getDb().getResultList(map_id, parameters);
 			showLog(map_id, "listByObject", parameters, null);
 		} catch (Exception e) {
 			resultList = null;
@@ -195,7 +204,7 @@ public abstract class AbstractDAO {
 	protected Map map(String map_id, Object parameters, String keyProperty, String valueProperty) {
 		Map m;
 		try {
-			m = db.getResultMap(map_id, parameters, keyProperty, valueProperty);
+			m = getDb().getResultMap(map_id, parameters, keyProperty, valueProperty);
 			showLog(map_id, "map", parameters, null);
 		} catch (Exception e) {
 			m = null;
@@ -215,7 +224,7 @@ public abstract class AbstractDAO {
 	 */
 	protected Object get(String map_id, Object parameters) {
 		try {
-			Object o = db.getResultObject(map_id, parameters);
+			Object o = getDb().getResultObject(map_id, parameters);
 			showLog(map_id, "get", parameters, null);
 			return o;
 		} catch (Exception e) {
@@ -226,7 +235,7 @@ public abstract class AbstractDAO {
 
 	public void startTransaction() {
 		try {
-			db.startTransaction();
+			getDb().startTransaction();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -234,7 +243,7 @@ public abstract class AbstractDAO {
 
 	public void commitTransaction() {
 		try {
-			db.commitTransaction();
+			getDb().commitTransaction();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -242,7 +251,7 @@ public abstract class AbstractDAO {
 
 	public void endTransaction() {
 		try {
-			db.endTransaction();
+			getDb().endTransaction();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -250,7 +259,7 @@ public abstract class AbstractDAO {
 
 	public void startBatch() {
 		try {
-			db.startBatch();
+			getDb().startBatch();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -258,7 +267,7 @@ public abstract class AbstractDAO {
 
 	public void executeBatch() {
 		try {
-			db.executeBatch();
+			getDb().executeBatch();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -266,7 +275,7 @@ public abstract class AbstractDAO {
 
 	protected void batchStatment(List<String> map_id_list, List<Object> parameter_list, Boolean isUseBatchNum) {
 		try {
-			db.batchStatment(map_id_list, parameter_list, isUseBatchNum);
+			getDb().batchStatment(map_id_list, parameter_list, isUseBatchNum);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -282,6 +291,38 @@ public abstract class AbstractDAO {
 	 */
 	protected void batchStatment(String map_id, List<Object> parameters, Boolean isUseBatchNum) {
 		batchStatment(String2List(map_id, parameters.size()), parameters, isUseBatchNum);
+	}
+
+	/**
+	 * Simple Transaction Use:initTransaction() addTransactionOperate(map_id, parameter) excuteTransaction()
+	 */
+	protected void initTransaction() {
+		map_ids = new ArrayList<String>();
+		parameters = new ArrayList<Object>();
+	}
+
+	/**
+	 * Simple Transaction Use:initTransaction() addTransactionOperate(map_id, parameter) excuteTransaction()
+	 */
+	protected void addTransactionOperate(String map_id, Object parameter) {
+		map_ids.add(map_id);
+		parameters.add(parameter);
+	}
+
+	/**
+	 * Simple Transaction Use:initTransaction() addTransactionOperate(map_id, parameter) excuteTransaction()
+	 */
+	protected void excuteTransaction() {
+		excuteTransaction(false);
+	}
+
+	/**
+	 * Simple Transaction Use:initTransaction() addTransactionOperate(map_id, parameter) excuteTransaction()
+	 */
+	protected void excuteTransaction(Boolean isUseBatchNum) {
+		if (map_ids != null && map_ids.size() > 0) {
+			batchStatment(map_ids, parameters, isUseBatchNum);
+		}
 	}
 
 	/**
@@ -304,7 +345,7 @@ public abstract class AbstractDAO {
 	 * @param num
 	 */
 	protected void setBatchNum(int num) {
-		db.setBatchNum(num);
+		getDb().setBatchNum(num);
 	}
 
 	public int getResultCount() {
@@ -317,11 +358,9 @@ public abstract class AbstractDAO {
 			this.setShowParameter(false);
 		}
 		if (null == e) {
-			log.info("Execute Map(MapID=" + map_id + ";method=" + method + ") Successful!"
-					+ (this.isShowParameter ? "\nParameters:" + msg : ""));
+			log.info("Execute Map(MapID=" + map_id + ";method=" + method + ") Successful!" + (this.isShowParameter ? "\nParameters:" + msg : ""));
 		} else {
-			log.error("Execute Map(MapID=" + map_id + ";method=" + method + ") Error!"
-					+ (this.isShowParameter ? "\nParameters:" + msg : ""), e);
+			log.error("Execute Map(MapID=" + map_id + ";method=" + method + ") Error!" + (this.isShowParameter ? "\nParameters:" + msg : ""), e);
 			e.printStackTrace();
 		}
 	}

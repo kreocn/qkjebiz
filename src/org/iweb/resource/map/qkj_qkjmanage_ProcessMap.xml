@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
+<sqlMap>
+	<!-- Process Start -->
+	<typeAlias alias="process" type="com.qkj.manage.domain.MyProcess" />
+	<select id="qkjmanage_getProcesss" resultClass="process" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select * From qkjm_h_process
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="process_id"><![CDATA[ process_id=#process_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="biz_id"><![CDATA[ biz_id=#biz_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="biz_user"><![CDATA[ biz_user=#biz_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="biz_time"><![CDATA[ biz_time=#biz_time# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="biz_status01"><![CDATA[ biz_status01=#biz_status01# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="biz_status02"><![CDATA[ biz_status02=#biz_status02# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="biz_status03"><![CDATA[ biz_status03=#biz_status03# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="biz_status04"><![CDATA[ biz_status04=#biz_status04# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="biz_status05"><![CDATA[ biz_status05=#biz_status05# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="biz_sign"><![CDATA[ biz_sign=#biz_sign# ]]></isNotEmpty>
+		</dynamic>
+		<![CDATA[ LIMIT 1000 ]]>
+	</select>
+	<select id="qkjmanage_getProcesssCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) From qkjm_h_process
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="process_id"><![CDATA[ process_id=#process_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="biz_id"><![CDATA[ biz_id=#biz_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="biz_user"><![CDATA[ biz_user=#biz_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="biz_time"><![CDATA[ biz_time=#biz_time# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="biz_status01"><![CDATA[ biz_status01=#biz_status01# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="biz_status02"><![CDATA[ biz_status02=#biz_status02# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="biz_status03"><![CDATA[ biz_status03=#biz_status03# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="biz_status04"><![CDATA[ biz_status04=#biz_status04# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="biz_status05"><![CDATA[ biz_status05=#biz_status05# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="biz_sign"><![CDATA[ biz_sign=#biz_sign# ]]></isNotEmpty>
+		</dynamic>
+		<![CDATA[ LIMIT 1000 ]]>
+	</select>
+	<insert id="qkjmanage_addProcess" parameterClass="process">
+		<![CDATA[ 
+			Insert Into qkjm_h_process(process_id,biz_id,biz_user,biz_time,biz_note,biz_status01,biz_status02,biz_status03,biz_status04,biz_status05,biz_sign)
+			Values (#process_id#,#biz_id#,#biz_user#,#biz_time#,#biz_note#,#biz_status01#,#biz_status02#,#biz_status03#,#biz_status04#,#biz_status05#,#biz_sign#)
+		]]>
+	</insert>
+	<!-- Process End -->
+</sqlMap>

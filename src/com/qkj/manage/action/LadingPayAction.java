@@ -96,7 +96,7 @@ public class LadingPayAction extends ActionSupport {
 			if (ladingPay == null) {
 				ladingPay = new LadingPay();
 			}
-			ContextHelper.setSearchDeptPermit4Search(map, "dept_codes", "add_user");
+			ContextHelper.setSearchDeptPermit4Search("QKJ_MANAGER_LADINGPAY_LIST",map, "dept_codes", "add_user");
 			ContextHelper.SimpleSearchMap4Page("QKJ_MANAGER_LADINGPAY_LIST", map, ladingPay, viewFlag);
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 			this.setLadingPays(dao.list(map));

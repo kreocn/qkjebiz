@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="salpro_salPromot" extends="default" namespace="/salpro">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- SalPromot Start -->
+		<action name="salPromot_list" class="com.qkj.manage.action.SalPromotAction" method="list">
+			<result name="success">/WEB-INF/jsp/qkjmanage/salpro/SalPromotList.jsp</result>
+			<result name="perSuccess"  type="redirectAction">
+				<param name="actionName">perWork_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+		<action name="perWork_list" class="com.qkj.manage.action.PerWorkAction" method="list">
+			<result>/WEB-INF/jsp/qkjmanage/Personal/PerWorkList.jsp</result>
+		</action>
+		<action name="salPromot_relist" class="com.qkj.manage.action.SalPromotAction" method="relist">
+			<result type="redirectAction">
+				<param name="actionName">salPromot_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+		<action name="salPromot_load" class="com.qkj.manage.action.SalPromotAction" method="load">
+			<result name="SUCCESS">/WEB-INF/jsp/qkjmanage/salpro/SalPromotEdit.jsp</result>
+			<result name="VIEWSUCCESS">/WEB-INF/jsp/qkjmanage/salpro/SalPromotView.jsp</result>
+		</action>
+		<action name="salPromot_loadt" class="com.qkj.manage.action.SalPromotAction" method="load">
+			<result name="SUCCESS">/WEB-INF/jsp/qkjmanage/salpro/SalPromotEdit.jsp</result>
+			<result name="VIEWSUCCESS">/WEB-INF/jsp/qkjmanage/salpro/SalPromotViewT.jsp</result>
+		</action>
+		
+		<action name="salPromot_view" class="com.qkj.manage.action.SalPromotAction" method="view">
+			<result>/WEB-INF/jsp/qkjmanage/salpro/SalPromotView.jsp</result>
+		</action>
+		
+		<action name="salPromot_add" class="com.qkj.manage.action.SalPromotAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">salPromot_load</param>
+				<param name="salPromot.uuid">${salPromot.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="salPromot_save" class="com.qkj.manage.action.SalPromotAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">salPromot_load</param>
+				<param name="salPromot.uuid">${salPromot.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="salPromot_del" class="com.qkj.manage.action.SalPromotAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">salPromot_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- 报审 -->
+		<action name="salPromot_status1" class="com.qkj.manage.action.SalPromotAction" method="status1">
+			<result type="redirectAction">
+				<param name="actionName">salPromot_load</param>
+				<param name="salPromot.uuid">${salPromot.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- 审核中 -->
+		<action name="mdySMDStatus*" class="com.qkj.manage.action.SalPromotAction" method="mdyCloseOrderSMDStatus{1}">
+			<result type="redirectAction">
+				<param name="actionName">salPromot_load</param>
+				<param name="salPromot.uuid">${salPromot.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="mdySDStatus*" class="com.qkj.manage.action.SalPromotAction" method="check{1}">
+			<result type="redirectAction">
+				<param name="actionName">salPromot_load</param>
+				<param name="salPromot.uuid">${salPromot.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="mdyFDStatus*" class="com.qkj.manage.action.SalPromotAction" method="checkfd{1}">
+			<result type="redirectAction">
+				<param name="actionName">salPromot_load</param>
+				<param name="salPromot.uuid">${salPromot.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="close_approve" class="com.qkj.manage.action.SalPromotAction" method="approve">
+			<result type="redirectAction">
+				<param name="actionName">salPromot_load</param>
+				<param name="salPromot.uuid">${salPromot.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="close_approveDel" class="com.qkj.manage.action.SalPromotAction" method="approveDel">
+			<result type="redirectAction">
+				<param name="actionName">salPromot_load</param>
+				<param name="salPromot.uuid">${salPromot.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<!-- SalPromot End -->
+	</package>
+</struts>

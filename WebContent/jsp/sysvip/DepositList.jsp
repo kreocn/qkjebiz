@@ -1,7 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
+<%@ taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -86,16 +86,16 @@ $(function(){
 		<td align="center"><s:property value="add_user_name" /></td>
 		<td align="center"><s:date name="add_time" format="yyyy-MM-dd HH:mm:ss" /></td>
 		<td align="center">
-			<s:if test="0==fd_check"><span class="noarea" /></s:if>
-			<s:if test="1==fd_check"><span class="yesarea" /></s:if>
+			<s:if test="0==fd_check"><span class="noarea"></span></s:if>
+			<s:if test="1==fd_check"><span class="yesarea"></span></s:if>
 		</td>
 		<td align="center">
-			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('VIP_SYSVIP_DEPOSIT')">
+			<c:if test="${it:checkPermit('VIP_SYSVIP_DEPOSIT',null)==true}">
 	    	[<a href="<s:url namespace="/sysvip" action="deposit_load"><s:param name="viewFlag">mdy</s:param><s:param name="deposit.uuid" value="uuid"></s:param></s:url>">修改&查看</a>]
-	    	</s:if>
-	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('VIP_SYSVIP_DEPOSIT_DEL')">
+	    	</c:if>
+	    	<c:if test="${it:checkPermit('VIP_SYSVIP_DEPOSIT_DEL',null)==true}">
 	    	[<a href="<s:url namespace="/sysvip" action="deposit_del"><s:param name="deposit.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>]
-	    	</s:if>	   
+	    	</c:if>	   
 	    </td>
 	  </tr>
 </s:iterator>

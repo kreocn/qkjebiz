@@ -14,6 +14,7 @@
 			<isNotEmpty prepend="AND" property="express_status"><![CDATA[ express_status=#express_status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="security"><![CDATA[ security=#security# ]]></isNotEmpty>
 		</dynamic>
+		<![CDATA[ Limit 1000 ]]>
 	</select>
 	<select id="web_getCusInfohCounts" resultClass="int" parameterClass="java.util.Map">
 		<![CDATA[ 
@@ -27,6 +28,7 @@
 			<isNotEmpty prepend="AND" property="express_status"><![CDATA[ express_status=#express_status# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="security"><![CDATA[ security=#security# ]]></isNotEmpty>
 		</dynamic>
+		<![CDATA[ Limit 1000 ]]>
 	</select>
 	<insert id="web_addCusInfoh" parameterClass="cusInfoh">
 		<![CDATA[ 
@@ -143,16 +145,25 @@
 
 	<select id="info_NewsRemoteCount" resultClass="int" parameterClass="java.util.Map">
 		<![CDATA[ 
-			Select Count(*)
-			From t_info_news t,t_info_class c,s_sys_user u
-			Where t.class_id = c.uuid
-			And t.add_user = u.title
-			And t.isdel = 0
+			Select COUNT(*)
+			From t_info_news t 
+			LEFT JOIN s_sys_user u ON (t.add_user = u.title)
+			LEFT JOIN t_info_class c ON (t.class_id = c.uuid)
+			Where t.isdel = 0
 			And t.ischecked = 4
 		]]>
 		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ t.uuid=#uuid# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="title"><![CDATA[ t.title Like #title# ]]></isNotEmpty>
-		<isNotEmpty prepend="AND" property="istop"><![CDATA[ t.istop>=#istop# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="istop">
+			<isEmpty property="istop_search_type"><![CDATA[  t.istop>=#istop# ]]></isEmpty>
+			<isNotEmpty>
+				<isEqual property="istop_search_type" compareValue="0"><![CDATA[ t.istop=#istop# ]]></isEqual>
+				<isEqual property="istop_search_type" compareValue="1"><![CDATA[ t.istop>=#istop# ]]></isEqual>
+				<isEqual property="istop_search_type" compareValue="2"><![CDATA[ t.istop<=#istop# ]]></isEqual>
+				<isEqual property="istop_search_type" compareValue="3"><![CDATA[ t.istop>#istop# ]]></isEqual>
+				<isEqual property="istop_search_type" compareValue="4"><![CDATA[ t.istop<#istop# ]]></isEqual>
+			</isNotEmpty>
+		</isNotEmpty>
 		<isNotEmpty prepend="AND" property="isimgnews"><![CDATA[ t.isimgnews=#isimgnews# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="title"><![CDATA[ t.title like #title# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="add_dept"><![CDATA[ u.dept_code like #add_dept# ]]></isNotEmpty>
@@ -161,8 +172,10 @@
 			<![CDATA[ t.class_id In ]]>
 			<iterate property="class_ids" open="(" close=")" conjunction=" , "> #class_ids[]#</iterate>
 		</isNotEmpty>
-		<isNotEmpty prepend="AND" property="keywords"><![CDATA[ t.keywords Like #keywords# ]]></isNotEmpty>
-		<isNotEmpty prepend="AND" property="shortcontent"><![CDATA[ t.shortcontent Like #shortcontent# ]]></isNotEmpty>
+		<isEmpty property="content">
+			<isNotEmpty prepend="AND" property="keywords"><![CDATA[ t.keywords Like #keywords# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="shortcontent"><![CDATA[ t.shortcontent Like #shortcontent# ]]></isNotEmpty>
+		</isEmpty>
 		<isNotEmpty prepend="AND" property="content">
 			<![CDATA[ (t.KEYWORDS LIKE #content# || t.SHORTCONTENT like #content# || t.CONTENT LIKE #content#) ]]>
 		</isNotEmpty>

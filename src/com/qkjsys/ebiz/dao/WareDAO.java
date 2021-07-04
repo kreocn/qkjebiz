@@ -22,6 +22,10 @@ public class WareDAO extends AbstractDAO {
 	public List list(Map<String, Object> map) {
 		return super.list("ebiz_getWares", map);
 	}
+	
+	public List listByPower(Map<String, Object> map) {
+		return super.list("ebiz_getPower", map);
+	}
 
 	public int getResultCount() {
 		return super.getResultCount();

@@ -6,16 +6,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>信息类别列表--<s:text name="APP_NAME" /></title>
-</head>
-<link rel="stylesheet" href="<s:url value="/css/css.css" />" />
-<link rel="stylesheet" href="<s:url value="/css/navigate.css" />" />
-<link rel="stylesheet" href="<s:url value="/css/main.css" />" />
+<s:action name="ref" namespace="/manager" executeResult="true" />
 <link rel="StyleSheet" href="<s:url value="/include/dtree/dtree.css" />" />
-<script type="text/javascript" src="<s:url value="/js/form_validator.js" />"></script>
 <script type="text/javascript" src="<s:url value="/include/dtree/dtree.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/common_cptb.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/common_ajax2.0.js" />"></script>
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-1.8.3.min.js" />"></script>
+</head>
 <script type="text/javascript">
 function getInfo(obj) {
 	//var ajax = new Ajax_Init("result",true,true,'','','','message');
@@ -79,102 +73,94 @@ function viewx(obj) {
 	$('message').innerHTML = obj;
 }
 </script>
+<style type="text/css">
+.label_main{font-size:14px;}
+</style>
 <body>
-	<div id="main">
-		<div id="result">
-			<div class="itablemdy">
-				<div class="itabletitle">部门</div>
-				<table width="100%" border="0" cellspacing="0" cellpadding="0">
-					<tr>
-						<td width="200" style="background-color: #F0F0F0;" valign="top">
-							<div class="dtree" style="width: 200px; overflow: auto;">
-								<!--<p><a href="javascript: d.openAll();">open all</a> | <a href="javascript: d.closeAll();">close all</a></p>-->
-								<script type="text/javascript">
-		d = new dTree('d');
-		//d.config.isAddNoRootNode = true;
-		d.icon = {
-				root		: '<s:url value="/include/dtree/" />'+'img/globe.gif',
-				folder		: '<s:url value="/include/dtree/" />'+'img/folder.gif',
-				folderOpen	: '<s:url value="/include/dtree/" />'+'img/folderopen.gif',
-				node		: '<s:url value="/include/dtree/" />'+'img/page.gif',
-				empty		: '<s:url value="/include/dtree/" />'+'img/empty.gif',
-				line		: '<s:url value="/include/dtree/" />'+'img/line.gif',
-				join		: '<s:url value="/include/dtree/" />'+'img/join.gif',
-				joinBottom	: '<s:url value="/include/dtree/" />'+'img/joinbottom.gif',
-				plus		: '<s:url value="/include/dtree/" />'+'img/plus.gif',
-				plusBottom	: '<s:url value="/include/dtree/" />'+'img/plusbottom.gif',
-				minus		: '<s:url value="/include/dtree/" />'+'img/minus.gif',
-				minusBottom	: '<s:url value="/include/dtree/" />'+'img/minusbottom.gif',
-				nlPlus		: '<s:url value="/include/dtree/" />'+'img/nolines_plus.gif',
-				nlMinus		: '<s:url value="/include/dtree/" />'+'img/nolines_minus.gif'
-		};		
-		d.add('0','-1','信息类别列表');
-		<s:iterator value="iclasses">
-		d.add('<s:property value="uuid" />','<s:property value="parent_id" />','<s:property value="title" />',"javascript:getInfo('<s:property value="uuid" />')");
-		</s:iterator>
-		d.add();
-		document.write(d);
-	</script>
+<div class="main" >
+	<div class="dq_step"><a href="/manager/default">首页</a>&nbsp;&gt;&nbsp;新闻类别</div>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="200" style="background-color: #F0F0F0;" valign="top">
+					<div class="dtree" style="width: 200px; overflow: auto;">
+						<!--<p><a href="javascript: d.openAll();">open all</a> | <a href="javascript: d.closeAll();">close all</a></p>-->
+						<script type="text/javascript">
+						d = new dTree('d');
+						//d.config.isAddNoRootNode = true;
+						d.icon = {
+								root		: '<s:url value="/include/dtree/" />'+'img/globe.gif',
+								folder		: '<s:url value="/include/dtree/" />'+'img/folder.gif',
+								folderOpen	: '<s:url value="/include/dtree/" />'+'img/folderopen.gif',
+								node		: '<s:url value="/include/dtree/" />'+'img/page.gif',
+								empty		: '<s:url value="/include/dtree/" />'+'img/empty.gif',
+								line		: '<s:url value="/include/dtree/" />'+'img/line.gif',
+								join		: '<s:url value="/include/dtree/" />'+'img/join.gif',
+								joinBottom	: '<s:url value="/include/dtree/" />'+'img/joinbottom.gif',
+								plus		: '<s:url value="/include/dtree/" />'+'img/plus.gif',
+								plusBottom	: '<s:url value="/include/dtree/" />'+'img/plusbottom.gif',
+								minus		: '<s:url value="/include/dtree/" />'+'img/minus.gif',
+								minusBottom	: '<s:url value="/include/dtree/" />'+'img/minusbottom.gif',
+								nlPlus		: '<s:url value="/include/dtree/" />'+'img/nolines_plus.gif',
+								nlMinus		: '<s:url value="/include/dtree/" />'+'img/nolines_minus.gif'
+						};		
+						d.add('0','-1','信息类别列表');
+						<s:iterator value="iclasses">
+						d.add('<s:property value="uuid" />','<s:property value="parent_id" />','<s:property value="title" />',"javascript:getInfo('<s:property value="uuid" />')");
+						</s:iterator>
+						d.add();
+						document.write(d);
+						</script>
+					</div>
+				</td>
+				<td width="10"></td>
+				<td valign="top">
+					<s:form name="form1" action="class_control" cssClass="validForm" namespace="/info" onsubmit="return validator(this);" method="post" theme="simple">
+							<div class="label_main">
+								<input type="button" value="新增类别" onclick="setControl('add');" />
 							</div>
-						</td>
-						<td valign="top"><s:form name="form1" action="class_control" namespace="/info" onsubmit="return validator(this);" method="post"
-								theme="simple">
-								<div class="ifromoperate">
-									<input type="button" value="新增类别" onclick="setControl('add');" />
+							<div class="label_main">
+								<div class="label_hang">
+									<div class="label_ltit">类别ID:</div>
+									<div class="label_rwbenx">
+										<span id="uuid_text"></span><s:hidden id="uuid" name="uuid" />
+									</div>
 								</div>
-								<table class="ilisttable" width="100%" border="1" cellspacing="0" cellpadding="0" bordercolor="#8B8B8B">
-									<colGroup width="20%" align="right" style="font-weight: bold;"></colGroup>
-									<colGroup width="30%"></colGroup>
-									<colGroup width="20%" align="right" style="font-weight: bold;"></colGroup>
-									<colGroup width="30%"></colGroup>
-									<tr>
-										<td>类别ID:</td>
-										<td colspan="3"><span id="uuid_text"></span>
-										<s:hidden id="uuid" name="uuid" /></td>
-									</tr>
-									<tr>
-										<td>类别名称:</td>
-										<td><s:textfield id="title" name="title" require="required" controlName="类别名称" /></td>
-										<td>类别别名:</td>
-										<td><s:textfield id="title2" name="title2" /></td>
-									</tr>
-									<tr>
-										<td>父类别:</td>
-										<td><s:select title="父部门" id="parent_id" name="parent_id" list="iclasses" listKey="uuid" listValue="title" headerKey="0"
-												headerValue="根节点" require="required" controlName="父部门" /></td>
-										<td></td>
-										<td></td>
-									</tr>
-									<!--
-				<tr>
-					<td>分类类别模板:</td>
-					<td><s:textfield id="dept_code" name="dept_code" /></td>
-					<td>资源模板:</td>
-					<td><s:textfield id="dept_cname" name="dept_cname" /></td>
-				</tr>
-				<tr>
-					<td>静态文件生成路径:</td>
-					<td colspan="3"><s:textfield id="dept_cname" name="dept_cname" cssStyle="width:60%" /></td>
-				</tr>
-				-->
-									<tr>
-										<td>修改人:</td>
-										<td><span id="lm_user"></span></td>
-										<td>修改时间:</td>
-										<td><span id="lm_time"></span></td>
-									</tr>
-									<tr>
-										<td colspan="4" class="buttonarea"><span id="message"><s:property value="message" /></span> <span id="label_add"><s:submit
-													id="add" name="add" value="新增" method="add" /></span> <span id="label_save" style="display: none;"><s:submit id="save" name="save"
-													value="保存" method="save" /></span> <span id="label_del" style="display: none;"><s:submit id="delete" name="delete" value="删除"
-													method="del" onclick="return isDel();" /></span></td>
-									</tr>
-								</table>
-							</s:form></td>
-					</tr>
-				</table>
-			</div>
-		</div>
-	</div>
+								<div class="label_hang clear">
+									<div class="label_ltit">类别名称:</div>
+									<div class="label_rwbenx"><s:textfield id="title" name="title" title="类别名称" cssClass="validate[required]"/></div>
+								</div>
+								<div class="label_hang">
+									<div class="label_ltit">类别别名:</div>
+									<div class="label_rwbenx"><s:textfield id="title2" name="title2" title="类别别名" /></div>
+								</div>
+								<div class="label_hang">
+									<div class="label_ltit">父类别:</div>
+									<div class="label_rwbenx">
+										<s:select title="父部门" id="parent_id" name="parent_id" list="iclasses" listKey="uuid" listValue="title" headerKey="0" headerValue="根节点" require="required" controlName="父部门" />
+									</div>
+								</div>
+								<div class="label_hang clear">
+									<div class="label_ltit">修改人:</div>
+									<div class="label_rwbenx"><span id="lm_user"></span></div>
+								</div>
+								<div class="label_hang">
+									<div class="label_ltit">修改时间:</div>
+									<div class="label_rwbenx"><span id="lm_time"></span></div>
+								</div>
+								<div class="label_hang clear">
+									<div class="label_ltit">相关操作:</div>
+									<div class="label_rwbenx">
+										<span id="label_add"><s:submit	id="add" name="add" value="新增" method="add"  cssClass="input-blue"/></span>
+										<span id="label_save" style="display: none;"><s:submit id="save" name="save"  value="保存" method="save" cssClass="input-blue"/></span>
+										<span id="label_del" style="display: none;"><s:submit id="delete" name="delete" value="删除" method="del" onclick="return isDel();" cssClass="input-red"/></span>
+										&nbsp;<span id="message"><s:property value="message" /></span>
+									</div>
+								</div>
+							</div>
+					</s:form>
+				</td>
+			</tr>
+		</table>
+</div>
 </body>
 </html>

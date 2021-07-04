@@ -7,7 +7,7 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- AssetItem Start -->
 		<action name="assetItem_list" class="com.qkj.adm.action.AssetItemAction" method="list">
-			<result>/jsp/adm/AssetItemList.jsp</result>
+			<result>/WEB-INF/jsp/adm/AssetItemList.jsp</result>
 		</action>
 		<action name="assetItem_relist" class="com.qkj.adm.action.AssetItemAction" method="relist">
 			<result type="redirectAction">
@@ -16,7 +16,7 @@
 			</result>
 		</action>
 		<action name="assetItem_load" class="com.qkj.adm.action.AssetItemAction" method="load">
-			<result>/jsp/adm/AssetItemEdit.jsp</result>
+			<result>/WEB-INF/jsp/adm/AssetItemEdit.jsp</result>
 		</action>
 		<action name="assetItem_add" class="com.qkj.adm.action.AssetItemAction" method="add">
 			<result type="redirectAction">
@@ -57,6 +57,9 @@
 				<param name="viewFlag">mdy</param>
 				<param name="message">${message}</param>
 			</result>
+		</action>
+		<action name="assetItem_print" class="com.qkj.adm.action.AssetItemAction" method="print">
+			<result>/WEB-INF/jsp/adm/AssetItemPrint.jsp</result>
 		</action>
 		<!-- AssetItem End -->
 	</package>

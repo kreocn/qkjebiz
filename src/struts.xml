@@ -10,6 +10,11 @@
 			<interceptor name="log" class="org.iweb.sys.interceptor.LogInterceptor" />
 			<interceptor name="checkMemberLogin" class="org.iweb.sys.interceptor.MemberInterceptor" />
 
+			<!-- Token专用 -->
+			<interceptor-stack name="myToken">
+				<!-- <interceptor-ref name="token" /> -->
+				<interceptor-ref name="tokenSession" />
+			</interceptor-stack>
 			<!-- 去除UploadFile拦截器的defaultStack -->
 			<interceptor-stack name="myDefault">
 				<interceptor-ref name="exception" />
@@ -64,12 +69,12 @@
 				<param name="namespace">/manager</param>
 				<param name="actionName">login</param>
 			</result>
-			<result name="logintimeout">/jsp/common/logintimeout.jsp</result>
-			<result name="error">/jsp/common/error.jsp</result>
-			<result name="invalid.token">/jsp/common/error.jsp</result>
-			<result name="logpermit">/jsp/common/login_refuse.jsp</result>
-			<result name="exception">/jsp/common/error.jsp</result>
-			<result name="input">/jsp/common/error.jsp</result>
+			<result name="logintimeout">/WEB-INF/jsp/common/logintimeout.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+			<result name="invalid.token">/WEB-INF/jsp/common/error.jsp</result>
+			<result name="logpermit">/WEB-INF/jsp/common/login_refuse.jsp</result>
+			<result name="exception">/WEB-INF/jsp/common/error.jsp</result>
+			<result name="input">/WEB-INF/jsp/common/error.jsp</result>
 			<!-- 以下为会员专用 -->
 			<result name="membertimeout">/jsp/m_c/tmo.jsp</result>
 		</global-results>

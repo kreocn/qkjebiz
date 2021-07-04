@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
+<sqlMap>
+	<!-- InStock Start -->
+	<typeAlias alias="inStock" type="com.qkj.ware.domain.InStock" />
+	<select id="inStock_getInStocks" resultClass="inStock" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT i.*,addu.`USER_NAME` add_user_name,lmu.`USER_NAME` lm_user_name,g.`USER_NAME` operator_name, t.`USER_NAME` take_name,s.`USER_NAME` conname_u,w.`ware_name` ware_name,wb.`ware_name` goldId_name FROM 
+			qkj_t_instock i LEFT JOIN s_sys_user addu ON (i.add_user=addu.`UUID`) 
+			LEFT JOIN s_sys_user lmu ON (i.lm_user=lmu.`UUID`)
+			LEFT JOIN s_sys_user g ON(g.`UUID`=i.`operator_id`)
+			LEFT JOIN s_sys_user t ON(t.`UUID`=i.`take_id`)
+			LEFT JOIN s_sys_user s ON (i.`conname`=s.`UUID`)
+			LEFT JOIN qkj_t_warehouse w ON(i.`store_id`=w.`uuid`)
+			LEFT JOIN qkj_t_warehouse wb ON(i.`goldId`=wb.`uuid`)
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ i.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="goldUuid"><![CDATA[ i.goldUuid=#goldUuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="ordernum"><![CDATA[ i.ordernum=#ordernum# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date"><![CDATA[ i.date=#date# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="store_id"><![CDATA[ i.store_id=#store_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="operator_id"><![CDATA[ i.operator_id=#operator_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="take_id"><![CDATA[ i.take_id=#take_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="total_price"><![CDATA[ i.total_price=#total_price# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="add_user"><![CDATA[ i.add_user=#add_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="reason"><![CDATA[ i.reason=#reason# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="send"><![CDATA[ i.send=#send# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_start"><![CDATA[ i.date>=#date_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_end"><![CDATA[ i.date<=DATE_ADD(#date_end#,INTERVAL 1 day) ]]></isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="storeids">
+			<![CDATA[ i.store_id In ]]>
+				<iterate property="storeids" open="(" close=")" conjunction=" , "> #storeids[]#</iterate>
+			</isNotEmpty>
+			
+
+		</dynamic>
+		<![CDATA[ Order By i.add_timer Desc LIMIT 0, 500 ]]>
+	</select>
+	
+	<select id="inStock_getIn" resultClass="inStock" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT DISTINCT i.`uuid`,i.*,addu.`USER_NAME` add_user_name,lmu.`USER_NAME` lm_user_name,g.`USER_NAME` operator_name, t.`USER_NAME` take_name,s.`USER_NAME` conname_u FROM 
+			qkj_t_instock i 
+			LEFT JOIN s_sys_user addu ON (i.add_user=addu.`UUID`) 
+			LEFT JOIN s_sys_user lmu ON (i.lm_user=lmu.`UUID`)
+			LEFT JOIN s_sys_user g ON(g.`UUID`=i.`operator_id`)
+			LEFT JOIN s_sys_user t ON(t.`UUID`=i.`take_id`) 
+			LEFT JOIN s_sys_user s ON (i.`conname`=s.`UUID`)
+			LEFT JOIN qkj_t_stockpower  sp ON(sp.`ware_id`=i.`store_id`)
+			WHERE 
+			 sp.`username`=#username#  AND sp.`prvg` LIKE '%4%'
+		]]>
+		<isNotEmpty prepend="AND" property="date"><![CDATA[ i.date=#date# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="ordernum"><![CDATA[ i.ordernum=#ordernum# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="store_id"><![CDATA[ i.store_id=#store_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="operator_id"><![CDATA[ i.operator_id=#operator_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="take_id"><![CDATA[ i.take_id=#take_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="total_price"><![CDATA[ i.total_price=#total_price# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="add_user"><![CDATA[ i.add_user=#add_user# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="reason"><![CDATA[ i.reason=#reason# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="send"><![CDATA[ i.send=#send# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_start"><![CDATA[ i.date>=#date_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_end"><![CDATA[ i.date<=DATE_ADD(#date_end#,INTERVAL 1 day) ]]></isNotEmpty>
+
+		<![CDATA[ GROUP BY i.`uuid` Order By i.add_timer Desc LIMIT 0, 500 ]]>
+	</select>
+	
+	<select id="inStock_getInStocksCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*)  FROM 
+			qkj_t_instock 
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="ordernum"><![CDATA[ ordernum=#ordernum# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date"><![CDATA[ date=#date# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="store_id"><![CDATA[ store_id=#store_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="operator_id"><![CDATA[ operator_id=#operator_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="take_id"><![CDATA[ take_id=#take_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="total_price"><![CDATA[ total_price=#total_price# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="add_user"><![CDATA[ add_user=#add_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="reason"><![CDATA[ reason=#reason# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="send"><![CDATA[ send=#send# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_start"><![CDATA[ date>=#date_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_end"><![CDATA[ date<=DATE_ADD(#date_end#,INTERVAL 1 day) ]]></isNotEmpty>
+		</dynamic>
+	</select>
+	<select id="inStock_getInStocksCountsByPower" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*)  FROM (
+				SELECT DISTINCT i.`uuid`,i.store_id store_id,i.operator_id operator_id,addu.`USER_NAME` add_user_name,lmu.`USER_NAME` lm_user_name,g.`USER_NAME` operator_name, t.`USER_NAME` take_name FROM 
+				qkj_t_instock i LEFT JOIN s_sys_user addu ON (i.add_user=addu.`UUID`) 
+				LEFT JOIN s_sys_user lmu ON (i.lm_user=lmu.`UUID`)
+				LEFT JOIN s_sys_user g ON(g.`UUID`=i.`operator_id`)
+				LEFT JOIN s_sys_user t ON(t.`UUID`=i.`take_id`) 
+				LEFT JOIN qkj_t_stockpower  sp ON(sp.`ware_id`=i.`store_id`)
+				LEFT JOIN s_sys_user s ON (i.`conname`=s.`UUID`)
+				WHERE 
+				 sp.`username`=#username#  AND sp.`prvg` LIKE '%4%'
+			) a
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="date"><![CDATA[ date=#date# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="ordernum"><![CDATA[ ordernum=#ordernum# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="store_id"><![CDATA[ store_id=#store_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="operator_id"><![CDATA[ operator_id=#operator_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="take_id"><![CDATA[ take_id=#take_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="total_price"><![CDATA[ total_price=#total_price# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="add_user"><![CDATA[ add_user=#add_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="reason"><![CDATA[ reason=#reason# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="send"><![CDATA[ send=#send# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_start"><![CDATA[ date>=#date_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_end"><![CDATA[ date<=DATE_ADD(#date_end#,INTERVAL 1 day) ]]></isNotEmpty>
+
+		</dynamic>
+	</select>
+	
+	<select id="inStock_getInStocksSpilt" resultClass="inStock" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT * FROM qkj_t_instock s WHERE s.`uuid`=#uuid# OR s.`splitUuid`=#uuid#
+		]]>
+	</select>
+	
+	<insert id="inStock_addInStock" parameterClass="inStock">
+		<![CDATA[ 
+			Insert Into qkj_t_instock(uuid,ordernum,date,store_id,operator_id,take_id,note,add_user,add_timer,lm_user,lm_timer,reason,goreason,goldId,goldUuid,goflag,splitUuid,split)
+			Values (#uuid#,#ordernum#,#date#,#store_id#,#operator_id#,#take_id#,#note#,#add_user#,#add_timer#,#lm_user#,#lm_timer#,#reason#,#goreason#,#goldId#,#goldUuid#,#goflag#,#splitUuid#,#split#)
+		]]>
+		<selectKey resultClass="int" keyProperty="uuid">
+		<![CDATA[ 
+			Select LAST_INSERT_ID()
+		]]>
+		</selectKey>
+	</insert>
+	<update id="inStock_mdyInStock" parameterClass="inStock">
+		<![CDATA[
+			Update qkj_t_instock
+			Set 
+			ordernum=#ordernum#,
+			goldId=#goldId#,
+			operator_id=#operator_id#,
+			take_id=#take_id#,
+			note=#note#,
+			total_price=#total_price#,
+			lm_user=#lm_user#,
+			lm_timer=#lm_timer#,
+			reason=#reason#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="inStock_delInStock" parameterClass="inStock">
+	<![CDATA[
+		Delete From qkj_t_instock Where uuid=#uuid#
+	]]>
+	</delete>
+	
+	<!-- 额外方法 -->
+	<update id="qkjmanage_mdyTotalPrice" parameterClass="Integer">
+		<![CDATA[
+			UPDATE qkj_t_instock
+			SET total_price=(
+				SELECT SUM(i.total)
+				FROM qkj_t_indetail i
+				WHERE i.lading_id = #value#
+			)
+			Where uuid = #value#
+		]]>
+	</update>
+	
+	<update id="inStock_mdySure" parameterClass="inStock">
+		<![CDATA[
+			Update qkj_t_instock
+			Set 
+			confirm=#confirm#,
+			conname=#conname#,
+			contime=#contime#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<update id="inStock_mdySend" parameterClass="inStock">
+		<![CDATA[
+			Update qkj_t_instock
+			Set 
+			send=#send#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<update id="inStock_mdyGodUid" parameterClass="inStock">
+		<![CDATA[
+			Update qkj_t_instock
+			Set 
+			goflag=#goflag#
+			Where goldUuid = #goldUuid#
+		]]>
+	</update>
+	
+	<update id="inStock_mdyGodFlog" parameterClass="inStock">
+		<![CDATA[
+			Update qkj_t_instock
+			Set 
+			goflag=#goflag#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<update id="inStock_mdyGodUuid" parameterClass="inStock">
+		<![CDATA[
+			Update qkj_t_instock
+			Set 
+			goldUuid=#goldUuid#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<update id="inStock_mdyRemark" parameterClass="inStock">
+		<![CDATA[
+			Update qkj_t_instock
+			Set 
+			store_id=#store_id#,
+			remark=#remark#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<!-- InStock End -->
+</sqlMap>

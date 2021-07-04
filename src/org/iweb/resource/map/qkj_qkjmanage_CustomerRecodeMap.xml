@@ -5,10 +5,10 @@
 	<typeAlias alias="customerRecode" type="com.qkj.manage.domain.CustomerRecode" />
 	<select id="qkjmanage_getCustomerRecodes" resultClass="customerRecode" parameterClass="java.util.Map">
 		<![CDATA[ 
-			Select r.*,c.cus_name,u.user_name add_user_name
+			Select r.*,s.member_name,u.user_name add_user_name
 			From qkjm_r_customer_recode r LEFT JOIN s_sys_user u ON(r.add_user=u.uuid)
-			,qkjm_r_customer c
-			WHERE r.customer_id = c.uuid
+			,s_vip_member s
+			WHERE r.customer_id = s.uuid 
 		]]>
 		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ r.uuid=#uuid# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="customer_id"><![CDATA[ r.customer_id=#customer_id# ]]></isNotEmpty>
@@ -21,10 +21,24 @@
 			<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ c.dept_code=#dept_code# ]]></isNotEqual>
 			<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ c.dept_code LIKE CONCAT(#dept_code#,'%') ]]></isEqual>
 		</isNotEmpty>
-		<isNotEmpty prepend="AND" property="dept_codes">
+		
+		<isNotEmpty prepend="AND" property="dept_codes" open="(" close=")">
 			<![CDATA[ c.dept_code In ]]>
-			<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
-		</isNotEmpty>
+				<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
+				<isNotEmpty prepend="OR" property="apply_perdepts">
+							<![CDATA[ c.dept_code In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<!-- <isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ c.add_user=#apply_userDouble# ]]></isNotEmpty> -->
+				</isNotEmpty>
+			</isNotEmpty>
+			<isEmpty property="dept_codes">
+				<isNotEmpty prepend="AND" property="apply_perdepts">
+						<![CDATA[ c.dept_code In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<!-- <isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ c.add_user=#apply_userDouble# ]]></isNotEmpty> -->
+				</isNotEmpty>
+			</isEmpty>
+			
 		<isEmpty property="order_type"><![CDATA[ Order By r.uuid Desc ]]>	</isEmpty>
 		<isNotEmpty property="order_type">
 			<isEqual property="order_type" compareValue="uuidAsc"><![CDATA[ Order By r.uuid ]]></isEqual>
@@ -47,15 +61,29 @@
 			<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ c.dept_code=#dept_code# ]]></isNotEqual>
 			<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ c.dept_code LIKE CONCAT(#dept_code#,'%') ]]></isEqual>
 		</isNotEmpty>
-		<isNotEmpty prepend="AND" property="dept_codes">
+		
+		<isNotEmpty prepend="AND" property="dept_codes" open="(" close=")">
 			<![CDATA[ c.dept_code In ]]>
-			<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
-		</isNotEmpty>
+				<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
+				<isNotEmpty prepend="OR" property="apply_perdepts">
+							<![CDATA[ c.dept_code In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<!-- <isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ c.add_user=#apply_userDouble# ]]></isNotEmpty> -->
+				</isNotEmpty>
+			</isNotEmpty>
+			<isEmpty property="dept_codes">
+				<isNotEmpty prepend="AND" property="apply_perdepts">
+						<![CDATA[ c.dept_code In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<!-- <isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ c.add_user=#apply_userDouble# ]]></isNotEmpty> -->
+				</isNotEmpty>
+			</isEmpty>
+			
 	</select>
 	<insert id="qkjmanage_addCustomerRecode" parameterClass="customerRecode">
 		<![CDATA[ 
-			Insert Into qkjm_r_customer_recode(customer_id,recode_time,type,person,content,promise,next_date,add_user,add_time)
-			Values (#customer_id#,#recode_time#,#type#,#person#,#content#,#promise#,#next_date#,#add_user#,#add_time#)
+			Insert Into qkjm_r_customer_recode(recode_time,customer_id,type,person,content,promise,next_date,add_user,add_time)
+			Values (#recode_time#,#customer_id#,#type#,#person#,#content#,#promise#,#next_date#,#add_user#,#add_time#)
 		]]>
 	</insert>
 	<update id="qkjmanage_mdyCustomerRecode" parameterClass="customerRecode">
@@ -77,8 +105,14 @@
 	<![CDATA[
 		Delete From qkjm_r_customer_recode 
 		Where uuid=#uuid#
-		AND unix_timestamp(NOW())-unix_timestamp(add_time) < 28800
+		AND date(add_time)=CURDATE();
 	]]>
 	</delete>
+	
+	<select id="qkjmanage_getdeletereturn" resultClass="customerRecode" parameterClass="java.util.Map">
+		<![CDATA[ 
+		select count(*) from qkjm_r_customer_recode  where uuid=#uuid#
+		]]>
+	</select>
 	<!-- CustomerRecode End -->
 </sqlMap>

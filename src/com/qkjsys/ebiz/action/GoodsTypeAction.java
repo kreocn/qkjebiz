@@ -27,6 +27,11 @@ public class GoodsTypeAction extends ActionSupport {
 	private String viewFlag;
 	private int recCount;
 	private int pageSize;
+	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;商品类型列表";
+	
+	public String getPath() {
+		return path;
+	}
 
 	public GoodsType getGoodsType() {
 		return goodsTypes;
@@ -86,6 +91,7 @@ public class GoodsTypeAction extends ActionSupport {
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 			this.setGoodsTypes(dao.list(map));
 			this.setRecCount(dao.getResultCount());
+			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;商品类型列表";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
@@ -100,6 +106,7 @@ public class GoodsTypeAction extends ActionSupport {
 				setMessage("你没有选择任何操作!");
 			} else if ("add".equals(viewFlag)) {
 				this.setGoodsType(null);
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/sysebiz/goodsType_list?viewFlag=relist'>商品类型列表</a>&nbsp;&gt;&nbsp;添加商品类型";
 			} else if ("mdy".equals(viewFlag)) {
 				map.clear();
 				map.put("uuid", goodsTypes.getUuid());
@@ -107,6 +114,7 @@ public class GoodsTypeAction extends ActionSupport {
 					this.setGoodsType(null);
 				else
 					this.setGoodsType((GoodsType) dao.list(map).get(0));
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/sysebiz/goodsType_list?viewFlag=relist'>商品类型列表</a>&nbsp;&gt;&nbsp;修改商品类型";
 			} else {
 				this.setGoodsType(null);
 				setMessage("无操作类型!");

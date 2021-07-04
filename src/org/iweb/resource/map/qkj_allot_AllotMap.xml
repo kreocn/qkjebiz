@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
+<sqlMap>
+	<!-- Allot Start -->
+	<typeAlias alias="allot" type="com.qkj.ware.domain.Allot" />
+	<select id="allot_getAllots" resultClass="allot" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT i.*,addu.`USER_NAME` add_user_name,lmu.`USER_NAME` lm_user_name,w.`ware_name` sourceName,g.`ware_name` goldName,sure.`USER_NAME` sureUser_name   FROM qkj_t_allot i LEFT JOIN s_sys_user addu ON (i.add_user=addu.`UUID`) 
+			LEFT JOIN s_sys_user lmu ON (i.lm_user=lmu.`UUID`)
+			LEFT JOIN qkj_t_warehouse w ON (i.`sourceId`=w.`uuid`)
+			LEFT JOIN qkj_t_warehouse g ON(i.`goldId`=g.`uuid`)
+			LEFT JOIN s_sys_user sure ON (i.`sureUser`=sure.`UUID`)
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ i.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="state"><![CDATA[ i.state=#state# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="ordernum"><![CDATA[ i.ordernum=#ordernum# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date"><![CDATA[ i.date=#date# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="sourceid"><![CDATA[ i.sourceid=#sourceid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="goldid"><![CDATA[ i.goldid=#goldid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="note"><![CDATA[ i.note=#note# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="add_timer"><![CDATA[ i.add_timer=#add_timer# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="lm_user"><![CDATA[ i.lm_user=#lm_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="lm_user_name"><![CDATA[ lmu.user_name=#lm_user_name# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="reason"><![CDATA[ i.reason=#reason# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_start"><![CDATA[ i.date>=#date_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_end"><![CDATA[ i.date<=DATE_ADD(#date_end#,INTERVAL 1 day) ]]></isNotEmpty>
+			
+		</dynamic>
+		<![CDATA[ Order By i.add_timer Desc LIMIT 0, 500 ]]>
+	</select>
+	
+	<select id="allot_getbyPower" resultClass="allot" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT DISTINCT i.`uuid`,i.*,addu.`USER_NAME` add_user_name,lmu.`USER_NAME` lm_user_name,w.`ware_name` sourceName,g.`ware_name` goldName,sure.`USER_NAME` sureUser_name  FROM qkj_t_allot i LEFT JOIN s_sys_user addu ON (i.add_user=addu.`UUID`) 
+			LEFT JOIN s_sys_user lmu ON (i.lm_user=lmu.`UUID`)
+			LEFT JOIN qkj_t_warehouse w ON (i.`sourceId`=w.`uuid`)
+			LEFT JOIN qkj_t_warehouse g ON(i.`goldId`=g.`uuid`)
+			LEFT JOIN qkj_t_stockpower  s ON(s.`ware_id`=i.`sourceId`)
+			LEFT JOIN qkj_t_stockpower  sg ON(sg.`ware_id`=i.`goldId`)
+			LEFT JOIN s_sys_user sure ON (i.`sureUser`=sure.`UUID`)
+			WHERE ((s.`username`=#username# || sg.`username`=#username# )  AND (s.`prvg` LIKE '%4%' or sg.`prvg` LIKE '%4%' ))
+		]]>
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ i.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="state"><![CDATA[ i.state=#state# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="ordernum"><![CDATA[ i.ordernum=#ordernum# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date"><![CDATA[ i.date=#date# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="sourceid"><![CDATA[ i.sourceid=#sourceid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="goldid"><![CDATA[ i.goldid=#goldid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="note"><![CDATA[ i.note=#note# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="add_timer"><![CDATA[ i.add_timer=#add_timer# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="lm_user"><![CDATA[ i.lm_user=#lm_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="lm_user_name"><![CDATA[ lmu.user_name=#lm_user_name# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_start"><![CDATA[ i.date>=#date_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_end"><![CDATA[ i.date<=DATE_ADD(#date_end#,INTERVAL 1 day) ]]></isNotEmpty>
+			
+
+		<![CDATA[ GROUP BY i.`uuid` Order By i.add_timer Desc LIMIT 0, 500 ]]>
+	</select>
+	
+	<select id="allot_getAllotsCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*)  FROM qkj_t_allot
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="state"><![CDATA[ state=#state# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="ordernum"><![CDATA[ ordernum=#ordernum# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date"><![CDATA[ date=#date# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="sourceid"><![CDATA[ sourceid=#sourceid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="goldid"><![CDATA[ goldid=#goldid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="note"><![CDATA[ note=#note# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="add_timer"><![CDATA[ add_timer=#add_timer# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="lm_user"><![CDATA[ lm_user=#lm_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_start"><![CDATA[ date>=#date_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_end"><![CDATA[ date<=DATE_ADD(#date_end#,INTERVAL 1 day) ]]></isNotEmpty>
+			
+		</dynamic>
+		<![CDATA[ LIMIT 1000 ]]>
+	</select>
+	<select id="allot_getAllotsCountsByPower" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*)  FROM (
+			SELECT DISTINCT i.`uuid`,i.ordernum ordernum,i.sourceid sourceid,i.goldid goldid,addu.`USER_NAME` add_user_name,lmu.`USER_NAME` lm_user_name,w.`ware_name` sourceName,g.`ware_name` goldName  FROM qkj_t_allot i LEFT JOIN s_sys_user addu ON (i.add_user=addu.`UUID`) 
+			LEFT JOIN s_sys_user lmu ON (i.lm_user=lmu.`UUID`)
+			LEFT JOIN qkj_t_warehouse w ON (i.`sourceId`=w.`uuid`)
+			LEFT JOIN qkj_t_warehouse g ON(i.`goldId`=g.`uuid`)
+			LEFT JOIN qkj_t_stockpower  s ON(s.`ware_id`=i.`sourceId`)
+			LEFT JOIN qkj_t_stockpower  sg ON(sg.`ware_id`=i.`goldId`)
+			LEFT JOIN s_sys_user sure ON (i.`sureUser`=sure.`UUID`)
+			WHERE ((s.`username`=#username# || sg.`username`=#username# )  AND (s.`prvg` LIKE '%4%' or sg.`prvg` LIKE '%4%' ) )
+			) a
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="state"><![CDATA[ state=#state# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="ordernum"><![CDATA[ ordernum=#ordernum# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date"><![CDATA[ date=#date# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="sourceid"><![CDATA[ sourceid=#sourceid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="goldid"><![CDATA[ goldid=#goldid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="note"><![CDATA[ note=#note# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="add_timer"><![CDATA[ add_timer=#add_timer# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="lm_user"><![CDATA[ lm_user=#lm_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_start"><![CDATA[ date>=#date_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_end"><![CDATA[ date<=DATE_ADD(#date_end#,INTERVAL 1 day) ]]></isNotEmpty>
+			
+		</dynamic>
+		<![CDATA[ LIMIT 1000 ]]>
+	</select>
+	
+	
+	<insert id="allot_addAllot" parameterClass="allot">
+		<![CDATA[ 
+			Insert Into qkj_t_allot(ordernum,date,sourceid,goldid,note,add_user,add_timer,lm_user,lm_timer,reason)
+			Values (#ordernum#,#date#,#sourceid#,#goldid#,#note#,#add_user#,#add_timer#,#lm_user#,#lm_timer#,#reason#)
+		]]>
+		<selectKey resultClass="int" keyProperty="uuid">
+		<![CDATA[ 
+			Select LAST_INSERT_ID()
+		]]>
+		</selectKey>
+	</insert>
+	<update id="allot_mdyAllot" parameterClass="allot">
+		<![CDATA[
+			Update qkj_t_allot
+			Set ordernum=#ordernum#,
+			ordernum=#ordernum#,
+			date=#date#,
+			
+			note=#note#,
+			lm_user=#lm_user#,
+			lm_timer=#lm_timer#
+			
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="allot_delAllot" parameterClass="allot">
+	<![CDATA[
+		Delete From qkj_t_allot Where uuid=#uuid#
+	]]>
+	</delete>
+	<!-- 额外方法 -->
+	<update id="allot_mdyAllotState" parameterClass="allot">
+		<![CDATA[
+			Update qkj_t_allot
+			Set 
+			state=#state#,
+			freDate=#freDate#,
+			delivery=#delivery#,
+			freUser=#freUser#,
+			deliUser=#deliUser#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<update id="allot_mdySure" parameterClass="allot">
+		<![CDATA[
+			Update qkj_t_allot
+			Set 
+			state=#state#,
+			sureDate=#sureDate#,
+			sureUser=#sureUser#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<!-- Allot End -->
+</sqlMap>

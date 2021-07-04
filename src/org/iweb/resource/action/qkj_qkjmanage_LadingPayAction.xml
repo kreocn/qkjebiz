@@ -7,10 +7,10 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- LadingPay Start -->
 		<action name="ladingPay_list" class="com.qkj.manage.action.LadingPayAction" method="list">
-			<result>/jsp/sysvip/LadingPayList.jsp</result>
+			<result>/WEB-INF/jsp/sysvip/LadingPayList.jsp</result>
 		</action>
 		<action name="ladingPay_load" class="com.qkj.manage.action.LadingPayAction" method="load">
-			<result>/jsp/sysvip/LadingPayEdit.jsp</result>
+			<result>/WEB-INF/jsp/sysvip/LadingPayEdit.jsp</result>
 		</action>
 		<action name="ladingPay_add" class="com.qkj.manage.action.LadingPayAction" method="add">
 			<result type="redirectAction">

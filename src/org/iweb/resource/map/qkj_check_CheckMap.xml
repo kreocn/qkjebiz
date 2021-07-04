@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
+<sqlMap>
+	<!-- Check Start -->
+	<typeAlias alias="check" type="com.qkj.ware.domain.Check" />
+	<select id="check_getChecks" resultClass="check" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT DISTINCT c.`uuid`,c.*,p.`title` product_name,w.`ware_name` ware_name FROM qkj_t_check c LEFT JOIN qkj_t_product p ON (c.`product_id`=p.`uuid`)
+			LEFT JOIN qkj_t_warehouse w ON(c.`store_id`=w.`uuid`)
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ c.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="product_id"><![CDATA[ c.product_id=#product_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="store_id"><![CDATA[ c.store_id=#store_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date"><![CDATA[ c.date=#date# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="quantity"><![CDATA[ c.quantity=#quantity# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="num"><![CDATA[ c.num=#num# ]]></isNotEmpty>
+
+		</dynamic>
+		<![CDATA[  LIMIT 1000 ]]>
+	</select>
+	<!-- 閺冦儲婀￠崚鍡欑矋閺屻儴顕楁稉鏃€鐗撮幑顔芥綀闂?-->
+	<select id="check_getChecksByDate" resultClass="check" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT DISTINCT c.`uuid`,c.*,p.`title` product_name,w.`ware_name` ware_name FROM qkj_t_check c 
+			LEFT JOIN qkj_t_product p ON (c.`product_id`=p.`uuid`)
+			LEFT JOIN qkj_t_warehouse w ON(c.`store_id`=w.`uuid`)
+			LEFT JOIN qkj_t_stockpower s ON (s.`ware_id`=c.`store_id`)
+			WHERE (s.`username`=#username#  AND s.`prvg` LIKE '%4%' )
+		]]>
+			<isNotEmpty prepend="AND" property="product_id"><![CDATA[ c.product_id=#product_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="store_id"><![CDATA[ c.store_id=#store_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date"><![CDATA[ c.date=#date# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="quantity"><![CDATA[ c.quantity=#quantity# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="num"><![CDATA[ c.num=#num# ]]></isNotEmpty>
+
+		<![CDATA[ LIMIT 1000 ]]>
+	</select>
+	
+	<select id="check_getChecksCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) From qkj_t_check
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="product_id"><![CDATA[ product_id=#product_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="store_id"><![CDATA[ store_id=#store_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="quantity"><![CDATA[ date=#date# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="num"><![CDATA[ num=#num# ]]></isNotEmpty>
+		</dynamic>
+		<![CDATA[ LIMIT 1000 ]]>
+	</select>
+	
+	<insert id="check_addCheck" parameterClass="check">
+		<![CDATA[ 
+			Insert Into qkj_t_check(stock_id,product_id,store_id,date,quantity,num,zdnum,znum,snum,qnum,jnum)
+			Values (#stock_id#,#product_id#,#store_id#,#date#,#quantity#,#num#,#zdnum#,#znum#,#snum#,#qnum#,#jnum#)
+		]]>
+		<selectKey resultClass="int" keyProperty="uuid">
+		<![CDATA[ Select LAST_INSERT_ID() ]]>
+		</selectKey>
+	</insert>
+	<update id="check_mdyCheck" parameterClass="check">
+		<![CDATA[
+			Update qkj_t_check
+			Set
+			num=#num#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="check_delCheck" parameterClass="check">
+	<![CDATA[
+		Delete From qkj_t_check Where uuid=#uuid#
+	]]>
+	</delete>
+	
+	<!-- 鏌ヨ鐩樼偣鏃ユ湡 -->
+	<select id="check_getGroupByDate" resultClass="check" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT * FROM qkj_t_check c GROUP BY c.`date`
+		]]>
+	</select>
+	<select id="check_getGroupByDatePower" resultClass="check" parameterClass="java.util.Map">
+		<![CDATA[
+		SELECT * FROM qkj_t_check c 
+				LEFT JOIN qkj_t_product p ON (c.`product_id`=p.`uuid`)
+				LEFT JOIN qkj_t_warehouse w ON(c.`store_id`=w.`uuid`)
+				LEFT JOIN qkj_t_stockpower s ON (s.`ware_id`=c.`store_id`)
+				WHERE (s.`username`=#username#  AND s.`prvg` LIKE '%4%' )
+				GROUP BY c.`date`
+		]]>
+	</select>
+	<!-- Check End -->
+</sqlMap>

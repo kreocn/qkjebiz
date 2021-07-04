@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="inStock_inStock" extends="default" namespace="/inStock">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- InStock Start -->
+		<action name="inStock_list" class="com.qkj.ware.action.InStockAction" method="list">
+			<result>/WEB-INF/jsp/ware/inStock/InStockList.jsp</result>
+		</action>
+		<action name="inStock_relist" class="com.qkj.ware.action.InStockAction" method="relist">
+			<result type="redirectAction">
+				<param name="actionName">inStock_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+		<action name="inStock_load" class="com.qkj.ware.action.InStockAction" method="load">
+			<result>/WEB-INF/jsp/ware/inStock/InStockEdit.jsp</result>
+		</action>
+		<action name="inStock_add" class="com.qkj.ware.action.InStockAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">inStock_load</param>
+				<param name="inStock.uuid">${inStock.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="inStock_save" class="com.qkj.ware.action.InStockAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">inStock_load</param>
+				<param name="inStock.uuid">${inStock.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="inStock_del" class="com.qkj.ware.action.InStockAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">inStock_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="inStock_sure" class="com.qkj.ware.action.InStockAction" method="sure">
+			<result type="redirectAction">
+				<param name="actionName">inStock_load</param>
+				<param name="inStock.uuid">${inStock.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="inStock_addOut" class="com.qkj.ware.action.InStockAction" method="addOut">
+			<result type="redirectAction">
+				<param name="actionName">inStock_load</param>
+				<param name="inStock.uuid">${inStock.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="inDetail_spilt" class="com.qkj.ware.action.InStockAction" method="inSpilt">
+			<result type="redirectAction">
+				<param name="actionName">inStock_load</param>
+				<param name="inStock.uuid">${inStock.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="mdyRemark" class="com.qkj.ware.action.InStockAction" method="mdyRemark">
+			<result type="redirectAction">
+				<param name="actionName">inStock_load</param>
+				<param name="inStock.uuid">${inStock.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="inStock_bake" class="com.qkj.ware.action.InStockAction" method="bakeStock">
+			<result type="redirectAction">
+				<param name="actionName">inStock_load</param>
+				<param name="inStock.uuid">${inStock.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="inStock_view" class="com.qkj.ware.action.InStockAction" method="load">
+			<result>/WEB-INF/jsp/ware/inStock/InStockView.jsp</result>
+		</action>
+		
+		<action name="inStock_cencle" class="com.qkj.ware.action.InStockAction" method="cencle">
+			<result type="redirectAction">
+				<param name="actionName">inStock_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- InStock End -->
+	</package>
+</struts>

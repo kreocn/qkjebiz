@@ -8,11 +8,11 @@
 	<package name="COMMON" extends="default" namespace="/common">
 		<default-interceptor-ref name="myStackIndex" />
 		<action name="ajax" class="org.iweb.common.action.AjaxAction">
-			<result>/jsp/common/ajax.jsp</result>
+			<result>/WEB-INF/jsp/common/ajax.jsp</result>
 		</action>
 		<!-- JFileSystem 转向 Action -->
 		<action name="open_jfilesystem" class="org.iweb.common.action.OpenJFileSystemAction">
-			<result>/jsp/common/openJFileSystem.jsp</result>
+			<result>/WEB-INF/jsp/common/openJFileSystem.jsp</result>
 		</action>
 	</package>
 	<package name="COMMON_AJAX" extends="json-default" namespace="/common_ajax">
@@ -22,100 +22,13 @@
 			</result>
 		</action>
 	</package>
-
-	<!-- fileupload Action -->
-	<!-- org.iweb.fileupload.action -->
-	<package name="UPLOAD" extends="default" namespace="/upload">
-		<default-interceptor-ref name="myStackUpload" />
-		<!-- UploadClass Start -->
-		<action name="uclass_list" class="org.iweb.fileupload.action.UploadClassAction" method="list">
-			<result>/jsp/upload/UploadClassList.jsp</result>
-		</action>
-		<action name="uclass_load" class="org.iweb.fileupload.action.UploadClassAction" method="load">
-			<result>/jsp/upload/UploadClassEdit.jsp</result>
-		</action>
-		<action name="uclass_add" class="org.iweb.fileupload.action.UploadClassAction" method="add">
-			<result type="redirectAction">
-				<param name="actionName">uclass_list</param>
-				<param name="message">${message}</param>
-			</result>
-		</action>
-		<action name="uclass_save" class="org.iweb.fileupload.action.UploadClassAction" method="save">
-			<result type="redirectAction">
-				<param name="actionName">uclass_list</param>
-				<param name="message">${message}</param>
-			</result>
-		</action>
-		<action name="uclass_del" class="org.iweb.fileupload.action.UploadClassAction" method="del">
-			<result type="redirectAction">
-				<param name="actionName">uclass_list</param>
-				<param name="message2">${message}</param>
-			</result>
-		</action>
-		<action name="add_relation" class="org.iweb.fileupload.action.UploadClassAction" method="addRelation">
-			<result type="redirectAction">
-				<param name="actionName">uclass_load</param>
-				<param name="uclass.uuid">${uclass.uuid}</param>
-				<param name="message2">${message}</param>
-				<param name="viewFlag">mdy</param>
-			</result>
-		</action>
-		<action name="remove_relation" class="org.iweb.fileupload.action.UploadClassAction" method="removeRelation">
-			<result type="redirectAction">
-				<param name="actionName">uclass_load</param>
-				<param name="uclass.uuid">${uclass.uuid}</param>
-				<param name="message2">${message}</param>
-				<param name="viewFlag">mdy</param>
-			</result>
-		</action>
-		<!-- UploadClass End -->
-		<!-- UploadFile Start -->
-		<action name="file_list" class="org.iweb.fileupload.action.UploadFileAction" method="list">
-			<result>/jsp/upload/UploadFileList.jsp</result>
-		</action>
-		<action name="file_load" class="org.iweb.fileupload.action.UploadFileAction" method="load">
-			<result>/jsp/upload/UploadFileEdit.jsp</result>
-		</action>
-		<action name="file_add" class="org.iweb.fileupload.action.UploadFileAction" method="add">
-			<result type="redirectAction">
-				<param name="actionName">file_list</param>
-				<param name="message">${message}</param>
-			</result>
-		</action>
-		<action name="file_save" class="org.iweb.fileupload.action.UploadFileAction" method="save">
-			<result type="redirectAction">
-				<param name="actionName">file_list</param>
-				<param name="message">${message}</param>
-			</result>
-		</action>
-		<action name="file_del" class="org.iweb.fileupload.action.UploadFileAction" method="del">
-			<result type="redirectAction">
-				<param name="actionName">file_list</param>
-				<param name="message">${message}</param>
-			</result>
-		</action>
-		<action name="download" class="org.iweb.fileupload.action.UploadFileAction" method="download">
-			<!-- 配置结果类型为stream的结果 -->
-			<result name="success" type="stream">
-				<!-- 指定下载文件的文件类型 -->
-				<param name="contentType">${file.file_type}</param>
-				<!-- 指定下载文件的文件位置 -->
-				<param name="inputName">downloadFile</param>
-				<param name="contentDisposition">filename="${file.title}"</param>
-				<!-- 指定下载文件的缓冲大小 -->
-				<param name="bufferSize">4096</param>
-			</result>
-		</action>
-		<!-- UploadFile End -->
-	</package>
-
 	<!-- info Action -->
 	<!-- org.iweb.info.action -->
 	<package name="INFO" extends="default" namespace="/info">
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- InfoClass Start -->
 		<action name="class_list" class="org.iweb.info.action.InfoClassAction" method="list">
-			<result>/jsp/info/InfoClassList.jsp</result>
+			<result>/WEB-INF/jsp/info/InfoClassList.jsp</result>
 		</action>
 		<action name="class_control" class="org.iweb.info.action.InfoClassAction">
 			<result type="redirectAction">
@@ -126,10 +39,10 @@
 		<!-- InfoClass End -->
 		<!-- InfoNews Start -->
 		<action name="news_list" class="org.iweb.info.action.InfoNewsAction" method="list">
-			<result>/jsp/info/InfoNewsList.jsp</result>
+			<result>/WEB-INF/jsp/info/InfoNewsList.jsp</result>
 		</action>
 		<action name="news_listRecycle" class="org.iweb.info.action.InfoNewsAction" method="listRecycle">
-			<result>/jsp/info/InfoNewsListRecycle.jsp</result>
+			<result>/WEB-INF/jsp/info/InfoNewsListRecycle.jsp</result>
 		</action>
 
 		<action name="news_saveadd" class="org.iweb.info.action.InfoNewsAction" method="addsave">
@@ -164,10 +77,10 @@
 			</result>
 		</action>
 		<action name="news_load" class="org.iweb.info.action.InfoNewsAction" method="load">
-			<result>/jsp/info/InfoNewsEdit.jsp</result>
+			<result>/WEB-INF/jsp/info/InfoNewsEdit.jsp</result>
 		</action>
 		<action name="news_view" class="org.iweb.info.action.InfoNewsAction" method="load">
-			<result>/jsp/info/InfoNewsView.jsp</result>
+			<result>/WEB-INF/jsp/info/InfoNewsView.jsp</result>
 		</action>
 		<action name="news_saveTop" class="org.iweb.info.action.InfoNewsAction" method="saveTop">
 			<result type="redirectAction">
@@ -196,11 +109,11 @@
 		</action>
 
 		<action name="news_loadCheck" class="org.iweb.info.action.InfoNewsAction" method="loadCheck">
-			<result>/jsp/info/InfoNewsCheckedEdit.jsp</result>
+			<result>/WEB-INF/jsp/info/InfoNewsCheckedEdit.jsp</result>
 		</action>
 
 		<action name="news_firstCheckedList" class="org.iweb.info.action.InfoNewsAction" method="listFirstCheck">
-			<result>/jsp/info/InfoNewsCheckedList.jsp</result>
+			<result>/WEB-INF/jsp/info/InfoNewsCheckedList.jsp</result>
 		</action>
 
 		<action name="news_saveFirstPass" class="org.iweb.info.action.InfoNewsAction" method="saveFirstPass">
@@ -213,7 +126,7 @@
 		</action>
 
 		<action name="news_finalCheckedList" class="org.iweb.info.action.InfoNewsAction" method="listFinalCheck">
-			<result>/jsp/info/InfoNewsCheckedList.jsp</result>
+			<result>/WEB-INF/jsp/info/InfoNewsCheckedList.jsp</result>
 		</action>
 
 
@@ -269,7 +182,10 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- Simple Report -->
 		<action name="simple" class="org.iweb.rpt.action.SimpleReportAction">
-			<result>/jsp/report/SimpleReport.jsp</result>
+			<result>/WEB-INF/jsp/report/SimpleReport.jsp</result>
+		</action>
+		<action name="checkeffmonthly" class="org.iweb.rpt.action.CheckEffMonthlyStatAction">
+			<result>/WEB-INF/jsp/report/CheckEffMonthlyStat.jsp</result>
 		</action>
 	</package>
 </struts>

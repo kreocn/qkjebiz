@@ -1,0 +1,79 @@
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>小应用：Java多行内容转换</title>
+    <style type="text/css">
+td {
+font-size:14px;
+}
+
+</style>
+<script language="javascript" type="text/javascript">
+function ChangeIt()
+{
+    var prev = "";
+    var current = "";
+
+    var strContent = document.getElementById("strContent").value;
+    var strArray = strContent.split(navigator.appName=="Netscape"?"\n":"\r\n");
+    var strName = document.getElementById("strName").value;
+    var newContent = "StringBuffer " + strName + " = new StringBuffer();";
+    for(var i=0;i<strArray.length;i++)
+    {
+        if(strArray[i].replace(" ","").replace("\t","")!="")
+        {
+            newContent += "\r\n";
+            //newContent += strName + ".append(\"";
+            newContent += ".append(\"";
+            
+            current = strArray[i].charAt(0);
+            if(/\w/.test(current) && /\w/.test(prev)) newContent += " ";
+            
+            //newContent += strArray[i] + "\");";
+            newContent += strArray[i] + "\")";
+            
+            prev = strArray[i].charAt(strArray[i].length-1);
+        }
+    }
+    
+    document.getElementById("newContent").value = newContent;
+    
+    if(document.getElementById("clip").checked)
+    {
+        window.clipboardData.clearData();
+        window.clipboardData.setData("Text",newContent);
+    }
+}
+</script>
+</head>
+
+<body>
+<table border="1" bgcolor="#E8E4D9" bordercolor="#A37C5C" style="border-collapse: collapse"
+        width="100%" cellpadding="2" cellspacing="0">
+        <tr height="30">
+            <td width="180" bgcolor="#D6CEB9">变量名称：</td>
+            <td id="p1Result"><input type="text" id="strName" value="sql">
+              <input type="checkbox" id="clip" value="1" checked><label for="clip">转换后直接复制到剪贴板</label></td>
+        </tr>
+        <tr height="30">
+            <td width="180" bgcolor="#D6CEB9">
+                原始字符串：</td>
+            <td id="p2Result"><textarea cols="80" rows="12"  id="strContent"></textarea></td>
+        </tr>
+                <tr height="30">
+            <td colspan="2" align="center">
+                <input type="button" name="Button2" value="开始转换" onClick="ChangeIt()" style="width:100px;"></td>
+        </tr>
+</table>
+    <br>
+    <table border="1" bgcolor="#E8E4D9" bordercolor="#A37C5C" style="border-collapse: collapse"
+        width="100%" cellpadding="2" cellspacing="0">
+        <tr height="30">
+            <td width="180" bgcolor="#D6CEB9">
+                转换后内容：</td>
+            <td id="p1Result"><textarea id="newContent" cols="80" rows="12" onMouseOver="this.select()"></textarea>            </td>
+        </tr>
+</table>
+</body>
+</html>

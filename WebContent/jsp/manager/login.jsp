@@ -4,63 +4,39 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title><s:text name="APP_NAME" /></title>
-<link rel="stylesheet" href="<s:url value="/css/css.css" />" />
-<link rel="stylesheet" href="<s:url value="/css/main.css" />" />
-<script type="text/javascript" src="<s:url value="/js/common.js" />"></script>
-<script type="text/javascript">
-<!--
-function reloadImage() {
-	form1.pic.src = form1.pic.src;
-}
-//-->
-</script>
+<s:action name="ref_css" namespace="/manager" executeResult="true" />
 <style type="text/css">
-.print_prepare01 {
-background: url("<s:url value="/images/print/pageheader02.png" />") transparent no-repeat 0 0;display: none;
-}
-.print_prepare02 {
-background: url("<s:url value="/images/print/pageheader02.png" />") transparent no-repeat 0 0;display: none;
-}
+body {background-color: #363636;}
+.print_prepare {width: 0;height: 0;position: absolute;left: -9999px;top: -9999px;}
 </style>
 </head>
 <body>
-<div style=" text-align:center; margin-top:80px;">
-  <div style="margin:auto;text-align:center;"><img src="<s:url value="/images/logo.png" />" /></div>  
-  <div align="center" style="width:490px; margin:auto; line-height:180%;padding-left: 100px;">
-<s:form name="form1" action="check_login" namespace="/manager" onsubmit="return checkFormx(form1)" method="post" theme="simple">
-<table class="ilisttable" id="table1" width="50%" border="1" cellspacing="0" cellpadding="0" bordercolor="#8B8B8B">
-	  <tr>
-	    <td class="firstRow">用户名:</td>
-	    <td class="secRow"><s:textfield title="用户名" name="user.title" cssClass="input1" nullable="false" /></td>
-	  </tr>
-	  <tr>
-	    <td class="firstRow">密&nbsp;&nbsp;&nbsp;码:</td>
-	    <td class="secRow"><s:password title="密码" name="user.passwords" cssClass="input1" nullable="false" /></td>
-	  </tr>
-	  <%if("true".equals(org.iweb.sys.IWebConfig.getConfigMap().get("isCheckLoginRand"))){ %>
-	  <tr>
-	    <td class="firstRow">验证码:</td>
-	    <td class="secRow">
-	    	<s:textfield name="rand" cssStyle="width: 45%;" maxlength="4" />
-			<img name="pic" class="imglink" onclick="reloadImage();" src="<s:url value="/jsp/common/image.jsp" />" />
-		</td>
-	  </tr>
-	  <% } %>
-	  <tr>
-		<td colspan="2" class="buttonarea">		
-		<s:submit value="登录" /> <s:reset value="重置" /></td>
-	  </tr>
-</table>
-</s:form>
-<div style="text-align: center;"><span id="message"><s:property value="message" /></span></div>
-  </div>
+<div class="main lg_main">
+	<div class="lg_title">商务系统登录</div>
+	<div class="lg_input">
+		<s:form id="mainForm" cssClass="validForm" name="mainForm" action="check_login" namespace="/manager" method="post" theme="simple">
+        <div class="label_singlecol">
+            <div class="label_singletitle">用户名:</div>
+            <div class="label_singlecon"><s:textfield title="用户名" name="user.title" cssClass="validate[required]" nullable="false" /></div>
+        </div>
+        <div class="label_singlecol">
+            <div class="label_singletitle">密&nbsp;&nbsp;&nbsp;&nbsp;码:</div>
+            <div class="label_singlecon"><s:password title="密码" name="user.passwords" cssClass="validate[required]" nullable="false" /></div>
+        </div>
+        <div class="label_singlecol label_s2">
+        	<s:submit value="登 录" />
+        	<span class="label_seq"></span>
+        	<s:reset value="重 置" />
+        </div>
+        </s:form>
+	</div>
 </div>
 <!-- 提前加载图片 -->
 <div>
-<div class="print_prepare01"></div>
-<div class="print_prepare02"></div>
+<div class="print_prepare"><img src="<s:url value="/images/print/pageheader02.png" />" alt="" /></div>
+<div class="print_prepare"><img src="<s:url value="/images/print/pageheader02.png" />" alt="" /></div>
 </div>
+<s:action name="ref_js" namespace="/manager" executeResult="true" />
 </body>
 </html>

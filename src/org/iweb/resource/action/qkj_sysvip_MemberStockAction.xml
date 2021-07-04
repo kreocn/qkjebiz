@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="sysvip_memberStock" extends="default" namespace="/sysvip">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- MemberStock Start -->
+		<action name="memberStock_list" class="org.iweb.sysvip.action.MemberStockAction" method="list">
+			<result>/WEB-INF/jsp/sysvip/MemberStockList.jsp</result>
+		</action>
+		<action name="memberStock_relist" class="org.iweb.sysvip.action.MemberStockAction" method="relist">
+			<result type="redirectAction">
+				<param name="actionName">memberStock_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+		<action name="memberStock_load" class="org.iweb.sysvip.action.MemberStockAction" method="load">
+			<result>/WEB-INF/jsp/sysvip/MemberStockEdit.jsp</result>
+		</action>
+		<action name="memberStock_add" class="org.iweb.sysvip.action.MemberStockAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">memberStock_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="memberStock_save" class="org.iweb.sysvip.action.MemberStockAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">memberStock_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="memberStock_del" class="org.iweb.sysvip.action.MemberStockAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">memberStock_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="memberStock_delCheck" class="org.iweb.sysvip.action.MemberStockAction" method="delCheck">
+			<result type="redirectAction">
+				<param name="actionName">memberStock_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="memberStock_leading" class="org.iweb.sysvip.action.MemberStockAction" method="leading">
+			<result type="redirectAction">
+				<param name="actionName">memberStock_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="memberStock_lead" class="org.iweb.sysvip.action.MemberStockAction" method="lead">
+			<result type="redirectAction">
+				<param name="actionName">memberStock_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="memberStock_out" class="org.iweb.sysvip.action.MemberStockAction" method="out">
+		</action>
+		<!-- MemberStock End leading-->
+	</package>
+</struts>

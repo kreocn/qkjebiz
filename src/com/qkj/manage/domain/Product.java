@@ -1,14 +1,19 @@
 package com.qkj.manage.domain;
 
-import java.util.*;
+import java.util.Date;
 
 public class Product {
 	private Integer uuid;// (int)主键ID
 	private String prod_code;// 产品统一编码
-	private String brand;// (varchar)系列/类型/品牌
+	private String bar_code;// 青海条形码
+	private String bar_code_box;// 青海条形码箱子
+	private String bar_code_tibet;// 西藏条形码
+	private String bar_code_tibet_box;// 西藏条形码箱子
+	private Integer brand;// (varchar)系列/类型/品牌
 	private String title;// (varchar)品名
 	private String spec;// (varchar)规格(500ml)
 	private Integer case_spec;// (int)数量(件)
+	private String unit; //单位
 	private Double alcohol;// (decimal)酒精度
 	private String flavor;// (varchar)香型
 	private String raw_materials;// (varchar)原材料
@@ -21,8 +26,97 @@ public class Product {
 	private Double agree_price_1;// (decimal)协议价1
 	private Double agree_price_2;// (decimal)协议价2
 	private Double agree_price_3;// (decimal)协议价3
+	private Integer status;// 是否启用
 	private String lm_user;// (varchar)
 	private Date lm_time;// (timestamp)
+	private String brand_name;
+
+	private Double num;
+	private Double dprice;
+	private Double dtotle;
+
+	public Double getDprice() {
+		return dprice;
+	}
+
+	public void setDprice(Double dprice) {
+		this.dprice = dprice;
+	}
+
+	public Double getDtotle() {
+		return dtotle;
+	}
+
+	public void setDtotle(Double dtotle) {
+		this.dtotle = dtotle;
+	}
+
+
+	public Double getNum() {
+		return num;
+	}
+
+	public void setNum(Double num) {
+		this.num = num;
+	}
+
+
+
+	private Double update_price;
+	public String getUnit() {
+		return unit;
+	}
+
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+	public Double getUpdate_price() {
+		return update_price;
+	}
+
+	public void setUpdate_price(Double update_price) {
+		this.update_price = update_price;
+	}
+
+	public String getBar_code_box() {
+		return bar_code_box;
+	}
+
+	public void setBar_code_box(String bar_code_box) {
+		this.bar_code_box = bar_code_box;
+	}
+
+	public String getBar_code_tibet() {
+		return bar_code_tibet;
+	}
+
+	public void setBar_code_tibet(String bar_code_tibet) {
+		this.bar_code_tibet = bar_code_tibet;
+	}
+
+	public String getBar_code_tibet_box() {
+		return bar_code_tibet_box;
+	}
+
+	public void setBar_code_tibet_box(String bar_code_tibet_box) {
+		this.bar_code_tibet_box = bar_code_tibet_box;
+	}
+
+	public String getBar_code() {
+		return bar_code;
+	}
+
+	public void setBar_code(String bar_code) {
+		this.bar_code = bar_code;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 
 	public String getProd_code() {
 		return prod_code;
@@ -40,11 +134,11 @@ public class Product {
 		this.uuid = uuid;
 	}
 
-	public String getBrand() {
+	public Integer getBrand() {
 		return brand;
 	}
 
-	public void setBrand(String brand) {
+	public void setBrand(Integer brand) {
 		this.brand = brand;
 	}
 
@@ -184,4 +278,11 @@ public class Product {
 		this.lm_time = lm_time;
 	}
 
+	public String getBrand_name() {
+		return brand_name;
+	}
+
+	public void setBrand_name(String brand_name) {
+		this.brand_name = brand_name;
+	}
 }

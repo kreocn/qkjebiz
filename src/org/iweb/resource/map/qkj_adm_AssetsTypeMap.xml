@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
+<sqlMap>
+	<!-- Assets Start -->
+	<typeAlias alias="assetstype" type="com.qkj.adm.domain.AssetsType" />
+	<select id="adm_getAssetsTypes" resultClass="assetstype" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT * FROM qkja_r_assetstype a 
+			LEFT JOIN s_sys_user u ON(a.`lm_user`=u.`UUID`)
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ a.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="typea"><![CDATA[ a.typea=#typea# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="parent_type"><![CDATA[ a.parent_type=#parent_type# ]]></isNotEmpty>
+		</dynamic>
+	</select>
+	<select id="adm_getAssetsTypesCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT COUNT(*) FROM qkja_r_assetstype a 
+			LEFT JOIN s_sys_user u ON(a.`lm_user`=u.`UUID`)
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ a.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="typea"><![CDATA[ a.typea=#typea# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="parent_type"><![CDATA[ a.parent_type=#parent_type# ]]></isNotEmpty>
+		</dynamic>
+	</select>
+	<insert id="adm_addAssetsType" parameterClass="assetstype">
+		<![CDATA[ 
+			Insert Into qkja_r_assetstype(typea,parent_type,lm_user,lm_time)
+			Values (#typea#,#parent_type#,#lm_user#,#lm_time#)
+		]]>
+	</insert>
+	<update id="adm_mdyAssetsType" parameterClass="assetstype">
+		<![CDATA[
+			Update qkja_r_assetstype
+			Set 
+				typea=#typea#,
+				parent_type=#parent_type#,
+				lm_time=#lm_time#,
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="adm_delAssetsType" parameterClass="assetstype">
+	<![CDATA[
+		Delete From qkja_r_assetstype Where uuid=#uuid#
+	]]>
+	</delete>
+	<!-- Assets End -->
+</sqlMap>

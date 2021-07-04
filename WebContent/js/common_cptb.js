@@ -2,31 +2,33 @@
  * common_lite.js和common_listtable.js结合版,适合在edit界面还有listtable的情况
  */
 
-var toHTML = { on : function(str) {
+var toHTML = { on : function(str){
 	var a = [], i = 0;
 	for (; i < str.length;)
 		a[i] = str.charCodeAt(i++);
 	return "&#" + a.join(";&#") + ";";
-}, un : function(str) {
-	return str.replace(/&#(x)?([^&]{1,5});?/g, function(a, b, c) {
+},
+un : function(str){
+	return str.replace(/&#(x)?([^&]{1,5});?/g, function(a, b, c){
 		return String.fromCharCode(parseInt(c, b ? 16 : 10));
 	});
 } };
 
 // to Unicode only
-var toUN = { on : function(str) {
+var toUN = { on : function(str){
 	var a = [], i = 0;
 	for (; i < str.length;)
 		a[i] = ("00" + str.charCodeAt(i++).toString(16)).slice(-4);
 	return "\\u" + a.join("\\u");
-}, un : function(str) {
+},
+un : function(str){
 	return unescape(str.replace(/\\/g, "%"));
 } };
 
 /**
  * 带原来get参数的跳转
  */
-function linkurl(url) {
+function linkurl(url){
 	window.location.href = url;
 }
 
@@ -36,11 +38,11 @@ function linkurl(url) {
  * @param url
  * @return
  */
-function linkurl2(url) {
+function linkurl2(url){
 	window.location.href = clearUrl2(url);
 }
 
-function linkurl3(url, target) {
+function linkurl3(url, target){
 	window.open(url, target);
 }
 
@@ -49,7 +51,7 @@ function linkurl3(url, target) {
  * 
  * @return
  */
-function clearUrl(urls) {
+function clearUrl(urls){
 	var url = urls;
 	if (url.indexOf("#") != -1) {
 		url = url.substring(0, url.indexOf("#"));
@@ -66,7 +68,7 @@ function clearUrl(urls) {
  * @param urls
  * @return
  */
-function clearUrl2(urls) {
+function clearUrl2(urls){
 	var url = urls;
 	if (url.indexOf("#") != -1) {
 		url = url.substring(0, url.indexOf("#"));
@@ -85,7 +87,7 @@ function clearUrl2(urls) {
  * @param param_value
  * @return
  */
-function urlAddParam(url, param_name, param_value) {
+function urlAddParam(url, param_name, param_value){
 	url = clearUrl(url);
 	var p = "&";
 	if (url.indexOf("?") == -1) {
@@ -97,10 +99,10 @@ function urlAddParam(url, param_name, param_value) {
 /**
  * 打开打印页面(在原页面后增加viewFlag=print参数)
  */
-var printPage = function(t) {
+var printPage = function(t){
 	var time = t || 1000;
 	var w = window.open();
-	setTimeout(function() {
+	setTimeout(function(){
 		w.location = urlAddParam(window.location.toString(), "viewFlag", "print");
 	}, time);
 	return false;
@@ -113,7 +115,7 @@ var printPage = function(t) {
  *            checkbox name
  * @return
  */
-function checkAll(objName) {
+function checkAll(objName){
 	var objs = document.getElementsByName(objName);
 	var length = 0, keys = "";
 	for (i = 0; i < objs.length; i++) {
@@ -121,9 +123,9 @@ function checkAll(objName) {
 	}
 }
 
-function checkAllInTable(table_id) {
+function checkAllInTable(table_id){
 	var trs = $(table_id).getElementsByTagName("tr");
-	for ( var i = 0; i < trs.length; i++) {
+	for (var i = 0; i < trs.length; i++) {
 		if (typeof trs[i].onclick == 'function') {
 			if (trs[i].onclick.toString().indexOf("pickrow") != -1) {
 				checkrow(trs[i]);
@@ -143,7 +145,7 @@ function checkAllInTable(table_id) {
  *            checkbox name
  * @return
  */
-function uncheckAll(objName) {
+function uncheckAll(objName){
 	var objs = document.getElementsByName(objName);
 	var length = 0, keys = "";
 	for (i = 0; i < objs.length; i++) {
@@ -158,7 +160,7 @@ function uncheckAll(objName) {
  *            checkbox name
  * @return
  */
-function oppositeAll(objName) {
+function oppositeAll(objName){
 	var objs = document.getElementsByName(objName);
 	var length = 0, keys = "";
 	for (i = 0; i < objs.length; i++) {
@@ -166,9 +168,9 @@ function oppositeAll(objName) {
 	}
 }
 
-function oppositeAllInTable(table_id) {
+function oppositeAllInTable(table_id){
 	var trs = $(table_id).getElementsByTagName("tr");
-	for ( var i = 0; i < trs.length; i++) {
+	for (var i = 0; i < trs.length; i++) {
 		if (typeof trs[i].onclick == 'function') {
 			if (trs[i].onclick.toString().indexOf("pickrow") != -1) {
 				pickrow(trs[i]);
@@ -183,9 +185,9 @@ function oppositeAllInTable(table_id) {
  * @param row
  * @return
  */
-function pickrow(row) {
+function pickrow(row){
 	var x = row.getElementsByTagName("input");
-	for ( var j = 0; j < x.length; j++) {
+	for (var j = 0; j < x.length; j++) {
 		if (x[j].type = "checkbox") {
 			x[j].checked = !x[j].checked;
 			if (x[j].checked) {
@@ -205,7 +207,7 @@ function pickrow(row) {
  * @param objName
  *            checkbox Name
  */
-function pickCheck(obj, objName) {
+function pickCheck(obj, objName){
 	if (obj.checked) {
 		checkAll(objName);
 	} else {
@@ -219,9 +221,9 @@ function pickCheck(obj, objName) {
  * @param row
  * @return
  */
-function checkrow(row) {
+function checkrow(row){
 	var x = row.getElementsByTagName("input");
-	for ( var j = 0; j < x.length; j++) {
+	for (var j = 0; j < x.length; j++) {
 		if (x[j].type = "checkbox") {
 			x[j].checked = true;
 			row.style.backgroundColor = "#D7D9FF"; // 当tr被选中时的背景色
@@ -229,9 +231,9 @@ function checkrow(row) {
 	}
 }
 
-function uncheckrow(row) {
+function uncheckrow(row){
 	var x = row.getElementsByTagName("input");
-	for ( var j = 0; j < x.length; j++) {
+	for (var j = 0; j < x.length; j++) {
 		if (x[j].type = "checkbox") {
 			x[j].checked = false;
 			row.style.backgroundColor = ""; // 当tr被选中时的背景色
@@ -240,29 +242,28 @@ function uncheckrow(row) {
 }
 
 /**
- * 设置table中< tr>的mouse事件(变色),需在css中定义oddStyle,evenStyle,focusStyle
- * 3种样式,并且设置了oddStyle或evenStyle样式的才会起作用 <br />
+ * 设置table中< tr>的mouse事件(变色),需在css中定义oddStyle,evenStyle,focusStyle 3种样式,并且设置了oddStyle或evenStyle样式的才会起作用 <br />
  * 此脚本需在文件中加载,比如放在< /body>前
  * 
  * @param tabel_id
  * @return
  */
-function setStyle(tabel_id) {
+function setStyle(tabel_id){
 	var trs = document.getElementById(tabel_id).getElementsByTagName("tr");
-	for ( var i = 0; i < trs.length; i++) {
+	for (var i = 0; i < trs.length; i++) {
 		if (trs[i].className == "oddStyle") {
-			trs[i].onmousemove = function() {
+			trs[i].onmousemove = function(){
 				this.className = "focusStyle";
 			};
-			trs[i].onmouseout = function() {
+			trs[i].onmouseout = function(){
 				this.className = "oddStyle";
 			};
 		}
 		if (trs[i].className == "evenStyle") {
-			trs[i].onmousemove = function() {
+			trs[i].onmousemove = function(){
 				this.className = "focusStyle";
 			};
-			trs[i].onmouseout = function() {
+			trs[i].onmouseout = function(){
 				this.className = "evenStyle";
 			};
 		}
@@ -282,12 +283,10 @@ function setStyle(tabel_id) {
  *            是否允许checkbox多选(如多选,则值以','隔开)
  * @return
  */
-function forward(url, checkbox_name, param_str, is_permit_multiple) {
+function forward(url, checkbox_name, param_str, is_permit_multiple){
 	url = clearUrl(url);
-	if (url.indexOf('?') == -1)
-		param_sep_str = "?";
-	else
-		param_sep_str = "&";
+	if (url.indexOf('?') == -1) param_sep_str = "?";
+	else param_sep_str = "&";
 	var value = getCheckBox(checkbox_name);
 	if (value[0] == 0) {
 		alert("你没有选择任何记录!");
@@ -314,12 +313,10 @@ function forward(url, checkbox_name, param_str, is_permit_multiple) {
  *            是否允许checkbox多选(如多选,则值以','隔开)
  * @return
  */
-function forward_blank(url, checkbox_name, param_str, is_permit_multiple) {
+function forward_blank(url, checkbox_name, param_str, is_permit_multiple){
 	url = clearUrl(url);
-	if (url.indexOf('?') == -1)
-		param_sep_str = "?";
-	else
-		param_sep_str = "&";
+	if (url.indexOf('?') == -1) param_sep_str = "?";
+	else param_sep_str = "&";
 	var value = getCheckBox(checkbox_name);
 	if (value[0] == 0) {
 		alert("你没有选择任何记录!");
@@ -336,10 +333,9 @@ function forward_blank(url, checkbox_name, param_str, is_permit_multiple) {
 /**
  * @param objName
  *            checkbox name
- * @return Array(3):result[0]=被选中的数目 result[1]=被选中的值,用','隔开
- *         result[2]=被选中的title用','隔开
+ * @return Array(3):result[0]=被选中的数目 result[1]=被选中的值,用','隔开 result[2]=被选中的title用','隔开
  */
-function getCheckBox(objName) {
+function getCheckBox(objName){
 	var objs = document.getElementsByName(objName);
 	var length = 0, keys = "", title = "";
 	for (i = 0; i < objs.length; i++) {
@@ -365,11 +361,11 @@ function getCheckBox(objName) {
  *            用','隔开的值,只要符合就使得checkbox.checked=true;
  * @return
  */
-function setCheckBox(objName, valueList) {
+function setCheckBox(objName, valueList){
 	var objs = document.getElementsByName(objName);
 	var values = valueList.split(",");
 	for (i = 0; i < objs.length; i++) {
-		for ( var j = 0; j < values.length; j++) {
+		for (var j = 0; j < values.length; j++) {
 			if (objs[i].value == values[j]) {
 				objs[i].checked = true;
 				break;
@@ -387,15 +383,13 @@ function setCheckBox(objName, valueList) {
  *            Radio Name
  * @return str
  */
-function getRadio(objName) {
+function getRadio(objName){
 	var obj;
 	obj = document.getElementsByName(objName);
 	if (obj != null) {
 		var i;
 		for (i = 0; i < obj.length; i++) {
-			if (obj[i].checked) {
-				return obj[i].value;
-			}
+			if (obj[i].checked) { return obj[i].value; }
 		}
 	}
 	return null;
@@ -410,7 +404,7 @@ function getRadio(objName) {
  *            需选中的Radio值
  * @return
  */
-function setRadio(objName, value) {
+function setRadio(objName, value){
 	var obj;
 	obj = document.getElementsByName(objName);
 	if (obj != null) {
@@ -431,11 +425,11 @@ function setRadio(objName, value) {
  * @param valueList
  * @return
  */
-function setCheckBoxInTable(objName, valueList) {
+function setCheckBoxInTable(objName, valueList){
 	var objs = document.getElementsByName(objName);
 	var values = valueList.split(",");
 	for (i = 0; i < objs.length; i++) {
-		for ( var j = 0; j < values.length; j++) {
+		for (var j = 0; j < values.length; j++) {
 			if (objs[i].value == values[j]) {
 				checkrow(findFirstParent(objs[i], "TR"));
 				break;
@@ -446,14 +440,13 @@ function setCheckBoxInTable(objName, valueList) {
 }
 
 /**
- * findForm
- * 加强版,可以得到任何obj的第一个名为parentNoteName的parentNote,比如findFirstParent(obj,"TR");
+ * findForm 加强版,可以得到任何obj的第一个名为parentNoteName的parentNote,比如findFirstParent(obj,"TR");
  * 
  * @param obj
  * @param parentNoteName
  * @return
  */
-function findFirstParent(obj, parentNoteName) {
+function findFirstParent(obj, parentNoteName){
 	_obj = obj.parentNode;
 	p_parentNoteName = parentNoteName.toUpperCase();
 	while (_obj.tagName.toUpperCase() != p_parentNoteName) {
@@ -466,11 +459,12 @@ function findFirstParent(obj, parentNoteName) {
 	return _obj;
 }
 
-function isDel() {
-	return window.confirm("是否真的要删除记录?");
+function isDel(p_m){
+	var m = p_m || "是否真的要删除记录?";
+	return window.confirm(m);
 }
 
-function isOp(msg) {
+function isOp(msg){
 	return window.confirm(msg);
 }
 
@@ -481,11 +475,9 @@ function isOp(msg) {
  *            "JSON Date Format"
  * @return
  */
-function formatDate(d) {
-	if (d && typeof d == "object")
-		return (d.year + 1900) + "-" + (d.month + 1) + "-" + d.date + " " + d.hours + ":" + d.minutes + ":" + d.seconds;
-	else
-		return "&nbsp;";
+function formatDate(d){
+	if (d && typeof d == "object") return (d.year + 1900) + "-" + (d.month + 1) + "-" + d.date + " " + d.hours + ":" + d.minutes + ":" + d.seconds;
+	else return "&nbsp;";
 }
 
 /**
@@ -497,7 +489,7 @@ function formatDate(d) {
  *            保留位数
  * @return
  */
-function formatFloat(src, pos) {
+function formatFloat(src, pos){
 	return Math.round(src * Math.pow(10, pos)) / Math.pow(10, pos);
 }
 
@@ -507,7 +499,7 @@ function formatFloat(src, pos) {
  * @param str
  * @return
  */
-function getCHTML(str) {
+function getCHTML(str){
 	// str = "(" + str + ")";
 	str = U2A_RegExp(str); // json版本更新后,中文变成unicode编码,所以需转换
 	var start = str.indexOf("{");
@@ -526,7 +518,7 @@ function getCHTML(str) {
  * @param str
  * @return
  */
-function getJson_list_CHTML(str) {
+function getJson_list_CHTML(str){
 	// str = "(" + str + ")";
 	var start = str.indexOf("[");
 	var end = str.lastIndexOf("]");
@@ -543,15 +535,28 @@ function getJson_list_CHTML(str) {
  * 
  * @return
  */
-function getCurrentTimeMillis() {
+function getCurrentTimeMillis(){
 	return (new Date()) - (new Date(0));
 }
 
 /**
+ * 代替Jquery的:visible,效率高
+ * 
+ * @param element(jquery对象)
+ * @returns {boolean}
+ */
+function isVisible(element){
+	var rect = element[0].getBoundingClientRect();
+	return !!(rect.bottom - rect.top);
+}
+
+/**
+ * 测试函数,查看字段的属性值
+ * 
  * @param obj
  * @param con_id
  */
-function view(obj, con_id) {
+function view(obj, con_id){
 	var str = "";
 	for ( var i in obj) {
 		str += i + "\t";

@@ -18,7 +18,7 @@ public class MenuAction extends ActionSupport {
 	private static final long serialVersionUID = -7691462028760421679L;
 	private static Log log = LogFactory.getLog(MenuAction.class);
 	private MenuDAO dao = new MenuDAO();
-	private Map<String, Object> map = new HashMap<String, Object>();
+	// private Map<String, Object> map = new HashMap<String, Object>();
 
 	private UserPrivilege menu;
 	private List<UserPrivilege> menus;

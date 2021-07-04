@@ -28,6 +28,11 @@ public class AssetItemAction extends ActionSupport {
 	private int recCount;
 	private int pageSize;
 	private int currPage;
+	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;资产物品列表";
+	
+	public String getPath() {
+		return path;
+	}
 
 	public AssetItem getAssetItem() {
 		return assetItem;
@@ -96,6 +101,7 @@ public class AssetItemAction extends ActionSupport {
 					.toString()));
 			this.setAssetItems(dao.list(map));
 			this.setRecCount(dao.getResultCount());
+			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;资产物品列表";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
@@ -114,9 +120,11 @@ public class AssetItemAction extends ActionSupport {
 				setMessage("你没有选择任何操作!");
 			} else if ("add".equals(viewFlag)) {
 				this.setAssetItem(null);
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/adm/assetItem_list'>资产物品列表</a>&nbsp;&gt;&nbsp;添加资产物品";
 			} else if ("mdy".equals(viewFlag)) {
 				if (!(assetItem == null || assetItem.getUuid() == null)) {
 					this.setAssetItem((AssetItem) dao.get(assetItem.getUuid()));
+					path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/adm/assetItem_list'>资产物品列表</a>&nbsp;&gt;&nbsp;修改资产物品";
 				} else {
 					this.setAssetItem(null);
 				}
@@ -205,6 +213,24 @@ public class AssetItemAction extends ActionSupport {
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!del 数据删除失败:", e);
 			throw new Exception(this.getClass().getName() + "!del 数据删除失败:", e);
+		}
+		return SUCCESS;
+	}
+	
+	public String print() throws Exception {
+		try {
+			if(assetItem!=null){
+			map.clear();
+			map.put("nuuid", assetItem.getNuuid());
+			map.put("lm_time_item", assetItem.getLm_time_item());
+			map.put("company", assetItem.getCompany());
+			map.put("btype", assetItem.getBtype());
+			map.put("ctype", assetItem.getCtype());
+			}
+			this.setAssetItems(dao.getPrint(map));
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!load 读取数据错误:", e);
+			throw new Exception(this.getClass().getName() + "!load 读取数据错误:", e);
 		}
 		return SUCCESS;
 	}

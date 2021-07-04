@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="qkjmanage_Entertain" extends="default" namespace="/qkjmanage">
+		<default-interceptor-ref name="myStackIndex" />
+		<!--  Start -->
+		<action name="entert_list" class="com.qkj.manage.action.EntertAction" method="list">
+			<result name="success">/WEB-INF/jsp/qkjmanage/EntertList.jsp</result>
+		</action>
+		
+		<action name="entert_report" class="com.qkj.manage.action.EntertAction" method="listReport">
+			<result name="success">/WEB-INF/jsp/qkjmanage/EntertReport.jsp</result>
+		</action>
+		
+		<action name="entert_print" class="com.qkj.manage.action.EntertAction" method="print">
+		</action>
+		
+		<action name="entert_load" class="com.qkj.manage.action.EntertAction" method="load">
+			<result name="SUCCESS">/WEB-INF/jsp/qkjmanage/EntertEdit.jsp</result>
+		</action>
+		<action name="entert_add" class="com.qkj.manage.action.EntertAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">entert_load</param>
+				<param name="entert.uuid">${entert.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="entert_save" class="com.qkj.manage.action.EntertAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">entert_load</param>
+				<param name="entert.uuid">${entert.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="entert_savestate" class="com.qkj.manage.action.EntertAction" method="savestate">
+			<result type="redirectAction">
+				<param name="actionName">entert_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="entert_del" class="com.qkj.manage.action.EntertAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">entert_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="entert_relist" class="com.qkj.manage.action.EntertAction">
+			<result type="redirectAction">
+				<param name="actionName">entert_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+		<!--  End -->
+	</package>
+</struts>

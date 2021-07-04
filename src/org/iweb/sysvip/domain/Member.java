@@ -28,10 +28,40 @@ public class Member {
 	private Integer score;
 	private Integer re_score;
 	private Integer with_score;
+	private String is_customers;// 是否是潜在客户
+	private String c_id;
+
+	private String address;
 
 	// 查询专用字段
 	// 客户经理查询方式 0 默认 1 查询客户经理为空的情况
 	private Integer manager_search_type;
+
+	public String getC_id() {
+		return c_id;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public void setC_id(String c_id) {
+		this.c_id = c_id;
+	}
+
+	private String is_sub_dept;
+
+	public String getIs_customers() {
+		return is_customers;
+	}
+
+	public void setIs_customers(String is_customers) {
+		this.is_customers = is_customers;
+	}
 
 	public Integer getWith_score() {
 		return with_score;
@@ -223,6 +253,14 @@ public class Member {
 
 	public void setLast_login_time(Date last_login_time) {
 		this.last_login_time = last_login_time;
+	}
+
+	public String getIs_sub_dept() {
+		return is_sub_dept;
+	}
+
+	public void setIs_sub_dept(String is_sub_dept) {
+		this.is_sub_dept = is_sub_dept;
 	}
 
 }

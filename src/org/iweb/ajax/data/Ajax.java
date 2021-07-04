@@ -15,4 +15,7 @@ public abstract class Ajax {
 		this.parameter = parameter;
 	}
 
+	protected final static String NOLOGIN = "NOLOGIN";
+	protected final static String NODATA = "NODATA";
+	protected final static String NOPERMIT = "NOPERMIT";
 }

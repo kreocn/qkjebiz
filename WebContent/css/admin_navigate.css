@@ -1,0 +1,49 @@
+@charset "utf-8";
+body {
+	background: #363636;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+.ht_top {
+	width: 100%; background: #363636; height: 45px; border-bottom: 1px solid #bbb;
+}
+
+.ht_lTit {
+	float: left; background: url(../images/top/ht_logo.gif) no-repeat; font-size: 16px; font-family: "微软雅黑"; color: #fff; padding-left: 45px; font-weight: bold; line-height: 24px; margin: 12px 0 0 15px; _display: inline;
+}
+
+.ht_lMenu {
+	display: none;
+}
+
+.ht_rczuo {
+	float: right; margin: 0;padding: 0 10px 0 0;
+}
+
+.ht_rczuo li {
+	float: left; list-style: none; margin-right: 10px; display: inline;
+}
+
+.bottom_style {
+	text-align: right; line-height: 20px; color: #FFF; padding-right: 10px;
+}
+
+.bottom_style a {
+	color: #FFF;
+}
+
+.bottom_style a:hover {
+	color: #E0E0E0;
+}
+
+@media screen and (min-width:320px) and (max-width:960px) {
+	.ht_lMenu {
+		display: block; width: 36px; height: 36px; position: absolute; left: 15px; top: 3px; margin-top: 0px; padding-left: 0px; text-indent: -9999px; background-image: url(../images/white/crate36x36.png); cursor: pointer;
+	}
+	.ht_lTit {
+		display: none;
+	}
+}

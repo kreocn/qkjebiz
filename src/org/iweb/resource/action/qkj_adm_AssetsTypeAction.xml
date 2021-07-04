@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="adm_assetstype" extends="default" namespace="/adm">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- Assets Start -->
+		<action name="assetstype_list" class="com.qkj.adm.action.AssetsTypeAction" method="list">
+			<result>/WEB-INF/jsp/adm/AssetsTypeList.jsp</result>
+		</action>
+		
+		<action name="asset_select" class="com.qkj.adm.action.AssetsTypeAction" method="asset_select">
+			<result>/WEB-INF/jsp/adm/FixAssetsSelect.jsp</result>
+		</action>
+		
+		<action name="ware_select" class="com.qkj.adm.action.AssetsTypeAction" method="asset_select">
+			<result>/WEB-INF/jsp/ware/WareSelect.jsp</result>
+		</action>
+		
+		<action name="assetstype_relist" class="com.qkj.adm.action.AssetsTypeAction" method="relist">
+			<result type="redirectAction">
+				<param name="actionName">assetstype_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+		<action name="assetstype_load" class="com.qkj.adm.action.AssetsTypeAction" method="load">
+			<result>/WEB-INF/jsp/adm/AssetsTypeEdit.jsp</result>
+		</action>
+		<action name="assetstype_add" class="com.qkj.adm.action.AssetsTypeAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">assetstype_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="assetstype_save" class="com.qkj.adm.action.AssetsTypeAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">assetstype_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="assetstype_del" class="com.qkj.adm.action.AssetsTypeAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">assetstype_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- Assets End -->
+	</package>
+</struts>

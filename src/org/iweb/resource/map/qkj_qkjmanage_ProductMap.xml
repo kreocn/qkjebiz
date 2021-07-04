@@ -5,14 +5,17 @@
 	<typeAlias alias="product" type="com.qkj.manage.domain.Product" />
 	<select id="qkjmanage_getProducts" resultClass="product" parameterClass="java.util.Map">
 		<![CDATA[ 
-			Select * From qkj_t_product
+			SELECT p.*,t.`name` brand_name FROM qkj_t_product p LEFT JOIN qkj_t_protype t ON (p.`brand`=t.`uuid`)
 		]]>
 		<dynamic prepend="WHERE">
-			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="brand"><![CDATA[ brand=#brand# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="title"><![CDATA[ title=#title# ]]></isNotEmpty>
-			<isNotEmpty prepend="AND" property="grade"><![CDATA[ grade=#grade# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ p.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="brand"><![CDATA[ p.brand=#brand# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="title"><![CDATA[ p.title=#title# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="grade"><![CDATA[ p.grade=#grade# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="status"><![CDATA[ p.status=#status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="notype"><![CDATA[ t.`type`<>1 ]]></isNotEmpty>
 		</dynamic>
+		<![CDATA[ ORDER BY t.`uuid` LIMIT 1000 ]]>
 	</select>
 	<select id="qkjmanage_getProductsCounts" resultClass="int" parameterClass="java.util.Map">
 		<![CDATA[ 
@@ -23,18 +26,23 @@
 			<isNotEmpty prepend="AND" property="brand"><![CDATA[ brand=#brand# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="title"><![CDATA[ title=#title# ]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="grade"><![CDATA[ grade=#grade# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="status"><![CDATA[ status=#status# ]]></isNotEmpty>
 		</dynamic>
 	</select>
 	<insert id="qkjmanage_addProduct" parameterClass="product">
 		<![CDATA[ 
-			Insert Into qkj_t_product(brand,title,spec,case_spec,alcohol,flavor,raw_materials,grade,market_price,group_price,dealer_price,group_rebates,dealer_rebates,agree_price_1,agree_price_2,agree_price_3,lm_user,prod_code)
-			Values (#brand#,#title#,#spec#,#case_spec#,#alcohol#,#flavor#,#raw_materials#,#grade#,#market_price#,#group_price#,#dealer_price#,#group_rebates#,#dealer_rebates#,#agree_price_1#,#agree_price_2#,#agree_price_3#,#lm_user#,#prod_code#)
+			Insert Into qkj_t_product(bar_code,bar_code_box,bar_code_tibet,bar_code_tibet_box,brand,title,spec,case_spec,alcohol,flavor,raw_materials,grade,market_price,group_price,dealer_price,group_rebates,dealer_rebates,agree_price_1,agree_price_2,agree_price_3,lm_user,prod_code,status)
+			Values (#bar_code#,#bar_code_box#,#bar_code_tibet#,#bar_code_tibet_box#,#brand#,#title#,#spec#,#case_spec#,#alcohol#,#flavor#,#raw_materials#,#grade#,#market_price#,#group_price#,#dealer_price#,#group_rebates#,#dealer_rebates#,#agree_price_1#,#agree_price_2#,#agree_price_3#,#lm_user#,#prod_code#,#status#)
 		]]>
 	</insert>
 	<update id="qkjmanage_mdyProduct" parameterClass="product">
 		<![CDATA[
 			Update qkj_t_product
 			Set brand=#brand#,
+				bar_code_box=#bar_code_box#,
+				bar_code_tibet=#bar_code_tibet#,
+				bar_code_tibet_box=#bar_code_tibet_box#,
+				bar_code=#bar_code#,
 				title=#title#,
 				spec=#spec#,
 				case_spec=#case_spec#,
@@ -51,7 +59,9 @@
 				agree_price_2=#agree_price_2#,
 				agree_price_3=#agree_price_3#,
 				lm_user=#lm_user#,
-				prod_code=#prod_code#
+				prod_code=#prod_code#,
+				status=#status#,
+				unit=#unit#
 			Where uuid = #uuid#
 		]]>
 	</update>
@@ -60,5 +70,8 @@
 		Delete From qkj_t_product Where uuid=#uuid#
 	]]>
 	</delete>
+	
+	
+	
 	<!-- Product End -->
 </sqlMap>

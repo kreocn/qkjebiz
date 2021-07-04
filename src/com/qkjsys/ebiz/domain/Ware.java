@@ -6,12 +6,46 @@ public class Ware {
 	private Integer uuid;// (int) 0
 	private Integer ware_class;// (int) 仓库分类 0普通库 1藏酒库 (其他分类待定义)
 	private String ware_name;// (varchar) 仓库名称(简称)
+	private Integer parent_ware;
 	private String address;// (varchar) 仓库地点
 	private String map_data;// (varchar) 在地图的数据,以地图类型为准
 	private String short_note;// (text) 简短描述,在不使用图片时使用
 	private String note;// (text) 详细描述
 	private String lm_user;// (varchar) 最后修改人
 	private Date lm_time;// (datetime) 最后修改时间
+	
+	private String ware_instcode;
+
+	private String bug;
+	private String dept_code;
+	private String prvg;
+	private String son;
+	private String username;
+	private String lm_user_name;
+
+	public String getWare_instcode() {
+		return ware_instcode;
+	}
+
+	public void setWare_instcode(String ware_instcode) {
+		this.ware_instcode = ware_instcode;
+	}
+
+	public String getLm_user_name() {
+		return lm_user_name;
+	}
+
+	public void setLm_user_name(String lm_user_name) {
+		this.lm_user_name = lm_user_name;
+	}
+
+	public Integer getParent_ware() {
+		return parent_ware;
+	}
+
+	public void setParent_ware(Integer parent_ware) {
+		this.parent_ware = parent_ware;
+	}
 
 	public Integer getUuid() {
 		return uuid;
@@ -83,6 +117,46 @@ public class Ware {
 
 	public void setLm_time(Date lm_time) {
 		this.lm_time = lm_time;
+	}
+
+	public String getBug() {
+		return bug;
+	}
+
+	public void setBug(String bug) {
+		this.bug = bug;
+	}
+
+	public String getDept_code() {
+		return dept_code;
+	}
+
+	public void setDept_code(String dept_code) {
+		this.dept_code = dept_code;
+	}
+
+	public String getPrvg() {
+		return prvg;
+	}
+
+	public void setPrvg(String prvg) {
+		this.prvg = prvg;
+	}
+
+	public String getSon() {
+		return son;
+	}
+
+	public void setSon(String son) {
+		this.son = son;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 }

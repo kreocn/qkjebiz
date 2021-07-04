@@ -6,14 +6,49 @@
 	<package name="qkjmanage_active" extends="default" namespace="/qkjmanage">
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- Active Start -->
+		<action name="perWork_list" class="com.qkj.manage.action.PerWorkAction" method="list">
+			<result>/WEB-INF/jsp/qkjmanage/Personal/PerWorkList.jsp</result>
+		</action>
+		<action name="active_history" class="com.qkj.manage.action.ActiveAction" method="history">
+			<result>/WEB-INF/jsp/qkjmanage/ActiveHistory.jsp</result>
+		</action>
 		<action name="active_list" class="com.qkj.manage.action.ActiveAction" method="list">
-			<result>/jsp/qkjmanage/ActiveList.jsp</result>
+			<result name="success">/WEB-INF/jsp/qkjmanage/ActiveList.jsp</result>
+			<result name="perSuccess"  type="redirectAction">
+				<param name="actionName">perWork_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+		
+		<action name="design_list" class="com.qkj.manage.action.ActiveAction" method="designList">
+			<result>/WEB-INF/jsp/qkjmanage/DesignList.jsp</result>
+		</action>
+		
+		<action name="active_nextList" class="com.qkj.manage.action.ActiveAction" method="nextList">
+			<result type="redirectAction">
+				<param name="actionName">active_load</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="minUid">${minUid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="active_nextListClose" class="com.qkj.manage.action.ActiveAction" method="nextList">
+			<result type="redirectAction">
+				<param name="actionName">active_closeLoad</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="minUid">${minUid}</param>
+				<param name="message">${message}</param>
+			</result>
 		</action>
 		<action name="active_load" class="com.qkj.manage.action.ActiveAction" method="load">
-			<result>/jsp/qkjmanage/ActiveEdit.jsp</result>
+			<result name="SUCCESS">/WEB-INF/jsp/qkjmanage/ActiveEdit.jsp</result>
+			<result name="DESIGN">/WEB-INF/jsp/qkjmanage/DesignEdit.jsp</result>
 		</action>
 		<action name="active_view" class="com.qkj.manage.action.ActiveAction" method="loadView">
-			<result>/jsp/qkjmanage/ActiveView.jsp</result>
+			<result name="SUCCESS">/WEB-INF/jsp/qkjmanage/ActiveView.jsp</result>
+			<result name="DESIGN">/WEB-INF/jsp/qkjmanage/DesignView.jsp</result>
 		</action>
 		<action name="active_add" class="com.qkj.manage.action.ActiveAction" method="add">
 			<result type="redirectAction">
@@ -23,7 +58,35 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
+		
+		<action name="design_add" class="com.qkj.manage.action.ActiveAction" method="designAdd">
+			<result type="redirectAction">
+				<param name="actionName">active_load</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
 		<action name="active_save" class="com.qkj.manage.action.ActiveAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">active_load</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="design_save" class="com.qkj.manage.action.ActiveAction" method="designSave">
+			<result type="redirectAction">
+				<param name="actionName">active_load</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="mdyActiveType" class="com.qkj.manage.action.ActiveAction" method="saveType">
 			<result type="redirectAction">
 				<param name="actionName">active_load</param>
 				<param name="active.uuid">${active.uuid}</param>
@@ -37,8 +100,29 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
-
+		
+		<action name="design_del" class="com.qkj.manage.action.ActiveAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">design_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="active_relist" class="com.qkj.manage.action.ActiveAction">
+			<result type="redirectAction">
+				<param name="actionName">active_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
 		<!-- 订单状态 -->
+		<!-- 作废 -->
+		<action name="active_mdyStatus_1" class="com.qkj.manage.action.ActiveAction" method="mdyStatus_1">
+			<result type="redirectAction">
+				<param name="actionName">active_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
 		<!-- 报审 -->
 		<action name="mdyStatus0" class="com.qkj.manage.action.ActiveAction" method="mdyStatus0">
 			<result type="redirectAction">
@@ -53,6 +137,7 @@
 				<param name="actionName">active_load</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -64,15 +149,50 @@
 				<param name="actionName">active_load</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
+		
+		<action name="mdyActiveSDStatusT" class="com.qkj.manage.action.ActiveAction" method="mdyActiveSDStatusTH">
+			<result type="redirectAction">
+				<param name="actionName">active_load</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<!-- 办事处审核通过 -->
+		<action name="mdyActiveSDStatus20" class="com.qkj.manage.action.ActiveAction" method="mdyActiveSDStatus20">
+			<result type="redirectAction">
+				<param name="actionName">active_load</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<!-- 区域经理审核通过 -->
+		<action name="mdyActiveSDStatus26" class="com.qkj.manage.action.ActiveAction" method="mdyActiveSDStatus26">
+			<result type="redirectAction">
+				<param name="actionName">active_load</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
 		<!-- 大区经理审核通过 -->
 		<action name="mdyActiveSDStatus10" class="com.qkj.manage.action.ActiveAction" method="mdyActiveSDStatus10">
 			<result type="redirectAction">
 				<param name="actionName">active_load</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -82,6 +202,18 @@
 				<param name="actionName">active_load</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+			<!-- 西北运营总监审核通过并送审到副总 -->
+		<action name="mdyActiveSDStatus30Two" class="com.qkj.manage.action.ActiveAction" method="mdyActiveSDStatus30Two">
+			<result type="redirectAction">
+				<param name="actionName">active_load</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -91,6 +223,7 @@
 				<param name="actionName">active_load</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -100,6 +233,18 @@
 				<param name="actionName">active_load</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<!-- 营销中心副总审核通过 -->
+		<action name="mdyActiveSDStatus60" class="com.qkj.manage.action.ActiveAction" method="mdyActiveSDStatus60">
+			<result type="redirectAction">
+				<param name="actionName">active_load</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -111,6 +256,7 @@
 				<param name="actionName">active_load</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -120,28 +266,139 @@
 				<param name="actionName">active_load</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
+		
+		<!-- 销管部经理已审 -->
+		<action name="mdyActiveSMDStatus50" class="com.qkj.manage.action.ActiveAction" method="mdyActiveSMDStatus50">
+			<result type="redirectAction">
+				<param name="actionName">active_load</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="mdyActiveSMDStatus70" class="com.qkj.manage.action.ActiveAction" method="mdyActiveSMDStatus70">
+			<result type="redirectAction">
+				<param name="actionName">active_load</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
 		<!-- 销售管理分管副总已审 -->
 		<action name="mdyActiveSMDStatus40" class="com.qkj.manage.action.ActiveAction" method="mdyActiveSMDStatus40">
 			<result type="redirectAction">
 				<param name="actionName">active_load</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<!-- 财务已审 -->
+		<action name="mdyActiveFDSTATUS10" class="com.qkj.manage.action.ActiveAction" method="mdyActiveFDSTATUS10">
+			<result type="redirectAction">
+				<param name="actionName">active_load</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<!-- 财务会计已审 -->
+		<action name="mdyActiveFDSTATUS901" class="com.qkj.manage.action.ActiveAction" method="mdyActiveFDSTATUS901">
+			<result type="redirectAction">
+				<param name="actionName">active_load</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<!-- 财务经理已审 -->
+		<action name="mdyActiveFDSTATUS20" class="com.qkj.manage.action.ActiveAction" method="mdyActiveFDSTATUS902">
+			<result type="redirectAction">
+				<param name="actionName">active_load</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<!-- 财务营销中心已审 -->
+		<action name="mdyActiveFDSTATUS30" class="com.qkj.manage.action.ActiveAction" method="mdyActiveFDSTATUS903">
+			<result type="redirectAction">
+				<param name="actionName">active_load</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="mdyActiveFDSTATUS10Two" class="com.qkj.manage.action.ActiveAction" method="mdyActiveFDSTATUS10Two">
+			<result type="redirectAction">
+				<param name="actionName">active_load</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<!-- 财务审核退回 -->
+		<action name="mdyActiveFDStatus" class="com.qkj.manage.action.ActiveAction" method="mdyActiveFDStatus">
+			<result type="redirectAction">
+				<param name="actionName">active_load</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
 
 		<!-- 以下开始为结案流程 -->
 		<action name="active_closeLoad" class="com.qkj.manage.action.ActiveAction" method="closeLoad">
-			<result>/jsp/qkjmanage/ActiveEdit_Close.jsp</result>
+			<result name="SUCCESS">/WEB-INF/jsp/qkjmanage/ActiveEdit_Close.jsp</result>
+			<result name="DESIGN">/WEB-INF/jsp/qkjmanage/DesignEdit_Close.jsp</result>
 		</action>
 		<action name="active_closeView" class="com.qkj.manage.action.ActiveAction" method="closeViewLoad">
-			<result>/jsp/qkjmanage/ActiveView_Close.jsp</result>
+			<result name="SUCCESS">/WEB-INF/jsp/qkjmanage/ActiveView_Close.jsp</result>
+			<result name="DESIGN">/WEB-INF/jsp/qkjmanage/DesignView_Close.jsp</result>
 		</action>
 		<!-- 结案单修改 -->
 		<action name="mdyCloseActive" class="com.qkj.manage.action.ActiveAction" method="mdyCloseActive">
+			<result type="redirectAction">
+				<param name="actionName">active_closeLoad</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="mdyCloseDesign" class="com.qkj.manage.action.ActiveAction" method="mdyCloseDesign">
+			<result type="redirectAction">
+				<param name="actionName">active_closeLoad</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- 结案单特殊字段修改 -->
+		<action name="mdyCloseSPE" class="com.qkj.manage.action.ActiveAction" method="saveCloseSpe">
 			<result type="redirectAction">
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
@@ -180,15 +437,51 @@
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
+		
+		<!-- 销售部-结案:办事处经理审核通过 -->
+		<action name="mdyCloseActiveSDStatus20" class="com.qkj.manage.action.ActiveAction" method="mdyCloseActiveSDStatus20">
+			<result type="redirectAction">
+				<param name="actionName">active_closeLoad</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<!-- 销售部-结案:区域经理审核通过 -->
+		<action name="mdyCloseActiveSDStatus26" class="com.qkj.manage.action.ActiveAction" method="mdyCloseActiveSDStatus26">
+			<result type="redirectAction">
+				<param name="actionName">active_closeLoad</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<!-- 销售部-结案初审-->
+		<action name="mdyCloseActiveSDStatuscs10" class="com.qkj.manage.action.ActiveAction" method="mdyCloseActiveSDStatusscs10">
+			<result type="redirectAction">
+				<param name="actionName">active_closeLoad</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
 		<!-- 销售部-结案:大区经理审核通过 -->
 		<action name="mdyCloseActiveSDStatus10" class="com.qkj.manage.action.ActiveAction" method="mdyCloseActiveSDStatus10">
 			<result type="redirectAction">
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -198,15 +491,29 @@
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
+		
+		<!-- 销售部-结案:运营总监审核通过送审副总 -->
+		<action name="mdyCloseActiveSDStatus30Two" class="com.qkj.manage.action.ActiveAction" method="mdyCloseActiveSDStatus30Two">
+			<result type="redirectAction">
+				<param name="actionName">active_closeLoad</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
 		<!-- 销售部-结案:销售副总审核通过 -->
 		<action name="mdyCloseActiveSDStatus40" class="com.qkj.manage.action.ActiveAction" method="mdyCloseActiveSDStatus40">
 			<result type="redirectAction">
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -216,6 +523,28 @@
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<!-- 销售部-结案:总经理审核通过 -->
+		<action name="mdyCloseActiveSDStatus60" class="com.qkj.manage.action.ActiveAction" method="mdyCloseActiveSDStatus60">
+			<result type="redirectAction">
+				<param name="actionName">active_closeLoad</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="mdycloseTH" class="com.qkj.manage.action.ActiveAction" method="mdyCloseActiveSDStatusTH">
+			<result type="redirectAction">
+				<param name="actionName">active_closeLoad</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -226,6 +555,7 @@
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -236,6 +566,18 @@
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<!-- 销管部-结案:销管经理审核通过 -->
+		<action name="mdyCloseActiveSMDStatus50" class="com.qkj.manage.action.ActiveAction" method="mdyCloseActiveSMDStatus50">
+			<result type="redirectAction">
+				<param name="actionName">active_closeLoad</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -246,6 +588,104 @@
 				<param name="actionName">active_closeLoad</param>
 				<param name="active.uuid">${active.uuid}</param>
 				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="mdyCloseActiveSMDStatus60" class="com.qkj.manage.action.ActiveAction" method="mdyCloseActiveSMDStatus60">
+			<result type="redirectAction">
+				<param name="actionName">active_closeLoad</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<!-- 财务审核通过 -->
+		<action name="mdyActiveFDCSTATUS10" class="com.qkj.manage.action.ActiveAction" method="mdyActiveFDCSTATUS10">
+			<result type="redirectAction">
+				<param name="actionName">active_closeLoad</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<!-- 财务会计审核通过 -->
+		<action name="mdyActiveFDCSTATUS101" class="com.qkj.manage.action.ActiveAction" method="mdyActiveFDCSTATUS101">
+			<result type="redirectAction">
+				<param name="actionName">active_closeLoad</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<!-- 财务经理审核通过 -->
+		<action name="mdyActiveFDCSTATUS20" class="com.qkj.manage.action.ActiveAction" method="mdyActiveFDCSTATUS102">
+			<result type="redirectAction">
+				<param name="actionName">active_closeLoad</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<!-- 财务营销中心审核通过 -->
+		<action name="mdyActiveFDCSTATUS30" class="com.qkj.manage.action.ActiveAction" method="mdyActiveFDCSTATUS103">
+			<result type="redirectAction">
+				<param name="actionName">active_closeLoad</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="mdyActiveFDCSTATUS10Two" class="com.qkj.manage.action.ActiveAction" method="mdyActiveFDCSTATUS10Two">
+			<result type="redirectAction">
+				<param name="actionName">active_closeLoad</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<!-- 财务-结案:退回 -->
+		<action name="mdyActiveFDCSTATUS" class="com.qkj.manage.action.ActiveAction" method="mdyActiveFDCSTATUS">
+			<result type="redirectAction">
+				<param name="actionName">active_closeLoad</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<!-- 数据中心审核通过 -->
+		<action name="mdyActiveNDCSTATUS10" class="com.qkj.manage.action.ActiveAction" method="mdyActiveNDCSTATUS10">
+			<result type="redirectAction">
+				<param name="actionName">active_closeLoad</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<!-- 数据中心结案:退回 -->
+		<action name="mdyActiveNDCSTATUS5" class="com.qkj.manage.action.ActiveAction" method="mdyActiveNDCSTATUS5">
+			<result type="redirectAction">
+				<param name="actionName">active_closeLoad</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="nextUuid">${nextUuid}</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
@@ -253,8 +693,47 @@
 		<!-- 发货信息修改 -->
 		<action name="mdyActiveShipInfo" class="com.qkj.manage.action.ActiveAction" method="mdyShipInfo">
 			<result type="redirectAction">
-				<param name="actionName">active_closeView</param>
+				<param name="actionName">active_relist</param>
+			</result>
+		</action>
+
+		<action name="active_approve" class="com.qkj.manage.action.ActiveAction" method="approve">
+			<result type="redirectAction">
+				<param name="actionName">active_load</param>
 				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="active_approveDel" class="com.qkj.manage.action.ActiveAction" method="approveDel">
+			<result type="redirectAction">
+				<param name="actionName">active_load</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="activeClose_approve" class="com.qkj.manage.action.ActiveAction" method="approve">
+			<result type="redirectAction">
+				<param name="actionName">active_closeLoad</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="activeClose_approveDel" class="com.qkj.manage.action.ActiveAction" method="approveDel">
+			<result type="redirectAction">
+				<param name="actionName">active_closeLoad</param>
+				<param name="active.uuid">${active.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="active_reinforce" class="com.qkj.manage.action.ActiveAction" method="reinforce">
+			<result type="redirectAction">
+				<param name="actionName">active_list</param>
+				<param name="message">${message}</param>
 			</result>
 		</action>
 		<!-- Active End -->

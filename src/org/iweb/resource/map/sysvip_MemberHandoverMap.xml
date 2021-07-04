@@ -29,10 +29,24 @@
 		</isNotEmpty>
 		<isNotEmpty prepend="AND" property="target_manager"><![CDATA[ h.target_manager=#target_manager# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="m_dept_code"><![CDATA[ hm.dept_code=#m_dept_code# ]]></isNotEmpty>
-		<isNotEmpty prepend="AND" property="m_dept_codes">
-			<![CDATA[  hm.dept_code In ]]>
-			<iterate property="m_dept_codes" open="(" close=")" conjunction=" , "> #m_dept_codes[]#</iterate>
-		</isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="dept_codes" open="(" close=")">
+			<![CDATA[ hm.dept_code In ]]>
+				<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
+				<isNotEmpty prepend="OR" property="apply_perdepts">
+							<![CDATA[ hm.dept_code In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ h.target_manager=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
+			</isNotEmpty>
+			<isEmpty property="dept_codes">
+				<isNotEmpty prepend="AND" property="apply_perdepts">
+						<![CDATA[ hm.dept_code In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ h.target_manager=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
+			</isEmpty>
+			
 		<isNotEmpty prepend="AND" property="m_manager"><![CDATA[ hm.uuid=#m_manager# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="status">
 			<isEmpty property="status_search_type"><![CDATA[ h.status=#status# ]]></isEmpty>
@@ -51,26 +65,40 @@
 	</select>
 	<select id="sysvip_getMemberHandoversCounts" resultClass="int" parameterClass="java.util.Map">
 		<![CDATA[ 
-			Select Count(*)
+			SELECT COUNT(*)
 			FROM   s_vip_member_handover h 
 			       LEFT JOIN s_sys_user tu ON ( h.target_manager = tu.uuid ) 
 			       LEFT JOIN s_sys_user au ON ( h.applicant = au.uuid ) 
 			       LEFT JOIN s_sys_user lu ON ( h.lm_user = lu.uuid ),
-			       (SELECT m.*,mu.user_name,d.dept_cname dept_name 
-			        FROM   s_vip_member m 
-			               LEFT JOIN s_sys_user mu ON ( m.manager = mu.uuid ),s_sys_department d 
-			        WHERE  m.dept_code = d.dept_code) hm,s_sys_department hd 
-			WHERE  h.member_id = hm.uuid 
-			       AND h.target_dept = hd.dept_code 
+			       (SELECT m.*,mu.user_name,d.dept_cname dept_name
+			        FROM   s_vip_member m
+			               LEFT JOIN s_sys_user mu ON ( m.manager = mu.uuid ),s_sys_department d
+			        WHERE  m.dept_code = d.dept_code) hm,s_sys_department hd
+			WHERE  h.member_id = hm.uuid
+			       AND h.target_dept = hd.dept_code
 		]]>
 		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ h.uuid=#uuid# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="member_id"><![CDATA[ h.member_id=#member_id# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="applicant"><![CDATA[ h.applicant=#applicant# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="target_dept"><![CDATA[ h.target_dept=#target_dept# ]]></isNotEmpty>
-		<isNotEmpty prepend="AND" property="target_depts">
-			<![CDATA[  h.target_dept In ]]>
-			<iterate property="target_depts" open="(" close=")" conjunction=" , "> #target_depts[]#</iterate>
-		</isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="dept_codes" open="(" close=")">
+			<![CDATA[ hm.dept_code In ]]>
+				<iterate property="dept_codes" open="(" close=")" conjunction=" , "> #dept_codes[]#</iterate>
+				<isNotEmpty prepend="OR" property="apply_perdepts">
+							<![CDATA[ hm.dept_code In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ h.target_manager=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
+			</isNotEmpty>
+			<isEmpty property="dept_codes">
+				<isNotEmpty prepend="AND" property="apply_perdepts">
+						<![CDATA[ hm.dept_code In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ h.target_manager=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
+			</isEmpty>
+			
 		<isNotEmpty prepend="AND" property="target_manager"><![CDATA[ h.target_manager=#target_manager# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="m_dept_code"><![CDATA[ hm.dept_code=#m_dept_code# ]]></isNotEmpty>
 		<isNotEmpty prepend="AND" property="m_dept_codes">

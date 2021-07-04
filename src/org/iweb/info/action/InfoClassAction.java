@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.struts2.interceptor.ServletRequestAware;
 import org.iweb.info.dao.InfoClassDAO;
 import org.iweb.info.domain.InfoClass;
 import org.iweb.sys.ContextHelper;
@@ -23,7 +22,7 @@ import com.opensymphony.xwork2.ActionSupport;
  * @author Kreo
  * 
  */
-public class InfoClassAction extends ActionSupport implements ServletRequestAware {
+public class InfoClassAction extends ActionSupport {
 
 	/**
 	 * 
@@ -33,16 +32,10 @@ public class InfoClassAction extends ActionSupport implements ServletRequestAwar
 	private Map<String, Object> map = new HashMap<String, Object>();
 	private InfoClassDAO dao = new InfoClassDAO();
 
-	private HttpServletRequest request;
-
 	private InfoClass iclass;
 	private List<InfoClass> iclasses;
 
 	private String message;
-
-	public void setServletRequest(HttpServletRequest request) {
-		this.request = request;
-	}
 
 	public Map<String, Object> getMap() {
 		return map;
@@ -159,6 +152,6 @@ public class InfoClassAction extends ActionSupport implements ServletRequestAwar
 
 	private void setRequest() {
 		this.iclass = new InfoClass();
-		ContextHelper.getBeanByRequest(iclass, request);
+		ContextHelper.getBeanByRequest(iclass, ContextHelper.getRequest());
 	}
 }

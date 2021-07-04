@@ -7,13 +7,23 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- Lading Start -->
 		<action name="lading_list" class="com.qkj.manage.action.LadingAction" method="list">
-			<result>/jsp/qkjmanage/LadingList.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/LadingList.jsp</result>
+		</action>
+		<action name="lading_checkList" class="com.qkj.manage.action.LadingAction" method="checkList">
+			<result>/WEB-INF/jsp/qkjmanage/LadingCheckList.jsp</result>
 		</action>
 		<action name="lading_load" class="com.qkj.manage.action.LadingAction" method="load">
-			<result>/jsp/qkjmanage/LadingEdit.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/LadingEdit.jsp</result>
 		</action>
+		<action name="lading_Checkload" class="com.qkj.manage.action.LadingAction" method="load">
+			<result>/WEB-INF/jsp/qkjmanage/LadingCheckEdit.jsp</result>
+		</action>
+		
 		<action name="lading_view" class="com.qkj.manage.action.LadingAction" method="load">
-			<result>/jsp/qkjmanage/LadingView.jsp</result>
+			<result>/WEB-INF/jsp/qkjmanage/LadingView.jsp</result>
+		</action>
+		<action name="lading_addproduct" class="com.qkj.manage.action.LadingAction" method="addProd">
+			<result>/WEB-INF/jsp/qkjmanage/LeadingAddProduct.jsp</result>
 		</action>
 		<action name="lading_add" class="com.qkj.manage.action.LadingAction" method="add">
 			<result type="redirectAction">
@@ -46,34 +56,34 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
-
-		<action name="saveLadingStatus1" class="com.qkj.manage.action.LadingAction" method="saveLadingStatus1">
+		
+		<action name="saveLadingStatus5" class="com.qkj.manage.action.LadingAction" method="saveLadingStatus5">
 			<result type="redirectAction">
 				<param name="actionName">lading_list</param>
 				<param name="viewFlag">relist</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
+		
+		<action name="saveLadingCheckStatus5" class="com.qkj.manage.action.LadingAction" method="saveLadingStatus5">
+			<result type="redirectAction">
+				<param name="actionName">lading_checkList</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
 
-		<action name="mdyLadingManagerCheck" class="com.qkj.manage.action.LadingAction" method="mdyLadingManagerCheck">
+		<action name="saveLadingStatus10" class="com.qkj.manage.action.LadingAction" method="saveLadingStatus10">
 			<result type="redirectAction">
 				<param name="actionName">lading_list</param>
 				<param name="viewFlag">relist</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>
-
-		<action name="mdyLadingSDCheck" class="com.qkj.manage.action.LadingAction" method="mdyLadingSDCheck">
+		
+		<action name="saveLadingCheckStatus10" class="com.qkj.manage.action.LadingAction" method="saveLadingStatus10">
 			<result type="redirectAction">
-				<param name="actionName">lading_list</param>
-				<param name="viewFlag">relist</param>
-				<param name="message">${message}</param>
-			</result>
-		</action>
-
-		<action name="mdyLadingMDCheck" class="com.qkj.manage.action.LadingAction" method="mdyLadingMDCheck">
-			<result type="redirectAction">
-				<param name="actionName">lading_list</param>
+				<param name="actionName">lading_checkList</param>
 				<param name="viewFlag">relist</param>
 				<param name="message">${message}</param>
 			</result>
@@ -87,11 +97,12 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
-
-		<action name="mdyLadingCOOCheck" class="com.qkj.manage.action.LadingAction" method="mdyLadingCOOCheck">
+		
+		<action name="mdyLadingCheckFDCheck" class="com.qkj.manage.action.LadingAction" method="mdyLadingFDCheck">
 			<result type="redirectAction">
-				<param name="actionName">lading_list</param>
-				<param name="viewFlag">relist</param>
+				<param name="actionName">lading_checkList</param>
+				<param name="lading.uuid">${lading.uuid}</param>
+				<param name="viewFlag">mdy</param>
 				<param name="message">${message}</param>
 			</result>
 		</action>

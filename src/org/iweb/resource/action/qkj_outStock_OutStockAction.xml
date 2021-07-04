@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="outStock_outStock" extends="default" namespace="/outStock">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- OutStock Start -->
+		<action name="outStock_list" class="com.qkj.ware.action.OutStockAction" method="list">
+			<result>/WEB-INF/jsp/ware/outStock/OutStockList.jsp</result>
+		</action>
+		<action name="outStock_relist" class="com.qkj.ware.action.OutStockAction" method="relist">
+			<result type="redirectAction">
+				<param name="actionName">outStock_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+		<action name="outStock_load" class="com.qkj.ware.action.OutStockAction" method="load">
+			<result>/WEB-INF/jsp/ware/outStock/OutStockEdit.jsp</result>
+		</action>
+		<action name="outStock_add" class="com.qkj.ware.action.OutStockAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">outStock_load</param>
+				<param name="outStock.uuid">${outStock.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="outStock_save" class="com.qkj.ware.action.OutStockAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">outStock_load</param>
+				<param name="outStock.uuid">${outStock.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="outStock_del" class="com.qkj.ware.action.OutStockAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">outStock_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- 新增 -->
+
+		<action name="outStock_sure" class="com.qkj.ware.action.OutStockAction" method="sure">
+			<result type="redirectAction">
+				<param name="actionName">outStock_load</param>
+				<param name="outStock.uuid">${outStock.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+
+		<action name="outStock_view" class="com.qkj.ware.action.OutStockAction" method="load">
+			<result>/WEB-INF/jsp/ware/outStock/outStockView.jsp</result>
+		</action>
+
+		<action name="outStock_cencle" class="com.qkj.ware.action.OutStockAction" method="cencle">
+			<result type="redirectAction">
+				<param name="actionName">outStock_load</param>
+				<param name="outStock.uuid">${outStock.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="outStock_spilt" class="com.qkj.ware.action.OutStockAction" method="inSpilt">
+			<result type="redirectAction">
+				<param name="actionName">outStock_load</param>
+				<param name="outStock.uuid">${outStock.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+
+		<action name="outStock_note" class="com.qkj.ware.action.OutStockAction" method="note">
+			<result type="redirectAction">
+				<param name="actionName">outStock_load</param>
+				<param name="outStock.uuid">${outStock.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="mdyRemark" class="com.qkj.ware.action.OutStockAction" method="mdyRemark">
+			<result type="redirectAction">
+				<param name="actionName">outStock_load</param>
+				<param name="outStock.uuid">${outStock.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="get_ware" class="com.qkj.ware.action.OutStockAction" method="getWareOut">
+		</action>
+		<!-- OutStock End chackManage -->
+	</package>
+</struts>

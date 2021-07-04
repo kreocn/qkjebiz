@@ -1,0 +1,33 @@
+@CHARSET "UTF-8";
+
+.filearea {
+	position: relative;
+	width: 60px;
+	display: inline-block;
+	zoom: 1;
+	*display: inline;
+	position: relative;
+}
+
+.fileinput {
+	display: none;
+	cursor: pointer;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 70px;
+	height: 24px;
+	opacity: 0;
+	-ms-filter: 'alpha(opacity=0)';
+	filter: alpha(opacity = 0);
+	z-index: 10001;
+}
+
+.filebutton {
+	cursor: pointer;
+	margin: 0;
+	width: 70px;
+	height: 24px;
+	padding: 0;
+	z-index: 10000;
+}

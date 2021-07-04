@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
+<sqlMap>
+	<!-- Approve Start -->
+	<typeAlias alias="approve" type="com.qkj.manage.domain.Approve" />
+	<select id="qkjmanage_getApproves" resultClass="approve" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT a.*,u.`USER_NAME` check_user_name
+			FROM qkjm_r_approve a LEFT JOIN s_sys_user u ON(a.`check_user` = u.`UUID`)
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ a.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="approve_type"><![CDATA[ a.approve_type=#approve_type# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="int_id"><![CDATA[ a.int_id=#int_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="varchar_id"><![CDATA[ a.varchar_id=#varchar_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="ad_time_start"><![CDATA[ a.ad_time >= #ad_time_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="ad_time_end"><![CDATA[ a.ad_time >= #ad_time_end# ]]></isNotEmpty>
+		</dynamic>
+	</select>
+	<select id="qkjmanage_getApprovesCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) From qkjm_r_approve
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="approve_type"><![CDATA[ approve_type=#approve_type# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="int_id"><![CDATA[ int_id=#int_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="varchar_id"><![CDATA[ varchar_id=#varchar_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="ad_time_start"><![CDATA[ a.ad_time >= #ad_time_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="ad_time_end"><![CDATA[ a.ad_time >= #ad_time_end# ]]></isNotEmpty>
+		</dynamic>
+	</select>
+	<insert id="qkjmanage_addApprove" parameterClass="approve">
+		<![CDATA[ 
+			Insert Into qkjm_r_approve(approve_type,int_id,varchar_id,flag,check_user,advice,ad_time)
+			Values (#approve_type#,#int_id#,#varchar_id#,#flag#,#check_user#,#advice#,#ad_time#)
+		]]>
+	</insert>
+	<update id="qkjmanage_mdyApprove" parameterClass="approve">
+		<![CDATA[
+			Update qkjm_r_approve
+			Set approve_type=#approve_type#,
+				int_id=#int_id#,
+				varchar_id=#varchar_id#,
+				flag=#flag#,
+				check_user=#check_user#,
+				advice=#advice#,
+				ad_time=#ad_time#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="qkjmanage_delApprove" parameterClass="approve">
+	<![CDATA[
+		Delete From qkjm_r_approve Where uuid=#uuid# AND unix_timestamp(NOW())-unix_timestamp(ad_time) < 28800
+	]]>
+	</delete>
+	<delete id="qkjmanage_delLastUserApprove" parameterClass="approve">
+	<![CDATA[
+		DELETE FROM qkjm_r_approve WHERE `uuid` IN (
+			SELECT uid FROM (
+				SELECT MAX(a.`uuid`) uid
+				FROM qkjm_r_approve a
+				WHERE a.`approve_type` = #approve_type#
+	]]>
+		<isNotEmpty prepend="AND" property="int_id"><![CDATA[ a.`int_id` = #int_id# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="varchar_id"><![CDATA[ a.`varchar_id` = #varchar_id# ]]></isNotEmpty>
+	<![CDATA[
+				AND a.`check_user` = #check_user#
+				AND unix_timestamp(NOW())-unix_timestamp(ad_time) < 28800
+			)z
+		);
+	]]>
+	</delete>
+	<!-- Approve End -->
+</sqlMap>

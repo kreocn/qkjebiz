@@ -25,10 +25,13 @@ public class AutoCompleteAjax extends Ajax {
 	static {
 		sqlmap.put("QKJCJ_SYSEBIZ_AJAXLOAD_MEMBER", "sysvip_getMembers");
 		sqlmap.put("QKJCJ_SYS_AJAXLOAD_USER", "sys_getUser");
+		//sqlmap.put("QKJCJ_SYS_AJAXLOAD_USER","sys_getUsesrDept");
 		sqlmap.put("QKJCJ_SYSEBIZ_AJAXLOAD_MEMBERCELLAR", "sysebiz_getMemberCellars4Add");
-
+		sqlmap.put("QKJ_QKJMANAGE_STORES", "qkjStores_getProductsSelect");
 		// 业务系统中,取得Member所用
 		sqlmap.put("QKJ_QKJMANAGER_AJAXLOAD_MEMBER", "sysvip_getMembers");
+		sqlmap.put("QKJCJ_SYSEBIZ_AJAXLOAD_MEMBER_NOPERMISSION", "sysvip_getMembers");
+		
 		log.info("AutoCompleteAjax sqlmap 初始化完成!");
 	}
 
@@ -44,6 +47,7 @@ public class AutoCompleteAjax extends Ajax {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.iweb.ajax.data.Ajax#getResult()
 	 */
 	@Override
@@ -54,9 +58,9 @@ public class AutoCompleteAjax extends Ajax {
 		if (ToolsUtil.isEmpty(this.getPrivilege_id())) {
 			return "NODATA";
 		} else {
-			if (!ContextHelper.checkPermit(this.getPrivilege_id())) {
+			if (!ContextHelper.checkPermit(this.getPrivilege_id())) { 
 				return "NOTPERMIT";
-			}
+				}
 			AjaxDAO dao = new AjaxDAO();
 			if (parameter.size() == 0) {
 				return new ArrayList<HashMap<String, Object>>();
@@ -64,13 +68,20 @@ public class AutoCompleteAjax extends Ajax {
 				if ("QKJCJ_SYSEBIZ_AJAXLOAD_MEMBER".equals(this.getPrivilege_id())) {
 					parameter.put("limitnum", 15);// 只列出15个
 					parameter4MemberLoad();
+				} 
+				if ("QKJCJ_SYSEBIZ_AJAXLOAD_MEMBER_NOPERMISSION".equals(this.getPrivilege_id())) {
+					parameter.put("limitnum", 15);// 只列出15个
+					parameter.put("member_name_autoc", parameter.get("member_name"));
+					parameter.remove("member_name");
 				} else if ("QKJCJ_SYS_AJAXLOAD_USER".equals(this.getPrivilege_id())) {
 					parameter4UserLoad();
-				} else if ("QKJ_QKJMANAGER_AJAXLOAD_MEMBER".equals(this.getPrivilege_id())
-						&& !parameter.containsKey("uuid")) {
+				} else if ("QKJ_QKJMANAGER_AJAXLOAD_MEMBER".equals(this.getPrivilege_id()) && !parameter.containsKey("uuid")) {
 					// 如果没有包含uuid参数,则直接返回无数据
 					return "NODATA";
+				} else if ("QKJ_QKJMANAGE_STORES".equals(this.getPrivilege_id())) {
+					dao.setDb_num(1);
 				}
+				
 				return dao.list(sqlmap.get(this.getPrivilege_id()), parameter);
 			}
 

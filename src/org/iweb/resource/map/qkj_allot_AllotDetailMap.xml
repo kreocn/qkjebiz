@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
+<sqlMap>
+	<!-- AllotDetail Start -->
+	<typeAlias alias="allotDetail" type="com.qkj.ware.domain.AllotDetail" />
+	<select id="allot_getAllotDetails" resultClass="allotDetail" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT i.*,p.`uuid` puid,p.`title` product_name,p.`case_spec` case_spec FROM qkj_t_allotdetail i LEFT JOIN qkj_r_stock s ON (i.`stock_id`=s.`uuid`)
+			LEFT JOIN qkj_t_product p ON(s.`product_id`=p.`uuid`)
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ i.uuid=#uuid# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="lading_id"><![CDATA[ i.lading_id=#lading_id# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="stock_id"><![CDATA[ i.stock_id=#stock_id# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="num"><![CDATA[ i.num=#num# ]]></isNotEmpty>
+
+		</dynamic>
+		<![CDATA[ LIMIT 1000 ]]>
+	</select>
+	<select id="allot_getAllotDetailsCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) From qkj_t_allotdetail
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="lading_id"><![CDATA[ lading_id=#lading_id# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="stock_id"><![CDATA[ stock_id=#stock_id# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="num"><![CDATA[ num=#num# ]]></isNotEmpty>
+
+		</dynamic>
+		<![CDATA[ LIMIT 1000 ]]>
+	</select>
+	<insert id="allot_addAllotDetail" parameterClass="allotDetail">
+		<![CDATA[ 
+			Insert Into qkj_t_allotdetail(lading_id,stock_id,num)
+			Values (#lading_id#,#stock_id#,#num#)
+		]]>
+	</insert>
+	<update id="allot_mdyAllotDetail" parameterClass="allotDetail">
+		<![CDATA[
+			Update qkj_t_allotdetail
+			Set lading_id=#lading_id#,
+stock_id=#stock_id#,
+num=#num#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="allot_delAllotDetail" parameterClass="allotDetail">
+	<![CDATA[
+		Delete From qkj_t_allotdetail Where uuid=#uuid#
+	]]>
+	</delete>
+	<!-- AllotDetail End -->
+</sqlMap>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
+<sqlMap>
+	<!-- Warepower Start -->
+	<typeAlias alias="warepower" type="com.qkj.ware.domain.Warepowers" />
+	<typeAlias alias="user" type="org.iweb.sys.domain.User" />
+	<select id="warepower_getWarepowers" resultClass="warepower" parameterClass="java.util.Map">
+		<![CDATA[ 
+		SELECT s.*,w.`ware_name` ware_name,w.`address` address, u.`USER_NAME` user_name FROM qkj_t_stockpower s LEFT JOIN qkj_t_warehouse w ON (s.`ware_id`=w.`uuid`)
+			LEFT JOIN s_sys_user u ON (s.`username`=u.`UUID`)
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ s.uuid=#uuid# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="ware_id"><![CDATA[ s.ware_id=#ware_id# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="username"><![CDATA[ s.username=#username# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="dept_code"><![CDATA[ s.dept_code=#dept_code# ]]></isNotEmpty>
+
+		</dynamic>
+		<![CDATA[ Order By s.uuid Desc LIMIT 0, 1000 ]]>
+	</select>
+	<select id="warepower_getWarepowersCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) From qkj_t_stockpower
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="ware_id"><![CDATA[ ware_id=#ware_id# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="username"><![CDATA[ username=#username# ]]></isNotEmpty>
+
+		</dynamic>
+		<![CDATA[ LIMIT 1000 ]]>
+	</select>
+	<insert id="warepower_addWarepower" parameterClass="warepower">
+		<![CDATA[ 
+			Insert Into qkj_t_stockpower(ware_id,username,dept_code,dept_name,prvg,son)
+			Values (#ware_id#,#username#,#dept_code#,#dept_name#,#prvg#,#son#)
+		]]>
+		<selectKey resultClass="int" keyProperty="uuid">
+		<![CDATA[ Select LAST_INSERT_ID() ]]>
+		</selectKey>
+	</insert>
+	<update id="warepower_mdyWarepower" parameterClass="warepower">
+		<![CDATA[
+			Update qkj_t_stockpower
+			Set
+			prvg=#prvg#,
+			son=#son#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="warepower_delWarepower" parameterClass="warepower">
+	<![CDATA[
+		Delete From qkj_t_stockpower Where uuid=#uuid#
+	]]>
+	</delete>
+	<!-- 其它的 -->
+	<select id="warepower_getUsers" resultClass="user" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT * FROM s_sys_user WHERE user_roles LIKE '%1393307368483001%'
+		]]>
+		
+		<![CDATA[ Order By uuid Desc LIMIT 0, 1000 ]]>
+	</select>
+	
+	<!-- Warepower End -->
+</sqlMap>

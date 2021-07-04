@@ -119,4 +119,38 @@
 		]]>
 	</insert>
 	<!-- MemberCapitalActn End -->
+	
+	
+	<!-- CustActives Start -->
+	<typeAlias alias="CustActives" type="org.iweb.sysvip.domain.CustActives" />
+	<select id="sysvip_getCustActives" resultClass="CustActives" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT DISTINCT(a.`uuid`),a.*,d.dept_cname apply_dept_name,au.user_name apply_user_name FROM qkjm_r_active_memcost am 
+			LEFT JOIN qkjm_r_active a ON (am.`active_id`=a.`uuid`)
+			LEFT JOIN s_vip_member m ON (am.`member_id`=m.`UUID`)
+			LEFT JOIN s_sys_department d ON (a.apply_dept = d.dept_code)
+			LEFT JOIN s_sys_user au ON (a.apply_user = au.uuid) 
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="uuid"><![CDATA[ a.uuid=#uuid# ]]></isNotNull>
+			<isNotNull prepend="AND" property="member_id"><![CDATA[ am.member_id=#member_id# ]]></isNotNull>
+			<isNotNull prepend="AND" property="active_id"><![CDATA[ am.active_id=#active_id# ]]></isNotNull>
+		</dynamic>
+	</select>
+	<select id="sysvip_getCustActivesCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT COUNT(DISTINCT a.`uuid`) FROM qkjm_r_active_memcost am 
+			LEFT JOIN qkjm_r_active a ON (am.`active_id`=a.`uuid`)
+			LEFT JOIN s_vip_member m ON (am.`member_id`=m.`UUID`)
+			LEFT JOIN s_sys_department d ON (a.apply_dept = d.dept_code)
+			LEFT JOIN s_sys_user au ON (a.apply_user = au.uuid)
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="uuid"><![CDATA[ a.uuid=#uuid# ]]></isNotNull>
+			<isNotNull prepend="AND" property="member_id"><![CDATA[ am.member_id=#member_id# ]]></isNotNull>
+			<isNotNull prepend="AND" property="active_id"><![CDATA[ am.active_id=#active_id# ]]></isNotNull>
+		</dynamic>
+		<isNotEmpty property="limit"><![CDATA[ LIMIT #limit# ]]></isNotEmpty>
+	</select>
+	<!-- CustActives End -->
 </sqlMap>

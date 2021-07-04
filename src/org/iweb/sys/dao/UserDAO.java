@@ -23,6 +23,10 @@ public class UserDAO extends AbstractDAO {
 	public void save(Object parameters) {
 		super.save("sys_mdyUser", parameters);
 	}
+	
+	public void saveDept(Object parameters) {
+		super.save("sys_mdyUserMDept", parameters);
+	}
 
 	public void delete(Object parameters) {
 		super.delete("sys_delUser", parameters);
@@ -43,14 +47,22 @@ public class UserDAO extends AbstractDAO {
 	public void isave(Object parameters) {
 		super.save("sys_imdyUser", parameters);
 	}
+	
+	public void isaveSign(Object parameters) {
+		super.save("sys_imdyUserSign", parameters);
+	}
 
 	public int checkMember(User user) {
-		if (ToolsUtil.isEmpty(user.getTitle()) && ToolsUtil.isEmpty(user.getMobile())
-				&& ToolsUtil.isEmpty(user.getEmail())) {
+		if (ToolsUtil.isEmpty(user.getTitle()) && ToolsUtil.isEmpty(user.getMobile()) && ToolsUtil.isEmpty(user.getEmail())) {
 			return -1;
 		} else {
 			return (int) super.get("sys_checkMember", user);
 		}
+	}
+	
+	
+	public void changeUserDept(Map<String, Object> map) {
+		super.save("vin_change_userDept", map);
 	}
 
 	public int getResultCount() {

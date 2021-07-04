@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
+<sqlMap>
+	<!-- Leave Start -->
+	<typeAlias alias="leave" type="com.qkj.adm.domain.Leave" />
+	<select id="adm_getLeaves" resultClass="leave" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT l.*,cu.`USER_NAME` check_user_name,au.`USER_NAME` acheck_user_name,ld.`dept_cname` leave_dept_name,lu.`USER_NAME` leave_user_name,
+						cu.`user_sign` check_user_sign,au.`user_sign` acheck_user_sign
+			FROM qkja_r_leave l
+			LEFT JOIN s_sys_user cu ON(cu.`UUID` = l.`check_user`)
+			LEFT JOIN s_sys_user au ON(au.`UUID` = l.`acheck_user`)
+			LEFT JOIN s_sys_user lu ON(lu.`UUID` = l.`leave_user`)
+			LEFT JOIN s_sys_department ld ON(ld.`dept_code` = l.`leave_dept`)
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ l.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="leave_type"><![CDATA[ l.leave_type=#leave_type# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="leave_dept">
+				<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ l.leave_dept=#leave_dept#]]></isNotEqual>
+				<isEqual property="is_sub_dept" compareValue="true"><![CDATA[  l.leave_dept LIKE CONCAT(#leave_dept#,'%') ]]></isEqual>
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="leave_depts" open="(" close=")">
+			<![CDATA[ l.leave_dept In ]]>
+				<iterate property="leave_depts" open="(" close=")" conjunction=" , "> #leave_depts[]#</iterate>
+				<isNotEmpty prepend="OR" property="apply_perdepts">
+							<![CDATA[ l.leave_dept In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ l.leave_user=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
+			</isNotEmpty>
+
+			<isEmpty property="leave_depts">
+				<isNotEmpty prepend="AND" property="apply_perdepts">
+						<![CDATA[ l.leave_dept In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ l.leave_user=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
+			</isEmpty>
+		
+			<isNotEmpty prepend="AND" property="leave_user"><![CDATA[ l.leave_user=#leave_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="leave_start"><![CDATA[ l.leave_start=#leave_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="leave_end"><![CDATA[ l.leave_end=#leave_end# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="check_status"><![CDATA[ l.check_status=#check_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="acheck_status"><![CDATA[ l.acheck_status=#acheck_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="allowance_status"><![CDATA[ l.allowance_status=#allowance_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="leave_mold"><![CDATA[ l.leave_mold=#leave_mold# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="serach_date"><![CDATA[ l.leave_start <= #serach_date# AND l.leave_end >= #serach_date# ]]></isNotEmpty>
+		</dynamic>
+		<![CDATA[ ORDER BY l.uuid DESC ]]>
+	</select>
+	<select id="adm_getLeavesCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) From qkja_r_leave l
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ l.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="leave_type"><![CDATA[ l.leave_type=#leave_type# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="leave_dept">
+				<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ l.leave_dept=#leave_dept#]]></isNotEqual>
+				<isEqual property="is_sub_dept" compareValue="true"><![CDATA[  l.leave_dept LIKE CONCAT(#leave_dept#,'%') ]]></isEqual>
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="leave_depts" open="(" close=")">
+			<![CDATA[ l.leave_dept In ]]>
+				<iterate property="leave_depts" open="(" close=")" conjunction=" , "> #leave_depts[]#</iterate>
+				<isNotEmpty prepend="OR" property="apply_perdepts">
+							<![CDATA[ l.leave_dept In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ l.leave_user=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
+			</isNotEmpty>
+			<isEmpty property="leave_depts">
+				<isNotEmpty prepend="AND" property="apply_perdepts">
+						<![CDATA[ l.leave_dept In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ l.leave_user=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
+			</isEmpty>
+			
+			<isNotEmpty prepend="AND" property="leave_user"><![CDATA[ l.leave_user=#leave_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="leave_start"><![CDATA[ l.leave_start=#leave_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="leave_end"><![CDATA[ l.leave_end=#leave_end# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="check_status"><![CDATA[ l.check_status=#check_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="acheck_status"><![CDATA[ l.acheck_status=#acheck_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="allowance_status"><![CDATA[ l.allowance_status=#allowance_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="leave_mold"><![CDATA[ l.leave_mold=#leave_mold# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="serach_date"><![CDATA[ l.leave_start <= #serach_date# AND l.leave_end >= #serach_date# ]]></isNotEmpty>
+		</dynamic>
+	</select>
+	<insert id="adm_addLeave" parameterClass="leave">
+		<![CDATA[ 
+			Insert Into qkja_r_leave(leave_type,leave_mold,leave_dept,leave_user,leave_start,leave_start_time,leave_end,leave_end_time,totle,cause,lm_time,lm_user,leave_time,peer)
+			Values (#leave_type#,#leave_mold#,#leave_dept#,#leave_user#,#leave_start#,#leave_start_time#,#leave_end#,#leave_end_time#,#totle#,#cause#,#lm_time#,#lm_user#,NOW(),#peer#)
+		]]>
+		<selectKey resultClass="int" keyProperty="uuid">
+		<![CDATA[ 
+			Select LAST_INSERT_ID()
+		]]>
+		</selectKey>
+	</insert>
+	<update id="adm_mdyLeave" parameterClass="leave">
+		<![CDATA[
+			Update qkja_r_leave
+			Set leave_type=#leave_type#,
+				leave_mold=#leave_mold#,
+				leave_dept=#leave_dept#,
+				leave_user=#leave_user#,
+				leave_start=#leave_start#,
+				leave_start_time=#leave_start_time#,
+				leave_end=#leave_end#,
+				leave_end_time=#leave_end_time#,
+				totle=#totle#,
+				cause=#cause#,
+				lm_time=#lm_time#,
+				lm_user=#lm_user#,
+				peer=#peer#
+			Where uuid = #uuid#
+		]]>
+	</update>
+
+	<update id="adm_mdyLeaveCheck" parameterClass="leave">
+		<![CDATA[
+			Update qkja_r_leave
+			Set check_status=#check_status#,
+				check_user=#check_user#,
+				check_time=#check_time#,
+				check_note=#check_note#,
+				lm_time=#lm_time#,
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+
+	<update id="adm_mdyLeaveACheck" parameterClass="leave">
+		<![CDATA[
+			Update qkja_r_leave
+			Set acheck_status=#acheck_status#,
+				acheck_user=#acheck_user#,
+				acheck_time=#acheck_time#,
+				acheck_note=#acheck_note#,
+				check_note=#check_note#,
+				lm_time=#lm_time#,
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+
+	<update id="adm_mdyLeaveAllowance" parameterClass="leave">
+		<![CDATA[
+			Update qkja_r_leave
+			Set lm_time=#lm_time#,
+				lm_user=#lm_user#,
+				allowance_status=#allowance_status#,
+				allowance_date=#allowance_date#
+			Where uuid = #uuid#
+		]]>
+	</update>
+
+	<delete id="adm_delLeave" parameterClass="leave">
+	<![CDATA[
+		Delete From qkja_r_leave Where uuid=#uuid#
+	]]>
+	</delete>
+	<!-- Leave End -->
+</sqlMap>

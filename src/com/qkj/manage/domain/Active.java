@@ -3,7 +3,8 @@ package com.qkj.manage.domain;
 import java.util.Date;
 
 public class Active {
-	private String uuid;// (varchar)申请编号
+	private Integer uuid;// (int)主键自增
+	private String uid;// (varchar)申请编号
 	private String apply_dept;// (varchar)申请部门
 	private String apply_user;// (varchar)申请人
 	private String theme;// (varchar)主题
@@ -48,9 +49,35 @@ public class Active {
 	private Integer ship_ware;// 发货仓库
 	private Date ship_date;// 发货时间
 	private String ship_no;// 运单号码
+	private String ship_cloud;// 云单号
 	private String ship_type;// 物流名称
 	private String ship_phone;// 物流单号
+	private Integer fd_status;
+	private String fd_user;
+	private Date fd_time;
+	private Integer close_fd_status;
+	private String close_fd_user;
+	private Date close_fd_time;
+	private Integer close_nd_status;
+	private String close_nd_user;
+	private Date close_nd_time;
+	private String spe_remark;
+	private Double m_upprice;
+	private Double m_price;
+	private Double m_bprice;
+	private Double f_upprice;
+	private Double f_price;
+	private Double f_bprice;
+	private Integer cost_types;
 
+	private Double close_m_upprice;
+	private Double close_m_price;
+	private Double close_m_bprice;
+	private Double close_f_upprice;
+	private Double close_f_price;
+	private Double close_f_bprice;
+	private Integer active_type;
+	private Integer fstauts;
 	// 非数据库字段
 	private String apply_dept_name;
 	private String apply_user_name;
@@ -62,7 +89,17 @@ public class Active {
 	private String smd_user_sign;
 	private String close_sd_user_sign;
 	private String close_smd_user_sign;
-
+	private String biz_user;
+	private String puser_sign;
+	private String puser_name;
+	private Date biz_time;
+	private Date baotime;
+	private Date stars;
+	private Date sing;
+	private Date spass;
+	private Date starj;
+	private Date jing;
+	private Date jpass;
 	// 查询使用字段
 	private String is_sub_dept;
 	private Date plan_start_begin;
@@ -71,6 +108,366 @@ public class Active {
 	private Date pass_time_end;
 	private Date close_pass_time_start;
 	private Date close_pass_time_end;
+	private String fd_user_name;
+	private String close_fd_name;
+	private String close_nd_name;
+	private String member_id;
+
+	// 门头
+	private String design_type;
+	private String design_name;
+	private Integer design_num;
+	private Double design_price;
+	private String assumed;
+	private Double design_total;
+	private String store_material;
+	private String store_size;
+
+	private Integer close_design_num;
+	private Double close_design_price;
+	private String close_assumed;
+	private String close_store_material;
+	private String close_store_size;
+	private Double close_design_total;
+
+	public Integer getFstauts() {
+		return fstauts;
+	}
+
+	public void setFstauts(Integer fstauts) {
+		this.fstauts = fstauts;
+	}
+
+	public Double getDesign_total() {
+		return design_total;
+	}
+
+	public void setDesign_total(Double design_total) {
+		this.design_total = design_total;
+	}
+
+	public Double getClose_design_total() {
+		return close_design_total;
+	}
+
+	public void setClose_design_total(Double close_design_total) {
+		this.close_design_total = close_design_total;
+	}
+
+	private Integer activeType;
+
+	public Integer getClose_design_num() {
+		return close_design_num;
+	}
+
+	public void setClose_design_num(Integer close_design_num) {
+		this.close_design_num = close_design_num;
+	}
+
+	public Double getClose_design_price() {
+		return close_design_price;
+	}
+
+	public void setClose_design_price(Double close_design_price) {
+		this.close_design_price = close_design_price;
+	}
+
+	public String getClose_assumed() {
+		return close_assumed;
+	}
+
+	public void setClose_assumed(String close_assumed) {
+		this.close_assumed = close_assumed;
+	}
+
+	public String getClose_store_material() {
+		return close_store_material;
+	}
+
+	public void setClose_store_material(String close_store_material) {
+		this.close_store_material = close_store_material;
+	}
+
+	public String getClose_store_size() {
+		return close_store_size;
+	}
+
+	public void setClose_store_size(String close_store_size) {
+		this.close_store_size = close_store_size;
+	}
+
+	public Integer getActiveType() {
+		return activeType;
+	}
+
+	public void setActiveType(Integer activeType) {
+		this.activeType = activeType;
+	}
+
+	public String getDesign_type() {
+		return design_type;
+	}
+
+	public void setDesign_type(String design_type) {
+		this.design_type = design_type;
+	}
+
+	public String getDesign_name() {
+		return design_name;
+	}
+
+	public void setDesign_name(String design_name) {
+		this.design_name = design_name;
+	}
+
+	public Integer getDesign_num() {
+		return design_num;
+	}
+
+	public void setDesign_num(Integer design_num) {
+		this.design_num = design_num;
+	}
+
+	public Double getDesign_price() {
+		return design_price;
+	}
+
+	public void setDesign_price(Double design_price) {
+		this.design_price = design_price;
+	}
+
+	public String getAssumed() {
+		return assumed;
+	}
+
+	public void setAssumed(String assumed) {
+		this.assumed = assumed;
+	}
+
+
+	public String getStore_material() {
+		return store_material;
+	}
+
+	public void setStore_material(String store_material) {
+		this.store_material = store_material;
+	}
+
+	public String getStore_size() {
+		return store_size;
+	}
+
+	public void setStore_size(String store_size) {
+		this.store_size = store_size;
+	}
+
+	public String getShip_cloud() {
+		return ship_cloud;
+	}
+
+	public void setShip_cloud(String ship_cloud) {
+		this.ship_cloud = ship_cloud;
+	}
+
+	public String getMember_id() {
+		return member_id;
+	}
+
+	public void setMember_id(String member_id) {
+		this.member_id = member_id;
+	}
+
+	public Date getStars() {
+		return stars;
+	}
+
+	public void setStars(Date stars) {
+		this.stars = stars;
+	}
+
+	public Date getSing() {
+		return sing;
+	}
+
+	public void setSing(Date sing) {
+		this.sing = sing;
+	}
+
+	public Date getSpass() {
+		return spass;
+	}
+
+	public void setSpass(Date spass) {
+		this.spass = spass;
+	}
+
+	public Date getStarj() {
+		return starj;
+	}
+
+	public void setStarj(Date starj) {
+		this.starj = starj;
+	}
+
+	public Date getJing() {
+		return jing;
+	}
+
+	public void setJing(Date jing) {
+		this.jing = jing;
+	}
+
+	public Date getJpass() {
+		return jpass;
+	}
+
+	public void setJpass(Date jpass) {
+		this.jpass = jpass;
+	}
+
+	public Date getBaotime() {
+		return baotime;
+	}
+
+	public void setBaotime(Date baotime) {
+		this.baotime = baotime;
+	}
+
+	public Double getClose_m_upprice() {
+		return close_m_upprice;
+	}
+
+	public void setClose_m_upprice(Double close_m_upprice) {
+		this.close_m_upprice = close_m_upprice;
+	}
+
+	public Double getClose_m_price() {
+		return close_m_price;
+	}
+
+	public void setClose_m_price(Double close_m_price) {
+		this.close_m_price = close_m_price;
+	}
+
+	public Double getClose_m_bprice() {
+		return close_m_bprice;
+	}
+
+	public void setClose_m_bprice(Double close_m_bprice) {
+		this.close_m_bprice = close_m_bprice;
+	}
+
+	public Double getClose_f_upprice() {
+		return close_f_upprice;
+	}
+
+	public void setClose_f_upprice(Double close_f_upprice) {
+		this.close_f_upprice = close_f_upprice;
+	}
+
+	public Double getClose_f_price() {
+		return close_f_price;
+	}
+
+	public void setClose_f_price(Double close_f_price) {
+		this.close_f_price = close_f_price;
+	}
+
+	public Double getClose_f_bprice() {
+		return close_f_bprice;
+	}
+
+	public void setClose_f_bprice(Double close_f_bprice) {
+		this.close_f_bprice = close_f_bprice;
+	}
+
+	public String getSpe_remark() {
+		return spe_remark;
+	}
+
+	public void setSpe_remark(String spe_remark) {
+		this.spe_remark = spe_remark;
+	}
+
+	public Date getBiz_time() {
+		return biz_time;
+	}
+
+	public void setBiz_time(Date biz_time) {
+		this.biz_time = biz_time;
+	}
+
+	public Integer getFd_status() {
+		return fd_status;
+	}
+
+	public void setFd_status(Integer fd_status) {
+		this.fd_status = fd_status;
+	}
+
+	public String getFd_user() {
+		return fd_user;
+	}
+
+	public void setFd_user(String fd_user) {
+		this.fd_user = fd_user;
+	}
+
+	public Date getFd_time() {
+		return fd_time;
+	}
+
+	public void setFd_time(Date fd_time) {
+		this.fd_time = fd_time;
+	}
+
+	public Integer getClose_fd_status() {
+		return close_fd_status;
+	}
+
+	public void setClose_fd_status(Integer close_fd_status) {
+		this.close_fd_status = close_fd_status;
+	}
+
+	public String getClose_fd_user() {
+		return close_fd_user;
+	}
+
+	public void setClose_fd_user(String close_fd_user) {
+		this.close_fd_user = close_fd_user;
+	}
+
+	public Date getClose_fd_time() {
+		return close_fd_time;
+	}
+
+	public void setClose_fd_time(Date close_fd_time) {
+		this.close_fd_time = close_fd_time;
+	}
+
+	public Integer getClose_nd_status() {
+		return close_nd_status;
+	}
+
+	public void setClose_nd_status(Integer close_nd_status) {
+		this.close_nd_status = close_nd_status;
+	}
+
+	public String getClose_nd_user() {
+		return close_nd_user;
+	}
+
+	public void setClose_nd_user(String close_nd_user) {
+		this.close_nd_user = close_nd_user;
+	}
+
+	public Date getClose_nd_time() {
+		return close_nd_time;
+	}
+
+	public void setClose_nd_time(Date close_nd_time) {
+		this.close_nd_time = close_nd_time;
+	}
 
 	public String getShip_type() {
 		return ship_type;
@@ -208,12 +605,20 @@ public class Active {
 		this.smd_user_sign = smd_user_sign;
 	}
 
-	public String getUuid() {
+	public Integer getUuid() {
 		return uuid;
 	}
 
-	public void setUuid(String uuid) {
+	public void setUuid(Integer uuid) {
 		this.uuid = uuid;
+	}
+
+	public String getUid() {
+		return uid;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
 	}
 
 	public String getApply_dept() {
@@ -550,6 +955,118 @@ public class Active {
 
 	public void setPlan_start_end(Date plan_start_end) {
 		this.plan_start_end = plan_start_end;
+	}
+
+	public String getFd_user_name() {
+		return fd_user_name;
+	}
+
+	public void setFd_user_name(String fd_user_name) {
+		this.fd_user_name = fd_user_name;
+	}
+
+	public String getClose_fd_name() {
+		return close_fd_name;
+	}
+
+	public void setClose_fd_name(String close_fd_name) {
+		this.close_fd_name = close_fd_name;
+	}
+
+	public String getClose_nd_name() {
+		return close_nd_name;
+	}
+
+	public void setClose_nd_name(String close_nd_name) {
+		this.close_nd_name = close_nd_name;
+	}
+
+	public String getBiz_user() {
+		return biz_user;
+	}
+
+	public void setBiz_user(String biz_user) {
+		this.biz_user = biz_user;
+	}
+
+	public String getPuser_sign() {
+		return puser_sign;
+	}
+
+	public void setPuser_sign(String puser_sign) {
+		this.puser_sign = puser_sign;
+	}
+
+	public String getPuser_name() {
+		return puser_name;
+	}
+
+	public void setPuser_name(String puser_name) {
+		this.puser_name = puser_name;
+	}
+
+	public Double getM_upprice() {
+		return m_upprice;
+	}
+
+	public void setM_upprice(Double m_upprice) {
+		this.m_upprice = m_upprice;
+	}
+
+	public Double getM_price() {
+		return m_price;
+	}
+
+	public void setM_price(Double m_price) {
+		this.m_price = m_price;
+	}
+
+	public Double getM_bprice() {
+		return m_bprice;
+	}
+
+	public void setM_bprice(Double m_bprice) {
+		this.m_bprice = m_bprice;
+	}
+
+	public Double getF_upprice() {
+		return f_upprice;
+	}
+
+	public void setF_upprice(Double f_upprice) {
+		this.f_upprice = f_upprice;
+	}
+
+	public Double getF_price() {
+		return f_price;
+	}
+
+	public void setF_price(Double f_price) {
+		this.f_price = f_price;
+	}
+
+	public Double getF_bprice() {
+		return f_bprice;
+	}
+
+	public void setF_bprice(Double f_bprice) {
+		this.f_bprice = f_bprice;
+	}
+
+	public Integer getActive_type() {
+		return active_type;
+	}
+
+	public void setActive_type(Integer active_type) {
+		this.active_type = active_type;
+	}
+
+	public Integer getCost_types() {
+		return cost_types;
+	}
+
+	public void setCost_types(Integer cost_types) {
+		this.cost_types = cost_types;
 	}
 
 }

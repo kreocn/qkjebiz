@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "sql-map-2.dtd">
+<sqlMap>
+	<!-- LadingProductg Start -->
+	<typeAlias alias="ladingProductg" type="com.qkj.manage.domain.LadingProductg" />
+	<select id="qkjmanage_getLadingProductgs" resultClass="ladingProductg" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT i.*,p.title product_name,p.case_spec
+			FROM qkjm_r_lading_productg i,qkj_t_product p
+			WHERE i.product_id = p.uuid
+		]]>
+		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ i.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="lading_id"><![CDATA[ i.lading_id=#lading_id# ]]></isNotEmpty>
+	</select>
+	<select id="qkjmanage_getLadingProductgsCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*)
+			FROM qkjm_r_lading_productg i,qkj_t_product p
+			WHERE i.product_id = p.uuid
+		]]>
+		<isNotEmpty prepend="AND" property="uuid"><![CDATA[ i.uuid=#uuid# ]]></isNotEmpty>
+		<isNotEmpty prepend="AND" property="lading_id"><![CDATA[ i.lading_id=#lading_id# ]]></isNotEmpty>
+	</select>
+	<insert id="qkjmanage_addLadingProductg" parameterClass="ladingProductg">
+		<![CDATA[ 
+			Insert Into qkjm_r_lading_productg(lading_id,product_id,per_price,num,total_price)
+			Values (#lading_id#,#product_id#,#per_price#,#num#,#total_price#)
+		]]>
+	</insert>
+	<update id="qkjmanage_mdyLadingProductg" parameterClass="ladingProductg">
+		<![CDATA[
+			Update qkjm_r_lading_productg
+			Set per_price=#per_price#,
+			num=#num#,
+			total_price=#total_price#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="qkjmanage_delLadingProductg" parameterClass="ladingProductg">
+	<![CDATA[
+		Delete From qkjm_r_lading_productg Where uuid=#uuid#
+	]]>
+	</delete>
+	<!-- LadingProductg End -->
+</sqlMap>

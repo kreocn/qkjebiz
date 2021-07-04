@@ -12,6 +12,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
+import java.math.BigInteger;
+import java.security.MessageDigest;
 
 /**
  * @version 1.0
@@ -241,6 +243,49 @@ public class FileUtil {
 		fout.write(content);
 		fout.close();
 		return true;
+	}
+
+	/**
+	 * 获取单个文件的MD5值！
+	 * 
+	 * @param file
+	 * @return
+	 */
+	public static String getFileMD5(File file) {
+		try {
+			if (!file.exists() || !file.isFile()) {
+				return null;
+			} else {
+				return getFileMD5(new FileInputStream(file));
+			}
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	/**
+	 * 获取单个文件的MD5值！
+	 * 
+	 * @param in
+	 * @return
+	 */
+	public static String getFileMD5(InputStream in) {
+		if (in == null) { return null; }
+		MessageDigest digest = null;
+		byte buffer[] = new byte[1024];
+		int len;
+		try {
+			digest = MessageDigest.getInstance("MD5");
+			while ((len = in.read(buffer, 0, 1024)) != -1) {
+				digest.update(buffer, 0, len);
+			}
+			in.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		BigInteger bigInt = new BigInteger(1, digest.digest());
+		return bigInt.toString(16);
 	}
 
 	public static void main(String[] args) {

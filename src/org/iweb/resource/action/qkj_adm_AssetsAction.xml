@@ -7,7 +7,7 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- Assets Start -->
 		<action name="assets_list" class="com.qkj.adm.action.AssetsAction" method="list">
-			<result>/jsp/adm/AssetsList.jsp</result>
+			<result>/WEB-INF/jsp/adm/AssetsList.jsp</result>
 		</action>
 		<action name="assets_relist" class="com.qkj.adm.action.AssetsAction" method="relist">
 			<result type="redirectAction">
@@ -16,7 +16,7 @@
 			</result>
 		</action>
 		<action name="assets_load" class="com.qkj.adm.action.AssetsAction" method="load">
-			<result>/jsp/adm/AssetsEdit.jsp</result>
+			<result>/WEB-INF/jsp/adm/AssetsEdit.jsp</result>
 		</action>
 		<action name="assets_add" class="com.qkj.adm.action.AssetsAction" method="add">
 			<result type="redirectAction">

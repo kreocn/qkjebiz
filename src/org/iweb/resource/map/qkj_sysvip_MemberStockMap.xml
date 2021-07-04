@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
+<sqlMap>
+	<!-- MemberStock Start -->
+	<typeAlias alias="memberStock" type="org.iweb.sysvip.domain.MemberStock" />
+	<typeAlias alias="memberStockHistory" type="org.iweb.sysvip.domain.MemberStockHistory" />
+	<select id="sysvip_getMemberStocks" resultClass="memberStock" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT m.*,ad.`USER_NAME` add_user_name,lm.`USER_NAME` lm_user_name,p.`title` product_name,
+			ROUND(m.`stock`/(p.`case_spec`*1.0)) case_spec,vm.member_name member_name,d.`dept_cname` add_dept_name
+			FROM qkjm_t_member m 
+			LEFT JOIN s_sys_user ad ON(m.`add_user`=ad.`UUID`)
+			LEFT JOIN s_sys_user lm ON(m.`lm_user`=lm.`UUID`)
+			LEFT JOIN qkj_t_product p ON(p.`uuid`=m.`product`)
+			LEFT JOIN s_vip_member vm ON(vm.uuid=m.dealer)
+			LEFT JOIN s_sys_department d ON(d.`dept_code`=m.`add_dept`)
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ m.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="dealer"><![CDATA[ m.dealer=#dealer# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="product_name"><![CDATA[ p.`title` LIKE CONCAT('%',#product_name#,'%') ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="stock"><![CDATA[ m.stock=#stock# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="check_date"><![CDATA[ m.check_date=#check_date# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="add_time"><![CDATA[ m.add_time=#add_time# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="lm_user"><![CDATA[ m.lm_user=#lm_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="member_name"><![CDATA[ vm.member_name LIKE CONCAT(#member_name#,'%') ]]></isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="apply_depts" open="(" close=")">
+				<![CDATA[ m.add_dept In ]]>
+				<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
+				<isNotEmpty prepend="OR" property="apply_perdepts">
+					<![CDATA[ m.add_dept In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ m.add_user=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
+			</isNotEmpty>
+			
+			<isEmpty  property="apply_depts">
+				<isNotEmpty prepend="AND" property="apply_perdepts">
+					<![CDATA[ m.add_dept In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ m.add_user=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
+			</isEmpty>
+
+		</dynamic>
+		<![CDATA[ORDER BY m.`check_date` DESC ]]>
+	</select>
+	<select id="sysvip_getMemberStocksCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) From qkjm_t_member m LEFT JOIN s_vip_member vm ON(vm.uuid=m.dealer)
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ m.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="dealer"><![CDATA[ m.dealer=#dealer# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="product_name"><![CDATA[ p.`title` LIKE CONCAT('%',#product_name#,'%') ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="stock"><![CDATA[ m.stock=#stock# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="check_date"><![CDATA[ m.check_date=#check_date# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="add_time"><![CDATA[ m.add_time=#add_time# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="lm_user"><![CDATA[ m.lm_user=#lm_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="member_name"><![CDATA[ vm.member_name LIKE CONCAT(#member_name#,'%') ]]></isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="apply_depts" open="(" close=")">
+				<![CDATA[ m.add_dept In ]]>
+				<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
+				<isNotEmpty prepend="OR" property="apply_perdepts">
+					<![CDATA[ m.add_dept In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ m.add_user=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
+			</isNotEmpty>
+			
+			<isEmpty  property="apply_depts">
+				<isNotEmpty prepend="AND" property="apply_perdepts">
+					<![CDATA[ m.add_dept In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ m.add_user=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
+			</isEmpty>
+			
+		</dynamic>
+		<![CDATA[ LIMIT 1000 ]]>
+	</select>
+	<insert id="sysvip_addMemberStock" parameterClass="memberStock">
+		<![CDATA[ 
+			Insert Into qkjm_t_member(dealer,product,stock,check_date,add_dept,add_user,add_time,lm_user,lm_time)
+			Values (#dealer#,#product#,#stock#,#check_date#,#add_dept#,#add_user#,#add_time#,#lm_user#,#lm_time#)
+		]]>
+		<selectKey resultClass="int" keyProperty="uuid">
+		<![CDATA[ Select LAST_INSERT_ID() ]]>
+		</selectKey>
+	</insert>
+	<insert id="sysvip_addMemberStockHistory" parameterClass="memberStockHistory">
+	<![CDATA[ 
+			Insert Into qkjm_h_member(memberId,check_date,up_user,up_time,up_path,upIp,state)
+			Values (#memberId#,#check_date#,#up_user#,#up_time#,#up_path#,#upIp#,#state#)
+		]]>
+		<selectKey resultClass="int" keyProperty="uuid">
+		<![CDATA[ Select LAST_INSERT_ID() ]]>
+		</selectKey>
+	</insert>
+	
+	<update id="sysvip_mdyMemberStock" parameterClass="memberStock">
+		<![CDATA[
+			Update qkjm_t_member
+			Set dealer=#dealer#,
+			product=#product#,
+			stock=#stock#,
+			check_date=#check_date#,
+			lm_user=#lm_user#,
+			lm_time=#lm_time#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="sysvip_delMemberStock" parameterClass="memberStock">
+	<![CDATA[
+		Delete From qkjm_t_member Where uuid=#uuid#
+	]]>
+	</delete>
+	<!-- MemberStock End -->
+</sqlMap>

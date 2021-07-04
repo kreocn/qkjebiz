@@ -45,6 +45,11 @@ public class RebatesAction extends ActionSupport {
 	private String viewFlag;
 	private int recCount;
 	private int pageSize;
+	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;返利申请单列表";
+	
+	public String getPath() {
+		return path;
+	}
 
 	public List<String> getRe_scales() {
 		return re_scales;
@@ -148,11 +153,12 @@ public class RebatesAction extends ActionSupport {
 			map.clear();
 			if (rebates == null)
 				rebates = new Rebates();
-			ContextHelper.setSearchDeptPermit4Search(map, "dept_codes", "manager");
+			ContextHelper.setSearchDeptPermit4Search("QKJ_QKJMANAGE_REBATES_LIST",map, "dept_codes", "manager");
 			ContextHelper.SimpleSearchMap4Page("QKJ_QKJMANAGE_REBATES_LIST", map, rebates, viewFlag);
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 			this.setRebatess(dao.list(map));
 			this.setRecCount(dao.getResultCount());
+			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;返利申请单列表";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
@@ -167,6 +173,7 @@ public class RebatesAction extends ActionSupport {
 				setMessage("你没有选择任何操作!");
 			} else if ("add".equals(viewFlag)) {
 				this.setRebates(null);
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/rebates_list?viewFlag=relist'>返利申请单列表</a>&nbsp;&gt;&nbsp;增加返利申请单";
 			} else if ("mdy".equals(viewFlag) || "view".equals(viewFlag) || "print".equals(viewFlag)) {
 				map.clear();
 				map.put("uuid", rebates.getUuid());
@@ -208,6 +215,7 @@ public class RebatesAction extends ActionSupport {
 						setRe_scales(Arrays.asList(rebates.getRe_scale().split("#")));
 					}
 				}
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/qkjmanage/rebates_list?viewFlag=relist'>返利申请单列表</a>&nbsp;&gt;&nbsp;修改返利申请单";
 			} else {
 				this.setRebates(null);
 				setMessage("无操作类型!");

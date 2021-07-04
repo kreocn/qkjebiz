@@ -1,0 +1,25 @@
+<Host>
+<Resource name="qkj/mysqlLocalCJ_proxool"
+	auth="Container"
+	type="javax.sql.DataSource"
+	factory="org.logicalcobwebs.proxool.ProxoolDataSource" 
+	proxool.alias="huzhuLocal" 
+	user="huzhu" 
+	password="huzhupwd" 
+	delegateProperties="foo=bar" 
+	proxool.driver-url="jdbc:mysql://localhost:3306/huzhu?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8"
+	proxool.driver-class="com.mysql.jdbc.Driver"
+	proxool.maximum-active-time="120"
+	proxool.prototype-count="10"
+	proxool.statistics="1m,15m,1d"
+	proxool.simultaneous-build-throttle="10"
+	proxool.minimum-connection-count="5"
+	proxool.maximum-connection-count="300"
+	proxool.house-keeping-sleep-time="12600"
+	proxool.house-keeping-test-sql="select now()"
+	proxool.test-before-use="true" />
+<!-- 配置 -->
+<Connector URIEncoding="UTF-8" connectionTimeout="20000" port="8888" protocol="HTTP/1.1" redirectPort="8443"/>
+<Context crossContext="true" docBase="qkjebiz" path="/" reloadable="true" source="org.eclipse.jst.jee.server:qkjebiz"/>
+<Context crossContext="true" docBase="ckframe" path="/ckframe" reloadable="true" source="org.eclipse.jst.jee.server:ckframe"/>
+</Host>

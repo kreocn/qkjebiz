@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
+<sqlMap>
+	<!-- CloseOrder Start -->
+	<typeAlias alias="closeOrder" type="com.qkj.manage.domain.CloseOrder" />
+	<select id="qkjmanage_getCloseOrders" resultClass="closeOrder" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT c.*,m.`MEMBER_NAME` member_name,au.`USER_NAME` add_user_name,lu.`LM_USER` lm_user_name,cu.`USER_NAME` sd_user_name,nu.`USER_NAME` nd_check_user_name,d.`dept_cname` apply_dept_name,smd.`USER_NAME` smd_user_name,fd.`USER_NAME` fd_user_name FROM qkjm_r_closeorder c
+			LEFT JOIN s_vip_member m ON (c.`member_id`=m.`UUID`)
+			LEFT JOIN s_sys_user au ON(c.`add_user`=au.`UUID`)
+			LEFT JOIN s_sys_user lu ON(c.`lm_user`=lu.`UUID`)
+			LEFT JOIN s_sys_user cu ON(c.`sd_user`=cu.`UUID`)
+			LEFT JOIN s_sys_user nu ON(c.`nd_check_user`=nu.`UUID`)
+			LEFT JOIN s_sys_user smd ON(c.`smd_user`=smd.`UUID`)
+			LEFT JOIN s_sys_user fd ON(c.`fd_check_user`=fd.`UUID`)
+			LEFT JOIN s_sys_department d ON (c.apply_dept = d.dept_code)
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ c.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="cost_types"><![CDATA[ c.cost_types=#cost_types# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="type"><![CDATA[ (c.type=#type# or c.type=2) ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="typeO"><![CDATA[ c.type=#typeO# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_id"><![CDATA[ c.apply_id=#apply_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="add_time"><![CDATA[ c.add_time LIKE CONCAT(#add_time#,'%') ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="close_time"><![CDATA[ c.close_time=#close_time# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="content"><![CDATA[ c.content=#content# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="member_id"><![CDATA[ c.member_id=#member_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="member_address"><![CDATA[ c.member_address=#member_address# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="nd_check_state"><![CDATA[ c.nd_check_state=#nd_check_state# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="state"><![CDATA[ c.state=#state# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="sd_state"><![CDATA[ c.sd_state=#sd_state# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="smd_status"><![CDATA[ c.smd_status=#smd_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="theme"><![CDATA[ c.theme LIKE CONCAT('%',#theme#,'%') ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_dept">
+				<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ c.apply_dept=#apply_dept# ]]></isNotEqual>
+				<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ c.apply_dept LIKE CONCAT(#apply_dept#,'%') ]]></isEqual>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="apply_depts" open="(" close=")">
+			<![CDATA[ c.apply_dept In ]]>
+				<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
+				<isNotEmpty prepend="OR" property="apply_perdepts">
+							<![CDATA[ c.apply_dept In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ c.add_user=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
+			</isNotEmpty>
+			<isEmpty property="apply_depts">
+				<isNotEmpty prepend="AND" property="apply_perdepts">
+						<![CDATA[ c.apply_dept In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ c.add_user=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
+			</isEmpty>
+			
+			<isEqual property="finance" compareValue="2">
+             
+              	<isNotEmpty prepend="AND" property="finance">
+            <![CDATA[   (c.sd_state=60 or c.sd_state=80 or    (c.apply_dept like  '312%' and c.sd_state=40) )  and fd_check_state=0      ]]>
+              
+              </isNotEmpty>
+              
+               </isEqual>
+			
+			<isEqual property="finance" compareValue="3">
+             
+              	<isNotEmpty prepend="AND" property="finance">
+            <![CDATA[   c.apply_dept not like  '312%'       ]]>
+              
+              </isNotEmpty>
+              
+               </isEqual>
+			
+		</dynamic>
+		<![CDATA[ ORDER BY c.add_time DESC LIMIT 1000 ]]>
+	</select>
+	<select id="qkjmanage_getCloseOrdersCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) From qkjm_r_closeorder c
+			LEFT JOIN s_vip_member m ON (c.`member_id`=m.`UUID`)
+			LEFT JOIN s_sys_user au ON(c.`add_user`=au.`UUID`)
+			LEFT JOIN s_sys_user lu ON(c.`lm_user`=lu.`UUID`)
+			LEFT JOIN s_sys_user nu ON(c.`nd_check_user`=nu.`UUID`)
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ c.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="type"><![CDATA[ (c.type=#type# or c.type=2) ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="typeO"><![CDATA[ c.type=#typeO# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_id"><![CDATA[ c.apply_id=#apply_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="add_time"><![CDATA[ c.add_time LIKE CONCAT(#add_time#,'%') ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="close_time"><![CDATA[ c.close_time=#close_time# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="content"><![CDATA[ c.content=#content# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="member_id"><![CDATA[ c.member_id=#member_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="member_address"><![CDATA[ c.member_address=#member_address# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="nd_check_state"><![CDATA[ c.nd_check_state=#nd_check_state# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="state"><![CDATA[ c.state=#state# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="sd_state"><![CDATA[ c.sd_state=#sd_state# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="smd_status"><![CDATA[ c.smd_status=#smd_status# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="theme"><![CDATA[ c.theme LIKE CONCAT('%',#theme#,'%') ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="apply_dept">
+				<isNotEqual property="is_sub_dept" compareValue="true"><![CDATA[ c.apply_dept=#apply_dept# ]]></isNotEqual>
+				<isEqual property="is_sub_dept" compareValue="true"><![CDATA[ c.apply_dept LIKE CONCAT(#apply_dept#,'%') ]]></isEqual>
+			</isNotEmpty>
+			
+		<isNotEmpty prepend="AND" property="apply_depts" open="(" close=")">
+			<![CDATA[ c.apply_dept In ]]>
+				<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
+				<isNotEmpty prepend="OR" property="apply_perdepts">
+							<![CDATA[ c.apply_dept In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ c.add_user=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
+			</isNotEmpty>
+			<isEmpty property="apply_depts">
+				<isNotEmpty prepend="AND" property="apply_perdepts">
+						<![CDATA[ c.apply_dept In ]]>
+					<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+					<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ c.add_user=#apply_userDouble# ]]></isNotEmpty>
+				</isNotEmpty>
+			</isEmpty>
+		</dynamic>
+		<![CDATA[ LIMIT 1000 ]]>
+	</select>
+	<insert id="qkjmanage_addCloseOrder" parameterClass="closeOrder">
+		<![CDATA[ 
+			Insert Into qkjm_r_closeorder(close_time,content,theme,member_id,member_address,member_phone,member_title,member_note,mt_price,add_user,add_time,lm_time,lm_user,apply_dept,close_num,state,type,apply_id,close_note,is_fullcheck,m_upprice,m_price,m_bprice,f_upprice,f_price,f_bprice,m_name,cost_types)
+			Values (#close_time#,#content#,#theme#,#member_id#,#member_address#,#member_phone#,#member_title#,#member_note#,#mt_price#,#add_user#,#add_time#,#lm_time#,#lm_user#,#apply_dept#,#close_num#,#state#,#type#,#apply_id#,#close_note#,#is_fullcheck#,#m_upprice#,#m_price#,#m_bprice#,#f_upprice#,#f_price#,#f_bprice#,#m_name#,#cost_types#)
+		]]>
+		<selectKey resultClass="int" keyProperty="uuid">
+		<![CDATA[ Select LAST_INSERT_ID() ]]>
+		</selectKey>
+	</insert>
+	<update id="qkjmanage_mdyCloseOrder" parameterClass="closeOrder">
+		<![CDATA[
+			Update qkjm_r_closeorder
+			Set close_time=#close_time#,
+			content=#content#,
+			theme=#theme#,
+			lm_time=#lm_time#,
+			lm_user=#lm_user#,
+			salPro_id=#salPro_id#,
+			apply_dept=#apply_dept#,
+			close_note=#close_note#,
+			m_name=#m_name#,
+			
+			m_upprice=#m_upprice#,
+			m_price=#m_price#,
+			m_bprice=#m_bprice#,
+			f_upprice=#f_upprice#,
+			f_price=#f_price#,
+			f_bprice=#f_bprice#,
+			is_fullcheck=#is_fullcheck#,
+			close_num=#close_num#,
+			
+			member_id=#member_id#,
+			member_address=#member_address#,
+			member_phone=#member_phone#,
+			member_title=#member_title#,
+			mt_price=#mt_price#,
+			member_note=#member_note#,
+			
+			cost_types=#cost_types#
+			
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<update id="qkjmanage_mdyCloseOrderT" parameterClass="closeOrder">
+		<![CDATA[
+			Update qkjm_r_closeorder
+			Set 
+			lm_time=#lm_time#,
+			lm_user=#lm_user#,
+			salPro_id=#salPro_id#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<update id="qkjmanage_mdyCloseOrderMember" parameterClass="closeOrder">
+		<![CDATA[
+			Update qkjm_r_closeorder
+			Set 
+			member_id=#member_id#,
+			member_address=#member_address#,
+			member_phone=#member_phone#,
+			member_title=#member_title#,
+			mt_price=#mt_price#,
+			member_note=#member_note#
+			Where uuid = #uuid#
+		]]>
+	</update>
+
+	<update id="qkjmanage_mdyCloseOrderSDStatus" parameterClass="closeOrder">
+		<![CDATA[
+			Update qkjm_r_closeorder
+			Set 
+			sd_state=#sd_state#,
+			sd_time=#sd_time#,
+			sd_user=#sd_user#,
+			lm_time=#lm_time#,
+			lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+
+	<update id="qkjmanage_mdyCloseOrderSMDStatus" parameterClass="closeOrder">
+		<![CDATA[
+			Update qkjm_r_closeorder
+			Set 
+			smd_status=#smd_status#,
+			smd_time=#smd_time#,
+			smd_user=#smd_user#,
+			lm_time=#lm_time#,
+			lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<update id="qkjmanage_mdyCloseOrderStatus" parameterClass="closeOrder">
+		<![CDATA[
+			Update qkjm_r_closeorder
+			Set 
+			state=#state#,
+			lm_time=#lm_time#,
+			lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<update id="qkjmanage_mdyPassStatus" parameterClass="closeOrder">
+		<![CDATA[
+			Update qkjm_r_closeorder
+			Set 
+			state=#state#
+			Where uuid = #uuid#
+		]]>
+	</update>
+
+	<update id="qkjmanage_mdyCloseOrderFDStatus" parameterClass="closeOrder">
+		<![CDATA[
+			Update qkjm_r_closeorder
+			Set 
+			fd_check_state=#fd_check_state#,
+			fd_check_time=#fd_check_time#,
+			fd_check_user=#fd_check_user#,
+			lm_time=#lm_time#,
+			lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<update id="qkjmanage_mdyCloseOrderNDStatus" parameterClass="closeOrder">
+		<![CDATA[
+			Update qkjm_r_closeorder
+			Set 
+			nd_check_state=#nd_check_state#,
+			nd_check_time=#nd_check_time#,
+			nd_check_user=#nd_check_user#,
+			lm_time=#lm_time#,
+			lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+
+	<update id="qkjmanage_mdyCloseOrdertotelPrice" parameterClass="integer">
+		<![CDATA[
+		UPDATE qkjm_r_closeorder c SET c.totel_price=(
+			SELECT IFNULL(SUM(a.total_price),0) FROM (
+			SELECT p.`total_price` FROM qkjm_r_closeorder_product p WHERE p.order_id=#value#
+			UNION ALL
+			SELECT m.total_price FROM qkjm_r_closeorder_posm m WHERE m.closeOrder_id = #value#
+			)a
+		)WHERE c.uuid=#value#
+		]]>
+	</update>
+	
+	<delete id="qkjmanage_delCloseOrder" parameterClass="closeOrder">
+	<![CDATA[
+		Delete From qkjm_r_closeorder Where uuid=#uuid#
+	]]>
+	</delete>
+	
+	<select id="qkjmanage_getallclosesign" resultClass="closeOrder" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT s.`biz_user` biz_user, u.`USER_NAME` puser_name,u.`user_sign` puser_sign,s.`biz_time` biz_time FROM qkjm_h_process s  
+			LEFT JOIN qkjm_r_closeorder a ON (a.`uuid`=s.`biz_id`)
+			LEFT JOIN s_sys_user u ON (s.`biz_user`=u.`UUID`)
+			WHERE s.`process_id`=4 
+		]]>
+		<isNotEmpty prepend="AND" property="allsign"><![CDATA[ 
+		 s.`biz_id`=#biz_id#
+			AND s.`biz_status01`>0 AND NOT  ISNULL(u.`user_sign`)
+			AND s.`biz_time`>(SELECT MAX(p.`biz_time`) biz_time FROM qkjm_h_process p WHERE p.process_id=4 AND p.biz_status01=0 AND p.`biz_id`=#biz_id# )
+		 ]]></isNotEmpty>
+		
+		<![CDATA[ GROUP BY s.`biz_user` ORDER BY s.`biz_time` DESC  ]]>
+		
+	</select>
+	
+	<select id="qkjmanage_getclosesign" resultClass="closeOrder" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT 	MAX(sign50) sign50,MAX(time50) time50,MAX(sign40) sign40,MAX(time40) time40,MAX(sign60) sign60,MAX(time60) time60,MAX(sign70) sign70,MAX(time70) time70,MAX(sign30) sign30,MAX(time30) time30,MAX(sign80) sign80,MAX(time80) time80,MAX(sign20) sign20,MAX(time20) time20 FROM (
+			SELECT u.`user_sign` sign50,s.`biz_time` time50,NULL sign40,NULL time40,NULL sign60,NULL time60,NULL sign70,NULL time70,null sign30,null time30,null sign80,null time80,NULL sign20,NULL time20  FROM qkjm_h_process s  
+			LEFT JOIN qkjm_r_closeorder a ON (a.`uuid`=s.`biz_id`)
+			LEFT JOIN s_sys_user u ON (s.`biz_user`=u.`UUID`)
+			WHERE s.`process_id`=4 AND s.`biz_status04`=10 AND s.`biz_sign`='CLOSEORDER_MDY_FDSTATUS' AND NOT ISNULL(u.`user_sign`) AND s.`biz_id`=#biz_id# 
+			AND s.`biz_time`>(SELECT MAX(p.`biz_time`) biz_time FROM qkjm_h_process p WHERE p.process_id=4 AND p.biz_status01=0 AND p.`biz_id`=#biz_id#)
+			UNION ALL 
+			SELECT NULL sign50,NULL time50,u.`user_sign` sign40,s.`biz_time` time40,NULL sign60,NULL time60,NULL sign70,NULL time70,null sign30,null time30,null sign80,null time80,NULL sign20,NULL time20 FROM qkjm_h_process s  
+			LEFT JOIN qkjm_r_closeorder a ON (a.`uuid`=s.`biz_id`)
+			LEFT JOIN s_sys_user u ON (s.`biz_user`=u.`UUID`)
+			WHERE s.`process_id`=4 AND s.`biz_status03`=40 AND s.`biz_sign`='CLOSEORDER_MDY_SMDSTATUS' AND NOT ISNULL(u.`user_sign`) AND s.`biz_id`=#biz_id# 
+			AND s.`biz_time`>(SELECT MAX(p.`biz_time`) biz_time FROM qkjm_h_process p WHERE p.process_id=4 AND p.biz_status01=0 AND p.`biz_id`=#biz_id#)
+			UNION ALL 
+			SELECT NULL sign50,NULL time50,NULL sign40,NULL time40, u.`user_sign` sign60,s.`biz_time` time60,NULL sign70,NULL time70,null sign30,null time30,null sign80,null time80,NULL sign20,NULL time20 FROM qkjm_h_process s  
+			LEFT JOIN qkjm_r_closeorder a ON (a.`uuid`=s.`biz_id`)
+			LEFT JOIN s_sys_user u ON (s.`biz_user`=u.`UUID`)
+			WHERE s.`process_id`=4 AND s.`biz_status03`=50 AND s.`biz_sign`='CLOSEORDER_MDY_SMDSTATUS' AND NOT ISNULL(u.`user_sign`) AND s.`biz_id`=#biz_id# 
+			AND s.`biz_time`>(SELECT MAX(p.`biz_time`) biz_time FROM qkjm_h_process p WHERE p.process_id=4 AND p.biz_status01=0 AND p.`biz_id`=#biz_id#)
+			UNION ALL 
+			SELECT NULL sign50,NULL time50,NULL sign40,NULL time40, NULL sign60,NULL time60,u.`user_sign` sign70,s.`biz_time` time70,null sign30,null time30,null sign80,null time80,NULL sign20,NULL time20 FROM qkjm_h_process s  
+			LEFT JOIN qkjm_r_closeorder a ON (a.`uuid`=s.`biz_id`)
+			LEFT JOIN s_sys_user u ON (s.`biz_user`=u.`UUID`)
+			WHERE s.`process_id`=4 AND ((s.`biz_status03`=60 AND s.`biz_sign`='CLOSEORDER_MDY_SMDSTATUS') or (s.biz_status02=60 and s.biz_sign='CLOSEORDER_MDY_SDSTATUS') or (s.biz_status02=70 and s.biz_sign='CLOSEORDER_MDY_SDSTATUS')) AND NOT ISNULL(u.`user_sign`) AND s.`biz_id`=#biz_id# 
+			AND s.`biz_time`>(SELECT MAX(p.`biz_time`) biz_time FROM qkjm_h_process p WHERE p.process_id=4 AND p.biz_status01=0 AND p.`biz_id`=#biz_id#)
+			union all
+			
+			SELECT NULL sign50,NULL time50,NULL sign40,NULL time40,NULL sign60,NULL time60,NULL sign70,NULL time70,u.`user_sign` sign30,s.`biz_time` time30,null sign80,null time80,NULL sign20,NULL time20 FROM qkjm_h_process s  
+			LEFT JOIN qkjm_r_closeorder a ON (a.`uuid`=s.`biz_id`)
+			LEFT JOIN s_sys_user u ON (s.`biz_user`=u.`UUID`)
+			WHERE s.`process_id`=4 AND s.`biz_status04`=10 AND s.`biz_sign`='CLOSEORDER_MDY_NDCSTATUS' AND NOT ISNULL(u.`user_sign`) AND s.`biz_id`=#biz_id#
+			AND s.`biz_time`>(SELECT MAX(p.`biz_time`) biz_time FROM qkjm_h_process p WHERE p.process_id=4 AND p.biz_status01=0 AND p.`biz_id`=#biz_id#)
+			
+			union all 
+			
+			SELECT NULL sign50,NULL time50,NULL sign40,NULL time40, NULL sign60,NULL time60,NULL sign70,NULL time70,NULL sign30,NULL time30,u.`user_sign` sign80,s.`biz_time` time80,NULL sign20,NULL time20 FROM qkjm_h_process s  
+			LEFT JOIN qkjm_r_closeorder a ON (a.`uuid`=s.`biz_id`)
+			LEFT JOIN s_sys_user u ON (s.`biz_user`=u.`UUID`)
+			WHERE s.`process_id`=4 AND ((s.`biz_status03`=70 AND s.`biz_sign`='CLOSEORDER_MDY_SMDSTATUS') or (s.biz_status02=80 and s.biz_sign='CLOSEORDER_MDY_SDSTATUS')) AND NOT ISNULL(u.`user_sign`) AND s.`biz_id`=#biz_id# 
+			AND s.`biz_time`>(SELECT MAX(p.`biz_time`) biz_time FROM qkjm_h_process p WHERE p.process_id=4 AND p.biz_status01=0 AND p.`biz_id`=#biz_id#)
+			
+			union all 
+			
+			SELECT NULL sign50,NULL time50,NULL sign40,NULL time40, NULL sign60,NULL time60,NULL sign70,NULL time70,NULL sign30,NULL time30,NULL sign80,NULL time80,u.`user_sign` sign20,s.`biz_time` time20 FROM qkjm_h_process s  
+			LEFT JOIN qkjm_r_closeorder a ON (a.`uuid`=s.`biz_id`)
+			LEFT JOIN s_sys_user u ON (s.`biz_user`=u.`UUID`)
+			WHERE s.`process_id`=4 AND s.`biz_status02`=50 AND s.`biz_sign`='CLOSEORDER_MDY_SDSTATUS' AND NOT ISNULL(u.`user_sign`) AND s.`biz_id`=#biz_id# 
+			AND s.`biz_time`>(SELECT MAX(p.`biz_time`) biz_time FROM qkjm_h_process p WHERE p.process_id=4 AND p.biz_status01=0 AND p.`biz_id`=#biz_id#) 
+			)a
+		]]>
+		
+	</select>
+	
+	<!-- ship info change -->
+	<update id="qkjmanage_mdyCloseOrderShipInfo" parameterClass="closeOrder">
+		<![CDATA[
+			Update qkjm_r_closeorder
+			Set ship_status=#ship_status#,
+				ship_ware=#ship_ware#,
+				ship_date=#ship_date#,
+				ship_no=#ship_no#,
+				ship_cloud=#ship_cloud#,
+				ship_phone=#ship_phone#,
+				remark=#remark#,
+				ship_type=#ship_type#,
+				lm_user=#lm_user#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<update id="qkjmanage_mdyGoFlag" parameterClass="closeOrder">
+		<![CDATA[
+			Update qkjm_r_closeorder
+			Set 
+			goflag=#goflag#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<update id="qkjmanage_mdyCloseOrderMtPrice" parameterClass="string">
+		<![CDATA[
+		UPDATE qkjm_r_closeorder a
+		SET a.mt_price = (
+			SELECT IFNULL(SUM(total_price),0)
+			FROM qkjm_r_closeorder_memcost
+			WHERE close_id = #value#
+			AND `status` = 1
+		)
+		WHERE a.uuid = #value#
+		]]>
+	</update>
+	
+	<!-- CloseOrder End -->
+</sqlMap>

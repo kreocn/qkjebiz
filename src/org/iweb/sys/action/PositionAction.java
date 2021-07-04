@@ -27,6 +27,11 @@ public class PositionAction extends ActionSupport {
 	private String viewFlag;
 	private int recCount;
 	private int pageSize;
+	private String path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;职务管理列表";
+	
+	public String getPath() {
+		return path;
+	}
 
 	public Position getPosition() {
 		return position;
@@ -89,6 +94,7 @@ public class PositionAction extends ActionSupport {
 			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
 			this.setPositions(dao.list(map));
 			this.setRecCount(dao.getResultCount());
+			path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;职务管理列表";
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!list 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!list 读取数据错误:", e);
@@ -103,6 +109,7 @@ public class PositionAction extends ActionSupport {
 				setMessage("你没有选择任何操作!");
 			} else if ("add".equals(viewFlag)) {
 				this.setPosition(null);
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/sys/position_list?viewFlag=relist'>职务管理列表</a>&nbsp;&gt;&nbsp;添加职务";
 			} else if ("mdy".equals(viewFlag)) {
 				map.clear();
 				map.put("uuid", position.getUuid());
@@ -110,6 +117,7 @@ public class PositionAction extends ActionSupport {
 					this.setPosition(null);
 				else
 					this.setPosition((Position) dao.list(map).get(0));
+				path = "<a href='/manager/default'>首页</a>&nbsp;&gt;&nbsp;<a href='/sys/position_list?viewFlag=relist'>职务管理列表</a>&nbsp;&gt;&nbsp;修改职务";
 			} else {
 				this.setPosition(null);
 				setMessage("无操作类型!");

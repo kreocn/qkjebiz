@@ -1,18 +1,12 @@
 package org.iweb.common.action;
 
-import java.lang.annotation.Annotation;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-import net.sf.json.util.JSONUtils;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -39,6 +33,15 @@ public class JsonAjaxAction extends ActionSupport {
 	private Object ajax_result;
 
 	private String work;
+	private Integer dbnum;
+
+	public Integer getDbnum() {
+		return dbnum;
+	}
+
+	public void setDbnum(Integer dbnum) {
+		this.dbnum = dbnum;
+	}
 
 	public String getPrivilege_id() {
 		return privilege_id;
@@ -166,6 +169,11 @@ public class JsonAjaxAction extends ActionSupport {
 		} else {
 			// 如果有privilege_id,则从privilege_id中读出map_id来查询数据库
 			log.info("获取privilege_id成功:" + privilege_id);
+
+			// 获取使用哪个数据源
+			if (!(dbnum == null || dbnum == 0)) {
+				dao.setDb_num(dbnum);
+			}
 
 			// 有权限ID,就必定要登录LOGTIMEOUT NOPERMIT NODATA
 			if (!ContextHelper.checkLoginStatus()) {

@@ -27,7 +27,7 @@ window.onload = function() {
 
 var sobj01;
 var selectDept2 = function() {
-	sobj01 = new DialogIFrame({src:'<s:url namespace="/sys" action="dept_permit_select" />?objname=sobj01'});
+	sobj01 = new DialogIFrame({src:'<s:url namespace="/sys" action="dept_permit_select" />?objname=sobj01',title:'选择部门'});
 	sobj01.selfAction = function(val1,val2) {
 		$("#userdept_codeid").val(val1);
 		$("#userdept_cnameid").val(val2);
@@ -50,12 +50,14 @@ var selectDept2 = function() {
 <s:form name="form_serach" action="user_list"  method="get" namespace="/sys" theme="simple">
 		<table class="ilisttable" id="serach_table" width="100%" border="1" cellspacing="0" cellpadding="0" bordercolor="#8B8B8B">
 			<tr>
-				<td class="firstRow">工号:</td>
-	    		<td class="secRow"><s:textfield id="user.work_id" title="工号" name="user.work_id" /></td>
+				<td class="firstRow">帐号:</td>
+	    		<td class="secRow"><s:textfield id="user.title" title="帐号" name="user.title" /></td>
 				<td class="firstRow">姓名:</td>
 	    		<td class="secRow"><s:textfield id="user.user_name" title="姓名" name="user.user_name" /></td>				
 			</tr>
 			<tr>
+				<td class="firstRow">工号:</td>
+	    		<td class="secRow"><s:textfield id="user.work_id" title="工号" name="user.work_id" /></td>
 				<td class="firstRow">所属部门:</td>
 	    		<td class="secRow" colspan="3">
 			    	<s:textfield title="部门" id="userdept_codeid" name="user.dept_code" readonly="true" />

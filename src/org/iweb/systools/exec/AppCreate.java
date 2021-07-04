@@ -97,29 +97,50 @@ public abstract class AppCreate {
 		log.info("开始初始化数据库信息");
 		DBConfig dc = DBConfig.getInstance(getDBType());
 		Conn conn = dc.getConn();
-		String column_sql = "SELECT c.COLUMN_NAME,c.COLUMN_DEFAULT,c.IS_NULLABLE,c.DATA_TYPE," + "c.NUMERIC_SCALE,c.COLUMN_COMMENT,	"
-				+ "IFNULL(c.CHARACTER_MAXIMUM_LENGTH,c.NUMERIC_PRECISION) AS MAX_LENGTH "
-				+ "FROM information_schema.`COLUMNS` c WHERE c.TABLE_SCHEMA = '" + app.getDb_name() + "' " + "AND c.TABLE_NAME = '"
-				+ app.getTable_name() + "'";
-		System.out.println(column_sql);
-		ResultSet rs = conn.getResult(column_sql);
-		String t_col;
-		while (rs.next()) {
-			t_col = Lower(rs.getString("COLUMN_NAME"));
-			TableColumn tc = app.getTcs().get(t_col);
-			System.out.println("===(1):" + ToolsUtil.dumpObject(tc));
-			tc.setType(Lower(rs.getString("DATA_TYPE")));
-			tc.setMax(rs.getInt("MAX_LENGTH"));
-			tc.setNote(rs.getString("COLUMN_COMMENT"));
-			tc.setDval(rs.getString("COLUMN_DEFAULT"));
-			tc.setScale(rs.getInt("NUMERIC_SCALE"));
-			tc.setNullable("NO".equals(rs.getString("IS_NULLABLE")) ? 1 : 0);
-			// tc.setHmax("UTF-8".equals(encode) ? tc.getMax() / 3 : tc.getMax() / 2);
-			tc.setHmax(tc.getMax());
-			tc.setJtype(dc.getJavaType(tc.getType()));
-			System.out.println("===(2):" + ToolsUtil.dumpObject(tc));
+		if (getDBType() == DBConfig.DBTYPE_MYSQL) {
+			String column_sql = "SELECT c.COLUMN_NAME,c.COLUMN_DEFAULT,c.IS_NULLABLE,c.DATA_TYPE," + "c.NUMERIC_SCALE,c.COLUMN_COMMENT,	"
+					+ "IFNULL(c.CHARACTER_MAXIMUM_LENGTH,c.NUMERIC_PRECISION) AS MAX_LENGTH " + "FROM information_schema.`COLUMNS` c WHERE c.TABLE_SCHEMA = '" + app.getDb_name()
+					+ "' " + "AND c.TABLE_NAME = '" + app.getTable_name() + "'";
+			System.out.println(column_sql);
+			ResultSet rs = conn.getResult(column_sql);
+			String t_col;
+			while (rs.next()) {
+				t_col = Lower(rs.getString("COLUMN_NAME"));
+				TableColumn tc = app.getTcs().get(t_col);
+				System.out.println("===(1):" + ToolsUtil.dumpObject(tc));
+				tc.setType(Lower(rs.getString("DATA_TYPE")));
+				tc.setMax(rs.getInt("MAX_LENGTH"));
+				tc.setNote(rs.getString("COLUMN_COMMENT"));
+				tc.setDval(rs.getString("COLUMN_DEFAULT"));
+				tc.setScale(rs.getInt("NUMERIC_SCALE"));
+				tc.setNullable("NO".equals(rs.getString("IS_NULLABLE")) ? 1 : 0);
+				// tc.setHmax("UTF-8".equals(encode) ? tc.getMax() / 3 : tc.getMax() / 2);
+				tc.setHmax(tc.getMax());
+				tc.setJtype(dc.getJavaType(tc.getType()));
+				System.out.println("===(2):" + ToolsUtil.dumpObject(tc));
+			}
+			rs.close();
+		} else if (getDBType() == DBConfig.DBTYPE_SQLITE) {
+			// PRAGMA table_info ('r_gas_storage')
+			String column_sql = "PRAGMA table_info ('" + app.getTable_name() + "')";
+			System.out.println(column_sql);
+			ResultSet rs = conn.getResult(column_sql);
+			String t_col;
+			while (rs.next()) {
+				t_col = Lower(rs.getString("name"));
+				TableColumn tc = app.getTcs().get(t_col);
+				tc.setType(Lower(rs.getString("type")));
+				tc.setNote(rs.getString("name"));
+				tc.setMax(32);
+				// tc.setScale(rs.getInt("NUMERIC_SCALE"));
+				tc.setDval(rs.getString("dflt_value"));
+				tc.setNullable(rs.getInt("notnull"));
+				tc.setHmax(65535);
+				tc.setJtype(dc.getJavaType(tc.getType()));
+				System.out.println("===(2):" + ToolsUtil.dumpObject(tc));
+			}
+			rs.close();
 		}
-		rs.close();
 		log.info("数据库配置设置完成");
 	}
 
@@ -160,7 +181,6 @@ public abstract class AppCreate {
 		StringBuffer jsplist_columns = new StringBuffer();
 		StringBuffer jsplist_columnValues = new StringBuffer();
 		int search_num = 0; // 记录元素参与search的个数
-		jsplist_search_area.append("<tr>\n");
 
 		// jspedit 特殊Tag
 		StringBuffer jspedit_noedit_area = new StringBuffer();
@@ -170,12 +190,11 @@ public abstract class AppCreate {
 		for (Map.Entry<String, TableColumn> entry : app.getTcs().entrySet()) {
 			TableColumn tc = entry.getValue();
 
-			domain_column_area.append("private ").append(tc.getJtype()).append(" ").append(tc.getName()).append(";//(").append(tc.getType())
-					.append(")").append(tc.getNote()).append("\n");
-			domain_bean_area.append("public ").append(tc.getJtype()).append(" get").append(ToolsUtil.UpperFirst(tc.getName())).append("(){\nreturn ")
-					.append(tc.getName()).append(";\n}").append("public void set").append(ToolsUtil.UpperFirst(tc.getName())).append("(")
-					.append(tc.getJtype()).append(" ").append(tc.getName()).append(")").append("{\n").append("this.").append(tc.getName())
-					.append("=").append(tc.getName()).append(";\n}\n");
+			domain_column_area.append("private ").append(tc.getJtype()).append(" ").append(tc.getName()).append(";//(").append(tc.getType()).append(")").append(tc.getNote())
+					.append("\n");
+			domain_bean_area.append("public ").append(tc.getJtype()).append(" get").append(ToolsUtil.UpperFirst(tc.getName())).append("(){\nreturn ").append(tc.getName())
+					.append(";\n}").append("public void set").append(ToolsUtil.UpperFirst(tc.getName())).append("(").append(tc.getJtype()).append(" ").append(tc.getName())
+					.append(")").append("{\n").append("this.").append(tc.getName()).append("=").append(tc.getName()).append(";\n}\n");
 
 			if (pkey == null && tc.getKey() == 1) {
 				pkey = tc.getName();
@@ -183,14 +202,10 @@ public abstract class AppCreate {
 
 			if (tc.getSearch() == 1) {
 				search_num++;
-				sqlmap_search_area.append("<isNotEmpty prepend=\"AND\" property=\"").append(tc.getName()).append("\">").append("<![CDATA[ ")
-						.append(tc.getName()).append("=#").append(tc.getName()).append("# ]]>").append("</isNotEmpty>\n");
-
-				jsplist_search_area.append("<td class='firstRow'>").append(tc.getTitle()).append(":</td>\n").append("<td class='secRow'>")
-						.append(tc.getFormField(tags.get("class_alias"), 1)).append("</td>\n");
-				if (search_num % 2 == 0) {
-					jsplist_search_area.append("</tr><tr>\n");
-				}
+				sqlmap_search_area.append("<isNotEmpty prepend=\"AND\" property=\"").append(tc.getName()).append("\">").append("<![CDATA[ ").append(tc.getName()).append("=#")
+						.append(tc.getName()).append("# ]]>").append("</isNotEmpty>\n");
+				jsplist_search_area.append("<div class='label_hang'><div class='label_ltit'>").append(tc.getTitle()).append(":</div><div class='label_rwben'>")
+						.append(tc.getFormField(tags.get("class_alias"), 1)).append("</div></div>");
 			}
 
 			if (tc.getShow() == 1) {
@@ -211,20 +226,21 @@ public abstract class AppCreate {
 			if (tc.getNullable() == 0) {
 				form_title = tc.getTitle();
 			} else {
-				form_title = "<span style=\"color:red;\">*</span> " + tc.getTitle();
+				form_title = "<span class='cr'>*</span>" + tc.getTitle();
 			}
-			// <span style="color:red;">*</span>
 			if (tc.getStype() == 5 || tc.getStype() == 6) {
-				jspedit_noedit_area.append("<tr>\n<td class='firstRow'>" + form_title + ":</td>\n").append(
-						"<td class='secRow'>" + tc.getFormField(tags.get("class_alias"), 0) + "</td>\n</tr>\n");
+				jspedit_noedit_area.append("<div class='label_hang'><div class='label_ltit'>").append(tc.getTitle()).append(":</div><div class='label_rwben'>")
+						.append(tc.getFormField(tags.get("class_alias"), 0)).append("</div></div>").append("\n");
+
 			} else if (tc.getStype() == 4) {
 				jspedit_hidden_area.append(tc.getFormField(tags.get("class_alias"), 0)).append("\n");
 			} else if (tc.getStype() == 8) {
-				jspedit_edit_area.append("<tr>\n<td class='titleRow' colspan='2'>").append(form_title).append(":</td>\n</tr>\n<tr>\n")
-						.append("<td class='secRow' colspan='2'>\n").append(tc.getFormField(tags.get("class_alias"), 0)).append("\n</td>\n</tr>\n");
+				jspedit_edit_area.append("</div><div class='label_main'><div class='label_hang'><div class='label_ltit'>").append(form_title)
+						.append(":</div><div class='label_rwbenx'></div></div></div><div class='label_main'><div class='note_area'>")
+						.append(tc.getFormField(tags.get("class_alias"), 0)).append("</div></div><div class='label_main'>").append("\n");
 			} else {
-				jspedit_edit_area.append("<tr>\n<td class='firstRow'>" + form_title + ":</td>\n").append(
-						"<td class='secRow'>" + tc.getFormField(tags.get("class_alias"), 0) + "</td>\n</tr>\n");
+				jspedit_edit_area.append("<div class='label_hang'><div class='label_ltit'>").append(form_title).append(":</div><div class='label_rwben'>")
+						.append(tc.getFormField(tags.get("class_alias"), 0)).append("</div></div>").append("\n");
 			}
 		}
 		// 循环后操作
@@ -234,8 +250,6 @@ public abstract class AppCreate {
 		// 需要减2个字符,因为最后一个字符是\n
 		// System.out.println("sqlmap_update_set_area:" + sqlmap_update_set_area);
 		sqlmap_update_set_area.deleteCharAt(sqlmap_update_set_area.length() - 1).deleteCharAt(sqlmap_update_set_area.length() - 1);
-		// jsplist 添加结束标签
-		jsplist_search_area.append("</tr>");
 
 		// 添加生成特殊Tag
 		addTags("pkey", pkey); // 主键Tag
@@ -255,10 +269,8 @@ public abstract class AppCreate {
 		addTags("dao_import", "import java.util.*;\nimport org.iweb.sys.AbstractDAO;");
 		// action 特殊Tag
 		addTags("action_package", tags.get("package_name") + ".action");
-		addTags("action_import",
-				"import java.util.*;\nimport org.apache.commons.logging.*;\n"
-						+ "import org.iweb.sys.*;\nimport com.opensymphony.xwork2.ActionSupport;\n" + "import " + tags.get("domain_package") + "."
-						+ tags.get("file_s_name") + ";\n" + "import " + tags.get("dao_package") + "." + tags.get("file_s_name") + "DAO;\n");
+		addTags("action_import", "import java.util.*;\nimport org.apache.commons.logging.*;\n" + "import org.iweb.sys.*;\nimport com.opensymphony.xwork2.ActionSupport;\n"
+				+ "import " + tags.get("domain_package") + "." + tags.get("file_s_name") + ";\n" + "import " + tags.get("dao_package") + "." + tags.get("file_s_name") + "DAO;\n");
 		addTags("action_privilege_flag", (tags.get("app_code") + "_" + tags.get("name_space") + "_" + tags.get("class_alias")).toUpperCase());
 		// jsplist 特殊Tag
 		addTags("jsplist_search_area", jsplist_search_area.toString());
@@ -346,15 +358,13 @@ public abstract class AppCreate {
 		// Domain File
 		filesInfo.put(path.get("DOMAIN") + tags.get("file_s_name") + ".java", domain_template);
 		// SQLMAPXML File
-		filesInfo.put(path.get("MAPXML") + tags.get("app_code") + "_" + tags.get("name_space") + "_" + tags.get("file_s_name") + "Map.xml",
-				sqlmap_template);
+		filesInfo.put(path.get("MAPXML") + tags.get("app_code") + "_" + tags.get("name_space") + "_" + tags.get("file_s_name") + "Map.xml", sqlmap_template);
 		// DAO File
 		filesInfo.put(path.get("DAO") + tags.get("file_s_name") + "DAO.java", dao_template);
 		// Action File
 		filesInfo.put(path.get("ACTION") + tags.get("file_s_name") + "Action.java", action_template);
 		// Action XML File
-		filesInfo.put(path.get("ACTIONXML") + tags.get("app_code") + "_" + tags.get("name_space") + "_" + tags.get("file_s_name") + "Action.xml",
-				actionxml_template);
+		filesInfo.put(path.get("ACTIONXML") + tags.get("app_code") + "_" + tags.get("name_space") + "_" + tags.get("file_s_name") + "Action.xml", actionxml_template);
 		// JSP 2 Files
 		filesInfo.put(path.get("JSPROOT") + "/" + tags.get("file_s_name") + "List.jsp", jsplist_template);
 		filesInfo.put(path.get("JSPROOT") + "/" + tags.get("file_s_name") + "Edit.jsp", jspedit_template);
@@ -380,7 +390,8 @@ public abstract class AppCreate {
 
 	private String replaceTags(String template) {
 		for (Map.Entry<String, String> entry : this.tags.entrySet()) {
-			template = template.replaceAll("\\$" + entry.getKey() + "\\$", entry.getValue());
+			// System.out.println("===:" + entry.getKey());
+			template = template.replace("$" + entry.getKey() + "$", entry.getValue());
 		}
 		return template;
 	}

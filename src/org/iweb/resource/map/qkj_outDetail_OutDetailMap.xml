@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
+<sqlMap>
+	<!-- OutDetail Start -->
+	<typeAlias alias="outDetail" type="com.qkj.ware.domain.OutDetail" />
+	<select id="outDetail_getOutDetails" resultClass="outDetail" parameterClass="java.util.Map">
+		<![CDATA[ 
+				SELECT i.*,p.`title` product_name, p.`case_spec` case_spec FROM qkj_t_outdetail i 
+			LEFT JOIN qkj_r_stock s ON(i.`product_id`=s.`uuid`) 
+			LEFT JOIN qkj_t_product p ON(i.`product_id`=p.`uuid`)
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ i.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="lading_id"><![CDATA[ i.lading_id=#lading_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="product_id"><![CDATA[ i.product_id=#product_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="num"><![CDATA[ i.num=#num# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="price"><![CDATA[ i.price=#price# ]]></isNotEmpty>
+
+		</dynamic>
+	</select>
+	
+	<select id="outDetail_getOutDetailsTwo" resultClass="outDetail" parameterClass="java.util.Map">
+		<![CDATA[ 
+				SELECT od.*,p.`title` product_name,p.`spec`,p.`case_spec`,os.`date` datea,os.`ordernum`,os.`goldUuid`,os.goreason,os.`store_id` store_id,os.`remark` remark,w.`ware_name` ware_name  FROM qkj_t_outdetail od 
+LEFT JOIN qkj_t_outstock os ON(od.`lading_id`=os.`uuid`)
+LEFT JOIN qkj_t_product p ON(p.`uuid`=od.`product_id`)
+LEFT JOIN qkj_t_warehouse w ON (w.`uuid`=os.`store_id`)
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ od.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="lading_id"><![CDATA[ od.lading_id=#lading_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="product_id"><![CDATA[ od.product_id=#product_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="num"><![CDATA[ od.num=#num# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="price"><![CDATA[ od.price=#price# ]]></isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="store_id"><![CDATA[ os.store_id=#store_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="goreason"><![CDATA[ os.goreason=#goreason# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="out_time_start"><![CDATA[ os.date>=#out_time_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="out_time_end"><![CDATA[ os.date<=DATE_ADD(#out_time_end#,INTERVAL 1 day) ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="product_name"><![CDATA[ p.`title` LIKE CONCAT('%',#product_name#,'%') ]]></isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="apply_depts" open="(" close=")">
+			<![CDATA[ os.dept_code In ]]>
+			<iterate property="apply_depts" open="(" close=")" conjunction=" , "> #apply_depts[]#</iterate>
+			<isNotEmpty prepend="OR" property="apply_perdepts">
+				<![CDATA[ os.dept_code In ]]>
+				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ os.add_user=#apply_userDouble# ]]></isNotEmpty>
+			</isNotEmpty>
+		</isNotEmpty>
+		<isEmpty  property="apply_depts">
+			<isNotEmpty prepend="AND" property="apply_perdepts">
+				<![CDATA[ os.dept_code In ]]>
+				<iterate property="apply_perdepts" open="(" close=")" conjunction=" , "> #apply_perdepts[]#</iterate>
+				<isNotEmpty prepend="AND" property="apply_userDouble"><![CDATA[ os.add_user=#apply_userDouble# ]]></isNotEmpty>
+			</isNotEmpty>
+		</isEmpty>
+
+		</dynamic>
+	</select>
+	
+	<select id="outDetail_getOutDetailsCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) From qkj_t_outdetail
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="lading_id"><![CDATA[ lading_id=#lading_id# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="product_id"><![CDATA[ product_id=#product_id# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="num"><![CDATA[ num=#num# ]]></isNotEmpty>
+<isNotEmpty prepend="AND" property="price"><![CDATA[ price=#price# ]]></isNotEmpty>
+
+		</dynamic>
+	</select>
+	<insert id="outDetail_addOutDetail" parameterClass="outDetail">
+		<![CDATA[ 
+			Insert Into qkj_t_outdetail(lading_id,product_id,num,price,totel)
+			Values (#lading_id#,#product_id#,#num#,#price#,#totel#)
+		]]>
+	</insert>
+	<update id="outDetail_mdyOutDetail" parameterClass="outDetail">
+		<![CDATA[
+			Update qkj_t_outdetail
+			Set lading_id=#lading_id#,
+product_id=#product_id#,
+num=#num#,
+price=#price#,
+totel=#totel#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="outDetail_delOutDetail" parameterClass="outDetail">
+	<![CDATA[
+		Delete From qkj_t_outdetail Where uuid=#uuid#
+	]]>
+	</delete>
+	
+	<!-- 额外方法 -->
+	<delete id="outDetail_delLading" parameterClass="java.util.Map">
+		<![CDATA[
+			DELETE FROM qkj_t_outdetail WHERE lading_id=#lading_id#
+		]]>
+	</delete>
+	<!-- OutDetail End -->
+</sqlMap>

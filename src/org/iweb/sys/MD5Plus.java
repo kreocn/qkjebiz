@@ -2,6 +2,12 @@ package org.iweb.sys;
 
 import java.security.MessageDigest;
 
+/**
+ * 
+ * @author 骏宇
+ * @deprecated replace By org.iweb.sys.encrypt.EncryptMD5
+ */
+@Deprecated
 public class MD5Plus {
 	public static String encrypt(String enteredPassword) {
 		String encryptString = "";
@@ -15,10 +21,8 @@ public class MD5Plus {
 			StringBuffer buf = new StringBuffer("");
 			for (int offset = 0; offset < b.length; offset++) {
 				i = b[offset];
-				if (i < 0)
-					i += 256;
-				if (i < 16)
-					buf.append("0");
+				if (i < 0) i += 256;
+				if (i < 16) buf.append("0");
 				buf.append(Integer.toHexString(i));
 			}
 			encryptString = buf.toString();

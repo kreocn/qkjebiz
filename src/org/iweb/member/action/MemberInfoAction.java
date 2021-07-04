@@ -7,19 +7,23 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.iweb.member.dao.MemberCenterDAO;
+import org.iweb.member.domain.MemberOrderGoods;
 import org.iweb.sys.ContextHelper;
 import org.iweb.sys.MD5Plus;
+import org.iweb.sys.Parameters;
 import org.iweb.sys.ToolsUtil;
 import org.iweb.sysvip.MemberStatusFactory;
 import org.iweb.sysvip.dao.MemberAddressDAO;
 import org.iweb.sysvip.dao.MemberCapitalDAO;
 import org.iweb.sysvip.dao.MemberDAO;
+import org.iweb.sysvip.domain.CustActives;
 import org.iweb.sysvip.domain.Member;
 import org.iweb.sysvip.domain.MemberAddress;
 import org.iweb.sysvip.domain.MemberCapital;
 import org.iweb.sysvip.domain.MemberCapitalActn;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.qkj.manage.domain.Active;
 
 public class MemberInfoAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
@@ -32,6 +36,8 @@ public class MemberInfoAction extends ActionSupport {
 
 	private MemberCapital memberCapital;
 	private List<MemberCapitalActn> memberCapitalActns;
+	private List<CustActives> custActives;
+	private CustActives custActive;
 
 	// 以下为修改密码所用对象
 	private String old_passwords;
@@ -47,6 +53,23 @@ public class MemberInfoAction extends ActionSupport {
 	private String viewFlag;
 	private int recCount;
 	private int pageSize;
+
+	
+	public CustActives getCustActive() {
+		return custActive;
+	}
+
+	public void setCustActive(CustActives custActive) {
+		this.custActive = custActive;
+	}
+
+	public List<CustActives> getCustActives() {
+		return custActives;
+	}
+
+	public void setCustActives(List<CustActives> custActives) {
+		this.custActives = custActives;
+	}
 
 	public MemberAddress getMemberAddress() {
 		return memberAddress;
@@ -280,6 +303,24 @@ public class MemberInfoAction extends ActionSupport {
 		} catch (Exception e) {
 			log.error(this.getClass().getName() + "!changeDefaultAddress 读取数据错误:", e);
 			throw new Exception(this.getClass().getName() + "!changeDefaultAddress 读取数据错误:", e);
+		}
+		return SUCCESS;
+	}
+	
+	public String getActive() throws Exception {
+		try {
+			MemberCapitalDAO mdao = new MemberCapitalDAO();
+			map.clear();
+			if (custActive == null)
+				custActive = new CustActives();
+			map.put("member_id", MemberStatusFactory.getLoginMemberID());
+			map.putAll(MemberStatusFactory.getDefaultRequestMap4Page());
+			this.setPageSize(Integer.parseInt(map.get(Parameters.Page_Size_Str).toString()));
+			this.setCustActives(mdao.listCustActives(map));
+			this.setRecCount(mdao.getResultCount());
+		} catch (Exception e) {
+			log.error(this.getClass().getName() + "!getCapital 读取数据错误:", e);
+			throw new Exception(this.getClass().getName() + "!getCapital 读取数据错误:", e);
 		}
 		return SUCCESS;
 	}

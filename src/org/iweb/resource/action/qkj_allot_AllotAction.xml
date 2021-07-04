@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="allot_allot" extends="default" namespace="/allot">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- Allot Start -->
+		<action name="allot_list" class="com.qkj.ware.action.AllotAction" method="list">
+			<result>/WEB-INF/jsp/ware/allot/AllotList.jsp</result>
+		</action>
+		<action name="allot_relist" class="com.qkj.ware.action.AllotAction" method="relist">
+			<result type="redirectAction">
+				<param name="actionName">allot_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+		<action name="allot_load" class="com.qkj.ware.action.AllotAction" method="load">
+			<result>/WEB-INF/jsp/ware/allot/AllotEdit.jsp</result>
+		</action>
+		<action name="allot_add" class="com.qkj.ware.action.AllotAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">allot_load</param>
+				<param name="allot.uuid">${allot.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="allot_save" class="com.qkj.ware.action.AllotAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">allot_load</param>
+				<param name="allot.uuid">${allot.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="allot_del" class="com.qkj.ware.action.AllotAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">allot_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="allot_freeze" class="com.qkj.ware.action.AllotAction" method="freeze">
+			<result type="redirectAction">
+				<param name="actionName">allot_load</param>
+				<param name="allot.uuid">${allot.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="allot_sure" class="com.qkj.ware.action.AllotAction" method="sure">
+			<result type="redirectAction">
+				<param name="actionName">allot_load</param>
+				<param name="allot.uuid">${allot.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="allot_cancel" class="com.qkj.ware.action.AllotAction" method="cancel">
+			<result type="redirectAction">
+				<param name="actionName">allot_load</param>
+				<param name="allot.uuid">${allot.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="allot_delivery" class="com.qkj.ware.action.AllotAction" method="delivery">
+			<result type="redirectAction">
+				<param name="actionName">allot_load</param>
+				<param name="allot.uuid">${allot.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- Allot End -->
+	</package>
+</struts>

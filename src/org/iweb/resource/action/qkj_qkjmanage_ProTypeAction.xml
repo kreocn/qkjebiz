@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="qkjmanage_proType" extends="default" namespace="/qkjmanage">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- ProType Start -->
+		<action name="proType_list" class="com.qkj.manage.action.ProTypeAction" method="list">
+			<result>/WEB-INF/jsp/qkjmanage/ProTypeList.jsp</result>
+		</action>
+		<action name="proType_lista" class="com.qkj.manage.action.ProTypeAction" method="lista">
+			<result type="redirectAction">
+				<param name="actionName">product_list</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="proType_listr" class="com.qkj.manage.action.ProTypeAction" method="listr">
+			<result>/WEB-INF/jsp/qkjmanage/ProTypeList.jsp</result>
+		</action>
+		<action name="proType_relist" class="com.qkj.manage.action.ProTypeAction" method="relist">
+			<result type="redirectAction">
+				<param name="actionName">proType_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+		<action name="proType_load" class="com.qkj.manage.action.ProTypeAction" method="load">
+			<result>/WEB-INF/jsp/qkjmanage/ProTypeEdit.jsp</result>
+		</action>
+		<action name="proType_add" class="com.qkj.manage.action.ProTypeAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">proType_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="proType_save" class="com.qkj.manage.action.ProTypeAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">proType_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="proType_del" class="com.qkj.manage.action.ProTypeAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">proType_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- ProType End -->
+	</package>
+</struts>

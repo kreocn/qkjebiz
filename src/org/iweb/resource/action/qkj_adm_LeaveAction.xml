@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="adm_leave" extends="default" namespace="/adm">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- Leave Start -->
+		<action name="leave_list" class="com.qkj.adm.action.LeaveAction" method="list">
+			<result name="success">/WEB-INF/jsp/adm/LeaveList.jsp</result>
+			<result name="perSuccess"  type="redirectAction">
+				<param name="actionName">perWork_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+		<action name="perWork_list" class="com.qkj.manage.action.PerWorkAction" method="list">
+			<result>/WEB-INF/jsp/qkjmanage/Personal/PerWorkList.jsp</result>
+		</action>
+		<action name="leave_relist" class="com.qkj.adm.action.LeaveAction" method="relist">
+			<result type="redirectAction">
+				<param name="actionName">leave_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+		<action name="leave_load" class="com.qkj.adm.action.LeaveAction" method="load">
+			<result>/WEB-INF/jsp/adm/LeaveEdit.jsp</result>
+		</action>
+		<action name="leave_del" class="com.qkj.adm.action.LeaveAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">leave_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="leave_list_*" class="com.qkj.adm.action.LeaveAction" method="{1}">
+			<result type="redirectAction">
+				<param name="actionName">leave_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="leave_print" class="com.qkj.adm.action.LeaveAction" method="print">
+			<result>/WEB-INF/jsp/adm/LeavePrint.jsp</result>
+		</action>
+		<action name="leave_check*" class="com.qkj.adm.action.LeaveAction" method="check{1}">
+			<result type="redirectAction">
+				<param name="actionName">leave_load</param>
+				<param name="leave.uuid">${leave.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="leave_acheck*" class="com.qkj.adm.action.LeaveAction" method="acheck{1}">
+			<result type="redirectAction">
+				<param name="actionName">leave_load</param>
+				<param name="leave.uuid">${leave.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="leave_*" class="com.qkj.adm.action.LeaveAction" method="{1}">
+			<result type="redirectAction">
+				<param name="actionName">leave_load</param>
+				<param name="leave.uuid">${leave.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="leave_approve" class="com.qkj.adm.action.LeaveAction" method="approve">
+			<result type="redirectAction">
+				<param name="actionName">leave_load</param>
+				<param name="leave.uuid">${leave.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="leave_approveDel" class="com.qkj.adm.action.LeaveAction" method="approveDel">
+			<result type="redirectAction">
+				<param name="actionName">leave_load</param>
+				<param name="leave.uuid">${leave.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- Leave End -->
+	</package>
+</struts>

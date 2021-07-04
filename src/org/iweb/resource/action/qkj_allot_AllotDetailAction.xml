@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="allot_allotDetail" extends="default" namespace="/allot">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- AllotDetail Start -->
+		<action name="allotDetail_list" class="com.qkj.ware.action.AllotDetailAction" method="list">
+			<result>/WEB-INF/jsp/ware/allotDetail/AllotDetailList.jsp</result>
+		</action>
+		<action name="allotDetail_relist" class="com.qkj.ware.action.AllotDetailAction" method="relist">
+			<result type="redirectAction">
+				<param name="actionName">allotDetail_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+		<action name="allotDetail_load" class="com.qkj.ware.action.AllotDetailAction" method="load">
+			<result>/WEB-INF/jsp/ware/allotDetail/AllotDetailEdit.jsp</result>
+		</action>
+		<action name="allotDetail_add" class="com.qkj.ware.action.AllotDetailAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">allot_load</param>
+				<param name="allot.uuid">${allotDetail.lading_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="allotDetail_save" class="com.qkj.ware.action.AllotDetailAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">allotDetail_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="allotDetail_del" class="com.qkj.ware.action.AllotDetailAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">allot_load</param>
+				<param name="allot.uuid">${allotDetail.lading_id}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- AllotDetail End -->
+	</package>
+</struts>

@@ -7,10 +7,10 @@
 		<default-interceptor-ref name="myStackIndex" />
 		<!-- Member Start -->
 		<action name="member_list" class="org.iweb.sysvip.action.MemberAction" method="list">
-			<result>/jsp/sysvip/MemberList.jsp</result>
+			<result>/WEB-INF/jsp/sysvip/MemberList.jsp</result>
 		</action>
 		<action name="member_load" class="org.iweb.sysvip.action.MemberAction" method="load">
-			<result>/jsp/sysvip/MemberEdit.jsp</result>
+			<result>/WEB-INF/jsp/sysvip/MemberEdit.jsp</result>
 		</action>
 		<action name="member_add" class="org.iweb.sysvip.action.MemberAction" method="add">
 			<result type="redirectAction">
@@ -39,7 +39,7 @@
 		</action>
 
 		<action name="distribution_list" class="org.iweb.sysvip.action.MemberAction" method="list">
-			<result>/jsp/sysvip/MemberDistribution.jsp</result>
+			<result>/WEB-INF/jsp/sysvip/MemberDistribution.jsp</result>
 		</action>
 
 		<action name="member_distribution" class="org.iweb.sysvip.action.MemberAction" method="distribution">
@@ -49,7 +49,68 @@
 				<param name="message">${message}</param>
 			</result>
 		</action>
+		
+		<action name="getMember" class="org.iweb.sysvip.action.MemberAction" method="get_Member">
+		</action>
+		<action name="getMemberMobile" class="org.iweb.sysvip.action.MemberAction" method="get_MemberMobile">
+		</action>
 
 		<!-- Member End -->
+	</package>
+	
+	
+	
+	
+	
+	
+	<package name="qkjmanage_customer" extends="default" namespace="/sysvip">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- Customer Start -->
+		<action name="customer_list" class="com.qkj.manage.action.CustomerAction" method="list">
+			<result>/WEB-INF/jsp/qkjmanage/CustomerList.jsp</result>
+		</action>
+		<action name="customer_load" class="com.qkj.manage.action.CustomerAction" method="load">
+			<result>/WEB-INF/jsp/qkjmanage/CustomerEdit.jsp</result>
+		</action>
+		<action name="customer_loadt" class="com.qkj.manage.action.CustomerAction" method="load">
+			<result>/WEB-INF/jsp/qkjmanage/CustomerEditT.jsp</result>
+		</action>
+		<action name="customer_relist" class="com.qkj.manage.action.CustomerAction">
+			<result type="redirectAction">
+				<param name="actionName">customer_list</param>
+				<param name="viewFlag">relist</param>
+			</result>
+		</action>
+		<action name="customer_add" class="com.qkj.manage.action.CustomerAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">customer_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="customer_save" class="com.qkj.manage.action.CustomerAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">customer_load</param>
+				<param name="customer.uuid">${customer.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="customer_savet" class="com.qkj.manage.action.CustomerAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">customer_loadt</param>
+				<param name="customer.uuid">${customer.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="customer_del" class="com.qkj.manage.action.CustomerAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">customer_list</param>
+				<param name="viewFlag">relist</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- Customer End -->
 	</package>
 </struts>

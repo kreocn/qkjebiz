@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "sql-map-2.dtd">
+<sqlMap>
+	<!-- closePosm Start -->
+	<typeAlias alias="closePosm" type="com.qkj.manage.domain.CloseOrderPosm" />
+	<select id="qkjmanage_getCloseOrderPosms" resultClass="closePosm" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select * From qkjm_r_closeorder_posm
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="closeOrder_id"><![CDATA[ closeOrder_id=#closeOrder_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="title"><![CDATA[ title=#title# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="status"><![CDATA[ status=#status# ]]></isNotEmpty>
+		</dynamic>
+	</select>
+	<select id="qkjmanage_getCloseOrderPosmsCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) From qkjm_r_closeorder_posm
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="closeOrder_id"><![CDATA[ closeOrder_id=#closeOrder_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="title"><![CDATA[ title=#title# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="status"><![CDATA[ status=#status# ]]></isNotEmpty>
+		</dynamic>
+	</select>
+	<insert id="qkjmanage_addCloseOrderPosm" parameterClass="closePosm">
+		<![CDATA[ 
+			Insert Into qkjm_r_closeorder_posm(closeOrder_id,title,note,total_price,status)
+			Values (#closeOrder_id#,#title#,#note#,#total_price#,#status#)
+		]]>
+	</insert>
+	<update id="qkjmanage_mdyCloseOrderPosm" parameterClass="closePosm">
+		<![CDATA[
+			Update qkjm_r_closeorder_posm
+			Set title=#title#,
+				note=#note#,
+				total_price=#total_price#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="qkjmanage_delCloseOrderPosm" parameterClass="closePosm">
+	<![CDATA[
+		Delete From qkjm_r_closeorder_posm Where uuid=#uuid#
+	]]>
+	</delete>
+	<!-- closePosm End -->
+</sqlMap>

@@ -1,6 +1,12 @@
 package org.iweb.sys;
 
 import java.beans.PropertyDescriptor;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.lang.annotation.Annotation;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -14,18 +20,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.TreeMap;
+import java.util.UUID;
 import java.util.Vector;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import net.sf.json.JsonConfig;
-import net.sf.json.processors.JsDateJsonBeanProcessor;
 import net.sf.json.util.JSONUtils;
 
 public class ToolsUtil {
 
-	private final static String[] simpleClass = { "java.lang.String", "java.lang.Double", "java.lang.Integer", "java.lang.Float", "java.lang.Lang",
-			"java.lang.Number", "java.lang.Short" };
+	private final static String[] simpleClass = { "java.lang.String", "java.lang.Double", "java.lang.Integer", "java.lang.Float", "java.lang.Lang", "java.lang.Number",
+			"java.lang.Short" };
 
 	/**
 	 * 创建16位ID
@@ -33,7 +38,7 @@ public class ToolsUtil {
 	 * @return
 	 */
 	public static String getUUID() {
-		return getUUIDByDateRandom(2, "yyyyMMddHHmmss");
+		return getUUIDByDateRandom(6, "yyyyMMddHH");
 	}
 
 	/**
@@ -128,28 +133,12 @@ public class ToolsUtil {
 	}
 
 	/**
+	 * JAVA自带UUID生成器,推荐使用
 	 * 
 	 * @return
 	 */
-	public static String getUUID16() {
-		return getUUIDByDateRandom(10, "yyMMdd");
-	}
-
-	/**
-	 * @return 20位的UUID,适用于不同要求
-	 */
-	public static String getUUID20() {
-		return new StringBuffer().append(System.currentTimeMillis()).append((long) (Math.random() * 9000) + 1000)
-				.append((long) (Math.random() * 900) + 100).toString();
-	}
-
-	/**
-	 * @return 32位的UUID,适用于不同要求
-	 */
 	public static String getUUID32() {
-		return new StringBuffer().append(System.currentTimeMillis()).append((long) (Math.random() * 9000) + 1000)
-				.append((long) (Math.random() * 9000) + 1000).append((long) (Math.random() * 9000) + 1000)
-				.append((long) (Math.random() * 9000) + 1000).append((long) (Math.random() * 900) + 100).toString();
+		return UUID.randomUUID().toString().replaceAll("-", "");
 	}
 
 	/**
@@ -171,10 +160,18 @@ public class ToolsUtil {
 	}
 
 	/**
+	 * 使用System.currentTimeMillis(13位)得到ID
+	 * 
+	 * @return
+	 */
+	public static String getTimeTimeMillis() {
+		return getTimeTimeMillis(13);
+	}
+
+	/**
 	 * 生成固定长度整数
 	 * 
-	 * @param int len
-	 *        长度
+	 * @param int len 长度
 	 * @return 固定长度整数
 	 */
 	public static int getRandomInt(int len) {
@@ -194,8 +191,8 @@ public class ToolsUtil {
 		final int maxNum = 36;
 		int i; // 生成的随机数
 		int count = 0; // 生成的密码的长度
-		char[] str = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'L', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y',
-				'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+		char[] str = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'L', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4',
+				'5', '6', '7', '8', '9' };
 		StringBuffer pwd = new StringBuffer("");
 		Random r = new Random();
 		while (count < pwd_len) {
@@ -207,6 +204,22 @@ public class ToolsUtil {
 			}
 		}
 		return pwd.toString();
+	}
+
+	/**
+	 * 根据传入的参数,计算出下一个ID
+	 * 
+	 * @param current_id
+	 *            当前ID
+	 * @param prefix
+	 *            前缀
+	 * @return NextID
+	 * 
+	 * 比如传入(q000155,q)则返回q000156
+	 */
+	public static String getNextID(String current_id, String prefix) {
+		Long l = Long.parseLong(current_id.substring(prefix.length()));
+		return prefix + String.format("%0" + (current_id.length() - prefix.length()) + "d", ++l);
 	}
 
 	/**
@@ -387,7 +400,7 @@ public class ToolsUtil {
 	}
 
 	/**
-	 * 在特定的map&lt;id,p_id&gt;中,用来判定是否存在从属关系,即判断id是否从属于p_id(可能包含多层),
+	 * 在特定的map&lt;id:p_id&gt;中,用来判定是否存在从属关系,即判断id是否从属于p_id(可能包含多层),
 	 * id和p_id相同将返回false
 	 * 
 	 * @param map
@@ -396,7 +409,7 @@ public class ToolsUtil {
 	 * @param p_id
 	 * @return
 	 */
-	private static boolean checkParent(Map<String, String> map, String id, String p_id) {
+	public static boolean checkParent(Map<String, String> map, String id, String p_id) {
 		while (true) {
 			if (map.containsKey(id)) {
 				return p_id.equals(map.get(id)) || checkParent(map, map.get(id), p_id);
@@ -491,8 +504,7 @@ public class ToolsUtil {
 			return null;
 		} else {
 			// instanceof
-			if (ToolsUtil.isIn(bean.getClass().getName(), ToolsUtil.simpleClass) || bean instanceof Map || bean instanceof Collections
-					|| bean instanceof Collection) {
+			if (ToolsUtil.isIn(bean.getClass().getName(), ToolsUtil.simpleClass) || bean instanceof Map || bean instanceof Collections || bean instanceof Collection) {
 				return bean.toString();
 			} else {
 				StringBuffer sb = new StringBuffer();
@@ -565,8 +577,7 @@ public class ToolsUtil {
 	 *            竖转横的key(竖列需变成横列的key列)
 	 * @return
 	 */
-	public static List<Map<String, Object>> conventTable(List<Map<String, Object>> oTable, String[] p_key, String[] v_key, String[] v_key_name,
-			String v_key_title, String value_key) {
+	public static List<Map<String, Object>> conventTable(List<Map<String, Object>> oTable, String[] p_key, String[] v_key, String[] v_key_name, String v_key_title, String value_key) {
 		// 定义返回的变量
 		Map<String, HashMap<String, Object>> nTable1 = new HashMap<String, HashMap<String, Object>>();
 		Map<String, HashMap<String, Object>> nTable2 = new HashMap<String, HashMap<String, Object>>();
@@ -689,6 +700,21 @@ public class ToolsUtil {
 	}
 
 	/**
+	 * JAVA判断字符串数组中是否包含某字符串元素
+	 * 
+	 * @param substring
+	 *            某字符串
+	 * @param source
+	 *            源字符串
+	 * @return 包含则返回true，否则返回false
+	 */
+	public static boolean isIn(String substring, String source, String split) {
+		if (source == null) { return false; }
+		split = isEmpty(split) ? "," : split;
+		return isIn(substring, source.split(split));
+	}
+
+	/**
 	 * 传入2个参数,输出一个非空字符串,如2个都为null,则输出null,优先级 str1>str2
 	 * 
 	 * @param str1
@@ -701,19 +727,22 @@ public class ToolsUtil {
 	}
 
 	/**
-	 * 专门为获得uuids(或者其他直接checkbox获取的字段)所设定的函数,因为传入的uuids,如果直接用','来split,
-	 * 则中间的元素会有空格
+	 * 防止分隔符中间还有空格的情况
 	 * 
 	 * @param uuid_str
+	 * @param split
 	 * @return
-	 * @date 2014-2-2 下午4:47:14
 	 */
-	public static String[] getSplitUuids(String uuid_str) {
-		if (ToolsUtil.isEmpty(uuid_str)) {
+	public static String[] spliten(String str, String split) {
+		if (ToolsUtil.isEmpty(str)) {
 			return new String[0];
 		} else {
-			return uuid_str.split("[ ]*,[ ]*");
+			return str.split("[ ]*" + split + "[ ]*");
 		}
+	}
+
+	public static String[] spliten(String str) {
+		return spliten(str, ",");
 	}
 
 	/**
@@ -727,7 +756,6 @@ public class ToolsUtil {
 		// JsDateJsonBeanProcessor jd = new JsDateJsonBeanProcessor();
 		// JsonConfig config = new JsonConfig();
 		// config.registerJsonBeanProcessor(java.sql.Date.class, jd);
-
 		if (obj == null || obj instanceof String || obj instanceof Number) {
 			JSONObject json = new JSONObject();
 			json.put("value", obj);
@@ -744,21 +772,19 @@ public class ToolsUtil {
 	}
 
 	/**
-	 * 字符串数组转换成字符串,用split隔开
+	 * 数组转换成字符串,用split隔开
 	 * 
 	 * @param array
-	 *            字符串数组
+	 *            数组,可以是简单类型的数组String[],Integer[],Double[]等
 	 * @param split
 	 *            分隔字符
 	 * @return
 	 */
-	public static String Array2String(String[] array, String split) {
+	public static String Array2String(Object[] array, String split) {
 		if (!(array == null || array.length == 0)) {
 			StringBuffer sb = new StringBuffer();
-			for (int i = 0; i < array.length; i++) {
+			for (int i = 0; i < array.length; i++)
 				sb.append(array[i]).append(split);
-			}
-
 			sb.delete(sb.length() - split.length(), sb.length());
 			return sb.toString();
 		} else {
@@ -859,6 +885,122 @@ public class ToolsUtil {
 			return s;
 		} else {
 			return s.substring(0, n) + "...";
+		}
+	}
+
+	public static byte[] File2byte(String filePath) {
+		byte[] buffer = null;
+		try {
+			File file = new File(filePath);
+			FileInputStream fis = new FileInputStream(file);
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			byte[] b = new byte[1024];
+			int n;
+			while ((n = fis.read(b)) != -1) {
+				bos.write(b, 0, n);
+			}
+			fis.close();
+			bos.close();
+			buffer = bos.toByteArray();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return buffer;
+	}
+
+	public static byte[] File2byte(File file) {
+		byte[] buffer = null;
+		try {
+			FileInputStream fis = new FileInputStream(file);
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			byte[] b = new byte[1024];
+			int n;
+			while ((n = fis.read(b)) != -1) {
+				bos.write(b, 0, n);
+			}
+			fis.close();
+			bos.close();
+			buffer = bos.toByteArray();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return buffer;
+	}
+
+	public static String formatNum(Double d, Integer digit) {
+		return String.format("%." + digit + "f", d);
+	}
+
+	/**
+	 * 把字符串转成整形数组
+	 * 
+	 * @param str
+	 * @return
+	 */
+	public static Integer[] split2Integer(String str, String split) {
+		if (isEmpty(str)) return new Integer[0];
+		String[] strs = spliten(str, split);
+		Integer[] ints = new Integer[strs.length];
+		for (int i = 0; i < ints.length; i++) {
+			try {
+				ints[i] = Integer.parseInt(strs[i]);
+			} catch (Exception e) {
+				ints[i] = -1;
+			}
+		}
+		return ints;
+	}
+
+	public static Integer[] split2Integer(String str) {
+		return split2Integer(str, ",");
+	}
+
+	/**
+	 * 序列化对象
+	 */
+	public static byte[] serialize(Object object) {
+		ObjectOutputStream oos = null;
+		ByteArrayOutputStream baos = null;
+		try {
+			// 序列化
+			baos = new ByteArrayOutputStream();
+			oos = new ObjectOutputStream(baos);
+			oos.writeObject(object);
+			byte[] bytes = baos.toByteArray();
+			return bytes;
+		} catch (Exception e) {
+
+		}
+		return null;
+	}
+
+	/**
+	 * 反序列化对象
+	 */
+	public static Object unserialize(byte[] bytes) {
+		ByteArrayInputStream bais = null;
+		try {
+			// 反序列化
+			bais = new ByteArrayInputStream(bytes);
+			ObjectInputStream ois = new ObjectInputStream(bais);
+			return ois.readObject();
+		} catch (Exception e) {
+
+		}
+		return null;
+	}
+
+	public Object[] mergeArray(Object[] al, Object[] bl) {
+		if ((bl == null || bl.length == 0) && (al == null || al.length == 0)) return null;
+		else if (bl == null || bl.length == 0) return al;
+		else if (al == null || al.length == 0) return bl;
+		else {
+			Object[] a = al;
+			Object[] b = bl;
+			Object[] c = new Object[a.length + b.length];
+			System.arraycopy(a, 0, c, 0, a.length);
+			System.arraycopy(b, 0, c, a.length, b.length);
+			return c;
 		}
 	}
 }

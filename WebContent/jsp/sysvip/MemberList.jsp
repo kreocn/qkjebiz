@@ -1,126 +1,115 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
+<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>会员列表--<s:text name="APP_NAME" /></title>
+<s:action name="ref" namespace="/manager" executeResult="true" />
 </head>
-<link rel="stylesheet" href="<s:url value="/css/css.css" />" />
-<link rel="stylesheet" href="<s:url value="/css/navigate.css" />" />
-<link rel="stylesheet" href="<s:url value="/css/main.css" />" />
-<script type="text/javascript" src="<s:url value="/js/common_listtable.js" />"></script>
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-1.8.3.min.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/jquery.CommonUtil.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/show_page.js" />"></script>
-<script type="text/javascript">
-$(function(){
-	CommonUtil.pickrow('table1');
-	CommonUtil.pickrowAll('table1','uuidcheck');
-});
-</script>
+<script type="text/javascript"></script>
 <body>
-<div id="main">
-<div id="result">
-	<div class="itablemdy">
-	<div class="itabletitle">
-		<span class="title1">会员列表</span>
-		<span class="extra1">
-			<a href="<s:url namespace="/sysvip" action="member_load"><s:param name="viewFlag">add</s:param></s:url>" >添加会员</a>
-		</span>
-	</div>	
-	<div class="ilistsearch">
-<s:form name="form_serach" action="member_list"  method="get" namespace="/sysvip" theme="simple">
-		<table class="ilisttable" id="serach_table" width="100%">
-			<tr>
-			<td class='firstRow'>会员号:</td>
-			<td class='secRow'><s:textfield name="member.uuid" title="会员号" /></td>
-			<td class='firstRow'>(%)会员姓名:</td>
-			<td class='secRow'><s:textfield name="member.member_name" title="会员姓名"  /></td>
-			</tr><tr>
-			<td class='firstRow'>会员手机:</td>
-			<td class='secRow'><s:textfield name="member.mobile" title="会员手机"  /></td>
-			<td class='firstRow'>(%)会员EMAIL:</td>
-			<td class='secRow'><s:textfield name="member.email" title="会员EMAIL"  /></td>
-			</tr>
-			<tr>
-			<td colspan="4" class="buttonarea">
-				<s:submit value="搜索" />
-				<s:reset value="重置" />
-			</td>
-			</tr>
-		</table>
+<div class="main" >
+<div class="dq_step">
+${path}
+<s:if test="@org.iweb.sys.ContextHelper@checkPermit('SYSVIP_MEMBER_ADD')">
+	<span class="opb lb op-area"><a href="<s:url namespace="/sysvip" action="member_load"><s:param name="viewFlag">add</s:param></s:url>">添加会员</a></span>
+</s:if>
+</div>
+	<s:form id="serachForm" name="serachForm"  method="get" namespace="/sysvip" theme="simple">
+<div class="label_con">
+<div class="label_main">
+      <div class="label_hang">
+          <div class="label_ltit">会员号:</div>
+          <div class="label_rwben"><s:textfield name="member.uuid" /></div>
+      </div>
+      <div class="label_hang">
+          <div class="label_ltit">会员姓名:</div>
+          <div class="label_rwben"><s:textfield name="member.member_name" cssClass="iI iI-s" /></div>
+      </div>
+      <div class="label_hang">
+          <div class="label_ltit">会员手机:</div>
+          <div class="label_rwben"><s:textfield name="member.mobile" /></div>
+      </div>
+      <div class="label_hang">
+          <div class="label_ltit">会员EMAIL:</div>
+          <div class="label_rwben"><s:textfield name="member.email" cssClass="iI iI-s" /></div>
+		</div>
+		<div class="label_hang">
+            <div class="label_ltit">所属部门:</div>
+            <div class="label_rwben2">
+            	<span class="label_rwb">
+				<s:textfield title="部门名称" id="userdept_nameid" name="member.dept_name" readonly="true" />
+				<s:hidden title="部门代码" id="userdept_codeid" name="member.dept_code" readonly="true" />
+				</span>
+				<span class="lb nw">
+				<img class="detail vatop" src='<s:url value="/images/open2.gif" />' onclick="selectDept('userdept_codeid','userdept_nameid',true);" />
+				<s:checkbox id="apply_is_sub_dept" name="member.is_sub_dept" cssClass="regular-checkbox" />
+				<label for="apply_is_sub_dept"></label>包含子部门<span id="ajax_member_message"></span>
+				</span>
+            </div>
+        </div>
+        
+        <div class="label_hang">
+            <div class="label_ltit">客户经理:</div>
+            <div class="label_rwben label_rwb">
+            	<s:select id="membermanagerid" cssClass="selectKick" name="member.manager" list="#{}" headerKey="" headerValue="--请选择--" />
+            </div>
+		</div>
+	  <div class="label_hang label_button tac">
+        	<s:checkbox id="search_mcondition" name="search_mcondition" fieldValue="true" value="true" cssClass="regular-checkbox" />
+			<label for="search_mcondition"></label>更多条件
+            <s:submit value="搜索" /> <s:reset value="重置" />
+      </div>
+</div>
+</div>
 </s:form>
-	</div>
-<s:form name="form1" theme="simple">
-	<table class="ilisttable" id="table1" width="100%">
-	<col width="30" />
-	  <tr>
-	    <th><input name="uuidcheck" type="checkbox" /></th>
-	    <th>会员号</th>
-		<th>会员手机</th>
-		<th>会员姓名</th>
-		<th>会员分组</th>
-		<th>资产</th>
-		<th>随量积分</th>
-		<th>返利积分</th>
-		<th>消费积分</th>
-		<th>所属部门</th>
-		<th>客户经理</th>
-		<th>操作</th>
-	  </tr>
+<div class="tab_warp">
+<table>
+<tr id="coltr">
+	<th class="td1">会员号</th>
+	<th class="td1">会员手机</th>
+	<th class="td2">会员姓名</th>
+	<th class="td5">会员分组</th>
+	<th class="td5">资产</th>
+	<th class="td5">随量积分</th>
+	<th class="td5">返利积分</th>
+	<th class="td5">消费积分</th>
+	<th class="td3">所属部门</th>
+	<th class="td2">客户经理</th>
+	<th class="td4">操作</th>
+	<th class="td0">查看</th>
+</tr>
 <s:iterator value="members" status="sta">
-	  <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>" type="pickrow">
-	    <td align="center"><input name="uuid" type="checkbox" value="<s:property value="uuid" />" /></td>
-	    <td><s:property value="uuid" /></td>
-		<td><s:property value="mobile" /></td>
-		<td>${member_name}<s:if test="contact!=null">(${contact})</s:if></td>
-		<td align="center"><s:property value="user_type_name" /></td>
-		<td align="center">￥<s:property value="money" /></td>
-		<td align="center"><s:property value="with_score" /></td>
-		<td align="center"><s:property value="re_score" /></td>
-		<td align="center"><s:property value="score" /></td>
-		<td align="center"><s:property value="dept_name" /></td>
-		<td align="center"><s:property value="manager_name" /></td>
-		<td align="center">
+	  <tr id="showtr${uuid}">
+	    <td class="td1">${uuid}</td>
+		<td class="td1">${mobile}</td>
+		<td class="td2">${member_name}<s:if test="contact!=null">(${contact})</s:if></td>
+		<td class="td5">${user_type_name}</td>
+		<td class="td5">￥${money}</td>
+		<td class="td5">${with_score}</td>
+		<td class="td5">${re_score}</td>
+		<td class="td5">${score}</td>
+		<td class="td3">${dept_name}</td>
+		<td class="td2">${manager_name}</td>
+		<td class="td4 op-area">
 			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('SYSVIP_MEMBER_MDY')">
-	    	[<a href="<s:url namespace="/sysvip" action="member_load"><s:param name="viewFlag">mdy</s:param><s:param name="member.uuid" value="uuid"></s:param></s:url>">修改</a>]
+	    	<a class="input-blue" href="<s:url namespace="/sysvip" action="member_load"><s:param name="viewFlag">mdy</s:param><s:param name="member.uuid" value="uuid"></s:param></s:url>">修改</a>
 	    	</s:if>
 	    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('SYSVIP_MEMBER_DEL')">
-	    	[<a href="<s:url namespace="/sysvip" action="member_del"><s:param name="member.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>]
+	    	<a class="input-red" href="<s:url namespace="/sysvip" action="member_del"><s:param name="member.uuid" value="uuid"></s:param></s:url>" onclick="return isDel();">删除</a>
 	    	</s:if>
-	    </td>
+			<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJM_SYSVIP_MEMBERSTOCK_LIST')">
+				<a class="input-blue" href="javascript:;" onclick="linkurl('<s:url action="memberStock_out" namespace="/sysvip" ><s:param name="member.member_name" value="%{member_name}"></s:param><s:param name="member.uuid" value="%{uuid}"></s:param></s:url>');" >生成盘点模板</a>
+			</s:if>
+		</td>
+	    <td class="td0 op-area"><a onClick="showDetail('showtr${uuid}');" class="input-nostyle">查看</a></td>
 	  </tr>
 </s:iterator>
-	  <tr>
-	    <td colspan="20" class="buttonarea">
-    	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_SYSVIP_MEMBERCAPITALRESCORE_ADD')">
-    	<input type="button" value="返利积分消费" onclick="return forward('<s:url value="/sysvip/memberCapitalRescore_load?viewFlag=add" />','uuid','memberCapitalRescore.member_id',false);" />
-    	</s:if>
-	    <s:if test="@org.iweb.sys.ContextHelper@checkPermit('VIP_SYSVIP_DEPOSIT_ADD')">
-    	<input type="button" value="添加会员预付款" onclick="return forward('<s:url value="/sysvip/deposit_load?viewFlag=add" />','uuid','deposit.member_id',false);" />
-    	</s:if>
-		</td>
-	  </tr>
-	  <tr>
-	    <td colspan="20" class="buttonarea">
-		<script type="text/javascript">
-		var spage = new ShowPage();
-		spage.show2(<s:property value="recCount" />,<s:property value="pageSize" />,2);
-		</script>
-		</td>	    
-	  </tr>
-	  <tr>
-	    <td colspan="20" class="buttonarea">
-	    <span id="message"><s:property value="message" /></span>
-		</td>
-	  </tr>
-	</table>
-</s:form>
-	</div>
+</table>
 </div>
+<div class="pagination"><script type="text/javascript">var spage = new ShowPage(${currPage});	spage.show2(${recCount},${pageSize},2);</script></div>
 </div>
 </body>
 </html>

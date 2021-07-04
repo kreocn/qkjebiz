@@ -55,12 +55,20 @@ public class LadingDAO extends AbstractDAO {
 		return super.save("qkjmanage_mdyLadingCOOCheck", parameters);
 	}
 
-	public int mdyLadingTotalPrice(String lading_id) {
+	public int mdyLadingTotalPrice(Integer lading_id) {
 		return super.save("qkjmanage_mdyLadingTotalPrice", lading_id);
+	}
+
+	public int mdyLadingTotalPriceg(Integer lading_id) {
+		return super.save("qkjmanage_mdyLadingTotalPriceg", lading_id);
 	}
 
 	public int mdyLadingOutFlag(Object parameters) {
 		return super.save("qkjmanage_mdyLadingOutFlag", parameters);
+	}
+	
+	public int mdyLadingGoflag(Object parameters) {
+		return super.save("qkjmanage_mdyLadinGoflag", parameters);
 	}
 
 	public int mdyLadingRebatesFlag(Object parameters) {

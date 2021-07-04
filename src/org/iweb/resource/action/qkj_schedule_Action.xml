@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="sche_schedule" extends="default" namespace="/sche">
+		<default-interceptor-ref name="myStackIndex" />
+		<!-- MemberCellar Start -->
+		<action name="schedule_list" class="com.qkj.sche.action.ScheAction" method="list">
+			<result>/WEB-INF/jsp/manager/main.jsp</result>
+		</action>
+		<action name="schedule_read" class="com.qkj.sche.action.ScheAction" method="read">
+			<result>/WEB-INF/jsp/manager/main.jsp</result>
+		</action>
+		
+		<action name="schedule_load" class="com.qkj.sche.action.ScheAction" method="load">
+			<result name="SUCCESS">/WEB-INF/jsp/schedule/saveSchedule.jsp</result>
+			<result name="VIEWSUCCESS">/WEB-INF/jsp/schedule/ScheduleView.jsp</result>
+		</action>
+		
+		<action name="schedule_leftList" class="com.qkj.sche.action.ScheAction" method="leftList">
+			<result>/WEB-INF/jsp/schedule/listSchedule.jsp</result>
+		</action>
+		
+		<action name="schedule_add" class="com.qkj.sche.action.ScheAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">schedule_load</param>
+				<param name="sche.uuid">${sche.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="schedule_save" class="com.qkj.sche.action.ScheAction" method="save">
+			<result type="redirectAction">
+				<param name="actionName">schedule_load</param>
+				<param name="sche.uuid">${sche.uuid}</param>
+				<param name="viewFlag">mdy</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<action name="schedule_del" class="com.qkj.sche.action.ScheAction" method="del">
+			<result type="redirectAction">
+				<param name="actionName">schedule_leftList</param>
+				<param name="sche.type">${sche.type}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		<!-- MemberCellar End -->
+	</package>
+</struts>

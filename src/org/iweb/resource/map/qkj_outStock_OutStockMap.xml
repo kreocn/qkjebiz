@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"  "sql-map-2.dtd">
+<sqlMap>
+	<!-- OutStock Start -->
+	<typeAlias alias="outStock" type="com.qkj.ware.domain.OutStock" />
+	<select id="outStock_getOutStocks" resultClass="outStock" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT i.*,addu.`USER_NAME` add_user_name,lmu.`USER_NAME` lm_user_name,w.`ware_name` ware_name,wb.`ware_name` borrowStore_name,mdu.`USER_NAME` manager_check_user_name,o.`USER_NAME` operator_name,t.`USER_NAME` take_name  FROM qkj_t_outstock i 
+			LEFT JOIN s_sys_user addu ON (i.add_user=addu.`UUID`) 
+			LEFT JOIN s_sys_user lmu ON (i.lm_user=lmu.`UUID`)
+			LEFT JOIN qkj_t_warehouse w ON(i.`store_id`=w.`uuid`)
+			LEFT JOIN qkj_t_warehouse wb ON(i.`borrowStore_id`=wb.`uuid`)
+			LEFT JOIN s_sys_user mdu ON(i.`manager_check_user`=mdu.`UUID`)
+			LEFT JOIN s_sys_user o ON (i.`operator_id`=o.`UUID`)
+			LEFT JOIN s_sys_user t ON (i.`take_id`=t.`UUID`)
+		]]>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="ordernum"><![CDATA[ i.ordernum=#ordernum# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ i.uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="send"><![CDATA[ i.send=#send# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="reason"><![CDATA[ i.reason=#reason# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="goreason"><![CDATA[ i.goreason=#goreason# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="boflag"><![CDATA[ i.boflag=#boflag# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date"><![CDATA[ i.date=#date# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="store_id"><![CDATA[ i.store_id=#store_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="operator_id"><![CDATA[ i.operator_id=#operator_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="take_id"><![CDATA[ i.take_id=#take_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="total_price"><![CDATA[ i.total_price=#total_price# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="add_user"><![CDATA[ i.add_user=#add_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="manager_check_user"><![CDATA[ i.manager_check_user=#manager_check_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_start"><![CDATA[ i.date>=#date_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_end"><![CDATA[ i.date<=DATE_ADD(#date_end#,INTERVAL 1 day) ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="goldUuid"><![CDATA[ i.goldUuid=#goldUuid# ]]></isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="storeids">
+			<![CDATA[ i.store_id In ]]>
+				<iterate property="storeids" open="(" close=")" conjunction=" , "> #storeids[]#</iterate>
+			</isNotEmpty>
+			
+		</dynamic>
+		<![CDATA[ Order By i.add_timer Desc LIMIT 0, 500 ]]>
+	</select>
+	
+	
+	<select id="outStock_getOutStocksCounts" resultClass="int" parameterClass="java.util.Map">
+		<![CDATA[ 
+			Select Count(*) FROM qkj_t_outstock 
+		]]>
+		<dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="order"><![CDATA[ send!=#send# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="uuid"><![CDATA[ uuid=#uuid# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="send"><![CDATA[ send=#send# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="reason"><![CDATA[reason=#reason# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="goreason"><![CDATA[ i.goreason=#goreason# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="boflag"><![CDATA[ boflag=#boflag# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="ordernum"><![CDATA[ ordernum=#ordernum# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date"><![CDATA[ date=#date# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="store_id"><![CDATA[ store_id=#store_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="operator_id"><![CDATA[ operator_id=#operator_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="take_id"><![CDATA[ take_id=#take_id# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="total_price"><![CDATA[ total_price=#total_price# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="add_user"><![CDATA[ add_user=#add_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="manager_check_user"><![CDATA[ manager_check_user=#manager_check_user# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_start"><![CDATA[ date>=#date_start# ]]></isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_end"><![CDATA[ date<=DATE_ADD(#date_end#,INTERVAL 1 day) ]]></isNotEmpty>
+			
+		</dynamic>
+	</select>
+	
+	<select id="outStock_getOutStocksSpilt" resultClass="outStock" parameterClass="java.util.Map">
+		<![CDATA[ 
+			SELECT * FROM qkj_t_outstock s WHERE s.`uuid`=#uuid# OR s.`splitUuid`=#uuid#
+		]]>
+	</select>
+	
+	<insert id="outStock_addOutStock" parameterClass="outStock">
+		<![CDATA[ 
+			Insert Into qkj_t_outstock(ordernum,date,store_id,reason,member_id,member_mebile,member_name, member_adress,bsreason, operator_id,dept_code,dept_name,take_id,note,add_user,add_timer,lm_user,lm_timer,send,borrowStore_id,member_price,goldUuid,goreason,splitUuid,split,ship_no,ship_phone,ship_type)
+			Values (#ordernum#,#date#,#store_id#, #reason#,#member_id#,#member_mebile#,#member_name#,#member_adress#,#bsreason#, #operator_id#,#dept_code#,#dept_name#,#take_id#,#note#,#add_user#,#add_timer#,#lm_user#,#lm_timer#,#send#,#borrowStore_id#,#member_price#,#goldUuid#,#goreason#,#splitUuid#,#split#,#ship_no#,#ship_phone#,#ship_type#)
+		]]>
+		<selectKey resultClass="int" keyProperty="uuid">
+		<![CDATA[ 
+			Select LAST_INSERT_ID()
+		]]>
+		</selectKey>
+	</insert>
+	<update id="outStock_mdyOutStock" parameterClass="outStock">
+		<![CDATA[
+			Update qkj_t_outstock
+			Set date=#date#,
+			bsreason=#bsreason#,
+			ordernum=#ordernum#,
+			store_id=#store_id#,
+			operator_id=#operator_id#,
+			note=#note#,
+			total_price=#total_price#,
+			lm_user=#lm_user#,
+			lm_timer=#lm_timer#,
+			reason=#reason#,
+			send=#send#,
+			member_id=#member_id#,
+			member_mebile=#member_mebile#,
+			member_name=#member_name#,
+			member_adress=#member_adress#,
+			borrowStore_id=#borrowStore_id#,
+			member_price=#member_price#,
+			ship_no=#ship_no#,
+			ship_phone=#ship_phone#,
+			ship_type=#ship_type#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	<delete id="outStock_delOutStock" parameterClass="outStock">
+	<![CDATA[
+		Delete From qkj_t_outstock Where uuid=#uuid#
+	]]>
+	</delete>
+	
+	<!-- 额外方法 -->
+	<update id="outStock_mdyOutStockByTotal" parameterClass="outStock">
+		<![CDATA[
+			Update qkj_t_outstock
+			Set 
+			total_price=#total_price#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<update id="outStock_mdyOutStockBs" parameterClass="outStock">
+		<![CDATA[
+			Update qkj_t_outstock
+			Set 
+			bsreason=#bsreason#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<update id="outStock_mdySend" parameterClass="outStock">
+		<![CDATA[
+			Update qkj_t_outstock
+			Set 
+			send=#send#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<update id="outStock_mdyCheck" parameterClass="outStock">
+		<![CDATA[
+			Update qkj_t_outstock
+			Set 
+			send=#send#,
+			manager_check=#manager_check#,
+			manager_check_user=#manager_check_user#,
+			manager_check_time=#manager_check_time#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<update id="outStock_mdyNote" parameterClass="outStock">
+		<![CDATA[
+			Update qkj_t_outstock
+			Set 
+			note=#note#,
+			lm_user=#lm_user#,
+			lm_timer=#lm_timer#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<update id="outStock_mdyBoFlag" parameterClass="outStock">
+		<![CDATA[
+			Update qkj_t_outstock
+			Set 
+			boflag=#boflag#,
+			backStock=#backStock#
+			Where goldUuid = #goldUuid# or uuid=#goldUuid#
+		]]>
+	</update>
+	
+	<update id="outStock_mdyGoldUuid" parameterClass="outStock">
+		<![CDATA[
+			Update qkj_t_outstock
+			Set 
+			goldUuid=#goldUuid#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<update id="outStock_mdyTotalPrice" parameterClass="Integer">
+		<![CDATA[
+			UPDATE qkj_t_outstock
+			SET total_price=(
+				SELECT SUM(i.totel)
+				FROM qkj_t_outdetail i
+				WHERE i.lading_id = #value#
+			)
+			WHERE UUID = #value#
+		]]>
+	</update>
+	
+	<update id="outStock_mdyRemark" parameterClass="outStock">
+		<![CDATA[
+			Update qkj_t_outstock
+			Set 
+			store_id=#store_id#,
+			remark=#remark#
+			Where uuid = #uuid#
+		]]>
+	</update>
+	
+	<!-- OutStock End outStock_mdyCheckManage-->
+</sqlMap>

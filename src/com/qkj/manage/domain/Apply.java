@@ -7,6 +7,8 @@ public class Apply {
 	private String touser;// 至(From)
 	private String title;// (varchar)主题
 	private String note;// (text)详细说明
+	private Integer is_material;// (text)详细说明
+	private Double it_price;// 公司合计费用
 	private String apply_dept;// (varchar)申请部门
 	private String apply_user;// (varchar)申请人
 	private Date apply_time;// (datetime)申请时间
@@ -18,18 +20,192 @@ public class Apply {
 	private Integer status;// (int)状态 0:新事由 5:已退回 10:待审核 20:大区经理已审 30:运营总监已审
 	private String lm_user;// (varchar)修改人
 	private Date lm_time;// (timestamp)修改时间
+	private Integer ship_status;// 发货状态
+	private Integer ship_ware;// 发货仓库
+	private Date ship_date;// 发货时间
+	private String ship_no;// 运单号码
+	private String ship_type;// 物流名称
+	private String ship_phone;// 物流单号
+	private Integer apply_type;
+
+	private Integer sp_check_status; // 特殊状态 0表示未审核 5表示退回 10表示已审核
+	private String sp_check_user;
+	private Date sp_check_time;
+	private String user_sign;
+	private Date sign_biz_time;
+	private String sign_user_name;
+	private Integer goflag;
+    private double total_price;
+    private Integer is_push;//用于西北总监推送副总
+
+
 
 	// 非数据库字段
 	private String apply_user_name;
 	private String check_user_name;
 	private String apply_dept_name;
 	private String check_user_sign;
+	private String sp_check_user_name;
 	// 查询专用字段
 	private Date apply_time_begin;
 	private Date apply_time_end;
 	private Date check_time_begin;
 	private Date check_time_end;
 	private String is_sub_dept;
+	private Integer status_start;
+	private Integer status_end;
+	private Integer status_sp;
+	
+	public Integer getIs_push() {
+		return is_push;
+	}
+
+	public void setIs_push(Integer is_push) {
+		this.is_push = is_push;
+	}
+
+	public double getTotal_price() {
+		return total_price;
+	}
+
+	public void setTotal_price(double total_price) {
+		this.total_price = total_price;
+	}
+	public Integer getGoflag() {
+		return goflag;
+	}
+
+	public void setGoflag(Integer goflag) {
+		this.goflag = goflag;
+	}
+
+	public Integer getIs_material() {
+		return is_material;
+	}
+
+	public void setIs_material(Integer is_material) {
+		this.is_material = is_material;
+	}
+
+	public Double getIt_price() {
+		return it_price;
+	}
+
+	public void setIt_price(Double it_price) {
+		this.it_price = it_price;
+	}
+
+	public Integer getApply_type() {
+		return apply_type;
+	}
+
+	public void setApply_type(Integer apply_type) {
+		this.apply_type = apply_type;
+	}
+
+	public Integer getStatus_sp() {
+		return status_sp;
+	}
+
+	public void setStatus_sp(Integer status_sp) {
+		this.status_sp = status_sp;
+	}
+
+	public Integer getStatus_start() {
+		return status_start;
+	}
+
+	public void setStatus_start(Integer status_start) {
+		this.status_start = status_start;
+	}
+
+	public Integer getStatus_end() {
+		return status_end;
+	}
+
+	public void setStatus_end(Integer status_end) {
+		this.status_end = status_end;
+	}
+
+	public Integer getSp_check_status() {
+		return sp_check_status;
+	}
+
+	public void setSp_check_status(Integer sp_check_status) {
+		this.sp_check_status = sp_check_status;
+	}
+
+	public String getSp_check_user() {
+		return sp_check_user;
+	}
+
+	public void setSp_check_user(String sp_check_user) {
+		this.sp_check_user = sp_check_user;
+	}
+
+	public Date getSp_check_time() {
+		return sp_check_time;
+	}
+
+	public void setSp_check_time(Date sp_check_time) {
+		this.sp_check_time = sp_check_time;
+	}
+
+	public String getSp_check_user_name() {
+		return sp_check_user_name;
+	}
+
+	public void setSp_check_user_name(String sp_check_user_name) {
+		this.sp_check_user_name = sp_check_user_name;
+	}
+
+	public Integer getShip_status() {
+		return ship_status;
+	}
+
+	public void setShip_status(Integer ship_status) {
+		this.ship_status = ship_status;
+	}
+
+	public Integer getShip_ware() {
+		return ship_ware;
+	}
+
+	public void setShip_ware(Integer ship_ware) {
+		this.ship_ware = ship_ware;
+	}
+
+	public Date getShip_date() {
+		return ship_date;
+	}
+
+	public void setShip_date(Date ship_date) {
+		this.ship_date = ship_date;
+	}
+
+	public String getShip_no() {
+		return ship_no;
+	}
+
+	public void setShip_no(String ship_no) {
+		this.ship_no = ship_no;
+	}
+
+	public String getShip_type() {
+		return ship_type;
+	}
+
+	public void setShip_type(String ship_type) {
+		this.ship_type = ship_type;
+	}
+
+	public String getShip_phone() {
+		return ship_phone;
+	}
+
+	public void setShip_phone(String ship_phone) {
+		this.ship_phone = ship_phone;
+	}
 
 	public Integer getIs_fullcheck() {
 		return is_fullcheck;
@@ -219,8 +395,32 @@ public class Apply {
 		return lm_time;
 	}
 
+	public String getUser_sign() {
+		return user_sign;
+	}
+
+	public void setUser_sign(String user_sign) {
+		this.user_sign = user_sign;
+	}
+
 	public void setLm_time(Date lm_time) {
 		this.lm_time = lm_time;
+	}
+
+	public Date getSign_biz_time() {
+		return sign_biz_time;
+	}
+
+	public void setSign_biz_time(Date sign_biz_time) {
+		this.sign_biz_time = sign_biz_time;
+	}
+
+	public String getSign_user_name() {
+		return sign_user_name;
+	}
+
+	public void setSign_user_name(String sign_user_name) {
+		this.sign_user_name = sign_user_name;
 	}
 
 }

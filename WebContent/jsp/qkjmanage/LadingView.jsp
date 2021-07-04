@@ -1,222 +1,296 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
+<%@taglib prefix="it" uri="http://qkjchina.com/iweb/iwebTags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>出库提货单管理--<s:text name="APP_NAME" /></title>
+<title>订单管理--<s:text name="APP_NAME" /></title>
+<s:action name="ref" namespace="/manager" executeResult="true" />
 </head>
-<link rel="stylesheet" href="<s:url value="/css/css.css" />" />
-<link rel="stylesheet" href="<s:url value="/css/navigate.css" />" />
-<link rel="stylesheet" href="<s:url value="/css/main.css" />" />
-<script type="text/javascript" src="<s:url value="/js/form_validator.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/common_cptb.js" />"></script>
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-1.8.3.min.js" />"></script>
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.select.js" />"></script>
-<link rel="stylesheet" href="<s:url value="/include/jQuery/style.ui.smoothness/jquery-ui-1.10.3.min.css" />" />
-<script type="text/javascript" src="<s:url value="/include/jQuery/jquery-ui-1.10.3.custom.min.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/common_ajax2.0.js" />"></script>
-<script type="text/javascript" src="<s:url value="/js/func/select_member.js" />"></script>
-<style type="text/css">
-.confirm_td{text-align:center;padding:5px 0 0!important;}
-.confirm_button{display:block;border:#333 solid 1px;border-radius:3px;font-size:28px;color:#333;margin:auto auto 5px;}
-a.confirm_button{width:100px;text-decoration:none;cursor:pointer;}
-a.confirm_button:hover{background-color:#333;color:#FFF;}
-.confirm_ok{line-height:50px;}
-.confirm_cancel{line-height:35px;}
-.confirmd{display:block;width:50px;line-height:50px;margin:auto;}
-.fd_button{width:50px;height:50px;font-size:14px;border:#333 solid 1px;border-radius:5px;cursor:pointer;}
-.confirmd_ok,.confirmd_cancel{font-size:40px;}
-#out_flag_no{cursor: pointer;}
-.dialog_button{text-align: center;line-height: 80px;}
-</style>
-<script type="text/javascript">
-$(function(){
-	/*<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADING_OUTFLAG1')">*/
-	$("#out_flag_no").bind("click",function(){
-		$("#OUT_Operation #lading_out").unbind().bind("click",function(){
-			if(isOp('是否确定已出货?\n出货操作不能更改!')) 
-				location.href='<s:url namespace="/qkjmanage" action="lading_out"><s:param name="lading.uuid" value="lading.uuid" /></s:url>';
-		});
-		$("#OUT_Operation").dialog("open");
-	});
-	$("#OUT_Operation").dialog({
-	      autoOpen: false,
-	      width: 200,
-	      height: 80,
-	      modal: true
-	});
-	/*</s:if>*/
-});
-</script>
 <body>
-<div id="main">
-<div id="result">
-	<div class="itablemdy">
-	<div class="itabletitle">
-		<span class="title1">出货单(No.<s:property value="lading.uuid" />)</span>
+	<div class="main">
+		<div class="dq_step">
+			${path} <span class="opb lb op-area"><a href="<s:url namespace="/qkjmanage" action="lading_list"><s:param name="viewFlag">relist</s:param></s:url>">返回列表</a></span> <span class="opb lb op-area"><a
+				href="<s:url namespace="/qkjmanage" action="lading_load"><s:param name="viewFlag">mdy</s:param><s:param name="lading.uuid" value="lading.uuid"></s:param></s:url>">修改页面</a></span>
+		</div>
+		<s:form id="editForm" name="editForm" cssClass="validForm" action="lading_load" namespace="/qkjmanage" method="post" theme="simple">
+			<div class="label_con">
+				<div class="label_main">
+					<div class="label_hang">
+						<div class="label_ltit">申请编号:</div>
+						<div class="label_rwben">
+							<s:property value="lading.uuid" />
+							<s:hidden name="lading.uuid" />
+						</div>
+					</div>
+					<div class="label_hang">
+						<div class="label_ltit">订单状态:</div>
+						<div class="label_rwben">
+							<s:if test='0==lading.status'>新单</s:if>
+							<s:if test='5==lading.status'>
+								<span title="${it:formatDate(lading.check_time,'yyyy-MM-dd HH:mm:ss')}" class="cr">已退回(${lading.check_user_name})</span>
+							</s:if>
+							<s:if test='10==lading.status'>
+								<span title="${it:formatDate(lading.check_time,'yyyy-MM-dd HH:mm:ss')}" class="cy">待确认(${lading.check_user_name})</span>
+							</s:if>
+							<s:if test='20==lading.status'>
+								<span title="${it:formatDate(lading.check_time,'yyyy-MM-dd HH:mm:ss')}" class="cg">已确认(${lading.check_user_name})</span>
+							</s:if>
+							<s:if test='30==lading.status'>
+								<span title="${it:formatDate(lading.check_time,'yyyy-MM-dd HH:mm:ss')}" class="cg">已发货</span>
+							</s:if>
+						</div>
+					</div>
+					<div class="label_hang">
+						<div class="label_ltit">订单提交时间:</div>
+						<div class="label_rwbenx">${it:formatDate(lading.apply_time,'yyyy-MM-dd HH:mm:ss')}</div>
+					</div>
+				</div>
+				<div class="label_main">
+					<div class="label_hang">
+						<div class="label_ltit">会员编号:</div>
+						<div class="label_rwben label_rwb">${lading.member_id}</div>
+					</div>
+					<div class="label_hang">
+						<div class="label_ltit">会员手机:</div>
+						<div class="label_rwben label_rwb">${lading.member_mobile}</div>
+					</div>
+					<div class="label_hang">
+						<div class="label_ltit">会员名称:</div>
+						<div class="label_rwben label_rwb">${lading.member_name}</div>
+					</div>
+				</div>
+				<div class="label_main">
+					<div class="label_hang">
+						<div class="label_ltit">配送地址:</div>
+						<div class="label_rwbenx">
+							<s:textarea id="lading_address" name="lading.address" title="配送地点" cssClass="label_hang_linput"></s:textarea>
+							<br /> <span class="label_rwb nw">选择预设地址:<select id="selectAddress"></select></span>
+						</div>
+					</div>
+				</div>
+				<div class="label_main">
+					<fieldset class="clear">
+						<legend>订单明细</legend>
+
+						<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+							<tr>
+								<th>品名</th>
+								<th>单价</th>
+								<th>数量(瓶)</th>
+								<th>数量(件)</th>
+								<th>合计</th>
+								<s:if test="lading.status<=5 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADINGITEM_DEL')">
+									<th>操作</th>
+								</s:if>
+							</tr>
+							<s:iterator value="ladingItems" status="sta">
+								<tr>
+									<td class="nw">${product_name}</td>
+									<td class="nw">￥${per_price}</td>
+									<td class="nw">${num}</td>
+									<td class="nw">${it:formatNum(num/case_spec,1)}</td>
+									<td class="nw">￥${total_price}</td>
+									<s:if test="lading.status<=5 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADINGITEM_DEL')">
+										<td><a href="<s:url action="ladingItem_del" namespace="/qkjmanage"><s:param name="ladingItem.uuid" value="%{uuid}" /><s:param name="ladingItem.lading_id" value="%{lading.uuid}" /></s:url>" onclick="return isDel();">[删除]</a></td>
+									</s:if>
+								</tr>
+							</s:iterator>
+						</table>
+						<p class="lb_gstit"></p>
+						<div class="label_main">
+							<div class="label_hang">
+								<div class="label_ltit">金额合计:</div>
+								<div class="label_rwben">￥${lading.total_price}</div>
+							</div>
+							<div class="label_hang">
+								<div class="label_ltit">实际到账金额:</div>
+								<div class="label_rwben">
+									<s:textfield name="lading.curr_price" cssClass="validate[required,custom[number],maxSize[11]]" />
+								</div>
+							</div>
+						</div>
+					</fieldset>
+				</div>
+				<div class="label_main">
+					<fieldset class="clear">
+						<legend>可参与促销活动</legend>
+						<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+							<tr>
+								<th>参加</th>
+								<th>活动名称</th>
+								<th>开始时间</th>
+								<th>结束时间</th>
+								<th>操作</th>
+							</tr>
+							<!-- lading.promotions -->
+							<s:iterator value="salPromots" status="sta">
+								<tr>
+									<td class="nw"><input type="checkbox" name="lading.promotions" value="${uuid}" /></td>
+									<td class="nw">${sal_title}</td>
+									<td class="nw">${it:formatDate(startime,'yyyy-MM-dd')}</td>
+									<td class="nw">${it:formatDate(endtime,'yyyy-MM-dd')}</td>
+									<td><a href="javascript:;" onclick="openCustomerView(${uuid});">[查看详情]</a></td>
+								</tr>
+							</s:iterator>
+						</table>
+						<script type="text/javascript">
+						setCheckBox("lading.promotions", '${lading.promotions}');
+						</script>
+					</fieldset>
+				</div>
+
+				<div class="label_main">
+					<fieldset class="clear">
+						<legend>返利/搭赠明细</legend>
+						<table width="100%" cellpadding="0" cellspacing="0" border="0" class="lb_jpin">
+							<tr>
+								<th>品名</th>
+								<th>单价</th>
+								<th>数量(瓶)</th>
+								<th>数量(件)</th>
+								<th>合计</th>
+								<s:if test="lading.status<=5 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADINGPRODUCTG_DEL')">
+									<th>操作</th>
+								</s:if>
+							</tr>
+							<s:iterator value="ladingProductgs" status="sta">
+								<tr>
+									<td class="nw">${product_name}</td>
+									<td class="nw">￥${per_price}</td>
+									<td class="nw">${num}</td>
+									<td class="nw">${it:formatNum(num/case_spec,1)}</td>
+									<td class="nw">￥${total_price}</td>
+									<s:if test="lading.status<=5 && @org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADINGPRODUCTG_DEL')">
+										<td><a href="<s:url action="ladingProductg_del" namespace="/qkjmanage"><s:param name="ladingProductg.uuid" value="%{uuid}" /><s:param name="ladingProductg.lading_id" value="%{lading.uuid}" /></s:url>" onclick="return isDel();">[删除]</a></td>
+									</s:if>
+								</tr>
+							</s:iterator>
+						</table>
+						<p class="lb_gstit"></p>
+						<div class="label_main">
+							<div class="label_hang">
+								<div class="label_ltit">金额合计:</div>
+								<div class="label_rwben">￥${lading.total_price_g}</div>
+							</div>
+							<div class="label_hang">
+								<div class="label_ltit">返利比例:</div>
+								<div class="label_rwben">${it:formatNum(lading.total_price_g*100/lading.total_price,2)}%</div>
+							</div>
+						</div>
+					</fieldset>
+				</div>
+
+				<div class="label_main">
+					<fieldset class="clear">
+						<legend>财务信息</legend>
+						<div class="label_main">
+							<div class="label_hang">
+								<div class="label_ltit">付款状态:</div>
+								<div class="label_rwben label_rwb">
+									<s:if test="lading.fd_check==0">
+										<span class="cr">未付款</span>
+									</s:if>
+									<s:if test="lading.fd_check==1">
+										<span class="cy">未付清</span>
+									</s:if>
+									<s:if test="lading.fd_check==2">
+										<span class="cg">已付款</span>
+									</s:if>
+								</div>
+							</div>
+							<div class="label_hang">
+								<div class="label_ltit">付款日期:</div>
+								<div class="label_rwben label_rwb">${it:formatDate(lading.fd_date,'yyyy-MM-dd')}</div>
+							</div>
+						</div>
+						<div class="label_main">
+							<div class="label_hang">
+								<div class="label_ltit">付款方式:</div>
+								<div class="label_rwbenx">
+									<!--   cssClass="regular-checkbox" -->
+									<s:checkboxlist name="lading.fd_typesx" list="#{0:'现金',1:'POS',2:'支票',3:'转账',4:'预付款',5:'其他'}" cssClass="regular-checkbox" />
+								</div>
+							</div>
+						</div>
+						<div class="label_main">
+							<div class="label_hang">
+								<div class="label_ltit">付款说明:</div>
+								<div class="label_rwbenx">${lading.fd_note}</div>
+							</div>
+						</div>
+					</fieldset>
+				</div>
+				<div class="label_main">
+					<div class="label_hang">
+						<div class="label_ltit">备注:</div>
+						<div class="label_rwbenx">
+							<s:textarea id="lading_content" name="lading.content" title="备注" cssClass="label_hang_linput validate[maxSize[65535]]" />
+						</div>
+					</div>
+				</div>
+				<s:if test="lading.status>5">
+					<div class="label_main">
+						<div class="label_hang">
+							<div class="label_ltit">审核意见:</div>
+							<div class="label_rwbenx">
+								<s:textarea id="lading_note" name="lading.note" title="备注" cssClass="label_hang_linput validate[maxSize[65535]]" />
+							</div>
+						</div>
+					</div>
+				</s:if>
+				<div class="label_main">
+					<div class="label_hang">
+						<div class="label_ltit">相关操作:</div>
+						<div class="label_rwbenx">
+							<input type="button" value="返回" onclick="linkurl('<s:url action="lading_load" namespace="/qkjmanage"><s:param name="viewFlag">mdy</s:param><s:param name="lading.uuid" value="lading.uuid"></s:param></s:url>');" class="input-gray" /> <span id="message" class="cr"></span> <input type="button" value="打印本页"
+								onclick="window.print();" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</s:form>
 	</div>
-<s:form name="form1" action="lading_add" namespace="/qkjmanage" onsubmit="return validator(this);" method="post" theme="simple">
-	<div class="ifromoperate" ></div>
-	<table class="ilisttable" width="100%">
-		<s:if test="null != lading">
-		<tr>
-		<td class='firstRow'>申请编号:</td>
-		<td class='secRow'>
-			<s:property value="lading.uuid" />
-			<s:hidden name="lading.uuid" />
-		</td>
-		<td class='firstRow'>状态:</td>
-		<td class='secRow'>
-			<s:if test='0==lading.status'>新单</s:if>
-			<s:if test='1==lading.status'>待批</s:if>
-			<s:if test='2==lading.status'>结案-<s:date name="lading.close_time" format="yyyy-MM-dd HH:mm:ss" /></s:if>
-			<s:if test='0==lading.out_flag'><span id="out_flag_no" class="message_error">未出货</span></s:if><s:if test='1==lading.out_flag'>已出货</s:if>
-		</td>
-		</tr>
-		</s:if>
-		<s:if test="null!=lading && 1<=lading.status">
-		<tr>
-			<td class='firstRow'>确认表单:</td>
-			<td class="tablearea" colspan="3">
-			<table class="ilisttable" width="100%">
-			<tr>
-				<th style="width: 20%;">渠道/运营经理确认</th>
-				<th style="width: 20%;">销售部经理确认</th>
-				<th style="width: 20%;">市场部经理确认</th>
-				<th style="width: 20%;">财务确认</th>
-				<th style="width: 20%;">运营总监确认</th>
-			</tr>
-			<tr>
-			<td class="confirm_td">
-				<s:if test="0==lading.manager_check">
-				<span class="confirmd confirmd_cancel">-</span>
-				</s:if>
-				<s:if test="1==lading.manager_check">
-				<span class="confirmd confirmd_ok" title='<s:property value="lading.manager_check_user_name" /> <s:date name="lading.manager_check_time" format="yyyy-MM-dd HH:mm:ss" />'>√</span>
-				<div></div>
-				</s:if>
-			</td>
-			<td class="confirm_td">
-				<s:if test="0==lading.sd_check">
-				<span class="confirmd confirmd_cancel">-</span>
-				</s:if>
-				<s:if test="1==lading.sd_check">
-				<span class="confirmd confirmd_ok" title='<s:property value="lading.sd_check_user_name" /> <s:date name="lading.sd_check_time" format="yyyy-MM-dd HH:mm:ss" />'>√</span>
-				</s:if>
-			</td>
-			<td class="confirm_td">
-				<s:if test="0==lading.md_check">
-				<span class="confirmd confirmd_cancel">-</span>
-				</s:if>
-				<s:if test="1==lading.md_check">
-				<span class="confirmd confirmd_ok" title='<s:property value="lading.md_check_user_name" /> <s:date name="lading.md_check_time" format="yyyy-MM-dd HH:mm:ss" />'>√</span>
-				</s:if>
-			</td>
-			<td class="confirm_td">
-				<s:if test="2>lading.fd_check">
-				<span class="confirmd confirmd_cancel">-</span>
-				</s:if>
-				<s:if test="2==lading.fd_check">
-				<span class="confirmd confirmd_ok" title='<s:property value="lading.fd_check_user_name" /> <s:date name="lading.md_check_time" format="yyyy-MM-dd HH:mm:ss" />'>√</span>
-				</s:if>
-			</td>
-			<td class="confirm_td">
-				<s:if test="0==lading.coo_check">
-				<span class="confirmd confirmd_cancel">-</span>
-				</s:if>
-				<s:if test="1==lading.coo_check">
-				<span class="confirmd confirmd_ok" title='<s:property value="lading.coo_check_user_name" /> <s:date name="lading.coo_check_time" format="yyyy-MM-dd HH:mm:ss" />'>√</span>
-				</s:if>
-			</td>
-			</tr>
-			</table>
-			</td>
-		</tr>
-		<tr>
-		<td class='firstRow'>申请人/销售人:</td>
-		<td class='secRow'>
-			<s:property value="lading.applicant_name" />
-		</td>
-		<td class='firstRow'>申请时间:</td>
-		<td class='secRow'><s:date name="lading.apply_time" format="yyyy-MM-dd HH:mm:ss" /></td>
-		</tr>
-		</s:if>
-		<tr>
-		<td class='firstRow'>客户信息:</td>
-		<td class='secRow' colspan="3">
-			<s:property value="lading.member_id" /> <s:property value="lading.member_name" /> 
-		</td>
-		</tr>
-		<tr>
-		<td class='firstRow'>内容:</td>
-		<td class='secRow' colspan="3">
-			<s:property value="lading.content" /> 
-		</tr>
-		<tr>
-		<td class='firstRow'>配送地点:</td>
-		<td class='secRow' colspan="3"><s:property value="lading.address" /></td>
-		</tr>
-		<tr>
-		<td class='firstRow'>其他说明:</td>
-		<td class='secRow' colspan="3"><s:property value="lading.note" /></td>
-		</tr>
-		<s:if test="null != lading">
-<!-- ------------------------------------------------------------- -->
-<tr>
-<td class='firstRow'>提货单明细:
-	<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADINGITEM_ADD') && lading.status==0">
-	<br />
-	<a id="addItem" href="javascript:;">[添加明细]</a>&nbsp;
-	</s:if>
-</td>
-<td class='secRow' colspan="3">
-<table class="ilisttable" id="table_item" width="100%">
-  <tr>
-    <th>主键编号</th>
-	<th>产品名称</th>
-	<th>提货数量</th>
-  </tr>
-<s:iterator value="ladingItems" status="sta">
-  <tr class="<s:if test="#sta.odd == true">oddStyle</s:if><s:else>evenStyle</s:else>">
-    <td align="center"><s:property value="uuid" /></td>
-	<td><s:property value="product_name" /></td>
-	<td align="center">
-		<s:property value="num" />(<s:property value="num/(case_spec*1.0)" /> 件)
-	</td>
-  </tr>
-</s:iterator>	
-</table>
-</td>
-</tr>
-<!-- ------------------------------------------------------------- -->
-		<tr>
-		<td class='firstRow'>添加人:</td>
-		<td class='secRow'><s:property value="lading.add_user_name" /></td>
-		<td class='firstRow'>添加时间:</td>
-		<td class='secRow'><s:date name="lading.add_time" format="yyyy-MM-dd HH:mm:ss" /></td>
-		</tr>
-		<tr>
-		<td class='firstRow'>最后修改人:</td>
-		<td class='secRow'><s:property value="lading.lm_user_name" /></td>
-		<td class='firstRow'>最后修改时间:</td>
-		<td class='secRow'><s:date name="lading.lm_time" format="yyyy-MM-dd HH:mm:ss" /></td>
-		</tr>
-		<tr>
-		</tr>
-		</s:if>
-	</table>
-</s:form>
-	</div>
-</div>
-</div>
-<div class="printarea"><input type="button" onclick="window.print();" value="打印本页"/></div>
-<s:if test="@org.iweb.sys.ContextHelper@checkPermit('QKJ_QKJMANAGE_LADING_OUTFLAG1')">
-<div id="OUT_Operation" title="出货操作">
-<div class="dialog_button"><span id="lading_out" class="ui_button_100x24_shallow">确定出货完成</span></div>
-</div>
-</s:if>
 </body>
+
+<script type="text/javascript" src="<s:url value="/include/jQuery/jquery.ui.datepicker-zh.js" />"></script>
+<script type="text/javascript">
+var ajax_url_action = '<s:url value="/common_ajax/json_ajax" />';
+var add_user='${customerRecode.add_user}';
+$(function(){
+	CommonUtil.pickrow('table1');
+	CommonUtil.pickrowAll('table1','uuidcheck');
+	$("#customerRecode_recode_time").datepicker();
+	$("#customerRecode_next_date").datepicker();
+	
+	if($("#userdept_codeid").val()!='') {
+		loadManagers($("#userdept_codeid").val());
+	}
+	createCustomerView();
+ });
+
+var sobj02;
+var createCustomerView = function() {
+	//http://localhost:8888/qkjmanage/customer_load?viewFlag=mdy&customer.uuid=3
+	var w_width = $(window).width();
+	var w_height = $(window).height();
+	sobj02 = new DialogIFrame({
+		src:'',
+		title:"查看促销活动信息",
+		width:w_width*0.35,
+		height:w_height*0.85
+	});
+	sobj02.selfAction = function(val1,val2) {};
+	sobj02.create();
+	//sobj02.open();
+};
+
+var openCustomerView = function(customer_uuid) {
+	var iframeId = sobj02.getConid() + "iframe";
+	$("#"+iframeId).attr("src","/salpro/salPromot_load?viewFlag=view&salstate=1&salPromot.uuid=" + customer_uuid);
+	sobj02.open();
+};
+
+</script>
 </html>

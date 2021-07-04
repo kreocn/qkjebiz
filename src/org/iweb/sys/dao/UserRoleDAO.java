@@ -63,7 +63,7 @@ public class UserRoleDAO extends AbstractDAO {
 		RolePrvg rolePrvg;
 		for (int i = 0, n = prvg_list.size(); i < n; i++) {
 			rolePrvg = new RolePrvg();
-			rolePrvg.setUuid(ToolsUtil.getUUID16());
+			rolePrvg.setUuid(ToolsUtil.getUUID());
 			rolePrvg.setRole_id(role.getUuid());
 			rolePrvg.setPrivilege_id(prvg_list.get(i));
 			rolePrvg.setType(0);
@@ -118,7 +118,7 @@ public class UserRoleDAO extends AbstractDAO {
 
 			rolePrvg = new RolePrvg();
 			if (exists_index == -1) { // 没有旧的数据
-				rolePrvg.setUuid(ToolsUtil.getUUID16());
+				rolePrvg.setUuid(ToolsUtil.getUUID());
 				rolePrvg.setRole_id(role.getUuid());
 				rolePrvg.setPrivilege_id(prvg_list.get(i));
 				rolePrvg.setType(0);
